@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Fields to be considred for matching policy. </summary>
-    public readonly partial struct MatchingPolicyFieldsType : IEquatable<MatchingPolicyFieldsType>
+    public readonly partial struct MatchingPolicyFieldsType : IEquatable<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType>
     {
         private readonly string _value;
         /// <summary> Include 'Questions' field. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Include 'Answer' field. </summary>
         private const string AnswerValue = "Answer";
 
-        /// <summary> Initializes a new instance of <see cref="MatchingPolicyFieldsType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MatchingPolicyFieldsType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Include 'Answer' field. </summary>
         public static MatchingPolicyFieldsType Answer { get; } = new MatchingPolicyFieldsType(AnswerValue);
 
-        /// <summary> Determines if two <see cref="MatchingPolicyFieldsType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MatchingPolicyFieldsType left, MatchingPolicyFieldsType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MatchingPolicyFieldsType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MatchingPolicyFieldsType left, MatchingPolicyFieldsType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MatchingPolicyFieldsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MatchingPolicyFieldsType(string value) => new MatchingPolicyFieldsType(value);
 
-        /// <summary> Converts a string to a <see cref="MatchingPolicyFieldsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchingPolicyFieldsType?(string value) => value == null ? null : new MatchingPolicyFieldsType(value);
+        public static implicit operator MatchingPolicyFieldsType?(string value) => (value == null) ? null : new MatchingPolicyFieldsType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MatchingPolicyFieldsType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MatchingPolicyFieldsType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MatchingPolicyFieldsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MatchingPolicyFieldsType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

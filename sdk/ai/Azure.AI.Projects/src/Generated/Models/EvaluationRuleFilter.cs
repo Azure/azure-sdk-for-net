@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluationRuleFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRuleFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRuleFilter"/>. </summary>
         /// <param name="agentName"> Filter by agent name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public EvaluationRuleFilter(string agentName)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRuleFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRuleFilter"/>. </summary>
         /// <param name="agentName"> Filter by agent name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationRuleFilter(string agentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationRuleFilter(string agentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

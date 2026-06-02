@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. This token filter is implemented using Apache Lucene. </summary>
-    public partial class CjkBigramTokenFilter : TokenFilter, IJsonModel<CjkBigramTokenFilter>
+    public partial class CjkBigramTokenFilter : TokenFilter, IJsonModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="CjkBigramTokenFilter"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter"/> for deserialization. </summary>
         internal CjkBigramTokenFilter()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCjkBigramTokenFilter(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter.DeserializeCjkBigramTokenFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CjkBigramTokenFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CjkBigramTokenFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CjkBigramTokenFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CjkBigramTokenFilter IPersistableModel<CjkBigramTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (CjkBigramTokenFilter)PersistableModelCreateCore(data, options);
+        CjkBigramTokenFilter IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => ((CjkBigramTokenFilter)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CjkBigramTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CjkBigramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,13 +74,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CjkBigramTokenFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(IgnoreScripts))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(IgnoreScripts))
             {
                 writer.WritePropertyName("ignoreScripts"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputUnigrams))
+            if (global::Azure.Search.Documents.Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
@@ -99,33 +99,33 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CjkBigramTokenFilter IJsonModel<CjkBigramTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CjkBigramTokenFilter)JsonModelCreateCore(ref reader, options);
+        CjkBigramTokenFilter IJsonModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((CjkBigramTokenFilter)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CjkBigramTokenFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCjkBigramTokenFilter(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilter.DeserializeCjkBigramTokenFilter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string odataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<CjkBigramTokenFilterScripts> ignoreScripts = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts> ignoreScripts = default;
             bool? outputUnigrams = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,11 +141,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("ignoreScripts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<CjkBigramTokenFilterScripts> array = new List<CjkBigramTokenFilterScripts>();
+                    List<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts> array = new List<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToCjkBigramTokenFilterScripts());
@@ -155,19 +155,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("outputUnigrams"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     outputUnigrams = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CjkBigramTokenFilter(odataType, name, additionalBinaryDataProperties, ignoreScripts ?? new ChangeTrackingList<CjkBigramTokenFilterScripts>(), outputUnigrams);
+            return new CjkBigramTokenFilter(odataType, name, additionalBinaryDataProperties, (ignoreScripts ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts>()), outputUnigrams);
         }
     }
 }

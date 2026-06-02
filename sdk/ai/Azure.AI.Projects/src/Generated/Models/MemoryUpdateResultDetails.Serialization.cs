@@ -12,9 +12,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory update result. </summary>
-    public partial class MemoryUpdateResultDetails : IJsonModel<MemoryUpdateResultDetails>
+    public partial class MemoryUpdateResultDetails : IJsonModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryUpdateResultDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails"/> for deserialization. </summary>
         internal MemoryUpdateResultDetails()
         {
         }
@@ -23,56 +23,56 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryUpdateResultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryUpdateResultDetails(document.RootElement, options);
+                        return global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails.DeserializeMemoryUpdateResultDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryUpdateResultDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryUpdateResultDetails IPersistableModel<MemoryUpdateResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MemoryUpdateResultDetails IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryUpdateResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryUpdateResultDetails"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails"/> from. </param>
         public static explicit operator MemoryUpdateResultDetails(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMemoryUpdateResultDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails.DeserializeMemoryUpdateResultDetails(document.RootElement, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryUpdateResultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -80,21 +80,21 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("memory_operations"u8);
             writer.WriteStartArray();
             foreach (MemoryOperation item in MemoryOperations)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<MemoryOperation>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<MemoryStoreOperationUsage>(Usage, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -102,9 +102,9 @@ namespace Azure.AI.Projects.Memory
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -113,52 +113,52 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryUpdateResultDetails IJsonModel<MemoryUpdateResultDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MemoryUpdateResultDetails IJsonModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryUpdateResultDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryUpdateResultDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails.DeserializeMemoryUpdateResultDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MemoryUpdateResultDetails DeserializeMemoryUpdateResultDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<MemoryOperation> memoryOperations = default;
+            IList<global::Azure.AI.Projects.Memory.MemoryOperation> memoryOperations = default;
             MemoryStoreOperationUsage usage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("memory_operations"u8))
                 {
-                    List<MemoryOperation> array = new List<MemoryOperation>();
+                    List<global::Azure.AI.Projects.Memory.MemoryOperation> array = new List<global::Azure.AI.Projects.Memory.MemoryOperation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MemoryOperation.DeserializeMemoryOperation(item, options));
+                        array.Add(global::Azure.AI.Projects.Memory.MemoryOperation.DeserializeMemoryOperation(item, options));
                     }
                     memoryOperations = array;
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    usage = MemoryStoreOperationUsage.DeserializeMemoryStoreOperationUsage(prop.Value, options);
+                    usage = global::Azure.AI.Projects.Memory.MemoryStoreOperationUsage.DeserializeMemoryStoreOperationUsage(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MemoryUpdateResultDetails(memoryOperations, usage, additionalBinaryDataProperties);

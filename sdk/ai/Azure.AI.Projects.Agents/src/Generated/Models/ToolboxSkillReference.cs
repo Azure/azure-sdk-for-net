@@ -10,22 +10,22 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A reference to an existing skill to include in a toolbox. </summary>
     public partial class ToolboxSkillReference : ToolboxSkill
     {
-        /// <summary> Initializes a new instance of <see cref="ToolboxSkillReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxSkillReference"/>. </summary>
         /// <param name="name"> The name of the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ToolboxSkillReference(string name) : base("skill_reference")
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxSkillReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxSkillReference"/>. </summary>
         /// <param name="type"> The type of skill source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
-        internal ToolboxSkillReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
+        internal ToolboxSkillReference(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a queue selector that will be attached to a job. </summary>
-    public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment, IJsonModel<StaticQueueSelectorAttachment>
+    public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment, IJsonModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>
     {
-        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment"/> for deserialization. </summary>
         internal StaticQueueSelectorAttachment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override QueueSelectorAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStaticQueueSelectorAttachment(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment.DeserializeStaticQueueSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticQueueSelectorAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StaticQueueSelectorAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticQueueSelectorAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticQueueSelectorAttachment IPersistableModel<StaticQueueSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticQueueSelectorAttachment)PersistableModelCreateCore(data, options);
+        StaticQueueSelectorAttachment IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => ((StaticQueueSelectorAttachment)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StaticQueueSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StaticQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StaticQueueSelectorAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queueSelector"u8);
-            writer.WriteObjectValue(QueueSelector, options);
+            writer.WriteObjectValue<RouterQueueSelector>(QueueSelector, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticQueueSelectorAttachment IJsonModel<StaticQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticQueueSelectorAttachment)JsonModelCreateCore(ref reader, options);
+        StaticQueueSelectorAttachment IJsonModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((StaticQueueSelectorAttachment)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override QueueSelectorAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StaticQueueSelectorAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStaticQueueSelectorAttachment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment.DeserializeStaticQueueSelectorAttachment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static StaticQueueSelectorAttachment DeserializeStaticQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             QueueSelectorAttachmentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             RouterQueueSelector queueSelector = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +120,12 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("queueSelector"u8))
                 {
-                    queueSelector = RouterQueueSelector.DeserializeRouterQueueSelector(prop.Value, options);
+                    queueSelector = global::Azure.Communication.JobRouter.RouterQueueSelector.DeserializeRouterQueueSelector(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new StaticQueueSelectorAttachment(kind, additionalBinaryDataProperties, queueSelector);

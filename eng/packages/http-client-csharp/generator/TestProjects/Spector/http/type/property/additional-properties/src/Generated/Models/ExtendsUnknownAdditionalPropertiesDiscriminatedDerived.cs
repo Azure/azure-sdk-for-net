@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(string name, int index) : base(name, "derived") => throw null;
 
-        internal ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(string name, string kind, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, kind, additionalProperties) => throw null;
+        internal ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(string name, string kind, IDictionary<string, global::System.BinaryData> additionalProperties, int index, float? age) : base(name, kind, additionalProperties) => throw null;
 
         public int Index
         {

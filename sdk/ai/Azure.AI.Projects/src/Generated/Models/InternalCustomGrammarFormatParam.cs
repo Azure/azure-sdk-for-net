@@ -9,21 +9,21 @@ namespace Azure.AI.Projects
 {
     internal partial class InternalCustomGrammarFormatParam : InternalCustomToolParamFormat
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCustomGrammarFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        public InternalCustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base(CustomToolParamFormatType.Grammar)
+        public InternalCustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base(global::Azure.AI.Projects.CustomToolParamFormatType.Grammar)
         {
             Syntax = syntax;
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCustomGrammarFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCustomGrammarFormatParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        internal InternalCustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, GrammarSyntax1 syntax, string definition) : base(@type, additionalBinaryDataProperties)
+        internal InternalCustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, GrammarSyntax1 syntax, string definition) : base(@type, additionalBinaryDataProperties)
         {
             Syntax = syntax;
             Definition = definition;

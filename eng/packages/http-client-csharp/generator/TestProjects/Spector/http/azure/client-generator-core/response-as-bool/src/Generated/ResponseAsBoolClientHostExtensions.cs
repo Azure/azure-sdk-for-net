@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ResponseAsBool
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ResponseAsBoolClientHostExtensions
     {
         public static IClientBuilder AddResponseAsBoolClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddResponseAsBoolClient(this IHostApplicationBuilder host, string sectionName, Action<ResponseAsBoolClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddResponseAsBoolClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ResponseAsBool.ResponseAsBoolClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedResponseAsBoolClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedResponseAsBoolClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ResponseAsBoolClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedResponseAsBoolClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ResponseAsBool.ResponseAsBoolClientSettings> configureSettings) => throw null;
     }
 }

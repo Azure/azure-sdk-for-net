@@ -13,16 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudUpdating event. </summary>
     public partial class AvsPrivateCloudUpdatingEventData : AvsPrivateCloudEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatingEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudUpdatingEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         internal AvsPrivateCloudUpdatingEventData(string operationId) : base(operationId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatingEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudUpdatingEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudUpdatingEventData(string operationId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, additionalBinaryDataProperties)
+        internal AvsPrivateCloudUpdatingEventData(string operationId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(operationId, additionalBinaryDataProperties)
         {
         }
     }

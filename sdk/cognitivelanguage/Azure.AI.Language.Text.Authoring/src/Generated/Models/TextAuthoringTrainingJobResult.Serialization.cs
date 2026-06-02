@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the output of a training job. </summary>
-    public partial class TextAuthoringTrainingJobResult : IJsonModel<TextAuthoringTrainingJobResult>
+    public partial class TextAuthoringTrainingJobResult : IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>
     {
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingJobResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult"/> for deserialization. </summary>
         internal TextAuthoringTrainingJobResult()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringTrainingJobResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTextAuthoringTrainingJobResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult.DeserializeTextAuthoringTrainingJobResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringTrainingJobResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringTrainingJobResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringTrainingJobResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringTrainingJobResult IPersistableModel<TextAuthoringTrainingJobResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TextAuthoringTrainingJobResult IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringTrainingJobResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TextAuthoringTrainingJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,28 +74,28 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringTrainingJobResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("modelLabel"u8);
             writer.WriteStringValue(ModelLabel);
             writer.WritePropertyName("trainingConfigVersion"u8);
             writer.WriteStringValue(TrainingConfigVersion);
             writer.WritePropertyName("trainingStatus"u8);
-            writer.WriteObjectValue(TrainingStatus, options);
-            if (Optional.IsDefined(EvaluationStatus))
+            writer.WriteObjectValue<TextAuthoringSubTrainingState>(TrainingStatus, options);
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(EvaluationStatus))
             {
                 writer.WritePropertyName("evaluationStatus"u8);
-                writer.WriteObjectValue(EvaluationStatus, options);
+                writer.WriteObjectValue<TextAuthoringSubTrainingState>(EvaluationStatus, options);
             }
-            if (Optional.IsDefined(EstimatedEndOn))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(EstimatedEndOn))
             {
                 writer.WritePropertyName("estimatedEndDateTime"u8);
                 writer.WriteStringValue(EstimatedEndOn.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -103,9 +103,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -114,26 +114,26 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringTrainingJobResult IJsonModel<TextAuthoringTrainingJobResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TextAuthoringTrainingJobResult IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringTrainingJobResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringTrainingJobResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTextAuthoringTrainingJobResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult.DeserializeTextAuthoringTrainingJobResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TextAuthoringTrainingJobResult DeserializeTextAuthoringTrainingJobResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Text.Authoring
             TextAuthoringSubTrainingState trainingStatus = default;
             TextAuthoringSubTrainingState evaluationStatus = default;
             DateTimeOffset? estimatedEndOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("modelLabel"u8))
@@ -157,30 +157,30 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("trainingStatus"u8))
                 {
-                    trainingStatus = TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(prop.Value, options);
+                    trainingStatus = global::Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluationStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    evaluationStatus = TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(prop.Value, options);
+                    evaluationStatus = global::Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("estimatedEndDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     estimatedEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TextAuthoringTrainingJobResult(
@@ -196,8 +196,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="response"> The response from the service. </param>
         internal static TextAuthoringTrainingJobResult FromLroResponse(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTextAuthoringTrainingJobResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult.DeserializeTextAuthoringTrainingJobResult(document.RootElement.GetProperty("result"), global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.WireOptions);
         }
     }
 }

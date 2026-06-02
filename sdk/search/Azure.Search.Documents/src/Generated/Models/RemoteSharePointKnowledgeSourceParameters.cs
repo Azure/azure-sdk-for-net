@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class RemoteSharePointKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSourceParameters"/>. </summary>
         public RemoteSharePointKnowledgeSourceParameters()
         {
             ResourceMetadata = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSourceParameters"/>. </summary>
         /// <param name="filterExpression"> Keyword Query Language (KQL) expression with queryable SharePoint properties and attributes to scope the retrieval before the query runs. </param>
         /// <param name="resourceMetadata"> A list of metadata fields to be returned for each item in the response. Only retrievable metadata properties can be included in this list. By default, no metadata is returned. </param>
         /// <param name="containerTypeId"> Container ID for SharePoint Embedded connection. When this is null, it will use SharePoint Online. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSharePointKnowledgeSourceParameters(string filterExpression, IList<string> resourceMetadata, string containerTypeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoteSharePointKnowledgeSourceParameters(string filterExpression, IList<string> resourceMetadata, string containerTypeId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FilterExpression = filterExpression;
             ResourceMetadata = resourceMetadata;

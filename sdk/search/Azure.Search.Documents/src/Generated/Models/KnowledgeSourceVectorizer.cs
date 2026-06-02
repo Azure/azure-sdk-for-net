@@ -13,24 +13,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used for knowledge source embedding model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceVectorizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         private protected KnowledgeSourceVectorizer(VectorSearchVectorizerKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

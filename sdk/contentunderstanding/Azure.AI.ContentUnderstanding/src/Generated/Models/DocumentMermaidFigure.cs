@@ -13,15 +13,15 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Figure containing a diagram, such as a flowchart or network diagram. </summary>
     public partial class DocumentMermaidFigure : DocumentFigure
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentMermaidFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/>. </summary>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="content"> Diagram content represented using [Mermaid syntax](https://mermaid.js.org/intro/). </param>
-        internal DocumentMermaidFigure(string id, string content) : base(DocumentFigureKind.Mermaid, id)
+        internal DocumentMermaidFigure(string id, string content) : base(global::Azure.AI.ContentUnderstanding.DocumentFigureKind.Mermaid, id)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentMermaidFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/>. </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Diagram content represented using [Mermaid syntax](https://mermaid.js.org/intro/). </param>
-        internal DocumentMermaidFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content) : base(kind, id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
+        internal DocumentMermaidFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string content) : base(kind, id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
         {
             Content = content;
         }

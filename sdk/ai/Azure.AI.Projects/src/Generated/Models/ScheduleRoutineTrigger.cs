@@ -10,25 +10,25 @@ namespace Azure.AI.Projects
     /// <summary> A recurring cron-based routine trigger. </summary>
     public partial class ScheduleRoutineTrigger : RoutineTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ScheduleRoutineTrigger"/>. </summary>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> or <paramref name="timeZone"/> is null. </exception>
-        public ScheduleRoutineTrigger(string cronExpression, string timeZone) : base(RoutineTriggerType.Schedule)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cronExpression"/> or <paramref name="timeZone"/> is null. </exception>
+        public ScheduleRoutineTrigger(string cronExpression, string timeZone) : base(global::Azure.AI.Projects.RoutineTriggerType.Schedule)
         {
-            Argument.AssertNotNull(cronExpression, nameof(cronExpression));
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
+            global::Azure.AI.Projects.Argument.AssertNotNull(cronExpression, nameof(cronExpression));
+            global::Azure.AI.Projects.Argument.AssertNotNull(timeZone, nameof(timeZone));
 
             CronExpression = cronExpression;
             TimeZone = timeZone;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ScheduleRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
-        internal ScheduleRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cronExpression, string timeZone) : base(@type, additionalBinaryDataProperties)
+        internal ScheduleRoutineTrigger(RoutineTriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string cronExpression, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             CronExpression = cronExpression;
             TimeZone = timeZone;

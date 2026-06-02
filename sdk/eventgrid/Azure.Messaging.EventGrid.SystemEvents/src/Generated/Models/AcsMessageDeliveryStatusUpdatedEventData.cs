@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageDeliveryStatusUpdated event. </summary>
     public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to) : base(@from, to)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="toBsuid"> Optional. The BSUID of the recipient. </param>
         /// <param name="status"> The updated message status. </param>
         /// <param name="channelKind"> The updated message channel type. </param>
-        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, string toBsuid, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
+        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string messageId, string toBsuid, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
         {
             MessageId = messageId;
             ToBsuid = toBsuid;

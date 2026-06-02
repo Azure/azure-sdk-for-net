@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringEvaluationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringEvaluationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult"/>. </summary>
         /// <param name="evaluationDetails"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
@@ -29,13 +29,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             PercentComplete = percentComplete;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringEvaluationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult"/>. </summary>
         /// <param name="evaluationDetails"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringEvaluationJobResult(ConversationAuthoringEvaluationDetails evaluationDetails, string modelLabel, string trainingConfigVersion, int percentComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringEvaluationJobResult(ConversationAuthoringEvaluationDetails evaluationDetails, string modelLabel, string trainingConfigVersion, int percentComplete, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EvaluationDetails = evaluationDetails;
             ModelLabel = modelLabel;

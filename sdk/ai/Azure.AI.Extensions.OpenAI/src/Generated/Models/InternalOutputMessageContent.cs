@@ -10,19 +10,19 @@ namespace Azure.AI.Extensions.OpenAI
     internal abstract partial class InternalOutputMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContent"/>. </summary>
         /// <param name="type"></param>
         private protected InternalOutputMessageContent(OutputMessageContentType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalOutputMessageContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalOutputMessageContent(OutputMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

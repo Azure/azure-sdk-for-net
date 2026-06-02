@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeSourceSynchronizationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceSynchronizationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceSynchronizationError"/>. </summary>
         /// <param name="errorMessage"> Human-readable, customer-visible error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
         public KnowledgeSourceSynchronizationError(string errorMessage)
         {
-            Argument.AssertNotNull(errorMessage, nameof(errorMessage));
+            global::Azure.Search.Documents.Argument.AssertNotNull(errorMessage, nameof(errorMessage));
 
             ErrorMessage = errorMessage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceSynchronizationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceSynchronizationError"/>. </summary>
         /// <param name="docId"> The unique identifier for the failed document or item within the synchronization run. </param>
         /// <param name="statusCode"> HTTP-like status code representing the failure category (e.g., 400). </param>
         /// <param name="name"> Name of the ingestion or processing component reporting the error. </param>
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="details"> Additional contextual information about the failure. </param>
         /// <param name="documentationLink"> A link to relevant troubleshooting documentation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceSynchronizationError(string docId, int? statusCode, string name, string errorMessage, string details, Uri documentationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceSynchronizationError(string docId, int? statusCode, string name, string errorMessage, string details, global::System.Uri documentationLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DocId = docId;
             StatusCode = statusCode;
@@ -62,6 +62,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Details { get; set; }
 
         /// <summary> A link to relevant troubleshooting documentation. </summary>
-        public Uri DocumentationLink { get; set; }
+        public global::System.Uri DocumentationLink { get; set; }
     }
 }

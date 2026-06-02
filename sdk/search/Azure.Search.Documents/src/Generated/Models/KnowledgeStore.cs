@@ -16,28 +16,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageConnectionString"/> or <paramref name="projections"/> is null. </exception>
-        public KnowledgeStore(string storageConnectionString, IEnumerable<KnowledgeStoreProjection> projections)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="storageConnectionString"/> or <paramref name="projections"/> is null. </exception>
+        public KnowledgeStore(string storageConnectionString, IEnumerable<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> projections)
         {
-            Argument.AssertNotNull(storageConnectionString, nameof(storageConnectionString));
-            Argument.AssertNotNull(projections, nameof(projections));
+            global::Azure.Search.Documents.Argument.AssertNotNull(storageConnectionString, nameof(storageConnectionString));
+            global::Azure.Search.Documents.Argument.AssertNotNull(projections, nameof(projections));
 
             StorageConnectionString = storageConnectionString;
             Projections = projections.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
         /// <param name="identity"> The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="parameters"> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity, SearchIndexerKnowledgeStoreParameters parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeStore(string storageConnectionString, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity, SearchIndexerKnowledgeStoreParameters parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StorageConnectionString = storageConnectionString;
             Projections = projections;
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string StorageConnectionString { get; set; }
 
         /// <summary> A list of additional projections to perform during indexing. </summary>
-        public IList<KnowledgeStoreProjection> Projections { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> Projections { get; }
 
         /// <summary> The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity Identity { get; set; }

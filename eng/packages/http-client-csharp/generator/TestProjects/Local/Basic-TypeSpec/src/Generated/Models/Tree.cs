@@ -13,25 +13,25 @@ namespace BasicTypeSpec
     /// <summary> Tree is a specific type of plant. </summary>
     public partial class Tree : Plant
     {
-        /// <summary> Initializes a new instance of <see cref="Tree"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.Tree"/>. </summary>
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
         /// <param name="age"> The age of the tree in years. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Tree(string id, int height, int age) : base("tree", id, height)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::BasicTypeSpec.Argument.AssertNotNull(id, nameof(id));
 
             Age = age;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Tree"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.Tree"/>. </summary>
         /// <param name="species"> The species of plant. </param>
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="age"> The age of the tree in years. </param>
-        internal Tree(string species, string id, int height, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age) : base(species, id, height, additionalBinaryDataProperties)
+        internal Tree(string species, string id, int height, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int age) : base(species, id, height, additionalBinaryDataProperties)
         {
             Age = age;
         }

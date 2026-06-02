@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-    public partial class OAuthConsentRequestResponseItem : AgentResponseItem, IJsonModel<OAuthConsentRequestResponseItem>
+    public partial class OAuthConsentRequestResponseItem : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem"/> for deserialization. </summary>
         internal OAuthConsentRequestResponseItem()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOAuthConsentRequestResponseItem(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OAuthConsentRequestResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OAuthConsentRequestResponseItem IPersistableModel<OAuthConsentRequestResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (OAuthConsentRequestResponseItem)PersistableModelCreateCore(data, options);
+        OAuthConsentRequestResponseItem IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((OAuthConsentRequestResponseItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OAuthConsentRequestResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OAuthConsentRequestResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,10 +70,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("consent_link"u8);
@@ -84,26 +84,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OAuthConsentRequestResponseItem IJsonModel<OAuthConsentRequestResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OAuthConsentRequestResponseItem)JsonModelCreateCore(ref reader, options);
+        OAuthConsentRequestResponseItem IJsonModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((OAuthConsentRequestResponseItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOAuthConsentRequestResponseItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OAuthConsentRequestResponseItem DeserializeOAuthConsentRequestResponseItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -111,7 +111,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string internalConsentLink = default;
             string serverLabel = default;
             foreach (var prop in element.EnumerateObject())
@@ -128,11 +128,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -150,9 +150,9 @@ namespace Azure.AI.Extensions.OpenAI
                     serverLabel = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OAuthConsentRequestResponseItem(

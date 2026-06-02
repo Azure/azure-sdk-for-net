@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class OutputTokenDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OutputTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.OutputTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of text tokens generated in the output. </param>
         /// <param name="audioTokens"> Number of audio tokens generated in the output. </param>
         internal OutputTokenDetails(int textTokens, int audioTokens)
@@ -25,11 +25,11 @@ namespace Azure.AI.VoiceLive
             AudioTokens = audioTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.OutputTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of text tokens generated in the output. </param>
         /// <param name="audioTokens"> Number of audio tokens generated in the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputTokenDetails(int textTokens, int audioTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputTokenDetails(int textTokens, int audioTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TextTokens = textTokens;
             AudioTokens = audioTokens;

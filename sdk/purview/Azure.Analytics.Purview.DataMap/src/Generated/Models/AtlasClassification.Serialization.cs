@@ -17,61 +17,61 @@ namespace Azure.Analytics.Purview.DataMap
     /// An instance of a classification; it doesn't have an identity, this object
     /// exists only when associated with an entity.
     /// </summary>
-    public partial class AtlasClassification : IJsonModel<AtlasClassification>
+    public partial class AtlasClassification : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasClassification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasClassification(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasClassification.DeserializeAtlasClassification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasClassification)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasClassification)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasClassification)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasClassification)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasClassification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasClassification IPersistableModel<AtlasClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasClassification IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasClassification"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassification"/> from. </param>
         public static explicit operator AtlasClassification(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasClassification(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Purview.DataMap.AtlasClassification.DeserializeAtlasClassification(document.RootElement, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,19 +79,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasClassification)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasClassification)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Attributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -99,50 +99,50 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TypeName))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsDefined(LastModifiedTS))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LastModifiedTS))
             {
                 writer.WritePropertyName("lastModifiedTS"u8);
                 writer.WriteStringValue(LastModifiedTS);
             }
-            if (Optional.IsDefined(EntityGuid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(EntityGuid))
             {
                 writer.WritePropertyName("entityGuid"u8);
                 writer.WriteStringValue(EntityGuid);
             }
-            if (Optional.IsDefined(EntityStatus))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(EntityStatus))
             {
                 writer.WritePropertyName("entityStatus"u8);
                 writer.WriteStringValue(EntityStatus.Value.ToString());
             }
-            if (Optional.IsDefined(RemovePropagationsOnEntityDelete))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(RemovePropagationsOnEntityDelete))
             {
                 writer.WritePropertyName("removePropagationsOnEntityDelete"u8);
                 writer.WriteBooleanValue(RemovePropagationsOnEntityDelete.Value);
             }
-            if (Optional.IsCollectionDefined(ValidityPeriods))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(ValidityPeriods))
             {
                 writer.WritePropertyName("validityPeriods"u8);
                 writer.WriteStartArray();
                 foreach (TimeBoundary item in ValidityPeriods)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TimeBoundary>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -150,9 +150,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -161,55 +161,55 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasClassification IJsonModel<AtlasClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasClassification IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasClassification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasClassification>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasClassification)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasClassification)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasClassification(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasClassification.DeserializeAtlasClassification(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasClassification DeserializeAtlasClassification(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> attributes = default;
+            IDictionary<string, global::System.BinaryData> attributes = default;
             string typeName = default;
             string lastModifiedTS = default;
             string entityGuid = default;
             EntityStatus? entityStatus = default;
             bool? removePropagationsOnEntityDelete = default;
-            IList<TimeBoundary> validityPeriods = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Purview.DataMap.TimeBoundary> validityPeriods = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("attributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     attributes = dictionary;
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("entityStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("removePropagationsOnEntityDelete"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -250,31 +250,31 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("validityPeriods"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TimeBoundary> array = new List<TimeBoundary>();
+                    List<global::Azure.Analytics.Purview.DataMap.TimeBoundary> array = new List<global::Azure.Analytics.Purview.DataMap.TimeBoundary>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TimeBoundary.DeserializeTimeBoundary(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.TimeBoundary.DeserializeTimeBoundary(item, options));
                     }
                     validityPeriods = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasClassification(
-                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (attributes ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 typeName,
                 lastModifiedTS,
                 entityGuid,
                 entityStatus,
                 removePropagationsOnEntityDelete,
-                validityPeriods ?? new ChangeTrackingList<TimeBoundary>(),
+                (validityPeriods ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TimeBoundary>()),
                 additionalBinaryDataProperties);
         }
     }

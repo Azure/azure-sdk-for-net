@@ -13,25 +13,25 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Tests Notification rule model. </summary>
     public partial class TestsNotificationRule : NotificationRule
     {
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestsNotificationRule"/>. </summary>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="eventFilters">
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="actionGroupIds"/> or <paramref name="eventFilters"/> is null. </exception>
-        public TestsNotificationRule(string displayName, IEnumerable<string> actionGroupIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(displayName, actionGroupIds, NotificationScopeType.Tests)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="displayName"/>, <paramref name="actionGroupIds"/> or <paramref name="eventFilters"/> is null. </exception>
+        public TestsNotificationRule(string displayName, IEnumerable<string> actionGroupIds, IDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters) : base(displayName, actionGroupIds, global::Azure.Developer.LoadTesting.NotificationScopeType.Tests)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
-            Argument.AssertNotNull(eventFilters, nameof(eventFilters));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(displayName, nameof(displayName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(eventFilters, nameof(eventFilters));
 
             TestIds = new ChangeTrackingList<string>();
             EventFilters = eventFilters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestsNotificationRule"/>. </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
         /// </param>
-        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
+        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> testIds, IDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
             TestIds = testIds;
             EventFilters = eventFilters;
@@ -59,6 +59,6 @@ namespace Azure.Developer.LoadTesting
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
         /// </summary>
-        public IDictionary<string, TestsNotificationEventFilter> EventFilters { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> EventFilters { get; }
     }
 }

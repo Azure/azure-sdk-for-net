@@ -14,21 +14,21 @@ namespace Azure.AI.Agents.Persistent
     public partial class FabricDataAgentToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FabricDataAgentToolParameters"/>. </summary>
         public FabricDataAgentToolParameters()
         {
-            ConnectionList = new ChangeTrackingList<ToolConnection>();
+            ConnectionList = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolConnection>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FabricDataAgentToolParameters"/>. </summary>
         /// <param name="connectionList">
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricDataAgentToolParameters(IList<ToolConnection> connectionList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricDataAgentToolParameters(IList<global::Azure.AI.Agents.Persistent.ToolConnection> connectionList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionList = connectionList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.AI.Agents.Persistent
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<ToolConnection> ConnectionList { get; }
+        public IList<global::Azure.AI.Agents.Persistent.ToolConnection> ConnectionList { get; }
     }
 }

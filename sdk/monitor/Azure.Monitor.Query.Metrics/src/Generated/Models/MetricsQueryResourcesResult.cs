@@ -15,24 +15,24 @@ namespace Azure.Monitor.Query.Metrics.Models
     public partial class MetricsQueryResourcesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsQueryResourcesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult"/>. </summary>
         internal MetricsQueryResourcesResult()
         {
-            Values = new ChangeTrackingList<MetricsQueryResult>();
+            Values = new ChangeTrackingList<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsQueryResourcesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsQueryResourcesResult(IList<MetricsQueryResult> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricsQueryResourcesResult(IList<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The collection of metric data responses per resource, per metric. </summary>
-        public IList<MetricsQueryResult> Values { get; }
+        public IList<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> Values { get; }
     }
 }

@@ -15,9 +15,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevCenterEnvironmentType
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterEnvironmentType"/>. </summary>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be
         /// mapped to. The environment's resources will be deployed into this subscription
@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterEnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DeploymentTargetId = deploymentTargetId;

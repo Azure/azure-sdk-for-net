@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
     public partial class SharepointPreviewTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SharepointPreviewTool"/>. </summary>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
-        public SharepointPreviewTool(SharePointGroundingToolOptions toolOptions) : base(ToolType.SharepointGroundingPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public SharepointPreviewTool(SharePointGroundingToolOptions toolOptions) : base(global::OpenAI.ToolType.SharepointGroundingPreview)
         {
-            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(toolOptions, nameof(toolOptions));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
             ToolOptions = toolOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SharepointPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
-        internal SharepointPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, SharePointGroundingToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
+        internal SharepointPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, SharePointGroundingToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
         public SharePointGroundingToolOptions ToolOptions { get; set; }

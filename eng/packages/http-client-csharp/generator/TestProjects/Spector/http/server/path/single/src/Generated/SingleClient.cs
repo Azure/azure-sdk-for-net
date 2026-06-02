@@ -18,23 +18,23 @@ namespace Server.Path.Single
     {
         protected SingleClient() => throw null;
 
-        public SingleClient(Uri endpoint) : this(endpoint, new SingleClientOptions()) => throw null;
+        public SingleClient(global::System.Uri endpoint) : this(endpoint, new SingleClientOptions()) => throw null;
 
-        internal SingleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SingleClientOptions options) => throw null;
+        internal SingleClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, SingleClientOptions options) => throw null;
 
-        public SingleClient(Uri endpoint, SingleClientOptions options) : this(null, endpoint, options) => throw null;
+        public SingleClient(global::System.Uri endpoint, SingleClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public SingleClient(SingleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public SingleClient(SingleClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response MyOp(RequestContext context) => throw null;
 
-        public virtual Task<Response> MyOpAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> MyOpAsync(RequestContext context) => throw null;
 
         public virtual Response MyOp(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> MyOpAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> MyOpAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

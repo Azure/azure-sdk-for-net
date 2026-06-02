@@ -18,16 +18,16 @@ namespace SpecialWords._ExtensibleStrings
     {
         protected ExtensibleStrings() => throw null;
 
-        internal ExtensibleStrings(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ExtensibleStrings(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PutExtensibleStringValue(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutExtensibleStringValueAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutExtensibleStringValueAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ExtensibleString> PutExtensibleStringValue(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::SpecialWords._ExtensibleStrings.ExtensibleString> PutExtensibleStringValue(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ExtensibleString>> PutExtensibleStringValueAsync(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::SpecialWords._ExtensibleStrings.ExtensibleString>> PutExtensibleStringValueAsync(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
     }
 }

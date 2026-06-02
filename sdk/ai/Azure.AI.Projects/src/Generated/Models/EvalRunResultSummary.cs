@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvalRunResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultSummary"/>. </summary>
         /// <param name="runId"> The evaluation run ID. </param>
         /// <param name="sampleCount"> Number of samples in the evaluation run. </param>
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects.Evaluation
             StandardDeviation = standardDeviation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultSummary"/>. </summary>
         /// <param name="runId"> The evaluation run ID. </param>
         /// <param name="sampleCount"> Number of samples in the evaluation run. </param>
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvalRunResultSummary(string runId, int sampleCount, float average, float standardDeviation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvalRunResultSummary(string runId, int sampleCount, float average, float standardDeviation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             SampleCount = sampleCount;

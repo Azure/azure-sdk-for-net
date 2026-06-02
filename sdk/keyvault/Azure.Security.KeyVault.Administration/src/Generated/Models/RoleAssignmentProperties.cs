@@ -13,9 +13,9 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RoleAssignmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties"/>. </summary>
         /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
         /// <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
         public RoleAssignmentProperties(string roleDefinitionId, string principalId)
@@ -24,11 +24,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             PrincipalId = principalId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties"/>. </summary>
         /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
         /// <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentProperties(string roleDefinitionId, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentProperties(string roleDefinitionId, string principalId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;

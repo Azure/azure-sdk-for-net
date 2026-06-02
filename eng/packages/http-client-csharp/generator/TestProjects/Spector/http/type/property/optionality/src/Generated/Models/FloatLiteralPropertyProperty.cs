@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Property.Optional
 {
-    public readonly partial struct FloatLiteralPropertyProperty : IEquatable<FloatLiteralPropertyProperty>
+    public readonly partial struct FloatLiteralPropertyProperty : IEquatable<global::_Type.Property.Optional.FloatLiteralPropertyProperty>
     {
         public FloatLiteralPropertyProperty(float value) => throw null;
 
@@ -20,16 +20,16 @@ namespace _Type.Property.Optional
 
         public static bool operator !=(FloatLiteralPropertyProperty left, FloatLiteralPropertyProperty right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="FloatLiteralPropertyProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.Optional.FloatLiteralPropertyProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator FloatLiteralPropertyProperty(float value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(FloatLiteralPropertyProperty other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

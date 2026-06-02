@@ -30,16 +30,16 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -54,14 +54,14 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -72,14 +72,14 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -90,15 +90,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath(":reclassify", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -114,15 +114,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath(":cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -140,15 +140,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
             uri.AppendPath(":complete", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -166,15 +166,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
             uri.AppendPath(":close", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -188,47 +188,47 @@ namespace Azure.Communication.JobRouter
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (status != null)
+            if ((status != null))
             {
                 uri.AppendQuery("status", status, true);
             }
-            if (queueId != null)
+            if ((queueId != null))
             {
                 uri.AppendQuery("queueId", queueId, true);
             }
-            if (channelId != null)
+            if ((channelId != null))
             {
                 uri.AppendQuery("channelId", channelId, true);
             }
-            if (classificationPolicyId != null)
+            if ((classificationPolicyId != null))
             {
                 uri.AppendQuery("classificationPolicyId", classificationPolicyId, true);
             }
-            if (scheduledBefore != null)
+            if ((scheduledBefore != null))
             {
-                uri.AppendQuery("scheduledBefore", TypeFormatters.ConvertToString(scheduledBefore, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("scheduledBefore", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(scheduledBefore, global::Azure.Communication.JobRouter.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (scheduledAfter != null)
+            if ((scheduledAfter != null))
             {
-                uri.AppendQuery("scheduledAfter", TypeFormatters.ConvertToString(scheduledAfter, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("scheduledAfter", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(scheduledAfter, global::Azure.Communication.JobRouter.SerializationFormat.DateTime_RFC3339), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetJobsRequest(global::System.Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -237,20 +237,20 @@ namespace Azure.Communication.JobRouter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(maxpagesize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -262,14 +262,14 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/position", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -283,15 +283,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
             uri.AppendPath(":unassign", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -309,14 +309,14 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath(":accept", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -330,15 +330,15 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath(":decline", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -354,14 +354,14 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/queues/", false);
             uri.AppendPath(queueId, true);
             uri.AppendPath("/statistics", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -372,16 +372,16 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -396,14 +396,14 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -414,14 +414,14 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -430,39 +430,39 @@ namespace Azure.Communication.JobRouter
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/workers", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (state != null)
+            if ((state != null))
             {
                 uri.AppendQuery("state", state, true);
             }
-            if (channelId != null)
+            if ((channelId != null))
             {
                 uri.AppendQuery("channelId", channelId, true);
             }
-            if (queueId != null)
+            if ((queueId != null))
             {
                 uri.AppendQuery("queueId", queueId, true);
             }
-            if (hasCapacity != null)
+            if ((hasCapacity != null))
             {
-                uri.AppendQuery("hasCapacity", TypeFormatters.ConvertToString(hasCapacity), true);
+                uri.AppendQuery("hasCapacity", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(hasCapacity), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetWorkersRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetWorkersRequest(global::System.Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -471,20 +471,20 @@ namespace Azure.Communication.JobRouter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Communication.JobRouter.TypeFormatters.ConvertToString(maxpagesize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

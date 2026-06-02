@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a class in a single-label classification project. </summary>
-    public partial class SingleLabelClassEvalSummary : IJsonModel<SingleLabelClassEvalSummary>
+    public partial class SingleLabelClassEvalSummary : IJsonModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="SingleLabelClassEvalSummary"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary"/> for deserialization. </summary>
         internal SingleLabelClassEvalSummary()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SingleLabelClassEvalSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSingleLabelClassEvalSummary(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary.DeserializeSingleLabelClassEvalSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleLabelClassEvalSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SingleLabelClassEvalSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SingleLabelClassEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SingleLabelClassEvalSummary IPersistableModel<SingleLabelClassEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SingleLabelClassEvalSummary IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SingleLabelClassEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SingleLabelClassEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SingleLabelClassEvalSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("f1"u8);
             writer.WriteNumberValue(F1);
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteNumberValue(FalsePositiveCount);
             writer.WritePropertyName("falseNegativeCount"u8);
             writer.WriteNumberValue(FalseNegativeCount);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -100,9 +100,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -111,26 +111,26 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SingleLabelClassEvalSummary IJsonModel<SingleLabelClassEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SingleLabelClassEvalSummary IJsonModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SingleLabelClassEvalSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SingleLabelClassEvalSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSingleLabelClassEvalSummary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary.DeserializeSingleLabelClassEvalSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SingleLabelClassEvalSummary DeserializeSingleLabelClassEvalSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Text.Authoring
             int trueNegativeCount = default;
             int falsePositiveCount = default;
             int falseNegativeCount = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("f1"u8))
@@ -179,9 +179,9 @@ namespace Azure.AI.Language.Text.Authoring
                     falseNegativeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SingleLabelClassEvalSummary(

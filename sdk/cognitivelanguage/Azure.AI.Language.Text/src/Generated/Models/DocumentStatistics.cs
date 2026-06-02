@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class DocumentStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentStatistics"/>. </summary>
         /// <param name="charactersCount"> Number of text elements recognized in the document. </param>
         /// <param name="transactionsCount"> Number of transactions for the document. </param>
         internal DocumentStatistics(int charactersCount, int transactionsCount)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             TransactionsCount = transactionsCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentStatistics"/>. </summary>
         /// <param name="charactersCount"> Number of text elements recognized in the document. </param>
         /// <param name="transactionsCount"> Number of transactions for the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStatistics(int charactersCount, int transactionsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentStatistics(int charactersCount, int transactionsCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CharactersCount = charactersCount;
             TransactionsCount = transactionsCount;

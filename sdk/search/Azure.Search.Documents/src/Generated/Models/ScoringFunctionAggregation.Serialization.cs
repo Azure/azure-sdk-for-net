@@ -14,41 +14,41 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringFunctionAggregation value) => value switch
         {
-            ScoringFunctionAggregation.Sum => "sum",
-            ScoringFunctionAggregation.Average => "average",
-            ScoringFunctionAggregation.Minimum => "minimum",
-            ScoringFunctionAggregation.Maximum => "maximum",
-            ScoringFunctionAggregation.FirstMatching => "firstMatching",
-            ScoringFunctionAggregation.Product => "product",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Sum => "sum",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Average => "average",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Minimum => "minimum",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Maximum => "maximum",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.FirstMatching => "firstMatching",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Product => "product",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ScoringFunctionAggregation ToScoringFunctionAggregation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sum"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "sum"))
             {
-                return ScoringFunctionAggregation.Sum;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Sum;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "average"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "average"))
             {
-                return ScoringFunctionAggregation.Average;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Average;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimum"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimum"))
             {
-                return ScoringFunctionAggregation.Minimum;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Minimum;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "maximum"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "maximum"))
             {
-                return ScoringFunctionAggregation.Maximum;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Maximum;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "firstMatching"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "firstMatching"))
             {
-                return ScoringFunctionAggregation.FirstMatching;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.FirstMatching;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "product"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "product"))
             {
-                return ScoringFunctionAggregation.Product;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionAggregation.Product;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.");
         }

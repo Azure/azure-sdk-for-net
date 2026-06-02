@@ -25,7 +25,7 @@ namespace BasicTypeSpec
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
         public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
@@ -73,19 +73,19 @@ namespace BasicTypeSpec
         /// <param name="readOnlyOptionalRecordUnknown"> optional readonly record of unknown. </param>
         /// <param name="modelWithRequiredNullable"> this is a model with required nullable properties. </param>
         /// <param name="requiredBytes"> Required bytes. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.RoundTripModel"/> instance for mocking. </returns>
-        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, ThingModel requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
+        /// <returns> A new <see cref="global::BasicTypeSpec.RoundTripModel"/> instance for mocking. </returns>
+        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<global::BasicTypeSpec.StringFixedEnum> requiredCollection = default, IDictionary<string, global::BasicTypeSpec.StringExtensibleEnum> requiredDictionary = default, ThingModel requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<global::BasicTypeSpec.IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<global::BasicTypeSpec.FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<global::BasicTypeSpec.FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<global::BasicTypeSpec.IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, global::System.BinaryData> requiredRecordUnknown = default, IDictionary<string, global::System.BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, global::System.BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, global::System.BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
-            requiredCollection ??= new ChangeTrackingList<StringFixedEnum>();
-            requiredDictionary ??= new ChangeTrackingDictionary<string, StringExtensibleEnum>();
-            intExtensibleEnumCollection ??= new ChangeTrackingList<IntExtensibleEnum>();
-            floatExtensibleEnumCollection ??= new ChangeTrackingList<FloatExtensibleEnum>();
-            floatFixedEnumCollection ??= new ChangeTrackingList<FloatFixedEnum>();
-            intFixedEnumCollection ??= new ChangeTrackingList<IntFixedEnum>();
-            requiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
-            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
-            readOnlyRequiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
-            readOnlyOptionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            requiredCollection ??= new ChangeTrackingList<global::BasicTypeSpec.StringFixedEnum>();
+            requiredDictionary ??= new ChangeTrackingDictionary<string, global::BasicTypeSpec.StringExtensibleEnum>();
+            intExtensibleEnumCollection ??= new ChangeTrackingList<global::BasicTypeSpec.IntExtensibleEnum>();
+            floatExtensibleEnumCollection ??= new ChangeTrackingList<global::BasicTypeSpec.FloatExtensibleEnum>();
+            floatFixedEnumCollection ??= new ChangeTrackingList<global::BasicTypeSpec.FloatFixedEnum>();
+            intFixedEnumCollection ??= new ChangeTrackingList<global::BasicTypeSpec.IntFixedEnum>();
+            requiredRecordUnknown ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            readOnlyRequiredRecordUnknown ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            readOnlyOptionalRecordUnknown ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new RoundTripModel(
                 requiredString,
@@ -119,7 +119,7 @@ namespace BasicTypeSpec
         /// <param name="requiredNullablePrimitive"> required nullable primitive type. </param>
         /// <param name="requiredExtensibleEnum"> required nullable extensible enum type. </param>
         /// <param name="requiredFixedEnum"> required nullable fixed enum type. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
             return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
@@ -127,7 +127,7 @@ namespace BasicTypeSpec
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.FriendModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.FriendModel"/> instance for mocking. </returns>
         public static FriendModel FriendModel(string name = default)
         {
             return new FriendModel(name, additionalBinaryDataProperties: null);
@@ -135,14 +135,14 @@ namespace BasicTypeSpec
 
         /// <summary> this is a model with a client name. </summary>
         /// <param name="name"> name of the ModelWithClientName. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.RenamedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.RenamedModel"/> instance for mocking. </returns>
         public static RenamedModel RenamedModel(string name = default)
         {
             return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ReturnsAnonymousModelResponse. </summary>
-        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
@@ -153,8 +153,8 @@ namespace BasicTypeSpec
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
-        public static DataFactoryElementModel DataFactoryElementModel(DataFactoryElement<string> stringProperty = default, DataFactoryElement<int> intProperty = default, DataFactoryElement<bool> boolProperty = default, DataFactoryElement<IList<string>> stringArrayProperty = default)
+        /// <returns> A new <see cref="global::BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
+        public static DataFactoryElementModel DataFactoryElementModel(DataFactoryElement<string> stringProperty = default, DataFactoryElement<int> intProperty = default, DataFactoryElement<bool> boolProperty = default, DataFactoryElement<global::System.Collections.Generic.IList<string>> stringArrayProperty = default)
         {
             return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties: null);
         }
@@ -200,24 +200,24 @@ namespace BasicTypeSpec
         /// <param name="dictionaryOfDictionaryFoo"></param>
         /// <param name="dictionaryListFoo"></param>
         /// <param name="listOfDictionaryFoo"></param>
-        /// <returns> A new <see cref="BasicTypeSpec.XmlAdvancedModel"/> instance for mocking. </returns>
-        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<IList<XmlItem>> listOfListFoo = default, IDictionary<string, XmlItem> dictionaryFoo = default, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, IList<XmlItem>> dictionaryListFoo = default, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo = default)
+        /// <returns> A new <see cref="global::BasicTypeSpec.XmlAdvancedModel"/> instance for mocking. </returns>
+        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<global::BasicTypeSpec.XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<global::BasicTypeSpec.XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, global::System.BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<global::BasicTypeSpec.XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<global::BasicTypeSpec.XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> listOfListFoo = default, IDictionary<string, global::BasicTypeSpec.XmlItem> dictionaryFoo = default, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> dictionaryListFoo = default, IEnumerable<global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> listOfDictionaryFoo = default)
         {
             unwrappedStrings ??= new ChangeTrackingList<string>();
             unwrappedCounts ??= new ChangeTrackingList<int>();
-            unwrappedItems ??= new ChangeTrackingList<XmlItem>();
+            unwrappedItems ??= new ChangeTrackingList<global::BasicTypeSpec.XmlItem>();
             wrappedColors ??= new ChangeTrackingList<string>();
-            items ??= new ChangeTrackingList<XmlItem>();
+            items ??= new ChangeTrackingList<global::BasicTypeSpec.XmlItem>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
-            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
             fooItems ??= new ChangeTrackingList<string>();
-            modelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
-            unwrappedModelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
-            listOfListFoo ??= new ChangeTrackingList<IList<XmlItem>>();
-            dictionaryFoo ??= new ChangeTrackingDictionary<string, XmlItem>();
-            dictionaryOfDictionaryFoo ??= new ChangeTrackingDictionary<string, IDictionary<string, XmlItem>>();
-            dictionaryListFoo ??= new ChangeTrackingDictionary<string, IList<XmlItem>>();
-            listOfDictionaryFoo ??= new ChangeTrackingList<IDictionary<string, XmlItem>>();
+            modelsWithNamespaces ??= new ChangeTrackingList<global::BasicTypeSpec.XmlModelWithNamespace>();
+            unwrappedModelsWithNamespaces ??= new ChangeTrackingList<global::BasicTypeSpec.XmlModelWithNamespace>();
+            listOfListFoo ??= new ChangeTrackingList<global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>>();
+            dictionaryFoo ??= new ChangeTrackingDictionary<string, global::BasicTypeSpec.XmlItem>();
+            dictionaryOfDictionaryFoo ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>>();
+            dictionaryListFoo ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>>();
+            listOfDictionaryFoo ??= new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>>();
 
             return new XmlAdvancedModel(
                 name,
@@ -266,7 +266,7 @@ namespace BasicTypeSpec
         /// <param name="itemName"> The item name. </param>
         /// <param name="itemValue"> The item value. </param>
         /// <param name="itemId"> Item ID as attribute. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.XmlItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.XmlItem"/> instance for mocking. </returns>
         public static XmlItem XmlItem(string itemName = default, int itemValue = default, string itemId = default)
         {
             return new XmlItem(itemName, itemValue, itemId);
@@ -275,7 +275,7 @@ namespace BasicTypeSpec
         /// <summary> A nested model for XML testing. </summary>
         /// <param name="value"> The value of the nested model. </param>
         /// <param name="nestedId"> An attribute on the nested model. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.XmlNestedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.XmlNestedModel"/> instance for mocking. </returns>
         public static XmlNestedModel XmlNestedModel(string value = default, int nestedId = default)
         {
             return new XmlNestedModel(value, nestedId);
@@ -283,7 +283,7 @@ namespace BasicTypeSpec
 
         /// <summary> The XmlModelWithNamespace. </summary>
         /// <param name="foo"></param>
-        /// <returns> A new <see cref="BasicTypeSpec.XmlModelWithNamespace"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.XmlModelWithNamespace"/> instance for mocking. </returns>
         public static XmlModelWithNamespace XmlModelWithNamespace(string foo = default)
         {
             return new XmlModelWithNamespace(foo);
@@ -293,7 +293,7 @@ namespace BasicTypeSpec
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
         /// <param name="age"> The age of the tree in years. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.Tree"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.Tree"/> instance for mocking. </returns>
         public static Tree Tree(string id = default, int height = default, int age = default)
         {
             return new Tree("tree", id, height, additionalBinaryDataProperties: null, age);
@@ -306,7 +306,7 @@ namespace BasicTypeSpec
         /// <param name="species"> The species of plant. </param>
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.Plant"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::BasicTypeSpec.Plant"/> instance for mocking. </returns>
         public static Plant Plant(string species = default, string id = default, int height = default)
         {
             return new UnknownPlant(species, id, height, additionalBinaryDataProperties: null);

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Payload.Pageable
 {
-    public partial class Pet : IJsonModel<Pet>
+    public partial class Pet : IJsonModel<global::Payload.Pageable.Pet>
     {
         internal Pet() => throw null;
 
@@ -19,17 +19,17 @@ namespace Payload.Pageable
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Pageable.Pet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Pet IPersistableModel<global::Payload.Pageable.Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Pageable.Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Payload.Pageable.Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Pet IJsonModel<Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Pet IJsonModel<global::Payload.Pageable.Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

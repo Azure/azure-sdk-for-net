@@ -13,9 +13,9 @@ using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
 namespace Payload.Pageable
 {
-    [ModelReaderWriterBuildable(typeof(Filter))]
-    [ModelReaderWriterBuildable(typeof(Pet))]
-    [ModelReaderWriterBuildable(typeof(XmlPet))]
+    [ModelReaderWriterBuildableAttribute(typeof(Filter))]
+    [ModelReaderWriterBuildableAttribute(typeof(Pet))]
+    [ModelReaderWriterBuildableAttribute(typeof(XmlPet))]
     public partial class PayloadPageableContext : ModelReaderWriterContext
     {
     }

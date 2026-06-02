@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
-    public partial class AvatarConfiguration : IJsonModel<AvatarConfiguration>
+    public partial class AvatarConfiguration : IJsonModel<global::Azure.AI.VoiceLive.AvatarConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AvatarConfiguration"/> for deserialization. </summary>
         internal AvatarConfiguration()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AvatarConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvatarConfiguration(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.AvatarConfiguration.DeserializeAvatarConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AvatarConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AvatarConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvatarConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvatarConfiguration IPersistableModel<AvatarConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AvatarConfiguration IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvatarConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvatarConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.AvatarConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,61 +73,61 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AvatarConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IceServers))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(IceServers))
             {
                 writer.WritePropertyName("ice_servers"u8);
                 writer.WriteStartArray();
                 foreach (IceServer item in IceServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<IceServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("character"u8);
             writer.WriteStringValue(Character);
-            if (Optional.IsDefined(Style))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Style))
             {
                 writer.WritePropertyName("style"u8);
                 writer.WriteStringValue(Style);
             }
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model.Value.ToString());
             }
             writer.WritePropertyName("customized"u8);
             writer.WriteBooleanValue(Customized);
-            if (Optional.IsDefined(Video))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Video))
             {
                 writer.WritePropertyName("video"u8);
-                writer.WriteObjectValue(Video, options);
+                writer.WriteObjectValue<VideoParams>(Video, options);
             }
-            if (Optional.IsDefined(Scene))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Scene))
             {
                 writer.WritePropertyName("scene"u8);
-                writer.WriteObjectValue(Scene, options);
+                writer.WriteObjectValue<SceneParams>(Scene, options);
             }
-            if (Optional.IsDefined(OutputProtocol))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(OutputProtocol))
             {
                 writer.WritePropertyName("output_protocol"u8);
                 writer.WriteStringValue(OutputProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(OutputAuditAudio))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(OutputAuditAudio))
             {
                 writer.WritePropertyName("output_audit_audio"u8);
                 writer.WriteBooleanValue(OutputAuditAudio.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -135,9 +135,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -146,31 +146,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvatarConfiguration IJsonModel<AvatarConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AvatarConfiguration IJsonModel<global::Azure.AI.VoiceLive.AvatarConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AvatarConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AvatarConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AvatarConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvatarConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.AvatarConfiguration.DeserializeAvatarConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AvatarConfiguration DeserializeAvatarConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             AvatarConfigTypes? @type = default;
-            IList<IceServer> iceServers = default;
+            IList<global::Azure.AI.VoiceLive.IceServer> iceServers = default;
             string character = default;
             string style = default;
             PhotoAvatarBaseModes? model = default;
@@ -179,12 +179,12 @@ namespace Azure.AI.VoiceLive
             SceneParams scene = default;
             AvatarOutputProtocol? outputProtocol = default;
             bool? outputAuditAudio = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -193,14 +193,14 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("ice_servers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IceServer> array = new List<IceServer>();
+                    List<global::Azure.AI.VoiceLive.IceServer> array = new List<global::Azure.AI.VoiceLive.IceServer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IceServer.DeserializeIceServer(item, options));
+                        array.Add(global::Azure.AI.VoiceLive.IceServer.DeserializeIceServer(item, options));
                     }
                     iceServers = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("model"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -231,25 +231,25 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("video"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    video = VideoParams.DeserializeVideoParams(prop.Value, options);
+                    video = global::Azure.AI.VoiceLive.VideoParams.DeserializeVideoParams(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scene"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    scene = SceneParams.DeserializeSceneParams(prop.Value, options);
+                    scene = global::Azure.AI.VoiceLive.SceneParams.DeserializeSceneParams(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_protocol"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -258,21 +258,21 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("output_audit_audio"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     outputAuditAudio = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AvatarConfiguration(
                 @type,
-                iceServers ?? new ChangeTrackingList<IceServer>(),
+                (iceServers ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.IceServer>()),
                 character,
                 style,
                 model,

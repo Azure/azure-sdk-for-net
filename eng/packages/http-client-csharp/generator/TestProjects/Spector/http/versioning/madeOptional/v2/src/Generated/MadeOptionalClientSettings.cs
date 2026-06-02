@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Versioning.MadeOptional
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class MadeOptionalClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

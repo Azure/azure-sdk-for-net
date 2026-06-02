@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The Interactive message content to which user can read and respond. </summary>
-    public partial class InteractiveMessage : IJsonModel<InteractiveMessage>
+    public partial class InteractiveMessage : IJsonModel<global::Azure.Communication.Messages.InteractiveMessage>
     {
-        /// <summary> Initializes a new instance of <see cref="InteractiveMessage"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.InteractiveMessage"/> for deserialization. </summary>
         internal InteractiveMessage()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InteractiveMessage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInteractiveMessage(document.RootElement, options);
+                        return global::Azure.Communication.Messages.InteractiveMessage.DeserializeInteractiveMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InteractiveMessage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.InteractiveMessage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InteractiveMessage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.InteractiveMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InteractiveMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InteractiveMessage IPersistableModel<InteractiveMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InteractiveMessage IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InteractiveMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InteractiveMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.InteractiveMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,26 +73,26 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InteractiveMessage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.InteractiveMessage)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Header))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
-                writer.WriteObjectValue(Header, options);
+                writer.WriteObjectValue<MessageContent>(Header, options);
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body, options);
-            if (Optional.IsDefined(Footer))
+            writer.WriteObjectValue<TextMessageContent>(Body, options);
+            if (global::Azure.Communication.Messages.Optional.IsDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
-                writer.WriteObjectValue(Footer, options);
+                writer.WriteObjectValue<TextMessageContent>(Footer, options);
             }
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<ActionBindings>(Action, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -100,9 +100,9 @@ namespace Azure.Communication.Messages
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -111,26 +111,26 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InteractiveMessage IJsonModel<InteractiveMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InteractiveMessage IJsonModel<global::Azure.Communication.Messages.InteractiveMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InteractiveMessage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.InteractiveMessage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InteractiveMessage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.InteractiveMessage)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInteractiveMessage(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.InteractiveMessage.DeserializeInteractiveMessage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InteractiveMessage DeserializeInteractiveMessage(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -138,40 +138,40 @@ namespace Azure.Communication.Messages
             TextMessageContent body = default;
             TextMessageContent footer = default;
             ActionBindings action = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("header"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    header = MessageContent.DeserializeMessageContent(prop.Value, options);
+                    header = global::Azure.Communication.Messages.MessageContent.DeserializeMessageContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("body"u8))
                 {
-                    body = TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
+                    body = global::Azure.Communication.Messages.TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("footer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    footer = TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
+                    footer = global::Azure.Communication.Messages.TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = ActionBindings.DeserializeActionBindings(prop.Value, options);
+                    action = global::Azure.Communication.Messages.ActionBindings.DeserializeActionBindings(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InteractiveMessage(header, body, footer, action, additionalBinaryDataProperties);

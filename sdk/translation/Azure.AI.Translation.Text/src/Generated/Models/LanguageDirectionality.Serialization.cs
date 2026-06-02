@@ -14,21 +14,21 @@ namespace Azure.AI.Translation.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LanguageDirectionality value) => value switch
         {
-            LanguageDirectionality.LeftToRight => "ltr",
-            LanguageDirectionality.RightToLeft => "rtl",
+            global::Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight => "ltr",
+            global::Azure.AI.Translation.Text.LanguageDirectionality.RightToLeft => "rtl",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LanguageDirectionality value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static LanguageDirectionality ToLanguageDirectionality(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ltr"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ltr"))
             {
-                return LanguageDirectionality.LeftToRight;
+                return global::Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rtl"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "rtl"))
             {
-                return LanguageDirectionality.RightToLeft;
+                return global::Azure.AI.Translation.Text.LanguageDirectionality.RightToLeft;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LanguageDirectionality value.");
         }

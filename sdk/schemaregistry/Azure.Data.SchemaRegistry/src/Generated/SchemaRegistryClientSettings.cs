@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Data.SchemaRegistry
 {
     /// <summary> Represents the settings used to configure a <see cref="SchemaRegistryClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class SchemaRegistryClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the FullyQualifiedNamespace. </summary>
@@ -28,12 +28,12 @@ namespace Azure.Data.SchemaRegistry
             string fullyQualifiedNamespace = section["FullyQualifiedNamespace"];
             if (!string.IsNullOrEmpty(fullyQualifiedNamespace))
             {
-                FullyQualifiedNamespace = fullyQualifiedNamespace;
+                this.FullyQualifiedNamespace = fullyQualifiedNamespace;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new SchemaRegistryClientOptions(optionsSection);
+                this.Options = new SchemaRegistryClientOptions(optionsSection);
             }
         }
     }

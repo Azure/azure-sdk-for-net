@@ -16,20 +16,20 @@ namespace Azure.AI.Projects.Agents
     public partial class CreateAgentVersionFromCodeMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata"/>. </summary>
         /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="definition"/> is null. </exception>
         public CreateAgentVersionFromCodeMetadata(HostedAgentDefinition definition)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(definition, nameof(definition));
 
             Metadata = new ChangeTrackingDictionary<string, string>();
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata"/>. </summary>
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentVersionFromCodeMetadata(string description, IDictionary<string, string> metadata, HostedAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateAgentVersionFromCodeMetadata(string description, IDictionary<string, string> metadata, HostedAgentDefinition definition, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Metadata = metadata;

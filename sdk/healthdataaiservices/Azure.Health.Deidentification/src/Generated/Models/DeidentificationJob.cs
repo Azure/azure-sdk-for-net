@@ -15,22 +15,22 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="targetLocation"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="targetLocation"/> is null. </exception>
         public DeidentificationJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(targetLocation, nameof(targetLocation));
 
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/>. </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
@@ -47,7 +47,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string jobName, DeidentificationOperationType? operationType, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationJob(string jobName, DeidentificationOperationType? operationType, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobName = jobName;
             OperationType = operationType;

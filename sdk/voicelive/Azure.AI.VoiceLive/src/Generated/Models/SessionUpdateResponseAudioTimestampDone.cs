@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
     public partial class SessionUpdateResponseAudioTimestampDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDone"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal SessionUpdateResponseAudioTimestampDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(ServerEventType.ResponseAudioTimestampDone)
+        internal SessionUpdateResponseAudioTimestampDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAudioTimestampDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
             ContentIndex = contentIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal SessionUpdateResponseAudioTimestampDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAudioTimestampDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

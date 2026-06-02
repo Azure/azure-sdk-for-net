@@ -15,25 +15,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DetectedTextLine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTextLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine"/>. </summary>
         /// <param name="text"> Text content of the detected text line. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="words"> A list of words in this line. </param>
-        internal DetectedTextLine(string text, IEnumerable<ImagePoint> boundingPolygon, IEnumerable<DetectedTextWord> words)
+        internal DetectedTextLine(string text, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.ImagePoint> boundingPolygon, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord> words)
         {
             Text = text;
             BoundingPolygon = boundingPolygon.ToList();
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTextLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine"/>. </summary>
         /// <param name="text"> Text content of the detected text line. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="words"> A list of words in this line. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextLine(string text, IReadOnlyList<ImagePoint> boundingPolygon, IReadOnlyList<DetectedTextWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTextLine(string text, IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.ImagePoint> boundingPolygon, IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord> words, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             BoundingPolygon = boundingPolygon;
@@ -45,9 +45,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         public string Text { get; }
 
         /// <summary> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </summary>
-        public IReadOnlyList<ImagePoint> BoundingPolygon { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.ImagePoint> BoundingPolygon { get; }
 
         /// <summary> A list of words in this line. </summary>
-        public IReadOnlyList<DetectedTextWord> Words { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord> Words { get; }
     }
 }

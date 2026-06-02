@@ -14,25 +14,25 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AuthorizeModelCopyOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeModelCopyOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeModelCopyOptions(string modelId)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeModelCopyOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizeModelCopyOptions(string modelId, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizeModelCopyOptions(string modelId, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;

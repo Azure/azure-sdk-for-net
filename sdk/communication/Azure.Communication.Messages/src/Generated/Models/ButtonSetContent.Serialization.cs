@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
-    public partial class ButtonSetContent : MessageContent, IJsonModel<ButtonSetContent>
+    public partial class ButtonSetContent : MessageContent, IJsonModel<global::Azure.Communication.Messages.ButtonSetContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ButtonSetContent"/> for deserialization. </summary>
         internal ButtonSetContent()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeButtonSetContent(document.RootElement, options);
+                        return global::Azure.Communication.Messages.ButtonSetContent.DeserializeButtonSetContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ButtonSetContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ButtonSetContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ButtonSetContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ButtonSetContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ButtonSetContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ButtonSetContent IPersistableModel<ButtonSetContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ButtonSetContent)PersistableModelCreateCore(data, options);
+        ButtonSetContent IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ButtonSetContent)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ButtonSetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ButtonSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.ButtonSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,49 +73,49 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ButtonSetContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ButtonSetContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("buttons"u8);
             writer.WriteStartArray();
             foreach (ButtonContent item in Buttons)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ButtonContent>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ButtonSetContent IJsonModel<ButtonSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ButtonSetContent)JsonModelCreateCore(ref reader, options);
+        ButtonSetContent IJsonModel<global::Azure.Communication.Messages.ButtonSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ButtonSetContent)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ButtonSetContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ButtonSetContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeButtonSetContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.ButtonSetContent.DeserializeButtonSetContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ButtonSetContent DeserializeButtonSetContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MessageContentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ButtonContent> buttons = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Communication.Messages.ButtonContent> buttons = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -125,17 +125,17 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("buttons"u8))
                 {
-                    List<ButtonContent> array = new List<ButtonContent>();
+                    List<global::Azure.Communication.Messages.ButtonContent> array = new List<global::Azure.Communication.Messages.ButtonContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ButtonContent.DeserializeButtonContent(item, options));
+                        array.Add(global::Azure.Communication.Messages.ButtonContent.DeserializeButtonContent(item, options));
                     }
                     buttons = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ButtonSetContent(kind, additionalBinaryDataProperties, buttons);

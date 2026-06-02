@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeVMExtension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeVMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeVMExtension"/>. </summary>
         internal BatchNodeVMExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeVMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeVMExtension"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the virtual machine extension. </param>
         /// <param name="vmExtension"> The virtual machine extension. </param>
         /// <param name="instanceView"> The vm extension instance view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeVMExtension(string provisioningState, VMExtension vmExtension, VMExtensionInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeVMExtension(string provisioningState, VMExtension vmExtension, VMExtensionInstanceView instanceView, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VmExtension = vmExtension;

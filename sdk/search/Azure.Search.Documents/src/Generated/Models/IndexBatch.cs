@@ -14,25 +14,25 @@ namespace Azure.Search.Documents.Models
     internal partial class IndexBatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
-        public IndexBatch(IEnumerable<IndexAction> actions)
+        public IndexBatch(IEnumerable<global::Azure.Search.Documents.Models.IndexAction> actions)
         {
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexBatch(IList<global::Azure.Search.Documents.Models.IndexAction> actions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The actions in the batch. </summary>
-        public IList<IndexAction> Actions { get; }
+        public IList<global::Azure.Search.Documents.Models.IndexAction> Actions { get; }
     }
 }

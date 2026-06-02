@@ -14,28 +14,28 @@ namespace Azure.Communication.Messages
     public partial class InteractiveMessage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InteractiveMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.InteractiveMessage"/>. </summary>
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
         /// <param name="action"> The binding object to get or set Action which describes options user have to respond to message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> or <paramref name="action"/> is null. </exception>
         public InteractiveMessage(TextMessageContent body, ActionBindings action)
         {
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(action, nameof(action));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(action, nameof(action));
 
             Body = body;
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InteractiveMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.InteractiveMessage"/>. </summary>
         /// <param name="header"> Gets or Sets Header content. Supports the following types:text, images etc. </param>
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
         /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
         /// <param name="action"> The binding object to get or set Action which describes options user have to respond to message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InteractiveMessage(MessageContent header, TextMessageContent body, TextMessageContent footer, ActionBindings action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InteractiveMessage(MessageContent header, TextMessageContent body, TextMessageContent footer, ActionBindings action, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Header = header;
             Body = body;

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Customization
 {
-    public partial class GroupParametersOptions : IJsonModel<GroupParametersOptions>
+    public partial class GroupParametersOptions : IJsonModel<global::Customization.GroupParametersOptions>
     {
         internal GroupParametersOptions() => throw null;
 
@@ -19,17 +19,17 @@ namespace Customization
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<GroupParametersOptions>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Customization.GroupParametersOptions>.Write(ModelReaderWriterOptions options) => throw null;
 
-        GroupParametersOptions IPersistableModel<GroupParametersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        GroupParametersOptions IPersistableModel<global::Customization.GroupParametersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<GroupParametersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Customization.GroupParametersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<GroupParametersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Customization.GroupParametersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        GroupParametersOptions IJsonModel<GroupParametersOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        GroupParametersOptions IJsonModel<global::Customization.GroupParametersOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual GroupParametersOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

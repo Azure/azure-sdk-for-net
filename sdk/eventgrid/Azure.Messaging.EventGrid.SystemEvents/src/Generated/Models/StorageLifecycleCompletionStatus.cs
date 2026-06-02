@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The status for a LCM policy. </summary>
-    public readonly partial struct StorageLifecycleCompletionStatus : IEquatable<StorageLifecycleCompletionStatus>
+    public readonly partial struct StorageLifecycleCompletionStatus : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus>
     {
         private readonly string _value;
         /// <summary> Completed. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Incomplete. </summary>
         private const string IncompleteValue = "Incomplete";
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageLifecycleCompletionStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Incomplete. </summary>
         public static StorageLifecycleCompletionStatus Incomplete { get; } = new StorageLifecycleCompletionStatus(IncompleteValue);
 
-        /// <summary> Determines if two <see cref="StorageLifecycleCompletionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageLifecycleCompletionStatus left, StorageLifecycleCompletionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageLifecycleCompletionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageLifecycleCompletionStatus left, StorageLifecycleCompletionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StorageLifecycleCompletionStatus(string value) => new StorageLifecycleCompletionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageLifecycleCompletionStatus?(string value) => value == null ? null : new StorageLifecycleCompletionStatus(value);
+        public static implicit operator StorageLifecycleCompletionStatus?(string value) => (value == null) ? null : new StorageLifecycleCompletionStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageLifecycleCompletionStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StorageLifecycleCompletionStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StorageLifecycleCompletionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageLifecycleCompletionStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

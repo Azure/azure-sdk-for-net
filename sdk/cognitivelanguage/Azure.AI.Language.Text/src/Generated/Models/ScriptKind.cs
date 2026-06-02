@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Identifies the script of the input document. Maps to the ISO 15924 standard formal name. </summary>
-    public readonly partial struct ScriptKind : IEquatable<ScriptKind>
+    public readonly partial struct ScriptKind : IEquatable<global::Azure.AI.Language.Text.ScriptKind>
     {
         private readonly string _value;
         /// <summary> Script name for the Arabic script. </summary>
@@ -83,12 +83,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Script name for the Tibetan script. </summary>
         private const string TibetanValue = "Tibetan";
 
-        /// <summary> Initializes a new instance of <see cref="ScriptKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ScriptKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -195,34 +195,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Script name for the Tibetan script. </summary>
         public static ScriptKind Tibetan { get; } = new ScriptKind(TibetanValue);
 
-        /// <summary> Determines if two <see cref="ScriptKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.ScriptKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptKind left, ScriptKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScriptKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.ScriptKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptKind left, ScriptKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScriptKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.ScriptKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ScriptKind(string value) => new ScriptKind(value);
 
-        /// <summary> Converts a string to a <see cref="ScriptKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.ScriptKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScriptKind?(string value) => value == null ? null : new ScriptKind(value);
+        public static implicit operator ScriptKind?(string value) => (value == null) ? null : new ScriptKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScriptKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ScriptKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ScriptKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScriptKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

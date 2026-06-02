@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationExportedIntent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent"/>. </summary>
         /// <param name="category"> The intent category. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public ConversationExportedIntent(string category)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
-            AssociatedEntities = new ChangeTrackingList<ConversationExportedAssociatedEntityLabel>();
+            AssociatedEntities = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent"/>. </summary>
         /// <param name="category"> The intent category. </param>
         /// <param name="description"> The intent description. </param>
         /// <param name="associatedEntities"> The list of associated entities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedIntent(string category, string description, IList<ConversationExportedAssociatedEntityLabel> associatedEntities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationExportedIntent(string category, string description, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel> associatedEntities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Description = description;
@@ -47,6 +47,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string Description { get; set; }
 
         /// <summary> The list of associated entities. </summary>
-        public IList<ConversationExportedAssociatedEntityLabel> AssociatedEntities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel> AssociatedEntities { get; }
     }
 }

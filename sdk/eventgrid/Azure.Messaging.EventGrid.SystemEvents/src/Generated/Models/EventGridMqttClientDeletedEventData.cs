@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientDeleted event. </summary>
     public partial class EventGridMqttClientDeletedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
+        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
         {
         }
     }

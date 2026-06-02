@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Parameters.Basic._ExplicitBody
 {
-    public partial class User : IJsonModel<User>
+    public partial class User : IJsonModel<global::Parameters.Basic._ExplicitBody.User>
     {
         internal User() => throw null;
 
@@ -20,20 +20,20 @@ namespace Parameters.Basic._ExplicitBody
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Parameters.Basic._ExplicitBody.User>.Write(ModelReaderWriterOptions options) => throw null;
 
-        User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        User IPersistableModel<global::Parameters.Basic._ExplicitBody.User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Parameters.Basic._ExplicitBody.User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="user"> The <see cref="global::Parameters.Basic._ExplicitBody.User"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(User user) => throw null;
 
-        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Parameters.Basic._ExplicitBody.User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        User IJsonModel<global::Parameters.Basic._ExplicitBody.User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

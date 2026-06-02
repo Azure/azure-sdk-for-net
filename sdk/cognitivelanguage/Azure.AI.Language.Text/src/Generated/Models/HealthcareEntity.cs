@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class HealthcareEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -29,10 +29,10 @@ namespace Azure.AI.Language.Text
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Links = new ChangeTrackingList<HealthcareEntityLink>();
+            Links = new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareEntityLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IList<HealthcareEntityLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IList<global::Azure.AI.Language.Text.HealthcareEntityLink> links, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Category = category;
@@ -82,6 +82,6 @@ namespace Azure.AI.Language.Text
         public string Name { get; }
 
         /// <summary> Entity references in known data sources. </summary>
-        public IList<HealthcareEntityLink> Links { get; }
+        public IList<global::Azure.AI.Language.Text.HealthcareEntityLink> Links { get; }
     }
 }

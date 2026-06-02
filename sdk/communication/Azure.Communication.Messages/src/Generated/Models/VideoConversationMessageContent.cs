@@ -13,22 +13,22 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a video conversation message. </summary>
     public partial class VideoConversationMessageContent : ConversationMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="VideoConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.VideoConversationMessageContent"/>. </summary>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
-        public VideoConversationMessageContent(Uri mediaUri) : base(CommunicationMessageKind.Video)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
+        public VideoConversationMessageContent(global::System.Uri mediaUri) : base(global::Azure.Communication.Messages.CommunicationMessageKind.Video)
         {
-            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.VideoConversationMessageContent"/>. </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="caption"> Optional text content. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal VideoConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string caption, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
+        internal VideoConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string caption, global::System.Uri mediaUri) : base(kind, additionalBinaryDataProperties)
         {
             Caption = caption;
             MediaUri = mediaUri;
@@ -38,6 +38,6 @@ namespace Azure.Communication.Messages
         public string Caption { get; set; }
 
         /// <summary> A media url for the file. Required if the type is one of the supported media types, e.g. image. </summary>
-        public Uri MediaUri { get; set; }
+        public global::System.Uri MediaUri { get; set; }
     }
 }

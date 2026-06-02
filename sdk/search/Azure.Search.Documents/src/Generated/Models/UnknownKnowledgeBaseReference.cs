@@ -12,14 +12,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeBaseReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.UnknownKnowledgeBaseReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal UnknownKnowledgeBaseReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
         }
     }

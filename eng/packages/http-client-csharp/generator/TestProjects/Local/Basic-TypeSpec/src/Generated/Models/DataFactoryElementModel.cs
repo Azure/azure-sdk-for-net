@@ -15,14 +15,14 @@ namespace BasicTypeSpec
     public partial class DataFactoryElementModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryElementModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.DataFactoryElementModel"/>. </summary>
         /// <param name="stringProperty"> String property with DFE pattern. </param>
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
-        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty)
+        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<global::System.Collections.Generic.IList<string>> stringArrayProperty)
         {
             StringProperty = stringProperty;
             IntProperty = intProperty;
@@ -30,13 +30,13 @@ namespace BasicTypeSpec
             StringArrayProperty = stringArrayProperty;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryElementModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.DataFactoryElementModel"/>. </summary>
         /// <param name="stringProperty"> String property with DFE pattern. </param>
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<global::System.Collections.Generic.IList<string>> stringArrayProperty, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StringProperty = stringProperty;
             IntProperty = intProperty;
@@ -55,6 +55,6 @@ namespace BasicTypeSpec
         public DataFactoryElement<bool> BoolProperty { get; }
 
         /// <summary> String array property with DFE pattern. </summary>
-        public DataFactoryElement<IList<string>> StringArrayProperty { get; }
+        public DataFactoryElement<global::System.Collections.Generic.IList<string>> StringArrayProperty { get; }
     }
 }

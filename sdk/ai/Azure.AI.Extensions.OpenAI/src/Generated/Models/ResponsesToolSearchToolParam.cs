@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Tool search tool. </summary>
     public partial class ResponsesToolSearchToolParam : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchToolParam"/>. </summary>
-        public ResponsesToolSearchToolParam() : base(ToolType.ToolSearch)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam"/>. </summary>
+        public ResponsesToolSearchToolParam() : base(global::Azure.AI.Extensions.OpenAI.ToolType.ToolSearch)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal ResponsesToolSearchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesToolSearchToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
         {
             Execution = execution;
             Description = description;

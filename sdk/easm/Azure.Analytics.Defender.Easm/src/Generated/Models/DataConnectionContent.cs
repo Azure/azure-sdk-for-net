@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The type of data the data connection will transfer. </summary>
-    public readonly partial struct DataConnectionContent : IEquatable<DataConnectionContent>
+    public readonly partial struct DataConnectionContent : IEquatable<global::Azure.Analytics.Defender.Easm.DataConnectionContent>
     {
         private readonly string _value;
         private const string AssetsValue = "assets";
         private const string AttackSurfaceInsightsValue = "attackSurfaceInsights";
 
-        /// <summary> Initializes a new instance of <see cref="DataConnectionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionContent"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataConnectionContent(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -33,34 +33,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the AttackSurfaceInsights. </summary>
         public static DataConnectionContent AttackSurfaceInsights { get; } = new DataConnectionContent(AttackSurfaceInsightsValue);
 
-        /// <summary> Determines if two <see cref="DataConnectionContent"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionContent"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataConnectionContent left, DataConnectionContent right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DataConnectionContent"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionContent"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataConnectionContent left, DataConnectionContent right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DataConnectionContent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionContent"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DataConnectionContent(string value) => new DataConnectionContent(value);
 
-        /// <summary> Converts a string to a <see cref="DataConnectionContent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionContent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataConnectionContent?(string value) => value == null ? null : new DataConnectionContent(value);
+        public static implicit operator DataConnectionContent?(string value) => (value == null) ? null : new DataConnectionContent(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataConnectionContent other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DataConnectionContent other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DataConnectionContent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataConnectionContent other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

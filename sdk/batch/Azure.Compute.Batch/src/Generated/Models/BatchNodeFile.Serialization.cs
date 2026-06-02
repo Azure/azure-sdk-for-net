@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> Information about a file or directory on a Compute Node. </summary>
-    public partial class BatchNodeFile : IJsonModel<BatchNodeFile>
+    public partial class BatchNodeFile : IJsonModel<global::Azure.Compute.Batch.BatchNodeFile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchNodeFile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchNodeFile(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchNodeFile.DeserializeBatchNodeFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchNodeFile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeFile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchNodeFile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeFile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchNodeFile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeFile IPersistableModel<BatchNodeFile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchNodeFile IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchNodeFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchNodeFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchNodeFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchNodeFile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeFile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Uri))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsDirectory))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(IsDirectory))
             {
                 writer.WritePropertyName("isDirectory"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue<FileProperties>(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,34 +112,34 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeFile IJsonModel<BatchNodeFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchNodeFile IJsonModel<global::Azure.Compute.Batch.BatchNodeFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchNodeFile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeFile>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchNodeFile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeFile)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchNodeFile(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchNodeFile.DeserializeBatchNodeFile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchNodeFile DeserializeBatchNodeFile(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
-            Uri uri = default;
+            global::System.Uri uri = default;
             bool? isDirectory = default;
             FileProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -149,16 +149,16 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("isDirectory"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -167,16 +167,16 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    properties = FileProperties.DeserializeFileProperties(prop.Value, options);
+                    properties = global::Azure.Compute.Batch.FileProperties.DeserializeFileProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchNodeFile(name, uri, isDirectory, properties, additionalBinaryDataProperties);

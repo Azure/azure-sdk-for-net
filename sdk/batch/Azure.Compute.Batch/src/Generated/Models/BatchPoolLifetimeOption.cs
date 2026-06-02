@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchPoolLifetimeOption enums. </summary>
-    public readonly partial struct BatchPoolLifetimeOption : IEquatable<BatchPoolLifetimeOption>
+    public readonly partial struct BatchPoolLifetimeOption : IEquatable<global::Azure.Compute.Batch.BatchPoolLifetimeOption>
     {
         private readonly string _value;
         /// <summary> The Pool exists for the lifetime of the Job Schedule. The Batch Service creates the Pool when it creates the first Job on the schedule. You may apply this option only to Job Schedules, not to Jobs. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
         private const string JobOptionValue = "job";
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolLifetimeOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchPoolLifetimeOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
         public static BatchPoolLifetimeOption JobOption { get; } = new BatchPoolLifetimeOption(JobOptionValue);
 
-        /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchPoolLifetimeOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchPoolLifetimeOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchPoolLifetimeOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchPoolLifetimeOption(string value) => new BatchPoolLifetimeOption(value);
 
-        /// <summary> Converts a string to a <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchPoolLifetimeOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPoolLifetimeOption?(string value) => value == null ? null : new BatchPoolLifetimeOption(value);
+        public static implicit operator BatchPoolLifetimeOption?(string value) => (value == null) ? null : new BatchPoolLifetimeOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchPoolLifetimeOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchPoolLifetimeOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchPoolLifetimeOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchPoolLifetimeOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

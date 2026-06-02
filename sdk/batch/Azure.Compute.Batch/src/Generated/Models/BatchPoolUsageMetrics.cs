@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolUsageMetrics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageMetrics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUsageMetrics"/>. </summary>
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
         /// <param name="startTime"> The start time of the aggregation interval covered by this entry. </param>
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
@@ -31,14 +31,14 @@ namespace Azure.Compute.Batch
             TotalCoreHours = totalCoreHours;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageMetrics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUsageMetrics"/>. </summary>
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
         /// <param name="startTime"> The start time of the aggregation interval covered by this entry. </param>
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             StartTime = startTime;

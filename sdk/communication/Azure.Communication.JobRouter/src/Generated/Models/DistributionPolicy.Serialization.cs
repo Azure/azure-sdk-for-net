@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
-    public partial class DistributionPolicy : IJsonModel<DistributionPolicy>
+    public partial class DistributionPolicy : IJsonModel<global::Azure.Communication.JobRouter.DistributionPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DistributionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDistributionPolicy(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.DistributionPolicy.DeserializeDistributionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.DistributionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DistributionPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.DistributionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DistributionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DistributionPolicy IPersistableModel<DistributionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DistributionPolicy IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DistributionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DistributionPolicy"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Communication.JobRouter.DistributionPolicy"/> from. </param>
         public static explicit operator DistributionPolicy(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDistributionPolicy(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Communication.JobRouter.DistributionPolicy.DeserializeDistributionPolicy(document.RootElement, global::Azure.Communication.JobRouter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DistributionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.DistributionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,37 +76,37 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.DistributionPolicy)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OfferExpiresAfter))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(OfferExpiresAfter))
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
-                WriteOfferExpiresAfter(writer, options);
+                this.WriteOfferExpiresAfter(writer, options);
             }
-            if (Optional.IsDefined(Mode))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue(Mode, options);
+                writer.WriteObjectValue<DistributionMode>(Mode, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,26 +125,26 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DistributionPolicy IJsonModel<DistributionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DistributionPolicy IJsonModel<global::Azure.Communication.JobRouter.DistributionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DistributionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.DistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.DistributionPolicy)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDistributionPolicy(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.DistributionPolicy.DeserializeDistributionPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -153,7 +153,7 @@ namespace Azure.Communication.JobRouter
             string name = default;
             TimeSpan? offerExpiresAfter = default;
             DistributionMode mode = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("etag"u8))
@@ -178,16 +178,16 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("mode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    mode = DistributionMode.DeserializeDistributionMode(prop.Value, options);
+                    mode = global::Azure.Communication.JobRouter.DistributionMode.DeserializeDistributionMode(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DistributionPolicy(

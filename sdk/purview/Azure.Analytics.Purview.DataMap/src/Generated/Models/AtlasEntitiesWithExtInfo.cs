@@ -17,20 +17,20 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntitiesWithExtInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntitiesWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo"/>. </summary>
         public AtlasEntitiesWithExtInfo()
         {
-            ReferredEntities = new ChangeTrackingDictionary<string, AtlasEntity>();
-            Entities = new ChangeTrackingList<AtlasEntity>();
+            ReferredEntities = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
+            Entities = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntitiesWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo"/>. </summary>
         /// <param name="referredEntities"> The referred entities. </param>
         /// <param name="entities"> An array of entities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntitiesWithExtInfo(IDictionary<string, AtlasEntity> referredEntities, IList<AtlasEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntitiesWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> referredEntities, IList<global::Azure.Analytics.Purview.DataMap.AtlasEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReferredEntities = referredEntities;
             Entities = entities;
@@ -38,9 +38,9 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> The referred entities. </summary>
-        public IDictionary<string, AtlasEntity> ReferredEntities { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> ReferredEntities { get; }
 
         /// <summary> An array of entities. </summary>
-        public IList<AtlasEntity> Entities { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasEntity> Entities { get; }
     }
 }

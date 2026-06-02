@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownToolboxSkill : ToolboxSkill
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownToolboxSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownToolboxSkill"/>. </summary>
         /// <param name="type"> The type of skill source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownToolboxSkill(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownToolboxSkill(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

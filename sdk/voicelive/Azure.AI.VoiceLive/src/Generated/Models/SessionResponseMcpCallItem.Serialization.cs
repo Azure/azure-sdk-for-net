@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a call to an MCP tool. </summary>
-    public partial class SessionResponseMcpCallItem : SessionResponseItem, IJsonModel<SessionResponseMcpCallItem>
+    public partial class SessionResponseMcpCallItem : SessionResponseItem, IJsonModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpCallItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpCallItem"/> for deserialization. </summary>
         internal SessionResponseMcpCallItem()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionResponseMcpCallItem(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionResponseMcpCallItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionResponseMcpCallItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionResponseMcpCallItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionResponseMcpCallItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionResponseMcpCallItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionResponseMcpCallItem IPersistableModel<SessionResponseMcpCallItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionResponseMcpCallItem)PersistableModelCreateCore(data, options);
+        SessionResponseMcpCallItem IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionResponseMcpCallItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionResponseMcpCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionResponseMcpCallItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,13 +73,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionResponseMcpCallItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionResponseMcpCallItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ApprovalRequestId))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(ApprovalRequestId))
             {
                 writer.WritePropertyName("approval_request_id"u8);
                 writer.WriteStringValue(ApprovalRequestId);
@@ -90,20 +90,20 @@ namespace Azure.AI.VoiceLive
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Output))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (Optional.IsDefined(Error))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Error);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Error))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Error))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -111,33 +111,33 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionResponseMcpCallItem IJsonModel<SessionResponseMcpCallItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionResponseMcpCallItem)JsonModelCreateCore(ref reader, options);
+        SessionResponseMcpCallItem IJsonModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionResponseMcpCallItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionResponseMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionResponseMcpCallItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionResponseMcpCallItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionResponseMcpCallItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionResponseMcpCallItem DeserializeSessionResponseMcpCallItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ItemType @type = default;
             string id = default;
             string @object = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string approvalRequestId = default;
             string arguments = default;
             string serverLabel = default;
@@ -188,16 +188,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = BinaryData.FromString(prop.Value.GetRawText());
+                    error = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionResponseMcpCallItem(

@@ -15,9 +15,9 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the translation operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Document
             Summary = summary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationStatusResult"/>. </summary>
         /// <param name="id"> Id of the translation operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Document
         /// inner error with more descriptive details.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, TranslationStatusSummary summary, JsonElement error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, TranslationStatusSummary summary, JsonElement error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             CreatedOn = createdOn;

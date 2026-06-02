@@ -14,13 +14,13 @@ namespace Azure.Health.Deidentification
     public partial class TaggedPhiEntities
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaggedPhiEntities"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.TaggedPhiEntities"/>. </summary>
         /// <param name="encoding"> The encoding type used for all entities in this group. </param>
         /// <param name="entities"> List of PHI entities using the specified encoding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaggedPhiEntities(TextEncodingType encoding, IList<SimplePhiEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaggedPhiEntities(TextEncodingType encoding, IList<global::Azure.Health.Deidentification.SimplePhiEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Encoding = encoding;
             Entities = entities;
@@ -31,6 +31,6 @@ namespace Azure.Health.Deidentification
         public TextEncodingType Encoding { get; }
 
         /// <summary> List of PHI entities using the specified encoding. </summary>
-        public IList<SimplePhiEntity> Entities { get; }
+        public IList<global::Azure.Health.Deidentification.SimplePhiEntity> Entities { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Semantic data type of the field value. </summary>
-    public readonly partial struct DocumentFieldType : IEquatable<DocumentFieldType>
+    public readonly partial struct DocumentFieldType : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentFieldType>
     {
         private readonly string _value;
         /// <summary> Plain text. </summary>
@@ -45,12 +45,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Array of selected string values. </summary>
         private const string SelectionGroupValue = "selectionGroup";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFieldType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFieldType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -100,34 +100,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Array of selected string values. </summary>
         public static DocumentFieldType SelectionGroup { get; } = new DocumentFieldType(SelectionGroupValue);
 
-        /// <summary> Determines if two <see cref="DocumentFieldType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFieldType left, DocumentFieldType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentFieldType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFieldType left, DocumentFieldType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentFieldType(string value) => new DocumentFieldType(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFieldType?(string value) => value == null ? null : new DocumentFieldType(value);
+        public static implicit operator DocumentFieldType?(string value) => (value == null) ? null : new DocumentFieldType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentFieldType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentFieldType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentFieldType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentFieldType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

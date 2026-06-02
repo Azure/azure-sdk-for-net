@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class ComputerUseToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolParameters"/>. </summary>
         /// <param name="displayWidth"> The display width for the computer use tool. </param>
         /// <param name="displayHeight"> The display height for the computer use tool. </param>
         /// <param name="environment"> The environment for the computer use tool. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Agents.Persistent
             Environment = environment;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolParameters"/>. </summary>
         /// <param name="displayWidth"> The display width for the computer use tool. </param>
         /// <param name="displayHeight"> The display height for the computer use tool. </param>
         /// <param name="environment"> The environment for the computer use tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerUseToolParameters(int displayWidth, int displayHeight, ComputerUseEnvironment environment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerUseToolParameters(int displayWidth, int displayHeight, ComputerUseEnvironment environment, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayWidth = displayWidth;
             DisplayHeight = displayHeight;

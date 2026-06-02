@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> NetworkSecurityGroupRuleAccess enums. </summary>
-    public readonly partial struct NetworkSecurityGroupRuleAccess : IEquatable<NetworkSecurityGroupRuleAccess>
+    public readonly partial struct NetworkSecurityGroupRuleAccess : IEquatable<global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess>
     {
         private readonly string _value;
         /// <summary> Allow access. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Deny access. </summary>
         private const string DenyValue = "deny";
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityGroupRuleAccess(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Deny access. </summary>
         public static NetworkSecurityGroupRuleAccess Deny { get; } = new NetworkSecurityGroupRuleAccess(DenyValue);
 
-        /// <summary> Determines if two <see cref="NetworkSecurityGroupRuleAccess"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityGroupRuleAccess left, NetworkSecurityGroupRuleAccess right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="NetworkSecurityGroupRuleAccess"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityGroupRuleAccess left, NetworkSecurityGroupRuleAccess right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityGroupRuleAccess(string value) => new NetworkSecurityGroupRuleAccess(value);
 
-        /// <summary> Converts a string to a <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.NetworkSecurityGroupRuleAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityGroupRuleAccess?(string value) => value == null ? null : new NetworkSecurityGroupRuleAccess(value);
+        public static implicit operator NetworkSecurityGroupRuleAccess?(string value) => (value == null) ? null : new NetworkSecurityGroupRuleAccess(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NetworkSecurityGroupRuleAccess other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is NetworkSecurityGroupRuleAccess other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(NetworkSecurityGroupRuleAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetworkSecurityGroupRuleAccess other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

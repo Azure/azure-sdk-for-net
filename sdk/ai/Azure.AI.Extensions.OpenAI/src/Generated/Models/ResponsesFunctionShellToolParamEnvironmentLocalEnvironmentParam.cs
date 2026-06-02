@@ -10,22 +10,22 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
     public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam : ResponsesFunctionShellToolParamEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
-        public ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(FunctionShellToolParamEnvironmentType.Local)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
+        public ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(global::Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType.Local)
         {
-            Skills = new ChangeTrackingList<LocalSkillParam>();
+            Skills = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.LocalSkillParam>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="skills"> An optional list of skills. </param>
-        internal ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<LocalSkillParam> skills) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Extensions.OpenAI.LocalSkillParam> skills) : base(@type, additionalBinaryDataProperties)
         {
             Skills = skills;
         }
 
         /// <summary> An optional list of skills. </summary>
-        public IList<LocalSkillParam> Skills { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.LocalSkillParam> Skills { get; }
     }
 }

@@ -14,14 +14,14 @@ namespace Specs.Azure.ClientGenerator.Core.ResponseAsBool
 {
     public partial class ResponseAsBoolClient
     {
-        public ResponseAsBoolClient() : this(new Uri("http://localhost:3000"), new ResponseAsBoolClientOptions()) => throw null;
+        public ResponseAsBoolClient() : this(new global::System.Uri("http://localhost:3000"), new ResponseAsBoolClientOptions()) => throw null;
 
-        internal ResponseAsBoolClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ResponseAsBoolClientOptions options) => throw null;
+        internal ResponseAsBoolClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ResponseAsBoolClientOptions options) => throw null;
 
-        public ResponseAsBoolClient(Uri endpoint, ResponseAsBoolClientOptions options) : this(null, endpoint, options) => throw null;
+        public ResponseAsBoolClient(global::System.Uri endpoint, ResponseAsBoolClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ResponseAsBoolClient(ResponseAsBoolClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ResponseAsBoolClient(ResponseAsBoolClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

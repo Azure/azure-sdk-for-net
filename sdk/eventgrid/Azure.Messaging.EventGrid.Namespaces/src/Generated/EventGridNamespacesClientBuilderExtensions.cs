@@ -9,7 +9,7 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class EventGridNamespacesClientBuilderExtensions
     {
     }

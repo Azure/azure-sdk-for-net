@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringExportedEntitySublist
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntitySublist"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist"/>. </summary>
         public ConversationAuthoringExportedEntitySublist()
         {
-            Synonyms = new ChangeTrackingList<ConversationAuthoringExportedEntityListSynonym>();
+            Synonyms = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntitySublist"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist"/>. </summary>
         /// <param name="listKey"> The key of the sub-list. </param>
         /// <param name="synonyms"> The phrases of that correspond to the sub-list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedEntitySublist(string listKey, IList<ConversationAuthoringExportedEntityListSynonym> synonyms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedEntitySublist(string listKey, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym> synonyms, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ListKey = listKey;
             Synonyms = synonyms;
@@ -37,6 +37,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string ListKey { get; set; }
 
         /// <summary> The phrases of that correspond to the sub-list. </summary>
-        public IList<ConversationAuthoringExportedEntityListSynonym> Synonyms { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym> Synonyms { get; }
     }
 }

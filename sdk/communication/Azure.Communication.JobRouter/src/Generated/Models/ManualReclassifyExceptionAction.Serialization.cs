@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
-    public partial class ManualReclassifyExceptionAction : ExceptionAction, IJsonModel<ManualReclassifyExceptionAction>
+    public partial class ManualReclassifyExceptionAction : ExceptionAction, IJsonModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExceptionAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManualReclassifyExceptionAction(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManualReclassifyExceptionAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManualReclassifyExceptionAction IPersistableModel<ManualReclassifyExceptionAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManualReclassifyExceptionAction)PersistableModelCreateCore(data, options);
+        ManualReclassifyExceptionAction IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ManualReclassifyExceptionAction)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManualReclassifyExceptionAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManualReclassifyExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,29 +68,29 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(QueueId))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Optional.IsDefined(Priority))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(WorkerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (RouterWorkerSelector item in WorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,35 +98,35 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManualReclassifyExceptionAction IJsonModel<ManualReclassifyExceptionAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManualReclassifyExceptionAction)JsonModelCreateCore(ref reader, options);
+        ManualReclassifyExceptionAction IJsonModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ManualReclassifyExceptionAction)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExceptionAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManualReclassifyExceptionAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
             ExceptionActionKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string queueId = default;
             int? priority = default;
-            IList<RouterWorkerSelector> workerSelectors = default;
+            IList<global::Azure.Communication.JobRouter.RouterWorkerSelector> workerSelectors = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("priority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -155,21 +155,21 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("workerSelectors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
+                    List<global::Azure.Communication.JobRouter.RouterWorkerSelector> array = new List<global::Azure.Communication.JobRouter.RouterWorkerSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     workerSelectors = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ManualReclassifyExceptionAction(
@@ -178,7 +178,7 @@ namespace Azure.Communication.JobRouter
                 additionalBinaryDataProperties,
                 queueId,
                 priority,
-                workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
+                (workerSelectors ?? new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterWorkerSelector>()));
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownComputerUseAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownComputerUseAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownComputerUseAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownComputerUseAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownComputerUseAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

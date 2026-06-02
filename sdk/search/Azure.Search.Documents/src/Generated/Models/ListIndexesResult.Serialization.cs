@@ -14,61 +14,61 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class ListIndexesResult : IJsonModel<ListIndexesResult>
+    internal partial class ListIndexesResult : IJsonModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ListIndexesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListIndexesResult(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ListIndexesResult.DeserializeListIndexesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListIndexesResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ListIndexesResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListIndexesResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ListIndexesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListIndexesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListIndexesResult IPersistableModel<ListIndexesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListIndexesResult IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListIndexesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListIndexesResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Search.Documents.Indexes.Models.ListIndexesResult"/> from. </param>
         public static explicit operator ListIndexesResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListIndexesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Search.Documents.Indexes.Models.ListIndexesResult.DeserializeListIndexesResult(document.RootElement, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListIndexesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,32 +76,32 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ListIndexesResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ListIndexesResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Count)))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (SearchIndex item in Indexes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SearchIndex>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(NextLink)))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,38 +120,38 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListIndexesResult IJsonModel<ListIndexesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ListIndexesResult IJsonModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ListIndexesResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ListIndexesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ListIndexesResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ListIndexesResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListIndexesResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.ListIndexesResult.DeserializeListIndexesResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ListIndexesResult DeserializeListIndexesResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             long? count = default;
-            IReadOnlyList<SearchIndex> indexes = default;
+            IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndex> indexes = default;
             string nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -160,10 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SearchIndex> array = new List<SearchIndex>();
+                    List<global::Azure.Search.Documents.Indexes.Models.SearchIndex> array = new List<global::Azure.Search.Documents.Indexes.Models.SearchIndex>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndex.DeserializeSearchIndex(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.SearchIndex.DeserializeSearchIndex(item, options));
                     }
                     indexes = array;
                     continue;
@@ -173,9 +173,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     nextLink = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ListIndexesResult(count, indexes, nextLink, additionalBinaryDataProperties);

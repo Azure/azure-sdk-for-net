@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Client.Naming.EnumConflict.SecondNamespace
 {
-    public partial class SecondModel : IJsonModel<SecondModel>
+    public partial class SecondModel : IJsonModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>
     {
         internal SecondModel() => throw null;
 
@@ -21,22 +21,22 @@ namespace Client.Naming.EnumConflict.SecondNamespace
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SecondModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SecondModel IPersistableModel<SecondModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SecondModel IPersistableModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SecondModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="secondModel"> The <see cref="SecondModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="secondModel"> The <see cref="global::Client.Naming.EnumConflict.SecondNamespace.SecondModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SecondModel secondModel) => throw null;
 
         public static explicit operator SecondModel(Response response) => throw null;
 
-        void IJsonModel<SecondModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SecondModel IJsonModel<SecondModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SecondModel IJsonModel<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SecondModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

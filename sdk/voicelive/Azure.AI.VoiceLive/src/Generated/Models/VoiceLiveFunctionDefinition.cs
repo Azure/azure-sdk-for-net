@@ -14,23 +14,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> The definition of a function tool as used by the voicelive endpoint. </summary>
     public partial class VoiceLiveFunctionDefinition : VoiceLiveToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveFunctionDefinition"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VoiceLiveFunctionDefinition(string name) : base(ToolType.Function)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public VoiceLiveFunctionDefinition(string name) : base(global::Azure.AI.VoiceLive.ToolType.Function)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveFunctionDefinition"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal VoiceLiveFunctionDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters) : base(@type, additionalBinaryDataProperties)
+        internal VoiceLiveFunctionDefinition(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -45,8 +45,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Gets or sets the Parameters.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

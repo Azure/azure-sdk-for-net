@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI agent. </summary>
-    public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
+    public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget"/> for deserialization. </summary>
         internal AzureAIAgentTarget()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureAIAgentTarget(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget.DeserializeAzureAIAgentTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAIAgentTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAIAgentTarget IPersistableModel<AzureAIAgentTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAIAgentTarget)PersistableModelCreateCore(data, options);
+        AzureAIAgentTarget IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureAIAgentTarget)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAIAgentTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureAIAgentTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,36 +71,36 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Version))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(ToolDescriptions))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(ToolDescriptions))
             {
                 writer.WritePropertyName("tool_descriptions"u8);
                 writer.WriteStartArray();
                 foreach (ToolDescription item in ToolDescriptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ToolDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternalTools))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(InternalTools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (InternalTool item in InternalTools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<InternalTool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,35 +108,35 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAIAgentTarget IJsonModel<AzureAIAgentTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureAIAgentTarget)JsonModelCreateCore(ref reader, options);
+        AzureAIAgentTarget IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureAIAgentTarget)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureAIAgentTarget(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget.DeserializeAzureAIAgentTarget(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureAIAgentTarget DeserializeAzureAIAgentTarget(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "azure_ai_agent";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string name = default;
             string version = default;
-            IList<ToolDescription> toolDescriptions = default;
-            IList<InternalTool> internalTools = default;
+            IList<global::Azure.AI.Projects.ToolDescription> toolDescriptions = default;
+            IList<global::Azure.AI.Projects.InternalTool> internalTools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -156,35 +156,35 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("tool_descriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ToolDescription> array = new List<ToolDescription>();
+                    List<global::Azure.AI.Projects.ToolDescription> array = new List<global::Azure.AI.Projects.ToolDescription>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolDescription.DeserializeToolDescription(item, options));
+                        array.Add(global::Azure.AI.Projects.ToolDescription.DeserializeToolDescription(item, options));
                     }
                     toolDescriptions = array;
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<InternalTool> array = new List<InternalTool>();
+                    List<global::Azure.AI.Projects.InternalTool> array = new List<global::Azure.AI.Projects.InternalTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                        array.Add(global::Azure.AI.Projects.InternalTool.DeserializeInternalTool(item, options));
                     }
                     internalTools = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureAIAgentTarget(
@@ -192,8 +192,8 @@ namespace Azure.AI.Projects.Evaluation
                 additionalBinaryDataProperties,
                 name,
                 version,
-                toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
-                internalTools ?? new ChangeTrackingList<InternalTool>());
+                (toolDescriptions ?? new ChangeTrackingList<global::Azure.AI.Projects.ToolDescription>()),
+                (internalTools ?? new ChangeTrackingList<global::Azure.AI.Projects.InternalTool>()));
         }
     }
 }

@@ -15,27 +15,27 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolReplaceOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolReplaceOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolReplaceOptions"/>. </summary>
         /// <param name="applicationPackageReferences"> The list of Application Packages to be installed on each Compute Node in the Pool. The list replaces any existing Application Package references on the Pool. Changes to Application Package references affect all new Compute Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Application Package references on any given Pool. If omitted, or if you specify an empty collection, any existing Application Packages references are removed from the Pool. A maximum of 10 references may be specified on a given Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. This list replaces any existing metadata configured on the Pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the Pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationPackageReferences"/> or <paramref name="metadata"/> is null. </exception>
-        public BatchPoolReplaceOptions(IEnumerable<BatchApplicationPackageReference> applicationPackageReferences, IEnumerable<BatchMetadataItem> metadata)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="applicationPackageReferences"/> or <paramref name="metadata"/> is null. </exception>
+        public BatchPoolReplaceOptions(IEnumerable<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IEnumerable<global::Azure.Compute.Batch.BatchMetadataItem> metadata)
         {
-            Argument.AssertNotNull(applicationPackageReferences, nameof(applicationPackageReferences));
-            Argument.AssertNotNull(metadata, nameof(metadata));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(applicationPackageReferences, nameof(applicationPackageReferences));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(metadata, nameof(metadata));
 
             ApplicationPackageReferences = applicationPackageReferences.ToList();
             Metadata = metadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolReplaceOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolReplaceOptions"/>. </summary>
         /// <param name="startTask"> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. If this element is present, it overwrites any existing StartTask. If omitted, any existing StartTask is removed from the Pool. </param>
         /// <param name="applicationPackageReferences"> The list of Application Packages to be installed on each Compute Node in the Pool. The list replaces any existing Application Package references on the Pool. Changes to Application Package references affect all new Compute Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Application Package references on any given Pool. If omitted, or if you specify an empty collection, any existing Application Packages references are removed from the Pool. A maximum of 10 references may be specified on a given Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. This list replaces any existing metadata configured on the Pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolReplaceOptions(BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolReplaceOptions(BatchStartTask startTask, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTask = startTask;
             ApplicationPackageReferences = applicationPackageReferences;
@@ -47,9 +47,9 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; set; }
 
         /// <summary> The list of Application Packages to be installed on each Compute Node in the Pool. The list replaces any existing Application Package references on the Pool. Changes to Application Package references affect all new Compute Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Application Package references on any given Pool. If omitted, or if you specify an empty collection, any existing Application Packages references are removed from the Pool. A maximum of 10 references may be specified on a given Pool. </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. This list replaces any existing metadata configured on the Pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the Pool. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
     }
 }

@@ -12,11 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class UnknownMonitorDomain : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMonitorDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.UnknownMonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownMonitorDomain(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties) : base(version, kind != default ? kind : "unknown", additionalProperties)
+        internal UnknownMonitorDomain(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties) : base(version, (kind != default) ? kind : "unknown", additionalProperties)
         {
         }
     }

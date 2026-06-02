@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringProjectDeletionState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectDeletionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeletionState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
-            Warnings = new ChangeTrackingList<ResponseError>();
-            Errors = new ChangeTrackingList<ResponseError>();
+            Warnings = new ChangeTrackingList<global::Azure.ResponseError>();
+            Errors = new ChangeTrackingList<global::Azure.ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectDeletionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeletionState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringProjectDeletionState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IList<ResponseError> warnings, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringProjectDeletionState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IList<global::Azure.ResponseError> warnings, IList<global::Azure.ResponseError> errors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -67,9 +67,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringOperationStatus Status { get; }
 
         /// <summary> The warnings that were encountered while executing the job. </summary>
-        public IList<ResponseError> Warnings { get; }
+        public IList<global::Azure.ResponseError> Warnings { get; }
 
         /// <summary> The errors encountered while executing the job. </summary>
-        public IList<ResponseError> Errors { get; }
+        public IList<global::Azure.ResponseError> Errors { get; }
     }
 }

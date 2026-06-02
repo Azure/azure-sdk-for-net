@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents an entity with its components. </summary>
-    public partial class ConversationExportedEntity : IJsonModel<ConversationExportedEntity>
+    public partial class ConversationExportedEntity : IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedEntity"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity"/> for deserialization. </summary>
         internal ConversationExportedEntity()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationExportedEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationExportedEntity(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity.DeserializeConversationExportedEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationExportedEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationExportedEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationExportedEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationExportedEntity IPersistableModel<ConversationExportedEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationExportedEntity IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationExportedEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationExportedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,50 +73,50 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationExportedEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CompositionMode))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsDefined(CompositionMode))
             {
                 writer.WritePropertyName("compositionSetting"u8);
                 writer.WriteStringValue(CompositionMode.Value.ToString());
             }
-            if (Optional.IsDefined(Entities))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
-                writer.WriteObjectValue(Entities, options);
+                writer.WriteObjectValue<ConversationAuthoringExportedEntityList>(Entities, options);
             }
-            if (Optional.IsCollectionDefined(Prebuilts))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(Prebuilts))
             {
                 writer.WritePropertyName("prebuilts"u8);
                 writer.WriteStartArray();
                 foreach (ConversationAuthoringExportedPrebuiltEntity item in Prebuilts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ConversationAuthoringExportedPrebuiltEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Regex))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsDefined(Regex))
             {
                 writer.WritePropertyName("regex"u8);
-                writer.WriteObjectValue(Regex, options);
+                writer.WriteObjectValue<ExportedEntityRegex>(Regex, options);
             }
-            if (Optional.IsCollectionDefined(RequiredComponents))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(RequiredComponents))
             {
                 writer.WritePropertyName("requiredComponents"u8);
                 writer.WriteStartArray();
                 foreach (string item in RequiredComponents)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -133,9 +133,9 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -144,26 +144,26 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationExportedEntity IJsonModel<ConversationExportedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationExportedEntity IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationExportedEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationExportedEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationExportedEntity(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity.DeserializeConversationExportedEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationExportedEntity DeserializeConversationExportedEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -171,10 +171,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             string description = default;
             ConversationAuthoringCompositionMode? compositionMode = default;
             ConversationAuthoringExportedEntityList entities = default;
-            IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts = default;
+            IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> prebuilts = default;
             ExportedEntityRegex regex = default;
             IList<string> requiredComponents = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("category"u8))
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("compositionSetting"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -198,46 +198,46 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    entities = ConversationAuthoringExportedEntityList.DeserializeConversationAuthoringExportedEntityList(prop.Value, options);
+                    entities = global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList.DeserializeConversationAuthoringExportedEntityList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("prebuilts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConversationAuthoringExportedPrebuiltEntity> array = new List<ConversationAuthoringExportedPrebuiltEntity>();
+                    List<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> array = new List<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringExportedPrebuiltEntity.DeserializeConversationAuthoringExportedPrebuiltEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity.DeserializeConversationAuthoringExportedPrebuiltEntity(item, options));
                     }
                     prebuilts = array;
                     continue;
                 }
                 if (prop.NameEquals("regex"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    regex = ExportedEntityRegex.DeserializeExportedEntityRegex(prop.Value, options);
+                    regex = global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex.DeserializeExportedEntityRegex(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requiredComponents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -249,9 +249,9 @@ namespace Azure.AI.Language.Conversations.Authoring
                     requiredComponents = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConversationExportedEntity(
@@ -259,9 +259,9 @@ namespace Azure.AI.Language.Conversations.Authoring
                 description,
                 compositionMode,
                 entities,
-                prebuilts ?? new ChangeTrackingList<ConversationAuthoringExportedPrebuiltEntity>(),
+                (prebuilts ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity>()),
                 regex,
-                requiredComponents ?? new ChangeTrackingList<string>(),
+                (requiredComponents ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

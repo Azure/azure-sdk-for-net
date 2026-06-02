@@ -19,33 +19,33 @@ namespace Payload.Pageable._ServerDrivenPagination
     {
         protected ServerDrivenPagination() => throw null;
 
-        internal ServerDrivenPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ServerDrivenPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> Link(RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> Link(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> LinkAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> LinkAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> Link(CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> Link(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> LinkAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> LinkAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> LinkString(RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> LinkString(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> LinkStringAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> LinkStringAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> LinkString(CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> LinkString(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> LinkStringAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> LinkStringAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> NestedLink(RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> NestedLink(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> NestedLinkAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> NestedLinkAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> NestedLink(CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> NestedLink(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> NestedLinkAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> NestedLinkAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual ServerDrivenPaginationAlternateInitialVerb GetServerDrivenPaginationAlternateInitialVerbClient() => throw null;
 

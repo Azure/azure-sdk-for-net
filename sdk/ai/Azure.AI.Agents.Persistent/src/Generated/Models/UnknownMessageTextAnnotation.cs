@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownMessageTextAnnotation : MessageTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownMessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageTextAnnotation(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", text, additionalBinaryDataProperties)
+        internal UnknownMessageTextAnnotation(string @type, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), text, additionalBinaryDataProperties)
         {
         }
     }

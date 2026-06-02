@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Specs.Azure.Example.Basic
 {
-    public readonly partial struct Enum : IEquatable<Enum>
+    public readonly partial struct Enum : IEquatable<global::Specs.Azure.Example.Basic.Enum>
     {
         public Enum(string value) => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.Example.Basic
 
         public static bool operator !=(Enum left, Enum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="Enum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Specs.Azure.Example.Basic.Enum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator Enum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="Enum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Specs.Azure.Example.Basic.Enum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator Enum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(Enum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

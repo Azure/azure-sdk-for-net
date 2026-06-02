@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Speed entity Metadata model. </summary>
-    public partial class SpeedMetadata : BaseMetadata, IJsonModel<SpeedMetadata>
+    public partial class SpeedMetadata : BaseMetadata, IJsonModel<global::Azure.AI.Language.Text.SpeedMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="SpeedMetadata"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SpeedMetadata"/> for deserialization. </summary>
         internal SpeedMetadata()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BaseMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSpeedMetadata(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.SpeedMetadata.DeserializeSpeedMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpeedMetadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SpeedMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SpeedMetadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SpeedMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SpeedMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpeedMetadata IPersistableModel<SpeedMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpeedMetadata)PersistableModelCreateCore(data, options);
+        SpeedMetadata IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SpeedMetadata)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SpeedMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SpeedMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.SpeedMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SpeedMetadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SpeedMetadata)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("value"u8);
@@ -87,31 +87,31 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpeedMetadata IJsonModel<SpeedMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SpeedMetadata)JsonModelCreateCore(ref reader, options);
+        SpeedMetadata IJsonModel<global::Azure.AI.Language.Text.SpeedMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SpeedMetadata)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BaseMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SpeedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SpeedMetadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SpeedMetadata)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSpeedMetadata(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.SpeedMetadata.DeserializeSpeedMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SpeedMetadata DeserializeSpeedMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MetadataKind metadataKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             double value = default;
             SpeedUnit unit = default;
             foreach (var prop in element.EnumerateObject())
@@ -131,9 +131,9 @@ namespace Azure.AI.Language.Text
                     unit = new SpeedUnit(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SpeedMetadata(metadataKind, additionalBinaryDataProperties, value, unit);

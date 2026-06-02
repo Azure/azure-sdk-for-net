@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Kind of environment where app service plan is. </summary>
-    public readonly partial struct StampKind : IEquatable<StampKind>
+    public readonly partial struct StampKind : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.StampKind>
     {
         private readonly string _value;
         /// <summary> App Service Plan is running on a public stamp. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> App Service Plan is running on an App Service Environment V2. </summary>
         private const string AseV2Value = "AseV2";
 
-        /// <summary> Initializes a new instance of <see cref="StampKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StampKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StampKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> App Service Plan is running on an App Service Environment V2. </summary>
         public static StampKind AseV2 { get; } = new StampKind(AseV2Value);
 
-        /// <summary> Determines if two <see cref="StampKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StampKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StampKind left, StampKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StampKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StampKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StampKind left, StampKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StampKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StampKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StampKind(string value) => new StampKind(value);
 
-        /// <summary> Converts a string to a <see cref="StampKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StampKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StampKind?(string value) => value == null ? null : new StampKind(value);
+        public static implicit operator StampKind?(string value) => (value == null) ? null : new StampKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StampKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StampKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StampKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StampKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

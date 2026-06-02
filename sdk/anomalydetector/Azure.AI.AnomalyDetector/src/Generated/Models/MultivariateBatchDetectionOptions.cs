@@ -17,9 +17,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateBatchDetectionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -36,17 +36,17 @@ namespace Azure.AI.AnomalyDetector
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public MultivariateBatchDetectionOptions(global::System.Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
             StartTime = startTime;
             EndTime = endTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -65,7 +65,7 @@ namespace Azure.AI.AnomalyDetector
         /// be in ISO 8601 format.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateBatchDetectionOptions(global::System.Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             TopContributorCount = topContributorCount;
@@ -82,7 +82,7 @@ namespace Azure.AI.AnomalyDetector
         /// contain at least slidingWindow entries preceding the start time of the data
         /// to be detected.
         /// </summary>
-        public Uri DataSource { get; set; }
+        public global::System.Uri DataSource { get; set; }
 
         /// <summary> Number of top contributed variables for one anomalous time stamp in the response. </summary>
         public int? TopContributorCount { get; set; }

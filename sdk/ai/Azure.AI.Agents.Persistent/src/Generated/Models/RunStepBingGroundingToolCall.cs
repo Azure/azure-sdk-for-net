@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepBingGroundingToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepBingGroundingToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         internal RunStepBingGroundingToolCall(string id, IReadOnlyDictionary<string, string> bingGrounding) : base("bing_grounding", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             BingGrounding = bingGrounding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepBingGroundingToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
-        internal RunStepBingGroundingToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> bingGrounding) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepBingGroundingToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> bingGrounding) : base(@type, id, additionalBinaryDataProperties)
         {
             BingGrounding = bingGrounding;
         }

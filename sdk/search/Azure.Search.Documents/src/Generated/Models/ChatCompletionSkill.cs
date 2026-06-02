@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that calls a language model via Azure AI Foundry's Chat Completions endpoint. </summary>
     public partial class ChatCompletionSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/> or <paramref name="uri"/> is null. </exception>
-        public ChatCompletionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/> or <paramref name="uri"/> is null. </exception>
+        public ChatCompletionSkill(IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, global::System.Uri uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
-            Argument.AssertNotNull(uri, nameof(uri));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
-            ExtraParameters = new ChangeTrackingDictionary<string, BinaryData>();
+            ExtraParameters = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="extraParameters"> Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry's extensibility pattern. </param>
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
-        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, global::System.BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
             AuthIdentity = authIdentity;
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The url for the Web API. </summary>
-        public Uri Uri { get; set; }
+        public global::System.Uri Uri { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity AuthIdentity { get; set; }
@@ -70,8 +70,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary>
         /// Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry's extensibility pattern.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ExtraParameters { get; set; }
+        public IDictionary<string, global::System.BinaryData> ExtraParameters { get; set; }
 
         /// <summary> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </summary>
         public ChatCompletionExtraParametersBehavior? ExtraParametersBehavior { get; set; }

@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     {
         private protected Animal(string kind, string name) => throw null;
 
-        internal Animal(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+        internal Animal(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) => throw null;
 
         internal string Kind
         {

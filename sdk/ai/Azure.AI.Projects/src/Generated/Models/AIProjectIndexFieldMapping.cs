@@ -12,21 +12,21 @@ namespace Azure.AI.Projects
     public partial class AIProjectIndexFieldMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectIndexFieldMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectIndexFieldMapping"/>. </summary>
         /// <param name="contentFields"> List of fields with text content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentFields"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="contentFields"/> is null. </exception>
         public AIProjectIndexFieldMapping(IEnumerable<string> contentFields)
         {
-            Argument.AssertNotNull(contentFields, nameof(contentFields));
+            global::Azure.AI.Projects.Argument.AssertNotNull(contentFields, nameof(contentFields));
 
             ContentFields = contentFields.ToList();
             VectorFields = new ChangeTrackingList<string>();
             MetadataFields = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectIndexFieldMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectIndexFieldMapping"/>. </summary>
         /// <param name="contentFields"> List of fields with text content. </param>
         /// <param name="filepathField"> Path of file to be used as a source of text content. </param>
         /// <param name="titleField"> Field containing the title of the document. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <param name="vectorFields"> List of fields with vector content. </param>
         /// <param name="metadataFields"> List of fields with metadata content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectIndexFieldMapping(IList<string> contentFields, string filepathField, string titleField, string urlField, IList<string> vectorFields, IList<string> metadataFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectIndexFieldMapping(IList<string> contentFields, string filepathField, string titleField, string urlField, IList<string> vectorFields, IList<string> metadataFields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContentFields = contentFields;
             FilepathField = filepathField;

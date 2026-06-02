@@ -16,27 +16,27 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchAlias
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchAlias"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchAlias"/>. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="indexes"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="indexes"/> is null. </exception>
         public SearchAlias(string name, IEnumerable<string> indexes)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(indexes, nameof(indexes));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(indexes, nameof(indexes));
 
             Name = name;
             Indexes = indexes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchAlias"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchAlias"/>. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
         /// <param name="etag"> The ETag of the alias. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchAlias(string name, IList<string> indexes, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchAlias(string name, IList<string> indexes, string etag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Indexes = indexes;

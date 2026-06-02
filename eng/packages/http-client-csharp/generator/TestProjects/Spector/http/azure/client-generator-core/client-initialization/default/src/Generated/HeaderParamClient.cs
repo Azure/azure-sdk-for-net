@@ -19,33 +19,33 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected HeaderParamClient() => throw null;
 
-        public HeaderParamClient(string name) : this(new Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
+        public HeaderParamClient(string name) : this(new global::System.Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public HeaderParamClient(string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+        public HeaderParamClient(string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new global::System.Uri("http://localhost:3000"), name, options) => throw null;
 
-        internal HeaderParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
+        internal HeaderParamClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public HeaderParamClient(Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, options) => throw null;
+        public HeaderParamClient(global::System.Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public HeaderParamClient(HeaderParamClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public HeaderParamClient(HeaderParamClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithQuery(string id, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string id, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string id, RequestContext context) => throw null;
 
         public virtual Response WithQuery(string id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string id, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> WithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> WithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithBody(Input body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithBody(global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithBodyAsync(Input body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithBodyAsync(global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input body, CancellationToken cancellationToken = default) => throw null;
     }
 }

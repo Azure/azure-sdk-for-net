@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Information for connecting one agent to another as a tool. </summary>
-    public partial class ConnectedAgentDetails : IJsonModel<ConnectedAgentDetails>
+    public partial class ConnectedAgentDetails : IJsonModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectedAgentDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentDetails"/> for deserialization. </summary>
         internal ConnectedAgentDetails()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConnectedAgentDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectedAgentDetails(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.ConnectedAgentDetails.DeserializeConnectedAgentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedAgentDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ConnectedAgentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedAgentDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ConnectedAgentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectedAgentDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedAgentDetails IPersistableModel<ConnectedAgentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectedAgentDetails IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectedAgentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectedAgentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConnectedAgentDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ConnectedAgentDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -84,7 +84,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStringValue(Name);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,33 +103,33 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedAgentDetails IJsonModel<ConnectedAgentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectedAgentDetails IJsonModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConnectedAgentDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ConnectedAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConnectedAgentDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ConnectedAgentDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectedAgentDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.ConnectedAgentDetails.DeserializeConnectedAgentDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConnectedAgentDetails DeserializeConnectedAgentDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
             string name = default;
             string description = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -147,9 +147,9 @@ namespace Azure.AI.Agents.Persistent
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConnectedAgentDetails(id, name, description, additionalBinaryDataProperties);

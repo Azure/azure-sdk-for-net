@@ -14,21 +14,21 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentPage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> Page number (1-based). </param>
         internal DocumentPage(int pageNumber)
         {
             PageNumber = pageNumber;
-            Spans = new ChangeTrackingList<ContentSpan>();
-            Words = new ChangeTrackingList<DocumentWord>();
-            Lines = new ChangeTrackingList<DocumentLine>();
-            Barcodes = new ChangeTrackingList<DocumentBarcode>();
-            Formulas = new ChangeTrackingList<DocumentFormula>();
+            Spans = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
+            Words = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentWord>();
+            Lines = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentLine>();
+            Barcodes = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentBarcode>();
+            Formulas = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFormula>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> Page number (1-based). </param>
         /// <param name="width"> Width of the page. </param>
         /// <param name="height"> Height of the page. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="barcodes"> List of barcodes in the page.  Only if enableBarcode and returnDetails are true. </param>
         /// <param name="formulas"> List of mathematical formulas in the page.  Only if enableFormula and returnDetails are true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentPage(int pageNumber, float? width, float? height, IList<ContentSpan> spans, float? angle, IList<DocumentWord> words, IList<DocumentLine> lines, IList<DocumentBarcode> barcodes, IList<DocumentFormula> formulas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentPage(int pageNumber, float? width, float? height, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? angle, IList<global::Azure.AI.ContentUnderstanding.DocumentWord> words, IList<global::Azure.AI.ContentUnderstanding.DocumentLine> lines, IList<global::Azure.AI.ContentUnderstanding.DocumentBarcode> barcodes, IList<global::Azure.AI.ContentUnderstanding.DocumentFormula> formulas, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Width = width;
@@ -67,7 +67,7 @@ namespace Azure.AI.ContentUnderstanding
         public float? Height { get; }
 
         /// <summary> Span(s) associated with the page in the markdown content. </summary>
-        public IList<ContentSpan> Spans { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.ContentSpan> Spans { get; }
 
         /// <summary>
         /// The general orientation of the content in clockwise direction,
@@ -77,15 +77,15 @@ namespace Azure.AI.ContentUnderstanding
         public float? Angle { get; }
 
         /// <summary> List of words in the page.  Only if enableOcr and returnDetails are true. </summary>
-        public IList<DocumentWord> Words { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentWord> Words { get; }
 
         /// <summary> List of lines in the page.  Only if enableOcr and returnDetails are true. </summary>
-        public IList<DocumentLine> Lines { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentLine> Lines { get; }
 
         /// <summary> List of barcodes in the page.  Only if enableBarcode and returnDetails are true. </summary>
-        public IList<DocumentBarcode> Barcodes { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentBarcode> Barcodes { get; }
 
         /// <summary> List of mathematical formulas in the page.  Only if enableFormula and returnDetails are true. </summary>
-        public IList<DocumentFormula> Formulas { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentFormula> Formulas { get; }
     }
 }

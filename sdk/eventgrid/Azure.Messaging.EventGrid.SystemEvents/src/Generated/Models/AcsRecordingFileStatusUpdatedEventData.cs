@@ -14,16 +14,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo)
         {
             RecordingStorageInfo = recordingStorageInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RecordingStorageInfo = recordingStorageInfo;
             RecordingStartTime = recordingStartTime;

@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
     public partial class OpenApiManagedAuthDetails : OpenApiAuthDetails
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
+        public OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme) : base(global::Azure.AI.Agents.Persistent.OpenApiAuthType.ManagedIdentity)
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
             SecurityScheme = securityScheme;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiManagedAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal OpenApiManagedAuthDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        internal OpenApiManagedAuthDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OpenApiManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }

@@ -15,9 +15,9 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> A model with a few properties of literal types. </summary>
-    public partial class ThingModel : IJsonModel<ThingModel>
+    public partial class ThingModel : IJsonModel<global::BasicTypeSpec.ThingModel>
     {
-        /// <summary> Initializes a new instance of <see cref="ThingModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ThingModel"/> for deserialization. </summary>
         internal ThingModel()
         {
         }
@@ -26,65 +26,65 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ThingModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.ThingModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeThingModel(document.RootElement, options);
+                        return global::BasicTypeSpec.ThingModel.DeserializeThingModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThingModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.ThingModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.ThingModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.ThingModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ThingModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.ThingModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThingModel IPersistableModel<ThingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ThingModel IPersistableModel<global::BasicTypeSpec.ThingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::BasicTypeSpec.ThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="thingModel"> The <see cref="ThingModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="thingModel"> The <see cref="global::BasicTypeSpec.ThingModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ThingModel thingModel)
         {
-            if (thingModel == null)
+            if ((thingModel == null))
             {
                 return null;
             }
-            return RequestContent.Create(thingModel, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(thingModel, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::BasicTypeSpec.ThingModel"/> from. </param>
         public static explicit operator ThingModel(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::BasicTypeSpec.ThingModel.DeserializeThingModel(document.RootElement, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ThingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::BasicTypeSpec.ThingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -92,10 +92,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.ThingModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.ThingModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -103,9 +103,9 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(RequiredUnion);
 #else
-            using (JsonDocument document = JsonDocument.Parse(RequiredUnion))
+            using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(RequiredUnion))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
             writer.WritePropertyName("requiredLiteralString"u8);
@@ -116,29 +116,29 @@ namespace BasicTypeSpec
             writer.WriteNumberValue(RequiredLiteralFloat);
             writer.WritePropertyName("requiredLiteralBool"u8);
             writer.WriteBooleanValue(RequiredLiteralBool);
-            if (Optional.IsDefined(OptionalLiteralString))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalLiteralString))
             {
                 writer.WritePropertyName("optionalLiteralString"u8);
                 writer.WriteStringValue(OptionalLiteralString.Value.ToString());
             }
-            if (Optional.IsDefined(OptionalLiteralInt))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalLiteralInt))
             {
                 writer.WritePropertyName("optionalLiteralInt"u8);
                 writer.WriteNumberValue(OptionalLiteralInt.Value.ToSerialInt32());
             }
-            if (Optional.IsDefined(OptionalLiteralFloat))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalLiteralFloat))
             {
                 writer.WritePropertyName("optionalLiteralFloat"u8);
                 writer.WriteNumberValue(OptionalLiteralFloat.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(OptionalLiteralBool))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalLiteralBool))
             {
                 writer.WritePropertyName("optionalLiteralBool"u8);
                 writer.WriteBooleanValue(OptionalLiteralBool.Value);
             }
             writer.WritePropertyName("requiredBadDescription"u8);
             writer.WriteStringValue(RequiredBadDescription);
-            if (Optional.IsCollectionDefined(OptionalNullableList))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(OptionalNullableList))
             {
                 writer.WritePropertyName("optionalNullableList"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace BasicTypeSpec
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredNullableList))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(RequiredNullableList))
             {
                 writer.WritePropertyName("requiredNullableList"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace BasicTypeSpec
             {
                 writer.WriteNull("requiredNullableList"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -170,9 +170,9 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -181,26 +181,26 @@ namespace BasicTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThingModel IJsonModel<ThingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ThingModel IJsonModel<global::BasicTypeSpec.ThingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ThingModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.ThingModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ThingModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.ThingModel)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThingModel(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::BasicTypeSpec.ThingModel.DeserializeThingModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ThingModel DeserializeThingModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -217,7 +217,7 @@ namespace BasicTypeSpec
             string requiredBadDescription = default;
             IList<int> optionalNullableList = default;
             IList<int> requiredNullableList = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -227,7 +227,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredUnion"u8))
                 {
-                    requiredUnion = BinaryData.FromString(prop.Value.GetRawText());
+                    requiredUnion = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("requiredLiteralString"u8))
@@ -252,7 +252,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralString"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -261,7 +261,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralInt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -270,7 +270,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralFloat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -279,7 +279,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralBool"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -293,7 +293,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalNullableList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -307,7 +307,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredNullableList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         requiredNullableList = new ChangeTrackingList<int>();
                         continue;
@@ -320,9 +320,9 @@ namespace BasicTypeSpec
                     requiredNullableList = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ThingModel(
@@ -337,7 +337,7 @@ namespace BasicTypeSpec
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList ?? new ChangeTrackingList<int>(),
+                (optionalNullableList ?? new ChangeTrackingList<int>()),
                 requiredNullableList,
                 additionalBinaryDataProperties);
         }

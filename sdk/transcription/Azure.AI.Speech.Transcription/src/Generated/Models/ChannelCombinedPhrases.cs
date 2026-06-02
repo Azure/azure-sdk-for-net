@@ -11,20 +11,20 @@ namespace Azure.AI.Speech.Transcription
     public partial class ChannelCombinedPhrases
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChannelCombinedPhrases"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases"/>. </summary>
         /// <param name="text"> The complete transcribed text for the channel. </param>
         internal ChannelCombinedPhrases(string text)
         {
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChannelCombinedPhrases"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases"/>. </summary>
         /// <param name="channel"> The 0-based channel index. Only present if channel separation is enabled. </param>
         /// <param name="text"> The complete transcribed text for the channel. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChannelCombinedPhrases(int? channel, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChannelCombinedPhrases(int? channel, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Channel = channel;
             Text = text;

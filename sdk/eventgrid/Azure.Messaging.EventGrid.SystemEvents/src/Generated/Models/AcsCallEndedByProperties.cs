@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsCallEndedByProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
         internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, string name)
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
         /// <param name="kind"> The type of call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind? kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind? kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CommunicationIdentifier = communicationIdentifier;
             Kind = kind;

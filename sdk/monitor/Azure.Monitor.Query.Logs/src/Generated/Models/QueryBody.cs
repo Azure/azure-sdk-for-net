@@ -14,9 +14,9 @@ namespace Azure.Monitor.Query.Logs.Models
     internal partial class QueryBody
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.QueryBody"/>. </summary>
         /// <param name="query"> The query to execute. </param>
         public QueryBody(string query)
         {
@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Logs.Models
             Workspaces = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.QueryBody"/>. </summary>
         /// <param name="query"> The query to execute. </param>
         /// <param name="timespan">
         /// Optional. The timespan over which to query data. This is an ISO8601 time period
@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// </param>
         /// <param name="workspaces"> A list of workspaces to query in addition to the primary workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryBody(string query, string timespan, IList<string> workspaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryBody(string query, string timespan, IList<string> workspaces, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             Timespan = timespan;

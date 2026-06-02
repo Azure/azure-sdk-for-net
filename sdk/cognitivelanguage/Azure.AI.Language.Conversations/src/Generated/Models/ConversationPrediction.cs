@@ -14,31 +14,31 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the prediction section of a Conversation project. </summary>
     public partial class ConversationPrediction : PredictionBase
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPrediction"/>. </summary>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        internal ConversationPrediction(IEnumerable<ConversationIntent> intents, IEnumerable<ConversationEntity> entities) : base(ProjectKind.Conversation)
+        internal ConversationPrediction(IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationIntent> intents, IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationEntity> entities) : base(global::Azure.AI.Language.Conversations.Models.ProjectKind.Conversation)
         {
             Intents = intents.ToList();
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPrediction"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        internal ConversationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ConversationIntent> intents, IList<ConversationEntity> entities) : base(projectKind, topIntent, additionalBinaryDataProperties)
+        internal ConversationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Conversations.Models.ConversationIntent> intents, IList<global::Azure.AI.Language.Conversations.Models.ConversationEntity> entities) : base(projectKind, topIntent, additionalBinaryDataProperties)
         {
             Intents = intents;
             Entities = entities;
         }
 
         /// <summary> The intent classification results. </summary>
-        public IList<ConversationIntent> Intents { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationIntent> Intents { get; }
 
         /// <summary> The entity extraction results. </summary>
-        public IList<ConversationEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationEntity> Entities { get; }
     }
 }

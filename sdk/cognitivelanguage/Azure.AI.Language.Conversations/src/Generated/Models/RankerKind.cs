@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Type of ranker to be used. </summary>
-    public readonly partial struct RankerKind : IEquatable<RankerKind>
+    public readonly partial struct RankerKind : IEquatable<global::Azure.AI.Language.Conversations.Models.RankerKind>
     {
         private readonly string _value;
         /// <summary> Default ranker. </summary>
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Question only ranker. </summary>
         private const string QuestionOnlyValue = "QuestionOnly";
 
-        /// <summary> Initializes a new instance of <see cref="RankerKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.RankerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RankerKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Question only ranker. </summary>
         public static RankerKind QuestionOnly { get; } = new RankerKind(QuestionOnlyValue);
 
-        /// <summary> Determines if two <see cref="RankerKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.RankerKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RankerKind left, RankerKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RankerKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.RankerKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RankerKind left, RankerKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RankerKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.RankerKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RankerKind(string value) => new RankerKind(value);
 
-        /// <summary> Converts a string to a <see cref="RankerKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.RankerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankerKind?(string value) => value == null ? null : new RankerKind(value);
+        public static implicit operator RankerKind?(string value) => (value == null) ? null : new RankerKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RankerKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RankerKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RankerKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RankerKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

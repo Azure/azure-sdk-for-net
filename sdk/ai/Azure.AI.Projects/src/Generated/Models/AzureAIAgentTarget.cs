@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Represents a target specifying an Azure AI agent. </summary>
     public partial class AzureAIAgentTarget : EvaluationTarget
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget"/>. </summary>
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureAIAgentTarget(string name) : base("azure_ai_agent")
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ToolDescriptions = new ChangeTrackingList<ToolDescription>();
-            InternalTools = new ChangeTrackingList<InternalTool>();
+            ToolDescriptions = new ChangeTrackingList<global::Azure.AI.Projects.ToolDescription>();
+            InternalTools = new ChangeTrackingList<global::Azure.AI.Projects.InternalTool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AzureAIAgentTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
         /// <param name="version"> The version of the Azure AI agent. </param>
         /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
         /// <param name="internalTools"></param>
-        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<InternalTool> internalTools) : base(@type, additionalBinaryDataProperties)
+        internal AzureAIAgentTarget(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string version, IList<global::Azure.AI.Projects.ToolDescription> toolDescriptions, IList<global::Azure.AI.Projects.InternalTool> internalTools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;
@@ -45,6 +45,6 @@ namespace Azure.AI.Projects.Evaluation
         public string Version { get; set; }
 
         /// <summary> The parameters used to control the sampling behavior of the agent during text generation. </summary>
-        public IList<ToolDescription> ToolDescriptions { get; }
+        public IList<global::Azure.AI.Projects.ToolDescription> ToolDescriptions { get; }
     }
 }

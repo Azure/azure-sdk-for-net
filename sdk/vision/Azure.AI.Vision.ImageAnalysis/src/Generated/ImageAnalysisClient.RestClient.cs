@@ -18,80 +18,80 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateAnalyzeFromImageDataRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromImageDataRequest(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((visualFeatures != null) && !((visualFeatures is ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);
             }
-            if (language != null)
+            if ((language != null))
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (genderNeutralCaption != null)
+            if ((genderNeutralCaption != null))
             {
-                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption), true);
+                uri.AppendQuery("gender-neutral-caption", global::Azure.AI.Vision.ImageAnalysis.TypeFormatters.ConvertToString(genderNeutralCaption), true);
             }
-            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((smartCropsAspectRatios != null) && !((smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", escape: true);
             }
-            if (modelVersion != null)
+            if ((modelVersion != null))
             {
                 uri.AppendQuery("model-version", modelVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/octet-stream");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((visualFeatures != null) && !((visualFeatures is ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);
             }
-            if (language != null)
+            if ((language != null))
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (genderNeutralCaption != null)
+            if ((genderNeutralCaption != null))
             {
-                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption), true);
+                uri.AppendQuery("gender-neutral-caption", global::Azure.AI.Vision.ImageAnalysis.TypeFormatters.ConvertToString(genderNeutralCaption), true);
             }
-            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((smartCropsAspectRatios != null) && !((smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", escape: true);
             }
-            if (modelVersion != null)
+            if ((modelVersion != null))
             {
                 uri.AppendQuery("model-version", modelVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

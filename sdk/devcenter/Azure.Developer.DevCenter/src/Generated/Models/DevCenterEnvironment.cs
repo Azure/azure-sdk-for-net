@@ -17,9 +17,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevCenterEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>
@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEnvironment(IDictionary<string, global::System.BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Name = name;
@@ -46,8 +46,8 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary>
         /// Parameters object for the environment.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -70,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; }
+        public IDictionary<string, global::System.BinaryData> Parameters { get; }
 
         /// <summary> Environment name. </summary>
         public string Name { get; }

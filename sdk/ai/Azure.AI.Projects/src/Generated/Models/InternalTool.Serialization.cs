@@ -9,10 +9,10 @@ using OpenAI;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownTool))]
-    internal abstract partial class InternalTool : IJsonModel<InternalTool>
+    [PersistableModelProxyAttribute(typeof(UnknownTool))]
+    internal abstract partial class InternalTool : IJsonModel<global::Azure.AI.Projects.InternalTool>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalTool"/> for deserialization. </summary>
         internal InternalTool()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalTool(document.RootElement, options);
+                        return global::Azure.AI.Projects.InternalTool.DeserializeInternalTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.InternalTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalTool IPersistableModel<InternalTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalTool IPersistableModel<global::Azure.AI.Projects.InternalTool>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.InternalTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.InternalTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalTool)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -85,9 +85,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -96,26 +96,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalTool IJsonModel<InternalTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalTool IJsonModel<global::Azure.AI.Projects.InternalTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.InternalTool.DeserializeInternalTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalTool DeserializeInternalTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -124,66 +124,66 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "bing_grounding":
-                        return BingGroundingTool.DeserializeBingGroundingTool(element, options);
+                        return global::Azure.AI.Projects.BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
-                        return MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
+                        return global::Azure.AI.Projects.MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
                     case "sharepoint_grounding_preview":
-                        return SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
+                        return global::Azure.AI.Projects.SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
                     case "azure_ai_search":
-                        return AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
+                        return global::Azure.AI.Projects.AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
                     case "openapi":
-                        return OpenApiTool.DeserializeOpenApiTool(element, options);
+                        return global::Azure.AI.Projects.OpenApiTool.DeserializeOpenApiTool(element, options);
                     case "bing_custom_search_preview":
-                        return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
+                        return global::Azure.AI.Projects.BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
                     case "browser_automation_preview":
-                        return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
+                        return global::Azure.AI.Projects.BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
                     case "azure_function":
-                        return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
+                        return global::Azure.AI.Projects.AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
                     case "capture_structured_outputs":
-                        return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
+                        return global::Azure.AI.Projects.CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
-                        return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                        return global::Azure.AI.Projects.A2APreviewTool.DeserializeA2APreviewTool(element, options);
                     case "work_iq_preview":
-                        return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
+                        return global::Azure.AI.Projects.WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
                     case "fabric_iq_preview":
-                        return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
+                        return global::Azure.AI.Projects.FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
-                        return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
+                        return global::Azure.AI.Projects.MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "toolbox_search_preview":
-                        return ToolboxSearchPreviewTool.DeserializeToolboxSearchPreviewTool(element, options);
+                        return global::Azure.AI.Projects.ToolboxSearchPreviewTool.DeserializeToolboxSearchPreviewTool(element, options);
                     case "code_interpreter":
-                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                        return global::OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                        return global::OpenAI.InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
-                        return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
+                        return global::OpenAI.InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
+                        return global::OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
-                        return WebSearchTool.DeserializeWebSearchTool(element, options);
+                        return global::Azure.AI.Projects.WebSearchTool.DeserializeWebSearchTool(element, options);
                     case "mcp":
-                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                        return global::OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
-                        return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
+                        return global::OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
-                        return LocalShellToolParam.DeserializeLocalShellToolParam(element, options);
+                        return global::Azure.AI.Projects.LocalShellToolParam.DeserializeLocalShellToolParam(element, options);
                     case "shell":
-                        return FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
+                        return global::Azure.AI.Projects.FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
                     case "custom":
-                        return InternalCustomToolParam.DeserializeInternalCustomToolParam(element, options);
+                        return global::Azure.AI.Projects.InternalCustomToolParam.DeserializeInternalCustomToolParam(element, options);
                     case "web_search_preview":
-                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
+                        return global::OpenAI.InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
-                        return ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
+                        return global::Azure.AI.Projects.ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
                     case "computer":
-                        return ComputerTool.DeserializeComputerTool(element, options);
+                        return global::Azure.AI.Projects.ComputerTool.DeserializeComputerTool(element, options);
                     case "namespace":
-                        return NamespaceToolParam.DeserializeNamespaceToolParam(element, options);
+                        return global::Azure.AI.Projects.NamespaceToolParam.DeserializeNamespaceToolParam(element, options);
                     case "tool_search":
-                        return ToolSearchToolParam.DeserializeToolSearchToolParam(element, options);
+                        return global::Azure.AI.Projects.ToolSearchToolParam.DeserializeToolSearchToolParam(element, options);
                 }
             }
-            return UnknownTool.DeserializeUnknownTool(element, options);
+            return global::Azure.AI.Projects.UnknownTool.DeserializeUnknownTool(element, options);
         }
     }
 }

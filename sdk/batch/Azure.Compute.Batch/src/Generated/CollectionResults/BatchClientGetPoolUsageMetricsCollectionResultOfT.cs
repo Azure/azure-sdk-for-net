@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Compute.Batch
 {
-    internal partial class BatchClientGetPoolUsageMetricsCollectionResultOfT : Pageable<BatchPoolUsageMetrics>
+    internal partial class BatchClientGetPoolUsageMetricsCollectionResultOfT : Pageable<global::Azure.Compute.Batch.BatchPoolUsageMetrics>
     {
         private readonly BatchClient _client;
         private readonly TimeSpan? _timeout;
@@ -53,7 +53,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetPoolUsageMetricsCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetPoolUsageMetricsCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _timeout = timeout;
@@ -70,20 +70,20 @@ namespace Azure.Compute.Batch
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BatchClientGetPoolUsageMetricsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BatchPoolUsageMetrics>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Compute.Batch.BatchPoolUsageMetrics>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                BatchPoolListUsageMetricsResult result = (BatchPoolListUsageMetricsResult)response;
-                yield return Page<BatchPoolUsageMetrics>.FromValues((IReadOnlyList<BatchPoolUsageMetrics>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                BatchPoolListUsageMetricsResult result = ((BatchPoolListUsageMetricsResult)response);
+                yield return global::Azure.Page<BatchPoolUsageMetrics>.FromValues(((IReadOnlyList<global::Azure.Compute.Batch.BatchPoolUsageMetrics>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -93,9 +93,9 @@ namespace Azure.Compute.Batch
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeout, _requestDate, _maxResults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeout, _requestDate, _maxResults, _starttime, _endtime, _filter, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeout, _requestDate, _maxResults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeout, _requestDate, _maxResults, _starttime, _endtime, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

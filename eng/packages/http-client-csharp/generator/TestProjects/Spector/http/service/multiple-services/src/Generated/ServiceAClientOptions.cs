@@ -13,11 +13,11 @@ namespace Service.MultipleServices.ServiceA
 {
     public partial class ServiceAClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.Vav2;
+        private const global::Service.MultipleServices.ServiceA.ServiceAClientOptions.ServiceVersion LatestVersion = global::Service.MultipleServices.ServiceA.ServiceAClientOptions.ServiceVersion.Vav2;
 
-        public ServiceAClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ServiceAClientOptions(global::Service.MultipleServices.ServiceA.ServiceAClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ServiceAClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

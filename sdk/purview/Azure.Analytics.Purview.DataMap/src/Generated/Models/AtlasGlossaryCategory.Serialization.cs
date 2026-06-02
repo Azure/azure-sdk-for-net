@@ -15,71 +15,71 @@ using Azure.Core;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The glossary category. </summary>
-    public partial class AtlasGlossaryCategory : IJsonModel<AtlasGlossaryCategory>
+    public partial class AtlasGlossaryCategory : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasGlossaryCategory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasGlossaryCategory(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasGlossaryCategory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasGlossaryCategory IPersistableModel<AtlasGlossaryCategory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasGlossaryCategory IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasGlossaryCategory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="atlasGlossaryCategory"> The <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AtlasGlossaryCategory atlasGlossaryCategory)
         {
-            if (atlasGlossaryCategory == null)
+            if ((atlasGlossaryCategory == null))
             {
                 return null;
             }
-            return RequestContent.Create(atlasGlossaryCategory, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(atlasGlossaryCategory, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryCategory"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory"/> from. </param>
         public static explicit operator AtlasGlossaryCategory(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasGlossaryCategory(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(document.RootElement, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasGlossaryCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -87,102 +87,102 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Guid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Guid))
             {
                 writer.WritePropertyName("guid"u8);
                 writer.WriteStringValue(Guid);
             }
-            if (Optional.IsCollectionDefined(Classifications))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
                 foreach (AtlasClassification item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasClassification>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LongDescription))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LongDescription))
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(QualifiedName))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(QualifiedName))
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
             }
-            if (Optional.IsDefined(ShortDescription))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteStringValue(ShortDescription);
             }
-            if (Optional.IsDefined(LastModifiedTS))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LastModifiedTS))
             {
                 writer.WritePropertyName("lastModifiedTS"u8);
                 writer.WriteStringValue(LastModifiedTS);
             }
-            if (Optional.IsDefined(CreateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CreateTime))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteNumberValue(CreateTime.Value);
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(UpdateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(UpdateTime))
             {
                 writer.WritePropertyName("updateTime"u8);
                 writer.WriteNumberValue(UpdateTime.Value);
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Anchor))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Anchor))
             {
                 writer.WritePropertyName("anchor"u8);
-                writer.WriteObjectValue(Anchor, options);
+                writer.WriteObjectValue<AtlasGlossaryHeader>(Anchor, options);
             }
-            if (Optional.IsCollectionDefined(ChildrenCategories))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(ChildrenCategories))
             {
                 writer.WritePropertyName("childrenCategories"u8);
                 writer.WriteStartArray();
                 foreach (AtlasRelatedCategoryHeader item in ChildrenCategories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasRelatedCategoryHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ParentCategory))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ParentCategory))
             {
                 writer.WritePropertyName("parentCategory"u8);
-                writer.WriteObjectValue(ParentCategory, options);
+                writer.WriteObjectValue<AtlasRelatedCategoryHeader>(ParentCategory, options);
             }
-            if (Optional.IsCollectionDefined(Terms))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Terms))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStartArray();
                 foreach (AtlasRelatedTermHeader item in Terms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasRelatedTermHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -190,9 +190,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -201,31 +201,31 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasGlossaryCategory IJsonModel<AtlasGlossaryCategory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasGlossaryCategory IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasGlossaryCategory JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasGlossaryCategory)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasGlossaryCategory(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasGlossaryCategory DeserializeAtlasGlossaryCategory(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string guid = default;
-            IList<AtlasClassification> classifications = default;
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default;
             string longDescription = default;
             string name = default;
             string qualifiedName = default;
@@ -236,10 +236,10 @@ namespace Azure.Analytics.Purview.DataMap
             long? updateTime = default;
             string updatedBy = default;
             AtlasGlossaryHeader anchor = default;
-            IList<AtlasRelatedCategoryHeader> childrenCategories = default;
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> childrenCategories = default;
             AtlasRelatedCategoryHeader parentCategory = default;
-            IList<AtlasRelatedTermHeader> terms = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("guid"u8))
@@ -249,14 +249,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("classifications"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasClassification> array = new List<AtlasClassification>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasClassification> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("createTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("updateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -316,58 +316,58 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("anchor"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(prop.Value, options);
+                    anchor = global::Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("childrenCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, options));
                     }
                     childrenCategories = array;
                     continue;
                 }
                 if (prop.NameEquals("parentCategory"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    parentCategory = AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(prop.Value, options);
+                    parentCategory = global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("terms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     terms = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasGlossaryCategory(
                 guid,
-                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                (classifications ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>()),
                 longDescription,
                 name,
                 qualifiedName,
@@ -378,9 +378,9 @@ namespace Azure.Analytics.Purview.DataMap
                 updateTime,
                 updatedBy,
                 anchor,
-                childrenCategories ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                (childrenCategories ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>()),
                 parentCategory,
-                terms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                (terms ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>()),
                 additionalBinaryDataProperties);
         }
     }

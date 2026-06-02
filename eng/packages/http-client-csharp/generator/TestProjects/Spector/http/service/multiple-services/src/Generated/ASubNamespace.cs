@@ -17,16 +17,16 @@ namespace Service.MultipleServices.ServiceA.SubNamespace
     {
         protected ASubNamespace() => throw null;
 
-        internal ASubNamespace(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal ASubNamespace(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SubOpA(RequestContext context) => throw null;
 
-        public virtual Task<Response> SubOpAAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SubOpAAsync(RequestContext context) => throw null;
 
         public virtual Response SubOpA(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SubOpAAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SubOpAAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

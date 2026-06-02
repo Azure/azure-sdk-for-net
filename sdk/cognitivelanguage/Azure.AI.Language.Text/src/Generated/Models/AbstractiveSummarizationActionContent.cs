@@ -14,14 +14,14 @@ namespace Azure.AI.Language.Text
     public partial class AbstractiveSummarizationActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationActionContent"/>. </summary>
         public AbstractiveSummarizationActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the query will be used to generate the summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbstractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string instruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbstractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string instruction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

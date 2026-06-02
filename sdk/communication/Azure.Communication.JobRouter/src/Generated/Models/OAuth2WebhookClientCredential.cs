@@ -14,18 +14,18 @@ namespace Azure.Communication.JobRouter
     public partial class OAuth2WebhookClientCredential
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.OAuth2WebhookClientCredential"/>. </summary>
         internal OAuth2WebhookClientCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.OAuth2WebhookClientCredential"/>. </summary>
         /// <param name="clientId"> ClientId for Contoso Authorization server. </param>
         /// <param name="clientSecret"> Client secret for Contoso Authorization server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OAuth2WebhookClientCredential(string clientId, string clientSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OAuth2WebhookClientCredential(string clientId, string clientSecret, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;

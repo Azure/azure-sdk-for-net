@@ -14,18 +14,18 @@ namespace Azure.AI.DocumentIntelligence
     public partial class ComposeModelOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComposeModelOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ComposeModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="classifierId"> Custom classifier to split and classify the input file. </param>
         /// <param name="documentTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="classifierId"/> or <paramref name="documentTypes"/> is null. </exception>
-        public ComposeModelOptions(string modelId, string classifierId, IDictionary<string, DocumentTypeDetails> documentTypes)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/>, <paramref name="classifierId"/> or <paramref name="documentTypes"/> is null. </exception>
+        public ComposeModelOptions(string modelId, string classifierId, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> documentTypes)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-            Argument.AssertNotNull(classifierId, nameof(classifierId));
-            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ModelId = modelId;
             ClassifierId = classifierId;
@@ -33,7 +33,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComposeModelOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ComposeModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="classifierId"> Custom classifier to split and classify the input file. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComposeModelOptions(string modelId, string description, string classifierId, SplitMode? split, IDictionary<string, DocumentTypeDetails> documentTypes, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComposeModelOptions(string modelId, string description, string classifierId, SplitMode? split, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> documentTypes, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
         public SplitMode? Split { get; set; }
 
         /// <summary> Dictionary mapping supported docTypes to the corresponding document models. </summary>
-        public IDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
+        public IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> DocumentTypes { get; }
 
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }

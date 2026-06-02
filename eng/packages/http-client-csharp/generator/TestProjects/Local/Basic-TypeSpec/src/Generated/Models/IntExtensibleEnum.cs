@@ -12,14 +12,14 @@ using System.Globalization;
 namespace BasicTypeSpec
 {
     /// <summary> Int based extensible enum. </summary>
-    public readonly partial struct IntExtensibleEnum : IEquatable<IntExtensibleEnum>
+    public readonly partial struct IntExtensibleEnum : IEquatable<global::BasicTypeSpec.IntExtensibleEnum>
     {
         private readonly int _value;
         private const int OneValue = 1;
         private const int TwoValue = 2;
         private const int FourValue = 4;
 
-        /// <summary> Initializes a new instance of <see cref="IntExtensibleEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.IntExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public IntExtensibleEnum(int value)
         {
@@ -35,32 +35,32 @@ namespace BasicTypeSpec
         /// <summary> Gets the Four. </summary>
         public static IntExtensibleEnum Four { get; } = new IntExtensibleEnum(FourValue);
 
-        /// <summary> Determines if two <see cref="IntExtensibleEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.IntExtensibleEnum"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntExtensibleEnum left, IntExtensibleEnum right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IntExtensibleEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.IntExtensibleEnum"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntExtensibleEnum left, IntExtensibleEnum right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IntExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::BasicTypeSpec.IntExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IntExtensibleEnum(int value) => new IntExtensibleEnum(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IntExtensibleEnum other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IntExtensibleEnum other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IntExtensibleEnum other) => Equals(_value, other._value);
+        public bool Equals(IntExtensibleEnum other) => int.Equals(_value, other._value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <inheritdoc/>
-        public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
+        public override string ToString() => _value.ToString(global::System.Globalization.CultureInfo.InvariantCulture);
     }
 }

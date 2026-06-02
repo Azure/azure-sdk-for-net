@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
-    public partial class SearchField : IJsonModel<SearchField>
+    public partial class SearchField : IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchField>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchField"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchField"/> for deserialization. </summary>
         internal SearchField()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchField(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SearchField.DeserializeSearchField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchField)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchField)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchField)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchField)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchField IPersistableModel<SearchField>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchField IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,117 +74,117 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchField)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchField)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(IsKey))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBooleanValue(IsKey.Value);
             }
-            if (Optional.IsDefined(IsRetrievable))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsRetrievable))
             {
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (Optional.IsDefined(IsStored))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsStored))
             {
                 writer.WritePropertyName("stored"u8);
                 writer.WriteBooleanValue(IsStored.Value);
             }
-            if (Optional.IsDefined(IsSearchable))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
                 writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (Optional.IsDefined(IsFilterable))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsFilterable))
             {
                 writer.WritePropertyName("filterable"u8);
                 writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (Optional.IsDefined(IsSortable))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsSortable))
             {
                 writer.WritePropertyName("sortable"u8);
                 writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (Optional.IsDefined(IsFacetable))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsFacetable))
             {
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Optional.IsDefined(PermissionFilter))
+            if (global::Azure.Search.Documents.Optional.IsDefined(PermissionFilter))
             {
                 writer.WritePropertyName("permissionFilter"u8);
                 writer.WriteStringValue(PermissionFilter.Value.ToString());
             }
-            if (Optional.IsDefined(SensitivityLabelId))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SensitivityLabelId))
             {
                 writer.WritePropertyName("sensitivityLabelId"u8);
                 writer.WriteBooleanValue(SensitivityLabelId.Value);
             }
-            if (Optional.IsDefined(SensitivityLabelName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SensitivityLabelName))
             {
                 writer.WritePropertyName("sensitivityLabelName"u8);
                 writer.WriteBooleanValue(SensitivityLabelName.Value);
             }
-            if (Optional.IsDefined(SourceDocumentId))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SourceDocumentId))
             {
                 writer.WritePropertyName("sourceDocumentId"u8);
                 writer.WriteBooleanValue(SourceDocumentId.Value);
             }
-            if (Optional.IsDefined(SharepointSiteUrl))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SharepointSiteUrl))
             {
                 writer.WritePropertyName("sharepointSiteUrl"u8);
                 writer.WriteBooleanValue(SharepointSiteUrl.Value);
             }
-            if (Optional.IsDefined(AnalyzerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (Optional.IsDefined(SearchAnalyzerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SearchAnalyzerName))
             {
                 writer.WritePropertyName("searchAnalyzer"u8);
                 writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
             }
-            if (Optional.IsDefined(IndexAnalyzerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IndexAnalyzerName))
             {
                 writer.WritePropertyName("indexAnalyzer"u8);
                 writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (Optional.IsDefined(NormalizerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(NormalizerName))
             {
                 writer.WritePropertyName("normalizer"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
-            if (Optional.IsDefined(VectorSearchDimensions))
+            if (global::Azure.Search.Documents.Optional.IsDefined(VectorSearchDimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(VectorSearchDimensions.Value);
             }
-            if (Optional.IsDefined(VectorSearchProfileName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(VectorSearchProfileName))
             {
                 writer.WritePropertyName("vectorSearchProfile"u8);
                 writer.WriteStringValue(VectorSearchProfileName);
             }
-            if (Optional.IsDefined(VectorEncodingFormat))
+            if (global::Azure.Search.Documents.Optional.IsDefined(VectorEncodingFormat))
             {
                 writer.WritePropertyName("vectorEncoding"u8);
                 writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SynonymMapNames))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
                 writer.WriteStartArray();
                 foreach (string item in SynonymMapNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -193,17 +193,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
                 foreach (SearchField item in Fields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SearchField>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -211,9 +211,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -222,26 +222,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchField IJsonModel<SearchField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchField IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchField)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchField)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchField(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.SearchField.DeserializeSearchField(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchField DeserializeSearchField(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -267,8 +267,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string vectorSearchProfileName = default;
             VectorEncodingFormat? vectorEncodingFormat = default;
             IList<string> synonymMapNames = default;
-            IList<SearchField> fields = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.SearchField> fields = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -283,7 +283,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -292,7 +292,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("retrievable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -301,7 +301,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("stored"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -310,7 +310,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("searchable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -319,7 +319,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("filterable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -328,7 +328,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("sortable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -337,7 +337,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("facetable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -346,7 +346,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("permissionFilter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         permissionFilter = null;
                         continue;
@@ -356,7 +356,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("sensitivityLabelId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -365,7 +365,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("sensitivityLabelName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -374,7 +374,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("sourceDocumentId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -383,7 +383,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("sharepointSiteUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -392,7 +392,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("analyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         analyzerName = null;
                         continue;
@@ -402,7 +402,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("searchAnalyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         searchAnalyzerName = null;
                         continue;
@@ -412,7 +412,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("indexAnalyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         indexAnalyzerName = null;
                         continue;
@@ -422,7 +422,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("normalizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         normalizerName = null;
                         continue;
@@ -432,7 +432,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dimensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -441,7 +441,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("vectorSearchProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         vectorSearchProfileName = null;
                         continue;
@@ -451,7 +451,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("vectorEncoding"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         vectorEncodingFormat = null;
                         continue;
@@ -461,14 +461,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("synonymMaps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -482,21 +482,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("fields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SearchField> array = new List<SearchField>();
+                    List<global::Azure.Search.Documents.Indexes.Models.SearchField> array = new List<global::Azure.Search.Documents.Indexes.Models.SearchField>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSearchField(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.SearchField.DeserializeSearchField(item, options));
                     }
                     fields = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SearchField(
@@ -521,8 +521,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 vectorSearchDimensions,
                 vectorSearchProfileName,
                 vectorEncodingFormat,
-                synonymMapNames ?? new ChangeTrackingList<string>(),
-                fields ?? new ChangeTrackingList<SearchField>(),
+                (synonymMapNames ?? new ChangeTrackingList<string>()),
+                (fields ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchField>()),
                 additionalBinaryDataProperties);
         }
     }

@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the properties for the exported model manifest. </summary>
-    public partial class ExportedModelManifest : IJsonModel<ExportedModelManifest>
+    public partial class ExportedModelManifest : IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedModelManifest"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedModelManifest"/> for deserialization. </summary>
         internal ExportedModelManifest()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExportedModelManifest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExportedModelManifest(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.ExportedModelManifest.DeserializeExportedModelManifest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportedModelManifest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedModelManifest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportedModelManifest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedModelManifest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedModelManifest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedModelManifest IPersistableModel<ExportedModelManifest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExportedModelManifest IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedModelManifest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExportedModelManifest"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Language.Text.Authoring.ExportedModelManifest"/> from. </param>
         public static explicit operator ExportedModelManifest(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExportedModelManifest(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Language.Text.Authoring.ExportedModelManifest.DeserializeExportedModelManifest(document.RootElement, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExportedModelManifest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,19 +81,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedModelManifest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedModelManifest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("modelFiles"u8);
             writer.WriteStartArray();
             foreach (TextAuthoringModelFile item in ModelFiles)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<TextAuthoringModelFile>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,46 +112,46 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedModelManifest IJsonModel<ExportedModelManifest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExportedModelManifest IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExportedModelManifest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedModelManifest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedModelManifest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedModelManifest)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedModelManifest(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.ExportedModelManifest.DeserializeExportedModelManifest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExportedModelManifest DeserializeExportedModelManifest(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<TextAuthoringModelFile> modelFiles = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> modelFiles = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("modelFiles"u8))
                 {
-                    List<TextAuthoringModelFile> array = new List<TextAuthoringModelFile>();
+                    List<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> array = new List<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TextAuthoringModelFile.DeserializeTextAuthoringModelFile(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile.DeserializeTextAuthoringModelFile(item, options));
                     }
                     modelFiles = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExportedModelManifest(modelFiles, additionalBinaryDataProperties);

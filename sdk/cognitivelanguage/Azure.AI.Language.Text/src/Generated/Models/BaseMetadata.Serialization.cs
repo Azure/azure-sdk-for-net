@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity Metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="AddressMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/>, and <see cref="NumericRangeMetadata"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.AgeMetadata"/>, <see cref="Azure.AI.Language.Text.VolumeMetadata"/>, <see cref="Azure.AI.Language.Text.SpeedMetadata"/>, <see cref="Azure.AI.Language.Text.AreaMetadata"/>, <see cref="Azure.AI.Language.Text.LengthMetadata"/>, <see cref="Azure.AI.Language.Text.InformationMetadata"/>, <see cref="Azure.AI.Language.Text.TemperatureMetadata"/>, <see cref="Azure.AI.Language.Text.WeightMetadata"/>, <see cref="Azure.AI.Language.Text.CurrencyMetadata"/>, <see cref="Azure.AI.Language.Text.AddressMetadata"/>, <see cref="Azure.AI.Language.Text.DateMetadata"/>, <see cref="Azure.AI.Language.Text.DateTimeMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSetMetadata"/>, <see cref="Azure.AI.Language.Text.TimeMetadata"/>, <see cref="Azure.AI.Language.Text.NumberMetadata"/>, <see cref="Azure.AI.Language.Text.OrdinalMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSpanMetadata"/>, and <see cref="Azure.AI.Language.Text.NumericRangeMetadata"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBaseMetadata))]
-    public abstract partial class BaseMetadata : IJsonModel<BaseMetadata>
+    [PersistableModelProxyAttribute(typeof(UnknownBaseMetadata))]
+    public abstract partial class BaseMetadata : IJsonModel<global::Azure.AI.Language.Text.BaseMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="BaseMetadata"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.BaseMetadata"/> for deserialization. </summary>
         internal BaseMetadata()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BaseMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBaseMetadata(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.BaseMetadata.DeserializeBaseMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseMetadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BaseMetadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BaseMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseMetadata IPersistableModel<BaseMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BaseMetadata IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BaseMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BaseMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.BaseMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BaseMetadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseMetadata)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("metadataKind"u8);
             writer.WriteStringValue(MetadataKind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseMetadata IJsonModel<BaseMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BaseMetadata IJsonModel<global::Azure.AI.Language.Text.BaseMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BaseMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BaseMetadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseMetadata)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseMetadata(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.BaseMetadata.DeserializeBaseMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BaseMetadata DeserializeBaseMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,44 +130,44 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "AgeMetadata":
-                        return AgeMetadata.DeserializeAgeMetadata(element, options);
+                        return global::Azure.AI.Language.Text.AgeMetadata.DeserializeAgeMetadata(element, options);
                     case "VolumeMetadata":
-                        return VolumeMetadata.DeserializeVolumeMetadata(element, options);
+                        return global::Azure.AI.Language.Text.VolumeMetadata.DeserializeVolumeMetadata(element, options);
                     case "SpeedMetadata":
-                        return SpeedMetadata.DeserializeSpeedMetadata(element, options);
+                        return global::Azure.AI.Language.Text.SpeedMetadata.DeserializeSpeedMetadata(element, options);
                     case "AreaMetadata":
-                        return AreaMetadata.DeserializeAreaMetadata(element, options);
+                        return global::Azure.AI.Language.Text.AreaMetadata.DeserializeAreaMetadata(element, options);
                     case "LengthMetadata":
-                        return LengthMetadata.DeserializeLengthMetadata(element, options);
+                        return global::Azure.AI.Language.Text.LengthMetadata.DeserializeLengthMetadata(element, options);
                     case "InformationMetadata":
-                        return InformationMetadata.DeserializeInformationMetadata(element, options);
+                        return global::Azure.AI.Language.Text.InformationMetadata.DeserializeInformationMetadata(element, options);
                     case "TemperatureMetadata":
-                        return TemperatureMetadata.DeserializeTemperatureMetadata(element, options);
+                        return global::Azure.AI.Language.Text.TemperatureMetadata.DeserializeTemperatureMetadata(element, options);
                     case "WeightMetadata":
-                        return WeightMetadata.DeserializeWeightMetadata(element, options);
+                        return global::Azure.AI.Language.Text.WeightMetadata.DeserializeWeightMetadata(element, options);
                     case "CurrencyMetadata":
-                        return CurrencyMetadata.DeserializeCurrencyMetadata(element, options);
+                        return global::Azure.AI.Language.Text.CurrencyMetadata.DeserializeCurrencyMetadata(element, options);
                     case "AddressMetadata":
-                        return AddressMetadata.DeserializeAddressMetadata(element, options);
+                        return global::Azure.AI.Language.Text.AddressMetadata.DeserializeAddressMetadata(element, options);
                     case "DateMetadata":
-                        return DateMetadata.DeserializeDateMetadata(element, options);
+                        return global::Azure.AI.Language.Text.DateMetadata.DeserializeDateMetadata(element, options);
                     case "DateTimeMetadata":
-                        return DateTimeMetadata.DeserializeDateTimeMetadata(element, options);
+                        return global::Azure.AI.Language.Text.DateTimeMetadata.DeserializeDateTimeMetadata(element, options);
                     case "TemporalSetMetadata":
-                        return TemporalSetMetadata.DeserializeTemporalSetMetadata(element, options);
+                        return global::Azure.AI.Language.Text.TemporalSetMetadata.DeserializeTemporalSetMetadata(element, options);
                     case "TimeMetadata":
-                        return TimeMetadata.DeserializeTimeMetadata(element, options);
+                        return global::Azure.AI.Language.Text.TimeMetadata.DeserializeTimeMetadata(element, options);
                     case "NumberMetadata":
-                        return NumberMetadata.DeserializeNumberMetadata(element, options);
+                        return global::Azure.AI.Language.Text.NumberMetadata.DeserializeNumberMetadata(element, options);
                     case "OrdinalMetadata":
-                        return OrdinalMetadata.DeserializeOrdinalMetadata(element, options);
+                        return global::Azure.AI.Language.Text.OrdinalMetadata.DeserializeOrdinalMetadata(element, options);
                     case "TemporalSpanMetadata":
-                        return TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element, options);
+                        return global::Azure.AI.Language.Text.TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element, options);
                     case "NumericRangeMetadata":
-                        return NumericRangeMetadata.DeserializeNumericRangeMetadata(element, options);
+                        return global::Azure.AI.Language.Text.NumericRangeMetadata.DeserializeNumericRangeMetadata(element, options);
                 }
             }
-            return UnknownBaseMetadata.DeserializeUnknownBaseMetadata(element, options);
+            return global::Azure.AI.Language.Text.UnknownBaseMetadata.DeserializeUnknownBaseMetadata(element, options);
         }
     }
 }

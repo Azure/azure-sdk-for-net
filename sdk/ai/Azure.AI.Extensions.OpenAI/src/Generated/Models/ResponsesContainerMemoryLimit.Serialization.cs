@@ -11,31 +11,31 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsesContainerMemoryLimit value) => value switch
         {
-            ResponsesContainerMemoryLimit._1g => "1g",
-            ResponsesContainerMemoryLimit._4g => "4g",
-            ResponsesContainerMemoryLimit._16g => "16g",
-            ResponsesContainerMemoryLimit._64g => "64g",
+            global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._1g => "1g",
+            global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._4g => "4g",
+            global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._16g => "16g",
+            global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._64g => "64g",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesContainerMemoryLimit value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsesContainerMemoryLimit ToResponsesContainerMemoryLimit(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "1g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "1g"))
             {
-                return ResponsesContainerMemoryLimit._1g;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._1g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "4g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "4g"))
             {
-                return ResponsesContainerMemoryLimit._4g;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._4g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "16g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "16g"))
             {
-                return ResponsesContainerMemoryLimit._16g;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._16g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "64g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "64g"))
             {
-                return ResponsesContainerMemoryLimit._64g;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit._64g;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesContainerMemoryLimit value.");
         }

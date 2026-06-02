@@ -18,32 +18,32 @@ namespace Specs.Azure.Core.Model
     {
         protected AzureCoreEmbeddingVector() => throw null;
 
-        internal AzureCoreEmbeddingVector(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal AzureCoreEmbeddingVector(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<ReadOnlyMemory<int>> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.ReadOnlyMemory<int>> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ReadOnlyMemory<int>>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.ReadOnlyMemory<int>>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(ReadOnlyMemory<int> body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(ReadOnlyMemory<int> body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(ReadOnlyMemory<int> body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Post(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PostAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PostAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<AzureEmbeddingModel> Post(AzureEmbeddingModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Model.AzureEmbeddingModel> Post(AzureEmbeddingModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<AzureEmbeddingModel>> PostAsync(AzureEmbeddingModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Model.AzureEmbeddingModel>> PostAsync(AzureEmbeddingModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Barcode in a document. </summary>
-    public partial class DocumentBarcode : IJsonModel<DocumentBarcode>
+    public partial class DocumentBarcode : IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcode"/> for deserialization. </summary>
         internal DocumentBarcode()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentBarcode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentBarcode(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.DocumentBarcode.DeserializeDocumentBarcode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentBarcode)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentBarcode)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentBarcode)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentBarcode)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentBarcode>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentBarcode IPersistableModel<DocumentBarcode>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentBarcode IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentBarcode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentBarcode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,31 +73,31 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentBarcode)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentBarcode)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Source))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Span))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Span))
             {
                 writer.WritePropertyName("span"u8);
-                writer.WriteObjectValue(Span, options);
+                writer.WriteObjectValue<ContentSpan>(Span, options);
             }
-            if (Optional.IsDefined(Confidence))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -105,9 +105,9 @@ namespace Azure.AI.ContentUnderstanding
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -116,26 +116,26 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentBarcode IJsonModel<DocumentBarcode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentBarcode IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentBarcode JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentBarcode>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentBarcode)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentBarcode)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentBarcode(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.DocumentBarcode.DeserializeDocumentBarcode(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentBarcode DeserializeDocumentBarcode(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -144,7 +144,7 @@ namespace Azure.AI.ContentUnderstanding
             string source = default;
             ContentSpan span = default;
             float? confidence = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -164,25 +164,25 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("span"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    span = ContentSpan.DeserializeContentSpan(prop.Value, options);
+                    span = global::Azure.AI.ContentUnderstanding.ContentSpan.DeserializeContentSpan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("confidence"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     confidence = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentBarcode(

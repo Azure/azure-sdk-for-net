@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsDeliveryAttemptProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties"/>. </summary>
         internal AcsSmsDeliveryAttemptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties"/>. </summary>
         /// <param name="timestamp"> TimeStamp when delivery was attempted. </param>
         /// <param name="segmentsSucceeded"> Number of segments that were successfully delivered. </param>
         /// <param name="segmentsFailed"> Number of segments whose delivery failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             SegmentsSucceeded = segmentsSucceeded;

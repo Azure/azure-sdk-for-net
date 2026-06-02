@@ -15,23 +15,23 @@ namespace Azure.Developer.LoadTesting
     public partial class PassFailServerMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PassFailServerMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailServerMetric"/>. </summary>
         /// <param name="resourceId"> The resource id of the resource emitting the metric. </param>
         /// <param name="metricNamespace"> The server metric namespace. </param>
         /// <param name="metricName"> The server metric name. </param>
         /// <param name="aggregation"> Aggregation Type. </param>
         /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </param>
         /// <param name="value"> The value to compare with the server metric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/>, <paramref name="aggregation"/> or <paramref name="condition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/>, <paramref name="aggregation"/> or <paramref name="condition"/> is null. </exception>
         public PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
-            Argument.AssertNotNull(condition, nameof(condition));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(resourceId, nameof(resourceId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(aggregation, nameof(aggregation));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(condition, nameof(condition));
 
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PassFailServerMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailServerMetric"/>. </summary>
         /// <param name="resourceId"> The resource id of the resource emitting the metric. </param>
         /// <param name="metricNamespace"> The server metric namespace. </param>
         /// <param name="metricName"> The server metric name. </param>
@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="actualValue"> The actual value of the server metric . </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;

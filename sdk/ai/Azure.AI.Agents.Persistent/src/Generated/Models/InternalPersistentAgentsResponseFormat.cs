@@ -13,17 +13,17 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalPersistentAgentsResponseFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalPersistentAgentsResponseFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat"/>. </summary>
         public InternalPersistentAgentsResponseFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalPersistentAgentsResponseFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat"/>. </summary>
         /// <param name="type"> Must be one of `text` or `json_object`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalPersistentAgentsResponseFormat(ResponseFormat? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalPersistentAgentsResponseFormat(ResponseFormat? @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

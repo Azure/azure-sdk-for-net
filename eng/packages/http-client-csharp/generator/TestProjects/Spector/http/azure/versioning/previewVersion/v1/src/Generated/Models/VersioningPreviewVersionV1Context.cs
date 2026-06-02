@@ -10,8 +10,8 @@ using Specs.Azure.Versioning.PreviewVersion;
 
 namespace Versioning.PreviewVersion.V1
 {
-    [ModelReaderWriterBuildable(typeof(ListWidgetsResponse))]
-    [ModelReaderWriterBuildable(typeof(Widget))]
+    [ModelReaderWriterBuildableAttribute(typeof(ListWidgetsResponse))]
+    [ModelReaderWriterBuildableAttribute(typeof(Widget))]
     public partial class VersioningPreviewVersionV1Context : ModelReaderWriterContext
     {
     }

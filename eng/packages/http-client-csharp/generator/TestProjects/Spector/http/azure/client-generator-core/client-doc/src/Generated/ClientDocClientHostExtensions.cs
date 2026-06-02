@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ClientDocClientHostExtensions
     {
         public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName, Action<ClientDocClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientDoc.ClientDocClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ClientDocClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientDoc.ClientDocClientSettings> configureSettings) => throw null;
     }
 }

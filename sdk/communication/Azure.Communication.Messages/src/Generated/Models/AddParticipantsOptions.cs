@@ -15,28 +15,28 @@ namespace Azure.Communication.Messages
     public partial class AddParticipantsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.AddParticipantsOptions"/>. </summary>
         /// <param name="participants"> List of participants to add. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
-        public AddParticipantsOptions(IEnumerable<ConversationParticipant> participants)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="participants"/> is null. </exception>
+        public AddParticipantsOptions(IEnumerable<global::Azure.Communication.Messages.ConversationParticipant> participants)
         {
-            Argument.AssertNotNull(participants, nameof(participants));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.AddParticipantsOptions"/>. </summary>
         /// <param name="participants"> List of participants to add. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddParticipantsOptions(IList<ConversationParticipant> participants, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddParticipantsOptions(IList<global::Azure.Communication.Messages.ConversationParticipant> participants, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Participants = participants;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of participants to add. </summary>
-        public IList<ConversationParticipant> Participants { get; }
+        public IList<global::Azure.Communication.Messages.ConversationParticipant> Participants { get; }
     }
 }

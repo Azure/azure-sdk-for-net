@@ -11,16 +11,16 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemMcpListTools : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpListTools"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        public InternalOutputItemMcpListTools(string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(AgentResponseItemKind.McpListTools)
+        public InternalOutputItemMcpListTools(string serverLabel, IEnumerable<global::OpenAI.InternalMCPListToolsTool> tools) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.McpListTools)
         {
             ServerLabel = serverLabel;
             Tools = tools.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpListTools"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, RealtimeMCPError error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, IList<global::OpenAI.InternalMCPListToolsTool> tools, RealtimeMCPError error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; set; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<InternalMCPListToolsTool> Tools { get; }
+        public IList<global::OpenAI.InternalMCPListToolsTool> Tools { get; }
 
         /// <summary> Gets or sets the Error. </summary>
         public RealtimeMCPError Error { get; set; }

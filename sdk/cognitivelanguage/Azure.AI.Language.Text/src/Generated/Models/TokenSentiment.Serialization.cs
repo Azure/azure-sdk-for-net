@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TokenSentiment value) => value switch
         {
-            TokenSentiment.Positive => "positive",
-            TokenSentiment.Mixed => "mixed",
-            TokenSentiment.Negative => "negative",
+            global::Azure.AI.Language.Text.TokenSentiment.Positive => "positive",
+            global::Azure.AI.Language.Text.TokenSentiment.Mixed => "mixed",
+            global::Azure.AI.Language.Text.TokenSentiment.Negative => "negative",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenSentiment value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static TokenSentiment ToTokenSentiment(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
             {
-                return TokenSentiment.Positive;
+                return global::Azure.AI.Language.Text.TokenSentiment.Positive;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mixed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "mixed"))
             {
-                return TokenSentiment.Mixed;
+                return global::Azure.AI.Language.Text.TokenSentiment.Mixed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
             {
-                return TokenSentiment.Negative;
+                return global::Azure.AI.Language.Text.TokenSentiment.Negative;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenSentiment value.");
         }

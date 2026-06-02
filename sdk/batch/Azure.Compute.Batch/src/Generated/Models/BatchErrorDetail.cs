@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class BatchErrorDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchErrorDetail"/>. </summary>
         internal BatchErrorDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchErrorDetail"/>. </summary>
         /// <param name="key"> An identifier specifying the meaning of the Value property. </param>
         /// <param name="value"> The additional information included with the error response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchErrorDetail(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchErrorDetail(string key, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class BatchContainerConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchContainerConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchContainerConfiguration"/>. </summary>
         /// <param name="type"> The container technology to be used. </param>
         public BatchContainerConfiguration(ContainerType @type)
         {
             Type = @type;
             ContainerImageNames = new ChangeTrackingList<string>();
-            ContainerRegistries = new ChangeTrackingList<ContainerRegistryReference>();
+            ContainerRegistries = new ChangeTrackingList<global::Azure.Compute.Batch.ContainerRegistryReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchContainerConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchContainerConfiguration"/>. </summary>
         /// <param name="type"> The container technology to be used. </param>
         /// <param name="containerImageNames"> The collection of container Image names. This is the full Image reference, as would be specified to "docker pull". An Image will be sourced from the default Docker registry unless the Image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> Additional private registries from which containers can be pulled. If any Images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchContainerConfiguration(ContainerType @type, IList<string> containerImageNames, IList<ContainerRegistryReference> containerRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchContainerConfiguration(ContainerType @type, IList<string> containerImageNames, IList<global::Azure.Compute.Batch.ContainerRegistryReference> containerRegistries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ContainerImageNames = containerImageNames;
@@ -45,6 +45,6 @@ namespace Azure.Compute.Batch
         public IList<string> ContainerImageNames { get; }
 
         /// <summary> Additional private registries from which containers can be pulled. If any Images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </summary>
-        public IList<ContainerRegistryReference> ContainerRegistries { get; }
+        public IList<global::Azure.Compute.Batch.ContainerRegistryReference> ContainerRegistries { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class DifferentSpreadModelDerived : DifferentSpreadModelRecord, IJsonModel<DifferentSpreadModelDerived>
+    public partial class DifferentSpreadModelDerived : DifferentSpreadModelRecord, IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>
     {
         internal DifferentSpreadModelDerived() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<DifferentSpreadModelDerived>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>.Write(ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadModelDerived IPersistableModel<DifferentSpreadModelDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadModelDerived IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<DifferentSpreadModelDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="differentSpreadModelDerived"> The <see cref="DifferentSpreadModelDerived"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="differentSpreadModelDerived"> The <see cref="global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadModelDerived differentSpreadModelDerived) => throw null;
 
         public static explicit operator DifferentSpreadModelDerived(Response response) => throw null;
 
-        void IJsonModel<DifferentSpreadModelDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadModelDerived IJsonModel<DifferentSpreadModelDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadModelDerived IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override DifferentSpreadModelRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

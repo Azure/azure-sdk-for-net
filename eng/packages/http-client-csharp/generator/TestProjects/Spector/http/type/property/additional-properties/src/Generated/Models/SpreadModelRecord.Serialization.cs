@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class SpreadModelRecord : IJsonModel<SpreadModelRecord>
+    public partial class SpreadModelRecord : IJsonModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>
     {
         internal SpreadModelRecord() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SpreadModelRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SpreadModelRecord IPersistableModel<SpreadModelRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SpreadModelRecord IPersistableModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SpreadModelRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="spreadModelRecord"> The <see cref="SpreadModelRecord"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="spreadModelRecord"> The <see cref="global::_Type.Property.AdditionalProperties.SpreadModelRecord"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SpreadModelRecord spreadModelRecord) => throw null;
 
         public static explicit operator SpreadModelRecord(Response response) => throw null;
 
-        void IJsonModel<SpreadModelRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SpreadModelRecord IJsonModel<SpreadModelRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SpreadModelRecord IJsonModel<global::_Type.Property.AdditionalProperties.SpreadModelRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SpreadModelRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

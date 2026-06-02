@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    public partial class Extension : Element, IJsonModel<Extension>
+    public partial class Extension : Element, IJsonModel<global::_Type.Model.Inheritance.Recursive.Extension>
     {
         internal Extension() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Model.Inheritance.Recursive
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Extension>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.Recursive.Extension>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Extension IPersistableModel<Extension>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Extension IPersistableModel<global::_Type.Model.Inheritance.Recursive.Extension>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Extension>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.Recursive.Extension>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="extension"> The <see cref="Extension"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="extension"> The <see cref="global::_Type.Model.Inheritance.Recursive.Extension"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Extension extension) => throw null;
 
         public static explicit operator Extension(Response response) => throw null;
 
-        void IJsonModel<Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.Recursive.Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Extension IJsonModel<Extension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Extension IJsonModel<global::_Type.Model.Inheritance.Recursive.Extension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Element JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

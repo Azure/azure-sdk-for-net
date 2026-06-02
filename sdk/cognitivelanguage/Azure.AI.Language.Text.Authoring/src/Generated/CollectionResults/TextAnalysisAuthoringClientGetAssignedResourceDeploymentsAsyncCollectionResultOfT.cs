@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    internal partial class TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT : AsyncPageable<TextAuthoringAssignedProjectDeploymentsMetadata>
+    internal partial class TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT : AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>
     {
         private readonly TextAnalysisAuthoringClient _client;
         private readonly int? _maxCount;
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(TextAnalysisAuthoringClient client, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(TextAnalysisAuthoringClient client, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxCount = maxCount;
@@ -44,20 +44,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TextAuthoringAssignedProjectDeploymentsMetadata>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata result = (PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata)response;
-                yield return Page<TextAuthoringAssignedProjectDeploymentsMetadata>.FromValues((IReadOnlyList<TextAuthoringAssignedProjectDeploymentsMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata result = ((PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata)response);
+                yield return global::Azure.Page<TextAuthoringAssignedProjectDeploymentsMetadata>.FromValues(((IReadOnlyList<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -67,10 +67,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAssignedResourceDeploymentsRequest(nextLink, pageSize, _context) : _client.CreateGetAssignedResourceDeploymentsRequest(_maxCount, _skip, pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetAssignedResourceDeploymentsRequest(nextLink, pageSize, _context) : _client.CreateGetAssignedResourceDeploymentsRequest(_maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

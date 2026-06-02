@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TargetRelationType value) => value switch
         {
-            TargetRelationType.Assessment => "assessment",
-            TargetRelationType.Target => "target",
+            global::Azure.AI.Language.Text.TargetRelationType.Assessment => "assessment",
+            global::Azure.AI.Language.Text.TargetRelationType.Target => "target",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TargetRelationType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static TargetRelationType ToTargetRelationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "assessment"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "assessment"))
             {
-                return TargetRelationType.Assessment;
+                return global::Azure.AI.Language.Text.TargetRelationType.Assessment;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "target"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "target"))
             {
-                return TargetRelationType.Target;
+                return global::Azure.AI.Language.Text.TargetRelationType.Target;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TargetRelationType value.");
         }

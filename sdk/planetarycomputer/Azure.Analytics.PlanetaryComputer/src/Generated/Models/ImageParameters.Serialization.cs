@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Parameters for requesting a rendered image from a collection. </summary>
-    public partial class ImageParameters : IJsonModel<ImageParameters>
+    public partial class ImageParameters : IJsonModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="ImageParameters"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ImageParameters"/> for deserialization. </summary>
         internal ImageParameters()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImageParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageParameters(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.ImageParameters.DeserializeImageParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ImageParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ImageParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageParameters IPersistableModel<ImageParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageParameters IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="imageParameters"> The <see cref="ImageParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="imageParameters"> The <see cref="global::Azure.Analytics.PlanetaryComputer.ImageParameters"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ImageParameters imageParameters)
         {
-            if (imageParameters == null)
+            if ((imageParameters == null))
             {
                 return null;
             }
-            return RequestContent.Create(imageParameters, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(imageParameters, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,17 +84,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ImageParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("cql"u8);
             writer.WriteStartObject();
             foreach (var item in Cql)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -102,22 +102,22 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(Zoom))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Zoom))
             {
                 writer.WritePropertyName("zoom"u8);
                 writer.WriteNumberValue(Zoom.Value);
             }
-            if (Optional.IsDefined(Geometry))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Geometry))
             {
                 writer.WritePropertyName("geometry"u8);
-                writer.WriteObjectValue(Geometry, options);
+                writer.WriteObjectValue<GeoJsonGeometry>(Geometry, options);
             }
             writer.WritePropertyName("render_params"u8);
             writer.WriteStringValue(RenderParameters);
@@ -125,17 +125,17 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteNumberValue(Columns);
             writer.WritePropertyName("rows"u8);
             writer.WriteNumberValue(Rows);
-            if (Optional.IsDefined(ShowBranding))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(ShowBranding))
             {
                 writer.WritePropertyName("showBranding"u8);
                 writer.WriteBooleanValue(ShowBranding.Value);
             }
-            if (Optional.IsDefined(ImageSize))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(ImageSize))
             {
                 writer.WritePropertyName("imageSize"u8);
                 writer.WriteStringValue(ImageSize);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -143,9 +143,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -154,30 +154,30 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageParameters IJsonModel<ImageParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageParameters IJsonModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImageParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ImageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ImageParameters)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageParameters(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.ImageParameters.DeserializeImageParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ImageParameters DeserializeImageParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> cql = default;
+            IDictionary<string, global::System.BinaryData> cql = default;
             float? zoom = default;
             GeoJsonGeometry geometry = default;
             string renderParameters = default;
@@ -185,21 +185,21 @@ namespace Azure.Analytics.PlanetaryComputer
             int rows = default;
             bool? showBranding = default;
             string imageSize = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("cql"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     cql = dictionary;
@@ -207,7 +207,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("zoom"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -216,11 +216,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("geometry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
+                    geometry = global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("render_params"u8))
@@ -240,7 +240,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("showBranding"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -252,9 +252,9 @@ namespace Azure.Analytics.PlanetaryComputer
                     imageSize = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ImageParameters(

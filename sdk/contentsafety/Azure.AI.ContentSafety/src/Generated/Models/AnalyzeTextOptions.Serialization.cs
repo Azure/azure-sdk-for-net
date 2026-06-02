@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The text analysis request. </summary>
-    public partial class AnalyzeTextOptions : IJsonModel<AnalyzeTextOptions>
+    public partial class AnalyzeTextOptions : IJsonModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeTextOptions"/> for deserialization. </summary>
         internal AnalyzeTextOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentSafety.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeTextOptions(document.RootElement, options);
+                        return global::Azure.AI.ContentSafety.AnalyzeTextOptions.DeserializeAnalyzeTextOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeTextOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentSafety.AzureAIContentSafetyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeTextOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeTextOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextOptions IPersistableModel<AnalyzeTextOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeTextOptions IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="analyzeTextOptions"> The <see cref="AnalyzeTextOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="analyzeTextOptions"> The <see cref="global::Azure.AI.ContentSafety.AnalyzeTextOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AnalyzeTextOptions analyzeTextOptions)
         {
-            if (analyzeTextOptions == null)
+            if ((analyzeTextOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(analyzeTextOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(analyzeTextOptions, global::Azure.AI.ContentSafety.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,14 +84,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeTextOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsCollectionDefined(Categories))
+            if (global::Azure.AI.ContentSafety.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -101,13 +101,13 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlocklistNames))
+            if (global::Azure.AI.ContentSafety.Optional.IsCollectionDefined(BlocklistNames))
             {
                 writer.WritePropertyName("blocklistNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in BlocklistNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -116,17 +116,17 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HaltOnBlocklistHit))
+            if (global::Azure.AI.ContentSafety.Optional.IsDefined(HaltOnBlocklistHit))
             {
                 writer.WritePropertyName("haltOnBlocklistHit"u8);
                 writer.WriteBooleanValue(HaltOnBlocklistHit.Value);
             }
-            if (Optional.IsDefined(OutputType))
+            if (global::Azure.AI.ContentSafety.Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -134,9 +134,9 @@ namespace Azure.AI.ContentSafety
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -145,35 +145,35 @@ namespace Azure.AI.ContentSafety
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextOptions IJsonModel<AnalyzeTextOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeTextOptions IJsonModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeTextOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentSafety.AnalyzeTextOptions.DeserializeAnalyzeTextOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeTextOptions DeserializeAnalyzeTextOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string text = default;
-            IList<TextCategory> categories = default;
+            IList<global::Azure.AI.ContentSafety.TextCategory> categories = default;
             IList<string> blocklistNames = default;
             bool? haltOnBlocklistHit = default;
             AnalyzeTextOutputType? outputType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("text"u8))
@@ -183,11 +183,11 @@ namespace Azure.AI.ContentSafety
                 }
                 if (prop.NameEquals("categories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TextCategory> array = new List<TextCategory>();
+                    List<global::Azure.AI.ContentSafety.TextCategory> array = new List<global::Azure.AI.ContentSafety.TextCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new TextCategory(item.GetString()));
@@ -197,14 +197,14 @@ namespace Azure.AI.ContentSafety
                 }
                 if (prop.NameEquals("blocklistNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -218,7 +218,7 @@ namespace Azure.AI.ContentSafety
                 }
                 if (prop.NameEquals("haltOnBlocklistHit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -227,22 +227,22 @@ namespace Azure.AI.ContentSafety
                 }
                 if (prop.NameEquals("outputType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     outputType = new AnalyzeTextOutputType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnalyzeTextOptions(
                 text,
-                categories ?? new ChangeTrackingList<TextCategory>(),
-                blocklistNames ?? new ChangeTrackingList<string>(),
+                (categories ?? new ChangeTrackingList<global::Azure.AI.ContentSafety.TextCategory>()),
+                (blocklistNames ?? new ChangeTrackingList<string>()),
                 haltOnBlocklistHit,
                 outputType,
                 additionalBinaryDataProperties);

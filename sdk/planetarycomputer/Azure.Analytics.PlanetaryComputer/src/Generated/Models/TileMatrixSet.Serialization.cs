@@ -21,9 +21,9 @@ namespace Azure.Analytics.PlanetaryComputer
     /// as an alternative to a link with a
     /// `http://www.opengis.net/def/rel/ogc/1.0/tiling-scheme` relation type.
     /// </summary>
-    public partial class TileMatrixSet : IJsonModel<TileMatrixSet>
+    public partial class TileMatrixSet : IJsonModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>
     {
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSet"/> for deserialization. </summary>
         internal TileMatrixSet()
         {
         }
@@ -32,55 +32,55 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TileMatrixSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTileMatrixSet(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.TileMatrixSet.DeserializeTileMatrixSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TileMatrixSet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TileMatrixSet)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TileMatrixSet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TileMatrixSet)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TileMatrixSet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TileMatrixSet IPersistableModel<TileMatrixSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TileMatrixSet IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TileMatrixSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TileMatrixSet"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSet"/> from. </param>
         public static explicit operator TileMatrixSet(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTileMatrixSet(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.TileMatrixSet.DeserializeTileMatrixSet(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TileMatrixSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -88,28 +88,28 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TileMatrixSet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TileMatrixSet)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Title))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Keywords))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
                 foreach (string item in Keywords)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -118,23 +118,23 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Uri))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri);
             }
-            if (Optional.IsCollectionDefined(OrderedAxes))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(OrderedAxes))
             {
                 writer.WritePropertyName("orderedAxes"u8);
                 writer.WriteStartArray();
                 foreach (string item in OrderedAxes)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -145,24 +145,24 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("crs"u8);
             writer.WriteStringValue(Crs);
-            if (Optional.IsDefined(WellKnownScaleSet))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(WellKnownScaleSet))
             {
                 writer.WritePropertyName("wellKnownScaleSet"u8);
                 writer.WriteStringValue(WellKnownScaleSet.AbsoluteUri);
             }
-            if (Optional.IsDefined(BoundingBox))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(BoundingBox))
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue(BoundingBox, options);
+                writer.WriteObjectValue<TileMatrixSetBoundingBox>(BoundingBox, options);
             }
             writer.WritePropertyName("tileMatrices"u8);
             writer.WriteStartArray();
             foreach (TileMatrix item in TileMatrices)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<TileMatrix>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -170,9 +170,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -181,26 +181,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TileMatrixSet IJsonModel<TileMatrixSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TileMatrixSet IJsonModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TileMatrixSet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TileMatrixSet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TileMatrixSet)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTileMatrixSet(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.TileMatrixSet.DeserializeTileMatrixSet(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TileMatrixSet DeserializeTileMatrixSet(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -211,10 +211,10 @@ namespace Azure.Analytics.PlanetaryComputer
             string uri = default;
             IList<string> orderedAxes = default;
             string crs = default;
-            Uri wellKnownScaleSet = default;
+            global::System.Uri wellKnownScaleSet = default;
             TileMatrixSetBoundingBox boundingBox = default;
-            IList<TileMatrix> tileMatrices = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.PlanetaryComputer.TileMatrix> tileMatrices = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("title"u8))
@@ -229,14 +229,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("keywords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -260,14 +260,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("orderedAxes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -286,44 +286,44 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("wellKnownScaleSet"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    wellKnownScaleSet = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    wellKnownScaleSet = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("boundingBox"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    boundingBox = TileMatrixSetBoundingBox.DeserializeTileMatrixSetBoundingBox(prop.Value, options);
+                    boundingBox = global::Azure.Analytics.PlanetaryComputer.TileMatrixSetBoundingBox.DeserializeTileMatrixSetBoundingBox(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tileMatrices"u8))
                 {
-                    List<TileMatrix> array = new List<TileMatrix>();
+                    List<global::Azure.Analytics.PlanetaryComputer.TileMatrix> array = new List<global::Azure.Analytics.PlanetaryComputer.TileMatrix>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TileMatrix.DeserializeTileMatrix(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.TileMatrix.DeserializeTileMatrix(item, options));
                     }
                     tileMatrices = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TileMatrixSet(
                 title,
                 description,
-                keywords ?? new ChangeTrackingList<string>(),
+                (keywords ?? new ChangeTrackingList<string>()),
                 id,
                 uri,
-                orderedAxes ?? new ChangeTrackingList<string>(),
+                (orderedAxes ?? new ChangeTrackingList<string>()),
                 crs,
                 wellKnownScaleSet,
                 boundingBox,

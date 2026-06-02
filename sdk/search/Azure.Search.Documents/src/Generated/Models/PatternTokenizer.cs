@@ -14,23 +14,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class PatternTokenizer : LexicalTokenizer
     {
-        /// <summary> Initializes a new instance of <see cref="PatternTokenizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PatternTokenizer"/>. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PatternTokenizer(string name) : base("#Microsoft.Azure.Search.PatternTokenizer", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="PatternTokenizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PatternTokenizer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
         /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="group"> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </param>
-        internal PatternTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string pattern, string flagsInternal, int? @group) : base(odataType, name, additionalBinaryDataProperties)
+        internal PatternTokenizer(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string pattern, string flagsInternal, int? @group) : base(odataType, name, additionalBinaryDataProperties)
         {
             Pattern = pattern;
             FlagsInternal = flagsInternal;

@@ -19,8 +19,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The EasmClient. </summary>
     public partial class EasmClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://easm.defender.microsoft.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://easm.defender.microsoft.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of EasmClient for mocking. </summary>
@@ -31,8 +31,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of EasmClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EasmClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EasmClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EasmClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EasmClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal EasmClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EasmClientOptions options)
+        internal EasmClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, EasmClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new EasmClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -63,14 +63,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EasmClient(Uri endpoint, TokenCredential credential, EasmClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EasmClient(global::System.Uri endpoint, TokenCredential credential, EasmClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of EasmClient from a <see cref="EasmClientSettings"/>. </summary>
         /// <param name="settings"> The settings for EasmClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public EasmClient(EasmClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -98,9 +98,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAssetResources(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAssetResources(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
             return new EasmClientGetAssetResourcesCollectionResult(
                 this,
@@ -133,9 +133,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAssetResourcesAsync(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAssetResourcesAsync(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
             return new EasmClientGetAssetResourcesAsyncCollectionResult(
                 this,
@@ -161,8 +161,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<AssetResource> GetAssetResources(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.AssetResource> GetAssetResources(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetAssetResourcesCollectionResultOfT(
                 this,
@@ -188,8 +188,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<AssetResource> GetAssetResourcesAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.AssetResource> GetAssetResourcesAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetAssetResourcesAsyncCollectionResultOfT(
                 this,
@@ -216,9 +216,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateAssets(string filter, RequestContent content, RequestContext context = null)
         {
@@ -226,10 +226,10 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateAssetsRequest(filter, content, context);
+                using HttpMessage message = this.CreateUpdateAssetsRequest(filter, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -250,20 +250,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAssetsAsync(string filter, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateAssetsAsync(string filter, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.UpdateAssets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateAssetsRequest(filter, content, context);
+                using HttpMessage message = this.CreateUpdateAssetsRequest(filter, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -277,32 +277,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> UpdateAssets(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> UpdateAssets(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateAssets(filter, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.UpdateAssets(filter, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Update labels on assets matching the provided filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> UpdateAssetsAsync(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> UpdateAssetsAsync(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateAssetsAsync(filter, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.UpdateAssetsAsync(filter, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -315,9 +315,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="assetId"> The system generated unique id for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAssetResource(string assetId, RequestContext context)
         {
@@ -325,9 +325,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-                using HttpMessage message = CreateGetAssetResourceRequest(assetId, context);
+                using HttpMessage message = this.CreateGetAssetResourceRequest(assetId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -347,19 +347,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="assetId"> The system generated unique id for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetResourceAsync(string assetId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetAssetResourceAsync(string assetId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-                using HttpMessage message = CreateGetAssetResourceRequest(assetId, context);
+                using HttpMessage message = this.CreateGetAssetResourceRequest(assetId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -372,29 +372,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve an asset by assetId. </summary>
         /// <param name="assetId"> The system generated unique id for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetResource> GetAssetResource(string assetId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.AssetResource> GetAssetResource(string assetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = GetAssetResource(assetId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AssetResource)result, result);
+            Response result = this.GetAssetResource(assetId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AssetResource)result), result);
         }
 
         /// <summary> Retrieve an asset by assetId. </summary>
         /// <param name="assetId"> The system generated unique id for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetResource>> GetAssetResourceAsync(string assetId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.AssetResource>> GetAssetResourceAsync(string assetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = await GetAssetResourceAsync(assetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AssetResource)result, result);
+            Response result = await this.GetAssetResourceAsync(assetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AssetResource)result), result);
         }
 
         /// <summary>
@@ -409,8 +409,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAssetsExport(RequestContent content, string filter = default, string @orderby = default, RequestContext context = null)
         {
@@ -418,9 +418,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetAssetsExportRequest(content, filter, @orderby, context);
+                using HttpMessage message = this.CreateGetAssetsExportRequest(content, filter, @orderby, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -442,18 +442,18 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetsExportAsync(RequestContent content, string filter = default, string @orderby = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetAssetsExportAsync(RequestContent content, string filter = default, string @orderby = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetsExport");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetAssetsExportRequest(content, filter, @orderby, context);
+                using HttpMessage message = this.CreateGetAssetsExportRequest(content, filter, @orderby, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -468,14 +468,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> GetAssetsExport(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> GetAssetsExport(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetAssetsExport(body, filter, @orderby, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.GetAssetsExport(body, filter, @orderby, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Export a list of assets for the provided search parameters. </summary>
@@ -483,14 +483,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> GetAssetsExportAsync(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> GetAssetsExportAsync(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetAssetsExportAsync(body, filter, @orderby, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.GetAssetsExportAsync(body, filter, @orderby, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -507,9 +507,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetObservations(string assetId, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
@@ -517,9 +517,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-                using HttpMessage message = CreateGetObservationsRequest(assetId, filter, @orderby, skip, maxpagesize, context);
+                using HttpMessage message = this.CreateGetObservationsRequest(assetId, filter, @orderby, skip, maxpagesize, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -543,19 +543,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetObservationsAsync(string assetId, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetObservationsAsync(string assetId, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetObservations");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-                using HttpMessage message = CreateGetObservationsRequest(assetId, filter, @orderby, skip, maxpagesize, context);
+                using HttpMessage message = this.CreateGetObservationsRequest(assetId, filter, @orderby, skip, maxpagesize, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -572,15 +572,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ObservationPageResult> GetObservations(string assetId, string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ObservationPageResult> GetObservations(string assetId, string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = GetObservations(assetId, filter, @orderby, skip, maxpagesize, cancellationToken.ToRequestContext());
-            return Response.FromValue((ObservationPageResult)result, result);
+            Response result = this.GetObservations(assetId, filter, @orderby, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ObservationPageResult)result), result);
         }
 
         /// <summary> Retrieve observations on an asset. </summary>
@@ -590,15 +590,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ObservationPageResult>> GetObservationsAsync(string assetId, string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ObservationPageResult>> GetObservationsAsync(string assetId, string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = await GetObservationsAsync(assetId, filter, @orderby, skip, maxpagesize, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ObservationPageResult)result, result);
+            Response result = await this.GetObservationsAsync(assetId, filter, @orderby, skip, maxpagesize, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ObservationPageResult)result), result);
         }
 
         /// <summary>
@@ -613,12 +613,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeltaDetails(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
+        public virtual Pageable<global::System.BinaryData> GetDeltaDetails(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
             return new EasmClientGetDeltaDetailsCollectionResult(
                 this,
@@ -641,12 +641,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeltaDetailsAsync(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
+        public virtual AsyncPageable<global::System.BinaryData> GetDeltaDetailsAsync(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
             return new EasmClientGetDeltaDetailsAsyncCollectionResult(
                 this,
@@ -662,11 +662,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeltaResult> GetDeltaDetails(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.DeltaResult> GetDeltaDetails(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
             return new EasmClientGetDeltaDetailsCollectionResultOfT(
                 this,
@@ -682,11 +682,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeltaResult> GetDeltaDetailsAsync(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.DeltaResult> GetDeltaDetailsAsync(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
             return new EasmClientGetDeltaDetailsAsyncCollectionResultOfT(
                 this,
@@ -707,8 +707,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeltaSummary(RequestContent content, RequestContext context = null)
         {
@@ -716,9 +716,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetDeltaSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetDeltaSummaryRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -738,18 +738,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeltaSummaryAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetDeltaSummaryAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDeltaSummary");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetDeltaSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetDeltaSummaryRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -762,27 +762,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a list of deltas with overall summary changes for the provided time range. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeltaSummaryResult> GetDeltaSummary(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DeltaSummaryResult> GetDeltaSummary(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetDeltaSummary(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeltaSummaryResult)result, result);
+            Response result = this.GetDeltaSummary(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DeltaSummaryResult)result), result);
         }
 
         /// <summary> Retrieve a list of deltas with overall summary changes for the provided time range. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeltaSummaryResult>> GetDeltaSummaryAsync(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DeltaSummaryResult>> GetDeltaSummaryAsync(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetDeltaSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeltaSummaryResult)result, result);
+            Response result = await this.GetDeltaSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DeltaSummaryResult)result), result);
         }
 
         /// <summary>
@@ -796,9 +796,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDataConnections(int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDataConnections(int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDataConnectionsCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
         }
@@ -814,9 +814,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDataConnectionsAsync(int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDataConnectionsAsync(int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDataConnectionsAsyncCollectionResult(this, skip, maxPageSize, context, "EasmClient.GetDataConnections");
         }
@@ -825,8 +825,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DataConnection> GetDataConnections(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.DataConnection> GetDataConnections(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDataConnectionsCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
         }
@@ -835,8 +835,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DataConnection> GetDataConnectionsAsync(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.DataConnection> GetDataConnectionsAsync(int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDataConnectionsAsyncCollectionResultOfT(this, skip, maxPageSize, cancellationToken.ToRequestContext(), "EasmClient.GetDataConnections");
         }
@@ -851,8 +851,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ValidateDataConnection(RequestContent content, RequestContext context = null)
         {
@@ -860,9 +860,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateDataConnectionRequest(content, context);
+                using HttpMessage message = this.CreateValidateDataConnectionRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -882,18 +882,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ValidateDataConnectionAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ValidateDataConnectionAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDataConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateDataConnectionRequest(content, context);
+                using HttpMessage message = this.CreateValidateDataConnectionRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -906,27 +906,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Validate a data connection with a given dataConnectionName. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ValidateResult> ValidateDataConnection(DataConnectionPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ValidateResult> ValidateDataConnection(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ValidateDataConnection(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ValidateResult)result, result);
+            Response result = this.ValidateDataConnection(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ValidateResult)result), result);
         }
 
         /// <summary> Validate a data connection with a given dataConnectionName. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(DataConnectionPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDataConnectionAsync(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ValidateDataConnectionAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ValidateResult)result, result);
+            Response result = await this.ValidateDataConnectionAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ValidateResult)result), result);
         }
 
         /// <summary>
@@ -939,9 +939,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDataConnection(string dataConnectionName, RequestContext context)
         {
@@ -949,9 +949,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-                using HttpMessage message = CreateGetDataConnectionRequest(dataConnectionName, context);
+                using HttpMessage message = this.CreateGetDataConnectionRequest(dataConnectionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -971,19 +971,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDataConnectionAsync(string dataConnectionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDataConnectionAsync(string dataConnectionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-                using HttpMessage message = CreateGetDataConnectionRequest(dataConnectionName, context);
+                using HttpMessage message = this.CreateGetDataConnectionRequest(dataConnectionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -996,29 +996,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DataConnection> GetDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DataConnection> GetDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            Response result = GetDataConnection(dataConnectionName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DataConnection)result, result);
+            Response result = this.GetDataConnection(dataConnectionName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DataConnection)result), result);
         }
 
         /// <summary> Retrieve a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DataConnection>> GetDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DataConnection>> GetDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            Response result = await GetDataConnectionAsync(dataConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DataConnection)result, result);
+            Response result = await this.GetDataConnectionAsync(dataConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DataConnection)result), result);
         }
 
         /// <summary>
@@ -1032,9 +1032,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrReplaceDataConnection(string dataConnectionName, RequestContent content, RequestContext context = null)
         {
@@ -1042,10 +1042,10 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1066,20 +1066,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDataConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1093,32 +1093,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplaceDataConnection(dataConnectionName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((DataConnection)result, result);
+            Response result = this.CreateOrReplaceDataConnection(dataConnectionName, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DataConnection)result), result);
         }
 
         /// <summary> Create or replace a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplaceDataConnectionAsync(dataConnectionName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DataConnection)result, result);
+            Response result = await this.CreateOrReplaceDataConnectionAsync(dataConnectionName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DataConnection)result), result);
         }
 
         /// <summary>
@@ -1131,9 +1131,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDataConnection(string dataConnectionName, RequestContext context)
         {
@@ -1141,9 +1141,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-                using HttpMessage message = CreateDeleteDataConnectionRequest(dataConnectionName, context);
+                using HttpMessage message = this.CreateDeleteDataConnectionRequest(dataConnectionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1163,19 +1163,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDataConnectionAsync(string dataConnectionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteDataConnectionAsync(string dataConnectionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDataConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-                using HttpMessage message = CreateDeleteDataConnectionRequest(dataConnectionName, context);
+                using HttpMessage message = this.CreateDeleteDataConnectionRequest(dataConnectionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1188,27 +1188,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Delete a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            return DeleteDataConnection(dataConnectionName, cancellationToken.ToRequestContext());
+            return this.DeleteDataConnection(dataConnectionName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            return await DeleteDataConnectionAsync(dataConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDataConnectionAsync(dataConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1223,9 +1223,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDiscoveryGroupsCollectionResult(
                 this,
@@ -1248,9 +1248,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDiscoveryGroupsAsyncCollectionResult(
                 this,
@@ -1266,8 +1266,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DiscoveryGroup> GetDiscoveryGroups(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroups(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDiscoveryGroupsCollectionResultOfT(
                 this,
@@ -1283,8 +1283,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDiscoveryGroupsAsyncCollectionResultOfT(
                 this,
@@ -1305,8 +1305,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ValidateDiscoveryGroup(RequestContent content, RequestContext context = null)
         {
@@ -1314,9 +1314,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateDiscoveryGroupRequest(content, context);
+                using HttpMessage message = this.CreateValidateDiscoveryGroupRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1336,18 +1336,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ValidateDiscoveryGroupAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ValidateDiscoveryGroupAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDiscoveryGroup");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateDiscoveryGroupRequest(content, context);
+                using HttpMessage message = this.CreateValidateDiscoveryGroupRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1360,27 +1360,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Validate a discovery group with a given groupName. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ValidateResult> ValidateDiscoveryGroup(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ValidateResult> ValidateDiscoveryGroup(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ValidateDiscoveryGroup(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ValidateResult)result, result);
+            Response result = this.ValidateDiscoveryGroup(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ValidateResult)result), result);
         }
 
         /// <summary> Validate a discovery group with a given groupName. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ValidateResult>> ValidateDiscoveryGroupAsync(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoveryGroupAsync(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ValidateDiscoveryGroupAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ValidateResult)result, result);
+            Response result = await this.ValidateDiscoveryGroupAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ValidateResult)result), result);
         }
 
         /// <summary>
@@ -1393,9 +1393,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDiscoveryGroup(string groupName, RequestContext context)
         {
@@ -1403,9 +1403,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateGetDiscoveryGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateGetDiscoveryGroupRequest(groupName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1425,19 +1425,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDiscoveryGroupAsync(string groupName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDiscoveryGroupAsync(string groupName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroup");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateGetDiscoveryGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateGetDiscoveryGroupRequest(groupName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1450,29 +1450,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DiscoveryGroup> GetDiscoveryGroup(string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DiscoveryGroup> GetDiscoveryGroup(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            Response result = GetDiscoveryGroup(groupName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DiscoveryGroup)result, result);
+            Response result = this.GetDiscoveryGroup(groupName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DiscoveryGroup)result), result);
         }
 
         /// <summary> Retrieve a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DiscoveryGroup>> GetDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DiscoveryGroup>> GetDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            Response result = await GetDiscoveryGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DiscoveryGroup)result, result);
+            Response result = await this.GetDiscoveryGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DiscoveryGroup)result), result);
         }
 
         /// <summary>
@@ -1485,9 +1485,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDiscoGroup(string groupName, RequestContext context)
         {
@@ -1495,9 +1495,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateDeleteDiscoGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateDeleteDiscoGroupRequest(groupName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1517,19 +1517,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDiscoGroupAsync(string groupName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteDiscoGroupAsync(string groupName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDiscoGroup");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateDeleteDiscoGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateDeleteDiscoGroupRequest(groupName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1542,27 +1542,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Delete a discovery group with a given discovery group name. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteDiscoGroup(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return DeleteDiscoGroup(groupName, cancellationToken.ToRequestContext());
+            return this.DeleteDiscoGroup(groupName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a discovery group with a given discovery group name. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDiscoGroupAsync(string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteDiscoGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return await DeleteDiscoGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDiscoGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1576,9 +1576,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrReplaceDiscoveryGroup(string groupName, RequestContent content, RequestContext context = null)
         {
@@ -1586,10 +1586,10 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceDiscoveryGroupRequest(groupName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceDiscoveryGroupRequest(groupName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1610,20 +1610,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceDiscoveryGroupAsync(string groupName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrReplaceDiscoveryGroupAsync(string groupName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDiscoveryGroup");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceDiscoveryGroupRequest(groupName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceDiscoveryGroupRequest(groupName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1637,32 +1637,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplaceDiscoveryGroup(groupName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((DiscoveryGroup)result, result);
+            Response result = this.CreateOrReplaceDiscoveryGroup(groupName, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DiscoveryGroup)result), result);
         }
 
         /// <summary> Create a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplaceDiscoveryGroupAsync(groupName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DiscoveryGroup)result, result);
+            Response result = await this.CreateOrReplaceDiscoveryGroupAsync(groupName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DiscoveryGroup)result), result);
         }
 
         /// <summary>
@@ -1675,9 +1675,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RunDiscoveryGroup(string groupName, RequestContext context)
         {
@@ -1685,9 +1685,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateRunDiscoveryGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateRunDiscoveryGroupRequest(groupName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1707,19 +1707,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RunDiscoveryGroupAsync(string groupName, RequestContext context)
+        public virtual async Task<global::Azure.Response> RunDiscoveryGroupAsync(string groupName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.RunDiscoveryGroup");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                using HttpMessage message = CreateRunDiscoveryGroupRequest(groupName, context);
+                using HttpMessage message = this.CreateRunDiscoveryGroupRequest(groupName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1732,27 +1732,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Run a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RunDiscoveryGroup(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return RunDiscoveryGroup(groupName, cancellationToken.ToRequestContext());
+            return this.RunDiscoveryGroup(groupName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Run a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RunDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RunDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return await RunDiscoveryGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RunDiscoveryGroupAsync(groupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1768,13 +1768,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             return new EasmClientGetDiscoveryGroupRunsCollectionResult(
                 this,
@@ -1799,13 +1799,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResult(
                 this,
@@ -1823,12 +1823,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             return new EasmClientGetDiscoveryGroupRunsCollectionResultOfT(
                 this,
@@ -1846,12 +1846,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResultOfT(
                 this,
@@ -1873,8 +1873,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAssetChainSummary(RequestContent content, RequestContext context = null)
         {
@@ -1882,9 +1882,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetAssetChainSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetAssetChainSummaryRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1904,18 +1904,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetChainSummaryAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetAssetChainSummaryAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetChainSummary");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetAssetChainSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetAssetChainSummaryRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1928,27 +1928,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve an asset chain summary. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetChainSummaryResult> GetAssetChainSummary(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult> GetAssetChainSummary(AssetChainRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetAssetChainSummary(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AssetChainSummaryResult)result, result);
+            Response result = this.GetAssetChainSummary(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AssetChainSummaryResult)result), result);
         }
 
         /// <summary> Retrieve an asset chain summary. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetChainSummaryResult>> GetAssetChainSummaryAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>> GetAssetChainSummaryAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetAssetChainSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AssetChainSummaryResult)result, result);
+            Response result = await this.GetAssetChainSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AssetChainSummaryResult)result), result);
         }
 
         /// <summary>
@@ -1961,8 +1961,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DismissAssetChain(RequestContent content, RequestContext context = null)
         {
@@ -1970,9 +1970,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDismissAssetChainRequest(content, context);
+                using HttpMessage message = this.CreateDismissAssetChainRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1992,18 +1992,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DismissAssetChainAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DismissAssetChainAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DismissAssetChain");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDismissAssetChainRequest(content, context);
+                using HttpMessage message = this.CreateDismissAssetChainRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2016,27 +2016,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Dismiss discovery chain for a given asset chain source. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> DismissAssetChain(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> DismissAssetChain(AssetChainRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = DismissAssetChain(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.DismissAssetChain(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Dismiss discovery chain for a given asset chain source. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> DismissAssetChainAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> DismissAssetChainAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await DismissAssetChainAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.DismissAssetChainAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -2051,9 +2051,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDiscoveryTemplatesCollectionResult(
                 this,
@@ -2076,9 +2076,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetDiscoveryTemplatesAsyncCollectionResult(
                 this,
@@ -2094,8 +2094,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DiscoveryTemplate> GetDiscoveryTemplates(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplates(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDiscoveryTemplatesCollectionResultOfT(
                 this,
@@ -2111,8 +2111,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetDiscoveryTemplatesAsyncCollectionResultOfT(
                 this,
@@ -2133,9 +2133,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="templateId"> The system generated unique id for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDiscoveryTemplate(string templateId, RequestContext context)
         {
@@ -2143,9 +2143,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-                using HttpMessage message = CreateGetDiscoveryTemplateRequest(templateId, context);
+                using HttpMessage message = this.CreateGetDiscoveryTemplateRequest(templateId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2165,19 +2165,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="templateId"> The system generated unique id for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDiscoveryTemplateAsync(string templateId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDiscoveryTemplateAsync(string templateId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryTemplate");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-                using HttpMessage message = CreateGetDiscoveryTemplateRequest(templateId, context);
+                using HttpMessage message = this.CreateGetDiscoveryTemplateRequest(templateId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2190,29 +2190,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a disco template with a given templateId. </summary>
         /// <param name="templateId"> The system generated unique id for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DiscoveryTemplate> GetDiscoveryTemplate(string templateId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.DiscoveryTemplate> GetDiscoveryTemplate(string templateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            Response result = GetDiscoveryTemplate(templateId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DiscoveryTemplate)result, result);
+            Response result = this.GetDiscoveryTemplate(templateId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DiscoveryTemplate)result), result);
         }
 
         /// <summary> Retrieve a disco template with a given templateId. </summary>
         /// <param name="templateId"> The system generated unique id for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DiscoveryTemplate>> GetDiscoveryTemplateAsync(string templateId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.DiscoveryTemplate>> GetDiscoveryTemplateAsync(string templateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            Response result = await GetDiscoveryTemplateAsync(templateId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DiscoveryTemplate)result, result);
+            Response result = await this.GetDiscoveryTemplateAsync(templateId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DiscoveryTemplate)result), result);
         }
 
         /// <summary>
@@ -2224,7 +2224,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetBillable(RequestContext context)
         {
@@ -2232,7 +2232,7 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBillableRequest(context);
+                using HttpMessage message = this.CreateGetBillableRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2251,15 +2251,15 @@ namespace Azure.Analytics.Defender.Easm
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBillableAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetBillableAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetBillable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBillableRequest(context);
+                using HttpMessage message = this.CreateGetBillableRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2271,20 +2271,20 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Get billable assets summary for the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReportBillableAssetSummaryResult> GetBillable(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult> GetBillable(CancellationToken cancellationToken = default)
         {
-            Response result = GetBillable(cancellationToken.ToRequestContext());
-            return Response.FromValue((ReportBillableAssetSummaryResult)result, result);
+            Response result = this.GetBillable(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReportBillableAssetSummaryResult)result), result);
         }
 
         /// <summary> Get billable assets summary for the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReportBillableAssetSummaryResult>> GetBillableAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>> GetBillableAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetBillableAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReportBillableAssetSummaryResult)result, result);
+            Response result = await this.GetBillableAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReportBillableAssetSummaryResult)result), result);
         }
 
         /// <summary>
@@ -2297,8 +2297,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSnapshot(RequestContent content, RequestContext context = null)
         {
@@ -2306,9 +2306,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSnapshotRequest(content, context);
+                using HttpMessage message = this.CreateGetSnapshotRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2328,18 +2328,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSnapshotAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetSnapshotAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSnapshotRequest(content, context);
+                using HttpMessage message = this.CreateGetSnapshotRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2352,27 +2352,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetSnapshot(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ReportAssetSnapshotResult)result, result);
+            Response result = this.GetSnapshot(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReportAssetSnapshotResult)result), result);
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetSnapshotAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReportAssetSnapshotResult)result, result);
+            Response result = await this.GetSnapshotAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReportAssetSnapshotResult)result), result);
         }
 
         /// <summary>
@@ -2385,8 +2385,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSummary(RequestContent content, RequestContext context = null)
         {
@@ -2394,9 +2394,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetSummaryRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2416,18 +2416,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSummaryAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetSummaryAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSummary");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSummaryRequest(content, context);
+                using HttpMessage message = this.CreateGetSummaryRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2440,27 +2440,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Get asset summary details for the summary request. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReportAssetSummaryResult> GetSummary(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryResult> GetSummary(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetSummary(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ReportAssetSummaryResult)result, result);
+            Response result = this.GetSummary(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReportAssetSummaryResult)result), result);
         }
 
         /// <summary> Get asset summary details for the summary request. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReportAssetSummaryResult)result, result);
+            Response result = await this.GetSummaryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReportAssetSummaryResult)result), result);
         }
 
         /// <summary>
@@ -2473,8 +2473,8 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSnapshotExport(RequestContent content, RequestContext context = null)
         {
@@ -2482,9 +2482,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSnapshotExportRequest(content, context);
+                using HttpMessage message = this.CreateGetSnapshotExportRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2504,18 +2504,18 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSnapshotExportAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetSnapshotExportAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshotExport");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetSnapshotExportRequest(content, context);
+                using HttpMessage message = this.CreateGetSnapshotExportRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2528,27 +2528,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request exported to a file. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> GetSnapshotExport(ReportAssetSnapshotExportPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> GetSnapshotExport(ReportAssetSnapshotExportPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetSnapshotExport(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.GetSnapshotExport(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request exported to a file. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> GetSnapshotExportAsync(ReportAssetSnapshotExportPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> GetSnapshotExportAsync(ReportAssetSnapshotExportPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetSnapshotExportAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.GetSnapshotExportAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -2563,9 +2563,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSavedFilters(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSavedFilters(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetSavedFiltersCollectionResult(
                 this,
@@ -2588,9 +2588,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetSavedFiltersAsyncCollectionResult(
                 this,
@@ -2606,8 +2606,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SavedFilter> GetSavedFilters(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetSavedFiltersCollectionResultOfT(
                 this,
@@ -2623,8 +2623,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SavedFilter> GetSavedFiltersAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetSavedFiltersAsyncCollectionResultOfT(
                 this,
@@ -2645,9 +2645,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSavedFilter(string filterName, RequestContext context)
         {
@@ -2655,9 +2655,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-                using HttpMessage message = CreateGetSavedFilterRequest(filterName, context);
+                using HttpMessage message = this.CreateGetSavedFilterRequest(filterName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2677,19 +2677,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSavedFilterAsync(string filterName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetSavedFilterAsync(string filterName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-                using HttpMessage message = CreateGetSavedFilterRequest(filterName, context);
+                using HttpMessage message = this.CreateGetSavedFilterRequest(filterName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2702,29 +2702,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a saved filter by filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SavedFilter> GetSavedFilter(string filterName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            Response result = GetSavedFilter(filterName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SavedFilter)result, result);
+            Response result = this.GetSavedFilter(filterName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SavedFilter)result), result);
         }
 
         /// <summary> Retrieve a saved filter by filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SavedFilter>> GetSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.SavedFilter>> GetSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            Response result = await GetSavedFilterAsync(filterName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SavedFilter)result, result);
+            Response result = await this.GetSavedFilterAsync(filterName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SavedFilter)result), result);
         }
 
         /// <summary>
@@ -2738,9 +2738,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrReplaceSavedFilter(string filterName, RequestContent content, RequestContext context = null)
         {
@@ -2748,10 +2748,10 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2772,20 +2772,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceSavedFilterAsync(string filterName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrReplaceSavedFilterAsync(string filterName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceSavedFilter");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2799,32 +2799,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplaceSavedFilter(filterName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((SavedFilter)result, result);
+            Response result = this.CreateOrReplaceSavedFilter(filterName, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SavedFilter)result), result);
         }
 
         /// <summary> Create or replace a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplaceSavedFilterAsync(filterName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SavedFilter)result, result);
+            Response result = await this.CreateOrReplaceSavedFilterAsync(filterName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SavedFilter)result), result);
         }
 
         /// <summary>
@@ -2837,9 +2837,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSavedFilter(string filterName, RequestContext context)
         {
@@ -2847,9 +2847,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-                using HttpMessage message = CreateDeleteSavedFilterRequest(filterName, context);
+                using HttpMessage message = this.CreateDeleteSavedFilterRequest(filterName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2869,19 +2869,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSavedFilterAsync(string filterName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteSavedFilterAsync(string filterName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DeleteSavedFilter");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-                using HttpMessage message = CreateDeleteSavedFilterRequest(filterName, context);
+                using HttpMessage message = this.CreateDeleteSavedFilterRequest(filterName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2894,27 +2894,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Delete a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteSavedFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            return DeleteSavedFilter(filterName, cancellationToken.ToRequestContext());
+            return this.DeleteSavedFilter(filterName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            return await DeleteSavedFilterAsync(filterName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteSavedFilterAsync(filterName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2930,9 +2930,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTasks(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTasks(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetTasksCollectionResult(
                 this,
@@ -2957,9 +2957,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTasksAsync(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTasksAsync(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetTasksAsyncCollectionResult(
                 this,
@@ -2977,8 +2977,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TaskResource> GetTasks(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.TaskResource> GetTasks(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetTasksCollectionResultOfT(
                 this,
@@ -2996,8 +2996,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TaskResource> GetTasksAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.TaskResource> GetTasksAsync(string filter = default, string @orderby = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetTasksAsyncCollectionResultOfT(
                 this,
@@ -3019,9 +3019,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTask(string taskId, RequestContext context)
         {
@@ -3029,9 +3029,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateGetTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateGetTaskRequest(taskId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3051,19 +3051,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTaskAsync(string taskId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTaskAsync(string taskId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateGetTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateGetTaskRequest(taskId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3076,29 +3076,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> GetTask(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> GetTask(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = GetTask(taskId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.GetTask(taskId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Retrieve a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = await GetTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.GetTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -3111,9 +3111,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CancelTask(string taskId, RequestContext context)
         {
@@ -3121,9 +3121,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateCancelTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateCancelTaskRequest(taskId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3143,19 +3143,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelTaskAsync(string taskId, RequestContext context)
+        public virtual async Task<global::Azure.Response> CancelTaskAsync(string taskId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.CancelTask");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateCancelTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateCancelTaskRequest(taskId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3168,29 +3168,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Cancel a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> CancelTask(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> CancelTask(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = CancelTask(taskId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.CancelTask(taskId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Cancel a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> CancelTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> CancelTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = await CancelTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.CancelTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -3203,9 +3203,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RunTask(string taskId, RequestContext context)
         {
@@ -3213,9 +3213,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateRunTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateRunTaskRequest(taskId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3235,19 +3235,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RunTaskAsync(string taskId, RequestContext context)
+        public virtual async Task<global::Azure.Response> RunTaskAsync(string taskId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.RunTask");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateRunTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateRunTaskRequest(taskId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3260,29 +3260,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Run a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> RunTask(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> RunTask(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = RunTask(taskId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.RunTask(taskId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Run a task by taskId. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> RunTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> RunTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = await RunTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.RunTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -3295,9 +3295,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DownloadTask(string taskId, RequestContext context)
         {
@@ -3305,9 +3305,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateDownloadTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateDownloadTaskRequest(taskId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3327,19 +3327,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DownloadTaskAsync(string taskId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DownloadTaskAsync(string taskId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DownloadTask");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-                using HttpMessage message = CreateDownloadTaskRequest(taskId, context);
+                using HttpMessage message = this.CreateDownloadTaskRequest(taskId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3352,29 +3352,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Download a task. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> DownloadTask(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.TaskResource> DownloadTask(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = DownloadTask(taskId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TaskResource)result, result);
+            Response result = this.DownloadTask(taskId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary> Download a task. </summary>
         /// <param name="taskId"> The unique identifier of the task. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> DownloadTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.TaskResource>> DownloadTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = await DownloadTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TaskResource)result, result);
+            Response result = await this.DownloadTaskAsync(taskId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TaskResource)result), result);
         }
 
         /// <summary>
@@ -3386,9 +3386,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetCisaCves(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetCisaCves(RequestContext context)
         {
             return new EasmClientGetCisaCvesCollectionResult(this, context, "EasmClient.GetCisaCves");
         }
@@ -3402,25 +3402,25 @@ namespace Azure.Analytics.Defender.Easm
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetCisaCvesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetCisaCvesAsync(RequestContext context)
         {
             return new EasmClientGetCisaCvesAsyncCollectionResult(this, context, "EasmClient.GetCisaCves");
         }
 
         /// <summary> Retrieve a list of CisaCves for the provided search parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<CisaCveResult> GetCisaCves(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.CisaCveResult> GetCisaCves(CancellationToken cancellationToken = default)
         {
             return new EasmClientGetCisaCvesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
         }
 
         /// <summary> Retrieve a list of CisaCves for the provided search parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<CisaCveResult> GetCisaCvesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.CisaCveResult> GetCisaCvesAsync(CancellationToken cancellationToken = default)
         {
             return new EasmClientGetCisaCvesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "EasmClient.GetCisaCves");
         }
@@ -3435,9 +3435,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="cveId"> The CVE ID of the vulnerability in the format CVE-YYYY-NNNN, note that the number portion can have more than 4 digits. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCisaCve(string cveId, RequestContext context)
         {
@@ -3445,9 +3445,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
 
-                using HttpMessage message = CreateGetCisaCveRequest(cveId, context);
+                using HttpMessage message = this.CreateGetCisaCveRequest(cveId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3467,19 +3467,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="cveId"> The CVE ID of the vulnerability in the format CVE-YYYY-NNNN, note that the number portion can have more than 4 digits. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCisaCveAsync(string cveId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCisaCveAsync(string cveId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetCisaCve");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
 
-                using HttpMessage message = CreateGetCisaCveRequest(cveId, context);
+                using HttpMessage message = this.CreateGetCisaCveRequest(cveId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3492,29 +3492,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve details of CisaCve by cveId. </summary>
         /// <param name="cveId"> The CVE ID of the vulnerability in the format CVE-YYYY-NNNN, note that the number portion can have more than 4 digits. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<CisaCveResult> GetCisaCve(string cveId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.CisaCveResult> GetCisaCve(string cveId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
 
-            Response result = GetCisaCve(cveId, cancellationToken.ToRequestContext());
-            return Response.FromValue((CisaCveResult)result, result);
+            Response result = this.GetCisaCve(cveId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((CisaCveResult)result), result);
         }
 
         /// <summary> Retrieve details of CisaCve by cveId. </summary>
         /// <param name="cveId"> The CVE ID of the vulnerability in the format CVE-YYYY-NNNN, note that the number portion can have more than 4 digits. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<CisaCveResult>> GetCisaCveAsync(string cveId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cveId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="cveId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.CisaCveResult>> GetCisaCveAsync(string cveId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(cveId, nameof(cveId));
 
-            Response result = await GetCisaCveAsync(cveId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((CisaCveResult)result, result);
+            Response result = await this.GetCisaCveAsync(cveId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((CisaCveResult)result), result);
         }
 
         /// <summary>
@@ -3529,9 +3529,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPolicies(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetPolicies(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetPoliciesCollectionResult(
                 this,
@@ -3554,9 +3554,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             return new EasmClientGetPoliciesAsyncCollectionResult(
                 this,
@@ -3572,8 +3572,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<EasmPolicy> GetPolicies(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.Defender.Easm.EasmPolicy> GetPolicies(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetPoliciesCollectionResultOfT(
                 this,
@@ -3589,8 +3589,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<EasmPolicy> GetPoliciesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.Defender.Easm.EasmPolicy> GetPoliciesAsync(string filter = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new EasmClientGetPoliciesAsyncCollectionResultOfT(
                 this,
@@ -3611,9 +3611,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPolicy(string policyName, RequestContext context)
         {
@@ -3621,9 +3621,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-                using HttpMessage message = CreateGetPolicyRequest(policyName, context);
+                using HttpMessage message = this.CreateGetPolicyRequest(policyName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3643,19 +3643,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPolicyAsync(string policyName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPolicyAsync(string policyName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-                using HttpMessage message = CreateGetPolicyRequest(policyName, context);
+                using HttpMessage message = this.CreateGetPolicyRequest(policyName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3668,29 +3668,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Retrieve a policy with a given policyName. </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EasmPolicy> GetPolicy(string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.EasmPolicy> GetPolicy(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            Response result = GetPolicy(policyName, cancellationToken.ToRequestContext());
-            return Response.FromValue((EasmPolicy)result, result);
+            Response result = this.GetPolicy(policyName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EasmPolicy)result), result);
         }
 
         /// <summary> Retrieve a policy with a given policyName. </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EasmPolicy>> GetPolicyAsync(string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.EasmPolicy>> GetPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            Response result = await GetPolicyAsync(policyName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EasmPolicy)result, result);
+            Response result = await this.GetPolicyAsync(policyName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EasmPolicy)result), result);
         }
 
         /// <summary>
@@ -3703,9 +3703,9 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeletePolicy(string policyName, RequestContext context)
         {
@@ -3713,9 +3713,9 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-                using HttpMessage message = CreateDeletePolicyRequest(policyName, context);
+                using HttpMessage message = this.CreateDeletePolicyRequest(policyName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3735,19 +3735,19 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeletePolicyAsync(string policyName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeletePolicyAsync(string policyName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.DeletePolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-                using HttpMessage message = CreateDeletePolicyRequest(policyName, context);
+                using HttpMessage message = this.CreateDeletePolicyRequest(policyName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3760,27 +3760,27 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Delete a policy with a given policyName. </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeletePolicy(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            return DeletePolicy(policyName, cancellationToken.ToRequestContext());
+            return this.DeletePolicy(policyName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a policy with a given policyName. </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeletePolicyAsync(string policyName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeletePolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            return await DeletePolicyAsync(policyName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeletePolicyAsync(policyName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3794,9 +3794,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrReplacePolicy(string policyName, RequestContent content, RequestContext context = null)
         {
@@ -3804,10 +3804,10 @@ namespace Azure.Analytics.Defender.Easm
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplacePolicyRequest(policyName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplacePolicyRequest(policyName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3828,20 +3828,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplacePolicyAsync(string policyName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrReplacePolicyAsync(string policyName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplacePolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+                global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplacePolicyRequest(policyName, content, context);
+                using HttpMessage message = this.CreateCreateOrReplacePolicyRequest(policyName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3855,32 +3855,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EasmPolicy> CreateOrReplacePolicy(string policyName, EasmPolicy body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Defender.Easm.EasmPolicy> CreateOrReplacePolicy(string policyName, EasmPolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplacePolicy(policyName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((EasmPolicy)result, result);
+            Response result = this.CreateOrReplacePolicy(policyName, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EasmPolicy)result), result);
         }
 
         /// <summary> Create a policy with a given policyName. </summary>
         /// <param name="policyName"> The caller provided unique name for the resource. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EasmPolicy>> CreateOrReplacePolicyAsync(string policyName, EasmPolicy body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="policyName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Defender.Easm.EasmPolicy>> CreateOrReplacePolicyAsync(string policyName, EasmPolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplacePolicyAsync(policyName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EasmPolicy)result, result);
+            Response result = await this.CreateOrReplacePolicyAsync(policyName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EasmPolicy)result), result);
         }
     }
 }

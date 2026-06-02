@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to authorize document model copy. </summary>
-    public partial class AuthorizeModelCopyOptions : IJsonModel<AuthorizeModelCopyOptions>
+    public partial class AuthorizeModelCopyOptions : IJsonModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AuthorizeModelCopyOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions"/> for deserialization. </summary>
         internal AuthorizeModelCopyOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AuthorizeModelCopyOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAuthorizeModelCopyOptions(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions.DeserializeAuthorizeModelCopyOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizeModelCopyOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizeModelCopyOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AuthorizeModelCopyOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthorizeModelCopyOptions IPersistableModel<AuthorizeModelCopyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AuthorizeModelCopyOptions IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AuthorizeModelCopyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="authorizeModelCopyOptions"> The <see cref="AuthorizeModelCopyOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="authorizeModelCopyOptions"> The <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AuthorizeModelCopyOptions authorizeModelCopyOptions)
         {
-            if (authorizeModelCopyOptions == null)
+            if ((authorizeModelCopyOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(authorizeModelCopyOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(authorizeModelCopyOptions, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AuthorizeModelCopyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,26 +84,26 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AuthorizeModelCopyOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,7 +112,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -120,9 +120,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -131,33 +131,33 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthorizeModelCopyOptions IJsonModel<AuthorizeModelCopyOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AuthorizeModelCopyOptions IJsonModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AuthorizeModelCopyOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AuthorizeModelCopyOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthorizeModelCopyOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions.DeserializeAuthorizeModelCopyOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AuthorizeModelCopyOptions DeserializeAuthorizeModelCopyOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string modelId = default;
             string description = default;
             IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("modelId"u8))
@@ -172,14 +172,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -191,12 +191,12 @@ namespace Azure.AI.DocumentIntelligence
                     tags = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthorizeModelCopyOptions(modelId, description, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AuthorizeModelCopyOptions(modelId, description, (tags ?? new ChangeTrackingDictionary<string, string>()), additionalBinaryDataProperties);
         }
     }
 }

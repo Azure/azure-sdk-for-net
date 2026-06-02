@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The type of the evaluator. </summary>
-    public readonly partial struct EvaluatorMetricType : IEquatable<EvaluatorMetricType>
+    public readonly partial struct EvaluatorMetricType : IEquatable<global::Azure.AI.Projects.Evaluation.EvaluatorMetricType>
     {
         private readonly string _value;
         /// <summary> Ordinal metric representing categories that can be ordered or ranked. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Boolean metric representing true/false values. </summary>
         private const string BooleanValue = "boolean";
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorMetricType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EvaluatorMetricType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -38,34 +38,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Boolean metric representing true/false values. </summary>
         public static EvaluatorMetricType Boolean { get; } = new EvaluatorMetricType(BooleanValue);
 
-        /// <summary> Determines if two <see cref="EvaluatorMetricType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetricType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EvaluatorMetricType left, EvaluatorMetricType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EvaluatorMetricType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetricType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EvaluatorMetricType left, EvaluatorMetricType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorMetricType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EvaluatorMetricType(string value) => new EvaluatorMetricType(value);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorMetricType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetricType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorMetricType?(string value) => value == null ? null : new EvaluatorMetricType(value);
+        public static implicit operator EvaluatorMetricType?(string value) => (value == null) ? null : new EvaluatorMetricType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EvaluatorMetricType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EvaluatorMetricType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EvaluatorMetricType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EvaluatorMetricType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

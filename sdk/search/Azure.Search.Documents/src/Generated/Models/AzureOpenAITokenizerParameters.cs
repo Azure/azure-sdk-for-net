@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureOpenAITokenizerParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAITokenizerParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAITokenizerParameters"/>. </summary>
         public AzureOpenAITokenizerParameters()
         {
             AllowedSpecialTokens = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAITokenizerParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAITokenizerParameters"/>. </summary>
         /// <param name="encoderModelName"> Only applies if the unit is set to azureOpenAITokens. Options include 'R50k_base', 'P50k_base', 'P50k_edit' and 'CL100k_base'. The default value is 'CL100k_base'. </param>
         /// <param name="allowedSpecialTokens"> (Optional) Only applies if the unit is set to azureOpenAITokens. This parameter defines a collection of special tokens that are permitted within the tokenization process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureOpenAITokenizerParameters(SplitSkillEncoderModelName? encoderModelName, IList<string> allowedSpecialTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureOpenAITokenizerParameters(SplitSkillEncoderModelName? encoderModelName, IList<string> allowedSpecialTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EncoderModelName = encoderModelName;
             AllowedSpecialTokens = allowedSpecialTokens;

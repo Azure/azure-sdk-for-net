@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasTypeDefHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTypeDefHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader"/>. </summary>
         internal AtlasTypeDefHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTypeDefHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader"/>. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="guid"> The GUID of the type definition. </param>
         /// <param name="name"> The name of the type definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTypeDefHeader(TypeCategory? category, string guid, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasTypeDefHeader(TypeCategory? category, string guid, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Guid = guid;

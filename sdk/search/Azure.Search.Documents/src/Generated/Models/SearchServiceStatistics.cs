@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
         /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
@@ -27,12 +27,12 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexersRuntime = indexersRuntime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
         /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Counters = counters;
             Limits = limits;

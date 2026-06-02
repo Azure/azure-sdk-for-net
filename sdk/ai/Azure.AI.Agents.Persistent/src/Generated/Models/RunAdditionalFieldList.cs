@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A list of additional fields to include in the response. </summary>
-    public readonly partial struct RunAdditionalFieldList : IEquatable<RunAdditionalFieldList>
+    public readonly partial struct RunAdditionalFieldList : IEquatable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList>
     {
         private readonly string _value;
         /// <summary> File search result content. </summary>
         private const string FileSearchContentsValue = "step_details.tool_calls[*].file_search.results[*].content";
 
-        /// <summary> Initializes a new instance of <see cref="RunAdditionalFieldList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunAdditionalFieldList"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunAdditionalFieldList(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> File search result content. </summary>
         public static RunAdditionalFieldList FileSearchContents { get; } = new RunAdditionalFieldList(FileSearchContentsValue);
 
-        /// <summary> Determines if two <see cref="RunAdditionalFieldList"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunAdditionalFieldList"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunAdditionalFieldList left, RunAdditionalFieldList right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RunAdditionalFieldList"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunAdditionalFieldList"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunAdditionalFieldList left, RunAdditionalFieldList right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RunAdditionalFieldList"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunAdditionalFieldList"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RunAdditionalFieldList(string value) => new RunAdditionalFieldList(value);
 
-        /// <summary> Converts a string to a <see cref="RunAdditionalFieldList"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunAdditionalFieldList"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunAdditionalFieldList?(string value) => value == null ? null : new RunAdditionalFieldList(value);
+        public static implicit operator RunAdditionalFieldList?(string value) => (value == null) ? null : new RunAdditionalFieldList(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RunAdditionalFieldList other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RunAdditionalFieldList other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RunAdditionalFieldList other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RunAdditionalFieldList other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

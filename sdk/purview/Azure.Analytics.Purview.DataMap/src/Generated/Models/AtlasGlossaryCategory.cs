@@ -14,17 +14,17 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasGlossaryCategory
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory"/>. </summary>
         public AtlasGlossaryCategory()
         {
-            Classifications = new ChangeTrackingList<AtlasClassification>();
-            ChildrenCategories = new ChangeTrackingList<AtlasRelatedCategoryHeader>();
-            Terms = new ChangeTrackingList<AtlasRelatedTermHeader>();
+            Classifications = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            ChildrenCategories = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
+            Terms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory"/>. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="classifications"> An array of classifications. </param>
         /// <param name="longDescription"> The long version description. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="parentCategory"> The header of the related category. </param>
         /// <param name="terms"> An array of related term headers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryCategory(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, AtlasGlossaryHeader anchor, IList<AtlasRelatedCategoryHeader> childrenCategories, AtlasRelatedCategoryHeader parentCategory, IList<AtlasRelatedTermHeader> terms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasGlossaryCategory(string guid, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, AtlasGlossaryHeader anchor, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> childrenCategories, AtlasRelatedCategoryHeader parentCategory, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             Classifications = classifications;
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Guid { get; set; }
 
         /// <summary> An array of classifications. </summary>
-        public IList<AtlasClassification> Classifications { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> Classifications { get; }
 
         /// <summary> The long version description. </summary>
         public string LongDescription { get; set; }
@@ -98,12 +98,12 @@ namespace Azure.Analytics.Purview.DataMap
         public AtlasGlossaryHeader Anchor { get; set; }
 
         /// <summary> An array of children categories. </summary>
-        public IList<AtlasRelatedCategoryHeader> ChildrenCategories { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> ChildrenCategories { get; }
 
         /// <summary> The header of the related category. </summary>
         public AtlasRelatedCategoryHeader ParentCategory { get; set; }
 
         /// <summary> An array of related term headers. </summary>
-        public IList<AtlasRelatedTermHeader> Terms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Terms { get; }
     }
 }

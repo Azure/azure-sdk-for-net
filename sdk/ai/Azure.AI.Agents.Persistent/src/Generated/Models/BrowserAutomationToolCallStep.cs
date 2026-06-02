@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class BrowserAutomationToolCallStep
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallStep"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep"/>. </summary>
         /// <param name="lastStepResult"> The result of the last step executed with the Browser. </param>
         /// <param name="currentState"> The current state of execution with the Browser. </param>
         /// <param name="nextStep"> The next step to execute with the Browser. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Agents.Persistent
             NextStep = nextStep;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallStep"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep"/>. </summary>
         /// <param name="lastStepResult"> The result of the last step executed with the Browser. </param>
         /// <param name="currentState"> The current state of execution with the Browser. </param>
         /// <param name="nextStep"> The next step to execute with the Browser. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolCallStep(string lastStepResult, string currentState, string nextStep, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolCallStep(string lastStepResult, string currentState, string nextStep, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LastStepResult = lastStepResult;
             CurrentState = currentState;

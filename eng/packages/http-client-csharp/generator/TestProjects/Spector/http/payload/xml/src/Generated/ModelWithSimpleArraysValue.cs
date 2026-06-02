@@ -18,24 +18,24 @@ namespace Payload.Xml
     {
         protected ModelWithSimpleArraysValue() => throw null;
 
-        internal ModelWithSimpleArraysValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelWithSimpleArraysValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<ModelWithSimpleArrays> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Payload.Xml.ModelWithSimpleArrays> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelWithSimpleArrays>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Payload.Xml.ModelWithSimpleArrays>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(ModelWithSimpleArrays input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(ModelWithSimpleArrays input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(ModelWithSimpleArrays input, CancellationToken cancellationToken = default) => throw null;
     }
 }

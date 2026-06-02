@@ -12,9 +12,9 @@ namespace Azure.AI.Projects
     public partial class EvaluatorGenerationArtifacts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationArtifacts"/>. </summary>
         /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         internal EvaluatorGenerationArtifacts(DatasetReference dataset, IEnumerable<string> kinds)
@@ -23,11 +23,11 @@ namespace Azure.AI.Projects
             Kinds = kinds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationArtifacts"/>. </summary>
         /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationArtifacts(DatasetReference dataset, IList<string> kinds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationArtifacts(DatasetReference dataset, IList<string> kinds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Dataset = dataset;
             Kinds = kinds;

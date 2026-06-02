@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Compute.Batch
 {
     /// <summary> Parameters for creating a user account for RDP or SSH access on an Azure Batch Compute Node. </summary>
-    public partial class BatchNodeUserCreateOptions : IJsonModel<BatchNodeUserCreateOptions>
+    public partial class BatchNodeUserCreateOptions : IJsonModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchNodeUserCreateOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeUserCreateOptions"/> for deserialization. </summary>
         internal BatchNodeUserCreateOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchNodeUserCreateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchNodeUserCreateOptions(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchNodeUserCreateOptions.DeserializeBatchNodeUserCreateOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchNodeUserCreateOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeUserCreateOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchNodeUserCreateOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeUserCreateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchNodeUserCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeUserCreateOptions IPersistableModel<BatchNodeUserCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchNodeUserCreateOptions IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchNodeUserCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="batchNodeUserCreateOptions"> The <see cref="BatchNodeUserCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="batchNodeUserCreateOptions"> The <see cref="global::Azure.Compute.Batch.BatchNodeUserCreateOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BatchNodeUserCreateOptions batchNodeUserCreateOptions)
         {
-            if (batchNodeUserCreateOptions == null)
+            if ((batchNodeUserCreateOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(batchNodeUserCreateOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(batchNodeUserCreateOptions, global::Azure.Compute.Batch.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchNodeUserCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,34 +84,34 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchNodeUserCreateOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeUserCreateOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(IsAdmin))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(IsAdmin))
             {
                 writer.WritePropertyName("isAdmin"u8);
                 writer.WriteBooleanValue(IsAdmin.Value);
             }
-            if (Optional.IsDefined(ExpiryTime))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(ExpiryTime))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryTime.Value, "O");
             }
-            if (Optional.IsDefined(Password))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(SshPublicKey))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -119,9 +119,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -130,26 +130,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeUserCreateOptions IJsonModel<BatchNodeUserCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchNodeUserCreateOptions IJsonModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchNodeUserCreateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchNodeUserCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchNodeUserCreateOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchNodeUserCreateOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchNodeUserCreateOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchNodeUserCreateOptions.DeserializeBatchNodeUserCreateOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchNodeUserCreateOptions DeserializeBatchNodeUserCreateOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? expiryTime = default;
             string password = default;
             string sshPublicKey = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -168,7 +168,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("isAdmin"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -177,7 +177,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("expiryTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -194,9 +194,9 @@ namespace Azure.Compute.Batch
                     sshPublicKey = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchNodeUserCreateOptions(

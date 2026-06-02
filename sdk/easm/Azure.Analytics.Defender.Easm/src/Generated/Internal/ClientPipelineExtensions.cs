@@ -15,12 +15,12 @@ namespace Azure.Analytics.Defender.Easm
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
+        public static async ValueTask<global::Azure.Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
 
-            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if ((message.Response.IsError && ((errorOptions & global::Azure.ErrorOptions.NoThrow) != global::Azure.ErrorOptions.NoThrow)))
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Defender.Easm
             (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             pipeline.Send(message, userCancellationToken);
 
-            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if ((message.Response.IsError && ((errorOptions & global::Azure.ErrorOptions.NoThrow) != global::Azure.ErrorOptions.NoThrow)))
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -41,15 +41,15 @@ namespace Azure.Analytics.Defender.Easm
             return message.Response;
         }
 
-        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
+        public static async ValueTask<global::Azure.Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             switch (response.Status)
             {
-                case >= 200 and < 300:
-                    return Response.FromValue(true, response);
-                case >= 400 and < 500:
-                    return Response.FromValue(false, response);
+                case ((>= 200) and (< 300)):
+                    return global::Azure.Response.FromValue<bool>(true, response);
+                case ((>= 400) and (< 500)):
+                    return global::Azure.Response.FromValue<bool>(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
             }
@@ -60,10 +60,10 @@ namespace Azure.Analytics.Defender.Easm
             Response response = pipeline.ProcessMessage(message, context);
             switch (response.Status)
             {
-                case >= 200 and < 300:
-                    return Response.FromValue(true, response);
-                case >= 400 and < 500:
-                    return Response.FromValue(false, response);
+                case ((>= 200) and (< 300)):
+                    return global::Azure.Response.FromValue<bool>(true, response);
+                case ((>= 400) and (< 500)):
+                    return global::Azure.Response.FromValue<bool>(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
             }

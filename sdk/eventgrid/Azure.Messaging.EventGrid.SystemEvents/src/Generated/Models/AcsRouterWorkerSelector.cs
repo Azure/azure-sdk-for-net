@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector"/>. </summary>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>
         /// <param name="ttlSeconds"> Router Job Worker Selector Time to Live in Seconds. </param>
         internal AcsRouterWorkerSelector(object labelValue, double? ttlSeconds)
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TtlSeconds = ttlSeconds;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector"/>. </summary>
         /// <param name="key"> Router Job Worker Selector Key. </param>
         /// <param name="operator"> Router Job Worker Selector Label Operator. </param>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? @operator, object labelValue, double? ttlSeconds, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? @operator, object labelValue, double? ttlSeconds, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;

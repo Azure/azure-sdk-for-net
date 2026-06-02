@@ -12,9 +12,9 @@ using System.Text.Json;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    internal partial class UnknownAnalysisContent : AnalysisContent, IJsonModel<AnalysisContent>
+    internal partial class UnknownAnalysisContent : AnalysisContent, IJsonModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalysisContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.UnknownAnalysisContent"/> for deserialization. </summary>
         internal UnknownAnalysisContent()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalysisContent(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.AnalysisContent.DeserializeAnalysisContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AnalysisContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AnalysisContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalysisContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalysisContent IPersistableModel<AnalysisContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalysisContent IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalysisContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalysisContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,36 +72,36 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalysisContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AnalysisContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalysisContent IJsonModel<AnalysisContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalysisContent IJsonModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AnalysisContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalysisContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AnalysisContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalysisContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.AnalysisContent.DeserializeAnalysisContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static UnknownAnalysisContent DeserializeUnknownAnalysisContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -111,8 +111,8 @@ namespace Azure.AI.ContentUnderstanding
             string category = default;
             string path = default;
             string markdown = default;
-            IDictionary<string, ContentField> fields = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -147,21 +147,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("fields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ContentField> dictionary = new Dictionary<string, ContentField>();
+                    Dictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> dictionary = new Dictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ContentField.DeserializeContentField(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.ContentUnderstanding.ContentField.DeserializeContentField(prop0.Value, options));
                     }
                     fields = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new UnknownAnalysisContent(
@@ -171,7 +171,7 @@ namespace Azure.AI.ContentUnderstanding
                 category,
                 path,
                 markdown,
-                fields ?? new ChangeTrackingDictionary<string, ContentField>(),
+                (fields ?? new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>()),
                 additionalBinaryDataProperties);
         }
     }

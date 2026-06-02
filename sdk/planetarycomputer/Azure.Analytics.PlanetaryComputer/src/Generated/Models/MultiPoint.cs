@@ -14,27 +14,27 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiPoint. </summary>
     public partial class MultiPoint : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MultiPoint"/>. </summary>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPoint(IEnumerable<IList<float>> coordinates) : base(GeometryType.MultiPoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public MultiPoint(IEnumerable<global::System.Collections.Generic.IList<float>> coordinates) : base(global::Azure.Analytics.PlanetaryComputer.GeometryType.MultiPoint)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MultiPoint"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
-        internal MultiPoint(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<float>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal MultiPoint(GeometryType @type, IList<float> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::System.Collections.Generic.IList<float>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> The coordinates of the multipoint. </summary>
-        public IList<IList<float>> Coordinates { get; }
+        public IList<global::System.Collections.Generic.IList<float>> Coordinates { get; }
     }
 }

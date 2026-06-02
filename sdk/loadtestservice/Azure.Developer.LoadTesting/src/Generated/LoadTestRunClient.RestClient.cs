@@ -34,18 +34,18 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (oldTestRunId != null)
+            if ((oldTestRunId != null))
             {
                 uri.AppendQuery("oldTestRunId", oldTestRunId, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -59,14 +59,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/app-components", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -80,14 +80,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/server-metrics-config", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -100,14 +100,14 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -118,14 +118,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/app-components", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -137,14 +137,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/server-metrics-config", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -155,14 +155,14 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -175,14 +175,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -196,12 +196,12 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/metric-dimensions/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/values", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("metricname", metricName, true);
-            if (interval != null)
+            if ((interval != null))
             {
                 uri.AppendQuery("interval", interval, true);
             }
@@ -210,12 +210,12 @@ namespace Azure.Developer.LoadTesting
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricDimensionValuesRequest(Uri nextPage, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
+        internal HttpMessage CreateNextGetMetricDimensionValuesRequest(global::System.Uri nextPage, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -224,16 +224,16 @@ namespace Azure.Developer.LoadTesting
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -245,7 +245,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metric-definitions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -253,7 +253,7 @@ namespace Azure.Developer.LoadTesting
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -265,14 +265,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metric-namespaces", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -284,16 +284,16 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metrics", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (aggregation != null)
+            if ((aggregation != null))
             {
                 uri.AppendQuery("aggregation", aggregation, true);
             }
             uri.AppendQuery("metricname", metricName, true);
-            if (interval != null)
+            if ((interval != null))
             {
                 uri.AppendQuery("interval", interval, true);
             }
@@ -302,8 +302,8 @@ namespace Azure.Developer.LoadTesting
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -312,7 +312,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsRequest(global::System.Uri nextPage, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -321,17 +321,17 @@ namespace Azure.Developer.LoadTesting
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json" != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -344,55 +344,55 @@ namespace Azure.Developer.LoadTesting
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/test-runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (@orderby != null)
+            if ((@orderby != null))
             {
                 uri.AppendQuery("orderby", @orderby, true);
             }
-            if (search != null)
+            if ((search != null))
             {
                 uri.AppendQuery("search", search, true);
             }
-            if (testId != null)
+            if ((testId != null))
             {
                 uri.AppendQuery("testId", testId, true);
             }
-            if (executionFrom != null)
+            if ((executionFrom != null))
             {
-                uri.AppendQuery("executionFrom", TypeFormatters.ConvertToString(executionFrom, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("executionFrom", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(executionFrom, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (executionTo != null)
+            if ((executionTo != null))
             {
-                uri.AppendQuery("executionTo", TypeFormatters.ConvertToString(executionTo, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("executionTo", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(executionTo, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (status != null)
+            if ((status != null))
             {
                 uri.AppendQuery("status", status, true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (createdByTypes != null && !(createdByTypes is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((createdByTypes != null) && !((createdByTypes is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("createdByTypes", createdByTypes, ",", escape: true);
             }
-            if (testIds != null && !(testIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((testIds != null) && !((testIds is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("testIds", testIds, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestRunsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTestRunsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -401,20 +401,20 @@ namespace Azure.Developer.LoadTesting
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -426,14 +426,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath(":stop", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -444,14 +444,14 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -464,14 +464,14 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -481,14 +481,14 @@ namespace Azure.Developer.LoadTesting
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -498,59 +498,59 @@ namespace Azure.Developer.LoadTesting
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/test-profile-runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (minStartDateTime != null)
+            if ((minStartDateTime != null))
             {
-                uri.AppendQuery("minStartDateTime", TypeFormatters.ConvertToString(minStartDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("minStartDateTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(minStartDateTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (maxStartDateTime != null)
+            if ((maxStartDateTime != null))
             {
-                uri.AppendQuery("maxStartDateTime", TypeFormatters.ConvertToString(maxStartDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("maxStartDateTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(maxStartDateTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (minEndDateTime != null)
+            if ((minEndDateTime != null))
             {
-                uri.AppendQuery("minEndDateTime", TypeFormatters.ConvertToString(minEndDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("minEndDateTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(minEndDateTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (maxEndDateTime != null)
+            if ((maxEndDateTime != null))
             {
-                uri.AppendQuery("maxEndDateTime", TypeFormatters.ConvertToString(maxEndDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("maxEndDateTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(maxEndDateTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateStartTime != null)
+            if ((createdDateStartTime != null))
             {
-                uri.AppendQuery("createdDateStartTime", TypeFormatters.ConvertToString(createdDateStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateStartTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(createdDateStartTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateEndTime != null)
+            if ((createdDateEndTime != null))
             {
-                uri.AppendQuery("createdDateEndTime", TypeFormatters.ConvertToString(createdDateEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateEndTime", global::Azure.Developer.LoadTesting.TypeFormatters.ConvertToString(createdDateEndTime, global::Azure.Developer.LoadTesting.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (testProfileRunIds != null && !(testProfileRunIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((testProfileRunIds != null) && !((testProfileRunIds is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("testProfileRunIds", testProfileRunIds, ",", escape: true);
             }
-            if (testProfileIds != null && !(testProfileIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((testProfileIds != null) && !((testProfileIds is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("testProfileIds", testProfileIds, ",", escape: true);
             }
-            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((statuses != null) && !((statuses is ChangeTrackingList<string> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("statuses", statuses, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestProfileRunsRequest(Uri nextPage, int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
+        internal HttpMessage CreateNextGetTestProfileRunsRequest(global::System.Uri nextPage, int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -559,16 +559,16 @@ namespace Azure.Developer.LoadTesting
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -580,14 +580,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-profile-runs/", false);
             uri.AppendPath(testProfileRunId, true);
             uri.AppendPath(":stop", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -599,14 +599,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/insights/latest", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -618,14 +618,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/insights/latest", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -639,14 +639,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/insights:generate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

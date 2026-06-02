@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> External conversation participant. </summary>
-    public partial class ExternalConversationParticipant : ConversationParticipant, IJsonModel<ExternalConversationParticipant>
+    public partial class ExternalConversationParticipant : ConversationParticipant, IJsonModel<global::Azure.Communication.Messages.ExternalConversationParticipant>
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ExternalConversationParticipant"/> for deserialization. </summary>
         internal ExternalConversationParticipant()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationParticipant PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExternalConversationParticipant(document.RootElement, options);
+                        return global::Azure.Communication.Messages.ExternalConversationParticipant.DeserializeExternalConversationParticipant(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalConversationParticipant)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ExternalConversationParticipant)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalConversationParticipant)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ExternalConversationParticipant)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExternalConversationParticipant>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalConversationParticipant IPersistableModel<ExternalConversationParticipant>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExternalConversationParticipant)PersistableModelCreateCore(data, options);
+        ExternalConversationParticipant IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ExternalConversationParticipant)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExternalConversationParticipant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExternalConversationParticipant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.ExternalConversationParticipant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,51 +73,51 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExternalConversationParticipant)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ExternalConversationParticipant)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("contacts"u8);
             writer.WriteStartArray();
             foreach (ConversationContact item in Contacts)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ConversationContact>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalConversationParticipant IJsonModel<ExternalConversationParticipant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExternalConversationParticipant)JsonModelCreateCore(ref reader, options);
+        ExternalConversationParticipant IJsonModel<global::Azure.Communication.Messages.ExternalConversationParticipant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ExternalConversationParticipant)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationParticipant JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ExternalConversationParticipant>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExternalConversationParticipant)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ExternalConversationParticipant)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExternalConversationParticipant(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.ExternalConversationParticipant.DeserializeExternalConversationParticipant(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExternalConversationParticipant DeserializeExternalConversationParticipant(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
             string displayName = default;
             ParticipantKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ConversationContact> contacts = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Communication.Messages.ConversationContact> contacts = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -137,17 +137,17 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("contacts"u8))
                 {
-                    List<ConversationContact> array = new List<ConversationContact>();
+                    List<global::Azure.Communication.Messages.ConversationContact> array = new List<global::Azure.Communication.Messages.ConversationContact>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationContact.DeserializeConversationContact(item, options));
+                        array.Add(global::Azure.Communication.Messages.ConversationContact.DeserializeConversationContact(item, options));
                     }
                     contacts = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExternalConversationParticipant(id, displayName, kind, additionalBinaryDataProperties, contacts);

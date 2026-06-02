@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Text
     public partial class LanguageDetectionTextInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionTextInput"/>. </summary>
         public LanguageDetectionTextInput()
         {
-            LanguageInputs = new ChangeTrackingList<LanguageInput>();
+            LanguageInputs = new ChangeTrackingList<global::Azure.AI.Language.Text.LanguageInput>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionTextInput"/>. </summary>
         /// <param name="languageInputs"> List of documents to be analyzed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LanguageDetectionTextInput(IList<LanguageInput> languageInputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LanguageDetectionTextInput(IList<global::Azure.AI.Language.Text.LanguageInput> languageInputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LanguageInputs = languageInputs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of documents to be analyzed. </summary>
-        public IList<LanguageInput> LanguageInputs { get; }
+        public IList<global::Azure.AI.Language.Text.LanguageInput> LanguageInputs { get; }
     }
 }

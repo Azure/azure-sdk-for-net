@@ -12,13 +12,13 @@ namespace Azure.AI.Language.Text
 {
     internal partial class UnknownBaseRedactionPolicy : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBaseRedactionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.UnknownBaseRedactionPolicy"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind != default ? policyKind : "unknown", entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
+        internal UnknownBaseRedactionPolicy(RedactionPolicyKind policyKind, IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((policyKind != default) ? policyKind : "unknown", entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
         {
         }
     }

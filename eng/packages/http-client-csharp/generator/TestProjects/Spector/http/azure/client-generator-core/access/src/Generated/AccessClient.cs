@@ -17,14 +17,14 @@ namespace Specs.Azure.ClientGenerator.Core.Access
 {
     public partial class AccessClient
     {
-        public AccessClient() : this(new Uri("http://localhost:3000"), new AccessClientOptions()) => throw null;
+        public AccessClient() : this(new global::System.Uri("http://localhost:3000"), new AccessClientOptions()) => throw null;
 
-        internal AccessClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AccessClientOptions options) => throw null;
+        internal AccessClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, AccessClientOptions options) => throw null;
 
-        public AccessClient(Uri endpoint, AccessClientOptions options) : this(null, endpoint, options) => throw null;
+        public AccessClient(global::System.Uri endpoint, AccessClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public AccessClient(AccessClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public AccessClient(AccessClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

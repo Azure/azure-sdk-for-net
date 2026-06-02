@@ -16,23 +16,23 @@ namespace Azure.SpecialHeaders.XmsClientRequestId
 {
     public partial class XmsClientRequestIdClient
     {
-        public XmsClientRequestIdClient() : this(new Uri("http://localhost:3000"), new XmsClientRequestIdClientOptions()) => throw null;
+        public XmsClientRequestIdClient() : this(new global::System.Uri("http://localhost:3000"), new XmsClientRequestIdClientOptions()) => throw null;
 
-        internal XmsClientRequestIdClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, XmsClientRequestIdClientOptions options) => throw null;
+        internal XmsClientRequestIdClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, XmsClientRequestIdClientOptions options) => throw null;
 
-        public XmsClientRequestIdClient(Uri endpoint, XmsClientRequestIdClientOptions options) : this(null, endpoint, options) => throw null;
+        public XmsClientRequestIdClient(global::System.Uri endpoint, XmsClientRequestIdClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public XmsClientRequestIdClient(XmsClientRequestIdClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public XmsClientRequestIdClient(XmsClientRequestIdClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
         public virtual Response Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

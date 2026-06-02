@@ -19,16 +19,16 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelationshipAttributeDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipAttributeDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef"/>. </summary>
         public AtlasRelationshipAttributeDef()
         {
-            Constraints = new ChangeTrackingList<AtlasConstraintDef>();
+            Constraints = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef>();
             Options = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipAttributeDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef"/>. </summary>
         /// <param name="cardinality"> single-valued attribute or multi-valued attribute. </param>
         /// <param name="constraints"> An array of constraints. </param>
         /// <param name="defaultValue"> The default value of the attribute. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
         /// <param name="relationshipTypeName"> The name of the relationship type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationshipAttributeDef(CardinalityValue? cardinality, IList<AtlasConstraintDef> constraints, string defaultValue, string description, bool? includeInNotification, bool? isIndexable, bool? isOptional, bool? isUnique, string name, IDictionary<string, string> options, string typeName, int? valuesMaxCount, int? valuesMinCount, bool? isLegacyAttribute, string relationshipTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelationshipAttributeDef(CardinalityValue? cardinality, IList<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef> constraints, string defaultValue, string description, bool? includeInNotification, bool? isIndexable, bool? isOptional, bool? isUnique, string name, IDictionary<string, string> options, string typeName, int? valuesMaxCount, int? valuesMinCount, bool? isLegacyAttribute, string relationshipTypeName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Cardinality = cardinality;
             Constraints = constraints;
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Purview.DataMap
         public CardinalityValue? Cardinality { get; set; }
 
         /// <summary> An array of constraints. </summary>
-        public IList<AtlasConstraintDef> Constraints { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef> Constraints { get; }
 
         /// <summary> The default value of the attribute. </summary>
         public string DefaultValue { get; set; }

@@ -15,27 +15,27 @@ namespace Azure.AI.Agents.Persistent
     public partial class OpenApiFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="openApiAuthentication"> Open API authentication details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="openApiAuthentication"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="openApiAuthentication"/> is null. </exception>
         public OpenApiFunctionDefinition(string name, BinaryData spec, OpenApiAuthDetails openApiAuthentication)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(spec, nameof(spec));
-            Argument.AssertNotNull(openApiAuthentication, nameof(openApiAuthentication));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(spec, nameof(spec));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(openApiAuthentication, nameof(openApiAuthentication));
 
             Name = name;
             Spec = spec;
             OpenApiAuthentication = openApiAuthentication;
             DefaultParams = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<InternalFunctionDefinition>();
+            Functions = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.InternalFunctionDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails openApiAuthentication, IList<string> defaultParams, IList<InternalFunctionDefinition> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails openApiAuthentication, IList<string> defaultParams, IList<global::Azure.AI.Agents.Persistent.InternalFunctionDefinition> functions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -62,8 +62,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The openapi function shape, described as a JSON Schema object.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

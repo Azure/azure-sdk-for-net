@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    public partial class ResponsesAzureFunctionTool : ResponsesTool, IJsonModel<ResponsesAzureFunctionTool>
+    public partial class ResponsesAzureFunctionTool : ResponsesTool, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool"/> for deserialization. </summary>
         internal ResponsesAzureFunctionTool()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesAzureFunctionTool(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool.DeserializeResponsesAzureFunctionTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesAzureFunctionTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesAzureFunctionTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesAzureFunctionTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesAzureFunctionTool IPersistableModel<ResponsesAzureFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesAzureFunctionTool)PersistableModelCreateCore(data, options);
+        ResponsesAzureFunctionTool IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesAzureFunctionTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesAzureFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesAzureFunctionTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,22 +70,22 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesAzureFunctionTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azure_function"u8);
-            writer.WriteObjectValue(AzureFunction, options);
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            writer.WriteObjectValue<ResponsesAzureFunctionDefinition>(AzureFunction, options);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -93,33 +93,33 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesAzureFunctionTool IJsonModel<ResponsesAzureFunctionTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesAzureFunctionTool)JsonModelCreateCore(ref reader, options);
+        ResponsesAzureFunctionTool IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesAzureFunctionTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesAzureFunctionTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesAzureFunctionTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool.DeserializeResponsesAzureFunctionTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesAzureFunctionTool DeserializeResponsesAzureFunctionTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ResponsesAzureFunctionDefinition azureFunction = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -129,29 +129,29 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("azure_function"u8))
                 {
-                    azureFunction = ResponsesAzureFunctionDefinition.DeserializeResponsesAzureFunctionDefinition(prop.Value, options);
+                    azureFunction = global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition.DeserializeResponsesAzureFunctionDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Extensions.OpenAI.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureFunctionTool(@type, additionalBinaryDataProperties, azureFunction, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new ResponsesAzureFunctionTool(@type, additionalBinaryDataProperties, azureFunction, (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>()));
         }
     }
 }

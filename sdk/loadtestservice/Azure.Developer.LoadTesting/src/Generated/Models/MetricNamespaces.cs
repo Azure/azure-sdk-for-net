@@ -15,25 +15,25 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricNamespaces
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespaces"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricNamespaces"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        internal MetricNamespaces(IEnumerable<MetricNamespace> value)
+        internal MetricNamespaces(IEnumerable<global::Azure.Developer.LoadTesting.MetricNamespace> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespaces"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricNamespaces"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricNamespaces(IList<MetricNamespace> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricNamespaces(IList<global::Azure.Developer.LoadTesting.MetricNamespace> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The values for the metric namespaces. </summary>
-        public IList<MetricNamespace> Value { get; }
+        public IList<global::Azure.Developer.LoadTesting.MetricNamespace> Value { get; }
     }
 }

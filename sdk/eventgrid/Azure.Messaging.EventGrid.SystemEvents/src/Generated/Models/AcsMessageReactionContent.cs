@@ -14,20 +14,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageReactionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent"/>. </summary>
         /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
         internal AcsMessageReactionContent(string messageId)
         {
             MessageId = messageId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageReactionContent"/>. </summary>
         /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
         /// <param name="emoji"> Optional. Unicode escape sequence of the emoji. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageReactionContent(string messageId, string emoji, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageReactionContent(string messageId, string emoji, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             Emoji = emoji;

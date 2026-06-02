@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesSkillReferenceParam. </summary>
-    public partial class ResponsesSkillReferenceParam : ContainerSkill, IJsonModel<ResponsesSkillReferenceParam>
+    public partial class ResponsesSkillReferenceParam : ContainerSkill, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesSkillReferenceParam"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam"/> for deserialization. </summary>
         internal ResponsesSkillReferenceParam()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesSkillReferenceParam(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam.DeserializeResponsesSkillReferenceParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesSkillReferenceParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesSkillReferenceParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesSkillReferenceParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesSkillReferenceParam IPersistableModel<ResponsesSkillReferenceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesSkillReferenceParam)PersistableModelCreateCore(data, options);
+        ResponsesSkillReferenceParam IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesSkillReferenceParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesSkillReferenceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesSkillReferenceParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,15 +70,15 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesSkillReferenceParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("skill_id"u8);
             writer.WriteStringValue(SkillId);
-            if (Optional.IsDefined(Version))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -87,31 +87,31 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesSkillReferenceParam IJsonModel<ResponsesSkillReferenceParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesSkillReferenceParam)JsonModelCreateCore(ref reader, options);
+        ResponsesSkillReferenceParam IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesSkillReferenceParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesSkillReferenceParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesSkillReferenceParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam.DeserializeResponsesSkillReferenceParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesSkillReferenceParam DeserializeResponsesSkillReferenceParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContainerSkillType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string skillId = default;
             string version = default;
             foreach (var prop in element.EnumerateObject())
@@ -131,9 +131,9 @@ namespace Azure.AI.Extensions.OpenAI
                     version = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesSkillReferenceParam(@type, additionalBinaryDataProperties, skillId, version);

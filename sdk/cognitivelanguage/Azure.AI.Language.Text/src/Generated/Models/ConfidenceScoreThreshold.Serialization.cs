@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Configuration for confidence score threshold for PII entity recognition. </summary>
-    public partial class ConfidenceScoreThreshold : IJsonModel<ConfidenceScoreThreshold>
+    public partial class ConfidenceScoreThreshold : IJsonModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfidenceScoreThreshold"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThreshold"/> for deserialization. </summary>
         internal ConfidenceScoreThreshold()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfidenceScoreThreshold PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfidenceScoreThreshold(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.ConfidenceScoreThreshold.DeserializeConfidenceScoreThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidenceScoreThreshold)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ConfidenceScoreThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidenceScoreThreshold)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ConfidenceScoreThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfidenceScoreThreshold>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidenceScoreThreshold IPersistableModel<ConfidenceScoreThreshold>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfidenceScoreThreshold IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfidenceScoreThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfidenceScoreThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,24 +73,24 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConfidenceScoreThreshold)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ConfidenceScoreThreshold)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("default"u8);
             writer.WriteNumberValue(Default);
-            if (Optional.IsCollectionDefined(Overrides))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(Overrides))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
                 foreach (ConfidenceScoreThresholdOverride item in Overrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ConfidenceScoreThresholdOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -98,9 +98,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -109,32 +109,32 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidenceScoreThreshold IJsonModel<ConfidenceScoreThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfidenceScoreThreshold IJsonModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfidenceScoreThreshold JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ConfidenceScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConfidenceScoreThreshold)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ConfidenceScoreThreshold)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfidenceScoreThreshold(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.ConfidenceScoreThreshold.DeserializeConfidenceScoreThreshold(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConfidenceScoreThreshold DeserializeConfidenceScoreThreshold(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             float @default = default;
-            IList<ConfidenceScoreThresholdOverride> overrides = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> overrides = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("default"u8))
@@ -144,24 +144,24 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("overrides"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConfidenceScoreThresholdOverride> array = new List<ConfidenceScoreThresholdOverride>();
+                    List<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> array = new List<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConfidenceScoreThresholdOverride.DeserializeConfidenceScoreThresholdOverride(item, options));
+                        array.Add(global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride.DeserializeConfidenceScoreThresholdOverride(item, options));
                     }
                     overrides = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfidenceScoreThreshold(@default, overrides ?? new ChangeTrackingList<ConfidenceScoreThresholdOverride>(), additionalBinaryDataProperties);
+            return new ConfidenceScoreThreshold(@default, (overrides ?? new ChangeTrackingList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride>()), additionalBinaryDataProperties);
         }
     }
 }

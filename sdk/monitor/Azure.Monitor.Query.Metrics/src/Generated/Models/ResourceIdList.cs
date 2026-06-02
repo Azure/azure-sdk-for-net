@@ -15,24 +15,24 @@ namespace Azure.Monitor.Query.Metrics.Models
     internal partial class ResourceIdList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceIdList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.ResourceIdList"/>. </summary>
         public ResourceIdList()
         {
-            Resourceids = new ChangeTrackingList<ResourceIdentifier>();
+            Resourceids = new ChangeTrackingList<global::Azure.Core.ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceIdList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.ResourceIdList"/>. </summary>
         /// <param name="resourceids"> The list of resource IDs to query metrics for. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceIdList(IList<ResourceIdentifier> resourceids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceIdList(IList<global::Azure.Core.ResourceIdentifier> resourceids, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Resourceids = resourceids;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of resource IDs to query metrics for. </summary>
-        public IList<ResourceIdentifier> Resourceids { get; }
+        public IList<global::Azure.Core.ResourceIdentifier> Resourceids { get; }
     }
 }

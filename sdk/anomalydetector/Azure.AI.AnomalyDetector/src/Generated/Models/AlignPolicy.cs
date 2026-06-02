@@ -14,14 +14,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class AlignPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AlignPolicy"/>. </summary>
         public AlignPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AlignPolicy"/>. </summary>
         /// <param name="alignMode">
         /// Field that indicates how to align different variables to the same
         /// time range.
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
         /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AlignMode = alignMode;
             FillNAMethod = fillNAMethod;

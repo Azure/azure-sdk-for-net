@@ -18,20 +18,20 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateInputAudioBufferCommitted : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferCommitted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCommitted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal SessionUpdateInputAudioBufferCommitted(string itemId) : base(ServerEventType.InputAudioBufferCommitted)
+        internal SessionUpdateInputAudioBufferCommitted(string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.InputAudioBufferCommitted)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferCommitted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCommitted"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousItemId"> The ID of the preceding item after which the new item will be inserted. </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal SessionUpdateInputAudioBufferCommitted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateInputAudioBufferCommitted(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string previousItemId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             ItemId = itemId;

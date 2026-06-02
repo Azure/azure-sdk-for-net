@@ -11,51 +11,51 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MessageRole value) => value switch
         {
-            MessageRole.Unknown => "unknown",
-            MessageRole.User => "user",
-            MessageRole.Assistant => "assistant",
-            MessageRole.System => "system",
-            MessageRole.Critic => "critic",
-            MessageRole.Discriminator => "discriminator",
-            MessageRole.Developer => "developer",
-            MessageRole.Tool => "tool",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Unknown => "unknown",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.User => "user",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Assistant => "assistant",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.System => "system",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Critic => "critic",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Discriminator => "discriminator",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Developer => "developer",
+            global::Azure.AI.Extensions.OpenAI.MessageRole.Tool => "tool",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MessageRole value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MessageRole ToMessageRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
             {
-                return MessageRole.Unknown;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Unknown;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "user"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "user"))
             {
-                return MessageRole.User;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.User;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "assistant"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "assistant"))
             {
-                return MessageRole.Assistant;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Assistant;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
             {
-                return MessageRole.System;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.System;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "critic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "critic"))
             {
-                return MessageRole.Critic;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Critic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "discriminator"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "discriminator"))
             {
-                return MessageRole.Discriminator;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Discriminator;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "developer"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "developer"))
             {
-                return MessageRole.Developer;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Developer;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tool"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "tool"))
             {
-                return MessageRole.Tool;
+                return global::Azure.AI.Extensions.OpenAI.MessageRole.Tool;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MessageRole value.");
         }

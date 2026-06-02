@@ -13,11 +13,11 @@ namespace Versioning.ReturnTypeChangedFrom
 {
     public partial class ReturnTypeChangedFromClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const global::Versioning.ReturnTypeChangedFrom.ReturnTypeChangedFromClientOptions.ServiceVersion LatestVersion = global::Versioning.ReturnTypeChangedFrom.ReturnTypeChangedFromClientOptions.ServiceVersion.V1;
 
-        public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ReturnTypeChangedFromClientOptions(global::Versioning.ReturnTypeChangedFrom.ReturnTypeChangedFromClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ReturnTypeChangedFromClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

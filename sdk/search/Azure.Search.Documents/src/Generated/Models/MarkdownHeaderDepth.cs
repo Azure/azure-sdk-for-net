@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </summary>
-    public readonly partial struct MarkdownHeaderDepth : IEquatable<MarkdownHeaderDepth>
+    public readonly partial struct MarkdownHeaderDepth : IEquatable<global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth>
     {
         private readonly string _value;
         /// <summary> Indicates that headers up to a level of h1 will be considered while grouping markdown content. </summary>
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that headers up to a level of h6 will be considered while grouping markdown content. This is the default. </summary>
         private const string H6Value = "h6";
 
-        /// <summary> Initializes a new instance of <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarkdownHeaderDepth(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -56,34 +56,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that headers up to a level of h6 will be considered while grouping markdown content. This is the default. </summary>
         public static MarkdownHeaderDepth H6 { get; } = new MarkdownHeaderDepth(H6Value);
 
-        /// <summary> Determines if two <see cref="MarkdownHeaderDepth"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarkdownHeaderDepth left, MarkdownHeaderDepth right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MarkdownHeaderDepth"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarkdownHeaderDepth left, MarkdownHeaderDepth right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MarkdownHeaderDepth(string value) => new MarkdownHeaderDepth(value);
 
-        /// <summary> Converts a string to a <see cref="MarkdownHeaderDepth"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownHeaderDepth"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarkdownHeaderDepth?(string value) => value == null ? null : new MarkdownHeaderDepth(value);
+        public static implicit operator MarkdownHeaderDepth?(string value) => (value == null) ? null : new MarkdownHeaderDepth(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MarkdownHeaderDepth other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MarkdownHeaderDepth other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MarkdownHeaderDepth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MarkdownHeaderDepth other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A WorkIQ server-side tool. </summary>
     public partial class WorkIQPreviewTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.WorkIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public WorkIQPreviewTool(string projectConnectionId) : base(ToolType.WorkIqPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public WorkIQPreviewTool(string projectConnectionId) : base(global::OpenAI.ToolType.WorkIqPreview)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.WorkIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string projectConnectionId, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             Name = name;
@@ -55,6 +55,6 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
     public partial class OAuthConsentRequestResponseItem : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        internal OAuthConsentRequestResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string internalConsentLink, string serverLabel) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OAuthConsentRequestResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string internalConsentLink, string serverLabel) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             InternalConsentLink = internalConsentLink;
             ServerLabel = serverLabel;

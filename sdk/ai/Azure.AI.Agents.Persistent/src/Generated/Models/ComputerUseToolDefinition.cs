@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a Computer Use tool as used to configure an agent. </summary>
     public partial class ComputerUseToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="ComputerUseToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolDefinition"/>. </summary>
         /// <param name="computerUsePreview"> The computer use tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computerUsePreview"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="computerUsePreview"/> is null. </exception>
         public ComputerUseToolDefinition(ComputerUseToolParameters computerUsePreview) : base("computer_use_preview")
         {
-            Argument.AssertNotNull(computerUsePreview, nameof(computerUsePreview));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(computerUsePreview, nameof(computerUsePreview));
 
             ComputerUsePreview = computerUsePreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="computerUsePreview"> The computer use tool parameters. </param>
-        internal ComputerUseToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerUseToolParameters computerUsePreview) : base(@type, additionalBinaryDataProperties)
+        internal ComputerUseToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ComputerUseToolParameters computerUsePreview) : base(@type, additionalBinaryDataProperties)
         {
             ComputerUsePreview = computerUsePreview;
         }

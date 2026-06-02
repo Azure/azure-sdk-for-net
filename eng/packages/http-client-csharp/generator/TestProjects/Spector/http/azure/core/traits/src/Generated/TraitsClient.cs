@@ -17,31 +17,31 @@ namespace Specs.Azure.Core.Traits
 {
     public partial class TraitsClient
     {
-        public TraitsClient() : this(new Uri("http://localhost:3000"), new TraitsClientOptions()) => throw null;
+        public TraitsClient() : this(new global::System.Uri("http://localhost:3000"), new TraitsClientOptions()) => throw null;
 
-        internal TraitsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TraitsClientOptions options) => throw null;
+        internal TraitsClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, TraitsClientOptions options) => throw null;
 
-        public TraitsClient(Uri endpoint, TraitsClientOptions options) : this(null, endpoint, options) => throw null;
+        public TraitsClient(global::System.Uri endpoint, TraitsClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public TraitsClient(TraitsClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public TraitsClient(TraitsClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SmokeTest(int id, string foo, RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Task<Response> SmokeTestAsync(int id, string foo, RequestConditions requestConditions, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SmokeTestAsync(int id, string foo, RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Response<User> SmokeTest(int id, string foo, RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Traits.User> SmokeTest(int id, string foo, RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<User>> SmokeTestAsync(int id, string foo, RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Traits.User>> SmokeTestAsync(int id, string foo, RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RepeatableAction(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RepeatableActionAsync(int id, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RepeatableActionAsync(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<UserActionResponse> RepeatableAction(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Traits.UserActionResponse> RepeatableAction(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UserActionResponse>> RepeatableActionAsync(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Traits.UserActionResponse>> RepeatableActionAsync(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
     }
 }

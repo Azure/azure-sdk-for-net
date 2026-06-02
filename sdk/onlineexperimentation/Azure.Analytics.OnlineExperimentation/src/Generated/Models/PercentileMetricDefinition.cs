@@ -13,24 +13,24 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a Percentile metric definition. Calculates a specified percentile of an event property. </summary>
     public partial class PercentileMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="PercentileMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition"/>. </summary>
         /// <param name="value"> The value to aggregate, including the event name and property to measure. </param>
         /// <param name="percentile"> The percentile to measure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PercentileMetricDefinition(AggregatedValue value, double percentile) : base(ExperimentMetricType.Percentile)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PercentileMetricDefinition(AggregatedValue value, double percentile) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.Percentile)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
             Percentile = percentile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PercentileMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value to aggregate, including the event name and property to measure. </param>
         /// <param name="percentile"> The percentile to measure. </param>
-        internal PercentileMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AggregatedValue value, double percentile) : base(@type, additionalBinaryDataProperties)
+        internal PercentileMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AggregatedValue value, double percentile) : base(@type, additionalBinaryDataProperties)
         {
             Value = value;
             Percentile = percentile;

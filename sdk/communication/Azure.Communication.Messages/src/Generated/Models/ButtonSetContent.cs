@@ -14,26 +14,26 @@ namespace Azure.Communication.Messages
     /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
     public partial class ButtonSetContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ButtonSetContent"/>. </summary>
         /// <param name="buttons"> Unique Id of the button content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="buttons"/> is null. </exception>
-        public ButtonSetContent(IEnumerable<ButtonContent> buttons) : base(MessageContentKind.ButtonSet)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="buttons"/> is null. </exception>
+        public ButtonSetContent(IEnumerable<global::Azure.Communication.Messages.ButtonContent> buttons) : base(global::Azure.Communication.Messages.MessageContentKind.ButtonSet)
         {
-            Argument.AssertNotNull(buttons, nameof(buttons));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(buttons, nameof(buttons));
 
             Buttons = buttons.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ButtonSetContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="buttons"> Unique Id of the button content. </param>
-        internal ButtonSetContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ButtonContent> buttons) : base(kind, additionalBinaryDataProperties)
+        internal ButtonSetContent(MessageContentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Communication.Messages.ButtonContent> buttons) : base(kind, additionalBinaryDataProperties)
         {
             Buttons = buttons;
         }
 
         /// <summary> Unique Id of the button content. </summary>
-        public IList<ButtonContent> Buttons { get; }
+        public IList<global::Azure.Communication.Messages.ButtonContent> Buttons { get; }
     }
 }

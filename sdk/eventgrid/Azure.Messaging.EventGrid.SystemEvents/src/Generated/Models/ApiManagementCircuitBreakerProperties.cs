@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiManagementCircuitBreakerProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCircuitBreakerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementCircuitBreakerProperties"/>. </summary>
         /// <param name="rules"> Overview of all configured rules and respective details. </param>
         internal ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules)
         {
             Rules = rules;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCircuitBreakerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementCircuitBreakerProperties"/>. </summary>
         /// <param name="rules"> Overview of all configured rules and respective details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

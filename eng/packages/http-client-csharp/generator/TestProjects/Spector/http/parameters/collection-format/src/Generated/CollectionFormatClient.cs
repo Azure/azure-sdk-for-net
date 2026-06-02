@@ -15,14 +15,14 @@ namespace Parameters.CollectionFormat
 {
     public partial class CollectionFormatClient
     {
-        public CollectionFormatClient() : this(new Uri("http://localhost:3000"), new CollectionFormatClientOptions()) => throw null;
+        public CollectionFormatClient() : this(new global::System.Uri("http://localhost:3000"), new CollectionFormatClientOptions()) => throw null;
 
-        internal CollectionFormatClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CollectionFormatClientOptions options) => throw null;
+        internal CollectionFormatClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CollectionFormatClientOptions options) => throw null;
 
-        public CollectionFormatClient(Uri endpoint, CollectionFormatClientOptions options) : this(null, endpoint, options) => throw null;
+        public CollectionFormatClient(global::System.Uri endpoint, CollectionFormatClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public CollectionFormatClient(CollectionFormatClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public CollectionFormatClient(CollectionFormatClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

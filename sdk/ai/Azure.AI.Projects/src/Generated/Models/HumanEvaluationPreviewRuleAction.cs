@@ -11,21 +11,21 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation rule action for human evaluation. </summary>
     public partial class HumanEvaluationPreviewRuleAction : EvaluationRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="HumanEvaluationPreviewRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction"/>. </summary>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        public HumanEvaluationPreviewRuleAction(string templateId) : base(EvaluationRuleActionType.HumanEvaluationPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        public HumanEvaluationPreviewRuleAction(string templateId) : base(global::Azure.AI.Projects.EvaluationRuleActionType.HumanEvaluationPreview)
         {
-            Argument.AssertNotNull(templateId, nameof(templateId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(templateId, nameof(templateId));
 
             TemplateId = templateId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HumanEvaluationPreviewRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        internal HumanEvaluationPreviewRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string templateId) : base(@type, additionalBinaryDataProperties)
+        internal HumanEvaluationPreviewRuleAction(EvaluationRuleActionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string templateId) : base(@type, additionalBinaryDataProperties)
         {
             TemplateId = templateId;
         }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Configuration for avatar's zoom level, position, rotation and movement amplitude in the video frame. </summary>
-    public partial class SceneParams : IJsonModel<SceneParams>
+    public partial class SceneParams : IJsonModel<global::Azure.AI.VoiceLive.SceneParams>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SceneParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SceneParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSceneParams(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SceneParams.DeserializeSceneParams(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SceneParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SceneParams)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SceneParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SceneParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SceneParams)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SceneParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SceneParams IPersistableModel<SceneParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SceneParams IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SceneParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SceneParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SceneParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,47 +68,47 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SceneParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SceneParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SceneParams)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Zoom))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Zoom))
             {
                 writer.WritePropertyName("zoom"u8);
                 writer.WriteNumberValue(Zoom.Value);
             }
-            if (Optional.IsDefined(PositionX))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(PositionX))
             {
                 writer.WritePropertyName("position_x"u8);
                 writer.WriteNumberValue(PositionX.Value);
             }
-            if (Optional.IsDefined(PositionY))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(PositionY))
             {
                 writer.WritePropertyName("position_y"u8);
                 writer.WriteNumberValue(PositionY.Value);
             }
-            if (Optional.IsDefined(RotationX))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(RotationX))
             {
                 writer.WritePropertyName("rotation_x"u8);
                 writer.WriteNumberValue(RotationX.Value);
             }
-            if (Optional.IsDefined(RotationY))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(RotationY))
             {
                 writer.WritePropertyName("rotation_y"u8);
                 writer.WriteNumberValue(RotationY.Value);
             }
-            if (Optional.IsDefined(RotationZ))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(RotationZ))
             {
                 writer.WritePropertyName("rotation_z"u8);
                 writer.WriteNumberValue(RotationZ.Value);
             }
-            if (Optional.IsDefined(Amplitude))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Amplitude))
             {
                 writer.WritePropertyName("amplitude"u8);
                 writer.WriteNumberValue(Amplitude.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,26 +127,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SceneParams IJsonModel<SceneParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SceneParams IJsonModel<global::Azure.AI.VoiceLive.SceneParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SceneParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SceneParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SceneParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SceneParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SceneParams)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSceneParams(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SceneParams.DeserializeSceneParams(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SceneParams DeserializeSceneParams(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -157,12 +157,12 @@ namespace Azure.AI.VoiceLive
             float? rotationY = default;
             float? rotationZ = default;
             float? amplitude = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("zoom"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -171,7 +171,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("position_x"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -180,7 +180,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("position_y"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -189,7 +189,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("rotation_x"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -198,7 +198,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("rotation_y"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -207,7 +207,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("rotation_z"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -216,16 +216,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("amplitude"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     amplitude = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SceneParams(

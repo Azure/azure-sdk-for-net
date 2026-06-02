@@ -14,9 +14,9 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RoleAssignmentCreateParameters : IJsonModel<RoleAssignmentCreateParameters>
+    internal partial class RoleAssignmentCreateParameters : IJsonModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters"/> for deserialization. </summary>
         internal RoleAssignmentCreateParameters()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoleAssignmentCreateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
+                        return global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters.DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Security.KeyVault.Administration.AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoleAssignmentCreateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignmentCreateParameters IPersistableModel<RoleAssignmentCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoleAssignmentCreateParameters IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoleAssignmentCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="roleAssignmentCreateParameters"> The <see cref="RoleAssignmentCreateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="roleAssignmentCreateParameters"> The <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(RoleAssignmentCreateParameters roleAssignmentCreateParameters)
         {
-            if (roleAssignmentCreateParameters == null)
+            if ((roleAssignmentCreateParameters == null))
             {
                 return null;
             }
-            return RequestContent.Create(roleAssignmentCreateParameters, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(roleAssignmentCreateParameters, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoleAssignmentCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,14 +84,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<RoleAssignmentProperties>(Properties, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -99,9 +99,9 @@ namespace Azure.Security.KeyVault.Administration.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -110,41 +110,41 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignmentCreateParameters IJsonModel<RoleAssignmentCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoleAssignmentCreateParameters IJsonModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoleAssignmentCreateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentCreateParameters.DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RoleAssignmentCreateParameters DeserializeRoleAssignmentCreateParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             RoleAssignmentProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = RoleAssignmentProperties.DeserializeRoleAssignmentProperties(prop.Value, options);
+                    properties = global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties.DeserializeRoleAssignmentProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RoleAssignmentCreateParameters(properties, additionalBinaryDataProperties);

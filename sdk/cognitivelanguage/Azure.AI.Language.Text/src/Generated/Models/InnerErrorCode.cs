@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Human-readable error code. </summary>
-    public readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
+    public readonly partial struct InnerErrorCode : IEquatable<global::Azure.AI.Language.Text.InnerErrorCode>
     {
         private readonly string _value;
         /// <summary> Invalid request error. </summary>
@@ -43,12 +43,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Invalid country hint error. </summary>
         private const string InvalidCountryHintValue = "InvalidCountryHint";
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorCode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.InnerErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InnerErrorCode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -95,34 +95,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Invalid country hint error. </summary>
         public static InnerErrorCode InvalidCountryHint { get; } = new InnerErrorCode(InvalidCountryHintValue);
 
-        /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.InnerErrorCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.InnerErrorCode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InnerErrorCode left, InnerErrorCode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.InnerErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InnerErrorCode(string value) => new InnerErrorCode(value);
 
-        /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.InnerErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InnerErrorCode?(string value) => value == null ? null : new InnerErrorCode(value);
+        public static implicit operator InnerErrorCode?(string value) => (value == null) ? null : new InnerErrorCode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InnerErrorCode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InnerErrorCode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InnerErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InnerErrorCode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

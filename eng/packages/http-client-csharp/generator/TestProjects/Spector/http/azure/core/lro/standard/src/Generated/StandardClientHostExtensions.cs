@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Lro.Standard
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class StandardClientHostExtensions
     {
         public static IClientBuilder AddStandardClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddStandardClient(this IHostApplicationBuilder host, string sectionName, Action<StandardClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddStandardClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Lro.Standard.StandardClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedStandardClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedStandardClient(this IHostApplicationBuilder host, string key, string sectionName, Action<StandardClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedStandardClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Lro.Standard.StandardClientSettings> configureSettings) => throw null;
     }
 }

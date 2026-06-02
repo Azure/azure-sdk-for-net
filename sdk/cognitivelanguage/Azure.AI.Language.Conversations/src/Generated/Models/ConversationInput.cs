@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Complete ordered set of utterances (spoken or written) by one or more speakers to be used for analysis.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversation"/> and <see cref="TranscriptConversation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.TextConversation"/> and <see cref="Azure.AI.Language.Conversations.Models.TranscriptConversation"/>.
     /// </summary>
     public abstract partial class ConversationInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationInput"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
@@ -30,13 +30,13 @@ namespace Azure.AI.Language.Conversations.Models
             Modality = modality;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationInput"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationInput(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationInput(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Language = language;

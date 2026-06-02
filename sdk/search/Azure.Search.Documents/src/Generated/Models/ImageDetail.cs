@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating which domain-specific details to return. </summary>
-    public readonly partial struct ImageDetail : IEquatable<ImageDetail>
+    public readonly partial struct ImageDetail : IEquatable<global::Azure.Search.Documents.Indexes.Models.ImageDetail>
     {
         private readonly string _value;
         /// <summary> Details recognized as celebrities. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Details recognized as landmarks. </summary>
         private const string LandmarksValue = "landmarks";
 
-        /// <summary> Initializes a new instance of <see cref="ImageDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ImageDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImageDetail(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Details recognized as landmarks. </summary>
         public static ImageDetail Landmarks { get; } = new ImageDetail(LandmarksValue);
 
-        /// <summary> Determines if two <see cref="ImageDetail"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.ImageDetail"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageDetail left, ImageDetail right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImageDetail"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.ImageDetail"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageDetail left, ImageDetail right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImageDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.ImageDetail"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImageDetail(string value) => new ImageDetail(value);
 
-        /// <summary> Converts a string to a <see cref="ImageDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.ImageDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageDetail?(string value) => value == null ? null : new ImageDetail(value);
+        public static implicit operator ImageDetail?(string value) => (value == null) ? null : new ImageDetail(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImageDetail other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImageDetail other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImageDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImageDetail other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

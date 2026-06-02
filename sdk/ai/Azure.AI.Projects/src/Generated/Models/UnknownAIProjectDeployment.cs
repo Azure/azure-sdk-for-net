@@ -9,11 +9,11 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownAIProjectDeployment : AIProjectDeployment
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAIProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownAIProjectDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAIProjectDeployment(AIProjectDeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", name, additionalBinaryDataProperties)
+        internal UnknownAIProjectDeployment(AIProjectDeploymentType @type, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", name, additionalBinaryDataProperties)
         {
         }
     }

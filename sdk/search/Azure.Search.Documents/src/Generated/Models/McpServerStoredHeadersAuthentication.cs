@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Authentication using stored HTTP headers. </summary>
     public partial class McpServerStoredHeadersAuthentication : McpServerAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerStoredHeadersAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerStoredHeadersAuthentication"/>. </summary>
         /// <param name="storedHeadersParameters"> Parameters for stored headers authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storedHeadersParameters"/> is null. </exception>
-        public McpServerStoredHeadersAuthentication(McpServerStoredHeadersParameters storedHeadersParameters) : base(McpServerAuthenticationKind.StoredHeaders)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="storedHeadersParameters"/> is null. </exception>
+        public McpServerStoredHeadersAuthentication(McpServerStoredHeadersParameters storedHeadersParameters) : base(global::Azure.Search.Documents.Indexes.Models.McpServerAuthenticationKind.StoredHeaders)
         {
-            Argument.AssertNotNull(storedHeadersParameters, nameof(storedHeadersParameters));
+            global::Azure.Search.Documents.Argument.AssertNotNull(storedHeadersParameters, nameof(storedHeadersParameters));
 
             StoredHeadersParameters = storedHeadersParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerStoredHeadersAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerStoredHeadersAuthentication"/>. </summary>
         /// <param name="kind"> The kind of authentication to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storedHeadersParameters"> Parameters for stored headers authentication. </param>
-        internal McpServerStoredHeadersAuthentication(McpServerAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, McpServerStoredHeadersParameters storedHeadersParameters) : base(kind, additionalBinaryDataProperties)
+        internal McpServerStoredHeadersAuthentication(McpServerAuthenticationKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, McpServerStoredHeadersParameters storedHeadersParameters) : base(kind, additionalBinaryDataProperties)
         {
             StoredHeadersParameters = storedHeadersParameters;
         }

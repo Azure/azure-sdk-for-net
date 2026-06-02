@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of FHIR resource type enumeration. </summary>
-    public readonly partial struct HealthcareFhirResourceType : IEquatable<HealthcareFhirResourceType>
+    public readonly partial struct HealthcareFhirResourceType : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType>
     {
         private readonly string _value;
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
@@ -337,12 +337,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
         private const string VisionPrescriptionValue = "VisionPrescription";
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthcareFhirResourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -830,34 +830,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
         public static HealthcareFhirResourceType VisionPrescription { get; } = new HealthcareFhirResourceType(VisionPrescriptionValue);
 
-        /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthcareFhirResourceType left, HealthcareFhirResourceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthcareFhirResourceType left, HealthcareFhirResourceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HealthcareFhirResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator HealthcareFhirResourceType(string value) => new HealthcareFhirResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="HealthcareFhirResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareFhirResourceType?(string value) => value == null ? null : new HealthcareFhirResourceType(value);
+        public static implicit operator HealthcareFhirResourceType?(string value) => (value == null) ? null : new HealthcareFhirResourceType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HealthcareFhirResourceType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is HealthcareFhirResourceType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(HealthcareFhirResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HealthcareFhirResourceType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

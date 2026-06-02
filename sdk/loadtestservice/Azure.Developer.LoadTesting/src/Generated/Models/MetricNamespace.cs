@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricNamespace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricNamespace"/>. </summary>
         internal MetricNamespace()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricNamespace"/>. </summary>
         /// <param name="description"> The namespace description. </param>
         /// <param name="name"> The metric namespace name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricNamespace(string description, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricNamespace(string description, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Name = name;

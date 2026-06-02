@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class ChartCoordinate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChartCoordinate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ChartCoordinate"/>. </summary>
         /// <param name="x"> X-axis coordinate. </param>
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects.Evaluation
             Size = size;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChartCoordinate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ChartCoordinate"/>. </summary>
         /// <param name="x"> X-axis coordinate. </param>
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChartCoordinate(int x, int y, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChartCoordinate(int x, int y, int size, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

@@ -11,22 +11,22 @@ namespace Azure.AI.Projects
     public partial class DataGenerationModelOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationModelOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationModelOptions"/>. </summary>
         /// <param name="model"> Base model name used to generate data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public DataGenerationModelOptions(string model)
         {
-            Argument.AssertNotNull(model, nameof(model));
+            global::Azure.AI.Projects.Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationModelOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationModelOptions"/>. </summary>
         /// <param name="model"> Base model name used to generate data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationModelOptions(string model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationModelOptions(string model, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

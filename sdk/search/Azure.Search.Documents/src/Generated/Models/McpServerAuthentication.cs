@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Authentication configuration for an MCP server knowledge source.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerFoundryConnectionAuthentication"/> and <see cref="McpServerStoredHeadersAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.McpServerFoundryConnectionAuthentication"/> and <see cref="Azure.Search.Documents.Indexes.Models.McpServerStoredHeadersAuthentication"/>.
     /// </summary>
     public abstract partial class McpServerAuthentication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerAuthentication"/>. </summary>
         /// <param name="kind"> The kind of authentication to use. </param>
         private protected McpServerAuthentication(McpServerAuthenticationKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerAuthentication"/>. </summary>
         /// <param name="kind"> The kind of authentication to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerAuthentication(McpServerAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerAuthentication(McpServerAuthenticationKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

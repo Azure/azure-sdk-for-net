@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppConfigurationKeyValueModifiedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueModifiedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was modified. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
         /// <param name="etag"> The etag representing the new state of the key-value. </param>
@@ -29,13 +29,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SyncToken = syncToken;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueModifiedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was modified. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
         /// <param name="etag"> The etag representing the new state of the key-value. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationKeyValueModifiedEventData(string key, string label, string etag, string syncToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationKeyValueModifiedEventData(string key, string label, string etag, string syncToken, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;

@@ -33,14 +33,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/operations/", false);
             uri.AppendPath(operationId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -49,14 +49,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/operations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -66,14 +66,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/operations/", false);
             uri.AppendPath(operationId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -83,35 +83,35 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/operations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(skip), true);
             }
-            if (collectionId != null)
+            if ((collectionId != null))
             {
                 uri.AppendQuery("collectionId", collectionId, true);
             }
-            if (status != null)
+            if ((status != null))
             {
                 uri.AppendQuery("status", status, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetOperationsRequest(Uri nextPage, int? maxCount, int? skip, string collectionId, string status, RequestContext context)
+        internal HttpMessage CreateNextGetOperationsRequest(global::System.Uri nextPage, int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -120,16 +120,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -143,14 +143,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/ingestions/", false);
             uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -165,14 +165,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -186,27 +186,27 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/ingestions/", false);
             uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetRunsRequest(global::System.Uri nextPage, string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -215,16 +215,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -236,14 +236,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -258,14 +258,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
             uri.AppendPath(ingestionId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -278,14 +278,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
             uri.AppendPath(ingestionId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -297,27 +297,27 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string collectionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(global::System.Uri nextPage, string collectionId, int? maxCount, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -326,16 +326,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -348,14 +348,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
             uri.AppendPath(ingestionId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -367,14 +367,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -387,14 +387,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
             uri.AppendPath(id.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -407,14 +407,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
             uri.AppendPath(id.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -424,14 +424,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
             uri.AppendPath(id.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -441,27 +441,27 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSourcesRequest(Uri nextPage, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetSourcesRequest(global::System.Uri nextPage, int? maxCount, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -470,16 +470,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -489,19 +489,19 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/managed-identities", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetManagedIdentitiesRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetManagedIdentitiesRequest(global::System.Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -510,16 +510,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

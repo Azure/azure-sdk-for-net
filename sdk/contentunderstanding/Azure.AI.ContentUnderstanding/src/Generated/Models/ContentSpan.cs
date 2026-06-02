@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentSpan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentSpan"/>. </summary>
         /// <param name="offset"> Starting position (0-indexed) of the element in markdown, specified in characters. </param>
         /// <param name="length"> Length of the element in markdown, specified in characters. </param>
         internal ContentSpan(int offset, int length)
@@ -25,11 +25,11 @@ namespace Azure.AI.ContentUnderstanding
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentSpan"/>. </summary>
         /// <param name="offset"> Starting position (0-indexed) of the element in markdown, specified in characters. </param>
         /// <param name="length"> Length of the element in markdown, specified in characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentSpan(int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentSpan(int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Length = length;

@@ -9,10 +9,10 @@ namespace OpenAI
 {
     internal partial class UnknownContainerNetworkPolicyParam : ContainerNetworkPolicyParam
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownContainerNetworkPolicyParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.UnknownContainerNetworkPolicyParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

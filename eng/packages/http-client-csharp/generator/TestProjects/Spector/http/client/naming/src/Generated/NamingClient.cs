@@ -20,32 +20,32 @@ namespace Client.Naming
 {
     public partial class NamingClient
     {
-        public NamingClient() : this(new Uri("http://localhost:3000"), new NamingClientOptions()) => throw null;
+        public NamingClient() : this(new global::System.Uri("http://localhost:3000"), new NamingClientOptions()) => throw null;
 
-        internal NamingClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NamingClientOptions options) => throw null;
+        internal NamingClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NamingClientOptions options) => throw null;
 
-        public NamingClient(Uri endpoint, NamingClientOptions options) : this(null, endpoint, options) => throw null;
+        public NamingClient(global::System.Uri endpoint, NamingClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NamingClient(NamingClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NamingClient(NamingClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ClientName(RequestContext context) => throw null;
 
-        public virtual Task<Response> ClientNameAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ClientNameAsync(RequestContext context) => throw null;
 
         public virtual Response ClientName(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ClientNameAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ClientNameAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Parameter(string clientName, RequestContext context) => throw null;
 
-        public virtual Task<Response> ParameterAsync(string clientName, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ParameterAsync(string clientName, RequestContext context) => throw null;
 
         public virtual Response Parameter(string clientName, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ParameterAsync(string clientName, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ParameterAsync(string clientName, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Property GetPropertyClient() => throw null;
 

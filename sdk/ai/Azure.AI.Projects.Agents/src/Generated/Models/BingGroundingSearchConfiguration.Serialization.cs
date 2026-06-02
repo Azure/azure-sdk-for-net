@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Search configuration for Bing Grounding. </summary>
-    public partial class BingGroundingSearchConfiguration : IJsonModel<BingGroundingSearchConfiguration>
+    public partial class BingGroundingSearchConfiguration : IJsonModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration"/> for deserialization. </summary>
         internal BingGroundingSearchConfiguration()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BingGroundingSearchConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBingGroundingSearchConfiguration(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.DeserializeBingGroundingSearchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BingGroundingSearchConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingGroundingSearchConfiguration IPersistableModel<BingGroundingSearchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BingGroundingSearchConfiguration IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BingGroundingSearchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BingGroundingSearchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,34 +70,34 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
-            if (Optional.IsDefined(Market))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Market))
             {
                 writer.WritePropertyName("market"u8);
                 writer.WriteStringValue(Market);
             }
-            if (Optional.IsDefined(BingUserInterfaceLanguage))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(BingUserInterfaceLanguage))
             {
                 writer.WritePropertyName("set_lang"u8);
                 writer.WriteStringValue(BingUserInterfaceLanguage);
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Freshness))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Freshness))
             {
                 writer.WritePropertyName("freshness"u8);
                 writer.WriteStringValue(Freshness);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -105,9 +105,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -116,26 +116,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingGroundingSearchConfiguration IJsonModel<BingGroundingSearchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BingGroundingSearchConfiguration IJsonModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BingGroundingSearchConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBingGroundingSearchConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.DeserializeBingGroundingSearchConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BingGroundingSearchConfiguration DeserializeBingGroundingSearchConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
             string bingUserInterfaceLanguage = default;
             long? count = default;
             string freshness = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("project_connection_id"u8))
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -176,9 +176,9 @@ namespace Azure.AI.Projects.Agents
                     freshness = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BingGroundingSearchConfiguration(

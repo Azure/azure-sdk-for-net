@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TileSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TileSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileSettings"/>. </summary>
         /// <param name="minZoom">
         /// The minimum zoom level that can be requested for this collection. Provides a
         /// hard limit for the tile servers to ensure they don't get requests for low zoom
@@ -30,7 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
             MaxItemsPerTile = maxItemsPerTile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TileSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileSettings"/>. </summary>
         /// <param name="minZoom">
         /// The minimum zoom level that can be requested for this collection. Provides a
         /// hard limit for the tile servers to ensure they don't get requests for low zoom
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxItemsPerTile"> Maximum number of items to include in a single tile. </param>
         /// <param name="defaultLocation"> Default map location when displaying this collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileSettings(int minZoom, int maxItemsPerTile, DefaultLocation defaultLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileSettings(int minZoom, int maxItemsPerTile, DefaultLocation defaultLocation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MinZoom = minZoom;
             MaxItemsPerTile = maxItemsPerTile;

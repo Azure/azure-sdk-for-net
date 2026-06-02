@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
-    public partial class RunStepBrowserAutomationToolCall : RunStepToolCall, IJsonModel<RunStepBrowserAutomationToolCall>
+    public partial class RunStepBrowserAutomationToolCall : RunStepToolCall, IJsonModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepBrowserAutomationToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/> for deserialization. </summary>
         internal RunStepBrowserAutomationToolCall()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepToolCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepBrowserAutomationToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepBrowserAutomationToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepBrowserAutomationToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepBrowserAutomationToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepBrowserAutomationToolCall IPersistableModel<RunStepBrowserAutomationToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (RunStepBrowserAutomationToolCall)PersistableModelCreateCore(data, options);
+        RunStepBrowserAutomationToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RunStepBrowserAutomationToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepBrowserAutomationToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepBrowserAutomationToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,44 +73,44 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepBrowserAutomationToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("browser_automation"u8);
-            writer.WriteObjectValue(BrowserAutomation, options);
+            writer.WriteObjectValue<BrowserAutomationToolCallDetails>(BrowserAutomation, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepBrowserAutomationToolCall IJsonModel<RunStepBrowserAutomationToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RunStepBrowserAutomationToolCall)JsonModelCreateCore(ref reader, options);
+        RunStepBrowserAutomationToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RunStepBrowserAutomationToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepToolCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepBrowserAutomationToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepBrowserAutomationToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepBrowserAutomationToolCall DeserializeRunStepBrowserAutomationToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "browser_automation";
             string id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             BrowserAutomationToolCallDetails browserAutomation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -126,12 +126,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("browser_automation"u8))
                 {
-                    browserAutomation = BrowserAutomationToolCallDetails.DeserializeBrowserAutomationToolCallDetails(prop.Value, options);
+                    browserAutomation = global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallDetails.DeserializeBrowserAutomationToolCallDetails(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RunStepBrowserAutomationToolCall(@type, id, additionalBinaryDataProperties, browserAutomation);

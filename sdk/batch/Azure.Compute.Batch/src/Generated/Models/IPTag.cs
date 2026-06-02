@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class IPTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.IPTag"/>. </summary>
         public IPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.IPTag"/>. </summary>
         /// <param name="ipTagType"> The IP Tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPTag(string ipTagType, string tag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IpTagType = ipTagType;
             Tag = tag;

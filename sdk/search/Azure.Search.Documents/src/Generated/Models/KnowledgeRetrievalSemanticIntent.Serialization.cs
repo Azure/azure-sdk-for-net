@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> A semantic query intent. </summary>
-    public partial class KnowledgeRetrievalSemanticIntent : KnowledgeRetrievalIntent, IJsonModel<KnowledgeRetrievalSemanticIntent>
+    public partial class KnowledgeRetrievalSemanticIntent : KnowledgeRetrievalIntent, IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/> for deserialization. </summary>
         internal KnowledgeRetrievalSemanticIntent()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeRetrievalIntent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeRetrievalSemanticIntent(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent.DeserializeKnowledgeRetrievalSemanticIntent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeRetrievalSemanticIntent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeRetrievalSemanticIntent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeRetrievalSemanticIntent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeRetrievalSemanticIntent IPersistableModel<KnowledgeRetrievalSemanticIntent>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeRetrievalSemanticIntent)PersistableModelCreateCore(data, options);
+        KnowledgeRetrievalSemanticIntent IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>.Create(BinaryData data, ModelReaderWriterOptions options) => ((KnowledgeRetrievalSemanticIntent)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeRetrievalSemanticIntent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeRetrievalSemanticIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,10 +74,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeRetrievalSemanticIntent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("search"u8);
@@ -86,31 +86,31 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeRetrievalSemanticIntent IJsonModel<KnowledgeRetrievalSemanticIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeRetrievalSemanticIntent)JsonModelCreateCore(ref reader, options);
+        KnowledgeRetrievalSemanticIntent IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((KnowledgeRetrievalSemanticIntent)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeRetrievalIntent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeRetrievalSemanticIntent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeRetrievalSemanticIntent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent.DeserializeKnowledgeRetrievalSemanticIntent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeRetrievalSemanticIntent DeserializeKnowledgeRetrievalSemanticIntent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             KnowledgeRetrievalIntentType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string search = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -124,9 +124,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     search = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeRetrievalSemanticIntent(@type, additionalBinaryDataProperties, search);

@@ -17,9 +17,9 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> An advanced XML model for testing various property types and XML features. </summary>
-    public partial class XmlAdvancedModel : IPersistableModel<XmlAdvancedModel>, IXmlSerializable
+    public partial class XmlAdvancedModel : IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.XmlAdvancedModel"/> for deserialization. </summary>
         internal XmlAdvancedModel()
         {
         }
@@ -28,78 +28,78 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual XmlAdvancedModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeXmlAdvancedModel(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return global::BasicTypeSpec.XmlAdvancedModel.DeserializeXmlAdvancedModel(global::System.Xml.Linq.XElement.Load(dataStream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlAdvancedModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (MemoryStream stream = new MemoryStream(256))
                     {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        using (XmlWriter writer = global::System.Xml.XmlWriter.Create(stream, global::BasicTypeSpec.ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "AdvancedXmlModel");
+                            this.WriteXml(writer, options, "AdvancedXmlModel");
                         }
-                        if (stream.Position > int.MaxValue)
+                        if ((stream.Position > int.MaxValue))
                         {
-                            return BinaryData.FromStream(stream);
+                            return global::System.BinaryData.FromStream(stream);
                         }
                         else
                         {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, ((int)stream.Position)));
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlAdvancedModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<XmlAdvancedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        XmlAdvancedModel IPersistableModel<XmlAdvancedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        XmlAdvancedModel IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<XmlAdvancedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        /// <param name="xmlAdvancedModel"> The <see cref="XmlAdvancedModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="xmlAdvancedModel"> The <see cref="global::BasicTypeSpec.XmlAdvancedModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(XmlAdvancedModel xmlAdvancedModel)
         {
-            if (xmlAdvancedModel == null)
+            if ((xmlAdvancedModel == null))
             {
                 return null;
             }
             XmlWriterContent content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(xmlAdvancedModel, ModelSerializationExtensions.WireOptions, "AdvancedXmlModel");
+            content.XmlWriter.WriteObjectValue(xmlAdvancedModel, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, "AdvancedXmlModel");
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="XmlAdvancedModel"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::BasicTypeSpec.XmlAdvancedModel"/> from. </param>
         public static explicit operator XmlAdvancedModel(Response response)
         {
             using Stream stream = response.ContentStream;
-            if (stream == null)
+            if ((stream == null))
             {
                 return default;
             }
 
-            return DeserializeXmlAdvancedModel(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return global::BasicTypeSpec.XmlAdvancedModel.DeserializeXmlAdvancedModel(global::System.Xml.Linq.XElement.Load(stream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -107,14 +107,14 @@ namespace BasicTypeSpec
         /// <param name="nameHint"> An optional name hint. </param>
         private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteStartElement(nameHint);
             }
 
-            XmlModelWriteCore(writer, options);
+            this.XmlModelWriteCore(writer, options);
 
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteEndElement();
             }
@@ -124,10 +124,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "X"))
             {
-                throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlAdvancedModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartAttribute("id");
@@ -155,19 +155,19 @@ namespace BasicTypeSpec
             writer.WriteStartElement("score");
             writer.WriteValue(Score);
             writer.WriteEndElement();
-            if (Optional.IsDefined(OptionalString))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalString))
             {
                 writer.WriteStartElement("optionalString");
                 writer.WriteValue(OptionalString);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(OptionalInt))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalInt))
             {
                 writer.WriteStartElement("optionalInt");
                 writer.WriteValue(OptionalInt.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(NullableString))
+            if (global::BasicTypeSpec.Optional.IsDefined(NullableString))
             {
                 writer.WriteStartElement("nullableString");
                 writer.WriteValue(NullableString);
@@ -191,7 +191,7 @@ namespace BasicTypeSpec
             foreach (XmlItem item in UnwrappedItems)
             {
                 writer.WriteStartElement("unwrappedItems");
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<XmlItem>(item, options);
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("wrappedColors");
@@ -206,17 +206,17 @@ namespace BasicTypeSpec
             foreach (XmlItem item in Items)
             {
                 writer.WriteStartElement("Item");
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<XmlItem>(item, options);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
             writer.WriteStartElement("nestedModel");
-            writer.WriteObjectValue(NestedModel, options);
+            writer.WriteObjectValue<XmlNestedModel>(NestedModel, options);
             writer.WriteEndElement();
-            if (Optional.IsDefined(OptionalNestedModel))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalNestedModel))
             {
                 writer.WriteStartElement("optionalNestedModel");
-                writer.WriteObjectValue(OptionalNestedModel, options);
+                writer.WriteObjectValue<XmlNestedModel>(OptionalNestedModel, options);
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("metadata");
@@ -236,7 +236,7 @@ namespace BasicTypeSpec
             writer.WriteStartElement("data");
             writer.WriteBase64StringValue(Data.ToArray(), "D");
             writer.WriteEndElement();
-            if (Optional.IsCollectionDefined(OptionalRecordUnknown))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(OptionalRecordUnknown))
             {
                 writer.WriteStartElement("optionalRecordUnknown");
                 foreach (var pair in OptionalRecordUnknown)
@@ -253,13 +253,13 @@ namespace BasicTypeSpec
             writer.WriteStartElement("extensibleEnum");
             writer.WriteValue(ExtensibleEnum.ToString());
             writer.WriteEndElement();
-            if (Optional.IsDefined(OptionalFixedEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalFixedEnum))
             {
                 writer.WriteStartElement("optionalFixedEnum");
-                writer.WriteValue((int)OptionalFixedEnum.Value);
+                writer.WriteValue(((int)OptionalFixedEnum.Value));
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(OptionalExtensibleEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalExtensibleEnum))
             {
                 writer.WriteStartElement("optionalExtensibleEnum");
                 writer.WriteValue(OptionalExtensibleEnum.Value.ToSerialInt32());
@@ -277,30 +277,30 @@ namespace BasicTypeSpec
             }
             writer.WriteEndElement();
             writer.WriteStartElement("bar", "anotherModel", "http://www.contoso.com/anothermodel.dtd");
-            writer.WriteObjectValue(AnotherModel, options);
+            writer.WriteObjectValue<XmlNestedModel>(AnotherModel, options);
             writer.WriteEndElement();
             writer.WriteStartElement("modelsWithNamespaces");
             foreach (XmlModelWithNamespace item in ModelsWithNamespaces)
             {
                 writer.WriteStartElement("ns1", "XmlModelWithNamespace", "http://www.example.com/namespace");
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<XmlModelWithNamespace>(item, options);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
             foreach (XmlModelWithNamespace item in UnwrappedModelsWithNamespaces)
             {
                 writer.WriteStartElement("unwrappedModelsWithNamespaces");
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<XmlModelWithNamespace>(item, options);
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("listOfListFoo");
-            foreach (IList<XmlItem> item in ListOfListFoo)
+            foreach (IList<global::BasicTypeSpec.XmlItem> item in ListOfListFoo)
             {
                 writer.WriteStartElement("Array");
                 foreach (XmlItem item0 in item)
                 {
                     writer.WriteStartElement("XmlItem");
-                    writer.WriteObjectValue(item0, options);
+                    writer.WriteObjectValue<XmlItem>(item0, options);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
@@ -310,7 +310,7 @@ namespace BasicTypeSpec
             foreach (var pair in DictionaryFoo)
             {
                 writer.WriteStartElement(pair.Key);
-                writer.WriteObjectValue(pair.Value, options);
+                writer.WriteObjectValue<XmlItem>(pair.Value, options);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
@@ -321,7 +321,7 @@ namespace BasicTypeSpec
                 foreach (var pair0 in pair.Value)
                 {
                     writer.WriteStartElement(pair0.Key);
-                    writer.WriteObjectValue(pair0.Value, options);
+                    writer.WriteObjectValue<XmlItem>(pair0.Value, options);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
@@ -334,20 +334,20 @@ namespace BasicTypeSpec
                 foreach (XmlItem item in pair.Value)
                 {
                     writer.WriteStartElement("XmlItem");
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<XmlItem>(item, options);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
             writer.WriteStartElement("listOfDictionaryFoo");
-            foreach (IDictionary<string, XmlItem> item in ListOfDictionaryFoo)
+            foreach (IDictionary<string, global::BasicTypeSpec.XmlItem> item in ListOfDictionaryFoo)
             {
                 writer.WriteStartElement("Record");
                 foreach (var pair in item)
                 {
                     writer.WriteStartElement(pair.Key);
-                    writer.WriteObjectValue(pair.Value, options);
+                    writer.WriteObjectValue<XmlItem>(pair.Value, options);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
@@ -360,7 +360,7 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static XmlAdvancedModel DeserializeXmlAdvancedModel(XElement element, ModelReaderWriterOptions options)
         {
-            if (element == null)
+            if ((element == null))
             {
                 return null;
             }
@@ -386,16 +386,16 @@ namespace BasicTypeSpec
             string content = default;
             IList<string> unwrappedStrings = new List<string>();
             IList<int> unwrappedCounts = new List<int>();
-            IList<XmlItem> unwrappedItems = new List<XmlItem>();
+            IList<global::BasicTypeSpec.XmlItem> unwrappedItems = new List<global::BasicTypeSpec.XmlItem>();
             IList<string> wrappedColors = default;
-            IList<XmlItem> items = default;
+            IList<global::BasicTypeSpec.XmlItem> items = default;
             XmlNestedModel nestedModel = default;
             XmlNestedModel optionalNestedModel = default;
             IDictionary<string, string> metadata = default;
             DateTimeOffset createdAt = default;
             TimeSpan duration = default;
             BinaryData data = default;
-            IDictionary<string, BinaryData> optionalRecordUnknown = default;
+            IDictionary<string, global::System.BinaryData> optionalRecordUnknown = default;
             StringFixedEnum fixedEnum = default;
             StringExtensibleEnum extensibleEnum = default;
             IntFixedEnum? optionalFixedEnum = default;
@@ -404,42 +404,42 @@ namespace BasicTypeSpec
             int daysUsed = default;
             IList<string> fooItems = default;
             XmlNestedModel anotherModel = default;
-            IList<XmlModelWithNamespace> modelsWithNamespaces = default;
-            IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces = new List<XmlModelWithNamespace>();
-            IList<IList<XmlItem>> listOfListFoo = default;
-            IDictionary<string, XmlItem> dictionaryFoo = default;
-            IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default;
-            IDictionary<string, IList<XmlItem>> dictionaryListFoo = default;
-            IList<IDictionary<string, XmlItem>> listOfDictionaryFoo = default;
+            IList<global::BasicTypeSpec.XmlModelWithNamespace> modelsWithNamespaces = default;
+            IList<global::BasicTypeSpec.XmlModelWithNamespace> unwrappedModelsWithNamespaces = new List<global::BasicTypeSpec.XmlModelWithNamespace>();
+            IList<global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> listOfListFoo = default;
+            IDictionary<string, global::BasicTypeSpec.XmlItem> dictionaryFoo = default;
+            IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> dictionaryOfDictionaryFoo = default;
+            IDictionary<string, global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> dictionaryListFoo = default;
+            IList<global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> listOfDictionaryFoo = default;
 
             foreach (var attr in element.Attributes())
             {
                 string localName = attr.Name.LocalName;
                 XNamespace ns = attr.Name.Namespace;
 
-                if (localName == "id")
+                if ((localName == "id"))
                 {
-                    id = (string)attr;
+                    id = ((string)attr);
                     continue;
                 }
-                if (localName == "version")
+                if ((localName == "version"))
                 {
-                    version = (int)attr;
+                    version = ((int)attr);
                     continue;
                 }
-                if (localName == "isActive")
+                if ((localName == "isActive"))
                 {
-                    isActive = (bool)attr;
+                    isActive = ((bool)attr);
                     continue;
                 }
-                if (localName == "xml-id")
+                if ((localName == "xml-id"))
                 {
-                    xmlIdentifier = (string)attr;
+                    xmlIdentifier = ((string)attr);
                     continue;
                 }
-                if (localName == "label" && ns == labelNs)
+                if (((localName == "label") && (ns == labelNs)))
                 {
-                    label = (string)attr;
+                    label = ((string)attr);
                     continue;
                 }
             }
@@ -449,245 +449,245 @@ namespace BasicTypeSpec
                 string localName = child.Name.LocalName;
                 XNamespace ns = child.Name.Namespace;
 
-                if (localName == "name")
+                if ((localName == "name"))
                 {
-                    name = (string)child;
+                    name = ((string)child);
                     continue;
                 }
-                if (localName == "age")
+                if ((localName == "age"))
                 {
-                    age = (int)child;
+                    age = ((int)child);
                     continue;
                 }
-                if (localName == "enabled")
+                if ((localName == "enabled"))
                 {
-                    enabled = (bool)child;
+                    enabled = ((bool)child);
                     continue;
                 }
-                if (localName == "score")
+                if ((localName == "score"))
                 {
-                    score = (float)child;
+                    score = ((float)child);
                     continue;
                 }
-                if (localName == "optionalString")
+                if ((localName == "optionalString"))
                 {
-                    optionalString = (string)child;
+                    optionalString = ((string)child);
                     continue;
                 }
-                if (localName == "optionalInt")
+                if ((localName == "optionalInt"))
                 {
-                    optionalInt = (int?)child;
+                    optionalInt = ((int?)child);
                     continue;
                 }
-                if (localName == "nullableString")
+                if ((localName == "nullableString"))
                 {
-                    nullableString = (string)child;
+                    nullableString = ((string)child);
                     continue;
                 }
-                if (localName == "RenamedProperty")
+                if ((localName == "RenamedProperty"))
                 {
-                    originalName = (string)child;
+                    originalName = ((string)child);
                     continue;
                 }
-                if (localName == "unwrappedStrings")
+                if ((localName == "unwrappedStrings"))
                 {
-                    unwrappedStrings.Add((string)child);
+                    unwrappedStrings.Add(((string)child));
                     continue;
                 }
-                if (localName == "unwrappedCounts")
+                if ((localName == "unwrappedCounts"))
                 {
-                    unwrappedCounts.Add((int)child);
+                    unwrappedCounts.Add(((int)child));
                     continue;
                 }
-                if (localName == "unwrappedItems")
+                if ((localName == "unwrappedItems"))
                 {
-                    unwrappedItems.Add(XmlItem.DeserializeXmlItem(child, options));
+                    unwrappedItems.Add(global::BasicTypeSpec.XmlItem.DeserializeXmlItem(child, options));
                     continue;
                 }
-                if (localName == "wrappedColors")
+                if ((localName == "wrappedColors"))
                 {
                     List<string> array = new List<string>();
                     foreach (var e in child.Elements("string"))
                     {
-                        array.Add((string)e);
+                        array.Add(((string)e));
                     }
                     wrappedColors = array;
                     continue;
                 }
-                if (localName == "ItemCollection")
+                if ((localName == "ItemCollection"))
                 {
-                    List<XmlItem> array = new List<XmlItem>();
+                    List<global::BasicTypeSpec.XmlItem> array = new List<global::BasicTypeSpec.XmlItem>();
                     foreach (var e in child.Elements("Item"))
                     {
-                        array.Add(XmlItem.DeserializeXmlItem(e, options));
+                        array.Add(global::BasicTypeSpec.XmlItem.DeserializeXmlItem(e, options));
                     }
                     items = array;
                     continue;
                 }
-                if (localName == "nestedModel")
+                if ((localName == "nestedModel"))
                 {
-                    nestedModel = XmlNestedModel.DeserializeXmlNestedModel(child, options);
+                    nestedModel = global::BasicTypeSpec.XmlNestedModel.DeserializeXmlNestedModel(child, options);
                     continue;
                 }
-                if (localName == "optionalNestedModel")
+                if ((localName == "optionalNestedModel"))
                 {
-                    optionalNestedModel = XmlNestedModel.DeserializeXmlNestedModel(child, options);
+                    optionalNestedModel = global::BasicTypeSpec.XmlNestedModel.DeserializeXmlNestedModel(child, options);
                     continue;
                 }
-                if (localName == "metadata")
+                if ((localName == "metadata"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var e in child.Elements())
                     {
-                        dictionary.Add(e.Name.LocalName, (string)e);
+                        dictionary.Add(e.Name.LocalName, ((string)e));
                     }
                     metadata = dictionary;
                     continue;
                 }
-                if (localName == "createdAt")
+                if ((localName == "createdAt"))
                 {
                     createdAt = child.GetDateTimeOffset("O");
                     continue;
                 }
-                if (localName == "duration")
+                if ((localName == "duration"))
                 {
                     duration = child.GetTimeSpan("P");
                     continue;
                 }
-                if (localName == "data")
+                if ((localName == "data"))
                 {
-                    data = BinaryData.FromBytes(child.GetBytesFromBase64("D"));
+                    data = global::System.BinaryData.FromBytes(child.GetBytesFromBase64("D"));
                     continue;
                 }
-                if (localName == "optionalRecordUnknown")
+                if ((localName == "optionalRecordUnknown"))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var e in child.Elements())
                     {
-                        dictionary.Add(e.Name.LocalName, BinaryData.FromString(e.Value));
+                        dictionary.Add(e.Name.LocalName, global::System.BinaryData.FromString(e.Value));
                     }
                     optionalRecordUnknown = dictionary;
                     continue;
                 }
-                if (localName == "fixedEnum")
+                if ((localName == "fixedEnum"))
                 {
                     fixedEnum = ((string)child).ToStringFixedEnum();
                     continue;
                 }
-                if (localName == "extensibleEnum")
+                if ((localName == "extensibleEnum"))
                 {
-                    extensibleEnum = new StringExtensibleEnum((string)child);
+                    extensibleEnum = new StringExtensibleEnum(((string)child));
                     continue;
                 }
-                if (localName == "optionalFixedEnum")
+                if ((localName == "optionalFixedEnum"))
                 {
                     optionalFixedEnum = ((int)child).ToIntFixedEnum();
                     continue;
                 }
-                if (localName == "optionalExtensibleEnum")
+                if ((localName == "optionalExtensibleEnum"))
                 {
-                    optionalExtensibleEnum = new IntExtensibleEnum((int)child);
+                    optionalExtensibleEnum = new IntExtensibleEnum(((int)child));
                     continue;
                 }
-                if (localName == "daysUsed" && ns == daysUsedNs)
+                if (((localName == "daysUsed") && (ns == daysUsedNs)))
                 {
-                    daysUsed = (int)child;
+                    daysUsed = ((int)child);
                     continue;
                 }
-                if (localName == "fooItems" && ns == fooItemsNs)
+                if (((localName == "fooItems") && (ns == fooItemsNs)))
                 {
                     List<string> array = new List<string>();
                     foreach (var e in child.Elements("string"))
                     {
-                        array.Add((string)e);
+                        array.Add(((string)e));
                     }
                     fooItems = array;
                     continue;
                 }
-                if (localName == "anotherModel" && ns == anotherModelNs)
+                if (((localName == "anotherModel") && (ns == anotherModelNs)))
                 {
-                    anotherModel = XmlNestedModel.DeserializeXmlNestedModel(child, options);
+                    anotherModel = global::BasicTypeSpec.XmlNestedModel.DeserializeXmlNestedModel(child, options);
                     continue;
                 }
-                if (localName == "modelsWithNamespaces")
+                if ((localName == "modelsWithNamespaces"))
                 {
-                    List<XmlModelWithNamespace> array = new List<XmlModelWithNamespace>();
-                    foreach (var e in child.Elements(modelsWithNamespacesNs + "XmlModelWithNamespace"))
+                    List<global::BasicTypeSpec.XmlModelWithNamespace> array = new List<global::BasicTypeSpec.XmlModelWithNamespace>();
+                    foreach (var e in child.Elements((modelsWithNamespacesNs + "XmlModelWithNamespace")))
                     {
-                        array.Add(XmlModelWithNamespace.DeserializeXmlModelWithNamespace(e, options));
+                        array.Add(global::BasicTypeSpec.XmlModelWithNamespace.DeserializeXmlModelWithNamespace(e, options));
                     }
                     modelsWithNamespaces = array;
                     continue;
                 }
-                if (localName == "unwrappedModelsWithNamespaces")
+                if ((localName == "unwrappedModelsWithNamespaces"))
                 {
-                    unwrappedModelsWithNamespaces.Add(XmlModelWithNamespace.DeserializeXmlModelWithNamespace(child, options));
+                    unwrappedModelsWithNamespaces.Add(global::BasicTypeSpec.XmlModelWithNamespace.DeserializeXmlModelWithNamespace(child, options));
                     continue;
                 }
-                if (localName == "listOfListFoo")
+                if ((localName == "listOfListFoo"))
                 {
-                    List<IList<XmlItem>> array = new List<IList<XmlItem>>();
+                    List<global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> array = new List<global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>>();
                     foreach (var e in child.Elements("Array"))
                     {
-                        List<XmlItem> list = new List<XmlItem>();
+                        List<global::BasicTypeSpec.XmlItem> list = new List<global::BasicTypeSpec.XmlItem>();
                         foreach (var item in e.Elements())
                         {
-                            list.Add(XmlItem.DeserializeXmlItem(item, options));
+                            list.Add(global::BasicTypeSpec.XmlItem.DeserializeXmlItem(item, options));
                         }
                         array.Add(list);
                     }
                     listOfListFoo = array;
                     continue;
                 }
-                if (localName == "dictionaryFoo")
+                if ((localName == "dictionaryFoo"))
                 {
-                    Dictionary<string, XmlItem> dictionary = new Dictionary<string, XmlItem>();
+                    Dictionary<string, global::BasicTypeSpec.XmlItem> dictionary = new Dictionary<string, global::BasicTypeSpec.XmlItem>();
                     foreach (var e in child.Elements())
                     {
-                        dictionary.Add(e.Name.LocalName, XmlItem.DeserializeXmlItem(e, options));
+                        dictionary.Add(e.Name.LocalName, global::BasicTypeSpec.XmlItem.DeserializeXmlItem(e, options));
                     }
                     dictionaryFoo = dictionary;
                     continue;
                 }
-                if (localName == "dictionaryOfDictionaryFoo")
+                if ((localName == "dictionaryOfDictionaryFoo"))
                 {
-                    Dictionary<string, IDictionary<string, XmlItem>> dictionary = new Dictionary<string, IDictionary<string, XmlItem>>();
+                    Dictionary<string, global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> dictionary = new Dictionary<string, global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>>();
                     foreach (var e in child.Elements())
                     {
-                        Dictionary<string, XmlItem> dict = new Dictionary<string, XmlItem>();
+                        Dictionary<string, global::BasicTypeSpec.XmlItem> dict = new Dictionary<string, global::BasicTypeSpec.XmlItem>();
                         foreach (var item in e.Elements())
                         {
-                            dict.Add(item.Name.LocalName, XmlItem.DeserializeXmlItem(item, options));
+                            dict.Add(item.Name.LocalName, global::BasicTypeSpec.XmlItem.DeserializeXmlItem(item, options));
                         }
                         dictionary.Add(e.Name.LocalName, dict);
                     }
                     dictionaryOfDictionaryFoo = dictionary;
                     continue;
                 }
-                if (localName == "dictionaryListFoo")
+                if ((localName == "dictionaryListFoo"))
                 {
-                    Dictionary<string, IList<XmlItem>> dictionary = new Dictionary<string, IList<XmlItem>>();
+                    Dictionary<string, global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>> dictionary = new Dictionary<string, global::System.Collections.Generic.IList<global::BasicTypeSpec.XmlItem>>();
                     foreach (var e in child.Elements())
                     {
-                        List<XmlItem> list = new List<XmlItem>();
+                        List<global::BasicTypeSpec.XmlItem> list = new List<global::BasicTypeSpec.XmlItem>();
                         foreach (var item in e.Elements())
                         {
-                            list.Add(XmlItem.DeserializeXmlItem(item, options));
+                            list.Add(global::BasicTypeSpec.XmlItem.DeserializeXmlItem(item, options));
                         }
                         dictionary.Add(e.Name.LocalName, list);
                     }
                     dictionaryListFoo = dictionary;
                     continue;
                 }
-                if (localName == "listOfDictionaryFoo")
+                if ((localName == "listOfDictionaryFoo"))
                 {
-                    List<IDictionary<string, XmlItem>> array = new List<IDictionary<string, XmlItem>>();
+                    List<global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>> array = new List<global::System.Collections.Generic.IDictionary<string, global::BasicTypeSpec.XmlItem>>();
                     foreach (var e in child.Elements("Record"))
                     {
-                        Dictionary<string, XmlItem> dict = new Dictionary<string, XmlItem>();
+                        Dictionary<string, global::BasicTypeSpec.XmlItem> dict = new Dictionary<string, global::BasicTypeSpec.XmlItem>();
                         foreach (var item in e.Elements())
                         {
-                            dict.Add(item.Name.LocalName, XmlItem.DeserializeXmlItem(item, options));
+                            dict.Add(item.Name.LocalName, global::BasicTypeSpec.XmlItem.DeserializeXmlItem(item, options));
                         }
                         array.Add(dict);
                     }
@@ -722,7 +722,7 @@ namespace BasicTypeSpec
                 createdAt,
                 duration,
                 data,
-                optionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (optionalRecordUnknown ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 fixedEnum,
                 extensibleEnum,
                 optionalFixedEnum,
@@ -742,6 +742,6 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => this.WriteXml(writer, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

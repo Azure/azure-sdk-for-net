@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
     {
         protected SharedModelInOperation() => throw null;
 
-        internal SharedModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal SharedModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Public(string name, RequestContext context) => throw null;
 
-        public virtual Task<Response> PublicAsync(string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PublicAsync(string name, RequestContext context) => throw null;
 
-        public virtual Response<SharedModel> Public(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel> Public(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SharedModel>> PublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>> PublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
     }
 }

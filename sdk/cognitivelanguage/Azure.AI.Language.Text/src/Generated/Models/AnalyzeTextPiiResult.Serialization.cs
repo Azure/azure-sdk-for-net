@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
-    public partial class AnalyzeTextPiiResult : AnalyzeTextResult, IJsonModel<AnalyzeTextPiiResult>
+    public partial class AnalyzeTextPiiResult : AnalyzeTextResult, IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPiiResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextPiiResult"/> for deserialization. </summary>
         internal AnalyzeTextPiiResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeTextPiiResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.AnalyzeTextPiiResult.DeserializeAnalyzeTextPiiResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextPiiResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextPiiResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextPiiResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextPiiResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeTextPiiResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextPiiResult IPersistableModel<AnalyzeTextPiiResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (AnalyzeTextPiiResult)PersistableModelCreateCore(data, options);
+        AnalyzeTextPiiResult IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AnalyzeTextPiiResult)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeTextPiiResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeTextPiiResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextPiiResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextPiiResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            writer.WriteObjectValue<PiiResult>(Results, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextPiiResult IJsonModel<AnalyzeTextPiiResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AnalyzeTextPiiResult)JsonModelCreateCore(ref reader, options);
+        AnalyzeTextPiiResult IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AnalyzeTextPiiResult)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextPiiResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextPiiResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextPiiResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextPiiResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.AnalyzeTextPiiResult.DeserializeAnalyzeTextPiiResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeTextPiiResult DeserializeAnalyzeTextPiiResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             AnalyzeTextResultsKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             PiiResult results = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +120,12 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("results"u8))
                 {
-                    results = PiiResult.DeserializePiiResult(prop.Value, options);
+                    results = global::Azure.AI.Language.Text.PiiResult.DeserializePiiResult(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnalyzeTextPiiResult(kind, additionalBinaryDataProperties, results);

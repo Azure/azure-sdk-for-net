@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunError"/>. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
         internal RunError(string code, string message)
@@ -25,11 +25,11 @@ namespace Azure.AI.Agents.Persistent
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunError"/>. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunError(string code, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

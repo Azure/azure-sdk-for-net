@@ -14,15 +14,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasDateFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasDateFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasDateFormat"/>. </summary>
         public AtlasDateFormat()
         {
             AvailableLocales = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasDateFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasDateFormat"/>. </summary>
         /// <param name="availableLocales"> An array of available locales. </param>
         /// <param name="calendar"> Calendar. </param>
         /// <param name="dateInstance"> The date format. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="timeInstance"> The date format. </param>
         /// <param name="timeZone"> The timezone information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasDateFormat(IList<string> availableLocales, float? calendar, AtlasDateFormat dateInstance, AtlasDateFormat dateTimeInstance, AtlasDateFormat instance, bool? lenient, AtlasNumberFormat numberFormat, AtlasDateFormat timeInstance, AtlasTimeZone timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasDateFormat(IList<string> availableLocales, float? calendar, AtlasDateFormat dateInstance, AtlasDateFormat dateTimeInstance, AtlasDateFormat instance, bool? lenient, AtlasNumberFormat numberFormat, AtlasDateFormat timeInstance, AtlasTimeZone timeZone, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AvailableLocales = availableLocales;
             Calendar = calendar;

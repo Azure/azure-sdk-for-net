@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeStoreProjection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection"/>. </summary>
         public KnowledgeStoreProjection()
         {
-            Tables = new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
-            Objects = new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>();
-            Files = new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
+            Tables = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector>();
+            Objects = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector>();
+            Files = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection"/>. </summary>
         /// <param name="tables"> Projections to Azure Table storage. </param>
         /// <param name="objects"> Projections to Azure Blob storage. </param>
         /// <param name="files"> Projections to Azure File storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeStoreProjection(IList<KnowledgeStoreTableProjectionSelector> tables, IList<KnowledgeStoreObjectProjectionSelector> objects, IList<KnowledgeStoreFileProjectionSelector> files, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeStoreProjection(IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> tables, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> objects, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> files, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Tables = tables;
             Objects = objects;
@@ -39,12 +39,12 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Projections to Azure Table storage. </summary>
-        public IList<KnowledgeStoreTableProjectionSelector> Tables { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> Tables { get; }
 
         /// <summary> Projections to Azure Blob storage. </summary>
-        public IList<KnowledgeStoreObjectProjectionSelector> Objects { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> Objects { get; }
 
         /// <summary> Projections to Azure File storage. </summary>
-        public IList<KnowledgeStoreFileProjectionSelector> Files { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> Files { get; }
     }
 }

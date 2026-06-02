@@ -17,9 +17,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class ModelInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -33,18 +33,18 @@ namespace Azure.AI.AnomalyDetector
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public ModelInfo(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public ModelInfo(global::System.Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
             StartTime = startTime;
             EndTime = endTime;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelInfo(global::System.Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<global::Azure.AI.AnomalyDetector.ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -95,7 +95,7 @@ namespace Azure.AI.AnomalyDetector
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection.
         /// </summary>
-        public Uri DataSource { get; set; }
+        public global::System.Uri DataSource { get; set; }
 
         /// <summary>
         /// Data schema of the input data source. The default
@@ -134,7 +134,7 @@ namespace Azure.AI.AnomalyDetector
         public ModelStatus? Status { get; }
 
         /// <summary> Error messages after failure to create a model. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<global::Azure.AI.AnomalyDetector.ErrorResponse> Errors { get; }
 
         /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
         public DiagnosticsInfo DiagnosticsInfo { get; }

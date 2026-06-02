@@ -19,38 +19,38 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacCollectionResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacCollectionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacCollectionResource"/>. </summary>
         /// <param name="id"> Unique identifier for the collection. </param>
         /// <param name="description"> Detailed description of the collection. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="license"> License identifier for the collection data. </param>
         /// <param name="extent"> Spatial and temporal extent of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="description"/>, <paramref name="links"/>, <paramref name="license"/> or <paramref name="extent"/> is null. </exception>
-        public StacCollectionResource(string id, string description, IEnumerable<StacLink> links, string license, StacExtensionExtent extent)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="description"/>, <paramref name="links"/>, <paramref name="license"/> or <paramref name="extent"/> is null. </exception>
+        public StacCollectionResource(string id, string description, IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacLink> links, string license, StacExtensionExtent extent)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(links, nameof(links));
-            Argument.AssertNotNull(license, nameof(license));
-            Argument.AssertNotNull(extent, nameof(extent));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(links, nameof(links));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(license, nameof(license));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(extent, nameof(extent));
 
             StacExtensions = new ChangeTrackingList<string>();
             Id = id;
             Description = description;
             Links = links.ToList();
-            Assets = new ChangeTrackingDictionary<string, StacAsset>();
-            ItemAssets = new ChangeTrackingDictionary<string, StacItemAsset>();
+            Assets = new ChangeTrackingDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset>();
+            ItemAssets = new ChangeTrackingDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacItemAsset>();
             License = license;
             Extent = extent;
             Keywords = new ChangeTrackingList<string>();
-            Providers = new ChangeTrackingList<StacProvider>();
-            Summaries = new ChangeTrackingDictionary<string, BinaryData>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Providers = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacProvider>();
+            Summaries = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacCollectionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacCollectionResource"/>. </summary>
         /// <param name="createdOn"> MSFT Created. </param>
         /// <param name="updatedOn"> MSFT Updated. </param>
         /// <param name="shortDescription"> MSFT Short Description. </param>
@@ -75,7 +75,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalProperties"></param>
-        internal StacCollectionResource(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
+        internal StacCollectionResource(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, string title, string @type, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> providers, IDictionary<string, global::System.BinaryData> summaries, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -119,7 +119,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string StacVersion { get; set; }
 
         /// <summary> Links to related resources and endpoints. </summary>
-        public IList<StacLink> Links { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacLink> Links { get; }
 
         /// <summary> Human-readable title for the collection. </summary>
         public string Title { get; set; }
@@ -128,13 +128,13 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Type { get; set; }
 
         /// <summary> Assets. </summary>
-        public IDictionary<string, StacAsset> Assets { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> Assets { get; }
 
         /// <summary>
         /// Item Assets
         /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
         /// </summary>
-        public IDictionary<string, StacItemAsset> ItemAssets { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacItemAsset> ItemAssets { get; }
 
         /// <summary> License identifier for the collection data. </summary>
         public string License { get; set; }
@@ -146,13 +146,13 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Keywords { get; }
 
         /// <summary> Organizations or individuals who provide the collection data. </summary>
-        public IList<StacProvider> Providers { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> Providers { get; }
 
         /// <summary>
         /// Summaries
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -175,9 +175,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Summaries { get; }
+        public IDictionary<string, global::System.BinaryData> Summaries { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

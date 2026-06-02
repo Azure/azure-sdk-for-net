@@ -14,26 +14,26 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexerStatus value) => value switch
         {
-            IndexerStatus.Unknown => "unknown",
-            IndexerStatus.Error => "error",
-            IndexerStatus.Running => "running",
+            global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown => "unknown",
+            global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Error => "error",
+            global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Running => "running",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static IndexerStatus ToIndexerStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
             {
-                return IndexerStatus.Unknown;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "error"))
             {
-                return IndexerStatus.Error;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Error;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
             {
-                return IndexerStatus.Running;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerStatus.Running;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerStatus value.");
         }

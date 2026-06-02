@@ -11,9 +11,9 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    public partial class BrowserAutomationPreviewTool : ProjectsAgentTool, IJsonModel<BrowserAutomationPreviewTool>
+    public partial class BrowserAutomationPreviewTool : ProjectsAgentTool, IJsonModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool"/> for deserialization. </summary>
         internal BrowserAutomationPreviewTool()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBrowserAutomationPreviewTool(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrowserAutomationPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BrowserAutomationPreviewTool IPersistableModel<BrowserAutomationPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (BrowserAutomationPreviewTool)PersistableModelCreateCore(data, options);
+        BrowserAutomationPreviewTool IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((BrowserAutomationPreviewTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrowserAutomationPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BrowserAutomationPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,67 +71,67 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("browser_automation_preview"u8);
-            writer.WriteObjectValue(ToolParameters, options);
+            writer.WriteObjectValue<BrowserAutomationToolOptions>(ToolParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BrowserAutomationPreviewTool IJsonModel<BrowserAutomationPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BrowserAutomationPreviewTool)JsonModelCreateCore(ref reader, options);
+        BrowserAutomationPreviewTool IJsonModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((BrowserAutomationPreviewTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBrowserAutomationPreviewTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BrowserAutomationPreviewTool DeserializeBrowserAutomationPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs = default;
             BrowserAutomationToolOptions toolParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,26 +152,26 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Agents.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    toolParameters = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
+                    toolParameters = global::Azure.AI.Projects.Agents.BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BrowserAutomationPreviewTool(
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>()),
                 toolParameters);
         }
     }

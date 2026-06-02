@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct TextAuthoringOperationStatus : IEquatable<TextAuthoringOperationStatus>
+    public readonly partial struct TextAuthoringOperationStatus : IEquatable<global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus>
     {
         private readonly string _value;
         private const string NotStartedValue = "notStarted";
@@ -22,12 +22,12 @@ namespace Azure.AI.Language.Text.Authoring
         private const string CancellingValue = "cancelling";
         private const string PartiallyCompletedValue = "partiallyCompleted";
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringOperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAuthoringOperationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -53,34 +53,34 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the PartiallyCompleted. </summary>
         public static TextAuthoringOperationStatus PartiallyCompleted { get; } = new TextAuthoringOperationStatus(PartiallyCompletedValue);
 
-        /// <summary> Determines if two <see cref="TextAuthoringOperationStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextAuthoringOperationStatus left, TextAuthoringOperationStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TextAuthoringOperationStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextAuthoringOperationStatus left, TextAuthoringOperationStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TextAuthoringOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TextAuthoringOperationStatus(string value) => new TextAuthoringOperationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="TextAuthoringOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringOperationStatus?(string value) => value == null ? null : new TextAuthoringOperationStatus(value);
+        public static implicit operator TextAuthoringOperationStatus?(string value) => (value == null) ? null : new TextAuthoringOperationStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TextAuthoringOperationStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TextAuthoringOperationStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TextAuthoringOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TextAuthoringOperationStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

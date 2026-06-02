@@ -18,33 +18,33 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected ParamAliasClient() => throw null;
 
-        public ParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
+        public ParamAliasClient(string blobName) : this(new global::System.Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public ParamAliasClient(string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public ParamAliasClient(string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new global::System.Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal ParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
+        internal ParamAliasClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public ParamAliasClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public ParamAliasClient(global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ParamAliasClient(ParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ParamAliasClient(ParamAliasClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithAliasedName(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithAliasedNameAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithAliasedNameAsync(RequestContext context) => throw null;
 
         public virtual Response WithAliasedName(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAliasedNameAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithAliasedNameAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithOriginalName(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithOriginalNameAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithOriginalNameAsync(RequestContext context) => throw null;
 
         public virtual Response WithOriginalName(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithOriginalNameAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithOriginalNameAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

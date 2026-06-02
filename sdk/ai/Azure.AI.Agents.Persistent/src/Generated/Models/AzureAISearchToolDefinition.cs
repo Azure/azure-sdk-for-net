@@ -13,15 +13,15 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class AzureAISearchToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolDefinition"/>. </summary>
         public AzureAISearchToolDefinition() : base("azure_ai_search")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal AzureAISearchToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

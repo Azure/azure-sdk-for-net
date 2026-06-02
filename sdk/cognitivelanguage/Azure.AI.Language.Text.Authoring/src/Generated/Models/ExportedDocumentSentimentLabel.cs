@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedDocumentSentimentLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedDocumentSentimentLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel"/>. </summary>
         public ExportedDocumentSentimentLabel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedDocumentSentimentLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel"/>. </summary>
         /// <param name="category"> The sentiment category. </param>
         /// <param name="offset"> Start position for the sentiment text. </param>
         /// <param name="length"> Length for the sentiment text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedDocumentSentimentLabel(TextAuthoringSentiment? category, int? offset, int? length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedDocumentSentimentLabel(TextAuthoringSentiment? category, int? offset, int? length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Offset = offset;

@@ -7,13 +7,13 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal readonly partial struct SampleType : IEquatable<SampleType>
+    internal readonly partial struct SampleType : IEquatable<global::Azure.AI.Projects.Evaluation.SampleType>
     {
         private readonly string _value;
         /// <summary> A sample from the evaluation result. </summary>
         private const string EvaluationResultSampleValue = "EvaluationResultSample";
 
-        /// <summary> Initializes a new instance of <see cref="SampleType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
         public SampleType(string value)
         {
@@ -23,34 +23,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> A sample from the evaluation result. </summary>
         public static SampleType EvaluationResultSample { get; } = new SampleType(EvaluationResultSampleValue);
 
-        /// <summary> Determines if two <see cref="SampleType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.SampleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SampleType left, SampleType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SampleType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.SampleType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SampleType left, SampleType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SampleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SampleType(string value) => new SampleType(value);
 
-        /// <summary> Converts a string to a <see cref="SampleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SampleType?(string value) => value == null ? null : new SampleType(value);
+        public static implicit operator SampleType?(string value) => (value == null) ? null : new SampleType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SampleType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SampleType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SampleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SampleType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

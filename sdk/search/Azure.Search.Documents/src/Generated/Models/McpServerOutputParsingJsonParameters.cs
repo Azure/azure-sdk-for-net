@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class McpServerOutputParsingJsonParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsingJsonParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingJsonParameters"/>. </summary>
         /// <param name="documentsPath"> The JSON path to the array of documents in the tool output. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documentsPath"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="documentsPath"/> is null. </exception>
         public McpServerOutputParsingJsonParameters(string documentsPath)
         {
-            Argument.AssertNotNull(documentsPath, nameof(documentsPath));
+            global::Azure.Search.Documents.Argument.AssertNotNull(documentsPath, nameof(documentsPath));
 
             DocumentsPath = documentsPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsingJsonParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingJsonParameters"/>. </summary>
         /// <param name="documentsPath"> The JSON path to the array of documents in the tool output. </param>
         /// <param name="includeContext"> Whether to include surrounding context from the JSON output alongside extracted documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerOutputParsingJsonParameters(string documentsPath, bool? includeContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerOutputParsingJsonParameters(string documentsPath, bool? includeContext, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DocumentsPath = documentsPath;
             IncludeContext = includeContext;

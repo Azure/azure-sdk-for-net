@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Models
     internal partial class SearchDocumentsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SearchDocumentsResult"/>. </summary>
         public SearchDocumentsResult()
         {
-            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            Answers = new ChangeTrackingList<QueryAnswerResult>();
-            Results = new ChangeTrackingList<SearchResult>();
+            Facets = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>>();
+            Answers = new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryAnswerResult>();
+            Results = new ChangeTrackingList<global::Azure.Search.Documents.Models.SearchResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SearchDocumentsResult"/>. </summary>
         /// <param name="count"> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="facets"> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
         /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> facets, IReadOnlyList<global::Azure.Search.Documents.Models.QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<global::Azure.Search.Documents.Models.SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Coverage = coverage;
@@ -60,10 +60,10 @@ namespace Azure.Search.Documents.Models
         public double? Coverage { get; }
 
         /// <summary> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </summary>
-        public IReadOnlyDictionary<string, IList<FacetResult>> Facets { get; }
+        public IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> Facets { get; }
 
         /// <summary> The answers query results for the search operation; null if the answers query parameter was not specified or set to 'none'. </summary>
-        public IReadOnlyList<QueryAnswerResult> Answers { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.QueryAnswerResult> Answers { get; }
 
         /// <summary> Debug information that applies to the search results as a whole. </summary>
         public DebugInfo DebugInfo { get; }
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Models
         public SearchOptions NextPageParameters { get; }
 
         /// <summary> The sequence of results returned by the query. </summary>
-        public IReadOnlyList<SearchResult> Results { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.SearchResult> Results { get; }
 
         /// <summary> Continuation URL returned when the query can't return all the requested results in a single response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </summary>
         public string NextLink { get; }

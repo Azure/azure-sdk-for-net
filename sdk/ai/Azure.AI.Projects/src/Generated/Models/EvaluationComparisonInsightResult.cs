@@ -11,28 +11,28 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Insights from the evaluation comparison. </summary>
     public partial class EvaluationComparisonInsightResult : InsightResult
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult"/>. </summary>
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
-        internal EvaluationComparisonInsightResult(IEnumerable<EvalRunResultComparison> comparisons, string @method) : base(InsightType.EvaluationComparison)
+        internal EvaluationComparisonInsightResult(IEnumerable<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison> comparisons, string @method) : base(global::Azure.AI.Projects.Evaluation.InsightType.EvaluationComparison)
         {
             Comparisons = comparisons.ToList();
             Method = @method;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
-        internal EvaluationComparisonInsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EvalRunResultComparison> comparisons, string @method) : base(@type, additionalBinaryDataProperties)
+        internal EvaluationComparisonInsightResult(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison> comparisons, string @method) : base(@type, additionalBinaryDataProperties)
         {
             Comparisons = comparisons;
             Method = @method;
         }
 
         /// <summary> Comparison results for each treatment run against the baseline. </summary>
-        public IList<EvalRunResultComparison> Comparisons { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison> Comparisons { get; }
 
         /// <summary> The statistical method used for comparison. </summary>
         public string Method { get; }

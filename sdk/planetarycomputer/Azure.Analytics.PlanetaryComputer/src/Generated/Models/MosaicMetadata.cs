@@ -14,16 +14,16 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class MosaicMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MosaicMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadata"/>. </summary>
         public MosaicMetadata()
         {
             Assets = new ChangeTrackingList<string>();
             Defaults = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MosaicMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadata"/>. </summary>
         /// <param name="type"> Type of metadata resource. </param>
         /// <param name="bounds"> Geographic bounding box in [west, south, east, north] format. </param>
         /// <param name="minZoom"> Minimum zoom level supported. </param>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> List of asset identifiers included in the resource. </param>
         /// <param name="defaults"> Defaults. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MosaicMetadata(MosaicMetadataType? @type, string bounds, int? minZoom, int? maxZoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MosaicMetadata(MosaicMetadataType? @type, string bounds, int? minZoom, int? maxZoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Bounds = bounds;

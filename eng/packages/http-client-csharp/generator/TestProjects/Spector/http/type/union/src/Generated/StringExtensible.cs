@@ -18,24 +18,24 @@ namespace _Type.Union
     {
         protected StringExtensible() => throw null;
 
-        internal StringExtensible(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal StringExtensible(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<GetResponse1> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Union.GetResponse1> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<GetResponse1>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Union.GetResponse1>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SendAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SendAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Send(GetResponseProp1 prop, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SendAsync(GetResponseProp1 prop, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SendAsync(GetResponseProp1 prop, CancellationToken cancellationToken = default) => throw null;
     }
 }

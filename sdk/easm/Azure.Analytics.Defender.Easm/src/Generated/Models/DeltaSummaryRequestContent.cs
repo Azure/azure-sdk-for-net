@@ -14,18 +14,18 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaSummaryRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaSummaryRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryRequestContent"/>. </summary>
         public DeltaSummaryRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaSummaryRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryRequestContent"/>. </summary>
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaSummaryRequestContent(int? priorDays, string date, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaSummaryRequestContent(int? priorDays, string date, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PriorDays = priorDays;
             Date = date;

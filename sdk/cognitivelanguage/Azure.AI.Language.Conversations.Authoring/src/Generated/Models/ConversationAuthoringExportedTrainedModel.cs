@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringExportedTrainedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel"/>. </summary>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             ModelTrainingConfigVersion = modelTrainingConfigVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel"/>. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedTrainedModel(string exportedModelName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastExportedModelOn, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedTrainedModel(string exportedModelName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastExportedModelOn, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExportedModelName = exportedModelName;
             ModelId = modelId;

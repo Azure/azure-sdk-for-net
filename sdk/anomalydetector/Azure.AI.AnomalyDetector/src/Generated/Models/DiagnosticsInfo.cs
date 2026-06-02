@@ -14,19 +14,19 @@ namespace Azure.AI.AnomalyDetector
     public partial class DiagnosticsInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.DiagnosticsInfo"/>. </summary>
         internal DiagnosticsInfo()
         {
-            VariableStates = new ChangeTrackingList<VariableState>();
+            VariableStates = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.DiagnosticsInfo"/>. </summary>
         /// <param name="modelState"> Model status. </param>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticsInfo(ModelState modelState, IList<global::Azure.AI.AnomalyDetector.VariableState> variableStates, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelState = modelState;
             VariableStates = variableStates;
@@ -37,6 +37,6 @@ namespace Azure.AI.AnomalyDetector
         public ModelState ModelState { get; }
 
         /// <summary> Variable status. </summary>
-        public IList<VariableState> VariableStates { get; }
+        public IList<global::Azure.AI.AnomalyDetector.VariableState> VariableStates { get; }
     }
 }

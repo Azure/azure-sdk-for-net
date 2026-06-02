@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Risk category for the attack objective. </summary>
-    public readonly partial struct RiskCategory : IEquatable<RiskCategory>
+    public readonly partial struct RiskCategory : IEquatable<global::Azure.AI.Projects.Evaluation.RiskCategory>
     {
         private readonly string _value;
         /// <summary> Represents content related to hate or unfairness. </summary>
@@ -33,12 +33,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Represents content that involves task adherence. </summary>
         private const string TaskAdherenceValue = "TaskAdherence";
 
-        /// <summary> Initializes a new instance of <see cref="RiskCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RiskCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RiskCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -73,34 +73,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Represents content that involves task adherence. </summary>
         public static RiskCategory TaskAdherence { get; } = new RiskCategory(TaskAdherenceValue);
 
-        /// <summary> Determines if two <see cref="RiskCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.RiskCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RiskCategory left, RiskCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RiskCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.RiskCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RiskCategory left, RiskCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RiskCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.RiskCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RiskCategory(string value) => new RiskCategory(value);
 
-        /// <summary> Converts a string to a <see cref="RiskCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.RiskCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RiskCategory?(string value) => value == null ? null : new RiskCategory(value);
+        public static implicit operator RiskCategory?(string value) => (value == null) ? null : new RiskCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RiskCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RiskCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RiskCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RiskCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

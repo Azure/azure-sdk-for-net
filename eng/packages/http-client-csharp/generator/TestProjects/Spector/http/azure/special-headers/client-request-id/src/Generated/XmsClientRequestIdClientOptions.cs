@@ -15,7 +15,7 @@ namespace Azure.SpecialHeaders.XmsClientRequestId
     {
         public XmsClientRequestIdClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal XmsClientRequestIdClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

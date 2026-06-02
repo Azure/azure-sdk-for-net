@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Provides the ability to override other stemming filters with custom dictionary-based stemming. Any dictionary-stemmed terms will be marked as keywords so that they will not be stemmed with stemmers down the chain. Must be placed before any stemming filters. This token filter is implemented using Apache Lucene. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/StemmerOverrideFilter.html. </summary>
     public partial class StemmerOverrideTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="StemmerOverrideTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.StemmerOverrideTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="rules"> A list of stemming rules in the following format: "word =&gt; stem", for example: "ran =&gt; run". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="rules"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="rules"/> is null. </exception>
         public StemmerOverrideTokenFilter(string name, IEnumerable<string> rules) : base("#Microsoft.Azure.Search.StemmerOverrideTokenFilter", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(rules, nameof(rules));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(rules, nameof(rules));
 
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StemmerOverrideTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.StemmerOverrideTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rules"> A list of stemming rules in the following format: "word =&gt; stem", for example: "ran =&gt; run". </param>
-        internal StemmerOverrideTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> rules) : base(odataType, name, additionalBinaryDataProperties)
+        internal StemmerOverrideTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> rules) : base(odataType, name, additionalBinaryDataProperties)
         {
             Rules = rules;
         }

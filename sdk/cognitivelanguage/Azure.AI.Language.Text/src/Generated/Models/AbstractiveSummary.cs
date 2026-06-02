@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
     public partial class AbstractiveSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummary"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         internal AbstractiveSummary(string text)
         {
             Text = text;
-            Contexts = new ChangeTrackingList<SummaryContext>();
+            Contexts = new ChangeTrackingList<global::Azure.AI.Language.Text.SummaryContext>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummary"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbstractiveSummary(string text, IList<SummaryContext> contexts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbstractiveSummary(string text, IList<global::Azure.AI.Language.Text.SummaryContext> contexts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Contexts = contexts;
@@ -39,6 +39,6 @@ namespace Azure.AI.Language.Text
         public string Text { get; }
 
         /// <summary> The context list of the summary. </summary>
-        public IList<SummaryContext> Contexts { get; }
+        public IList<global::Azure.AI.Language.Text.SummaryContext> Contexts { get; }
     }
 }

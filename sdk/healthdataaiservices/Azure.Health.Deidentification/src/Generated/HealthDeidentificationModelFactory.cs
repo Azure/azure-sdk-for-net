@@ -32,7 +32,7 @@ namespace Azure.Health.Deidentification
         /// <param name="createdAt"> Date and time when the job was created. </param>
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/> instance for mocking. </returns>
         public static DeidentificationJob DeidentificationJob(string jobName = default, DeidentificationOperationType? operationType = default, SourceStorageLocation sourceLocation = default, TargetStorageLocation targetLocation = default, DeidentificationJobCustomizationOptions customizations = default, OperationStatus status = default, ResponseError error = default, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = default, DeidentificationJobSummary summary = default)
         {
             return new DeidentificationJob(
@@ -54,8 +54,8 @@ namespace Azure.Health.Deidentification
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix"> Prefix to filter path by. </param>
         /// <param name="extensions"> List of extensions to filter path by. </param>
-        /// <returns> A new <see cref="Deidentification.SourceStorageLocation"/> instance for mocking. </returns>
-        public static SourceStorageLocation SourceStorageLocation(Uri location = default, string prefix = default, IEnumerable<string> extensions = default)
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.SourceStorageLocation"/> instance for mocking. </returns>
+        public static SourceStorageLocation SourceStorageLocation(global::System.Uri location = default, string prefix = default, IEnumerable<string> extensions = default)
         {
             extensions ??= new ChangeTrackingList<string>();
 
@@ -73,8 +73,8 @@ namespace Azure.Health.Deidentification
         /// Output file: "output_docs/note.txt"
         /// </param>
         /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
-        /// <returns> A new <see cref="Deidentification.TargetStorageLocation"/> instance for mocking. </returns>
-        public static TargetStorageLocation TargetStorageLocation(Uri location = default, string prefix = default, bool? overwrite = default)
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.TargetStorageLocation"/> instance for mocking. </returns>
+        public static TargetStorageLocation TargetStorageLocation(global::System.Uri location = default, string prefix = default, bool? overwrite = default)
         {
             return new TargetStorageLocation(location, prefix, overwrite, additionalBinaryDataProperties: null);
         }
@@ -86,7 +86,7 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationJobCustomizationOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationJobCustomizationOptions"/> instance for mocking. </returns>
         public static DeidentificationJobCustomizationOptions DeidentificationJobCustomizationOptions(string redactionFormat = default, string surrogateLocale = default, string inputLocale = default)
         {
             return new DeidentificationJobCustomizationOptions(redactionFormat, surrogateLocale, inputLocale, additionalBinaryDataProperties: null);
@@ -98,7 +98,7 @@ namespace Azure.Health.Deidentification
         /// <param name="canceledCount"> Number of documents that have been canceled. </param>
         /// <param name="totalCount"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationJobSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationJobSummary"/> instance for mocking. </returns>
         public static DeidentificationJobSummary DeidentificationJobSummary(int successfulCount = default, int failedCount = default, int canceledCount = default, int totalCount = default, long bytesProcessed = default)
         {
             return new DeidentificationJobSummary(
@@ -116,7 +116,7 @@ namespace Azure.Health.Deidentification
         /// <param name="outputLocation"> Location for the output. </param>
         /// <param name="status"> Status of the document. </param>
         /// <param name="error"> Error when document fails. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationDocumentDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentDetails"/> instance for mocking. </returns>
         public static DeidentificationDocumentDetails DeidentificationDocumentDetails(string id = default, DeidentificationDocumentLocation inputLocation = default, DeidentificationDocumentLocation outputLocation = default, OperationStatus status = default, ResponseError error = default)
         {
             return new DeidentificationDocumentDetails(
@@ -131,8 +131,8 @@ namespace Azure.Health.Deidentification
         /// <summary> Location of a document. </summary>
         /// <param name="location"> Location of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationDocumentLocation"/> instance for mocking. </returns>
-        public static DeidentificationDocumentLocation DeidentificationDocumentLocation(Uri location = default, ETag etag = default)
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentLocation"/> instance for mocking. </returns>
+        public static DeidentificationDocumentLocation DeidentificationDocumentLocation(global::System.Uri location = default, ETag etag = default)
         {
             return new DeidentificationDocumentLocation(location, etag, additionalBinaryDataProperties: null);
         }
@@ -142,7 +142,7 @@ namespace Azure.Health.Deidentification
         /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationContent"/> instance for mocking. </returns>
         public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, TaggedPhiEntities taggedEntities = default, DeidentificationCustomizationOptions customizations = default)
         {
             return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties: null);
@@ -151,10 +151,10 @@ namespace Azure.Health.Deidentification
         /// <summary> Grouped PHI entities with shared encoding specification. </summary>
         /// <param name="encoding"> The encoding type used for all entities in this group. </param>
         /// <param name="entities"> List of PHI entities using the specified encoding. </param>
-        /// <returns> A new <see cref="Deidentification.TaggedPhiEntities"/> instance for mocking. </returns>
-        public static TaggedPhiEntities TaggedPhiEntities(TextEncodingType encoding = default, IEnumerable<SimplePhiEntity> entities = default)
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.TaggedPhiEntities"/> instance for mocking. </returns>
+        public static TaggedPhiEntities TaggedPhiEntities(TextEncodingType encoding = default, IEnumerable<global::Azure.Health.Deidentification.SimplePhiEntity> entities = default)
         {
-            entities ??= new ChangeTrackingList<SimplePhiEntity>();
+            entities ??= new ChangeTrackingList<global::Azure.Health.Deidentification.SimplePhiEntity>();
 
             return new TaggedPhiEntities(encoding, entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -164,7 +164,7 @@ namespace Azure.Health.Deidentification
         /// <param name="offset"> Starting index of the location from within the input text using the group's encoding. </param>
         /// <param name="length"> Length of the input text using the group's encoding. </param>
         /// <param name="text"> Text of the entity (optional). </param>
-        /// <returns> A new <see cref="Deidentification.SimplePhiEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.SimplePhiEntity"/> instance for mocking. </returns>
         public static SimplePhiEntity SimplePhiEntity(PhiCategory category = default, int offset = default, int length = default, string text = default)
         {
             return new SimplePhiEntity(category, offset, length, text, additionalBinaryDataProperties: null);
@@ -177,7 +177,7 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationCustomizationOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationCustomizationOptions"/> instance for mocking. </returns>
         public static DeidentificationCustomizationOptions DeidentificationCustomizationOptions(string redactionFormat = default, string surrogateLocale = default, string inputLocale = default)
         {
             return new DeidentificationCustomizationOptions(redactionFormat, surrogateLocale, inputLocale, additionalBinaryDataProperties: null);
@@ -186,7 +186,7 @@ namespace Azure.Health.Deidentification
         /// <summary> Response body for de-identification operation. </summary>
         /// <param name="outputText"> Output text after de-identification. Not available for "Tag" operation. </param>
         /// <param name="taggerResult"> Result of the "Tag" operation. Only available for "Tag" Operation. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.DeidentificationResult"/> instance for mocking. </returns>
         public static DeidentificationResult DeidentificationResult(string outputText = default, PhiTaggerResult taggerResult = default)
         {
             return new DeidentificationResult(outputText, taggerResult, additionalBinaryDataProperties: null);
@@ -194,10 +194,10 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Result of the "Tag" operation. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
-        /// <returns> A new <see cref="Deidentification.PhiTaggerResult"/> instance for mocking. </returns>
-        public static PhiTaggerResult PhiTaggerResult(IEnumerable<PhiEntity> entities = default)
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.PhiTaggerResult"/> instance for mocking. </returns>
+        public static PhiTaggerResult PhiTaggerResult(IEnumerable<global::Azure.Health.Deidentification.PhiEntity> entities = default)
         {
-            entities ??= new ChangeTrackingList<PhiEntity>();
+            entities ??= new ChangeTrackingList<global::Azure.Health.Deidentification.PhiEntity>();
 
             return new PhiTaggerResult(entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -208,7 +208,7 @@ namespace Azure.Health.Deidentification
         /// <param name="length"> Length of the input text. </param>
         /// <param name="text"> Text of the entity. </param>
         /// <param name="confidenceScore"> Confidence score of the category match. </param>
-        /// <returns> A new <see cref="Deidentification.PhiEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.PhiEntity"/> instance for mocking. </returns>
         public static PhiEntity PhiEntity(PhiCategory category = default, StringIndex offset = default, StringIndex length = default, string text = default, double? confidenceScore = default)
         {
             return new PhiEntity(
@@ -230,18 +230,18 @@ namespace Azure.Health.Deidentification
         /// The offset or length of the substring in CodePoint encoding.
         /// Primary encoding used by Python.
         /// </param>
-        /// <returns> A new <see cref="Deidentification.StringIndex"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Health.Deidentification.StringIndex"/> instance for mocking. </returns>
         public static StringIndex StringIndex(int utf8 = default, int utf16 = default, int codePoint = default)
         {
             return new StringIndex(utf8, utf16, codePoint, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Azure.Health.Deidentification.DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <returns> A new <see cref="Azure.Health.Deidentification.DeidentificationContent"/> instance for mocking. </returns>
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
         {
             return DeidentificationContent(inputText: inputText, operationType: operationType, taggedEntities: default, customizations: customizations);

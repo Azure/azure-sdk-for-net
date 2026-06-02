@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Text
 {
     internal partial class UnknownEntityOverlapPolicy : EntityOverlapPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEntityOverlapPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.UnknownEntityOverlapPolicy"/>. </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEntityOverlapPolicy(PolicyKind policyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind != default ? policyKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownEntityOverlapPolicy(PolicyKind policyKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((policyKind != default) ? policyKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> Represents a generated phrase that describes the content of the whole image or a region in the image. </summary>
-    public partial class DenseCaption : IJsonModel<DenseCaption>
+    public partial class DenseCaption : IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>
     {
-        /// <summary> Initializes a new instance of <see cref="DenseCaption"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaption"/> for deserialization. </summary>
         internal DenseCaption()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DenseCaption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Vision.ImageAnalysis.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDenseCaption(document.RootElement, options);
+                        return global::Azure.AI.Vision.ImageAnalysis.DenseCaption.DeserializeDenseCaption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DenseCaption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DenseCaption)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVisionImageAnalysisContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Vision.ImageAnalysis.AzureAIVisionImageAnalysisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DenseCaption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DenseCaption)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DenseCaption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DenseCaption IPersistableModel<DenseCaption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DenseCaption IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DenseCaption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DenseCaption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,18 +73,18 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DenseCaption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DenseCaption)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.AI.Vision.ImageAnalysis
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,33 +103,33 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DenseCaption IJsonModel<DenseCaption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DenseCaption IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DenseCaption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DenseCaption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DenseCaption)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDenseCaption(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Vision.ImageAnalysis.DenseCaption.DeserializeDenseCaption(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DenseCaption DeserializeDenseCaption(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             float confidence = default;
             string text = default;
             ImageBoundingBox boundingBox = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("confidence"u8))
@@ -144,12 +144,12 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (prop.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(prop.Value, options);
+                    boundingBox = global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox.DeserializeImageBoundingBox(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DenseCaption(confidence, text, boundingBox, additionalBinaryDataProperties);

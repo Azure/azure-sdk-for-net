@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
     {
         public MoveMethodParameterToClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MoveMethodParameterToClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

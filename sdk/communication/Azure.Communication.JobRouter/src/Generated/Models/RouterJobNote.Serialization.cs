@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A note attached to a job. </summary>
-    public partial class RouterJobNote : IJsonModel<RouterJobNote>
+    public partial class RouterJobNote : IJsonModel<global::Azure.Communication.JobRouter.RouterJobNote>
     {
-        /// <summary> Initializes a new instance of <see cref="RouterJobNote"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobNote"/> for deserialization. </summary>
         internal RouterJobNote()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterJobNote PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRouterJobNote(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.RouterJobNote.DeserializeRouterJobNote(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterJobNote)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterJobNote)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RouterJobNote)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterJobNote)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RouterJobNote>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterJobNote IPersistableModel<RouterJobNote>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RouterJobNote IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RouterJobNote>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RouterJobNote>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.RouterJobNote>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,19 +73,19 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterJobNote)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterJobNote)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(AddedAt))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(AddedAt))
             {
                 writer.WritePropertyName("addedAt"u8);
                 writer.WriteStringValue(AddedAt.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -93,9 +93,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -104,32 +104,32 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterJobNote IJsonModel<RouterJobNote>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RouterJobNote IJsonModel<global::Azure.Communication.JobRouter.RouterJobNote>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterJobNote JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterJobNote>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterJobNote)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterJobNote)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRouterJobNote(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.RouterJobNote.DeserializeRouterJobNote(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RouterJobNote DeserializeRouterJobNote(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string message = default;
             DateTimeOffset? addedAt = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("message"u8))
@@ -139,16 +139,16 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("addedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     addedAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RouterJobNote(message, addedAt, additionalBinaryDataProperties);

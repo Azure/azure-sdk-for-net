@@ -16,17 +16,17 @@ namespace Azure.AI.ContentUnderstanding
     public partial class AnalysisResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisResult"/>. </summary>
         /// <param name="contents"> The extracted content. </param>
-        internal AnalysisResult(IEnumerable<AnalysisContent> contents)
+        internal AnalysisResult(IEnumerable<global::Azure.AI.ContentUnderstanding.AnalysisContent> contents)
         {
-            Warnings = new ChangeTrackingList<ResponseError>();
+            Warnings = new ChangeTrackingList<global::Azure.ResponseError>();
             Contents = contents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisResult"/>. </summary>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="apiVersion"> The version of the API used to analyze the document. </param>
         /// <param name="createdAt"> The date and time when the result was created. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<AnalysisContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<global::Azure.ResponseError> warnings, string stringEncoding, IList<global::Azure.AI.ContentUnderstanding.AnalysisContent> contents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             ApiVersion = apiVersion;
@@ -58,7 +58,7 @@ namespace Azure.AI.ContentUnderstanding
         public DateTimeOffset? CreatedAt { get; }
 
         /// <summary> Warnings encountered while analyzing the document. </summary>
-        public IList<ResponseError> Warnings { get; }
+        public IList<global::Azure.ResponseError> Warnings { get; }
 
         /// <summary>
         ///   The string encoding format for content spans in the response.
@@ -67,6 +67,6 @@ namespace Azure.AI.ContentUnderstanding
         public string StringEncoding { get; }
 
         /// <summary> The extracted content. </summary>
-        public IList<AnalysisContent> Contents { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.AnalysisContent> Contents { get; }
     }
 }

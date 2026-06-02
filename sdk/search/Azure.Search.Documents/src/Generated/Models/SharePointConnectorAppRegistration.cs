@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SharePointConnectorAppRegistration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SharePointConnectorAppRegistration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SharePointConnectorAppRegistration"/>. </summary>
         /// <param name="applicationId"> The application (client) ID of the app registration used to connect to SharePoint. </param>
         /// <param name="federatedCredentialId"> The federated credential ID configured on the app registration. </param>
         public SharePointConnectorAppRegistration(Guid applicationId, Guid federatedCredentialId)
@@ -25,12 +25,12 @@ namespace Azure.Search.Documents.Indexes.Models
             FederatedCredentialId = federatedCredentialId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharePointConnectorAppRegistration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SharePointConnectorAppRegistration"/>. </summary>
         /// <param name="applicationId"> The application (client) ID of the app registration used to connect to SharePoint. </param>
         /// <param name="federatedCredentialId"> The federated credential ID configured on the app registration. </param>
         /// <param name="tenantId"> The tenant ID of the app registration. If not specified, the tenant of the search service is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharePointConnectorAppRegistration(Guid applicationId, Guid federatedCredentialId, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharePointConnectorAppRegistration(Guid applicationId, Guid federatedCredentialId, Guid? tenantId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             FederatedCredentialId = federatedCredentialId;

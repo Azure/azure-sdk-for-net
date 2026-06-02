@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Output timestamp types supported in audio response content. </summary>
-    public readonly partial struct AudioTimestampType : IEquatable<AudioTimestampType>
+    public readonly partial struct AudioTimestampType : IEquatable<global::Azure.AI.VoiceLive.AudioTimestampType>
     {
         private readonly string _value;
         /// <summary> Timestamps per word in the output audio. </summary>
         private const string WordValue = "word";
 
-        /// <summary> Initializes a new instance of <see cref="AudioTimestampType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioTimestampType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AudioTimestampType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Timestamps per word in the output audio. </summary>
         public static AudioTimestampType Word { get; } = new AudioTimestampType(WordValue);
 
-        /// <summary> Determines if two <see cref="AudioTimestampType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AudioTimestampType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AudioTimestampType left, AudioTimestampType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AudioTimestampType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AudioTimestampType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AudioTimestampType left, AudioTimestampType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AudioTimestampType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AudioTimestampType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AudioTimestampType(string value) => new AudioTimestampType(value);
 
-        /// <summary> Converts a string to a <see cref="AudioTimestampType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AudioTimestampType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AudioTimestampType?(string value) => value == null ? null : new AudioTimestampType(value);
+        public static implicit operator AudioTimestampType?(string value) => (value == null) ? null : new AudioTimestampType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AudioTimestampType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AudioTimestampType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AudioTimestampType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AudioTimestampType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -16,47 +16,47 @@ namespace SpecialHeaders.ConditionalRequest
 {
     public partial class ConditionalRequestClient
     {
-        public ConditionalRequestClient() : this(new Uri("http://localhost:3000"), new ConditionalRequestClientOptions()) => throw null;
+        public ConditionalRequestClient() : this(new global::System.Uri("http://localhost:3000"), new ConditionalRequestClientOptions()) => throw null;
 
-        internal ConditionalRequestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ConditionalRequestClientOptions options) => throw null;
+        internal ConditionalRequestClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ConditionalRequestClientOptions options) => throw null;
 
-        public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options) : this(null, endpoint, options) => throw null;
+        public ConditionalRequestClient(global::System.Uri endpoint, ConditionalRequestClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ConditionalRequestClient(ConditionalRequestClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ConditionalRequestClient(ConditionalRequestClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PostIfMatch(ETag? ifMatch, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfMatchAsync(ETag? ifMatch, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PostIfMatchAsync(ETag? ifMatch, RequestContext context) => throw null;
 
         public virtual Response PostIfMatch(ETag? ifMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfMatchAsync(ETag? ifMatch = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostIfMatchAsync(ETag? ifMatch = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PostIfNoneMatch(ETag? ifNoneMatch, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfNoneMatchAsync(ETag? ifNoneMatch, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PostIfNoneMatchAsync(ETag? ifNoneMatch, RequestContext context) => throw null;
 
         public virtual Response PostIfNoneMatch(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfNoneMatchAsync(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostIfNoneMatchAsync(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response HeadIfModifiedSince(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
 
         public virtual Response HeadIfModifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
 
         public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

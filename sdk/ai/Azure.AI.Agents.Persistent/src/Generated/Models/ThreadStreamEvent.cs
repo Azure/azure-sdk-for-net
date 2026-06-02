@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Thread operation related streaming events. </summary>
-    public readonly partial struct ThreadStreamEvent : IEquatable<ThreadStreamEvent>
+    public readonly partial struct ThreadStreamEvent : IEquatable<global::Azure.AI.Agents.Persistent.ThreadStreamEvent>
     {
         private readonly string _value;
         /// <summary> Event sent when a new thread is created. The data of this event is of type AgentThread. </summary>
         private const string ThreadCreatedValue = "thread.created";
 
-        /// <summary> Initializes a new instance of <see cref="ThreadStreamEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreadStreamEvent(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Event sent when a new thread is created. The data of this event is of type AgentThread. </summary>
         public static ThreadStreamEvent ThreadCreated { get; } = new ThreadStreamEvent(ThreadCreatedValue);
 
-        /// <summary> Determines if two <see cref="ThreadStreamEvent"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ThreadStreamEvent"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreadStreamEvent left, ThreadStreamEvent right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThreadStreamEvent"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ThreadStreamEvent"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreadStreamEvent left, ThreadStreamEvent right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThreadStreamEvent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ThreadStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ThreadStreamEvent(string value) => new ThreadStreamEvent(value);
 
-        /// <summary> Converts a string to a <see cref="ThreadStreamEvent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ThreadStreamEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreadStreamEvent?(string value) => value == null ? null : new ThreadStreamEvent(value);
+        public static implicit operator ThreadStreamEvent?(string value) => (value == null) ? null : new ThreadStreamEvent(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThreadStreamEvent other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ThreadStreamEvent other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ThreadStreamEvent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ThreadStreamEvent other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

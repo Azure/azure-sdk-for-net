@@ -18,40 +18,40 @@ namespace _Type.Property.Optional
     {
         protected RequiredAndOptional() => throw null;
 
-        internal RequiredAndOptional(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal RequiredAndOptional(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<RequiredAndOptionalProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.RequiredAndOptionalProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<RequiredAndOptionalProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.RequiredAndOptionalProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetRequiredOnly(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetRequiredOnlyAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetRequiredOnlyAsync(RequestContext context) => throw null;
 
-        public virtual Response<RequiredAndOptionalProperty> GetRequiredOnly(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.RequiredAndOptionalProperty> GetRequiredOnly(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<RequiredAndOptionalProperty>> GetRequiredOnlyAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.RequiredAndOptionalProperty>> GetRequiredOnlyAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutAll(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutAll(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutRequiredOnly(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutRequiredOnlyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutRequiredOnlyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutRequiredOnly(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutRequiredOnlyAsync(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutRequiredOnlyAsync(RequiredAndOptionalProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -13,24 +13,24 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
     public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/>. </summary>
         /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        public MonthlyRecurrenceByWeekDays(int index, int interval) : base(Frequency.MonthlyByDays)
+        public MonthlyRecurrenceByWeekDays(int index, int interval) : base(global::Azure.Developer.LoadTesting.Frequency.MonthlyByDays)
         {
-            WeekDaysInMonth = new ChangeTrackingList<WeekDays>();
+            WeekDaysInMonth = new ChangeTrackingList<global::Azure.Developer.LoadTesting.WeekDays>();
             Index = index;
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="weekDaysInMonth"> Specific days of the week when the recurrence should repeat. </param>
         /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        internal MonthlyRecurrenceByWeekDays(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WeekDays> weekDaysInMonth, int index, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
+        internal MonthlyRecurrenceByWeekDays(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Developer.LoadTesting.WeekDays> weekDaysInMonth, int index, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             WeekDaysInMonth = weekDaysInMonth;
             Index = index;
@@ -38,7 +38,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Specific days of the week when the recurrence should repeat. </summary>
-        public IList<WeekDays> WeekDaysInMonth { get; }
+        public IList<global::Azure.Developer.LoadTesting.WeekDays> WeekDaysInMonth { get; }
 
         /// <summary> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </summary>
         public int Index { get; set; }

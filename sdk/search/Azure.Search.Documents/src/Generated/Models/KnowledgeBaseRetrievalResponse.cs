@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseRetrievalResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/>. </summary>
         internal KnowledgeBaseRetrievalResponse()
         {
-            Response = new ChangeTrackingList<KnowledgeBaseMessage>();
-            Activity = new ChangeTrackingList<KnowledgeBaseActivityRecord>();
-            References = new ChangeTrackingList<KnowledgeBaseReference>();
+            Response = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage>();
+            Activity = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord>();
+            References = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/>. </summary>
         /// <param name="response"> The response messages. </param>
         /// <param name="activity"> The activity records for tracking progress and billing implications. </param>
         /// <param name="references"> The references for the retrieval data used in the response. </param>
         /// <param name="responseSensitivityLabelInfo"> The sensitivity label information for the overall response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalResponse(IList<KnowledgeBaseMessage> response, IList<KnowledgeBaseActivityRecord> activity, IList<KnowledgeBaseReference> references, PurviewSensitivityLabelInfo responseSensitivityLabelInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRetrievalResponse(IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> response, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord> activity, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference> references, PurviewSensitivityLabelInfo responseSensitivityLabelInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Response = response;
             Activity = activity;
@@ -41,13 +41,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The response messages. </summary>
-        public IList<KnowledgeBaseMessage> Response { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> Response { get; }
 
         /// <summary> The activity records for tracking progress and billing implications. </summary>
-        public IList<KnowledgeBaseActivityRecord> Activity { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord> Activity { get; }
 
         /// <summary> The references for the retrieval data used in the response. </summary>
-        public IList<KnowledgeBaseReference> References { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference> References { get; }
 
         /// <summary> The sensitivity label information for the overall response. </summary>
         public PurviewSensitivityLabelInfo ResponseSensitivityLabelInfo { get; }

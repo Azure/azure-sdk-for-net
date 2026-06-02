@@ -10,17 +10,17 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Local shell call output. </summary>
     public partial class OutputItemLocalShellToolCallOutput : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemLocalShellToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemLocalShellToolCallOutput"/>. </summary>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
-        public OutputItemLocalShellToolCallOutput(string output) : base(AgentResponseItemKind.LocalShellCallOutput)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="output"/> is null. </exception>
+        public OutputItemLocalShellToolCallOutput(string output) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.LocalShellCallOutput)
         {
-            Argument.AssertNotNull(output, nameof(output));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(output, nameof(output));
 
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputItemLocalShellToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemLocalShellToolCallOutput"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
         /// <param name="status"></param>
-        internal OutputItemLocalShellToolCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output, ItemLocalShellToolCallOutputStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemLocalShellToolCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string output, ItemLocalShellToolCallOutputStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Output = output;
             Status = status;

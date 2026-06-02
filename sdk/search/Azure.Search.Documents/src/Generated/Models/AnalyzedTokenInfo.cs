@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AnalyzedTokenInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzedTokenInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo"/>. </summary>
         public AnalyzedTokenInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzedTokenInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo"/>. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
         /// <param name="endOffset"> The index of the last character of the token in the input text. </param>
         /// <param name="position"> The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzedTokenInfo(string token, int startOffset, int endOffset, int position, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzedTokenInfo(string token, int startOffset, int endOffset, int position, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             StartOffset = startOffset;

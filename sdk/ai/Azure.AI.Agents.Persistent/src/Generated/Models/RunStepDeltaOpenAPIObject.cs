@@ -13,22 +13,22 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents an invocation of openapi as part of a streaming run step. </summary>
     public partial class RunStepDeltaOpenAPIObject : RunStepDeltaDetail
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/>. </summary>
         internal RunStepDeltaOpenAPIObject() : base("openapi")
         {
-            ToolCalls = new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>();
+            ToolCalls = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        internal RunStepDeltaOpenAPIObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RunStepDeltaOpenAPIToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepDeltaOpenAPIObject(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }
 
         /// <summary> The collection of tool calls for the tool call detail item. </summary>
-        public IList<RunStepDeltaOpenAPIToolCall> ToolCalls { get; }
+        public IList<global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> ToolCalls { get; }
     }
 }

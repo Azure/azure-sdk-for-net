@@ -19,8 +19,8 @@ namespace Azure.Developer.DevCenter
     /// <summary> The DevBoxesClient. </summary>
     public partial class DevBoxesClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DevBoxesClient for mocking. </summary>
@@ -31,8 +31,8 @@ namespace Azure.Developer.DevCenter
         /// <summary> Initializes a new instance of DevBoxesClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevBoxesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevBoxesClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DevBoxesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DevCenterClientOptions options)
+        internal DevBoxesClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DevCenterClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -63,14 +63,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevBoxesClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevBoxesClient(global::System.Uri endpoint, TokenCredential credential, DevCenterClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DevBoxesClient from a <see cref="DevBoxesClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DevBoxesClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DevBoxesClient(DevBoxesClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -91,13 +91,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPools(string projectName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetPools(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DevBoxesClientGetPoolsCollectionResult(this, projectName, context, "DevBoxesClient.GetPools");
         }
@@ -112,13 +112,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(string projectName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetPoolsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DevBoxesClientGetPoolsAsyncCollectionResult(this, projectName, context, "DevBoxesClient.GetPools");
         }
@@ -126,12 +126,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists available pools. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBoxPool> GetPools(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBoxPool> GetPools(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DevBoxesClientGetPoolsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetPools");
         }
@@ -139,12 +139,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists available pools. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBoxPool> GetPoolsAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBoxPool> GetPoolsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DevBoxesClientGetPoolsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetPools");
         }
@@ -160,9 +160,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPool(string projectName, string poolName, RequestContext context)
         {
@@ -170,10 +170,10 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-                using HttpMessage message = CreateGetPoolRequest(projectName, poolName, context);
+                using HttpMessage message = this.CreateGetPoolRequest(projectName, poolName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -194,20 +194,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPoolAsync(string projectName, string poolName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPoolAsync(string projectName, string poolName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetPool");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-                using HttpMessage message = CreateGetPoolRequest(projectName, poolName, context);
+                using HttpMessage message = this.CreateGetPoolRequest(projectName, poolName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -221,32 +221,32 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="poolName"> Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevBoxPool> GetPool(string projectName, string poolName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevBoxPool> GetPool(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            Response result = GetPool(projectName, poolName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevBoxPool)result, result);
+            Response result = this.GetPool(projectName, poolName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevBoxPool)result), result);
         }
 
         /// <summary> Gets a pool. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="poolName"> Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevBoxPool>> GetPoolAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevBoxPool>> GetPoolAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            Response result = await GetPoolAsync(projectName, poolName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevBoxPool)result, result);
+            Response result = await this.GetPoolAsync(projectName, poolName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevBoxPool)result), result);
         }
 
         /// <summary>
@@ -260,14 +260,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSchedules(string projectName, string poolName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSchedules(string projectName, string poolName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return new DevBoxesClientGetSchedulesCollectionResult(this, projectName, poolName, context, "DevBoxesClient.GetSchedules");
         }
@@ -283,14 +283,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSchedulesAsync(string projectName, string poolName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSchedulesAsync(string projectName, string poolName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return new DevBoxesClientGetSchedulesAsyncCollectionResult(this, projectName, poolName, context, "DevBoxesClient.GetSchedules");
         }
@@ -299,13 +299,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBoxSchedule> GetSchedules(string projectName, string poolName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBoxSchedule> GetSchedules(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return new DevBoxesClientGetSchedulesCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetSchedules");
         }
@@ -314,13 +314,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBoxSchedule> GetSchedulesAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBoxSchedule> GetSchedulesAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return new DevBoxesClientGetSchedulesAsyncCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetSchedules");
         }
@@ -337,9 +337,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="poolName"> Pool name. </param>
         /// <param name="scheduleName"> Display name for the Schedule. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSchedule(string projectName, string poolName, string scheduleName, RequestContext context)
         {
@@ -347,11 +347,11 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-                Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-                using HttpMessage message = CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
+                using HttpMessage message = this.CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -373,21 +373,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="poolName"> Pool name. </param>
         /// <param name="scheduleName"> Display name for the Schedule. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetScheduleAsync(string projectName, string poolName, string scheduleName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetScheduleAsync(string projectName, string poolName, string scheduleName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetSchedule");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-                Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-                using HttpMessage message = CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
+                using HttpMessage message = this.CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -402,17 +402,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="poolName"> Pool name. </param>
         /// <param name="scheduleName"> Display name for the Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevBoxSchedule> GetSchedule(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevBoxSchedule> GetSchedule(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            Response result = GetSchedule(projectName, poolName, scheduleName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevBoxSchedule)result, result);
+            Response result = this.GetSchedule(projectName, poolName, scheduleName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevBoxSchedule)result), result);
         }
 
         /// <summary> Gets a schedule. </summary>
@@ -420,17 +420,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="poolName"> Pool name. </param>
         /// <param name="scheduleName"> Display name for the Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevBoxSchedule>> GetScheduleAsync(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevBoxSchedule>> GetScheduleAsync(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            Response result = await GetScheduleAsync(projectName, poolName, scheduleName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevBoxSchedule)result, result);
+            Response result = await this.GetScheduleAsync(projectName, poolName, scheduleName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevBoxSchedule)result), result);
         }
 
         /// <summary>
@@ -442,9 +442,9 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAllDevBoxes(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAllDevBoxes(RequestContext context)
         {
             return new DevBoxesClientGetAllDevBoxesCollectionResult(this, context, "DevBoxesClient.GetAllDevBoxes");
         }
@@ -458,25 +458,25 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAllDevBoxesAsync(RequestContext context)
         {
             return new DevBoxesClientGetAllDevBoxesAsyncCollectionResult(this, context, "DevBoxesClient.GetAllDevBoxes");
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBox> GetAllDevBoxes(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBox> GetAllDevBoxes(CancellationToken cancellationToken = default)
         {
             return new DevBoxesClientGetAllDevBoxesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxes");
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBox> GetAllDevBoxesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBox> GetAllDevBoxesAsync(CancellationToken cancellationToken = default)
         {
             return new DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxes");
         }
@@ -491,13 +491,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAllDevBoxesByUser(string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetAllDevBoxesByUserCollectionResult(this, userId, context, "DevBoxesClient.GetAllDevBoxesByUser");
         }
@@ -512,13 +512,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAllDevBoxesByUserAsync(string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResult(this, userId, context, "DevBoxesClient.GetAllDevBoxesByUser");
         }
@@ -526,12 +526,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBox> GetAllDevBoxesByUser(string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBox> GetAllDevBoxesByUser(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetAllDevBoxesByUserCollectionResultOfT(this, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxesByUser");
         }
@@ -539,12 +539,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBox> GetAllDevBoxesByUserAsync(string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBox> GetAllDevBoxesByUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResultOfT(this, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxesByUser");
         }
@@ -560,14 +560,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDevBoxes(string projectName, string userId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDevBoxes(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetDevBoxesCollectionResult(this, projectName, userId, context, "DevBoxesClient.GetDevBoxes");
         }
@@ -583,14 +583,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDevBoxesAsync(string projectName, string userId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDevBoxesAsync(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetDevBoxesAsyncCollectionResult(this, projectName, userId, context, "DevBoxesClient.GetDevBoxes");
         }
@@ -599,13 +599,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBox> GetDevBoxes(string projectName, string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBox> GetDevBoxes(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetDevBoxesCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetDevBoxes");
         }
@@ -614,13 +614,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBox> GetDevBoxesAsync(string projectName, string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBox> GetDevBoxesAsync(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DevBoxesClientGetDevBoxesAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetDevBoxes");
         }
@@ -637,9 +637,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDevBox(string projectName, string userId, string devBoxName, RequestContext context)
         {
@@ -647,11 +647,11 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
+                using HttpMessage message = this.CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -673,21 +673,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDevBoxAsync(string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDevBoxAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
+                using HttpMessage message = this.CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -702,17 +702,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevBox> GetDevBox(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevBox> GetDevBox(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            Response result = GetDevBox(projectName, userId, devBoxName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevBox)result, result);
+            Response result = this.GetDevBox(projectName, userId, devBoxName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevBox)result), result);
         }
 
         /// <summary> Gets a Dev Box. </summary>
@@ -720,17 +720,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevBox>> GetDevBoxAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevBox>> GetDevBoxAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            Response result = await GetDevBoxAsync(projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevBox)result, result);
+            Response result = await this.GetDevBoxAsync(projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevBox)result), result);
         }
 
         /// <summary> Creates or replaces a Dev Box. </summary>
@@ -740,22 +740,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> CreateDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                using HttpMessage message = this.CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -771,22 +771,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBoxAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBoxAsync", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -801,8 +801,8 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
@@ -810,12 +810,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -830,21 +830,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.DeleteDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBoxAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -859,15 +859,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeleteDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return DeleteDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
+            return this.DeleteDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a Dev Box. </summary>
@@ -876,15 +876,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return await DeleteDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Starts a Dev Box. </summary>
@@ -893,8 +893,8 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation StartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
@@ -902,12 +902,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -922,21 +922,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.StartDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBoxAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -951,15 +951,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation StartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return StartDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
+            return this.StartDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Starts a Dev Box. </summary>
@@ -968,15 +968,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return await StartDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.StartDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Stops a Dev Box. </summary>
@@ -986,8 +986,8 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation StopDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
         {
@@ -995,12 +995,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1016,21 +1016,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
+        public virtual async Task<global::Azure.Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBoxAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1046,15 +1046,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation StopDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return StopDevBox(waitUntil, projectName, userId, devBoxName, hibernate, cancellationToken.ToRequestContext());
+            return this.StopDevBox(waitUntil, projectName, userId, devBoxName, hibernate, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Stops a Dev Box. </summary>
@@ -1064,15 +1064,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return await StopDevBoxAsync(waitUntil, projectName, userId, devBoxName, hibernate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.StopDevBoxAsync(waitUntil, projectName, userId, devBoxName, hibernate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Restarts a Dev Box. </summary>
@@ -1081,8 +1081,8 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation RestartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
@@ -1090,12 +1090,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1110,21 +1110,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.RestartDevBox");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBoxAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1139,15 +1139,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation RestartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return RestartDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
+            return this.RestartDevBox(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Restarts a Dev Box. </summary>
@@ -1156,15 +1156,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return await RestartDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RestartDevBoxAsync(waitUntil, projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1179,9 +1179,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetRemoteConnection(string projectName, string userId, string devBoxName, RequestContext context)
         {
@@ -1189,11 +1189,11 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
+                using HttpMessage message = this.CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1215,21 +1215,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-                using HttpMessage message = CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
+                using HttpMessage message = this.CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1244,17 +1244,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RemoteConnection> GetRemoteConnection(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.RemoteConnection> GetRemoteConnection(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            Response result = GetRemoteConnection(projectName, userId, devBoxName, cancellationToken.ToRequestContext());
-            return Response.FromValue((RemoteConnection)result, result);
+            Response result = this.GetRemoteConnection(projectName, userId, devBoxName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RemoteConnection)result), result);
         }
 
         /// <summary> Gets RDP Connection info. </summary>
@@ -1262,17 +1262,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RemoteConnection>> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.RemoteConnection>> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            Response result = await GetRemoteConnectionAsync(projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RemoteConnection)result, result);
+            Response result = await this.GetRemoteConnectionAsync(projectName, userId, devBoxName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RemoteConnection)result), result);
         }
 
         /// <summary>
@@ -1287,15 +1287,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDevBoxActions(string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDevBoxActions(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientGetDevBoxActionsCollectionResult(
                 this,
@@ -1318,15 +1318,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientGetDevBoxActionsAsyncCollectionResult(
                 this,
@@ -1342,14 +1342,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBoxAction> GetDevBoxActions(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBoxAction> GetDevBoxActions(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientGetDevBoxActionsCollectionResultOfT(
                 this,
@@ -1365,14 +1365,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBoxAction> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBoxAction> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT(
                 this,
@@ -1396,9 +1396,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
@@ -1406,12 +1406,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
+                using HttpMessage message = this.CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1434,22 +1434,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxAction");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
+                using HttpMessage message = this.CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1465,18 +1465,18 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevBoxAction> GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevBoxAction> GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            Response result = GetDevBoxAction(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevBoxAction)result, result);
+            Response result = this.GetDevBoxAction(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevBoxAction)result), result);
         }
 
         /// <summary> Gets an action. </summary>
@@ -1485,18 +1485,18 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevBoxAction>> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevBoxAction>> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            Response result = await GetDevBoxActionAsync(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevBoxAction)result, result);
+            Response result = await this.GetDevBoxActionAsync(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevBoxAction)result), result);
         }
 
         /// <summary>
@@ -1512,9 +1512,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SkipAction(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
@@ -1522,12 +1522,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
+                using HttpMessage message = this.CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1550,22 +1550,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SkipActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> SkipActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.SkipAction");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
+                using HttpMessage message = this.CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1581,17 +1581,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SkipAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            return SkipAction(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext());
+            return this.SkipAction(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Skips an occurrence of an action. </summary>
@@ -1600,17 +1600,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SkipActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> SkipActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            return await SkipActionAsync(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.SkipActionAsync(projectName, userId, devBoxName, actionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1627,9 +1627,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
         {
@@ -1637,12 +1637,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
+                using HttpMessage message = this.CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1666,22 +1666,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
+        public virtual async Task<global::Azure.Response> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevBoxesClient.DelayAction");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-                Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-                using HttpMessage message = CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
+                using HttpMessage message = this.CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1698,18 +1698,18 @@ namespace Azure.Developer.DevCenter
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevBoxAction> DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevBoxAction> DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            Response result = DelayAction(projectName, userId, devBoxName, actionName, delayUntil, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevBoxAction)result, result);
+            Response result = this.DelayAction(projectName, userId, devBoxName, actionName, delayUntil, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevBoxAction)result), result);
         }
 
         /// <summary> Delays the occurrence of an action. </summary>
@@ -1719,18 +1719,18 @@ namespace Azure.Developer.DevCenter
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevBoxAction>> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevBoxAction>> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            Response result = await DelayActionAsync(projectName, userId, devBoxName, actionName, delayUntil, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevBoxAction)result, result);
+            Response result = await this.DelayActionAsync(projectName, userId, devBoxName, actionName, delayUntil, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevBoxAction)result), result);
         }
 
         /// <summary>
@@ -1746,15 +1746,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientDelayAllActionsCollectionResult(
                 this,
@@ -1779,15 +1779,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientDelayAllActionsAsyncCollectionResult(
                 this,
@@ -1805,14 +1805,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevBoxActionDelayResult> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevBoxActionDelayResult> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientDelayAllActionsCollectionResultOfT(
                 this,
@@ -1830,14 +1830,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevBoxActionDelayResult> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevBoxActionDelayResult> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             return new DevBoxesClientDelayAllActionsAsyncCollectionResultOfT(
                 this,

@@ -14,23 +14,23 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunAppComponents
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunAppComponents"/>. </summary>
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
         /// : resource object } 
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="components"/> is null. </exception>
-        public TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="components"/> is null. </exception>
+        public TestRunAppComponents(IDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent> components)
         {
-            Argument.AssertNotNull(components, nameof(components));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(components, nameof(components));
 
             Components = components;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunAppComponents"/>. </summary>
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
@@ -42,7 +42,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components, string testRunId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunAppComponents(IDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent> components, string testRunId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Components = components;
             TestRunId = testRunId;
@@ -58,7 +58,7 @@ namespace Azure.Developer.LoadTesting
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
         /// : resource object } 
         /// </summary>
-        public IDictionary<string, LoadTestingAppComponent> Components { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent> Components { get; }
 
         /// <summary> Test run identifier. </summary>
         public string TestRunId { get; }

@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Authentication using an Azure AI Foundry connection. </summary>
     public partial class McpServerFoundryConnectionAuthentication : McpServerAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerFoundryConnectionAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerFoundryConnectionAuthentication"/>. </summary>
         /// <param name="foundryConnectionParameters"> Parameters for Foundry connection authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="foundryConnectionParameters"/> is null. </exception>
-        public McpServerFoundryConnectionAuthentication(McpServerFoundryConnectionParameters foundryConnectionParameters) : base(McpServerAuthenticationKind.FoundryConnection)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="foundryConnectionParameters"/> is null. </exception>
+        public McpServerFoundryConnectionAuthentication(McpServerFoundryConnectionParameters foundryConnectionParameters) : base(global::Azure.Search.Documents.Indexes.Models.McpServerAuthenticationKind.FoundryConnection)
         {
-            Argument.AssertNotNull(foundryConnectionParameters, nameof(foundryConnectionParameters));
+            global::Azure.Search.Documents.Argument.AssertNotNull(foundryConnectionParameters, nameof(foundryConnectionParameters));
 
             FoundryConnectionParameters = foundryConnectionParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerFoundryConnectionAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerFoundryConnectionAuthentication"/>. </summary>
         /// <param name="kind"> The kind of authentication to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="foundryConnectionParameters"> Parameters for Foundry connection authentication. </param>
-        internal McpServerFoundryConnectionAuthentication(McpServerAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, McpServerFoundryConnectionParameters foundryConnectionParameters) : base(kind, additionalBinaryDataProperties)
+        internal McpServerFoundryConnectionAuthentication(McpServerAuthenticationKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, McpServerFoundryConnectionParameters foundryConnectionParameters) : base(kind, additionalBinaryDataProperties)
         {
             FoundryConnectionParameters = foundryConnectionParameters;
         }

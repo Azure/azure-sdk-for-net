@@ -13,54 +13,54 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchResult : IJsonModel<SearchResult>
+    internal partial class SearchResult : IJsonModel<global::Azure.Search.Documents.Models.SearchResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchResult(document.RootElement, options);
+                        return global::Azure.Search.Documents.Models.SearchResult.DeserializeSearchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchResult IPersistableModel<SearchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchResult IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Models.SearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,34 +68,34 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("@search.score"u8);
                 writer.WriteNumberValue(Score);
             }
-            if (options.Format != "W" && Optional.IsDefined(RerankerScore))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(RerankerScore)))
             {
                 writer.WritePropertyName("@search.rerankerScore"u8);
                 writer.WriteNumberValue(RerankerScore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RerankerBoostedScore))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(RerankerBoostedScore)))
             {
                 writer.WritePropertyName("@search.rerankerBoostedScore"u8);
                 writer.WriteNumberValue(RerankerBoostedScore.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Highlights))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(Highlights)))
             {
                 writer.WritePropertyName("@search.highlights"u8);
                 writer.WriteStartObject();
                 foreach (var item in Highlights)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Models
                     writer.WriteStartArray();
                     foreach (string item0 in item.Value)
                     {
-                        if (item0 == null)
+                        if ((item0 == null))
                         {
                             writer.WriteNullValue();
                             continue;
@@ -114,20 +114,20 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Captions))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(Captions)))
             {
                 writer.WritePropertyName("@search.captions"u8);
                 writer.WriteStartArray();
                 foreach (QueryCaptionResult item in Captions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<QueryCaptionResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DocumentDebugInfo))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(DocumentDebugInfo)))
             {
                 writer.WritePropertyName("@search.documentDebugInfo"u8);
-                writer.WriteObjectValue(DocumentDebugInfo, options);
+                writer.WriteObjectValue<DocumentDebugInfo>(DocumentDebugInfo, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -135,9 +135,9 @@ namespace Azure.Search.Documents.Models
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -145,36 +145,36 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchResult IJsonModel<SearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchResult IJsonModel<global::Azure.Search.Documents.Models.SearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Models.SearchResult.DeserializeSearchResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchResult DeserializeSearchResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             double score = default;
             double? rerankerScore = default;
             double? rerankerBoostedScore = default;
-            IReadOnlyDictionary<string, IList<string>> highlights = default;
-            IReadOnlyList<QueryCaptionResult> captions = default;
+            IReadOnlyDictionary<string, global::System.Collections.Generic.IList<string>> highlights = default;
+            IReadOnlyList<global::Azure.Search.Documents.Models.QueryCaptionResult> captions = default;
             DocumentDebugInfo documentDebugInfo = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@search.score"u8))
@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.rerankerScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         rerankerScore = null;
                         continue;
@@ -194,7 +194,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.rerankerBoostedScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         rerankerBoostedScore = null;
                         continue;
@@ -204,14 +204,14 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.highlights"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+                    Dictionary<string, global::System.Collections.Generic.IList<string>> dictionary = new Dictionary<string, global::System.Collections.Generic.IList<string>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -220,7 +220,7 @@ namespace Azure.Search.Documents.Models
                             List<string> array = new List<string>();
                             foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
+                                if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                                 {
                                     array.Add(null);
                                 }
@@ -237,36 +237,36 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.captions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<QueryCaptionResult> array = new List<QueryCaptionResult>();
+                    List<global::Azure.Search.Documents.Models.QueryCaptionResult> array = new List<global::Azure.Search.Documents.Models.QueryCaptionResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QueryCaptionResult.DeserializeQueryCaptionResult(item, options));
+                        array.Add(global::Azure.Search.Documents.Models.QueryCaptionResult.DeserializeQueryCaptionResult(item, options));
                     }
                     captions = array;
                     continue;
                 }
                 if (prop.NameEquals("@search.documentDebugInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         documentDebugInfo = null;
                         continue;
                     }
-                    documentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value, options);
+                    documentDebugInfo = global::Azure.Search.Documents.Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new SearchResult(
                 score,
                 rerankerScore,
                 rerankerBoostedScore,
-                highlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                captions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                (highlights ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<string>>()),
+                (captions ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryCaptionResult>()),
                 documentDebugInfo,
                 additionalProperties);
         }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Traits
 {
-    public partial class UserActionParam : IJsonModel<UserActionParam>
+    public partial class UserActionParam : IJsonModel<global::Specs.Azure.Core.Traits.UserActionParam>
     {
         internal UserActionParam() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.Core.Traits
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<UserActionParam>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Traits.UserActionParam>.Write(ModelReaderWriterOptions options) => throw null;
 
-        UserActionParam IPersistableModel<UserActionParam>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UserActionParam IPersistableModel<global::Specs.Azure.Core.Traits.UserActionParam>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<UserActionParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Traits.UserActionParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="userActionParam"> The <see cref="UserActionParam"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="userActionParam"> The <see cref="global::Specs.Azure.Core.Traits.UserActionParam"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(UserActionParam userActionParam) => throw null;
 
-        void IJsonModel<UserActionParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Traits.UserActionParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        UserActionParam IJsonModel<UserActionParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        UserActionParam IJsonModel<global::Specs.Azure.Core.Traits.UserActionParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UserActionParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

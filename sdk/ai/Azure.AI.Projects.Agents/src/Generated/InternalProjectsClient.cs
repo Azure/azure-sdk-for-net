@@ -12,14 +12,14 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalProjectsClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+                { global::System.ClientModel.Primitives.GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { global::System.ClientModel.Primitives.GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
         private readonly string _apiVersion;
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
+        public InternalProjectsClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
         {
         }
 
@@ -45,20 +45,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
+        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, global::System.Uri endpoint, AgentAdministrationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new AgentAdministrationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             }
             else
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
             _apiVersion = options.Version;
         }
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
+        public InternalProjectsClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
         }
 
@@ -77,31 +77,31 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         public virtual AgentAdministrationClient GetAgentAdministrationClient()
         {
-            return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
+            return (global::System.Threading.Volatile.Read(ref _cachedAgentAdministrationClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient));
         }
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
         public virtual AgentToolboxes GetAgentToolboxesClient()
         {
-            return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
+            return (global::System.Threading.Volatile.Read(ref _cachedAgentToolboxes) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes));
         }
 
         /// <summary> Initializes a new instance of ProjectAgentSkills. </summary>
         public virtual ProjectAgentSkills GetProjectAgentSkillsClient()
         {
-            return Volatile.Read(ref _cachedProjectAgentSkills) ?? Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills;
+            return (global::System.Threading.Volatile.Read(ref _cachedProjectAgentSkills) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills));
         }
 
         /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
         public virtual AgentSessionFiles GetAgentSessionFilesClient()
         {
-            return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+            return (global::System.Threading.Volatile.Read(ref _cachedAgentSessionFiles) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles));
         }
 
         /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
         public virtual AgentOptimizationJobs GetAgentOptimizationJobsClient()
         {
-            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+            return (global::System.Threading.Volatile.Read(ref _cachedAgentOptimizationJobs) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs));
         }
     }
 }

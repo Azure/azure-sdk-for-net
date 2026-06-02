@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class UtteranceEntityEvaluationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntityEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntityEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UtteranceEntityEvaluationResult(string category, int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UtteranceEntityEvaluationResult(string category, int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Offset = offset;

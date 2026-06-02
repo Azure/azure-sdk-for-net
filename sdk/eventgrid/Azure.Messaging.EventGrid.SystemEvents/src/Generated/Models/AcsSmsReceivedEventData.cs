@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SegmentCount = segmentCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
         /// <param name="segmentCount"> Number of segments in the message. </param>
-        internal AcsSmsReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> additionalBinaryDataProperties, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to, additionalBinaryDataProperties)
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to, additionalBinaryDataProperties)
         {
             Message = message;
             ReceivedTimestamp = receivedTimestamp;

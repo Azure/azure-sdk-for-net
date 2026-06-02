@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Models
     public partial class QueryResultDocumentInnerHit
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentInnerHit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentInnerHit"/>. </summary>
         internal QueryResultDocumentInnerHit()
         {
-            Vectors = new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>();
+            Vectors = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentInnerHit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentInnerHit"/>. </summary>
         /// <param name="ordinal"> Position of this specific matching element within it's original collection. Position starts at 0. </param>
         /// <param name="vectors"> Detailed scoring information for an individual element of a complex collection that matched a vector query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResultDocumentInnerHit(long? ordinal, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryResultDocumentInnerHit(long? ordinal, IReadOnlyList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>> vectors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Ordinal = ordinal;
             Vectors = vectors;
@@ -38,6 +38,6 @@ namespace Azure.Search.Documents.Models
         public long? Ordinal { get; }
 
         /// <summary> Detailed scoring information for an individual element of a complex collection that matched a vector query. </summary>
-        public IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> Vectors { get; }
+        public IReadOnlyList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>> Vectors { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace _Type.Model.Inheritance.NotDiscriminated
     {
         public Cat(string name, int age) : base(name) => throw null;
 
-        internal Cat(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age) : base(name, additionalBinaryDataProperties) => throw null;
+        internal Cat(string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int age) : base(name, additionalBinaryDataProperties) => throw null;
 
         public int Age
         {

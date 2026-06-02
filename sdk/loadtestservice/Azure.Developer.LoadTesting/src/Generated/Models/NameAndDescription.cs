@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class NameAndDescription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NameAndDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.NameAndDescription"/>. </summary>
         internal NameAndDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NameAndDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.NameAndDescription"/>. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="name"> The name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NameAndDescription(string description, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NameAndDescription(string description, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Name = name;

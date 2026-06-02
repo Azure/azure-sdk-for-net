@@ -15,7 +15,7 @@ namespace Server.Path.Single
     {
         public SingleClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal SingleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

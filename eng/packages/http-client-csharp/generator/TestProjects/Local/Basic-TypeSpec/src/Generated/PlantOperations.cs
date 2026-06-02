@@ -17,7 +17,7 @@ namespace BasicTypeSpec
     /// <summary> The PlantOperations sub-client. </summary>
     public partial class PlantOperations
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
 
         /// <summary> Initializes a new instance of PlantOperations for mocking. </summary>
         protected PlantOperations()
@@ -28,7 +28,7 @@ namespace BasicTypeSpec
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal PlantOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        internal PlantOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -50,7 +50,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTree(RequestContext context)
         {
@@ -58,7 +58,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTreeRequest(context);
+                using HttpMessage message = this.CreateGetTreeRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -77,15 +77,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTreeAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTreeAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PlantOperations.GetTree");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTreeRequest(context);
+                using HttpMessage message = this.CreateGetTreeRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -97,20 +97,20 @@ namespace BasicTypeSpec
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> GetTree(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.Tree> GetTree(CancellationToken cancellationToken = default)
         {
-            Response result = GetTree(cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            Response result = this.GetTree(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> GetTreeAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.Tree>> GetTreeAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetTreeAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            Response result = await this.GetTreeAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTreeAsJson(RequestContext context)
         {
@@ -130,7 +130,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTreeAsJsonRequest(context);
+                using HttpMessage message = this.CreateGetTreeAsJsonRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -149,15 +149,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTreeAsJsonAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTreeAsJsonAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PlantOperations.GetTreeAsJson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTreeAsJsonRequest(context);
+                using HttpMessage message = this.CreateGetTreeAsJsonRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -169,20 +169,20 @@ namespace BasicTypeSpec
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> GetTreeAsJson(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.Tree> GetTreeAsJson(CancellationToken cancellationToken = default)
         {
-            Response result = GetTreeAsJson(cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            Response result = this.GetTreeAsJson(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> GetTreeAsJsonAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.Tree>> GetTreeAsJsonAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetTreeAsJsonAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            Response result = await this.GetTreeAsJsonAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateTree(RequestContent content, RequestContext context = null)
         {
@@ -204,9 +204,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTreeRequest(content, context);
+                using HttpMessage message = this.CreateUpdateTreeRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -226,18 +226,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateTreeAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateTreeAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PlantOperations.UpdateTree");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTreeRequest(content, context);
+                using HttpMessage message = this.CreateUpdateTreeRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -250,29 +250,29 @@ namespace BasicTypeSpec
         /// <summary> Update a tree as a plant. </summary>
         /// <param name="tree"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> UpdateTree(Tree tree, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tree"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.Tree> UpdateTree(Tree tree, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tree, nameof(tree));
+            global::BasicTypeSpec.Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("X");
-            Response result = UpdateTree(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            Response result = this.UpdateTree(content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary> Update a tree as a plant. </summary>
         /// <param name="tree"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> UpdateTreeAsync(Tree tree, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tree"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.Tree>> UpdateTreeAsync(Tree tree, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tree, nameof(tree));
+            global::BasicTypeSpec.Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("X");
-            Response result = await UpdateTreeAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            Response result = await this.UpdateTreeAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary>
@@ -285,8 +285,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateTreeAsJson(RequestContent content, RequestContext context = null)
         {
@@ -294,9 +294,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTreeAsJsonRequest(content, context);
+                using HttpMessage message = this.CreateUpdateTreeAsJsonRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -316,18 +316,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateTreeAsJsonAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateTreeAsJsonAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PlantOperations.UpdateTreeAsJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTreeAsJsonRequest(content, context);
+                using HttpMessage message = this.CreateUpdateTreeAsJsonRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -340,29 +340,29 @@ namespace BasicTypeSpec
         /// <summary> Update a tree as a plant. </summary>
         /// <param name="tree"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> UpdateTreeAsJson(Tree tree, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tree"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.Tree> UpdateTreeAsJson(Tree tree, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tree, nameof(tree));
+            global::BasicTypeSpec.Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("J");
-            Response result = UpdateTreeAsJson(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            Response result = this.UpdateTreeAsJson(content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
 
         /// <summary> Update a tree as a plant. </summary>
         /// <param name="tree"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> UpdateTreeAsJsonAsync(Tree tree, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tree"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.Tree>> UpdateTreeAsJsonAsync(Tree tree, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tree, nameof(tree));
+            global::BasicTypeSpec.Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("J");
-            Response result = await UpdateTreeAsJsonAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            Response result = await this.UpdateTreeAsJsonAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((Tree)result), result);
         }
     }
 }

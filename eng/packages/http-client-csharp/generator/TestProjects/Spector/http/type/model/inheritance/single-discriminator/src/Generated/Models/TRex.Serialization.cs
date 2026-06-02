@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    public partial class TRex : Dinosaur, IJsonModel<TRex>
+    public partial class TRex : Dinosaur, IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>
     {
         internal TRex() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<TRex>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>.Write(ModelReaderWriterOptions options) => throw null;
 
-        TRex IPersistableModel<TRex>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        TRex IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<TRex>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<TRex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        TRex IJsonModel<TRex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        TRex IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.TRex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Dinosaur JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

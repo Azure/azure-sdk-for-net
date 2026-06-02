@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class FunctionArgument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FunctionArgument"/>. </summary>
         /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         internal FunctionArgument(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FunctionArgument"/>. </summary>
         /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <param name="description"> The argument description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionArgument(string @type, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionArgument(string @type, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Description = description;

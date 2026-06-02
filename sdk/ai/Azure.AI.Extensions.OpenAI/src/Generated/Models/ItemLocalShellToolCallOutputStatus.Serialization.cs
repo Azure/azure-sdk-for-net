@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ItemLocalShellToolCallOutputStatus value) => value switch
         {
-            ItemLocalShellToolCallOutputStatus.InProgress => "in_progress",
-            ItemLocalShellToolCallOutputStatus.Completed => "completed",
-            ItemLocalShellToolCallOutputStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ItemLocalShellToolCallOutputStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ItemLocalShellToolCallOutputStatus ToItemLocalShellToolCallOutputStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return ItemLocalShellToolCallOutputStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return ItemLocalShellToolCallOutputStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return ItemLocalShellToolCallOutputStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ItemLocalShellToolCallOutputStatus value.");
         }

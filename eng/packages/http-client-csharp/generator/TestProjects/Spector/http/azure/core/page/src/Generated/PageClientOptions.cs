@@ -13,11 +13,11 @@ namespace Specs.Azure.Core.Page
 {
     public partial class PageClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::Specs.Azure.Core.Page.PageClientOptions.ServiceVersion LatestVersion = global::Specs.Azure.Core.Page.PageClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public PageClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public PageClientOptions(global::Specs.Azure.Core.Page.PageClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal PageClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

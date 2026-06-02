@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> An image-URL block in a new message, referencing an external image by URL. </summary>
     public partial class MessageInputImageUriBlock : MessageInputContentBlock
     {
-        /// <summary> Initializes a new instance of <see cref="MessageInputImageUriBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageUriBlock"/>. </summary>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
-        public MessageInputImageUriBlock(MessageImageUriParam imageUrl) : base(MessageBlockType.ImageUrl)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
+        public MessageInputImageUriBlock(MessageImageUriParam imageUrl) : base(global::Azure.AI.Agents.Persistent.MessageBlockType.ImageUrl)
         {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
             ImageUrl = imageUrl;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageInputImageUriBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageUriBlock"/>. </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
-        internal MessageInputImageUriBlock(MessageBlockType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageImageUriParam imageUrl) : base(@type, additionalBinaryDataProperties)
+        internal MessageInputImageUriBlock(MessageBlockType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageImageUriParam imageUrl) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
         }

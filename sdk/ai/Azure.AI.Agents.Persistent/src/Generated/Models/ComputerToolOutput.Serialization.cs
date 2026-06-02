@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The output from a computer use tool to be submitted. </summary>
-    public partial class ComputerToolOutput : StructuredToolOutput, IJsonModel<ComputerToolOutput>
+    public partial class ComputerToolOutput : StructuredToolOutput, IJsonModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputerToolOutput"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerToolOutput"/> for deserialization. </summary>
         internal ComputerToolOutput()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override StructuredToolOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputerToolOutput(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.ComputerToolOutput.DeserializeComputerToolOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputerToolOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerToolOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputerToolOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerToolOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputerToolOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputerToolOutput IPersistableModel<ComputerToolOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputerToolOutput)PersistableModelCreateCore(data, options);
+        ComputerToolOutput IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ComputerToolOutput)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputerToolOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputerToolOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,21 +73,21 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ComputerToolOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerToolOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output, options);
-            if (Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
+            writer.WriteObjectValue<ComputerScreenshot>(Output, options);
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
             {
                 writer.WritePropertyName("acknowledged_safety_checks"u8);
                 writer.WriteStartArray();
                 foreach (SafetyCheck item in AcknowledgedSafetyChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SafetyCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,34 +95,34 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputerToolOutput IJsonModel<ComputerToolOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputerToolOutput)JsonModelCreateCore(ref reader, options);
+        ComputerToolOutput IJsonModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ComputerToolOutput)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override StructuredToolOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerToolOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ComputerToolOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerToolOutput)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputerToolOutput(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.ComputerToolOutput.DeserializeComputerToolOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ComputerToolOutput DeserializeComputerToolOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "computer_call_output";
             string toolCallId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ComputerScreenshot output = default;
-            IList<SafetyCheck> acknowledgedSafetyChecks = default;
+            IList<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -137,29 +137,29 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = ComputerScreenshot.DeserializeComputerScreenshot(prop.Value, options);
+                    output = global::Azure.AI.Agents.Persistent.ComputerScreenshot.DeserializeComputerScreenshot(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("acknowledged_safety_checks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SafetyCheck> array = new List<SafetyCheck>();
+                    List<global::Azure.AI.Agents.Persistent.SafetyCheck> array = new List<global::Azure.AI.Agents.Persistent.SafetyCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SafetyCheck.DeserializeSafetyCheck(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.SafetyCheck.DeserializeSafetyCheck(item, options));
                     }
                     acknowledgedSafetyChecks = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerToolOutput(@type, toolCallId, additionalBinaryDataProperties, output, acknowledgedSafetyChecks ?? new ChangeTrackingList<SafetyCheck>());
+            return new ComputerToolOutput(@type, toolCallId, additionalBinaryDataProperties, output, (acknowledgedSafetyChecks ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>()));
         }
     }
 }

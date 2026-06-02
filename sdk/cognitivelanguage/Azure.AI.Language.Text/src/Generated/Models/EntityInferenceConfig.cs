@@ -14,17 +14,17 @@ namespace Azure.AI.Language.Text
     public partial class EntityInferenceConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityInferenceConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityInferenceConfig"/>. </summary>
         public EntityInferenceConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityInferenceConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityInferenceConfig"/>. </summary>
         /// <param name="excludeNormalizedValues"> Option to include/exclude the detected entity values to be normalized and included in the metadata. The numeric and temporal entity types support value normalization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityInferenceConfig(bool? excludeNormalizedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityInferenceConfig(bool? excludeNormalizedValues, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExcludeNormalizedValues = excludeNormalizedValues;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

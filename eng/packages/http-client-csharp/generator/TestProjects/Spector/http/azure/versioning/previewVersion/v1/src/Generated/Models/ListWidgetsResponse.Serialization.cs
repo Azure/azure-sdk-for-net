@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
-    public partial class ListWidgetsResponse : IJsonModel<ListWidgetsResponse>
+    public partial class ListWidgetsResponse : IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>
     {
         internal ListWidgetsResponse() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.Versioning.PreviewVersion
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ListWidgetsResponse>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ListWidgetsResponse IPersistableModel<ListWidgetsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ListWidgetsResponse IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ListWidgetsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator ListWidgetsResponse(Response response) => throw null;
 
-        void IJsonModel<ListWidgetsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ListWidgetsResponse IJsonModel<ListWidgetsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ListWidgetsResponse IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ListWidgetsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

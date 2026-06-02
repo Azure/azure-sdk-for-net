@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodeDeallocationOption enums. </summary>
-    public readonly partial struct BatchNodeDeallocationOption : IEquatable<BatchNodeDeallocationOption>
+    public readonly partial struct BatchNodeDeallocationOption : IEquatable<global::Azure.Compute.Batch.BatchNodeDeallocationOption>
     {
         private readonly string _value;
         /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks will run again when a Compute Node is available. Remove Compute Nodes as soon as Tasks have been terminated. </summary>
@@ -23,12 +23,12 @@ namespace Azure.Compute.Batch
         /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Remove Compute Nodes when all Task retention periods have expired. </summary>
         private const string RetainedDataValue = "retaineddata";
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocationOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDeallocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeDeallocationOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.Compute.Batch
         /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Remove Compute Nodes when all Task retention periods have expired. </summary>
         public static BatchNodeDeallocationOption RetainedData { get; } = new BatchNodeDeallocationOption(RetainedDataValue);
 
-        /// <summary> Determines if two <see cref="BatchNodeDeallocationOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeDeallocationOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeDeallocationOption left, BatchNodeDeallocationOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchNodeDeallocationOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeDeallocationOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeDeallocationOption left, BatchNodeDeallocationOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeDeallocationOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeDeallocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeDeallocationOption(string value) => new BatchNodeDeallocationOption(value);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeDeallocationOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeDeallocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeDeallocationOption?(string value) => value == null ? null : new BatchNodeDeallocationOption(value);
+        public static implicit operator BatchNodeDeallocationOption?(string value) => (value == null) ? null : new BatchNodeDeallocationOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchNodeDeallocationOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchNodeDeallocationOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchNodeDeallocationOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchNodeDeallocationOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -13,19 +13,19 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
     public partial class LuisTargetIntentResult : TargetIntentResult
     {
-        /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.LuisTargetIntentResult"/>. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal LuisTargetIntentResult(double confidence) : base(TargetProjectKind.Luis, confidence)
+        internal LuisTargetIntentResult(double confidence) : base(global::Azure.AI.Language.Conversations.Models.TargetProjectKind.Luis, confidence)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.LuisTargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
-        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties, LuisResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
+        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, LuisResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
         {
             Result = result;
         }

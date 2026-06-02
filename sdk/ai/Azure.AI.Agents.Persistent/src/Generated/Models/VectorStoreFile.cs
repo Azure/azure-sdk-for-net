@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreFile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFile"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="usageBytes">
         /// The total vector store usage in bytes. Note that this may be different from the original file
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             ChunkingStrategy = chunkingStrategy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFile"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store.file`. </param>
         /// <param name="usageBytes">
@@ -51,10 +51,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastError"> The last error associated with this vector store file. Will be `null` if there are no errors. </param>
         /// <param name="chunkingStrategy"> The strategy used to chunk the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFile(string id, VectorStoreFileObject @object, int usageBytes, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileStatus status, VectorStoreFileError lastError, VectorStoreChunkingStrategyResponse chunkingStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFile(string id, VectorStoreFileObject @object, int usageBytes, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileStatus status, VectorStoreFileError lastError, VectorStoreChunkingStrategyResponse chunkingStrategy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             UsageBytes = usageBytes;
             CreatedAt = createdAt;
             VectorStoreId = vectorStoreId;

@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationsSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationsSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="summaries"> array of summaries. </param>
-        internal ConversationsSummaryResult(string id, IEnumerable<InputWarning> warnings, IEnumerable<SummaryResultItem> summaries)
+        internal ConversationsSummaryResult(string id, IEnumerable<global::Azure.AI.Language.Conversations.Models.InputWarning> warnings, IEnumerable<global::Azure.AI.Language.Conversations.Models.SummaryResultItem> summaries)
         {
             Id = id;
             Warnings = warnings.ToList();
             Summaries = summaries.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationsSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="summaries"> array of summaries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationsSummaryResult(string id, IList<InputWarning> warnings, ConversationStatistics statistics, IList<SummaryResultItem> summaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationsSummaryResult(string id, IList<global::Azure.AI.Language.Conversations.Models.InputWarning> warnings, ConversationStatistics statistics, IList<global::Azure.AI.Language.Conversations.Models.SummaryResultItem> summaries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -47,12 +47,12 @@ namespace Azure.AI.Language.Conversations.Models
         public string Id { get; }
 
         /// <summary> Warnings encountered in processing the document. </summary>
-        public IList<InputWarning> Warnings { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.InputWarning> Warnings { get; }
 
         /// <summary> If showStats=true was specified in the request this field will contain information about the conversation payload. </summary>
         public ConversationStatistics Statistics { get; }
 
         /// <summary> array of summaries. </summary>
-        public IList<SummaryResultItem> Summaries { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.SummaryResultItem> Summaries { get; }
     }
 }

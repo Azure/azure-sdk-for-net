@@ -13,22 +13,22 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's quick action value information. </summary>
     public partial class MessageTemplateQuickAction : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateQuickAction"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MessageTemplateQuickAction(string name) : base(name, MessageTemplateValueKind.QuickAction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public MessageTemplateQuickAction(string name) : base(name, global::Azure.Communication.Messages.MessageTemplateValueKind.QuickAction)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateQuickAction"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
         /// <param name="payload"> The [Optional] quick action payload. </param>
-        internal MessageTemplateQuickAction(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, string payload) : base(name, kind, additionalBinaryDataProperties)
+        internal MessageTemplateQuickAction(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text, string payload) : base(name, kind, additionalBinaryDataProperties)
         {
             Text = text;
             Payload = payload;

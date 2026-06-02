@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> ContainerType enums. </summary>
-    public readonly partial struct ContainerType : IEquatable<ContainerType>
+    public readonly partial struct ContainerType : IEquatable<global::Azure.Compute.Batch.ContainerType>
     {
         private readonly string _value;
         /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> A CRI based technology will be used to launch the containers. </summary>
         private const string CriCompatibleValue = "criCompatible";
 
-        /// <summary> Initializes a new instance of <see cref="ContainerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> A CRI based technology will be used to launch the containers. </summary>
         public static ContainerType CriCompatible { get; } = new ContainerType(CriCompatibleValue);
 
-        /// <summary> Determines if two <see cref="ContainerType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.ContainerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerType left, ContainerType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContainerType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.ContainerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerType left, ContainerType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContainerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.ContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerType(string value) => new ContainerType(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.ContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerType?(string value) => value == null ? null : new ContainerType(value);
+        public static implicit operator ContainerType?(string value) => (value == null) ? null : new ContainerType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContainerType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ContainerType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ContainerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,28 +14,28 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringTrainingJobDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/> or <paramref name="trainingConfigVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelLabel"/> or <paramref name="trainingConfigVersion"/> is null. </exception>
         public TextAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion)
         {
-            Argument.AssertNotNull(modelLabel, nameof(modelLabel));
-            Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(modelLabel, nameof(modelLabel));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
 
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, TextAuthoringEvaluationDetails evaluationOptions, DataGenerationSetting dataGenerationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, TextAuthoringEvaluationDetails evaluationOptions, DataGenerationSetting dataGenerationSettings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;

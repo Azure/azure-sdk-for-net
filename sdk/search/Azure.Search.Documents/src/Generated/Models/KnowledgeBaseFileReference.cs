@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a file document reference. </summary>
     public partial class KnowledgeBaseFileReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFileReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseFileReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.File, id, activitySource)
+        internal KnowledgeBaseFileReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.File, id, activitySource)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFileReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="docName"> The document name for the reference. </param>
-        internal KnowledgeBaseFileReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string docName) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseFileReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string docName) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             DocName = docName;
         }

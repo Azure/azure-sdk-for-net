@@ -14,14 +14,14 @@ namespace Service.MultipleServices.ServiceA
 {
     public partial class ServiceAClient
     {
-        public ServiceAClient() : this(new Uri("http://localhost:3000"), new ServiceAClientOptions()) => throw null;
+        public ServiceAClient() : this(new global::System.Uri("http://localhost:3000"), new ServiceAClientOptions()) => throw null;
 
-        internal ServiceAClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ServiceAClientOptions options) => throw null;
+        internal ServiceAClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ServiceAClientOptions options) => throw null;
 
-        public ServiceAClient(Uri endpoint, ServiceAClientOptions options) : this(null, endpoint, options) => throw null;
+        public ServiceAClient(global::System.Uri endpoint, ServiceAClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ServiceAClient(ServiceAClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ServiceAClient(ServiceAClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

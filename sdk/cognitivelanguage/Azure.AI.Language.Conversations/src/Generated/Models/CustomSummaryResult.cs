@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class CustomSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CustomSummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
+        internal CustomSummaryResult(IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> conversations, IEnumerable<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, string projectName, string deploymentName)
         {
             Conversations = conversations.ToList();
             Errors = errors.ToList();
@@ -30,14 +30,14 @@ namespace Azure.AI.Language.Conversations.Models
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CustomSummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomSummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomSummaryResult(IList<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> conversations, IList<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Errors = errors;
@@ -48,10 +48,10 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> array of conversations. </summary>
-        public IList<ConversationsSummaryResult> Conversations { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> Conversations { get; }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }

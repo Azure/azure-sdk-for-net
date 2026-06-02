@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Models
     public partial class QueryRewritesValuesDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryRewritesValuesDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo"/>. </summary>
         internal QueryRewritesValuesDebugInfo()
         {
             Rewrites = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryRewritesValuesDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo"/>. </summary>
         /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
         /// <param name="rewrites"> List of query rewrites. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryRewritesValuesDebugInfo(string inputQuery, IReadOnlyList<string> rewrites, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryRewritesValuesDebugInfo(string inputQuery, IReadOnlyList<string> rewrites, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InputQuery = inputQuery;
             Rewrites = rewrites;

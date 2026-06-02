@@ -14,16 +14,16 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoveryTemplate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryTemplate"/>. </summary>
         internal DiscoveryTemplate()
         {
-            Seeds = new ChangeTrackingList<DiscoverySource>();
+            Seeds = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             Names = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryTemplate"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="seeds"> The list of disco template seeds. </param>
         /// <param name="names"> The list of disco template names. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryTemplate(string id, string name, string displayName, string industry, string region, string countryCode, string stateCode, string city, IList<DiscoverySource> seeds, IList<string> names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryTemplate(string id, string name, string displayName, string industry, string region, string countryCode, string stateCode, string city, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds, IList<string> names, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Defender.Easm
         public string City { get; }
 
         /// <summary> The list of disco template seeds. </summary>
-        public IList<DiscoverySource> Seeds { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get; }
 
         /// <summary> The list of disco template names. </summary>
         public IList<string> Names { get; }

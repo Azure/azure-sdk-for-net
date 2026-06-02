@@ -12,9 +12,9 @@ namespace Azure.AI.Projects
     public partial class DeleteMemoryResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteMemoryResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DeleteMemoryResponse"/>. </summary>
         /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
         /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
         internal DeleteMemoryResponse(string memoryId, bool deleted)
@@ -23,14 +23,14 @@ namespace Azure.AI.Projects
             Deleted = deleted;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteMemoryResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DeleteMemoryResponse"/>. </summary>
         /// <param name="object"> The object type. Always 'memory_store.item.deleted'. </param>
         /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
         /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteMemoryResponse(MemoryStoreObjectType @object, string memoryId, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteMemoryResponse(MemoryStoreObjectType @object, string memoryId, bool deleted, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             MemoryId = memoryId;
             Deleted = deleted;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

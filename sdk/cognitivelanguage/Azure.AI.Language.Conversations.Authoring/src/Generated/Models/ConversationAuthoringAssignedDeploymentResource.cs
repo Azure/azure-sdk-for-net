@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringAssignedDeploymentResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="region"> The Azure resource region. </param>
         internal ConversationAuthoringAssignedDeploymentResource(string region)
         {
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
         /// <param name="region"> The Azure resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignedDeploymentResource(string resourceId, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringAssignedDeploymentResource(string resourceId, string region, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Region = region;

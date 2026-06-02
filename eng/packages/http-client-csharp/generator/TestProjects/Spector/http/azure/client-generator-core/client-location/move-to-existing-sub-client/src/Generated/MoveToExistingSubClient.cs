@@ -13,14 +13,14 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClie
 {
     public partial class MoveToExistingSubClient
     {
-        public MoveToExistingSubClient() : this(new Uri("http://localhost:3000"), new MoveToExistingSubClientOptions()) => throw null;
+        public MoveToExistingSubClient() : this(new global::System.Uri("http://localhost:3000"), new MoveToExistingSubClientOptions()) => throw null;
 
-        internal MoveToExistingSubClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MoveToExistingSubClientOptions options) => throw null;
+        internal MoveToExistingSubClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MoveToExistingSubClientOptions options) => throw null;
 
-        public MoveToExistingSubClient(Uri endpoint, MoveToExistingSubClientOptions options) : this(null, endpoint, options) => throw null;
+        public MoveToExistingSubClient(global::System.Uri endpoint, MoveToExistingSubClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MoveToExistingSubClient(MoveToExistingSubClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MoveToExistingSubClient(MoveToExistingSubClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

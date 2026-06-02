@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedModelManifest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedModelManifest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedModelManifest"/>. </summary>
         /// <param name="modelFiles"> The model files belonging to this model. </param>
-        internal ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles)
+        internal ExportedModelManifest(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> modelFiles)
         {
             ModelFiles = modelFiles.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedModelManifest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedModelManifest"/>. </summary>
         /// <param name="modelFiles"> The model files belonging to this model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedModelManifest(IList<TextAuthoringModelFile> modelFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedModelManifest(IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> modelFiles, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelFiles = modelFiles;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The model files belonging to this model. </summary>
-        public IList<TextAuthoringModelFile> ModelFiles { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> ModelFiles { get; }
     }
 }

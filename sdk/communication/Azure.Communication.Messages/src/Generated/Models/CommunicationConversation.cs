@@ -14,23 +14,23 @@ namespace Azure.Communication.Messages
     public partial class CommunicationConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.CommunicationConversation"/>. </summary>
         public CommunicationConversation()
         {
             DeliveryChannelIds = new ChangeTrackingList<string>();
-            Participants = new ChangeTrackingList<ConversationParticipant>();
+            Participants = new ChangeTrackingList<global::Azure.Communication.Messages.ConversationParticipant>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.CommunicationConversation"/>. </summary>
         /// <param name="id"> The conversation ID. </param>
         /// <param name="topic"> The conversation topic. </param>
         /// <param name="deliveryChannelIds"> List of delivery channel IDs. </param>
         /// <param name="outboundDeliveryStrategy"> Outbound delivery strategy for the conversation. </param>
         /// <param name="participants"> List of participants involved in the conversation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationConversation(string id, string topic, IList<string> deliveryChannelIds, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IList<ConversationParticipant> participants, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunicationConversation(string id, string topic, IList<string> deliveryChannelIds, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IList<global::Azure.Communication.Messages.ConversationParticipant> participants, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Topic = topic;
@@ -53,6 +53,6 @@ namespace Azure.Communication.Messages
         public OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get; set; }
 
         /// <summary> List of participants involved in the conversation. </summary>
-        public IList<ConversationParticipant> Participants { get; }
+        public IList<global::Azure.Communication.Messages.ConversationParticipant> Participants { get; }
     }
 }

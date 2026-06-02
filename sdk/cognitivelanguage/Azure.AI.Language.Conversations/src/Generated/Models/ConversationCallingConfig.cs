@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationCallingConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationCallingConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationCallingConfig"/>. </summary>
         public ConversationCallingConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationCallingConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationCallingConfig"/>. </summary>
         /// <param name="language"> The language of the query in BCP 47 language representation. </param>
         /// <param name="verbose"> If true, the service will return more detailed information. </param>
         /// <param name="isLoggingEnabled"> If true, the query will be saved for customers to further review in authoring, to improve the model quality. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationCallingConfig(string language, bool? verbose, bool? isLoggingEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationCallingConfig(string language, bool? verbose, bool? isLoggingEnabled, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Verbose = verbose;

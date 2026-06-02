@@ -10,22 +10,22 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
     public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem"/>. </summary>
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="actionId"/> is null. </exception>
-        public AgentWorkflowPreviewActionResponseItem(string kind, string actionId, AgentWorkflowPreviewActionStatus? status) : base(AgentResponseItemKind.WorkflowAction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="kind"/> or <paramref name="actionId"/> is null. </exception>
+        public AgentWorkflowPreviewActionResponseItem(string kind, string actionId, AgentWorkflowPreviewActionStatus? status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.WorkflowAction)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
-            Argument.AssertNotNull(actionId, nameof(actionId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(kind, nameof(kind));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(actionId, nameof(actionId));
 
             Kind = kind;
             ActionId = actionId;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        internal AgentWorkflowPreviewActionResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal AgentWorkflowPreviewActionResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Kind = kind;
             ActionId = actionId;

@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
     public partial class AzureSemanticVadTurnDetectionEn : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionEn"/>. </summary>
-        public AzureSemanticVadTurnDetectionEn() : base(TurnDetectionType.AzureSemanticVadEn)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn"/>. </summary>
+        public AzureSemanticVadTurnDetectionEn() : base(global::Azure.AI.VoiceLive.TurnDetectionType.AzureSemanticVadEn)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionEn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="autoTruncate"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
-        internal AzureSemanticVadTurnDetectionEn(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
+        internal AzureSemanticVadTurnDetectionEn(TurnDetectionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;

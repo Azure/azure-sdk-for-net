@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Status for import. </summary>
-    public readonly partial struct ImportStatus : IEquatable<ImportStatus>
+    public readonly partial struct ImportStatus : IEquatable<global::Azure.Analytics.Purview.DataMap.ImportStatus>
     {
         private readonly string _value;
         /// <summary> Success. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Failed. </summary>
         private const string FailedValue = "FAILED";
 
-        /// <summary> Initializes a new instance of <see cref="ImportStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.ImportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImportStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Failed. </summary>
         public static ImportStatus Failed { get; } = new ImportStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="ImportStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.ImportStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImportStatus left, ImportStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImportStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.ImportStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImportStatus left, ImportStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImportStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.ImportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImportStatus(string value) => new ImportStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ImportStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.ImportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportStatus?(string value) => value == null ? null : new ImportStatus(value);
+        public static implicit operator ImportStatus?(string value) => (value == null) ? null : new ImportStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImportStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImportStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImportStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

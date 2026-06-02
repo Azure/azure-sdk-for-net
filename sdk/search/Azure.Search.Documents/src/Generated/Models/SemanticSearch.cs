@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SemanticSearch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticSearch"/>. </summary>
         public SemanticSearch()
         {
-            Configurations = new ChangeTrackingList<SemanticConfiguration>();
+            Configurations = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SemanticConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticSearch"/>. </summary>
         /// <param name="defaultConfigurationName"> Allows you to set the name of a default semantic configuration in your index, making it optional to pass it on as a query parameter every time. </param>
         /// <param name="configurations"> The semantic configurations for the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticSearch(string defaultConfigurationName, IList<SemanticConfiguration> configurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticSearch(string defaultConfigurationName, IList<global::Azure.Search.Documents.Indexes.Models.SemanticConfiguration> configurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DefaultConfigurationName = defaultConfigurationName;
             Configurations = configurations;
@@ -38,6 +38,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string DefaultConfigurationName { get; set; }
 
         /// <summary> The semantic configurations for the index. </summary>
-        public IList<SemanticConfiguration> Configurations { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SemanticConfiguration> Configurations { get; }
     }
 }

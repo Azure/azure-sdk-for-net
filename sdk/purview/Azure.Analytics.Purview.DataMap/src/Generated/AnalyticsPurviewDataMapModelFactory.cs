@@ -20,10 +20,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="referredEntities"> The referred entities. </param>
         /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntityWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasEntityWithExtInfo AtlasEntityWithExtInfo(IDictionary<string, AtlasEntity> referredEntities = default, AtlasEntity entity = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo"/> instance for mocking. </returns>
+        public static AtlasEntityWithExtInfo AtlasEntityWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> referredEntities = default, AtlasEntity entity = default)
         {
-            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntity>();
+            referredEntities ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
 
             return new AtlasEntityWithExtInfo(referredEntities, entity, additionalBinaryDataProperties: null);
         }
@@ -54,17 +54,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="updatedBy"> The user who updated the record. </param>
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntity"/> instance for mocking. </returns>
-        public static AtlasEntity AtlasEntity(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IDictionary<string, BinaryData> businessAttributes = default, IEnumerable<AtlasClassification> classifications = default, long? createTime = default, string createdBy = default, IDictionary<string, string> customAttributes = default, string guid = default, string homeId = default, string collectionId = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, int? provenanceType = default, bool? proxy = default, IDictionary<string, BinaryData> relationshipAttributes = default, EntityStatus? status = default, long? updateTime = default, string updatedBy = default, long? version = default, IDictionary<string, IList<ContactInfo>> contacts = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntity"/> instance for mocking. </returns>
+        public static AtlasEntity AtlasEntity(IDictionary<string, global::System.BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IDictionary<string, global::System.BinaryData> businessAttributes = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, long? createTime = default, string createdBy = default, IDictionary<string, string> customAttributes = default, string guid = default, string homeId = default, string collectionId = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> meanings = default, int? provenanceType = default, bool? proxy = default, IDictionary<string, global::System.BinaryData> relationshipAttributes = default, EntityStatus? status = default, long? updateTime = default, string updatedBy = default, long? version = default, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> contacts = default)
         {
-            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
-            businessAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            businessAttributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
             customAttributes ??= new ChangeTrackingDictionary<string, string>();
             labels ??= new ChangeTrackingList<string>();
-            meanings ??= new ChangeTrackingList<AtlasTermAssignmentHeader>();
-            relationshipAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
-            contacts ??= new ChangeTrackingDictionary<string, IList<ContactInfo>>();
+            meanings ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>();
+            relationshipAttributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            contacts ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>();
 
             return new AtlasEntity(
                 attributes,
@@ -106,11 +106,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="removePropagationsOnEntityDelete"> Determines if propagations will be removed on entity deletion. </param>
         /// <param name="validityPeriods"> An array of time boundaries indicating validity periods. </param>
-        /// <returns> A new <see cref="DataMap.AtlasClassification"/> instance for mocking. </returns>
-        public static AtlasClassification AtlasClassification(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, string entityGuid = default, EntityStatus? entityStatus = default, bool? removePropagationsOnEntityDelete = default, IEnumerable<TimeBoundary> validityPeriods = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassification"/> instance for mocking. </returns>
+        public static AtlasClassification AtlasClassification(IDictionary<string, global::System.BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, string entityGuid = default, EntityStatus? entityStatus = default, bool? removePropagationsOnEntityDelete = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.TimeBoundary> validityPeriods = default)
         {
-            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
-            validityPeriods ??= new ChangeTrackingList<TimeBoundary>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            validityPeriods ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TimeBoundary>();
 
             return new AtlasClassification(
                 attributes,
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="endTime"> The end of the time boundary. </param>
         /// <param name="startTime"> The start of the time boundary. </param>
         /// <param name="timeZone"> The timezone of the time boundary. </param>
-        /// <returns> A new <see cref="DataMap.TimeBoundary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.TimeBoundary"/> instance for mocking. </returns>
         public static TimeBoundary TimeBoundary(string endTime = default, string startTime = default, string timeZone = default)
         {
             return new TimeBoundary(endTime, startTime, timeZone, additionalBinaryDataProperties: null);
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="status"> The status of terms assignment. </param>
         /// <param name="steward"> The steward of the term. </param>
         /// <param name="termGuid"> The GUID of the term. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTermAssignmentHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader"/> instance for mocking. </returns>
         public static AtlasTermAssignmentHeader AtlasTermAssignmentHeader(int? confidence = default, string createdBy = default, string description = default, string displayText = default, string expression = default, Guid? relationGuid = default, AtlasTermAssignmentStatus? status = default, string steward = default, Guid? termGuid = default)
         {
             return new AtlasTermAssignmentHeader(
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ContactInfo. </summary>
         /// <param name="id"> Azure Active Directory object Id. </param>
         /// <param name="info"> additional information to describe this contact. </param>
-        /// <returns> A new <see cref="DataMap.ContactInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ContactInfo"/> instance for mocking. </returns>
         public static ContactInfo ContactInfo(string id = default, string info = default)
         {
             return new ContactInfo(id, info, additionalBinaryDataProperties: null);
@@ -172,12 +172,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guidAssignments"> A map of GUID assignments with entities. </param>
         /// <param name="mutatedEntities"> The entity headers of mutated entities. </param>
         /// <param name="partialUpdatedEntities"> An array of entity headers that partially updated. </param>
-        /// <returns> A new <see cref="DataMap.EntityMutationResult"/> instance for mocking. </returns>
-        public static EntityMutationResult EntityMutationResult(IDictionary<string, string> guidAssignments = default, IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = default, IEnumerable<AtlasEntityHeader> partialUpdatedEntities = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.EntityMutationResult"/> instance for mocking. </returns>
+        public static EntityMutationResult EntityMutationResult(IDictionary<string, string> guidAssignments = default, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> mutatedEntities = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> partialUpdatedEntities = default)
         {
             guidAssignments ??= new ChangeTrackingDictionary<string, string>();
-            mutatedEntities ??= new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>();
-            partialUpdatedEntities ??= new ChangeTrackingList<AtlasEntityHeader>();
+            mutatedEntities ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>>();
+            partialUpdatedEntities ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
 
             return new EntityMutationResult(guidAssignments, mutatedEntities, partialUpdatedEntities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -198,15 +198,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntityHeader"/> instance for mocking. </returns>
-        public static AtlasEntityHeader AtlasEntityHeader(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IEnumerable<string> classificationNames = default, IEnumerable<AtlasClassification> classifications = default, string displayText = default, string guid = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<string> meaningNames = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, EntityStatus? status = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader"/> instance for mocking. </returns>
+        public static AtlasEntityHeader AtlasEntityHeader(IDictionary<string, global::System.BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IEnumerable<string> classificationNames = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, string displayText = default, string guid = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<string> meaningNames = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> meanings = default, EntityStatus? status = default)
         {
-            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
             classificationNames ??= new ChangeTrackingList<string>();
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
             labels ??= new ChangeTrackingList<string>();
             meaningNames ??= new ChangeTrackingList<string>();
-            meanings ??= new ChangeTrackingList<AtlasTermAssignmentHeader>();
+            meanings ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>();
 
             return new AtlasEntityHeader(
                 attributes,
@@ -230,11 +230,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="referredEntities"> The referred entities. </param>
         /// <param name="entities"> An array of entities. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntitiesWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasEntitiesWithExtInfo AtlasEntitiesWithExtInfo(IDictionary<string, AtlasEntity> referredEntities = default, IEnumerable<AtlasEntity> entities = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo"/> instance for mocking. </returns>
+        public static AtlasEntitiesWithExtInfo AtlasEntitiesWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> referredEntities = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEntity> entities = default)
         {
-            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntity>();
-            entities ??= new ChangeTrackingList<AtlasEntity>();
+            referredEntities ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
+            entities ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
 
             return new AtlasEntitiesWithExtInfo(referredEntities, entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// exists only when associated with an entity.
         /// </param>
         /// <param name="entityGuids"> The GUID of the entity. </param>
-        /// <returns> A new <see cref="DataMap.ClassificationAssociateConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig"/> instance for mocking. </returns>
         public static ClassificationAssociateConfig ClassificationAssociateConfig(AtlasClassification classification = default, IEnumerable<string> entityGuids = default)
         {
             entityGuids ??= new ChangeTrackingList<string>();
@@ -260,10 +260,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sortType"> to specify whether the result should be sorted? If yes, whether asc or desc. </param>
         /// <param name="startIndex"> The start index of the page. </param>
         /// <param name="totalCount"> The total count of items. </param>
-        /// <returns> A new <see cref="DataMap.AtlasClassifications"/> instance for mocking. </returns>
-        public static AtlasClassifications AtlasClassifications(IEnumerable<BinaryData> list = default, int? pageSize = default, string sortBy = default, AtlasSortType? sortType = default, int? startIndex = default, int? totalCount = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassifications"/> instance for mocking. </returns>
+        public static AtlasClassifications AtlasClassifications(IEnumerable<global::System.BinaryData> list = default, int? pageSize = default, string sortBy = default, AtlasSortType? sortType = default, int? startIndex = default, int? totalCount = default)
         {
-            list ??= new ChangeTrackingList<BinaryData>();
+            list ??= new ChangeTrackingList<global::System.BinaryData>();
 
             return new AtlasClassifications(
                 list.ToList(),
@@ -277,17 +277,17 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> An instance of an entity header map. </summary>
         /// <param name="guidHeaderMap"> The description of the guid header map,. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntityHeaders"/> instance for mocking. </returns>
-        public static AtlasEntityHeaders AtlasEntityHeaders(IDictionary<string, AtlasEntityHeader> guidHeaderMap = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeaders"/> instance for mocking. </returns>
+        public static AtlasEntityHeaders AtlasEntityHeaders(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> guidHeaderMap = default)
         {
-            guidHeaderMap ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+            guidHeaderMap ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
 
             return new AtlasEntityHeaders(guidHeaderMap, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Business metadata to send to the service. </summary>
         /// <param name="file"> InputStream of file. </param>
-        /// <returns> A new <see cref="DataMap.BusinessMetadataOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.BusinessMetadataOptions"/> instance for mocking. </returns>
         public static BusinessMetadataOptions BusinessMetadataOptions(BinaryData @file = default)
         {
             return new BusinessMetadataOptions(@file, additionalBinaryDataProperties: null);
@@ -296,11 +296,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Bulk import result. </summary>
         /// <param name="failedImportInfoList"> failed importInfoList. </param>
         /// <param name="successImportInfoList"> successful importInfoList. </param>
-        /// <returns> A new <see cref="DataMap.BulkImportResult"/> instance for mocking. </returns>
-        public static BulkImportResult BulkImportResult(IEnumerable<ImportInfo> failedImportInfoList = default, IEnumerable<ImportInfo> successImportInfoList = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.BulkImportResult"/> instance for mocking. </returns>
+        public static BulkImportResult BulkImportResult(IEnumerable<global::Azure.Analytics.Purview.DataMap.ImportInfo> failedImportInfoList = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.ImportInfo> successImportInfoList = default)
         {
-            failedImportInfoList ??= new ChangeTrackingList<ImportInfo>();
-            successImportInfoList ??= new ChangeTrackingList<ImportInfo>();
+            failedImportInfoList ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ImportInfo>();
+            successImportInfoList ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ImportInfo>();
 
             return new BulkImportResult(failedImportInfoList.ToList(), successImportInfoList.ToList(), additionalBinaryDataProperties: null);
         }
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="importStatus"> importStatus. </param>
         /// <param name="parentObjectName"> parentObjectName. </param>
         /// <param name="remarks"> remarks. </param>
-        /// <returns> A new <see cref="DataMap.ImportInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ImportInfo"/> instance for mocking. </returns>
         public static ImportInfo ImportInfo(string childObjectName = default, ImportStatus? importStatus = default, string parentObjectName = default, string remarks = default)
         {
             return new ImportInfo(childObjectName, importStatus, parentObjectName, remarks, additionalBinaryDataProperties: null);
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> MoveEntitiesOptions. </summary>
         /// <param name="entityGuids"> An array of entity guids to be moved to target collection. </param>
-        /// <returns> A new <see cref="DataMap.MoveEntitiesConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.MoveEntitiesConfig"/> instance for mocking. </returns>
         public static MoveEntitiesConfig MoveEntitiesConfig(IEnumerable<string> entityGuids = default)
         {
             entityGuids ??= new ChangeTrackingList<string>();
@@ -342,12 +342,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="language"> The language of the glossary. </param>
         /// <param name="terms"> An array of related term headers. </param>
         /// <param name="usage"> The usage of the glossary. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossary"/> instance for mocking. </returns>
-        public static AtlasGlossary AtlasGlossary(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<AtlasRelatedTermHeader> terms = default, string usage = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossary"/> instance for mocking. </returns>
+        public static AtlasGlossary AtlasGlossary(string guid = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms = default, string usage = default)
         {
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
-            categories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
-            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            categories ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
 
             return new AtlasGlossary(
                 guid,
@@ -374,7 +374,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="displayText"> The display text. </param>
         /// <param name="parentCategoryGuid"> The GUID of the parent category. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelatedCategoryHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader"/> instance for mocking. </returns>
         public static AtlasRelatedCategoryHeader AtlasRelatedCategoryHeader(string categoryGuid = default, string description = default, string displayText = default, string parentCategoryGuid = default, string relationGuid = default)
         {
             return new AtlasRelatedCategoryHeader(
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="status"> The status of term relationship. </param>
         /// <param name="steward"> The steward of the term. </param>
         /// <param name="termGuid"> The GUID of the term. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelatedTermHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader"/> instance for mocking. </returns>
         public static AtlasRelatedTermHeader AtlasRelatedTermHeader(string description = default, string displayText = default, string expression = default, string relationGuid = default, AtlasTermRelationshipStatus? status = default, string steward = default, string termGuid = default)
         {
             return new AtlasRelatedTermHeader(
@@ -424,12 +424,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="childrenCategories"> An array of children categories. </param>
         /// <param name="parentCategory"> The header of the related category. </param>
         /// <param name="terms"> An array of related term headers. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossaryCategory"/> instance for mocking. </returns>
-        public static AtlasGlossaryCategory AtlasGlossaryCategory(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, AtlasGlossaryHeader anchor = default, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = default, AtlasRelatedCategoryHeader parentCategory = default, IEnumerable<AtlasRelatedTermHeader> terms = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory"/> instance for mocking. </returns>
+        public static AtlasGlossaryCategory AtlasGlossaryCategory(string guid = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, AtlasGlossaryHeader anchor = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> childrenCategories = default, AtlasRelatedCategoryHeader parentCategory = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms = default)
         {
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
-            childrenCategories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
-            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            childrenCategories ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
 
             return new AtlasGlossaryCategory(
                 guid,
@@ -454,7 +454,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="displayText"> The display text. </param>
         /// <param name="glossaryGuid"> The GUID of the glossary. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossaryHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader"/> instance for mocking. </returns>
         public static AtlasGlossaryHeader AtlasGlossaryHeader(string displayText = default, string glossaryGuid = default, string relationGuid = default)
         {
             return new AtlasGlossaryHeader(displayText, glossaryGuid, relationGuid, additionalBinaryDataProperties: null);
@@ -502,31 +502,31 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="usage"> The usage of the term. </param>
         /// <param name="validValues"> An array of related term headers as valid values. </param>
         /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossaryTerm"/> instance for mocking. </returns>
-        public static AtlasGlossaryTerm AtlasGlossaryTerm(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, string abbreviation = default, IEnumerable<BinaryData> templateName = default, AtlasGlossaryHeader anchor = default, IEnumerable<AtlasRelatedTermHeader> antonyms = default, TermStatus? status = default, string nickName = default, IEnumerable<PurviewObjectId> hierarchyInfo = default, IEnumerable<ResourceLink> resources = default, IDictionary<string, IList<ContactInfo>> contacts = default, IDictionary<string, IDictionary<string, BinaryData>> attributes = default, IEnumerable<AtlasRelatedObjectId> assignedEntities = default, IEnumerable<AtlasTermCategorizationHeader> categories = default, IEnumerable<AtlasRelatedTermHeader> classifies = default, IEnumerable<string> examples = default, IEnumerable<AtlasRelatedTermHeader> isA = default, IEnumerable<AtlasRelatedTermHeader> preferredTerms = default, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = default, IEnumerable<AtlasRelatedTermHeader> replacedBy = default, IEnumerable<AtlasRelatedTermHeader> replacementTerms = default, IEnumerable<AtlasRelatedTermHeader> seeAlso = default, IEnumerable<AtlasRelatedTermHeader> synonyms = default, IEnumerable<AtlasRelatedTermHeader> translatedTerms = default, IEnumerable<AtlasRelatedTermHeader> translationTerms = default, string usage = default, IEnumerable<AtlasRelatedTermHeader> validValues = default, IEnumerable<AtlasRelatedTermHeader> validValuesFor = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm"/> instance for mocking. </returns>
+        public static AtlasGlossaryTerm AtlasGlossaryTerm(string guid = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, string abbreviation = default, IEnumerable<global::System.BinaryData> templateName = default, AtlasGlossaryHeader anchor = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> antonyms = default, TermStatus? status = default, string nickName = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.PurviewObjectId> hierarchyInfo = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.ResourceLink> resources = default, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> contacts = default, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> attributes = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> assignedEntities = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader> categories = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> classifies = default, IEnumerable<string> examples = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> isA = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> preferredTerms = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> preferredToTerms = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> replacedBy = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> replacementTerms = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> seeAlso = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> synonyms = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> translatedTerms = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> translationTerms = default, string usage = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> validValues = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> validValuesFor = default)
         {
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
-            templateName ??= new ChangeTrackingList<BinaryData>();
-            antonyms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            hierarchyInfo ??= new ChangeTrackingList<PurviewObjectId>();
-            resources ??= new ChangeTrackingList<ResourceLink>();
-            contacts ??= new ChangeTrackingDictionary<string, IList<ContactInfo>>();
-            attributes ??= new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
-            assignedEntities ??= new ChangeTrackingList<AtlasRelatedObjectId>();
-            categories ??= new ChangeTrackingList<AtlasTermCategorizationHeader>();
-            classifies ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            templateName ??= new ChangeTrackingList<global::System.BinaryData>();
+            antonyms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            hierarchyInfo ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.PurviewObjectId>();
+            resources ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ResourceLink>();
+            contacts ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            assignedEntities ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>();
+            categories ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>();
+            classifies ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             examples ??= new ChangeTrackingList<string>();
-            isA ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            preferredTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            preferredToTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            replacedBy ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            replacementTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            seeAlso ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            synonyms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            translatedTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            translationTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            validValues ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            validValuesFor ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            isA ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            preferredTerms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            preferredToTerms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            replacedBy ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            replacementTerms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            seeAlso ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            synonyms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            translatedTerms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            translationTerms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            validValues ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            validValuesFor ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
 
             return new AtlasGlossaryTerm(
                 guid,
@@ -578,11 +578,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="itemPath"> Item path. </param>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="properties"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="DataMap.PurviewObjectId"/> instance for mocking. </returns>
-        public static PurviewObjectId PurviewObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string name = default, string displayText = default, string itemPath = default, string resourceId = default, IDictionary<string, BinaryData> properties = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.PurviewObjectId"/> instance for mocking. </returns>
+        public static PurviewObjectId PurviewObjectId(string guid = default, string typeName = default, IDictionary<string, global::System.BinaryData> uniqueAttributes = default, string name = default, string displayText = default, string itemPath = default, string resourceId = default, IDictionary<string, global::System.BinaryData> properties = default)
         {
-            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
-            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            properties ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new PurviewObjectId(
                 guid,
@@ -599,7 +599,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ResourceLink. </summary>
         /// <param name="displayName"> Display name for url. </param>
         /// <param name="url"> web url. http or https. </param>
-        /// <returns> A new <see cref="DataMap.ResourceLink"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ResourceLink"/> instance for mocking. </returns>
         public static ResourceLink ResourceLink(string displayName = default, string url = default)
         {
             return new ResourceLink(displayName, url, additionalBinaryDataProperties: null);
@@ -624,10 +624,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="relationshipGuid"> The GUID of the relationship. </param>
         /// <param name="relationshipStatus"> The enum of relationship status. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelatedObjectId"/> instance for mocking. </returns>
-        public static AtlasRelatedObjectId AtlasRelatedObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string displayText = default, EntityStatus? entityStatus = default, string relationshipType = default, AtlasStruct relationshipAttributes = default, Guid? relationshipGuid = default, StatusAtlasRelationship? relationshipStatus = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId"/> instance for mocking. </returns>
+        public static AtlasRelatedObjectId AtlasRelatedObjectId(string guid = default, string typeName = default, IDictionary<string, global::System.BinaryData> uniqueAttributes = default, string displayText = default, EntityStatus? entityStatus = default, string relationshipType = default, AtlasStruct relationshipAttributes = default, Guid? relationshipGuid = default, StatusAtlasRelationship? relationshipStatus = default)
         {
-            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new AtlasRelatedObjectId(
                 guid,
@@ -649,10 +649,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
-        /// <returns> A new <see cref="DataMap.AtlasStruct"/> instance for mocking. </returns>
-        public static AtlasStruct AtlasStruct(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasStruct"/> instance for mocking. </returns>
+        public static AtlasStruct AtlasStruct(IDictionary<string, global::System.BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default)
         {
-            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new AtlasStruct(attributes, typeName, lastModifiedTS, additionalBinaryDataProperties: null);
         }
@@ -663,7 +663,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="displayText"> The display text. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
         /// <param name="status"> The status of term relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTermCategorizationHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader"/> instance for mocking. </returns>
         public static AtlasTermCategorizationHeader AtlasTermCategorizationHeader(Guid? categoryGuid = default, string description = default, string displayText = default, Guid? relationGuid = default, AtlasTermRelationshipStatus? status = default)
         {
             return new AtlasTermCategorizationHeader(
@@ -693,14 +693,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossaryExtInfo"/> instance for mocking. </returns>
-        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<AtlasRelatedTermHeader> terms = default, string usage = default, IDictionary<string, AtlasGlossaryCategory> categoryInfo = default, IDictionary<string, AtlasGlossaryTerm> termInfo = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo"/> instance for mocking. </returns>
+        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms = default, string usage = default, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> categoryInfo = default, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> termInfo = default)
         {
-            classifications ??= new ChangeTrackingList<AtlasClassification>();
-            categories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
-            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
-            categoryInfo ??= new ChangeTrackingDictionary<string, AtlasGlossaryCategory>();
-            termInfo ??= new ChangeTrackingDictionary<string, AtlasGlossaryTerm>();
+            classifications ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            categories ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            categoryInfo ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
+            termInfo ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
 
             return new AtlasGlossaryExtInfo(
                 guid,
@@ -737,11 +737,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="filter"> The filter for the search. See examples for the usage of supported filters. </param>
         /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
         /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
-        /// <returns> A new <see cref="DataMap.QueryConfig"/> instance for mocking. </returns>
-        public static QueryConfig QueryConfig(string keywords = default, int? limit = default, string continuationToken = default, IEnumerable<BinaryData> @orderby = default, BinaryData filter = default, IEnumerable<SearchFacetItem> facets = default, SearchTaxonomySetting taxonomySetting = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.QueryConfig"/> instance for mocking. </returns>
+        public static QueryConfig QueryConfig(string keywords = default, int? limit = default, string continuationToken = default, IEnumerable<global::System.BinaryData> @orderby = default, BinaryData filter = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItem> facets = default, SearchTaxonomySetting taxonomySetting = default)
         {
-            @orderby ??= new ChangeTrackingList<BinaryData>();
-            facets ??= new ChangeTrackingList<SearchFacetItem>();
+            @orderby ??= new ChangeTrackingList<global::System.BinaryData>();
+            facets ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem>();
 
             return new QueryConfig(
                 keywords,
@@ -758,7 +758,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="count"> The count of the facet item. </param>
         /// <param name="facet"> The name of the facet item. </param>
         /// <param name="sort"> Define the sorting criteria for items. </param>
-        /// <returns> A new <see cref="DataMap.SearchFacetItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetItem"/> instance for mocking. </returns>
         public static SearchFacetItem SearchFacetItem(int? count = default, string facet = default, SearchFacetSort sort = default)
         {
             return new SearchFacetItem(count, facet, sort, additionalBinaryDataProperties: null);
@@ -767,7 +767,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The sorting criteria. </summary>
         /// <param name="count"> Order by count. </param>
         /// <param name="value"> Order by value. </param>
-        /// <returns> A new <see cref="DataMap.SearchFacetSort"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetSort"/> instance for mocking. </returns>
         public static SearchFacetSort SearchFacetSort(SearchSortOrder? count = default, SearchSortOrder? value = default)
         {
             return new SearchFacetSort(count, value, additionalBinaryDataProperties: null);
@@ -776,7 +776,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Taxonomy setting for search request. </summary>
         /// <param name="assetTypes"> Asset types. </param>
         /// <param name="facet"> The content of a search facet result item. </param>
-        /// <returns> A new <see cref="DataMap.SearchTaxonomySetting"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchTaxonomySetting"/> instance for mocking. </returns>
         public static SearchTaxonomySetting SearchTaxonomySetting(IEnumerable<string> assetTypes = default, SearchFacetItem facet = default)
         {
             assetTypes ??= new ChangeTrackingList<string>();
@@ -797,10 +797,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// the facet is returned as an element of @search.facets.
         /// </param>
         /// <param name="value"> Search result value. </param>
-        /// <returns> A new <see cref="DataMap.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(int? searchCount = default, bool? searchCountApproximate = default, string continuationToken = default, SearchFacetResultValue searchFacets = default, IEnumerable<SearchResultValue> value = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.QueryResult"/> instance for mocking. </returns>
+        public static QueryResult QueryResult(int? searchCount = default, bool? searchCountApproximate = default, string continuationToken = default, SearchFacetResultValue searchFacets = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchResultValue> value = default)
         {
-            value ??= new ChangeTrackingList<SearchResultValue>();
+            value ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchResultValue>();
 
             return new QueryResult(
                 searchCount,
@@ -826,19 +826,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="glossaryType"> Glossary type. </param>
         /// <param name="termStatus"> Term status. </param>
         /// <param name="termTemplate"> Term template. </param>
-        /// <returns> A new <see cref="DataMap.SearchFacetResultValue"/> instance for mocking. </returns>
-        public static SearchFacetResultValue SearchFacetResultValue(IEnumerable<SearchFacetItemValue> entityType = default, IEnumerable<SearchFacetItemValue> assetType = default, IEnumerable<SearchFacetItemValue> classification = default, IEnumerable<SearchFacetItemValue> term = default, IEnumerable<SearchFacetItemValue> contactId = default, IEnumerable<SearchFacetItemValue> contactType = default, IEnumerable<SearchFacetItemValue> label = default, IEnumerable<SearchFacetItemValue> glossaryType = default, IEnumerable<SearchFacetItemValue> termStatus = default, IEnumerable<SearchFacetItemValue> termTemplate = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetResultValue"/> instance for mocking. </returns>
+        public static SearchFacetResultValue SearchFacetResultValue(IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> entityType = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> assetType = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> classification = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> term = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactId = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactType = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> label = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> glossaryType = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termStatus = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termTemplate = default)
         {
-            entityType ??= new ChangeTrackingList<SearchFacetItemValue>();
-            assetType ??= new ChangeTrackingList<SearchFacetItemValue>();
-            classification ??= new ChangeTrackingList<SearchFacetItemValue>();
-            term ??= new ChangeTrackingList<SearchFacetItemValue>();
-            contactId ??= new ChangeTrackingList<SearchFacetItemValue>();
-            contactType ??= new ChangeTrackingList<SearchFacetItemValue>();
-            label ??= new ChangeTrackingList<SearchFacetItemValue>();
-            glossaryType ??= new ChangeTrackingList<SearchFacetItemValue>();
-            termStatus ??= new ChangeTrackingList<SearchFacetItemValue>();
-            termTemplate ??= new ChangeTrackingList<SearchFacetItemValue>();
+            entityType ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            assetType ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            classification ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            term ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            contactId ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            contactType ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            label ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            glossaryType ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            termStatus ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            termTemplate ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
 
             return new SearchFacetResultValue(
                 entityType.ToList(),
@@ -857,7 +857,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The content of a search facet result item. </summary>
         /// <param name="count"> The count of the facet item. </param>
         /// <param name="value"> The name of the facet item. </param>
-        /// <returns> A new <see cref="DataMap.SearchFacetItemValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue"/> instance for mocking. </returns>
         public static SearchFacetItemValue SearchFacetItemValue(int? count = default, string value = default)
         {
             return new SearchFacetItemValue(count, value, additionalBinaryDataProperties: null);
@@ -900,14 +900,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termStatus"> The status of the term. </param>
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
-        /// <returns> A new <see cref="DataMap.SearchResultValue"/> instance for mocking. </returns>
-        public static SearchResultValue SearchResultValue(float? searchScore = default, SearchHighlights searchHighlights = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<TermSearchResultValue> term = default, IEnumerable<ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchResultValue"/> instance for mocking. </returns>
+        public static SearchResultValue SearchResultValue(float? searchScore = default, SearchHighlights searchHighlights = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
         {
             endorsement ??= new ChangeTrackingList<string>();
             classification ??= new ChangeTrackingList<string>();
             label ??= new ChangeTrackingList<string>();
-            term ??= new ChangeTrackingList<TermSearchResultValue>();
-            contact ??= new ChangeTrackingList<ContactSearchResultValue>();
+            term ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue>();
+            contact ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue>();
             assetType ??= new ChangeTrackingList<string>();
             termTemplate ??= new ChangeTrackingList<string>();
 
@@ -948,7 +948,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> Name. </param>
         /// <param name="description"> Description. </param>
         /// <param name="entityType"> Entity type. </param>
-        /// <returns> A new <see cref="DataMap.SearchHighlights"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SearchHighlights"/> instance for mocking. </returns>
         public static SearchHighlights SearchHighlights(IEnumerable<string> id = default, IEnumerable<string> qualifiedName = default, IEnumerable<string> name = default, IEnumerable<string> description = default, IEnumerable<string> entityType = default)
         {
             id ??= new ChangeTrackingList<string>();
@@ -970,7 +970,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the term. </param>
         /// <param name="glossaryName"> The name of the glossary which contains the term. </param>
         /// <param name="guid"> The GUID of the term. </param>
-        /// <returns> A new <see cref="DataMap.TermSearchResultValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.TermSearchResultValue"/> instance for mocking. </returns>
         public static TermSearchResultValue TermSearchResultValue(string name = default, string glossaryName = default, string guid = default)
         {
             return new TermSearchResultValue(name, glossaryName, guid, additionalBinaryDataProperties: null);
@@ -983,7 +983,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// The type of the contact. It can be Expert or Owner for an entity. It can be
         /// Expert or Steward for a glossary term.
         /// </param>
-        /// <returns> A new <see cref="DataMap.ContactSearchResultValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue"/> instance for mocking. </returns>
         public static ContactSearchResultValue ContactSearchResultValue(string id = default, string info = default, string contactType = default)
         {
             return new ContactSearchResultValue(id, info, contactType, additionalBinaryDataProperties: null);
@@ -1001,7 +1001,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// must be a number between 1 and 100.
         /// </param>
         /// <param name="filter"> The filter for the search. </param>
-        /// <returns> A new <see cref="DataMap.SuggestConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SuggestConfig"/> instance for mocking. </returns>
         public static SuggestConfig SuggestConfig(string keywords = default, int? limit = default, BinaryData filter = default)
         {
             return new SuggestConfig(keywords, limit, filter, additionalBinaryDataProperties: null);
@@ -1009,10 +1009,10 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> The result item of the search suggest. </summary>
         /// <param name="value"> The result value. </param>
-        /// <returns> A new <see cref="DataMap.SuggestResult"/> instance for mocking. </returns>
-        public static SuggestResult SuggestResult(IEnumerable<SuggestResultValue> value = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SuggestResult"/> instance for mocking. </returns>
+        public static SuggestResult SuggestResult(IEnumerable<global::Azure.Analytics.Purview.DataMap.SuggestResultValue> value = default)
         {
-            value ??= new ChangeTrackingList<SuggestResultValue>();
+            value ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>();
 
             return new SuggestResult(value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1052,14 +1052,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termStatus"> The status of the term. </param>
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
-        /// <returns> A new <see cref="DataMap.SuggestResultValue"/> instance for mocking. </returns>
-        public static SuggestResultValue SuggestResultValue(float? searchScore = default, string searchText = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<TermSearchResultValue> term = default, IEnumerable<ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.SuggestResultValue"/> instance for mocking. </returns>
+        public static SuggestResultValue SuggestResultValue(float? searchScore = default, string searchText = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
         {
             endorsement ??= new ChangeTrackingList<string>();
             classification ??= new ChangeTrackingList<string>();
             label ??= new ChangeTrackingList<string>();
-            term ??= new ChangeTrackingList<TermSearchResultValue>();
-            contact ??= new ChangeTrackingList<ContactSearchResultValue>();
+            term ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue>();
+            contact ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue>();
             assetType ??= new ChangeTrackingList<string>();
             termTemplate ??= new ChangeTrackingList<string>();
 
@@ -1099,7 +1099,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// The value must be a number between 1 and 100.
         /// </param>
         /// <param name="filter"> The filter for the autocomplete request. </param>
-        /// <returns> A new <see cref="DataMap.AutoCompleteConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AutoCompleteConfig"/> instance for mocking. </returns>
         public static AutoCompleteConfig AutoCompleteConfig(string keywords = default, int? limit = default, BinaryData filter = default)
         {
             return new AutoCompleteConfig(keywords, limit, filter, additionalBinaryDataProperties: null);
@@ -1107,10 +1107,10 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> The result of the autocomplete request. </summary>
         /// <param name="value"> The result value. </param>
-        /// <returns> A new <see cref="DataMap.AutoCompleteResult"/> instance for mocking. </returns>
-        public static AutoCompleteResult AutoCompleteResult(IEnumerable<AutoCompleteResultValue> value = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AutoCompleteResult"/> instance for mocking. </returns>
+        public static AutoCompleteResult AutoCompleteResult(IEnumerable<global::Azure.Analytics.Purview.DataMap.AutoCompleteResultValue> value = default)
         {
-            value ??= new ChangeTrackingList<AutoCompleteResultValue>();
+            value ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>();
 
             return new AutoCompleteResult(value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1118,7 +1118,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The value item of the autocomplete suggest. </summary>
         /// <param name="text"> The completed term or phrase. </param>
         /// <param name="queryPlusText"> The completed search query text. </param>
-        /// <returns> A new <see cref="DataMap.AutoCompleteResultValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AutoCompleteResultValue"/> instance for mocking. </returns>
         public static AutoCompleteResultValue AutoCompleteResultValue(string text = default, string queryPlusText = default)
         {
             return new AutoCompleteResultValue(text, queryPlusText, additionalBinaryDataProperties: null);
@@ -1134,13 +1134,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="lineageDirection"> The enum of lineage direction. </param>
         /// <param name="parentRelations"> An array of parentRelations relations. </param>
         /// <param name="relations"> An array of lineage relations. </param>
-        /// <returns> A new <see cref="DataMap.AtlasLineageInfo"/> instance for mocking. </returns>
-        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = default, IDictionary<string, AtlasEntityHeader> guidEntityMap = default, IDictionary<string, IDictionary<string, BinaryData>> widthCounts = default, int? lineageDepth = default, int? lineageWidth = default, int? childrenCount = default, LineageDirection? lineageDirection = default, IEnumerable<ParentRelation> parentRelations = default, IEnumerable<LineageRelation> relations = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo"/> instance for mocking. </returns>
+        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = default, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> guidEntityMap = default, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> widthCounts = default, int? lineageDepth = default, int? lineageWidth = default, int? childrenCount = default, LineageDirection? lineageDirection = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.ParentRelation> parentRelations = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.LineageRelation> relations = default)
         {
-            guidEntityMap ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
-            widthCounts ??= new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
-            parentRelations ??= new ChangeTrackingList<ParentRelation>();
-            relations ??= new ChangeTrackingList<LineageRelation>();
+            guidEntityMap ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
+            widthCounts ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            parentRelations ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ParentRelation>();
+            relations ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.LineageRelation>();
 
             return new AtlasLineageInfo(
                 baseEntityGuid,
@@ -1159,7 +1159,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="childEntityId"> The GUID of child entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="parentEntityId"> The GUID of parent entity. </param>
-        /// <returns> A new <see cref="DataMap.ParentRelation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.ParentRelation"/> instance for mocking. </returns>
         public static ParentRelation ParentRelation(string childEntityId = default, string relationshipId = default, string parentEntityId = default)
         {
             return new ParentRelation(childEntityId, relationshipId, parentEntityId, additionalBinaryDataProperties: null);
@@ -1169,7 +1169,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="fromEntityId"> The GUID of from-entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="toEntityId"> The GUID of to-entity. </param>
-        /// <returns> A new <see cref="DataMap.LineageRelation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.LineageRelation"/> instance for mocking. </returns>
         public static LineageRelation LineageRelation(string fromEntityId = default, string relationshipId = default, string toEntityId = default)
         {
             return new LineageRelation(fromEntityId, relationshipId, toEntityId, additionalBinaryDataProperties: null);
@@ -1191,10 +1191,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="updateTime"> The update time of the record. </param>
         /// <param name="updatedBy"> The user who updated the record. </param>
         /// <param name="version"> The version of the relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationship"/> instance for mocking. </returns>
-        public static AtlasRelationship AtlasRelationship(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, AtlasObjectId end1 = default, AtlasObjectId end2 = default, string guid = default, string homeId = default, string label = default, int? provenanceType = default, StatusAtlasRelationship? status = default, long? updateTime = default, string updatedBy = default, long? version = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationship"/> instance for mocking. </returns>
+        public static AtlasRelationship AtlasRelationship(IDictionary<string, global::System.BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, AtlasObjectId end1 = default, AtlasObjectId end2 = default, string guid = default, string homeId = default, string label = default, int? provenanceType = default, StatusAtlasRelationship? status = default, long? updateTime = default, string updatedBy = default, long? version = default)
         {
-            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            attributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new AtlasRelationship(
                 attributes,
@@ -1219,10 +1219,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
-        /// <returns> A new <see cref="DataMap.AtlasObjectId"/> instance for mocking. </returns>
-        public static AtlasObjectId AtlasObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasObjectId"/> instance for mocking. </returns>
+        public static AtlasObjectId AtlasObjectId(string guid = default, string typeName = default, IDictionary<string, global::System.BinaryData> uniqueAttributes = default)
         {
-            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new AtlasObjectId(guid, typeName, uniqueAttributes, additionalBinaryDataProperties: null);
         }
@@ -1230,10 +1230,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The relationship with extended information. </summary>
         /// <param name="referredEntities"> The referred entity header. </param>
         /// <param name="relationship"> Atlas relationship instance. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationshipWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IDictionary<string, AtlasEntityHeader> referredEntities = default, AtlasRelationship relationship = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo"/> instance for mocking. </returns>
+        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> referredEntities = default, AtlasRelationship relationship = default)
         {
-            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+            referredEntities ??= new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
 
             return new AtlasRelationshipWithExtInfo(referredEntities, relationship, additionalBinaryDataProperties: null);
         }
@@ -1254,11 +1254,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the record. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasBusinessMetadataDef"/> instance for mocking. </returns>
-        public static AtlasBusinessMetadataDef AtlasBusinessMetadataDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef"/> instance for mocking. </returns>
+        public static AtlasBusinessMetadataDef AtlasBusinessMetadataDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
 
             return new AtlasBusinessMetadataDef(
                 category,
@@ -1289,7 +1289,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="numberFormat"> The number format. </param>
         /// <param name="timeInstance"> The date format. </param>
         /// <param name="timeZone"> The timezone information. </param>
-        /// <returns> A new <see cref="DataMap.AtlasDateFormat"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasDateFormat"/> instance for mocking. </returns>
         public static AtlasDateFormat AtlasDateFormat(IEnumerable<string> availableLocales = default, float? calendar = default, AtlasDateFormat dateInstance = default, AtlasDateFormat dateTimeInstance = default, AtlasDateFormat instance = default, bool? lenient = default, AtlasNumberFormat numberFormat = default, AtlasDateFormat timeInstance = default, AtlasTimeZone timeZone = default)
         {
             availableLocales ??= new ChangeTrackingList<string>();
@@ -1322,7 +1322,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="parseIntegerOnly"> Determines if only integer is parsed. </param>
         /// <param name="percentInstance"> The number format. </param>
         /// <param name="roundingMode"> The enum of rounding mode. </param>
-        /// <returns> A new <see cref="DataMap.AtlasNumberFormat"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat"/> instance for mocking. </returns>
         public static AtlasNumberFormat AtlasNumberFormat(IEnumerable<string> availableLocales = default, string currency = default, AtlasNumberFormat currencyInstance = default, bool? groupingUsed = default, AtlasNumberFormat instance = default, AtlasNumberFormat integerInstance = default, int? maximumFractionDigits = default, int? maximumIntegerDigits = default, int? minimumFractionDigits = default, int? minimumIntegerDigits = default, AtlasNumberFormat numberInstance = default, bool? parseIntegerOnly = default, AtlasNumberFormat percentInstance = default, RoundingMode? roundingMode = default)
         {
             availableLocales ??= new ChangeTrackingList<string>();
@@ -1352,7 +1352,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="default"> The timezone information. </param>
         /// <param name="displayName"> The display name of the timezone. </param>
         /// <param name="rawOffset"> The raw offset of the timezone. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTimeZone"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTimeZone"/> instance for mocking. </returns>
         public static AtlasTimeZone AtlasTimeZone(int? dstSavings = default, string id = default, IEnumerable<string> availableIds = default, AtlasTimeZone @default = default, string displayName = default, int? rawOffset = default)
         {
             availableIds ??= new ChangeTrackingList<string>();
@@ -1381,10 +1381,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="valuesMaxCount"> The maximum count of the values. </param>
         /// <param name="valuesMinCount"> The minimum count of the values. </param>
-        /// <returns> A new <see cref="DataMap.AtlasAttributeDef"/> instance for mocking. </returns>
-        public static AtlasAttributeDef AtlasAttributeDef(CardinalityValue? cardinality = default, IEnumerable<AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef"/> instance for mocking. </returns>
+        public static AtlasAttributeDef AtlasAttributeDef(CardinalityValue? cardinality = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default)
         {
-            constraints ??= new ChangeTrackingList<AtlasConstraintDef>();
+            constraints ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef>();
             options ??= new ChangeTrackingDictionary<string, string>();
 
             return new AtlasAttributeDef(
@@ -1407,10 +1407,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> class that captures details of a constraint. </summary>
         /// <param name="params"> The parameters of the constraint definition. </param>
         /// <param name="type"> The type of the constraint. </param>
-        /// <returns> A new <see cref="DataMap.AtlasConstraintDef"/> instance for mocking. </returns>
-        public static AtlasConstraintDef AtlasConstraintDef(IDictionary<string, BinaryData> @params = default, string @type = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef"/> instance for mocking. </returns>
+        public static AtlasConstraintDef AtlasConstraintDef(IDictionary<string, global::System.BinaryData> @params = default, string @type = default)
         {
-            @params ??= new ChangeTrackingDictionary<string, BinaryData>();
+            @params ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new AtlasConstraintDef(@params, @type, additionalBinaryDataProperties: null);
         }
@@ -1450,11 +1450,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
-        /// <returns> A new <see cref="DataMap.AtlasClassificationDef"/> instance for mocking. </returns>
-        public static AtlasClassificationDef AtlasClassificationDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef"/> instance for mocking. </returns>
+        public static AtlasClassificationDef AtlasClassificationDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
             entityTypes ??= new ChangeTrackingList<string>();
             subTypes ??= new ChangeTrackingList<string>();
             superTypes ??= new ChangeTrackingList<string>();
@@ -1500,14 +1500,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
         /// <param name="relationshipAttributeDefs"> An array of relationship attributes. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntityDef"/> instance for mocking. </returns>
-        public static AtlasEntityDef AtlasEntityDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityDef"/> instance for mocking. </returns>
+        public static AtlasEntityDef AtlasEntityDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef> relationshipAttributeDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
             subTypes ??= new ChangeTrackingList<string>();
             superTypes ??= new ChangeTrackingList<string>();
-            relationshipAttributeDefs ??= new ChangeTrackingList<AtlasRelationshipAttributeDef>();
+            relationshipAttributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>();
 
             return new AtlasEntityDef(
                 category,
@@ -1552,10 +1552,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="valuesMinCount"> The minimum count of the values. </param>
         /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
         /// <param name="relationshipTypeName"> The name of the relationship type. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationshipAttributeDef"/> instance for mocking. </returns>
-        public static AtlasRelationshipAttributeDef AtlasRelationshipAttributeDef(CardinalityValue? cardinality = default, IEnumerable<AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default, bool? isLegacyAttribute = default, string relationshipTypeName = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef"/> instance for mocking. </returns>
+        public static AtlasRelationshipAttributeDef AtlasRelationshipAttributeDef(CardinalityValue? cardinality = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default, bool? isLegacyAttribute = default, string relationshipTypeName = default)
         {
-            constraints ??= new ChangeTrackingList<AtlasConstraintDef>();
+            constraints ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef>();
             options ??= new ChangeTrackingDictionary<string, string>();
 
             return new AtlasRelationshipAttributeDef(
@@ -1594,11 +1594,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="defaultValue"> The default value. </param>
         /// <param name="elementDefs"> An array of enum element definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEnumDef"/> instance for mocking. </returns>
-        public static AtlasEnumDef AtlasEnumDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, string defaultValue = default, IEnumerable<AtlasEnumElementDef> elementDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumDef"/> instance for mocking. </returns>
+        public static AtlasEnumDef AtlasEnumDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, string defaultValue = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef> elementDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            elementDefs ??= new ChangeTrackingList<AtlasEnumElementDef>();
+            elementDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>();
 
             return new AtlasEnumDef(
                 category,
@@ -1624,7 +1624,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="description"> The description of the enum element definition. </param>
         /// <param name="ordinal"> The ordinal of the enum element definition. </param>
         /// <param name="value"> The value of the enum element definition. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEnumElementDef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef"/> instance for mocking. </returns>
         public static AtlasEnumElementDef AtlasEnumElementDef(string description = default, int? ordinal = default, string value = default)
         {
             return new AtlasEnumElementDef(description, ordinal, value, additionalBinaryDataProperties: null);
@@ -1704,11 +1704,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// For AGGREGATION, the life cycles of the container and children are totally independent.
         /// </param>
         /// <param name="relationshipLabel"> The label of the relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationshipDef"/> instance for mocking. </returns>
-        public static AtlasRelationshipDef AtlasRelationshipDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef"/> instance for mocking. </returns>
+        public static AtlasRelationshipDef AtlasRelationshipDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
 
             return new AtlasRelationshipDef(
                 category,
@@ -1745,7 +1745,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
         /// <param name="name"> The name of the relationship end definition. </param>
         /// <param name="type"> The type of the relationship end. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationshipEndDef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef"/> instance for mocking. </returns>
         public static AtlasRelationshipEndDef AtlasRelationshipEndDef(CardinalityValue? cardinality = default, string description = default, bool? isContainer = default, bool? isLegacyAttribute = default, string name = default, string @type = default)
         {
             return new AtlasRelationshipEndDef(
@@ -1774,11 +1774,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the record. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasStructDef"/> instance for mocking. </returns>
-        public static AtlasStructDef AtlasStructDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasStructDef"/> instance for mocking. </returns>
+        public static AtlasStructDef AtlasStructDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
 
             return new AtlasStructDef(
                 category,
@@ -1860,16 +1860,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="relationshipLabel"> The label of the relationship. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTypeDef"/> instance for mocking. </returns>
-        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = default, string defaultValue = default, IEnumerable<AtlasEnumElementDef> elementDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypeDef"/> instance for mocking. </returns>
+        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef> relationshipAttributeDefs = default, string defaultValue = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef> elementDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
             entityTypes ??= new ChangeTrackingList<string>();
             subTypes ??= new ChangeTrackingList<string>();
             superTypes ??= new ChangeTrackingList<string>();
-            relationshipAttributeDefs ??= new ChangeTrackingList<AtlasRelationshipAttributeDef>();
-            elementDefs ??= new ChangeTrackingList<AtlasEnumElementDef>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            relationshipAttributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>();
+            elementDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
 
             return new AtlasTypeDef(
                 category,
@@ -1908,16 +1908,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipDefs"> An array of relationship definitions. </param>
         /// <param name="structDefs"> An array of struct definitions. </param>
         /// <param name="termTemplateDefs"> An array of term template definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTypesDef"/> instance for mocking. </returns>
-        public static AtlasTypesDef AtlasTypesDef(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = default, IEnumerable<AtlasClassificationDef> classificationDefs = default, IEnumerable<AtlasEntityDef> entityDefs = default, IEnumerable<AtlasEnumDef> enumDefs = default, IEnumerable<AtlasRelationshipDef> relationshipDefs = default, IEnumerable<AtlasStructDef> structDefs = default, IEnumerable<TermTemplateDef> termTemplateDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypesDef"/> instance for mocking. </returns>
+        public static AtlasTypesDef AtlasTypesDef(IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef> businessMetadataDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef> classificationDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEntityDef> entityDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasEnumDef> enumDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef> relationshipDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasStructDef> structDefs = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.TermTemplateDef> termTemplateDefs = default)
         {
-            businessMetadataDefs ??= new ChangeTrackingList<AtlasBusinessMetadataDef>();
-            classificationDefs ??= new ChangeTrackingList<AtlasClassificationDef>();
-            entityDefs ??= new ChangeTrackingList<AtlasEntityDef>();
-            enumDefs ??= new ChangeTrackingList<AtlasEnumDef>();
-            relationshipDefs ??= new ChangeTrackingList<AtlasRelationshipDef>();
-            structDefs ??= new ChangeTrackingList<AtlasStructDef>();
-            termTemplateDefs ??= new ChangeTrackingList<TermTemplateDef>();
+            businessMetadataDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef>();
+            classificationDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef>();
+            entityDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntityDef>();
+            enumDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEnumDef>();
+            relationshipDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef>();
+            structDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasStructDef>();
+            termTemplateDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermTemplateDef>();
 
             return new AtlasTypesDef(
                 businessMetadataDefs.ToList(),
@@ -1946,11 +1946,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the record. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
-        /// <returns> A new <see cref="DataMap.TermTemplateDef"/> instance for mocking. </returns>
-        public static TermTemplateDef TermTemplateDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.TermTemplateDef"/> instance for mocking. </returns>
+        public static TermTemplateDef TermTemplateDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs = default)
         {
             options ??= new ChangeTrackingDictionary<string, string>();
-            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            attributeDefs ??= new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
 
             return new TermTemplateDef(
                 category,
@@ -1975,7 +1975,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="category"> The enum of type category. </param>
         /// <param name="guid"> The GUID of the type definition. </param>
         /// <param name="name"> The name of the type definition. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTypeDefHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader"/> instance for mocking. </returns>
         public static AtlasTypeDefHeader AtlasTypeDefHeader(TypeCategory? category = default, string guid = default, string name = default)
         {
             return new AtlasTypeDefHeader(category, guid, name, additionalBinaryDataProperties: null);

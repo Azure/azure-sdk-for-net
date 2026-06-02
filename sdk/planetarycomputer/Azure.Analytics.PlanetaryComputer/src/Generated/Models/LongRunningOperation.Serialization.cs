@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog operation. </summary>
-    public partial class LongRunningOperation : IJsonModel<LongRunningOperation>
+    public partial class LongRunningOperation : IJsonModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>
     {
-        /// <summary> Initializes a new instance of <see cref="LongRunningOperation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.LongRunningOperation"/> for deserialization. </summary>
         internal LongRunningOperation()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LongRunningOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLongRunningOperation(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.LongRunningOperation.DeserializeLongRunningOperation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LongRunningOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.LongRunningOperation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LongRunningOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.LongRunningOperation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LongRunningOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LongRunningOperation IPersistableModel<LongRunningOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LongRunningOperation IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LongRunningOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LongRunningOperation"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.LongRunningOperation"/> from. </param>
         public static explicit operator LongRunningOperation(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLongRunningOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.LongRunningOperation.DeserializeLongRunningOperation(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LongRunningOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,10 +81,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LongRunningOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.LongRunningOperation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -94,7 +94,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteStringValue(Type);
             writer.WritePropertyName("creationTime"u8);
             writer.WriteStringValue(CreationTime, "O");
-            if (Optional.IsDefined(CollectionId))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId);
@@ -103,27 +103,27 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteStartArray();
             foreach (OperationStatusHistoryItem item in StatusHistory)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<OperationStatusHistoryItem>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartTime))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (Optional.IsDefined(FinishTime))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(FinishTime))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishTime.Value, "O");
             }
-            if (Optional.IsCollectionDefined(AdditionalInformation))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(AdditionalInformation))
             {
                 writer.WritePropertyName("additionalInformation"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalInformation)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -132,12 +132,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Error))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<ErrorInfo>(Error, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -145,9 +145,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -156,26 +156,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LongRunningOperation IJsonModel<LongRunningOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LongRunningOperation IJsonModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LongRunningOperation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.LongRunningOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LongRunningOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.LongRunningOperation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLongRunningOperation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.LongRunningOperation.DeserializeLongRunningOperation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LongRunningOperation DeserializeLongRunningOperation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -184,12 +184,12 @@ namespace Azure.Analytics.PlanetaryComputer
             string @type = default;
             DateTimeOffset creationTime = default;
             string collectionId = default;
-            IList<OperationStatusHistoryItem> statusHistory = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? finishTime = default;
             IDictionary<string, string> additionalInformation = default;
             ErrorInfo error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -219,17 +219,17 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("statusHistory"u8))
                 {
-                    List<OperationStatusHistoryItem> array = new List<OperationStatusHistoryItem>();
+                    List<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> array = new List<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationStatusHistoryItem.DeserializeOperationStatusHistoryItem(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem.DeserializeOperationStatusHistoryItem(item, options));
                     }
                     statusHistory = array;
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -238,7 +238,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("finishTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -247,14 +247,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("additionalInformation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -268,16 +268,16 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = ErrorInfo.DeserializeErrorInfo(prop.Value, options);
+                    error = global::Azure.Analytics.PlanetaryComputer.ErrorInfo.DeserializeErrorInfo(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LongRunningOperation(
@@ -289,7 +289,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 statusHistory,
                 startTime,
                 finishTime,
-                additionalInformation ?? new ChangeTrackingDictionary<string, string>(),
+                (additionalInformation ?? new ChangeTrackingDictionary<string, string>()),
                 error,
                 additionalBinaryDataProperties);
         }

@@ -14,54 +14,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Container object for various projection selectors. </summary>
-    public partial class KnowledgeStoreProjection : IJsonModel<KnowledgeStoreProjection>
+    public partial class KnowledgeStoreProjection : IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeStoreProjection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeStoreProjection(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection.DeserializeKnowledgeStoreProjection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeStoreProjection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeStoreProjection IPersistableModel<KnowledgeStoreProjection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeStoreProjection IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeStoreProjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeStoreProjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,42 +69,42 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Tables))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeStoreTableProjectionSelector item in Tables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeStoreTableProjectionSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Objects))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Objects))
             {
                 writer.WritePropertyName("objects"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeStoreObjectProjectionSelector item in Objects)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeStoreObjectProjectionSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeStoreFileProjectionSelector item in Files)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeStoreFileProjectionSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -112,9 +112,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -123,83 +123,83 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeStoreProjection IJsonModel<KnowledgeStoreProjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeStoreProjection IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeStoreProjection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeStoreProjection(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection.DeserializeKnowledgeStoreProjection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeStoreProjection DeserializeKnowledgeStoreProjection(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<KnowledgeStoreTableProjectionSelector> tables = default;
-            IList<KnowledgeStoreObjectProjectionSelector> objects = default;
-            IList<KnowledgeStoreFileProjectionSelector> files = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> tables = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> objects = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> files = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tables"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeStoreTableProjectionSelector> array = new List<KnowledgeStoreTableProjectionSelector>();
+                    List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> array = new List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeStoreTableProjectionSelector.DeserializeKnowledgeStoreTableProjectionSelector(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector.DeserializeKnowledgeStoreTableProjectionSelector(item, options));
                     }
                     tables = array;
                     continue;
                 }
                 if (prop.NameEquals("objects"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeStoreObjectProjectionSelector> array = new List<KnowledgeStoreObjectProjectionSelector>();
+                    List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> array = new List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeStoreObjectProjectionSelector.DeserializeKnowledgeStoreObjectProjectionSelector(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector.DeserializeKnowledgeStoreObjectProjectionSelector(item, options));
                     }
                     objects = array;
                     continue;
                 }
                 if (prop.NameEquals("files"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeStoreFileProjectionSelector> array = new List<KnowledgeStoreFileProjectionSelector>();
+                    List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> array = new List<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeStoreFileProjectionSelector.DeserializeKnowledgeStoreFileProjectionSelector(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector.DeserializeKnowledgeStoreFileProjectionSelector(item, options));
                     }
                     files = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeStoreProjection(tables ?? new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>(), objects ?? new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>(), files ?? new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>(), additionalBinaryDataProperties);
+            return new KnowledgeStoreProjection((tables ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector>()), (objects ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector>()), (files ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector>()), additionalBinaryDataProperties);
         }
     }
 }

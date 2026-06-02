@@ -16,9 +16,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBox
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ProjectName = projectName;

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Configuration for data mosaic visualization. </summary>
-    public partial class StacMosaicConfiguration : IJsonModel<StacMosaicConfiguration>
+    public partial class StacMosaicConfiguration : IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="StacMosaicConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration"/> for deserialization. </summary>
         internal StacMosaicConfiguration()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacMosaicConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStacMosaicConfiguration(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration.DeserializeStacMosaicConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StacMosaicConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StacMosaicConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacMosaicConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacMosaicConfiguration IPersistableModel<StacMosaicConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StacMosaicConfiguration IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacMosaicConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StacMosaicConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,38 +73,38 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacMosaicConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("mosaics"u8);
             writer.WriteStartArray();
             foreach (StacMosaic item in Mosaics)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<StacMosaic>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("renderOptions"u8);
             writer.WriteStartArray();
             foreach (RenderConfiguration item in RenderOptions)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<RenderConfiguration>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(DefaultLocation))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(DefaultLocation))
             {
                 writer.WritePropertyName("defaultLocation"u8);
-                writer.WriteObjectValue(DefaultLocation, options);
+                writer.WriteObjectValue<DefaultLocation>(DefaultLocation, options);
             }
-            if (Optional.IsCollectionDefined(DefaultCustomQuery))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(DefaultCustomQuery))
             {
                 writer.WritePropertyName("defaultCustomQuery"u8);
                 writer.WriteStartObject();
                 foreach (var item in DefaultCustomQuery)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,15 +112,15 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -128,9 +128,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -139,92 +139,92 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacMosaicConfiguration IJsonModel<StacMosaicConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StacMosaicConfiguration IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacMosaicConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacMosaicConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStacMosaicConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration.DeserializeStacMosaicConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static StacMosaicConfiguration DeserializeStacMosaicConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<StacMosaic> mosaics = default;
-            IList<RenderConfiguration> renderOptions = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.StacMosaic> mosaics = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration> renderOptions = default;
             DefaultLocation defaultLocation = default;
-            IDictionary<string, BinaryData> defaultCustomQuery = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> defaultCustomQuery = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mosaics"u8))
                 {
-                    List<StacMosaic> array = new List<StacMosaic>();
+                    List<global::Azure.Analytics.PlanetaryComputer.StacMosaic> array = new List<global::Azure.Analytics.PlanetaryComputer.StacMosaic>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StacMosaic.DeserializeStacMosaic(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.StacMosaic.DeserializeStacMosaic(item, options));
                     }
                     mosaics = array;
                     continue;
                 }
                 if (prop.NameEquals("renderOptions"u8))
                 {
-                    List<RenderConfiguration> array = new List<RenderConfiguration>();
+                    List<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration> array = new List<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RenderConfiguration.DeserializeRenderConfiguration(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.RenderConfiguration.DeserializeRenderConfiguration(item, options));
                     }
                     renderOptions = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    defaultLocation = DefaultLocation.DeserializeDefaultLocation(prop.Value, options);
+                    defaultLocation = global::Azure.Analytics.PlanetaryComputer.DefaultLocation.DeserializeDefaultLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("defaultCustomQuery"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     defaultCustomQuery = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StacMosaicConfiguration(mosaics, renderOptions, defaultLocation, defaultCustomQuery ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new StacMosaicConfiguration(mosaics, renderOptions, defaultLocation, (defaultCustomQuery ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()), additionalBinaryDataProperties);
         }
     }
 }

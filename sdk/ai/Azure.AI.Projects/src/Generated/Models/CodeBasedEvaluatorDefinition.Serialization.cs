@@ -11,54 +11,54 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Code-based evaluator definition using python code. </summary>
-    public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<CodeBasedEvaluatorDefinition>
+    public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCodeBasedEvaluatorDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition.DeserializeCodeBasedEvaluatorDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CodeBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CodeBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CodeBasedEvaluatorDefinition IPersistableModel<CodeBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (CodeBasedEvaluatorDefinition)PersistableModelCreateCore(data, options);
+        CodeBasedEvaluatorDefinition IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((CodeBasedEvaluatorDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CodeBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CodeBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -66,28 +66,28 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CodeBasedEvaluatorDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(CodeText))
+            if (global::Azure.AI.Projects.Optional.IsDefined(CodeText))
             {
                 writer.WritePropertyName("code_text"u8);
                 writer.WriteStringValue(CodeText);
             }
-            if (Optional.IsDefined(EntryPoint))
+            if (global::Azure.AI.Projects.Optional.IsDefined(EntryPoint))
             {
                 writer.WritePropertyName("entry_point"u8);
                 writer.WriteStringValue(EntryPoint);
             }
-            if (Optional.IsDefined(ImageTag))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ImageTag))
             {
                 writer.WritePropertyName("image_tag"u8);
                 writer.WriteStringValue(ImageTag);
             }
-            if (Optional.IsDefined(BlobUri))
+            if (global::Azure.AI.Projects.Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob_uri"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
@@ -96,38 +96,38 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CodeBasedEvaluatorDefinition IJsonModel<CodeBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CodeBasedEvaluatorDefinition)JsonModelCreateCore(ref reader, options);
+        CodeBasedEvaluatorDefinition IJsonModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((CodeBasedEvaluatorDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CodeBasedEvaluatorDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCodeBasedEvaluatorDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition.DeserializeCodeBasedEvaluatorDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CodeBasedEvaluatorDefinition DeserializeCodeBasedEvaluatorDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             EvaluatorDefinitionType @type = default;
             BinaryData initParameters = default;
             BinaryData dataSchema = default;
-            IDictionary<string, EvaluatorMetric> metrics = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string codeText = default;
             string entryPoint = default;
             string imageTag = default;
-            Uri blobUri = default;
+            global::System.Uri blobUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -137,32 +137,32 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("init_parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    initParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    initParameters = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("data_schema"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dataSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    dataSchema = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, EvaluatorMetric> dictionary = new Dictionary<string, EvaluatorMetric>();
+                    Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> dictionary = new Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Evaluation.EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
                     }
                     metrics = dictionary;
                     continue;
@@ -184,23 +184,23 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("blob_uri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CodeBasedEvaluatorDefinition(
                 @type,
                 initParameters,
                 dataSchema,
-                metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
+                (metrics ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>()),
                 additionalBinaryDataProperties,
                 codeText,
                 entryPoint,

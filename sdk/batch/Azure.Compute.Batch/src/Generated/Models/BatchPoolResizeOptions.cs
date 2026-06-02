@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolResizeOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolResizeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolResizeOptions"/>. </summary>
         public BatchPoolResizeOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolResizeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolResizeOptions"/>. </summary>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Nodes to the Pool or removal of Compute Nodes from the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="nodeDeallocationOption"> Determines what to do with a Compute Node and its running task(s) if the Pool size is decreasing. The default value is requeue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolResizeOptions(int? targetDedicatedNodes, int? targetLowPriorityNodes, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolResizeOptions(int? targetDedicatedNodes, int? targetLowPriorityNodes, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetDedicatedNodes = targetDedicatedNodes;
             TargetLowPriorityNodes = targetLowPriorityNodes;

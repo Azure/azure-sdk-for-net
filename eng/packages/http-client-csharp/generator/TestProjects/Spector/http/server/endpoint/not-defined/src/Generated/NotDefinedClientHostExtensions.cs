@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Server.Endpoint.NotDefined
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NotDefinedClientHostExtensions
     {
         public static IClientBuilder AddNotDefinedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNotDefinedClient(this IHostApplicationBuilder host, string sectionName, Action<NotDefinedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNotDefinedClient(this IHostApplicationBuilder host, string sectionName, Action<global::Server.Endpoint.NotDefined.NotDefinedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNotDefinedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNotDefinedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NotDefinedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNotDefinedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Server.Endpoint.NotDefined.NotDefinedClientSettings> configureSettings) => throw null;
     }
 }

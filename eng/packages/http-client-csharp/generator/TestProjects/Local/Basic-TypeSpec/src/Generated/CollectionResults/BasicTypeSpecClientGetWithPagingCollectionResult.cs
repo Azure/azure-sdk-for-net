@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithPagingCollectionResult : Pageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithPagingCollectionResult : Pageable<global::System.BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly RequestContext _context;
@@ -24,7 +24,7 @@ namespace BasicTypeSpec
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithPagingCollectionResult(BasicTypeSpecClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithPagingCollectionResult(BasicTypeSpecClient client, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
@@ -35,16 +35,16 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithPagingCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            PageThingModel result = (PageThingModel)response;
-            List<BinaryData> items = new List<BinaryData>();
+            Response response = this.GetNextResponse(pageSizeHint, null);
+            PageThingModel result = ((PageThingModel)response);
+            List<global::System.BinaryData> items = new List<global::System.BinaryData>();
             foreach (var item in result.Items)
             {
-                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default));
             }
-            yield return Page<BinaryData>.FromValues(items, null, response);
+            yield return global::Azure.Page<BinaryData>.FromValues(items, null, response);
         }
 
         /// <summary> Get next page. </summary>

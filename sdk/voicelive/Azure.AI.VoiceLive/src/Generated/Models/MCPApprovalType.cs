@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The available set of MCP approval types. </summary>
-    public readonly partial struct MCPApprovalType : IEquatable<MCPApprovalType>
+    public readonly partial struct MCPApprovalType : IEquatable<global::Azure.AI.VoiceLive.MCPApprovalType>
     {
         private readonly string _value;
         /// <summary> Approval is never required. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Approval is always required. </summary>
         private const string AlwaysValue = "always";
 
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MCPApprovalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MCPApprovalType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Approval is always required. </summary>
         public static MCPApprovalType Always { get; } = new MCPApprovalType(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="MCPApprovalType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.MCPApprovalType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MCPApprovalType left, MCPApprovalType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MCPApprovalType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.MCPApprovalType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MCPApprovalType left, MCPApprovalType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MCPApprovalType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.MCPApprovalType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MCPApprovalType(string value) => new MCPApprovalType(value);
 
-        /// <summary> Converts a string to a <see cref="MCPApprovalType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.MCPApprovalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MCPApprovalType?(string value) => value == null ? null : new MCPApprovalType(value);
+        public static implicit operator MCPApprovalType?(string value) => (value == null) ? null : new MCPApprovalType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MCPApprovalType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MCPApprovalType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MCPApprovalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MCPApprovalType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

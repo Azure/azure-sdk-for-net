@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeBatchDocumentsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions"/>. </summary>
         /// <param name="blobSource">
         /// Azure Blob Storage location containing the batch documents.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="resultPrefix"> Blob name prefix of result files. </param>
         /// <param name="overwriteExisting"> Overwrite existing analyze result files?. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchDocumentsOptions(BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, Uri resultContainerUri, string resultPrefix, bool? overwriteExisting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeBatchDocumentsOptions(BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, global::System.Uri resultContainerUri, string resultPrefix, bool? overwriteExisting, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlobSource = blobSource;
             BlobFileListSource = blobFileListSource;
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Azure Blob Storage container URL where analyze result files will be stored. </summary>
-        public Uri ResultContainerUri { get; }
+        public global::System.Uri ResultContainerUri { get; }
 
         /// <summary> Blob name prefix of result files. </summary>
         public string ResultPrefix { get; set; }

@@ -14,24 +14,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRecordingStorageInfoProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties"/>. </summary>
         internal AcsRecordingStorageInfoProperties()
         {
-            RecordingChunks = new ChangeTrackingList<AcsRecordingChunkInfoProperties>();
+            RecordingChunks = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties"/>. </summary>
         /// <param name="recordingChunks"> List of details of recording chunks information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRecordingStorageInfoProperties(IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> recordingChunks, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RecordingChunks = recordingChunks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of details of recording chunks information. </summary>
-        public IReadOnlyList<AcsRecordingChunkInfoProperties> RecordingChunks { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> RecordingChunks { get; }
     }
 }

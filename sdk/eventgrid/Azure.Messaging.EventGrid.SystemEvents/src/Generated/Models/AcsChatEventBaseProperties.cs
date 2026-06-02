@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatEventBaseProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="threadId"> The chat thread id. </param>
         internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId)
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ThreadId = threadId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RecipientCommunicationIdentifier = recipientCommunicationIdentifier;
             TransactionId = transactionId;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Rounding Mode. </summary>
-    public readonly partial struct RoundingMode : IEquatable<RoundingMode>
+    public readonly partial struct RoundingMode : IEquatable<global::Azure.Analytics.Purview.DataMap.RoundingMode>
     {
         private readonly string _value;
         /// <summary> up. </summary>
@@ -31,12 +31,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> unnecessary. </summary>
         private const string UnnecessaryValue = "UNNECESSARY";
 
-        /// <summary> Initializes a new instance of <see cref="RoundingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.RoundingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoundingMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -65,34 +65,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> unnecessary. </summary>
         public static RoundingMode Unnecessary { get; } = new RoundingMode(UnnecessaryValue);
 
-        /// <summary> Determines if two <see cref="RoundingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.RoundingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoundingMode left, RoundingMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RoundingMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.RoundingMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoundingMode left, RoundingMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RoundingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.RoundingMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RoundingMode(string value) => new RoundingMode(value);
 
-        /// <summary> Converts a string to a <see cref="RoundingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.RoundingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoundingMode?(string value) => value == null ? null : new RoundingMode(value);
+        public static implicit operator RoundingMode?(string value) => (value == null) ? null : new RoundingMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RoundingMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RoundingMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RoundingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RoundingMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -16,27 +16,27 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class McpServerKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerKnowledgeSourceParameters"/>. </summary>
         /// <param name="serverURL"> The URL of the MCP server endpoint. </param>
         /// <param name="tools"> The list of tools to invoke on the MCP server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverURL"/> or <paramref name="tools"/> is null. </exception>
-        public McpServerKnowledgeSourceParameters(string serverURL, IEnumerable<McpServerTool> tools)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="serverURL"/> or <paramref name="tools"/> is null. </exception>
+        public McpServerKnowledgeSourceParameters(string serverURL, IEnumerable<global::Azure.Search.Documents.Indexes.Models.McpServerTool> tools)
         {
-            Argument.AssertNotNull(serverURL, nameof(serverURL));
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.Search.Documents.Argument.AssertNotNull(serverURL, nameof(serverURL));
+            global::Azure.Search.Documents.Argument.AssertNotNull(tools, nameof(tools));
 
             ServerURL = serverURL;
             Tools = tools.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerKnowledgeSourceParameters"/>. </summary>
         /// <param name="serverURL"> The URL of the MCP server endpoint. </param>
         /// <param name="authentication"> The authentication configuration for the MCP server. </param>
         /// <param name="tools"> The list of tools to invoke on the MCP server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerKnowledgeSourceParameters(string serverURL, McpServerAuthentication authentication, IList<McpServerTool> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerKnowledgeSourceParameters(string serverURL, McpServerAuthentication authentication, IList<global::Azure.Search.Documents.Indexes.Models.McpServerTool> tools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ServerURL = serverURL;
             Authentication = authentication;
@@ -51,6 +51,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public McpServerAuthentication Authentication { get; set; }
 
         /// <summary> The list of tools to invoke on the MCP server. </summary>
-        public IList<McpServerTool> Tools { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.McpServerTool> Tools { get; }
     }
 }

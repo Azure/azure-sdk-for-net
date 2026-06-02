@@ -14,17 +14,17 @@ namespace Azure.AI.Translation.Document
     public partial class BatchOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.BatchOptions"/>. </summary>
         public BatchOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.BatchOptions"/>. </summary>
         /// <param name="translateTextWithinImage"> Translation text within an image option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchOptions(bool? translateTextWithinImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchOptions(bool? translateTextWithinImage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TranslateTextWithinImage = translateTextWithinImage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

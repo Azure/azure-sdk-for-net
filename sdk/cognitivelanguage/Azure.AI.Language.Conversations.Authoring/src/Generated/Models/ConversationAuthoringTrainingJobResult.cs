@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringTrainingJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult"/>. </summary>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             DataGenerationStatus = dataGenerationStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult"/>. </summary>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;

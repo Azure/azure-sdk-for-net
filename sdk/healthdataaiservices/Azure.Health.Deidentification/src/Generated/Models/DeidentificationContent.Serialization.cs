@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Request body for de-identification operation. </summary>
-    public partial class DeidentificationContent : IJsonModel<DeidentificationContent>
+    public partial class DeidentificationContent : IJsonModel<global::Azure.Health.Deidentification.DeidentificationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationContent"/> for deserialization. </summary>
         internal DeidentificationContent()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeidentificationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Health.Deidentification.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeidentificationContent(document.RootElement, options);
+                        return global::Azure.Health.Deidentification.DeidentificationContent.DeserializeDeidentificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeidentificationContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Health.Deidentification.AzureHealthDeidentificationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeidentificationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeidentificationContent IPersistableModel<DeidentificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeidentificationContent IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeidentificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="deidentificationContent"> The <see cref="DeidentificationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="deidentificationContent"> The <see cref="global::Azure.Health.Deidentification.DeidentificationContent"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DeidentificationContent deidentificationContent)
         {
-            if (deidentificationContent == null)
+            if ((deidentificationContent == null))
             {
                 return null;
             }
-            return RequestContent.Create(deidentificationContent, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(deidentificationContent, global::Azure.Health.Deidentification.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeidentificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Health.Deidentification.DeidentificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,29 +84,29 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
-            if (Optional.IsDefined(OperationType))
+            if (global::Azure.Health.Deidentification.Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (Optional.IsDefined(TaggedEntities))
+            if (global::Azure.Health.Deidentification.Optional.IsDefined(TaggedEntities))
             {
                 writer.WritePropertyName("taggedEntities"u8);
-                writer.WriteObjectValue(TaggedEntities, options);
+                writer.WriteObjectValue<TaggedPhiEntities>(TaggedEntities, options);
             }
-            if (Optional.IsDefined(Customizations))
+            if (global::Azure.Health.Deidentification.Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
-                writer.WriteObjectValue(Customizations, options);
+                writer.WriteObjectValue<DeidentificationCustomizationOptions>(Customizations, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace Azure.Health.Deidentification
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,26 +125,26 @@ namespace Azure.Health.Deidentification
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeidentificationContent IJsonModel<DeidentificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeidentificationContent IJsonModel<global::Azure.Health.Deidentification.DeidentificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeidentificationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeidentificationContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeidentificationContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Health.Deidentification.DeidentificationContent.DeserializeDeidentificationContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DeidentificationContent DeserializeDeidentificationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -152,7 +152,7 @@ namespace Azure.Health.Deidentification
             DeidentificationOperationType? operationType = default;
             TaggedPhiEntities taggedEntities = default;
             DeidentificationCustomizationOptions customizations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("inputText"u8))
@@ -162,7 +162,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("operation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -171,25 +171,25 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("taggedEntities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    taggedEntities = TaggedPhiEntities.DeserializeTaggedPhiEntities(prop.Value, options);
+                    taggedEntities = global::Azure.Health.Deidentification.TaggedPhiEntities.DeserializeTaggedPhiEntities(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    customizations = DeidentificationCustomizationOptions.DeserializeDeidentificationCustomizationOptions(prop.Value, options);
+                    customizations = global::Azure.Health.Deidentification.DeidentificationCustomizationOptions.DeserializeDeidentificationCustomizationOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties);

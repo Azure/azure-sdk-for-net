@@ -15,18 +15,18 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerKnowledgeStoreParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreParameters"/>. </summary>
         public SearchIndexerKnowledgeStoreParameters()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreParameters"/>. </summary>
         /// <param name="synthesizeGeneratedKeyName"> Whether or not projections should synthesize a generated key name if one isn't already present. </param>
         /// <param name="additionalProperties"></param>
-        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, BinaryData> additionalProperties)
+        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             SynthesizeGeneratedKeyName = synthesizeGeneratedKeyName;
             _additionalBinaryDataProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? SynthesizeGeneratedKeyName { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

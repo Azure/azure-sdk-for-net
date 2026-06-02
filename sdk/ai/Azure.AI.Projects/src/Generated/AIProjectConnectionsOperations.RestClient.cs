@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateGetConnectionRequest(string name, RequestOptions options)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/connections/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/getConnectionWithCredentials", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -56,17 +56,17 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/connections", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (connectionType != null)
+            if ((connectionType != null))
             {
                 uri.AppendQuery("connectionType", connectionType, true);
             }
-            if (defaultConnection != null)
+            if ((defaultConnection != null))
             {
-                uri.AppendQuery("defaultConnection", TypeFormatters.ConvertToString(defaultConnection), true);
+                uri.AppendQuery("defaultConnection", global::Azure.AI.Projects.TypeFormatters.ConvertToString(defaultConnection), true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, RequestOptions options)
+        internal PipelineMessage CreateNextGetConnectionsRequest(global::System.Uri nextPage, string connectionType, bool? defaultConnection, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -85,9 +85,9 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }

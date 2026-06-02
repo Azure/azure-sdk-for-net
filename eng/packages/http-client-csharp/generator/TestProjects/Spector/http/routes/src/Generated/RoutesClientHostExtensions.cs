@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Routes
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RoutesClientHostExtensions
     {
         public static IClientBuilder AddRoutesClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRoutesClient(this IHostApplicationBuilder host, string sectionName, Action<RoutesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRoutesClient(this IHostApplicationBuilder host, string sectionName, Action<global::Routes.RoutesClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRoutesClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRoutesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RoutesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRoutesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Routes.RoutesClientSettings> configureSettings) => throw null;
     }
 }

@@ -17,22 +17,22 @@ namespace Azure.Compute.Batch
     public partial class BatchAutoPoolSpecification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchAutoPoolSpecification"/>. </summary>
         /// <param name="poolLifetimeOption"> The minimum lifetime of created auto Pools, and how multiple Jobs on a schedule are assigned to Pools. </param>
         public BatchAutoPoolSpecification(BatchPoolLifetimeOption poolLifetimeOption)
         {
             PoolLifetimeOption = poolLifetimeOption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchAutoPoolSpecification"/>. </summary>
         /// <param name="autoPoolIdPrefix"> A prefix to be added to the unique identifier when a Pool is automatically created. The Batch service assigns each auto Pool a unique identifier on creation. To distinguish between Pools created for different purposes, you can specify this element to add a prefix to the ID that is assigned. The prefix can be up to 20 characters long. </param>
         /// <param name="poolLifetimeOption"> The minimum lifetime of created auto Pools, and how multiple Jobs on a schedule are assigned to Pools. </param>
         /// <param name="keepAlive"> Whether to keep an auto Pool alive after its lifetime expires. If false, the Batch service deletes the Pool once its lifetime (as determined by the poolLifetimeOption setting) expires; that is, when the Job or Job Schedule completes. If true, the Batch service does not delete the Pool automatically. It is up to the user to delete auto Pools created with this option. </param>
         /// <param name="pool"> The Pool specification for the auto Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAutoPoolSpecification(string autoPoolIdPrefix, BatchPoolLifetimeOption poolLifetimeOption, bool? keepAlive, BatchPoolSpecification pool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAutoPoolSpecification(string autoPoolIdPrefix, BatchPoolLifetimeOption poolLifetimeOption, bool? keepAlive, BatchPoolSpecification pool, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AutoPoolIdPrefix = autoPoolIdPrefix;
             PoolLifetimeOption = poolLifetimeOption;

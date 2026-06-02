@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
 {
-    public partial class PublicDecoratorModelInInternal : IJsonModel<PublicDecoratorModelInInternal>
+    public partial class PublicDecoratorModelInInternal : IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>
     {
         internal PublicDecoratorModelInInternal() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<PublicDecoratorModelInInternal>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>.Write(ModelReaderWriterOptions options) => throw null;
 
-        PublicDecoratorModelInInternal IPersistableModel<PublicDecoratorModelInInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        PublicDecoratorModelInInternal IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<PublicDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator PublicDecoratorModelInInternal(Response response) => throw null;
 
-        void IJsonModel<PublicDecoratorModelInInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        PublicDecoratorModelInInternal IJsonModel<PublicDecoratorModelInInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        PublicDecoratorModelInInternal IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._InternalOperation.PublicDecoratorModelInInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual PublicDecoratorModelInInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

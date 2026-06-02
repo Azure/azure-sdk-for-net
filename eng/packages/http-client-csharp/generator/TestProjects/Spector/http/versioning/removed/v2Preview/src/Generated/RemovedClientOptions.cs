@@ -13,11 +13,11 @@ namespace Versioning.Removed
 {
     public partial class RemovedClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2preview;
+        private const global::Versioning.Removed.RemovedClientOptions.ServiceVersion LatestVersion = global::Versioning.Removed.RemovedClientOptions.ServiceVersion.V2preview;
 
-        public RemovedClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public RemovedClientOptions(global::Versioning.Removed.RemovedClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal RemovedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

@@ -14,31 +14,31 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DocumentSentiment value) => value switch
         {
-            DocumentSentiment.Positive => "positive",
-            DocumentSentiment.Neutral => "neutral",
-            DocumentSentiment.Negative => "negative",
-            DocumentSentiment.Mixed => "mixed",
+            global::Azure.AI.Language.Text.DocumentSentiment.Positive => "positive",
+            global::Azure.AI.Language.Text.DocumentSentiment.Neutral => "neutral",
+            global::Azure.AI.Language.Text.DocumentSentiment.Negative => "negative",
+            global::Azure.AI.Language.Text.DocumentSentiment.Mixed => "mixed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentSentiment value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static DocumentSentiment ToDocumentSentiment(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
             {
-                return DocumentSentiment.Positive;
+                return global::Azure.AI.Language.Text.DocumentSentiment.Positive;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutral"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "neutral"))
             {
-                return DocumentSentiment.Neutral;
+                return global::Azure.AI.Language.Text.DocumentSentiment.Neutral;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
             {
-                return DocumentSentiment.Negative;
+                return global::Azure.AI.Language.Text.DocumentSentiment.Negative;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mixed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "mixed"))
             {
-                return DocumentSentiment.Mixed;
+                return global::Azure.AI.Language.Text.DocumentSentiment.Mixed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentSentiment value.");
         }

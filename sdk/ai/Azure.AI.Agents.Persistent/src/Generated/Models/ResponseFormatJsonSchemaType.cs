@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     public partial class ResponseFormatJsonSchemaType
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchemaType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </summary>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jsonSchema"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jsonSchema"/> is null. </exception>
         public ResponseFormatJsonSchemaType(ResponseFormatJsonSchema jsonSchema)
         {
-            Argument.AssertNotNull(jsonSchema, nameof(jsonSchema));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(jsonSchema, nameof(jsonSchema));
 
             JsonSchema = jsonSchema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchemaType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </summary>
         /// <param name="type"> Type. </param>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType @type, ResponseFormatJsonSchema jsonSchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType @type, ResponseFormatJsonSchema jsonSchema, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             JsonSchema = jsonSchema;

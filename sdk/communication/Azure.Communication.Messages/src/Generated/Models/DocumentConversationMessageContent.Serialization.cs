@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> A request to send a document conversation message. </summary>
-    public partial class DocumentConversationMessageContent : ConversationMessageContent, IJsonModel<DocumentConversationMessageContent>
+    public partial class DocumentConversationMessageContent : ConversationMessageContent, IJsonModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentConversationMessageContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.DocumentConversationMessageContent"/> for deserialization. </summary>
         internal DocumentConversationMessageContent()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentConversationMessageContent(document.RootElement, options);
+                        return global::Azure.Communication.Messages.DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentConversationMessageContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.DocumentConversationMessageContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentConversationMessageContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.DocumentConversationMessageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentConversationMessageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentConversationMessageContent IPersistableModel<DocumentConversationMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentConversationMessageContent)PersistableModelCreateCore(data, options);
+        DocumentConversationMessageContent IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DocumentConversationMessageContent)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentConversationMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentConversationMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,18 +73,18 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentConversationMessageContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.DocumentConversationMessageContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Caption))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
             }
-            if (Optional.IsDefined(FileName))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
@@ -95,34 +95,34 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentConversationMessageContent IJsonModel<DocumentConversationMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentConversationMessageContent)JsonModelCreateCore(ref reader, options);
+        DocumentConversationMessageContent IJsonModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DocumentConversationMessageContent)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.DocumentConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentConversationMessageContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.DocumentConversationMessageContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentConversationMessageContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentConversationMessageContent DeserializeDocumentConversationMessageContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             CommunicationMessageKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string caption = default;
             string fileName = default;
-            Uri mediaUri = default;
+            global::System.Uri mediaUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -142,12 +142,12 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("mediaUri"u8))
                 {
-                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentConversationMessageContent(kind, additionalBinaryDataProperties, caption, fileName, mediaUri);

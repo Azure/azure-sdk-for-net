@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/>, and <see cref="OpenApiManagedAuthDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.OpenApiAnonymousAuthDetails"/>, <see cref="Azure.AI.Agents.Persistent.OpenApiConnectionAuthDetails"/>, and <see cref="Azure.AI.Agents.Persistent.OpenApiManagedAuthDetails"/>.
     /// </summary>
     public abstract partial class OpenApiAuthDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
         private protected OpenApiAuthDetails(OpenApiAuthType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiAuthDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiAuthDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

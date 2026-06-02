@@ -17,9 +17,9 @@ namespace Azure.Data.AppConfiguration
     /// <summary> Azure App Configuration REST API. </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Connection String";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ConfigurationClient for mocking. </summary>
@@ -30,8 +30,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of ConfigurationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConfigurationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
         {
         }
 
@@ -39,20 +39,20 @@ namespace Azure.Data.AppConfiguration
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ConfigurationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ConfigurationClientOptions options)
+        internal ConfigurationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ConfigurationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new ConfigurationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -86,15 +86,15 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<global::Azure.Data.AppConfiguration.SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
+                using HttpMessage message = this.CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -126,15 +126,15 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<global::Azure.Data.AppConfiguration.SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
+                using HttpMessage message = this.CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -159,7 +159,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SetConfigurationSettingInternal(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -167,7 +167,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -192,15 +192,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SetConfigurationSettingInternalAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> SetConfigurationSettingInternalAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSettingInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -226,7 +226,7 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DeleteConfigurationSetting(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
@@ -234,7 +234,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
+                using HttpMessage message = this.CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -260,15 +260,15 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        internal virtual async Task<global::Azure.Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
+                using HttpMessage message = this.CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -291,15 +291,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response GetSnapshot(string name, IEnumerable<global::Azure.Data.AppConfiguration.SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -322,15 +322,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetSnapshotAsync(string name, IEnumerable<global::Azure.Data.AppConfiguration.SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -348,14 +348,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual Operation<global::System.BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                using HttpMessage message = this.CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -372,14 +372,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Operation<global::System.BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -402,7 +402,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateSnapshotStatus(string name, string contentType, RequestContent content, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -410,7 +410,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -434,15 +434,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -465,7 +465,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateReadOnlyLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
@@ -473,7 +473,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -496,15 +496,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<global::Azure.Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -527,7 +527,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DeleteReadOnlyLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
@@ -535,7 +535,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -558,15 +558,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<global::Azure.Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

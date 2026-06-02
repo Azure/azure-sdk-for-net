@@ -16,9 +16,9 @@ namespace Azure.AI.Translation.Text
     /// The value of the translation property is a dictionary of (key, value) pairs. Each key is a BCP 47 language tag.
     /// A key identifies a language for which text can be translated to or translated from.
     /// </summary>
-    public partial class TranslationLanguage : IJsonModel<TranslationLanguage>
+    public partial class TranslationLanguage : IJsonModel<global::Azure.AI.Translation.Text.TranslationLanguage>
     {
-        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationLanguage"/> for deserialization. </summary>
         internal TranslationLanguage()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranslationLanguage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Translation.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTranslationLanguage(document.RootElement, options);
+                        return global::Azure.AI.Translation.Text.TranslationLanguage.DeserializeTranslationLanguage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranslationLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TranslationLanguage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Translation.Text.AzureAITranslationTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TranslationLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TranslationLanguage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranslationLanguage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranslationLanguage IPersistableModel<TranslationLanguage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TranslationLanguage IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranslationLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TranslationLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Translation.Text.TranslationLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,10 +76,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranslationLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TranslationLanguage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -87,13 +87,13 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
             writer.WriteStringValue(Directionality.ToSerialString());
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("models"u8);
                 writer.WriteStartArray();
                 foreach (string item in Models)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -102,7 +102,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -110,9 +110,9 @@ namespace Azure.AI.Translation.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -121,26 +121,26 @@ namespace Azure.AI.Translation.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranslationLanguage IJsonModel<TranslationLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TranslationLanguage IJsonModel<global::Azure.AI.Translation.Text.TranslationLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranslationLanguage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TranslationLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranslationLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TranslationLanguage)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranslationLanguage(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Translation.Text.TranslationLanguage.DeserializeTranslationLanguage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranslationLanguage DeserializeTranslationLanguage(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -148,7 +148,7 @@ namespace Azure.AI.Translation.Text
             string nativeName = default;
             LanguageDirectionality directionality = default;
             IReadOnlyList<string> models = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -171,7 +171,7 @@ namespace Azure.AI.Translation.Text
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -183,9 +183,9 @@ namespace Azure.AI.Translation.Text
                     models = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TranslationLanguage(name, nativeName, directionality, models, additionalBinaryDataProperties);

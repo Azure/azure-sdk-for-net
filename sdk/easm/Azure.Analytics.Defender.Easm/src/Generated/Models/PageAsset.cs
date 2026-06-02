@@ -13,58 +13,58 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The PageAsset. </summary>
     public partial class PageAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PageAsset"/>. </summary>
         internal PageAsset()
         {
-            IpAddresses = new ChangeTrackingList<ObservedString>();
-            Successful = new ChangeTrackingList<ObservedBoolean>();
-            HttpResponseCodes = new ChangeTrackingList<ObservedInteger>();
-            HttpResponseMessages = new ChangeTrackingList<ObservedString>();
-            ResponseTimes = new ChangeTrackingList<ObservedLong>();
-            Frames = new ChangeTrackingList<ObservedBoolean>();
-            Windows = new ChangeTrackingList<ObservedBoolean>();
-            NonHtmlFrames = new ChangeTrackingList<ObservedBoolean>();
-            UndirectedContent = new ChangeTrackingList<ObservedBoolean>();
-            ContentTypes = new ChangeTrackingList<ObservedString>();
-            ContentLengths = new ChangeTrackingList<ObservedLong>();
-            WindowNames = new ChangeTrackingList<ObservedString>();
-            Charsets = new ChangeTrackingList<ObservedString>();
-            Titles = new ChangeTrackingList<ObservedString>();
-            Languages = new ChangeTrackingList<ObservedString>();
-            ResponseHeaders = new ChangeTrackingList<ObservedHeader>();
-            Cookies = new ChangeTrackingList<CookieDetails>();
-            WebComponents = new ChangeTrackingList<WebComponent>();
-            Attributes = new ChangeTrackingList<AttributeDetails>();
-            AssetSecurityPolicies = new ChangeTrackingList<AssetSecurityPolicy>();
-            ResponseBodyMinhashSignatures = new ChangeTrackingList<ObservedIntegers>();
-            FullDomMinhashSignatures = new ChangeTrackingList<ObservedIntegers>();
-            ResponseBodyHashSignatures = new ChangeTrackingList<ObservedString>();
-            Errors = new ChangeTrackingList<ObservedString>();
-            SslCerts = new ChangeTrackingList<SslCertAsset>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            RedirectUrls = new ChangeTrackingList<ObservedString>();
-            FinalUrls = new ChangeTrackingList<ObservedString>();
-            FinalResponseCodes = new ChangeTrackingList<ObservedInteger>();
-            ParkedPage = new ChangeTrackingList<ObservedBoolean>();
-            ResourceUrls = new ChangeTrackingList<ResourceUri>();
-            Guids = new ChangeTrackingList<GuidPair>();
-            FinalIpAddresses = new ChangeTrackingList<ObservedString>();
-            Asns = new ChangeTrackingList<ObservedLong>();
-            IpBlocks = new ChangeTrackingList<IpBlock>();
-            FinalAsns = new ChangeTrackingList<ObservedLong>();
-            FinalIpBlocks = new ChangeTrackingList<IpBlock>();
-            ResponseBodies = new ChangeTrackingList<ObservedString>();
-            Location = new ChangeTrackingList<ObservedLocation>();
-            Services = new ChangeTrackingList<AssetService>();
-            Cnames = new ChangeTrackingList<ObservedString>();
-            Cdns = new ChangeTrackingList<ObservedString>();
-            SslServerConfig = new ChangeTrackingList<SslServerConfig>();
-            GdprAssetSecurityPolicies = new ChangeTrackingList<AssetSecurityPolicy>();
-            Ipv4 = new ChangeTrackingList<ObservedBoolean>();
-            Ipv6 = new ChangeTrackingList<ObservedBoolean>();
+            IpAddresses = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Successful = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            HttpResponseCodes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            HttpResponseMessages = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            ResponseTimes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            Frames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            Windows = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            NonHtmlFrames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            UndirectedContent = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            ContentTypes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            ContentLengths = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            WindowNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Charsets = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Titles = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Languages = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            ResponseHeaders = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
+            Cookies = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>();
+            WebComponents = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            Attributes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
+            AssetSecurityPolicies = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy>();
+            ResponseBodyMinhashSignatures = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedIntegers>();
+            FullDomMinhashSignatures = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedIntegers>();
+            ResponseBodyHashSignatures = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Errors = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            SslCerts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            RedirectUrls = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            FinalUrls = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            FinalResponseCodes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            ParkedPage = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            ResourceUrls = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ResourceUri>();
+            Guids = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.GuidPair>();
+            FinalIpAddresses = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Asns = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            IpBlocks = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            FinalAsns = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            FinalIpBlocks = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            ResponseBodies = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Location = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            Services = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>();
+            Cnames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Cdns = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            SslServerConfig = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
+            GdprAssetSecurityPolicies = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy>();
+            Ipv4 = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            Ipv6 = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PageAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"></param>
         /// <param name="httpMethod"></param>
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal PageAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string httpMethod, string service, IList<ObservedString> ipAddresses, IList<ObservedBoolean> successful, IList<ObservedInteger> httpResponseCodes, IList<ObservedString> httpResponseMessages, IList<ObservedLong> responseTimes, IList<ObservedBoolean> frames, IList<ObservedBoolean> windows, IList<ObservedBoolean> nonHtmlFrames, IList<ObservedBoolean> undirectedContent, IList<ObservedString> contentTypes, IList<ObservedLong> contentLengths, IList<ObservedString> windowNames, IList<ObservedString> charsets, IList<ObservedString> titles, IList<ObservedString> languages, IList<ObservedHeader> responseHeaders, IList<CookieDetails> cookies, IList<WebComponent> webComponents, IList<AttributeDetails> attributes, IList<AssetSecurityPolicy> assetSecurityPolicies, IList<ObservedIntegers> responseBodyMinhashSignatures, IList<ObservedIntegers> fullDomMinhashSignatures, IList<ObservedString> responseBodyHashSignatures, IList<ObservedString> errors, IList<SslCertAsset> sslCerts, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IList<ObservedString> finalUrls, IList<ObservedInteger> finalResponseCodes, IList<ObservedBoolean> parkedPage, IList<ResourceUri> resourceUrls, IList<GuidPair> guids, IList<ObservedString> finalIpAddresses, IList<ObservedLong> asns, IList<IpBlock> ipBlocks, IList<ObservedLong> finalAsns, IList<IpBlock> finalIpBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IList<ObservedLocation> location, IList<AssetService> services, string siteStatus, IList<ObservedString> cnames, IList<ObservedString> cdns, string host, string domain, IList<SslServerConfig> sslServerConfig, IList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
+        internal PageAsset(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri url, string httpMethod, string service, IList<global::Azure.Analytics.Defender.Easm.ObservedString> ipAddresses, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> successful, IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> httpResponseCodes, IList<global::Azure.Analytics.Defender.Easm.ObservedString> httpResponseMessages, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> responseTimes, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> frames, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> windows, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nonHtmlFrames, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> undirectedContent, IList<global::Azure.Analytics.Defender.Easm.ObservedString> contentTypes, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> contentLengths, IList<global::Azure.Analytics.Defender.Easm.ObservedString> windowNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> charsets, IList<global::Azure.Analytics.Defender.Easm.ObservedString> titles, IList<global::Azure.Analytics.Defender.Easm.ObservedString> languages, IList<global::Azure.Analytics.Defender.Easm.ObservedHeader> responseHeaders, IList<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies, IList<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents, IList<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes, IList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> assetSecurityPolicies, IList<global::Azure.Analytics.Defender.Easm.ObservedIntegers> responseBodyMinhashSignatures, IList<global::Azure.Analytics.Defender.Easm.ObservedIntegers> fullDomMinhashSignatures, IList<global::Azure.Analytics.Defender.Easm.ObservedString> responseBodyHashSignatures, IList<global::Azure.Analytics.Defender.Easm.ObservedString> errors, IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IList<global::Azure.Analytics.Defender.Easm.ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IList<global::Azure.Analytics.Defender.Easm.ObservedString> finalUrls, IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> finalResponseCodes, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> parkedPage, IList<global::Azure.Analytics.Defender.Easm.ResourceUri> resourceUrls, IList<global::Azure.Analytics.Defender.Easm.GuidPair> guids, IList<global::Azure.Analytics.Defender.Easm.ObservedString> finalIpAddresses, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> asns, IList<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> finalAsns, IList<global::Azure.Analytics.Defender.Easm.IpBlock> finalIpBlocks, IList<global::Azure.Analytics.Defender.Easm.ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> location, IList<global::Azure.Analytics.Defender.Easm.AssetService> services, string siteStatus, IList<global::Azure.Analytics.Defender.Easm.ObservedString> cnames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> cdns, string host, string domain, IList<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig, IList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> gdprAssetSecurityPolicies, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv4, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
         {
             Url = url;
             HttpMethod = httpMethod;
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Gets the Url. </summary>
-        public Uri Url { get; }
+        public global::System.Uri Url { get; }
 
         /// <summary> Gets the HttpMethod. </summary>
         public string HttpMethod { get; }
@@ -202,82 +202,82 @@ namespace Azure.Analytics.Defender.Easm
         public string Service { get; }
 
         /// <summary> Gets the IpAddresses. </summary>
-        public IList<ObservedString> IpAddresses { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> IpAddresses { get; }
 
         /// <summary> Gets the Successful. </summary>
-        public IList<ObservedBoolean> Successful { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Successful { get; }
 
         /// <summary> Gets the HttpResponseCodes. </summary>
-        public IList<ObservedInteger> HttpResponseCodes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> HttpResponseCodes { get; }
 
         /// <summary> Gets the HttpResponseMessages. </summary>
-        public IList<ObservedString> HttpResponseMessages { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> HttpResponseMessages { get; }
 
         /// <summary> Gets the ResponseTimes. </summary>
-        public IList<ObservedLong> ResponseTimes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> ResponseTimes { get; }
 
         /// <summary> Gets the Frames. </summary>
-        public IList<ObservedBoolean> Frames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Frames { get; }
 
         /// <summary> Gets the Windows. </summary>
-        public IList<ObservedBoolean> Windows { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Windows { get; }
 
         /// <summary> Gets the NonHtmlFrames. </summary>
-        public IList<ObservedBoolean> NonHtmlFrames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> NonHtmlFrames { get; }
 
         /// <summary> Gets the UndirectedContent. </summary>
-        public IList<ObservedBoolean> UndirectedContent { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> UndirectedContent { get; }
 
         /// <summary> Gets the ContentTypes. </summary>
-        public IList<ObservedString> ContentTypes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> ContentTypes { get; }
 
         /// <summary> Gets the ContentLengths. </summary>
-        public IList<ObservedLong> ContentLengths { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> ContentLengths { get; }
 
         /// <summary> Gets the WindowNames. </summary>
-        public IList<ObservedString> WindowNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> WindowNames { get; }
 
         /// <summary> Gets the Charsets. </summary>
-        public IList<ObservedString> Charsets { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Charsets { get; }
 
         /// <summary> Gets the Titles. </summary>
-        public IList<ObservedString> Titles { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Titles { get; }
 
         /// <summary> Gets the Languages. </summary>
-        public IList<ObservedString> Languages { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Languages { get; }
 
         /// <summary> Gets the ResponseHeaders. </summary>
-        public IList<ObservedHeader> ResponseHeaders { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedHeader> ResponseHeaders { get; }
 
         /// <summary> Gets the Cookies. </summary>
-        public IList<CookieDetails> Cookies { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.CookieDetails> Cookies { get; }
 
         /// <summary> Gets the WebComponents. </summary>
-        public IList<WebComponent> WebComponents { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get; }
 
         /// <summary> Gets the Attributes. </summary>
-        public IList<AttributeDetails> Attributes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AttributeDetails> Attributes { get; }
 
         /// <summary> Gets the AssetSecurityPolicies. </summary>
-        public IList<AssetSecurityPolicy> AssetSecurityPolicies { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> AssetSecurityPolicies { get; }
 
         /// <summary> Gets the ResponseBodyMinhashSignatures. </summary>
-        public IList<ObservedIntegers> ResponseBodyMinhashSignatures { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedIntegers> ResponseBodyMinhashSignatures { get; }
 
         /// <summary> Gets the FullDomMinhashSignatures. </summary>
-        public IList<ObservedIntegers> FullDomMinhashSignatures { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedIntegers> FullDomMinhashSignatures { get; }
 
         /// <summary> Gets the ResponseBodyHashSignatures. </summary>
-        public IList<ObservedString> ResponseBodyHashSignatures { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> ResponseBodyHashSignatures { get; }
 
         /// <summary> Gets the Errors. </summary>
-        public IList<ObservedString> Errors { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Errors { get; }
 
         /// <summary> Gets the SslCerts. </summary>
-        public IList<SslCertAsset> SslCerts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> SslCerts { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
@@ -295,43 +295,43 @@ namespace Azure.Analytics.Defender.Easm
         public string Referrer { get; }
 
         /// <summary> Gets the RedirectUrls. </summary>
-        public IList<ObservedString> RedirectUrls { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RedirectUrls { get; }
 
         /// <summary> Gets the RedirectType. </summary>
         public PageAssetRedirectType? RedirectType { get; }
 
         /// <summary> Gets the FinalUrls. </summary>
-        public IList<ObservedString> FinalUrls { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> FinalUrls { get; }
 
         /// <summary> Gets the FinalResponseCodes. </summary>
-        public IList<ObservedInteger> FinalResponseCodes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> FinalResponseCodes { get; }
 
         /// <summary> Gets the ParkedPage. </summary>
-        public IList<ObservedBoolean> ParkedPage { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ParkedPage { get; }
 
         /// <summary> Gets the ResourceUrls. </summary>
-        public IList<ResourceUri> ResourceUrls { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ResourceUri> ResourceUrls { get; }
 
         /// <summary> Gets the Guids. </summary>
-        public IList<GuidPair> Guids { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.GuidPair> Guids { get; }
 
         /// <summary> Gets the FinalIpAddresses. </summary>
-        public IList<ObservedString> FinalIpAddresses { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> FinalIpAddresses { get; }
 
         /// <summary> Gets the Asns. </summary>
-        public IList<ObservedLong> Asns { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> Asns { get; }
 
         /// <summary> Gets the IpBlocks. </summary>
-        public IList<IpBlock> IpBlocks { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.IpBlock> IpBlocks { get; }
 
         /// <summary> Gets the FinalAsns. </summary>
-        public IList<ObservedLong> FinalAsns { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> FinalAsns { get; }
 
         /// <summary> Gets the FinalIpBlocks. </summary>
-        public IList<IpBlock> FinalIpBlocks { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.IpBlock> FinalIpBlocks { get; }
 
         /// <summary> Gets the ResponseBodies. </summary>
-        public IList<ObservedString> ResponseBodies { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> ResponseBodies { get; }
 
         /// <summary> Gets the DomainAsset. </summary>
         public DomainAsset DomainAsset { get; }
@@ -343,19 +343,19 @@ namespace Azure.Analytics.Defender.Easm
         public bool? IsRootUrl { get; }
 
         /// <summary> Gets the Location. </summary>
-        public IList<ObservedLocation> Location { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> Location { get; }
 
         /// <summary> Gets the Services. </summary>
-        public IList<AssetService> Services { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetService> Services { get; }
 
         /// <summary> Gets the SiteStatus. </summary>
         public string SiteStatus { get; }
 
         /// <summary> Gets the Cnames. </summary>
-        public IList<ObservedString> Cnames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Cnames { get; }
 
         /// <summary> Gets the Cdns. </summary>
-        public IList<ObservedString> Cdns { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Cdns { get; }
 
         /// <summary> Gets the Host. </summary>
         public string Host { get; }
@@ -364,15 +364,15 @@ namespace Azure.Analytics.Defender.Easm
         public string Domain { get; }
 
         /// <summary> Gets the SslServerConfig. </summary>
-        public IList<SslServerConfig> SslServerConfig { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SslServerConfig> SslServerConfig { get; }
 
         /// <summary> Gets the GdprAssetSecurityPolicies. </summary>
-        public IList<AssetSecurityPolicy> GdprAssetSecurityPolicies { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> GdprAssetSecurityPolicies { get; }
 
         /// <summary> Gets the Ipv4. </summary>
-        public IList<ObservedBoolean> Ipv4 { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Ipv4 { get; }
 
         /// <summary> Gets the Ipv6. </summary>
-        public IList<ObservedBoolean> Ipv6 { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Ipv6 { get; }
     }
 }

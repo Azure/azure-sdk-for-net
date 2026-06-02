@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ResetDocumentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ResetDocumentOptions"/>. </summary>
         public ResetDocumentOptions()
         {
             DocumentKeys = new ChangeTrackingList<string>();
             DataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ResetDocumentOptions"/>. </summary>
         /// <param name="documentKeys"> document keys to be reset. </param>
         /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DocumentKeys = documentKeys;
             DataSourceDocumentIds = dataSourceDocumentIds;

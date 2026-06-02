@@ -15,24 +15,24 @@ namespace Azure.Communication.JobRouter
     /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
     /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
     /// SuspendMode: Used when matching workers to a job needs to be suspended.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/>, and <see cref="SuspendMode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.JobRouter.ScheduleAndSuspendMode"/>, <see cref="Azure.Communication.JobRouter.QueueAndMatchMode"/>, and <see cref="Azure.Communication.JobRouter.SuspendMode"/>.
     /// </summary>
     public abstract partial class JobMatchingMode
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.JobMatchingMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         private protected JobMatchingMode(JobMatchingModeKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.JobMatchingMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobMatchingMode(JobMatchingModeKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobMatchingMode(JobMatchingModeKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

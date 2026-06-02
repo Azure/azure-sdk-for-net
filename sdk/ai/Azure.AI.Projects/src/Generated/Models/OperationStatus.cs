@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Enum describing allowed operation states. </summary>
-    public readonly partial struct OperationStatus : IEquatable<OperationStatus>
+    public readonly partial struct OperationStatus : IEquatable<global::Azure.AI.Projects.Evaluation.OperationStatus>
     {
         private readonly string _value;
         /// <summary> The operation has not started. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> The operation has been canceled by the user. </summary>
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.OperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -48,34 +48,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> The operation has been canceled by the user. </summary>
         public static OperationStatus Canceled { get; } = new OperationStatus(CanceledValue);
 
-        /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.OperationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationStatus left, OperationStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.OperationStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationStatus left, OperationStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.OperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OperationStatus(string value) => new OperationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.OperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationStatus?(string value) => value == null ? null : new OperationStatus(value);
+        public static implicit operator OperationStatus?(string value) => (value == null) ? null : new OperationStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OperationStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

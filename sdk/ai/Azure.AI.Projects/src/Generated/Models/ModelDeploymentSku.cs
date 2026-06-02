@@ -11,9 +11,9 @@ namespace Azure.AI.Projects
     public partial class ModelDeploymentSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelDeploymentSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ModelDeploymentSku"/>. </summary>
         /// <param name="capacity"> Sku capacity. </param>
         /// <param name="family"> Sku family. </param>
         /// <param name="name"> Sku name. </param>
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects
             Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelDeploymentSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ModelDeploymentSku"/>. </summary>
         /// <param name="capacity"> Sku capacity. </param>
         /// <param name="family"> Sku family. </param>
         /// <param name="name"> Sku name. </param>
         /// <param name="size"> Sku size. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelDeploymentSku(long capacity, string family, string name, string size, string tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelDeploymentSku(long capacity, string family, string name, string size, string tier, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             Family = family;

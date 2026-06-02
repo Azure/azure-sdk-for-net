@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="SharepointToolDefinition"/>, <see cref="AzureAISearchToolDefinition"/>, <see cref="OpenApiToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="DeepResearchToolDefinition"/>, <see cref="MCPToolDefinition"/>, <see cref="ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="BrowserAutomationToolDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.FileSearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.FunctionToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.BingGroundingToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.SharepointToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.AzureAISearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.OpenApiToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.BingCustomSearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.DeepResearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.MCPToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.ComputerUseToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.AzureFunctionToolDefinition"/>, and <see cref="Azure.AI.Agents.Persistent.BrowserAutomationToolDefinition"/>.
     /// </summary>
     public abstract partial class ToolDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         private protected ToolDefinition(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,24 +12,24 @@ namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary>
     /// The metric definition, which determines how the metric value is calculated from event data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventCountMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="UserRateMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="AverageMetricDefinition"/>, and <see cref="PercentileMetricDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.SumMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.AverageMetricDefinition"/>, and <see cref="Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition"/>.
     /// </summary>
     public abstract partial class ExperimentMetricDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         private protected ExperimentMetricDefinition(ExperimentMetricType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

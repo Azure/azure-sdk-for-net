@@ -20,20 +20,20 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class SearchOptionsFields
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchOptionsFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SearchOptionsFields"/>. </summary>
         public SearchOptionsFields()
         {
             Include = new ChangeTrackingList<string>();
             Exclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchOptionsFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SearchOptionsFields"/>. </summary>
         /// <param name="include"> Array of field names to include in the response. </param>
         /// <param name="exclude"> Array of field names to exclude from the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchOptionsFields(IList<string> include, IList<string> exclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchOptionsFields(IList<string> include, IList<string> exclude, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Include = include;
             Exclude = exclude;

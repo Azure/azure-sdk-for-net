@@ -15,9 +15,9 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueue"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a queue. </param>
         /// <param name="name"> Friendly name of this queue. </param>
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
         /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterQueue(ETag eTag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterQueue(ETag eTag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;

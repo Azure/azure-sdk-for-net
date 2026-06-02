@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A citation within the message that points to a specific URL associated with the message. Generated when the agent uses tools such as 'bing_grounding' to search the Internet. </summary>
     public partial class MessageDeltaTextUriCitationAnnotation : MessageDeltaTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextUriCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="uriCitation"> The details of the URL citation. </param>
         internal MessageDeltaTextUriCitationAnnotation(int index, MessageDeltaTextUriCitationDetails uriCitation) : base(index, "url_citation")
@@ -21,14 +21,14 @@ namespace Azure.AI.Agents.Persistent
             UriCitation = uriCitation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextUriCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        internal MessageDeltaTextUriCitationAnnotation(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageDeltaTextUriCitationDetails uriCitation, int? startIndex, int? endIndex) : base(index, @type, additionalBinaryDataProperties)
+        internal MessageDeltaTextUriCitationAnnotation(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageDeltaTextUriCitationDetails uriCitation, int? startIndex, int? endIndex) : base(index, @type, additionalBinaryDataProperties)
         {
             UriCitation = uriCitation;
             StartIndex = startIndex;

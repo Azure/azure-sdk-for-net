@@ -10,15 +10,15 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalComputerTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalComputerTool"/>. </summary>
-        public InternalComputerTool() : base(ToolType.Computer)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalComputerTool"/>. </summary>
+        public InternalComputerTool() : base(global::OpenAI.ToolType.Computer)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalComputerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalComputerTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalComputerTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal InternalComputerTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

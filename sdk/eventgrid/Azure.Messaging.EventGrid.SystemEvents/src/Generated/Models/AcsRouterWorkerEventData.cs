@@ -13,18 +13,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all Router Worker events. </summary>
     public partial class AcsRouterWorkerEventData : AcsRouterEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerEventData"/>. </summary>
         internal AcsRouterWorkerEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
-        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties)
+        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties)
         {
             WorkerId = workerId;
         }

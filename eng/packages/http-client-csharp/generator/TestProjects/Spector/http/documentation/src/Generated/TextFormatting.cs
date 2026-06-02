@@ -17,32 +17,32 @@ namespace Documentation._TextFormatting
     {
         protected TextFormatting() => throw null;
 
-        internal TextFormatting(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal TextFormatting(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response BoldText(RequestContext context) => throw null;
 
-        public virtual Task<Response> BoldTextAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> BoldTextAsync(RequestContext context) => throw null;
 
         public virtual Response BoldText(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> BoldTextAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> BoldTextAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ItalicText(RequestContext context) => throw null;
 
-        public virtual Task<Response> ItalicTextAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ItalicTextAsync(RequestContext context) => throw null;
 
         public virtual Response ItalicText(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ItalicTextAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ItalicTextAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response CombinedFormatting(RequestContext context) => throw null;
 
-        public virtual Task<Response> CombinedFormattingAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> CombinedFormattingAsync(RequestContext context) => throw null;
 
         public virtual Response CombinedFormatting(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> CombinedFormattingAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> CombinedFormattingAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

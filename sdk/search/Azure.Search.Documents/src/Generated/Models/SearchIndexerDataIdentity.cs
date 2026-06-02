@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Abstract base type for data identities.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.SearchIndexerDataNoneIdentity"/> and <see cref="Azure.Search.Documents.Indexes.Models.SearchIndexerDataUserAssignedIdentity"/>.
     /// </summary>
     public abstract partial class SearchIndexerDataIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity"/>. </summary>
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         private protected SearchIndexerDataIdentity(string odataType)
         {
             OdataType = odataType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity"/>. </summary>
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerDataIdentity(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerDataIdentity(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OdataType = odataType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

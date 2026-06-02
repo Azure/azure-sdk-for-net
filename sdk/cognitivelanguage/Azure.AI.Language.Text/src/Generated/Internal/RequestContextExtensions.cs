@@ -14,11 +14,11 @@ namespace Azure.AI.Language.Text
     internal static partial class RequestContextExtensions
     {
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public static ValueTuple<CancellationToken, ErrorOptions> Parse(this RequestContext context)
+        public static ValueTuple<global::System.Threading.CancellationToken, global::Azure.ErrorOptions> Parse(this RequestContext context)
         {
-            if (context == null)
+            if ((context == null))
             {
-                return (CancellationToken.None, ErrorOptions.Default);
+                return (global::System.Threading.CancellationToken.None, global::Azure.ErrorOptions.Default);
             }
             return (context.CancellationToken, context.ErrorOptions);
         }

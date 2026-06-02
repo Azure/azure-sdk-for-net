@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The ReportBillableAssetSnapshotResult. </summary>
-    public partial class ReportBillableAssetSnapshotResult : IJsonModel<ReportBillableAssetSnapshotResult>
+    public partial class ReportBillableAssetSnapshotResult : IJsonModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ReportBillableAssetSnapshotResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReportBillableAssetSnapshotResult(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult.DeserializeReportBillableAssetSnapshotResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReportBillableAssetSnapshotResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportBillableAssetSnapshotResult IPersistableModel<ReportBillableAssetSnapshotResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReportBillableAssetSnapshotResult IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReportBillableAssetSnapshotResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReportBillableAssetSnapshotResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Date))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "D");
             }
-            if (Optional.IsDefined(Total))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Optional.IsCollectionDefined(AssetBreakdown))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AssetBreakdown))
             {
                 writer.WritePropertyName("assetBreakdown"u8);
                 writer.WriteStartArray();
                 foreach (ReportBillableAssetBreakdown item in AssetBreakdown)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ReportBillableAssetBreakdown>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,38 +112,38 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportBillableAssetSnapshotResult IJsonModel<ReportBillableAssetSnapshotResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReportBillableAssetSnapshotResult IJsonModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ReportBillableAssetSnapshotResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReportBillableAssetSnapshotResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult.DeserializeReportBillableAssetSnapshotResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ReportBillableAssetSnapshotResult DeserializeReportBillableAssetSnapshotResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             DateTimeOffset? date = default;
             long? total = default;
-            IList<ReportBillableAssetBreakdown> assetBreakdown = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> assetBreakdown = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("date"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("total"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -161,24 +161,24 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("assetBreakdown"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ReportBillableAssetBreakdown> array = new List<ReportBillableAssetBreakdown>();
+                    List<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> array = new List<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReportBillableAssetBreakdown.DeserializeReportBillableAssetBreakdown(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown.DeserializeReportBillableAssetBreakdown(item, options));
                     }
                     assetBreakdown = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown ?? new ChangeTrackingList<ReportBillableAssetBreakdown>(), additionalBinaryDataProperties);
+            return new ReportBillableAssetSnapshotResult(date, total, (assetBreakdown ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>()), additionalBinaryDataProperties);
         }
     }
 }

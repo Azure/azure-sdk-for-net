@@ -18,24 +18,24 @@ namespace _Type.Scalar
     {
         protected Boolean() => throw null;
 
-        internal Boolean(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Boolean(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
         public virtual Response<bool> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<bool>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<bool>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(bool body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(bool body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(bool body, CancellationToken cancellationToken = default) => throw null;
     }
 }

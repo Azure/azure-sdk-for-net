@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event.Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
     public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
+        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
         {
         }
     }

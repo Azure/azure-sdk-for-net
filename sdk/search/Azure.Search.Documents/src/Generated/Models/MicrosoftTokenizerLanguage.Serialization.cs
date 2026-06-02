@@ -14,221 +14,221 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MicrosoftTokenizerLanguage value) => value switch
         {
-            MicrosoftTokenizerLanguage.Bangla => "bangla",
-            MicrosoftTokenizerLanguage.Bulgarian => "bulgarian",
-            MicrosoftTokenizerLanguage.Catalan => "catalan",
-            MicrosoftTokenizerLanguage.ChineseSimplified => "chineseSimplified",
-            MicrosoftTokenizerLanguage.ChineseTraditional => "chineseTraditional",
-            MicrosoftTokenizerLanguage.Croatian => "croatian",
-            MicrosoftTokenizerLanguage.Czech => "czech",
-            MicrosoftTokenizerLanguage.Danish => "danish",
-            MicrosoftTokenizerLanguage.Dutch => "dutch",
-            MicrosoftTokenizerLanguage.English => "english",
-            MicrosoftTokenizerLanguage.French => "french",
-            MicrosoftTokenizerLanguage.German => "german",
-            MicrosoftTokenizerLanguage.Greek => "greek",
-            MicrosoftTokenizerLanguage.Gujarati => "gujarati",
-            MicrosoftTokenizerLanguage.Hindi => "hindi",
-            MicrosoftTokenizerLanguage.Icelandic => "icelandic",
-            MicrosoftTokenizerLanguage.Indonesian => "indonesian",
-            MicrosoftTokenizerLanguage.Italian => "italian",
-            MicrosoftTokenizerLanguage.Japanese => "japanese",
-            MicrosoftTokenizerLanguage.Kannada => "kannada",
-            MicrosoftTokenizerLanguage.Korean => "korean",
-            MicrosoftTokenizerLanguage.Malay => "malay",
-            MicrosoftTokenizerLanguage.Malayalam => "malayalam",
-            MicrosoftTokenizerLanguage.Marathi => "marathi",
-            MicrosoftTokenizerLanguage.NorwegianBokmaal => "norwegianBokmaal",
-            MicrosoftTokenizerLanguage.Polish => "polish",
-            MicrosoftTokenizerLanguage.Portuguese => "portuguese",
-            MicrosoftTokenizerLanguage.PortugueseBrazilian => "portugueseBrazilian",
-            MicrosoftTokenizerLanguage.Punjabi => "punjabi",
-            MicrosoftTokenizerLanguage.Romanian => "romanian",
-            MicrosoftTokenizerLanguage.Russian => "russian",
-            MicrosoftTokenizerLanguage.SerbianCyrillic => "serbianCyrillic",
-            MicrosoftTokenizerLanguage.SerbianLatin => "serbianLatin",
-            MicrosoftTokenizerLanguage.Slovenian => "slovenian",
-            MicrosoftTokenizerLanguage.Spanish => "spanish",
-            MicrosoftTokenizerLanguage.Swedish => "swedish",
-            MicrosoftTokenizerLanguage.Tamil => "tamil",
-            MicrosoftTokenizerLanguage.Telugu => "telugu",
-            MicrosoftTokenizerLanguage.Thai => "thai",
-            MicrosoftTokenizerLanguage.Ukrainian => "ukrainian",
-            MicrosoftTokenizerLanguage.Urdu => "urdu",
-            MicrosoftTokenizerLanguage.Vietnamese => "vietnamese",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Bangla => "bangla",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Bulgarian => "bulgarian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Catalan => "catalan",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.ChineseSimplified => "chineseSimplified",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.ChineseTraditional => "chineseTraditional",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Croatian => "croatian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Czech => "czech",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Danish => "danish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Dutch => "dutch",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.English => "english",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.French => "french",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.German => "german",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Greek => "greek",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Gujarati => "gujarati",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Hindi => "hindi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Icelandic => "icelandic",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Indonesian => "indonesian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Italian => "italian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Japanese => "japanese",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Kannada => "kannada",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Korean => "korean",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Malay => "malay",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Malayalam => "malayalam",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Marathi => "marathi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.NorwegianBokmaal => "norwegianBokmaal",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Polish => "polish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Portuguese => "portuguese",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.PortugueseBrazilian => "portugueseBrazilian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Punjabi => "punjabi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Romanian => "romanian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Russian => "russian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.SerbianCyrillic => "serbianCyrillic",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.SerbianLatin => "serbianLatin",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Slovenian => "slovenian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Spanish => "spanish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Swedish => "swedish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Tamil => "tamil",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Telugu => "telugu",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Thai => "thai",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Ukrainian => "ukrainian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Urdu => "urdu",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Vietnamese => "vietnamese",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MicrosoftTokenizerLanguage value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MicrosoftTokenizerLanguage ToMicrosoftTokenizerLanguage(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bangla"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bangla"))
             {
-                return MicrosoftTokenizerLanguage.Bangla;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Bangla;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
             {
-                return MicrosoftTokenizerLanguage.Bulgarian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Bulgarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
             {
-                return MicrosoftTokenizerLanguage.Catalan;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Catalan;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "chineseSimplified"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "chineseSimplified"))
             {
-                return MicrosoftTokenizerLanguage.ChineseSimplified;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.ChineseSimplified;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "chineseTraditional"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "chineseTraditional"))
             {
-                return MicrosoftTokenizerLanguage.ChineseTraditional;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.ChineseTraditional;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "croatian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "croatian"))
             {
-                return MicrosoftTokenizerLanguage.Croatian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Croatian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
             {
-                return MicrosoftTokenizerLanguage.Czech;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Czech;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
             {
-                return MicrosoftTokenizerLanguage.Danish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Danish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
             {
-                return MicrosoftTokenizerLanguage.Dutch;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Dutch;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
             {
-                return MicrosoftTokenizerLanguage.English;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.English;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
             {
-                return MicrosoftTokenizerLanguage.French;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.French;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
             {
-                return MicrosoftTokenizerLanguage.German;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.German;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
             {
-                return MicrosoftTokenizerLanguage.Greek;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Greek;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gujarati"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gujarati"))
             {
-                return MicrosoftTokenizerLanguage.Gujarati;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Gujarati;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
             {
-                return MicrosoftTokenizerLanguage.Hindi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Hindi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "icelandic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "icelandic"))
             {
-                return MicrosoftTokenizerLanguage.Icelandic;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Icelandic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
             {
-                return MicrosoftTokenizerLanguage.Indonesian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Indonesian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
             {
-                return MicrosoftTokenizerLanguage.Italian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Italian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "japanese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "japanese"))
             {
-                return MicrosoftTokenizerLanguage.Japanese;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Japanese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "kannada"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "kannada"))
             {
-                return MicrosoftTokenizerLanguage.Kannada;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Kannada;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "korean"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "korean"))
             {
-                return MicrosoftTokenizerLanguage.Korean;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Korean;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "malay"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "malay"))
             {
-                return MicrosoftTokenizerLanguage.Malay;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Malay;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "malayalam"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "malayalam"))
             {
-                return MicrosoftTokenizerLanguage.Malayalam;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Malayalam;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "marathi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "marathi"))
             {
-                return MicrosoftTokenizerLanguage.Marathi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Marathi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "norwegianBokmaal"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "norwegianBokmaal"))
             {
-                return MicrosoftTokenizerLanguage.NorwegianBokmaal;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.NorwegianBokmaal;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "polish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "polish"))
             {
-                return MicrosoftTokenizerLanguage.Polish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Polish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
             {
-                return MicrosoftTokenizerLanguage.Portuguese;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Portuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseBrazilian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseBrazilian"))
             {
-                return MicrosoftTokenizerLanguage.PortugueseBrazilian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.PortugueseBrazilian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "punjabi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "punjabi"))
             {
-                return MicrosoftTokenizerLanguage.Punjabi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Punjabi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
             {
-                return MicrosoftTokenizerLanguage.Romanian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Romanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
             {
-                return MicrosoftTokenizerLanguage.Russian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Russian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serbianCyrillic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "serbianCyrillic"))
             {
-                return MicrosoftTokenizerLanguage.SerbianCyrillic;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.SerbianCyrillic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serbianLatin"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "serbianLatin"))
             {
-                return MicrosoftTokenizerLanguage.SerbianLatin;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.SerbianLatin;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "slovenian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "slovenian"))
             {
-                return MicrosoftTokenizerLanguage.Slovenian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Slovenian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
             {
-                return MicrosoftTokenizerLanguage.Spanish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Spanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
             {
-                return MicrosoftTokenizerLanguage.Swedish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Swedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tamil"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "tamil"))
             {
-                return MicrosoftTokenizerLanguage.Tamil;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Tamil;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "telugu"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "telugu"))
             {
-                return MicrosoftTokenizerLanguage.Telugu;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Telugu;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "thai"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "thai"))
             {
-                return MicrosoftTokenizerLanguage.Thai;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Thai;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ukrainian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ukrainian"))
             {
-                return MicrosoftTokenizerLanguage.Ukrainian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Ukrainian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "urdu"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "urdu"))
             {
-                return MicrosoftTokenizerLanguage.Urdu;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Urdu;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "vietnamese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "vietnamese"))
             {
-                return MicrosoftTokenizerLanguage.Vietnamese;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftTokenizerLanguage.Vietnamese;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MicrosoftTokenizerLanguage value.");
         }

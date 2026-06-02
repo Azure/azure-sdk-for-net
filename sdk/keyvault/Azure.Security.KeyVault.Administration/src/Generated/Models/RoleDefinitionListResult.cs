@@ -14,19 +14,19 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RoleDefinitionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionListResult"/>. </summary>
         internal RoleDefinitionListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultRoleDefinition>();
+            Value = new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionListResult"/>. </summary>
         /// <param name="value"> Role definition list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleDefinitionListResult(IList<KeyVaultRoleDefinition> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleDefinitionListResult(IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> value, string nextLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Role definition list. </summary>
-        public IList<KeyVaultRoleDefinition> Value { get; }
+        public IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> Value { get; }
 
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }

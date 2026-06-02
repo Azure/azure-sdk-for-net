@@ -11,66 +11,66 @@ namespace Azure.AI.Projects.Agents
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FoundryFeaturesOptInKeys value) => value switch
         {
-            FoundryFeaturesOptInKeys.EvaluationsV1Preview => "Evaluations=V1Preview",
-            FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
-            FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
-            FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
-            FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
-            FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
-            FoundryFeaturesOptInKeys.ToolboxesV1Preview => "Toolboxes=V1Preview",
-            FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
-            FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
-            FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
-            FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview => "AgentsOptimization=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.EvaluationsV1Preview => "Evaluations=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.ToolboxesV1Preview => "Toolboxes=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
+            global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview => "AgentsOptimization=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FoundryFeaturesOptInKeys ToFoundryFeaturesOptInKeys(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Evaluations=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Evaluations=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.EvaluationsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.EvaluationsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Schedules=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Schedules=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.SchedulesV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.SchedulesV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedTeams=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "RedTeams=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.RedTeamsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.RedTeamsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Insights=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Insights=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.InsightsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.InsightsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MemoryStores=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "MemoryStores=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.RoutinesV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.RoutinesV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.ToolboxesV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.ToolboxesV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.SkillsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.SkillsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataGenerationJobs=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "DataGenerationJobs=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Models=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Models=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.ModelsV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.ModelsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V1Preview"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview;
+                return global::Azure.AI.Projects.Agents.FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }

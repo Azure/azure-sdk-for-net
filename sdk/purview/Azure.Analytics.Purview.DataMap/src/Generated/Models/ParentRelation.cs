@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class ParentRelation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ParentRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.ParentRelation"/>. </summary>
         internal ParentRelation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ParentRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.ParentRelation"/>. </summary>
         /// <param name="childEntityId"> The GUID of child entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="parentEntityId"> The GUID of parent entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ParentRelation(string childEntityId, string relationshipId, string parentEntityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ParentRelation(string childEntityId, string relationshipId, string parentEntityId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ChildEntityId = childEntityId;
             RelationshipId = relationshipId;

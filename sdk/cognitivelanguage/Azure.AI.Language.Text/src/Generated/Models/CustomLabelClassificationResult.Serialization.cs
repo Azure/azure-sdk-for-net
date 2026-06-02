@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the custom label classification results. </summary>
-    public partial class CustomLabelClassificationResult : IJsonModel<CustomLabelClassificationResult>
+    public partial class CustomLabelClassificationResult : IJsonModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomLabelClassificationResult"/> for deserialization. </summary>
         internal CustomLabelClassificationResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CustomLabelClassificationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomLabelClassificationResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.CustomLabelClassificationResult.DeserializeCustomLabelClassificationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLabelClassificationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.CustomLabelClassificationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLabelClassificationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.CustomLabelClassificationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomLabelClassificationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomLabelClassificationResult IPersistableModel<CustomLabelClassificationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomLabelClassificationResult IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomLabelClassificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomLabelClassificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,22 +73,22 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomLabelClassificationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.CustomLabelClassificationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (DocumentError item in Errors)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentError>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<RequestStatistics>(Statistics, options);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -98,10 +98,10 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (ClassificationActionResult item in Documents)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ClassificationActionResult>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,54 +120,54 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomLabelClassificationResult IJsonModel<CustomLabelClassificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomLabelClassificationResult IJsonModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CustomLabelClassificationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.CustomLabelClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomLabelClassificationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.CustomLabelClassificationResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomLabelClassificationResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.CustomLabelClassificationResult.DeserializeCustomLabelClassificationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CustomLabelClassificationResult DeserializeCustomLabelClassificationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<DocumentError> errors = default;
+            IList<global::Azure.AI.Language.Text.DocumentError> errors = default;
             RequestStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
-            IList<ClassificationActionResult> documents = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.ClassificationActionResult> documents = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("errors"u8))
                 {
-                    List<DocumentError> array = new List<DocumentError>();
+                    List<global::Azure.AI.Language.Text.DocumentError> array = new List<global::Azure.AI.Language.Text.DocumentError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item, options));
+                        array.Add(global::Azure.AI.Language.Text.DocumentError.DeserializeDocumentError(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
+                    statistics = global::Azure.AI.Language.Text.RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("projectName"u8))
@@ -182,17 +182,17 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("documents"u8))
                 {
-                    List<ClassificationActionResult> array = new List<ClassificationActionResult>();
+                    List<global::Azure.AI.Language.Text.ClassificationActionResult> array = new List<global::Azure.AI.Language.Text.ClassificationActionResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ClassificationActionResult.DeserializeClassificationActionResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.ClassificationActionResult.DeserializeClassificationActionResult(item, options));
                     }
                     documents = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CustomLabelClassificationResult(

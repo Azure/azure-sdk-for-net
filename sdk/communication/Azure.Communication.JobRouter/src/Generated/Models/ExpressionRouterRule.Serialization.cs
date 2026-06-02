@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing inline expression rules. </summary>
-    public partial class ExpressionRouterRule : RouterRule, IJsonModel<ExpressionRouterRule>
+    public partial class ExpressionRouterRule : RouterRule, IJsonModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExpressionRouterRule"/> for deserialization. </summary>
         internal ExpressionRouterRule()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RouterRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExpressionRouterRule(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.ExpressionRouterRule.DeserializeExpressionRouterRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ExpressionRouterRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ExpressionRouterRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExpressionRouterRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpressionRouterRule IPersistableModel<ExpressionRouterRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpressionRouterRule)PersistableModelCreateCore(data, options);
+        ExpressionRouterRule IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ExpressionRouterRule)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExpressionRouterRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExpressionRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,13 +73,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ExpressionRouterRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Language))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -90,31 +90,31 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpressionRouterRule IJsonModel<ExpressionRouterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExpressionRouterRule)JsonModelCreateCore(ref reader, options);
+        ExpressionRouterRule IJsonModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ExpressionRouterRule)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RouterRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ExpressionRouterRule)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpressionRouterRule(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.ExpressionRouterRule.DeserializeExpressionRouterRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             RouterRuleKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string language = default;
             string expression = default;
             foreach (var prop in element.EnumerateObject())
@@ -134,9 +134,9 @@ namespace Azure.Communication.JobRouter
                     expression = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExpressionRouterRule(kind, additionalBinaryDataProperties, language, expression);

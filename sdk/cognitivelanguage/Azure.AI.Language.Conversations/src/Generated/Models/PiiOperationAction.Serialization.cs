@@ -14,54 +14,54 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Task definition for a PII redaction in conversations. </summary>
-    public partial class PiiOperationAction : AnalyzeConversationOperationAction, IJsonModel<PiiOperationAction>
+    public partial class PiiOperationAction : AnalyzeConversationOperationAction, IJsonModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePiiOperationAction(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.PiiOperationAction.DeserializePiiOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.PiiOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PiiOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.PiiOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PiiOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiOperationAction IPersistableModel<PiiOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (PiiOperationAction)PersistableModelCreateCore(data, options);
+        PiiOperationAction IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => ((PiiOperationAction)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PiiOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PiiOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,47 +69,47 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PiiOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.PiiOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue<ConversationPiiActionContent>(ActionContent, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiOperationAction IJsonModel<PiiOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PiiOperationAction)JsonModelCreateCore(ref reader, options);
+        PiiOperationAction IJsonModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((PiiOperationAction)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PiiOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.PiiOperationAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiOperationAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.PiiOperationAction.DeserializePiiOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PiiOperationAction DeserializePiiOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
             AnalyzeConversationOperationActionKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ConversationPiiActionContent actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,16 +125,16 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    actionContent = ConversationPiiActionContent.DeserializeConversationPiiActionContent(prop.Value, options);
+                    actionContent = global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent.DeserializeConversationPiiActionContent(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PiiOperationAction(name, kind, additionalBinaryDataProperties, actionContent);

@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the data property of an EventGridEvent for a Microsoft.ApiCenter.ApiDefinitionAdded event. </summary>
-    [JsonConverter(typeof(ApiCenterApiDefinitionAddedEventDataConverter))]
-    public partial class ApiCenterApiDefinitionAddedEventData : IJsonModel<ApiCenterApiDefinitionAddedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData.ApiCenterApiDefinitionAddedEventDataConverter))]
+    public partial class ApiCenterApiDefinitionAddedEventData : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiDefinitionAddedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData"/> for deserialization. </summary>
         internal ApiCenterApiDefinitionAddedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ApiCenterApiDefinitionAddedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData.DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiDefinitionAddedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiDefinitionAddedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiCenterApiDefinitionAddedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterApiDefinitionAddedEventData IPersistableModel<ApiCenterApiDefinitionAddedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApiCenterApiDefinitionAddedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiCenterApiDefinitionAddedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiCenterApiDefinitionAddedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,24 +75,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ApiCenterApiDefinitionAddedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Specification))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Specification))
             {
                 writer.WritePropertyName("specification"u8);
-                writer.WriteObjectValue(Specification, options);
+                writer.WriteObjectValue<ApiCenterApiSpecification>(Specification, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -100,9 +100,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -111,33 +111,33 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterApiDefinitionAddedEventData IJsonModel<ApiCenterApiDefinitionAddedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApiCenterApiDefinitionAddedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ApiCenterApiDefinitionAddedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ApiCenterApiDefinitionAddedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData.DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ApiCenterApiDefinitionAddedEventData DeserializeApiCenterApiDefinitionAddedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string title = default;
             string description = default;
             ApiCenterApiSpecification specification = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("title"u8))
@@ -152,22 +152,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("specification"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    specification = ApiCenterApiSpecification.DeserializeApiCenterApiSpecification(prop.Value, options);
+                    specification = global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiSpecification.DeserializeApiCenterApiSpecification(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ApiCenterApiDefinitionAddedEventData(title, description, specification, additionalBinaryDataProperties);
         }
 
-        internal partial class ApiCenterApiDefinitionAddedEventDataConverter : JsonConverter<ApiCenterApiDefinitionAddedEventData>
+        internal partial class ApiCenterApiDefinitionAddedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ApiCenterApiDefinitionAddedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ApiCenterApiDefinitionAddedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -184,8 +184,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override ApiCenterApiDefinitionAddedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

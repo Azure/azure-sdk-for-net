@@ -18,25 +18,25 @@ namespace Azure.AI.Agents.Persistent
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateInternalCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
+        internal HttpMessage CreateInternalCreateRunRequest(string threadId, RequestContent content, IEnumerable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> include, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (include != null && !(include is ChangeTrackingList<RunAdditionalFieldList> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((include != null) && !((include is ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("include[]", include, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -50,30 +50,30 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Agents.Persistent.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -86,14 +86,14 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -106,14 +106,14 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -129,14 +129,14 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
             uri.AppendPath("/submit_tool_outputs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -152,14 +152,14 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
             uri.AppendPath("/cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

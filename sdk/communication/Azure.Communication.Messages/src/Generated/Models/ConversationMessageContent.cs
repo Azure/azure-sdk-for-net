@@ -12,24 +12,24 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the conversation message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="VideoConversationMessageContent"/>, <see cref="AudioConversationMessageContent"/>, and <see cref="TemplateConversationMessageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.TextConversationMessageContent"/>, <see cref="Azure.Communication.Messages.ImageConversationMessageContent"/>, <see cref="Azure.Communication.Messages.DocumentConversationMessageContent"/>, <see cref="Azure.Communication.Messages.VideoConversationMessageContent"/>, <see cref="Azure.Communication.Messages.AudioConversationMessageContent"/>, and <see cref="Azure.Communication.Messages.TemplateConversationMessageContent"/>.
     /// </summary>
     public abstract partial class ConversationMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessageContent"/>. </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         private protected ConversationMessageContent(CommunicationMessageKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessageContent"/>. </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

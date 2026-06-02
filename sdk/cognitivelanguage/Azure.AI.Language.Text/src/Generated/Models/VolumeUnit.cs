@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The Volume Unit of measurement. </summary>
-    public readonly partial struct VolumeUnit : IEquatable<VolumeUnit>
+    public readonly partial struct VolumeUnit : IEquatable<global::Azure.AI.Language.Text.VolumeUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified volume unit. </summary>
@@ -71,12 +71,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Volume unit in hogsheads. </summary>
         private const string HogsheadValue = "Hogshead";
 
-        /// <summary> Initializes a new instance of <see cref="VolumeUnit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.VolumeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VolumeUnit(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -165,34 +165,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Volume unit in hogsheads. </summary>
         public static VolumeUnit Hogshead { get; } = new VolumeUnit(HogsheadValue);
 
-        /// <summary> Determines if two <see cref="VolumeUnit"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.VolumeUnit"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeUnit left, VolumeUnit right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VolumeUnit"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.VolumeUnit"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeUnit left, VolumeUnit right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VolumeUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.VolumeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VolumeUnit(string value) => new VolumeUnit(value);
 
-        /// <summary> Converts a string to a <see cref="VolumeUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.VolumeUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VolumeUnit?(string value) => value == null ? null : new VolumeUnit(value);
+        public static implicit operator VolumeUnit?(string value) => (value == null) ? null : new VolumeUnit(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VolumeUnit other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VolumeUnit other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VolumeUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VolumeUnit other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all text analyzers supported by the search engine. </summary>
-    public readonly partial struct LexicalAnalyzerName : IEquatable<LexicalAnalyzerName>
+    public readonly partial struct LexicalAnalyzerName : IEquatable<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName>
     {
         private readonly string _value;
         /// <summary> Microsoft analyzer for Arabic. </summary>
@@ -202,12 +202,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> An analyzer that uses the whitespace tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html. </summary>
         private const string WhitespaceValue = "whitespace";
 
-        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzerName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalAnalyzerName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -491,34 +491,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> An analyzer that uses the whitespace tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html. </summary>
         public static LexicalAnalyzerName Whitespace { get; } = new LexicalAnalyzerName(WhitespaceValue);
 
-        /// <summary> Determines if two <see cref="LexicalAnalyzerName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LexicalAnalyzerName left, LexicalAnalyzerName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LexicalAnalyzerName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LexicalAnalyzerName left, LexicalAnalyzerName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LexicalAnalyzerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LexicalAnalyzerName(string value) => new LexicalAnalyzerName(value);
 
-        /// <summary> Converts a string to a <see cref="LexicalAnalyzerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalAnalyzerName?(string value) => value == null ? null : new LexicalAnalyzerName(value);
+        public static implicit operator LexicalAnalyzerName?(string value) => (value == null) ? null : new LexicalAnalyzerName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LexicalAnalyzerName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LexicalAnalyzerName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LexicalAnalyzerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LexicalAnalyzerName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

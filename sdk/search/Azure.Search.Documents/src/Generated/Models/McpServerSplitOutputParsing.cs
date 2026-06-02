@@ -13,16 +13,16 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Split the output into pages using the configured split parameters. </summary>
     public partial class McpServerSplitOutputParsing : McpServerOutputParsing
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerSplitOutputParsing"/>. </summary>
-        public McpServerSplitOutputParsing() : base(McpServerOutputParsingKind.Split)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerSplitOutputParsing"/>. </summary>
+        public McpServerSplitOutputParsing() : base(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingKind.Split)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerSplitOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerSplitOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="splitParameters"> Parameters for split output parsing. </param>
-        internal McpServerSplitOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, McpServerOutputParsingSplitParameters splitParameters) : base(kind, additionalBinaryDataProperties)
+        internal McpServerSplitOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, McpServerOutputParsingSplitParameters splitParameters) : base(kind, additionalBinaryDataProperties)
         {
             SplitParameters = splitParameters;
         }

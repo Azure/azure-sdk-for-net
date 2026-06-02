@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Text
     public partial class EntitySynonyms
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntitySynonyms"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntitySynonyms"/>. </summary>
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonyms"/> is null. </exception>
-        public EntitySynonyms(EntityCategory entityType, IEnumerable<EntitySynonym> synonyms)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonyms"/> is null. </exception>
+        public EntitySynonyms(EntityCategory entityType, IEnumerable<global::Azure.AI.Language.Text.EntitySynonym> synonyms)
         {
-            Argument.AssertNotNull(synonyms, nameof(synonyms));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(synonyms, nameof(synonyms));
 
             EntityType = entityType;
             Synonyms = synonyms.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitySynonyms"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntitySynonyms"/>. </summary>
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySynonyms(EntityCategory entityType, IList<EntitySynonym> synonyms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySynonyms(EntityCategory entityType, IList<global::Azure.AI.Language.Text.EntitySynonym> synonyms, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             Synonyms = synonyms;
@@ -44,6 +44,6 @@ namespace Azure.AI.Language.Text
         public EntityCategory EntityType { get; }
 
         /// <summary> The entity synonyms. </summary>
-        public IList<EntitySynonym> Synonyms { get; }
+        public IList<global::Azure.AI.Language.Text.EntitySynonym> Synonyms { get; }
     }
 }

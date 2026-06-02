@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class IndividuallyNestedWithMixedClientHostExtensions
     {
         public static IClientBuilder AddIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string sectionName, Action<IndividuallyNestedWithMixedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.IndividuallyNestedWithMixedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<IndividuallyNestedWithMixedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedIndividuallyNestedWithMixedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.IndividuallyNestedWithMixedClientSettings> configureSettings) => throw null;
     }
 }

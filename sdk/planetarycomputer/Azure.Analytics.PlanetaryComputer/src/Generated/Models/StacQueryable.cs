@@ -15,28 +15,28 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacQueryable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacQueryable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryable"/>. </summary>
         /// <param name="name"> Name of the queryable field. </param>
         /// <param name="definition"> Metadata for the queryable field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        public StacQueryable(string name, IDictionary<string, BinaryData> definition)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        public StacQueryable(string name, IDictionary<string, global::System.BinaryData> definition)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(definition, nameof(definition));
 
             Name = name;
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacQueryable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryable"/>. </summary>
         /// <param name="name"> Name of the queryable field. </param>
         /// <param name="definition"> Metadata for the queryable field. </param>
         /// <param name="createIndex"> Whether to create a database index for this field. </param>
         /// <param name="dataType"> Data type of the queryable field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacQueryable(string name, IDictionary<string, BinaryData> definition, bool? createIndex, StacQueryableDefinitionDataType? dataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacQueryable(string name, IDictionary<string, global::System.BinaryData> definition, bool? createIndex, StacQueryableDefinitionDataType? dataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Definition = definition;
@@ -50,8 +50,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Metadata for the queryable field.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -74,7 +74,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Definition { get; }
+        public IDictionary<string, global::System.BinaryData> Definition { get; }
 
         /// <summary> Whether to create a database index for this field. </summary>
         public bool? CreateIndex { get; set; }

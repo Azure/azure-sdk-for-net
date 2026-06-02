@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DataChangeDetectionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="odataType"/> is null. </exception>
         public DataChangeDetectionPolicy(string odataType)
         {
-            Argument.AssertNotNull(odataType, nameof(odataType));
+            global::Azure.Search.Documents.Argument.AssertNotNull(odataType, nameof(odataType));
 
             OdataType = odataType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataChangeDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataChangeDetectionPolicy(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OdataType = odataType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

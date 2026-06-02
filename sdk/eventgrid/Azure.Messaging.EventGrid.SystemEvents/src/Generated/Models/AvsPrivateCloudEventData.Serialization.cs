@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/privateClouds events. </summary>
-    [JsonConverter(typeof(AvsPrivateCloudEventDataConverter))]
-    public partial class AvsPrivateCloudEventData : IJsonModel<AvsPrivateCloudEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData.AvsPrivateCloudEventDataConverter))]
+    public partial class AvsPrivateCloudEventData : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData"/> for deserialization. </summary>
         internal AvsPrivateCloudEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AvsPrivateCloudEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvsPrivateCloudEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData.DeserializeAvsPrivateCloudEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsPrivateCloudEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsPrivateCloudEventData IPersistableModel<AvsPrivateCloudEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AvsPrivateCloudEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsPrivateCloudEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvsPrivateCloudEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,14 +75,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -90,9 +90,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -101,31 +101,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsPrivateCloudEventData IJsonModel<AvsPrivateCloudEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AvsPrivateCloudEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AvsPrivateCloudEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvsPrivateCloudEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData.DeserializeAvsPrivateCloudEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AvsPrivateCloudEventData DeserializeAvsPrivateCloudEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string operationId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationId"u8))
@@ -133,15 +133,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     operationId = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AvsPrivateCloudEventData(operationId, additionalBinaryDataProperties);
         }
 
-        internal partial class AvsPrivateCloudEventDataConverter : JsonConverter<AvsPrivateCloudEventData>
+        internal partial class AvsPrivateCloudEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AvsPrivateCloudEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AvsPrivateCloudEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -158,8 +158,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AvsPrivateCloudEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAvsPrivateCloudEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsPrivateCloudEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

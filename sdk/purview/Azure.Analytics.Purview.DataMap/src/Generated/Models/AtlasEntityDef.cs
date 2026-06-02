@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntityDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityDef"/>. </summary>
         public AtlasEntityDef()
         {
             Options = new ChangeTrackingDictionary<string, string>();
-            AttributeDefs = new ChangeTrackingList<AtlasAttributeDef>();
+            AttributeDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
             SubTypes = new ChangeTrackingList<string>();
             SuperTypes = new ChangeTrackingList<string>();
-            RelationshipAttributeDefs = new ChangeTrackingList<AtlasRelationshipAttributeDef>();
+            RelationshipAttributeDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityDef"/>. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="createTime"> The created time of the record. </param>
         /// <param name="createdBy"> The user who created the record. </param>
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="superTypes"> An array of super types. </param>
         /// <param name="relationshipAttributeDefs"> An array of relationship attributes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IList<string> subTypes, IList<string> superTypes, IList<AtlasRelationshipAttributeDef> relationshipAttributeDefs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntityDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs, IList<string> subTypes, IList<string> superTypes, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef> relationshipAttributeDefs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             CreateTime = createTime;
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string LastModifiedTS { get; set; }
 
         /// <summary> An array of attribute definitions. </summary>
-        public IList<AtlasAttributeDef> AttributeDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> AttributeDefs { get; }
 
         /// <summary> An array of sub types. </summary>
         public IList<string> SubTypes { get; }
@@ -121,6 +121,6 @@ namespace Azure.Analytics.Purview.DataMap
         public IList<string> SuperTypes { get; }
 
         /// <summary> An array of relationship attributes. </summary>
-        public IList<AtlasRelationshipAttributeDef> RelationshipAttributeDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef> RelationshipAttributeDefs { get; }
     }
 }

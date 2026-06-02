@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
-    public partial class ImageAnalysisSkill : SearchIndexerSkill, IJsonModel<ImageAnalysisSkill>
+    public partial class ImageAnalysisSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysisSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill"/> for deserialization. </summary>
         internal ImageAnalysisSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageAnalysisSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill.DeserializeImageAnalysisSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageAnalysisSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageAnalysisSkill IPersistableModel<ImageAnalysisSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageAnalysisSkill)PersistableModelCreateCore(data, options);
+        ImageAnalysisSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ImageAnalysisSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageAnalysisSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageAnalysisSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,18 +74,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VisualFeatures))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(VisualFeatures))
             {
                 writer.WritePropertyName("visualFeatures"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -109,26 +109,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageAnalysisSkill IJsonModel<ImageAnalysisSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImageAnalysisSkill)JsonModelCreateCore(ref reader, options);
+        ImageAnalysisSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ImageAnalysisSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageAnalysisSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill.DeserializeImageAnalysisSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -136,12 +136,12 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ImageAnalysisSkillLanguage? defaultLanguageCode = default;
-            IList<VisualFeature> visualFeatures = default;
-            IList<ImageDetail> details = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.VisualFeature> visualFeatures = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.ImageDetail> details = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -166,27 +166,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -195,11 +195,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("visualFeatures"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VisualFeature> array = new List<VisualFeature>();
+                    List<global::Azure.Search.Documents.Indexes.Models.VisualFeature> array = new List<global::Azure.Search.Documents.Indexes.Models.VisualFeature>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new VisualFeature(item.GetString()));
@@ -209,11 +209,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("details"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ImageDetail> array = new List<ImageDetail>();
+                    List<global::Azure.Search.Documents.Indexes.Models.ImageDetail> array = new List<global::Azure.Search.Documents.Indexes.Models.ImageDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ImageDetail(item.GetString()));
@@ -221,9 +221,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     details = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ImageAnalysisSkill(
@@ -235,8 +235,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs,
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
-                visualFeatures ?? new ChangeTrackingList<VisualFeature>(),
-                details ?? new ChangeTrackingList<ImageDetail>());
+                (visualFeatures ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VisualFeature>()),
+                (details ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.ImageDetail>()));
         }
     }
 }

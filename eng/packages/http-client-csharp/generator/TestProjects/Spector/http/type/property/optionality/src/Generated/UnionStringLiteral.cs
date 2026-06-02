@@ -18,40 +18,40 @@ namespace _Type.Property.Optional
     {
         protected UnionStringLiteral() => throw null;
 
-        internal UnionStringLiteral(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal UnionStringLiteral(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<UnionStringLiteralProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.UnionStringLiteralProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UnionStringLiteralProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.UnionStringLiteralProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetDefault(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetDefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetDefaultAsync(RequestContext context) => throw null;
 
-        public virtual Response<UnionStringLiteralProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.UnionStringLiteralProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UnionStringLiteralProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.UnionStringLiteralProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutAll(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutAll(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAllAsync(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutDefault(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutDefault(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(UnionStringLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

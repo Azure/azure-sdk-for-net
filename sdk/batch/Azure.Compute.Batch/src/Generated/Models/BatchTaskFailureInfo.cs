@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskFailureInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskFailureInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskFailureInfo"/>. </summary>
         /// <param name="category"> The category of the Task error. </param>
         internal BatchTaskFailureInfo(BatchErrorSourceCategory category)
         {
             Category = category;
-            Details = new ChangeTrackingList<BatchNameValuePair>();
+            Details = new ChangeTrackingList<global::Azure.Compute.Batch.BatchNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskFailureInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskFailureInfo"/>. </summary>
         /// <param name="category"> The category of the Task error. </param>
         /// <param name="code"> An identifier for the Task error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional details related to the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskFailureInfo(BatchErrorSourceCategory category, string code, string message, IList<BatchNameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskFailureInfo(BatchErrorSourceCategory category, string code, string message, IList<global::Azure.Compute.Batch.BatchNameValuePair> details, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Code = code;
@@ -49,6 +49,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> A list of additional details related to the error. </summary>
-        public IList<BatchNameValuePair> Details { get; }
+        public IList<global::Azure.Compute.Batch.BatchNameValuePair> Details { get; }
     }
 }

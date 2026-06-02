@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all Router Job events. </summary>
     public partial class AcsRouterJobEventData : AcsRouterEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobEventData"/>. </summary>
         internal AcsRouterJobEventData()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties)
+        internal AcsRouterJobEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties)
         {
             QueueId = queueId;
             Labels = labels;

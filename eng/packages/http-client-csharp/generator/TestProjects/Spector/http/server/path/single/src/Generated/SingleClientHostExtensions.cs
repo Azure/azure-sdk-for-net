@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Server.Path.Single
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class SingleClientHostExtensions
     {
         public static IClientBuilder AddSingleClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddSingleClient(this IHostApplicationBuilder host, string sectionName, Action<SingleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddSingleClient(this IHostApplicationBuilder host, string sectionName, Action<global::Server.Path.Single.SingleClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedSingleClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedSingleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<SingleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedSingleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Server.Path.Single.SingleClientSettings> configureSettings) => throw null;
     }
 }

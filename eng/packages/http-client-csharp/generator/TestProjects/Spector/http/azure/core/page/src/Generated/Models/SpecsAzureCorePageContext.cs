@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Page
 {
-    [ModelReaderWriterBuildable(typeof(FirstItem))]
-    [ModelReaderWriterBuildable(typeof(ListItemInputBody))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SecondItem))]
-    [ModelReaderWriterBuildable(typeof(User))]
-    [ModelReaderWriterBuildable(typeof(UserOrder))]
+    [ModelReaderWriterBuildableAttribute(typeof(FirstItem))]
+    [ModelReaderWriterBuildableAttribute(typeof(ListItemInputBody))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(SecondItem))]
+    [ModelReaderWriterBuildableAttribute(typeof(User))]
+    [ModelReaderWriterBuildableAttribute(typeof(UserOrder))]
     public partial class SpecsAzureCorePageContext : ModelReaderWriterContext
     {
     }

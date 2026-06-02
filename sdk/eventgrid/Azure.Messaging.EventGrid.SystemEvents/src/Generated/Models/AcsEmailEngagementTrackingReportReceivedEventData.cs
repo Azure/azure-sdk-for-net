@@ -14,14 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailEngagementTrackingReportReceivedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
         internal AcsEmailEngagementTrackingReportReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The Recipient Email Address. </param>
         /// <param name="messageId"> The Id of the email that has been sent. </param>
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="userAgent"> The user agent interacting with the email. </param>
         /// <param name="engagement"> The type of engagement user have with email. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsEmailEngagementTrackingReportReceivedEventData(string sender, string recipient, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsEmailEngagementTrackingReportReceivedEventData(string sender, string recipient, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sender = sender;
             Recipient = recipient;

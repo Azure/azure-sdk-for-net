@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringStatistics value) => value switch
         {
-            ScoringStatistics.Local => "local",
-            ScoringStatistics.Global => "global",
+            global::Azure.Search.Documents.Models.ScoringStatistics.Local => "local",
+            global::Azure.Search.Documents.Models.ScoringStatistics.Global => "global",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringStatistics value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ScoringStatistics ToScoringStatistics(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "local"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "local"))
             {
-                return ScoringStatistics.Local;
+                return global::Azure.Search.Documents.Models.ScoringStatistics.Local;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "global"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "global"))
             {
-                return ScoringStatistics.Global;
+                return global::Azure.Search.Documents.Models.ScoringStatistics.Global;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringStatistics value.");
         }

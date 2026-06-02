@@ -14,21 +14,21 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelatedCategoryHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedCategoryHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader"/>. </summary>
         public AtlasRelatedCategoryHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedCategoryHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader"/>. </summary>
         /// <param name="categoryGuid"> The GUID of the category. </param>
         /// <param name="description"> The description of the category header. </param>
         /// <param name="displayText"> The display text. </param>
         /// <param name="parentCategoryGuid"> The GUID of the parent category. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelatedCategoryHeader(string categoryGuid, string description, string displayText, string parentCategoryGuid, string relationGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelatedCategoryHeader(string categoryGuid, string description, string displayText, string parentCategoryGuid, string relationGuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CategoryGuid = categoryGuid;
             Description = description;

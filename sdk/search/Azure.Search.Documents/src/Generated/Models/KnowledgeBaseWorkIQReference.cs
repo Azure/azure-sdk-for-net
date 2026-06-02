@@ -14,15 +14,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a WorkIQ document reference. </summary>
     public partial class KnowledgeBaseWorkIQReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWorkIQReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseWorkIQReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.WorkIQ, id, activitySource)
+        internal KnowledgeBaseWorkIQReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.WorkIQ, id, activitySource)
         {
-            Attributions = new ChangeTrackingList<WorkIQAttribution>();
+            Attributions = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQAttribution>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWorkIQReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="attributions"> The attributions for the reference. </param>
-        internal KnowledgeBaseWorkIQReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WorkIQAttribution> attributions) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseWorkIQReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQAttribution> attributions) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             Attributions = attributions;
         }
 
         /// <summary> The attributions for the reference. </summary>
-        public IList<WorkIQAttribution> Attributions { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQAttribution> Attributions { get; }
     }
 }

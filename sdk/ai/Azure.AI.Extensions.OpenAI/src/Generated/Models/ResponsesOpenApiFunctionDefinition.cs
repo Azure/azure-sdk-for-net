@@ -12,27 +12,27 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesOpenApiFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="auth"/> is null. </exception>
-        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="auth"/> is null. </exception>
+        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, global::System.BinaryData> specification, ResponsesOpenApiAuthDetails auth)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(specification, nameof(specification));
-            Argument.AssertNotNull(auth, nameof(auth));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(specification, nameof(specification));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(auth, nameof(auth));
 
             Name = name;
             Specification = specification;
             Auth = auth;
             DefaultParams = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>();
+            Functions = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesOpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesOpenApiFunctionDefinition(string name, string description, IDictionary<string, global::System.BinaryData> specification, ResponsesOpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction> functions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -59,8 +59,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The openapi function shape, described as a JSON Schema object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -83,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Specification { get; }
+        public IDictionary<string, global::System.BinaryData> Specification { get; }
 
         /// <summary> Open API authentication details. </summary>
         public ResponsesOpenApiAuthDetails Auth { get; set; }
@@ -92,6 +92,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<string> DefaultParams { get; }
 
         /// <summary> List of function definitions used by OpenApi tool. </summary>
-        public IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> Functions { get; }
+        public IReadOnlyList<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction> Functions { get; }
     }
 }

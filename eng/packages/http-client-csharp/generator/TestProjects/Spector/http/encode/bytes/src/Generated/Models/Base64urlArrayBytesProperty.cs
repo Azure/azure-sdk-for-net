@@ -12,8 +12,8 @@ namespace Encode.Bytes
 {
     public partial class Base64urlArrayBytesProperty
     {
-        public Base64urlArrayBytesProperty(IEnumerable<BinaryData> value) => throw null;
+        public Base64urlArrayBytesProperty(IEnumerable<global::System.BinaryData> value) => throw null;
 
-        public IList<BinaryData> Value => throw null;
+        public IList<global::System.BinaryData> Value => throw null;
     }
 }

@@ -13,14 +13,14 @@ namespace Specs.Azure.Core.Model
 {
     public partial class ModelClient
     {
-        public ModelClient() : this(new Uri("http://localhost:3000"), new ModelClientOptions()) => throw null;
+        public ModelClient() : this(new global::System.Uri("http://localhost:3000"), new ModelClientOptions()) => throw null;
 
-        internal ModelClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ModelClientOptions options) => throw null;
+        internal ModelClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ModelClientOptions options) => throw null;
 
-        public ModelClient(Uri endpoint, ModelClientOptions options) : this(null, endpoint, options) => throw null;
+        public ModelClient(global::System.Uri endpoint, ModelClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ModelClient(ModelClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ModelClient(ModelClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportBillableAssetSnapshotResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetSnapshotResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult"/>. </summary>
         internal ReportBillableAssetSnapshotResult()
         {
-            AssetBreakdown = new ChangeTrackingList<ReportBillableAssetBreakdown>();
+            AssetBreakdown = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetSnapshotResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult"/>. </summary>
         /// <param name="date"> The date these assets were billed on. </param>
         /// <param name="total"> The total number of billable assets for this date. </param>
         /// <param name="assetBreakdown"> The breakdown of billable asset counts for each asset type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportBillableAssetSnapshotResult(DateTimeOffset? date, long? total, IList<ReportBillableAssetBreakdown> assetBreakdown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportBillableAssetSnapshotResult(DateTimeOffset? date, long? total, IList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> assetBreakdown, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Date = date;
             Total = total;
@@ -42,6 +42,6 @@ namespace Azure.Analytics.Defender.Easm
         public long? Total { get; }
 
         /// <summary> The breakdown of billable asset counts for each asset type. </summary>
-        public IList<ReportBillableAssetBreakdown> AssetBreakdown { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> AssetBreakdown { get; }
     }
 }

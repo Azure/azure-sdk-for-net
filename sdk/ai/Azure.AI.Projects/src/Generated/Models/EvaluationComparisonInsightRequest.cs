@@ -12,29 +12,29 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation Comparison Request. </summary>
     public partial class EvaluationComparisonInsightRequest : InsightRequest
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest"/>. </summary>
         /// <param name="evalId"> Identifier for the evaluation. </param>
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evalId"/>, <paramref name="baselineRunId"/> or <paramref name="treatmentRunIds"/> is null. </exception>
-        public EvaluationComparisonInsightRequest(string evalId, string baselineRunId, IEnumerable<string> treatmentRunIds) : base(InsightType.EvaluationComparison)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="evalId"/>, <paramref name="baselineRunId"/> or <paramref name="treatmentRunIds"/> is null. </exception>
+        public EvaluationComparisonInsightRequest(string evalId, string baselineRunId, IEnumerable<string> treatmentRunIds) : base(global::Azure.AI.Projects.Evaluation.InsightType.EvaluationComparison)
         {
-            Argument.AssertNotNull(evalId, nameof(evalId));
-            Argument.AssertNotNull(baselineRunId, nameof(baselineRunId));
-            Argument.AssertNotNull(treatmentRunIds, nameof(treatmentRunIds));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evalId, nameof(evalId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(baselineRunId, nameof(baselineRunId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(treatmentRunIds, nameof(treatmentRunIds));
 
             EvalId = evalId;
             BaselineRunId = baselineRunId;
             TreatmentRunIds = treatmentRunIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Identifier for the evaluation. </param>
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
-        internal EvaluationComparisonInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, string baselineRunId, IList<string> treatmentRunIds) : base(@type, additionalBinaryDataProperties)
+        internal EvaluationComparisonInsightRequest(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string evalId, string baselineRunId, IList<string> treatmentRunIds) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             BaselineRunId = baselineRunId;

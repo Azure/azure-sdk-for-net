@@ -11,101 +11,101 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseErrorCode value) => value switch
         {
-            ResponseErrorCode.ServerError => "server_error",
-            ResponseErrorCode.RateLimitExceeded => "rate_limit_exceeded",
-            ResponseErrorCode.InvalidPrompt => "invalid_prompt",
-            ResponseErrorCode.VectorStoreTimeout => "vector_store_timeout",
-            ResponseErrorCode.InvalidImage => "invalid_image",
-            ResponseErrorCode.InvalidImageFormat => "invalid_image_format",
-            ResponseErrorCode.InvalidBase64Image => "invalid_base64_image",
-            ResponseErrorCode.InvalidImageUrl => "invalid_image_url",
-            ResponseErrorCode.ImageTooLarge => "image_too_large",
-            ResponseErrorCode.ImageTooSmall => "image_too_small",
-            ResponseErrorCode.ImageParseError => "image_parse_error",
-            ResponseErrorCode.ImageContentPolicyViolation => "image_content_policy_violation",
-            ResponseErrorCode.InvalidImageMode => "invalid_image_mode",
-            ResponseErrorCode.ImageFileTooLarge => "image_file_too_large",
-            ResponseErrorCode.UnsupportedImageMediaType => "unsupported_image_media_type",
-            ResponseErrorCode.EmptyImageFile => "empty_image_file",
-            ResponseErrorCode.FailedToDownloadImage => "failed_to_download_image",
-            ResponseErrorCode.ImageFileNotFound => "image_file_not_found",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ServerError => "server_error",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.RateLimitExceeded => "rate_limit_exceeded",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidPrompt => "invalid_prompt",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.VectorStoreTimeout => "vector_store_timeout",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImage => "invalid_image",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageFormat => "invalid_image_format",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidBase64Image => "invalid_base64_image",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageUrl => "invalid_image_url",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageTooLarge => "image_too_large",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageTooSmall => "image_too_small",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageParseError => "image_parse_error",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageContentPolicyViolation => "image_content_policy_violation",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageMode => "invalid_image_mode",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageFileTooLarge => "image_file_too_large",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.UnsupportedImageMediaType => "unsupported_image_media_type",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.EmptyImageFile => "empty_image_file",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.FailedToDownloadImage => "failed_to_download_image",
+            global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageFileNotFound => "image_file_not_found",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseErrorCode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseErrorCode ToResponseErrorCode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server_error"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "server_error"))
             {
-                return ResponseErrorCode.ServerError;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ServerError;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rate_limit_exceeded"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "rate_limit_exceeded"))
             {
-                return ResponseErrorCode.RateLimitExceeded;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.RateLimitExceeded;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_prompt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_prompt"))
             {
-                return ResponseErrorCode.InvalidPrompt;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidPrompt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "vector_store_timeout"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "vector_store_timeout"))
             {
-                return ResponseErrorCode.VectorStoreTimeout;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.VectorStoreTimeout;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image"))
             {
-                return ResponseErrorCode.InvalidImage;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImage;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_format"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_format"))
             {
-                return ResponseErrorCode.InvalidImageFormat;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageFormat;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_base64_image"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_base64_image"))
             {
-                return ResponseErrorCode.InvalidBase64Image;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidBase64Image;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_url"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_url"))
             {
-                return ResponseErrorCode.InvalidImageUrl;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageUrl;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_too_large"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_too_large"))
             {
-                return ResponseErrorCode.ImageTooLarge;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageTooLarge;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_too_small"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_too_small"))
             {
-                return ResponseErrorCode.ImageTooSmall;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageTooSmall;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_parse_error"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_parse_error"))
             {
-                return ResponseErrorCode.ImageParseError;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageParseError;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_content_policy_violation"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_content_policy_violation"))
             {
-                return ResponseErrorCode.ImageContentPolicyViolation;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageContentPolicyViolation;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_mode"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_mode"))
             {
-                return ResponseErrorCode.InvalidImageMode;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.InvalidImageMode;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_file_too_large"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_file_too_large"))
             {
-                return ResponseErrorCode.ImageFileTooLarge;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageFileTooLarge;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unsupported_image_media_type"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "unsupported_image_media_type"))
             {
-                return ResponseErrorCode.UnsupportedImageMediaType;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.UnsupportedImageMediaType;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "empty_image_file"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "empty_image_file"))
             {
-                return ResponseErrorCode.EmptyImageFile;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.EmptyImageFile;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed_to_download_image"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed_to_download_image"))
             {
-                return ResponseErrorCode.FailedToDownloadImage;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.FailedToDownloadImage;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_file_not_found"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image_file_not_found"))
             {
-                return ResponseErrorCode.ImageFileNotFound;
+                return global::Azure.AI.Extensions.OpenAI.ResponseErrorCode.ImageFileNotFound;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseErrorCode value.");
         }

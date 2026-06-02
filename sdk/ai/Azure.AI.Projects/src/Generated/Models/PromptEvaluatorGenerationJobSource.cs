@@ -10,22 +10,22 @@ namespace Azure.AI.Projects
     /// <summary> Prompt source for evaluator generation jobs — inline text provided by the user. </summary>
     public partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="PromptEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.PromptEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
-        public PromptEvaluatorGenerationJobSource(string prompt) : base(EvaluatorGenerationJobSourceType.Prompt)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
+        public PromptEvaluatorGenerationJobSource(string prompt) : base(global::Azure.AI.Projects.EvaluatorGenerationJobSourceType.Prompt)
         {
-            Argument.AssertNotNull(prompt, nameof(prompt));
+            global::Azure.AI.Projects.Argument.AssertNotNull(prompt, nameof(prompt));
 
             Prompt = prompt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PromptEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.PromptEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        internal PromptEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string prompt) : base(@type, additionalBinaryDataProperties)
+        internal PromptEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string description, string prompt) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             Prompt = prompt;

@@ -15,16 +15,16 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class PurviewObjectId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PurviewObjectId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.PurviewObjectId"/>. </summary>
         public PurviewObjectId()
         {
-            UniqueAttributes = new ChangeTrackingDictionary<string, BinaryData>();
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            UniqueAttributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Properties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewObjectId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.PurviewObjectId"/>. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="properties"> Dictionary of &lt;any&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string name, string displayText, string itemPath, string resourceId, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewObjectId(string guid, string typeName, IDictionary<string, global::System.BinaryData> uniqueAttributes, string name, string displayText, string itemPath, string resourceId, IDictionary<string, global::System.BinaryData> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             TypeName = typeName;
@@ -55,8 +55,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The unique attributes of the object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> UniqueAttributes { get; }
+        public IDictionary<string, global::System.BinaryData> UniqueAttributes { get; }
 
         /// <summary> Name. </summary>
         public string Name { get; set; }
@@ -95,8 +95,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Dictionary of &lt;any&gt;
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -119,6 +119,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Properties { get; }
+        public IDictionary<string, global::System.BinaryData> Properties { get; }
     }
 }

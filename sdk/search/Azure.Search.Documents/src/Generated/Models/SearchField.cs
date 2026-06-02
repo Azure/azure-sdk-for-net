@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
         /// <param name="type"> The data type of the field. </param>
         /// <param name="isKey"> A value indicating whether the field uniquely identifies documents in the index. Exactly one top-level field in each index must be chosen as the key field and it must be of type Edm.String. Key fields can be used to look up documents directly and update or delete specific documents. Default is false for simple fields and null for complex fields. </param>
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<global::Azure.Search.Documents.Indexes.Models.SearchField> fields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;

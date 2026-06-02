@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         private protected IsUnknownAdditionalPropertiesDiscriminated(string name, string kind) => throw null;
 
-        internal IsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties) => throw null;
+        internal IsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, global::System.BinaryData> additionalProperties) => throw null;
 
         public string Name
         {
@@ -28,6 +28,6 @@ namespace _Type.Property.AdditionalProperties
             set => throw null;
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => throw null;
     }
 }

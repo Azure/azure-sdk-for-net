@@ -11,8 +11,8 @@ namespace Payload.Xml
 {
     public partial class ModelWithRenamedWrappedAndItemModelArray
     {
-        public ModelWithRenamedWrappedAndItemModelArray(IEnumerable<Book> books) => throw null;
+        public ModelWithRenamedWrappedAndItemModelArray(IEnumerable<global::Payload.Xml.Book> books) => throw null;
 
-        public IList<Book> Books => throw null;
+        public IList<global::Payload.Xml.Book> Books => throw null;
     }
 }

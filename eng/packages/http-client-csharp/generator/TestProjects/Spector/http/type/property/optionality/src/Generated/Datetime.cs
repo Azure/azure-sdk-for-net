@@ -18,40 +18,40 @@ namespace _Type.Property.Optional
     {
         protected Datetime() => throw null;
 
-        internal Datetime(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Datetime(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<DatetimeProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.DatetimeProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DatetimeProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.DatetimeProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetDefault(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetDefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetDefaultAsync(RequestContext context) => throw null;
 
-        public virtual Response<DatetimeProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.DatetimeProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DatetimeProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.DatetimeProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutAll(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutAll(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAllAsync(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutDefault(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutDefault(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> An entity for jobs to be routed to. </summary>
-    public partial class RouterWorker : IJsonModel<RouterWorker>
+    public partial class RouterWorker : IJsonModel<global::Azure.Communication.JobRouter.RouterWorker>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterWorker PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRouterWorker(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.RouterWorker.DeserializeRouterWorker(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterWorker)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterWorker)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RouterWorker)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterWorker)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RouterWorker>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterWorker IPersistableModel<RouterWorker>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RouterWorker IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RouterWorker>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RouterWorker"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Communication.JobRouter.RouterWorker"/> from. </param>
         public static explicit operator RouterWorker(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRouterWorker(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Communication.JobRouter.RouterWorker.DeserializeRouterWorker(document.RootElement, global::Azure.Communication.JobRouter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RouterWorker>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.RouterWorker>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,33 +76,33 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterWorker)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterWorker)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (((options.Format != "W") && global::Azure.Communication.JobRouter.Optional.IsDefined(State)))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Queues))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(Queues))
             {
                 writer.WritePropertyName("queues"u8);
                 writer.WriteStartArray();
                 foreach (string item in Queues)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -111,19 +111,19 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capacity))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -131,22 +131,22 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_tags))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(_tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in _tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -154,60 +154,60 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Channels))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
                 foreach (RouterChannel item in Channels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<RouterChannel>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Offers))
+            if (((options.Format != "W") && global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(Offers)))
             {
                 writer.WritePropertyName("offers"u8);
                 writer.WriteStartArray();
                 foreach (RouterJobOffer item in Offers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<RouterJobOffer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssignedJobs))
+            if (((options.Format != "W") && global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(AssignedJobs)))
             {
                 writer.WritePropertyName("assignedJobs"u8);
                 writer.WriteStartArray();
                 foreach (RouterWorkerAssignment item in AssignedJobs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<RouterWorkerAssignment>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadRatio))
+            if (((options.Format != "W") && global::Azure.Communication.JobRouter.Optional.IsDefined(LoadRatio)))
             {
                 writer.WritePropertyName("loadRatio"u8);
                 writer.WriteNumberValue(LoadRatio.Value);
             }
-            if (Optional.IsDefined(AvailableForOffers))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(AvailableForOffers))
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
-            if (Optional.IsDefined(MaxConcurrentOffers))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(MaxConcurrentOffers))
             {
                 writer.WritePropertyName("maxConcurrentOffers"u8);
                 writer.WriteNumberValue(MaxConcurrentOffers.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -215,9 +215,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -226,26 +226,26 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterWorker IJsonModel<RouterWorker>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RouterWorker IJsonModel<global::Azure.Communication.JobRouter.RouterWorker>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterWorker JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterWorker>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterWorker)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterWorker)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRouterWorker(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.RouterWorker.DeserializeRouterWorker(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RouterWorker DeserializeRouterWorker(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -254,15 +254,15 @@ namespace Azure.Communication.JobRouter
             RouterWorkerState? state = default;
             IList<string> queues = default;
             int? capacity = default;
-            IDictionary<string, BinaryData> labels = default;
-            IDictionary<string, BinaryData> tags = default;
-            IList<RouterChannel> channels = default;
-            IReadOnlyList<RouterJobOffer> offers = default;
-            IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
+            IDictionary<string, global::System.BinaryData> labels = default;
+            IDictionary<string, global::System.BinaryData> tags = default;
+            IList<global::Azure.Communication.JobRouter.RouterChannel> channels = default;
+            IReadOnlyList<global::Azure.Communication.JobRouter.RouterJobOffer> offers = default;
+            IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorkerAssignment> assignedJobs = default;
             double? loadRatio = default;
             bool? availableForOffers = default;
             int? maxConcurrentOffers = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("etag"u8))
@@ -277,7 +277,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -286,14 +286,14 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("queues"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -307,7 +307,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("capacity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -316,20 +316,20 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("labels"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     labels = dictionary;
@@ -337,20 +337,20 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     tags = dictionary;
@@ -358,49 +358,49 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("channels"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<RouterChannel> array = new List<RouterChannel>();
+                    List<global::Azure.Communication.JobRouter.RouterChannel> array = new List<global::Azure.Communication.JobRouter.RouterChannel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterChannel.DeserializeRouterChannel(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterChannel.DeserializeRouterChannel(item, options));
                     }
                     channels = array;
                     continue;
                 }
                 if (prop.NameEquals("offers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<RouterJobOffer> array = new List<RouterJobOffer>();
+                    List<global::Azure.Communication.JobRouter.RouterJobOffer> array = new List<global::Azure.Communication.JobRouter.RouterJobOffer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterJobOffer.DeserializeRouterJobOffer(item, options));
                     }
                     offers = array;
                     continue;
                 }
                 if (prop.NameEquals("assignedJobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<RouterWorkerAssignment> array = new List<RouterWorkerAssignment>();
+                    List<global::Azure.Communication.JobRouter.RouterWorkerAssignment> array = new List<global::Azure.Communication.JobRouter.RouterWorkerAssignment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item, options));
                     }
                     assignedJobs = array;
                     continue;
                 }
                 if (prop.NameEquals("loadRatio"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -409,7 +409,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("availableForOffers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -418,29 +418,29 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("maxConcurrentOffers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     maxConcurrentOffers = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RouterWorker(
                 eTag,
                 id,
                 state,
-                queues ?? new ChangeTrackingList<string>(),
+                (queues ?? new ChangeTrackingList<string>()),
                 capacity,
-                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                channels ?? new ChangeTrackingList<RouterChannel>(),
-                offers ?? new ChangeTrackingList<RouterJobOffer>(),
-                assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
+                (labels ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (tags ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (channels ?? new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterChannel>()),
+                (offers ?? new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterJobOffer>()),
+                (assignedJobs ?? new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterWorkerAssignment>()),
                 loadRatio,
                 availableForOffers,
                 maxConcurrentOffers,

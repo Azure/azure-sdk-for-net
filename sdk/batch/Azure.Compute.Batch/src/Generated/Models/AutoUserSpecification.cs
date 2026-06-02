@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class AutoUserSpecification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoUserSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutoUserSpecification"/>. </summary>
         public AutoUserSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoUserSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutoUserSpecification"/>. </summary>
         /// <param name="scope"> The scope for the auto user. The default value is pool. If the pool is running Windows a value of Task should be specified if stricter isolation between tasks is required. For example, if the task mutates the registry in a way which could impact other tasks. </param>
         /// <param name="elevationLevel"> The elevation level of the auto user. The default value is nonAdmin. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUserSpecification(AutoUserScope? scope, ElevationLevel? elevationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoUserSpecification(AutoUserScope? scope, ElevationLevel? elevationLevel, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             ElevationLevel = elevationLevel;

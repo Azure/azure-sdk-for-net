@@ -10,28 +10,28 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telemetry export endpoint configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OtlpTelemetryEndpoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.OtlpTelemetryEndpoint"/>.
     /// </summary>
     public abstract partial class TelemetryEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.TelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        private protected TelemetryEndpoint(TelemetryEndpointKind kind, IEnumerable<ExportedDataTypes> exportedDataTypes)
+        private protected TelemetryEndpoint(TelemetryEndpointKind kind, IEnumerable<global::Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes)
         {
             Kind = kind;
             ExportedDataTypes = exportedDataTypes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.TelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<global::Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ExportedDataTypes = exportedDataTypes;
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         internal TelemetryEndpointKind Kind { get; set; }
 
         /// <summary> Data types to export to this endpoint. Use an empty array to export no data. </summary>
-        public IList<ExportedDataTypes> ExportedDataTypes { get; }
+        public IList<global::Azure.AI.Projects.Agents.ExportedDataTypes> ExportedDataTypes { get; }
 
         /// <summary> Optional authentication configuration. </summary>
         public TelemetryEndpointAuthentication Authentication { get; set; }

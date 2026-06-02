@@ -13,21 +13,21 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of an EventCount metric definition. Counts the occurrences of a specified event. </summary>
     public partial class EventCountMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition"/>. </summary>
         /// <param name="event"> Event to observe. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="event"/> is null. </exception>
-        public EventCountMetricDefinition(ObservedEvent @event) : base(ExperimentMetricType.EventCount)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="event"/> is null. </exception>
+        public EventCountMetricDefinition(ObservedEvent @event) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.EventCount)
         {
-            Argument.AssertNotNull(@event, nameof(@event));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(@event, nameof(@event));
 
             Event = @event;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="event"> Event to observe. </param>
-        internal EventCountMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedEvent @event) : base(@type, additionalBinaryDataProperties)
+        internal EventCountMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ObservedEvent @event) : base(@type, additionalBinaryDataProperties)
         {
             Event = @event;
         }

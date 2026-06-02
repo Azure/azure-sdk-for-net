@@ -17,24 +17,24 @@ namespace Payload.ContentNegotiation._SameBody
     {
         protected SameBody() => throw null;
 
-        internal SameBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal SameBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAvatarAsPng(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAvatarAsPngAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAvatarAsPngAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> GetAvatarAsPng(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> GetAvatarAsPng(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> GetAvatarAsPngAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> GetAvatarAsPngAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetAvatarAsJpeg(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAvatarAsJpegAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAvatarAsJpegAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> GetAvatarAsJpeg(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> GetAvatarAsJpeg(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> GetAvatarAsJpegAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> GetAvatarAsJpegAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

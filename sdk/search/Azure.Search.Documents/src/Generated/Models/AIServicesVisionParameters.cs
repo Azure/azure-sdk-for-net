@@ -15,27 +15,27 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AIServicesVisionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIServicesVisionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesVisionParameters"/>. </summary>
         /// <param name="modelVersion"> The version of the model to use when calling the AI Services Vision service. It will default to the latest available when not specified. </param>
         /// <param name="resourceUri"> The resource URI of the AI Services resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public AIServicesVisionParameters(string modelVersion, Uri resourceUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        public AIServicesVisionParameters(string modelVersion, global::System.Uri resourceUri)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            global::Azure.Search.Documents.Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             ModelVersion = modelVersion;
             ResourceUri = resourceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIServicesVisionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesVisionParameters"/>. </summary>
         /// <param name="modelVersion"> The version of the model to use when calling the AI Services Vision service. It will default to the latest available when not specified. </param>
         /// <param name="resourceUri"> The resource URI of the AI Services resource. </param>
         /// <param name="apiKey"> API key of the designated AI Services resource. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the index, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIServicesVisionParameters(string modelVersion, Uri resourceUri, string apiKey, SearchIndexerDataIdentity authIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIServicesVisionParameters(string modelVersion, global::System.Uri resourceUri, string apiKey, SearchIndexerDataIdentity authIdentity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelVersion = modelVersion;
             ResourceUri = resourceUri;
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ModelVersion { get; set; }
 
         /// <summary> The resource URI of the AI Services resource. </summary>
-        public Uri ResourceUri { get; set; }
+        public global::System.Uri ResourceUri { get; set; }
 
         /// <summary> API key of the designated AI Services resource. </summary>
         public string ApiKey { get; set; }

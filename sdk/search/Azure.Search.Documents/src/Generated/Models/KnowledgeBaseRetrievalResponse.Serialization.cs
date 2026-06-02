@@ -15,61 +15,61 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The output contract for the retrieval response. </summary>
-    public partial class KnowledgeBaseRetrievalResponse : IJsonModel<KnowledgeBaseRetrievalResponse>
+    public partial class KnowledgeBaseRetrievalResponse : IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeBaseRetrievalResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse.DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseRetrievalResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseRetrievalResponse IPersistableModel<KnowledgeBaseRetrievalResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeBaseRetrievalResponse IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseRetrievalResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="KnowledgeBaseRetrievalResponse"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/> from. </param>
         public static explicit operator KnowledgeBaseRetrievalResponse(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse.DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseRetrievalResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,47 +77,47 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Response))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeBaseMessage item in Response)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeBaseMessage>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Activity))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Activity))
             {
                 writer.WritePropertyName("activity"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeBaseActivityRecord item in Activity)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeBaseActivityRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(References))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(References))
             {
                 writer.WritePropertyName("references"u8);
                 writer.WriteStartArray();
                 foreach (KnowledgeBaseReference item in References)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<KnowledgeBaseReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResponseSensitivityLabelInfo))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ResponseSensitivityLabelInfo))
             {
                 writer.WritePropertyName("responseSensitivityLabelInfo"u8);
-                writer.WriteObjectValue(ResponseSensitivityLabelInfo, options);
+                writer.WriteObjectValue<PurviewSensitivityLabelInfo>(ResponseSensitivityLabelInfo, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -125,9 +125,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -136,93 +136,93 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseRetrievalResponse IJsonModel<KnowledgeBaseRetrievalResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeBaseRetrievalResponse IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeBaseRetrievalResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse.DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeBaseRetrievalResponse DeserializeKnowledgeBaseRetrievalResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<KnowledgeBaseMessage> response = default;
-            IList<KnowledgeBaseActivityRecord> activity = default;
-            IList<KnowledgeBaseReference> references = default;
+            IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> response = default;
+            IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord> activity = default;
+            IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference> references = default;
             PurviewSensitivityLabelInfo responseSensitivityLabelInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("response"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeBaseMessage> array = new List<KnowledgeBaseMessage>();
+                    List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> array = new List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseMessage.DeserializeKnowledgeBaseMessage(item, options));
+                        array.Add(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage.DeserializeKnowledgeBaseMessage(item, options));
                     }
                     response = array;
                     continue;
                 }
                 if (prop.NameEquals("activity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeBaseActivityRecord> array = new List<KnowledgeBaseActivityRecord>();
+                    List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord> array = new List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(item, options));
+                        array.Add(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(item, options));
                     }
                     activity = array;
                     continue;
                 }
                 if (prop.NameEquals("references"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeBaseReference> array = new List<KnowledgeBaseReference>();
+                    List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference> array = new List<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseReference.DeserializeKnowledgeBaseReference(item, options));
+                        array.Add(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference.DeserializeKnowledgeBaseReference(item, options));
                     }
                     references = array;
                     continue;
                 }
                 if (prop.NameEquals("responseSensitivityLabelInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    responseSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    responseSensitivityLabelInfo = global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeBaseRetrievalResponse(response ?? new ChangeTrackingList<KnowledgeBaseMessage>(), activity ?? new ChangeTrackingList<KnowledgeBaseActivityRecord>(), references ?? new ChangeTrackingList<KnowledgeBaseReference>(), responseSensitivityLabelInfo, additionalBinaryDataProperties);
+            return new KnowledgeBaseRetrievalResponse((response ?? new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage>()), (activity ?? new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord>()), (references ?? new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference>()), responseSensitivityLabelInfo, additionalBinaryDataProperties);
         }
     }
 }

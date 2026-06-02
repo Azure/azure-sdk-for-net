@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageMetadata"/>. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         internal ImageMetadata(int height, int width)
@@ -25,11 +25,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             Width = width;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageMetadata"/>. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageMetadata(int height, int width, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageMetadata(int height, int width, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Height = height;
             Width = width;

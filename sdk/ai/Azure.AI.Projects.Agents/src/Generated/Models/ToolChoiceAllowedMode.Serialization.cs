@@ -11,21 +11,21 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ToolChoiceAllowedMode value) => value switch
         {
-            ToolChoiceAllowedMode.Auto => "auto",
-            ToolChoiceAllowedMode.Required => "required",
+            global::OpenAI.ToolChoiceAllowedMode.Auto => "auto",
+            global::OpenAI.ToolChoiceAllowedMode.Required => "required",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolChoiceAllowedMode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ToolChoiceAllowedMode ToToolChoiceAllowedMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ToolChoiceAllowedMode.Auto;
+                return global::OpenAI.ToolChoiceAllowedMode.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "required"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "required"))
             {
-                return ToolChoiceAllowedMode.Required;
+                return global::OpenAI.ToolChoiceAllowedMode.Required;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolChoiceAllowedMode value.");
         }

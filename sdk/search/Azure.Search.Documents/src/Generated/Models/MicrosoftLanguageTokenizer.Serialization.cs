@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text using language-specific rules. </summary>
-    public partial class MicrosoftLanguageTokenizer : LexicalTokenizer, IJsonModel<MicrosoftLanguageTokenizer>
+    public partial class MicrosoftLanguageTokenizer : LexicalTokenizer, IJsonModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftLanguageTokenizer"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer"/> for deserialization. </summary>
         internal MicrosoftLanguageTokenizer()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer.DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MicrosoftLanguageTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageTokenizer IPersistableModel<MicrosoftLanguageTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (MicrosoftLanguageTokenizer)PersistableModelCreateCore(data, options);
+        MicrosoftLanguageTokenizer IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MicrosoftLanguageTokenizer)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MicrosoftLanguageTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MicrosoftLanguageTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,23 +74,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxTokenLength))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Optional.IsDefined(IsSearchTokenizer))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsSearchTokenizer))
             {
                 writer.WritePropertyName("isSearchTokenizer"u8);
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Optional.IsDefined(Language))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -99,32 +99,32 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageTokenizer IJsonModel<MicrosoftLanguageTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MicrosoftLanguageTokenizer)JsonModelCreateCore(ref reader, options);
+        MicrosoftLanguageTokenizer IJsonModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MicrosoftLanguageTokenizer)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.MicrosoftLanguageTokenizer.DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string odataType = "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             int? maxTokenLength = default;
             bool? isSearchTokenizer = default;
             MicrosoftTokenizerLanguage? language = default;
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxTokenLength"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("isSearchTokenizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -160,16 +160,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("language"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     language = prop.Value.GetString().ToMicrosoftTokenizerLanguage();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MicrosoftLanguageTokenizer(

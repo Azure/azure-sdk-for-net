@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Client options for <see cref="ConfigurationClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/>. </summary>
     public partial class ConfigurationClientOptions : ClientOptions
     {
         /// <summary> Configures logging for the client options. </summary>

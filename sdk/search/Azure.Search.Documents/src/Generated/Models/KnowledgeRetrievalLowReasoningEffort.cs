@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Run knowledge retrieval with low reasoning effort. </summary>
     public partial class KnowledgeRetrievalLowReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalLowReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalLowReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Low)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>. </summary>
+        public KnowledgeRetrievalLowReasoningEffort() : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind.Low)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalLowReasoningEffort"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalLowReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal KnowledgeRetrievalLowReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

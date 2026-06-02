@@ -17,31 +17,31 @@ namespace Client.Overload
 {
     public partial class OverloadClient
     {
-        public OverloadClient() : this(new Uri("http://localhost:3000"), new OverloadClientOptions()) => throw null;
+        public OverloadClient() : this(new global::System.Uri("http://localhost:3000"), new OverloadClientOptions()) => throw null;
 
-        internal OverloadClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OverloadClientOptions options) => throw null;
+        internal OverloadClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, OverloadClientOptions options) => throw null;
 
-        public OverloadClient(Uri endpoint, OverloadClientOptions options) : this(null, endpoint, options) => throw null;
+        public OverloadClient(global::System.Uri endpoint, OverloadClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public OverloadClient(OverloadClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public OverloadClient(OverloadClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<Resource>> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Client.Overload.Resource>> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<Resource>>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Client.Overload.Resource>>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetAll(string scope, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(string scope, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(string scope, RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<Resource>> GetAll(string scope, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Client.Overload.Resource>> GetAll(string scope, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<Resource>>> GetAllAsync(string scope, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Client.Overload.Resource>>> GetAllAsync(string scope, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerLimits
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerLimits"/>. </summary>
         internal SearchIndexerLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerLimits"/>. </summary>
         /// <param name="maxRunTime"> The maximum duration that the indexer is permitted to run for one execution. </param>
         /// <param name="maxDocumentExtractionSize"> The maximum size of a document, in bytes, which will be considered valid for indexing. </param>
         /// <param name="maxDocumentContentCharactersToExtract"> The maximum number of characters that will be extracted from a document picked up for indexing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerLimits(TimeSpan? maxRunTime, long? maxDocumentExtractionSize, long? maxDocumentContentCharactersToExtract, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerLimits(TimeSpan? maxRunTime, long? maxDocumentExtractionSize, long? maxDocumentContentCharactersToExtract, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MaxRunTime = maxRunTime;
             MaxDocumentExtractionSize = maxDocumentExtractionSize;

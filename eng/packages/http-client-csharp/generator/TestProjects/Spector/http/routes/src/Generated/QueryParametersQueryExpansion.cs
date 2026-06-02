@@ -16,7 +16,7 @@ namespace Routes._QueryParameters.QueryExpansion
     {
         protected QueryParametersQueryExpansion() => throw null;
 
-        internal QueryParametersQueryExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal QueryParametersQueryExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -14,166 +14,166 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StopwordsList value) => value switch
         {
-            StopwordsList.Arabic => "arabic",
-            StopwordsList.Armenian => "armenian",
-            StopwordsList.Basque => "basque",
-            StopwordsList.Brazilian => "brazilian",
-            StopwordsList.Bulgarian => "bulgarian",
-            StopwordsList.Catalan => "catalan",
-            StopwordsList.Czech => "czech",
-            StopwordsList.Danish => "danish",
-            StopwordsList.Dutch => "dutch",
-            StopwordsList.English => "english",
-            StopwordsList.Finnish => "finnish",
-            StopwordsList.French => "french",
-            StopwordsList.Galician => "galician",
-            StopwordsList.German => "german",
-            StopwordsList.Greek => "greek",
-            StopwordsList.Hindi => "hindi",
-            StopwordsList.Hungarian => "hungarian",
-            StopwordsList.Indonesian => "indonesian",
-            StopwordsList.Irish => "irish",
-            StopwordsList.Italian => "italian",
-            StopwordsList.Latvian => "latvian",
-            StopwordsList.Norwegian => "norwegian",
-            StopwordsList.Persian => "persian",
-            StopwordsList.Portuguese => "portuguese",
-            StopwordsList.Romanian => "romanian",
-            StopwordsList.Russian => "russian",
-            StopwordsList.Sorani => "sorani",
-            StopwordsList.Spanish => "spanish",
-            StopwordsList.Swedish => "swedish",
-            StopwordsList.Thai => "thai",
-            StopwordsList.Turkish => "turkish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Arabic => "arabic",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Armenian => "armenian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Basque => "basque",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Brazilian => "brazilian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Bulgarian => "bulgarian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Catalan => "catalan",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Czech => "czech",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Danish => "danish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Dutch => "dutch",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.English => "english",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Finnish => "finnish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.French => "french",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Galician => "galician",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.German => "german",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Greek => "greek",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Hindi => "hindi",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Hungarian => "hungarian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Indonesian => "indonesian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Irish => "irish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Italian => "italian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Latvian => "latvian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Norwegian => "norwegian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Persian => "persian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Portuguese => "portuguese",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Romanian => "romanian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Russian => "russian",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Sorani => "sorani",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Spanish => "spanish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Swedish => "swedish",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Thai => "thai",
+            global::Azure.Search.Documents.Indexes.Models.StopwordsList.Turkish => "turkish",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StopwordsList value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static StopwordsList ToStopwordsList(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
             {
-                return StopwordsList.Arabic;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Arabic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
             {
-                return StopwordsList.Armenian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Armenian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
             {
-                return StopwordsList.Basque;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Basque;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "brazilian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "brazilian"))
             {
-                return StopwordsList.Brazilian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Brazilian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
             {
-                return StopwordsList.Bulgarian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Bulgarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
             {
-                return StopwordsList.Catalan;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Catalan;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
             {
-                return StopwordsList.Czech;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Czech;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
             {
-                return StopwordsList.Danish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Danish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
             {
-                return StopwordsList.Dutch;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Dutch;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
             {
-                return StopwordsList.English;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.English;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
             {
-                return StopwordsList.Finnish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Finnish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
             {
-                return StopwordsList.French;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.French;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "galician"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "galician"))
             {
-                return StopwordsList.Galician;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Galician;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
             {
-                return StopwordsList.German;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.German;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
             {
-                return StopwordsList.Greek;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Greek;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
             {
-                return StopwordsList.Hindi;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Hindi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
             {
-                return StopwordsList.Hungarian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Hungarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
             {
-                return StopwordsList.Indonesian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Indonesian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "irish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "irish"))
             {
-                return StopwordsList.Irish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Irish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
             {
-                return StopwordsList.Italian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Italian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
             {
-                return StopwordsList.Latvian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Latvian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
             {
-                return StopwordsList.Norwegian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Norwegian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "persian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "persian"))
             {
-                return StopwordsList.Persian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Persian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
             {
-                return StopwordsList.Portuguese;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Portuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
             {
-                return StopwordsList.Romanian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Romanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
             {
-                return StopwordsList.Russian;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Russian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sorani"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "sorani"))
             {
-                return StopwordsList.Sorani;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Sorani;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
             {
-                return StopwordsList.Spanish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Spanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
             {
-                return StopwordsList.Swedish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Swedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "thai"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "thai"))
             {
-                return StopwordsList.Thai;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Thai;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
             {
-                return StopwordsList.Turkish;
+                return global::Azure.Search.Documents.Indexes.Models.StopwordsList.Turkish;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StopwordsList value.");
         }

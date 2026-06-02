@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </summary>
-    public partial class ReportAssetSummaryPayload : IJsonModel<ReportAssetSummaryPayload>
+    public partial class ReportAssetSummaryPayload : IJsonModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ReportAssetSummaryPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReportAssetSummaryPayload(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload.DeserializeReportAssetSummaryPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReportAssetSummaryPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportAssetSummaryPayload IPersistableModel<ReportAssetSummaryPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReportAssetSummaryPayload IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReportAssetSummaryPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="reportAssetSummaryPayload"> The <see cref="ReportAssetSummaryPayload"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="reportAssetSummaryPayload"> The <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ReportAssetSummaryPayload reportAssetSummaryPayload)
         {
-            if (reportAssetSummaryPayload == null)
+            if ((reportAssetSummaryPayload == null))
             {
                 return null;
             }
-            return RequestContent.Create(reportAssetSummaryPayload, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(reportAssetSummaryPayload, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReportAssetSummaryPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,18 +79,18 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(MetricCategories))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(MetricCategories))
             {
                 writer.WritePropertyName("metricCategories"u8);
                 writer.WriteStartArray();
                 foreach (string item in MetricCategories)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -99,13 +99,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (string item in Metrics)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -114,13 +114,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (string item in Filters)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -129,22 +129,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GroupBy))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStringValue(GroupBy);
             }
-            if (Optional.IsDefined(SegmentBy))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SegmentBy))
             {
                 writer.WritePropertyName("segmentBy"u8);
                 writer.WriteStringValue(SegmentBy);
             }
-            if (Optional.IsDefined(LabelName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -152,9 +152,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -163,26 +163,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportAssetSummaryPayload IJsonModel<ReportAssetSummaryPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReportAssetSummaryPayload IJsonModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ReportAssetSummaryPayload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReportAssetSummaryPayload(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload.DeserializeReportAssetSummaryPayload(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ReportAssetSummaryPayload DeserializeReportAssetSummaryPayload(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -192,19 +192,19 @@ namespace Azure.Analytics.Defender.Easm
             string groupBy = default;
             string segmentBy = default;
             string labelName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metricCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -218,14 +218,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("metrics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -239,14 +239,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("filters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -273,15 +273,15 @@ namespace Azure.Analytics.Defender.Easm
                     labelName = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ReportAssetSummaryPayload(
-                metricCategories ?? new ChangeTrackingList<string>(),
-                metrics ?? new ChangeTrackingList<string>(),
-                filters ?? new ChangeTrackingList<string>(),
+                (metricCategories ?? new ChangeTrackingList<string>()),
+                (metrics ?? new ChangeTrackingList<string>()),
+                (filters ?? new ChangeTrackingList<string>()),
                 groupBy,
                 segmentBy,
                 labelName,

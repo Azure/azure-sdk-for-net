@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A bing custom search configuration. </summary>
-    public partial class ResponsesBingCustomSearchConfiguration : IJsonModel<ResponsesBingCustomSearchConfiguration>
+    public partial class ResponsesBingCustomSearchConfiguration : IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration"/> for deserialization. </summary>
         internal ResponsesBingCustomSearchConfiguration()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesBingCustomSearchConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesBingCustomSearchConfiguration(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration.DeserializeResponsesBingCustomSearchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesBingCustomSearchConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesBingCustomSearchConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesBingCustomSearchConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesBingCustomSearchConfiguration IPersistableModel<ResponsesBingCustomSearchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResponsesBingCustomSearchConfiguration IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesBingCustomSearchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesBingCustomSearchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,36 +70,36 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesBingCustomSearchConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
             writer.WritePropertyName("instance_name"u8);
             writer.WriteStringValue(InstanceName);
-            if (Optional.IsDefined(Market))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Market))
             {
                 writer.WritePropertyName("market"u8);
                 writer.WriteStringValue(Market);
             }
-            if (Optional.IsDefined(SetLang))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(SetLang))
             {
                 writer.WritePropertyName("set_lang"u8);
                 writer.WriteStringValue(SetLang);
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Freshness))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Freshness))
             {
                 writer.WritePropertyName("freshness"u8);
                 writer.WriteStringValue(Freshness);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Extensions.OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,26 +118,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesBingCustomSearchConfiguration IJsonModel<ResponsesBingCustomSearchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResponsesBingCustomSearchConfiguration IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesBingCustomSearchConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesBingCustomSearchConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesBingCustomSearchConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration.DeserializeResponsesBingCustomSearchConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesBingCustomSearchConfiguration DeserializeResponsesBingCustomSearchConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -147,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
             string setLang = default;
             long? count = default;
             string freshness = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("project_connection_id"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -184,9 +184,9 @@ namespace Azure.AI.Extensions.OpenAI
                     freshness = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesBingCustomSearchConfiguration(

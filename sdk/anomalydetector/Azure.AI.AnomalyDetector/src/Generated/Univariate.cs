@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> The Univariate sub-client. </summary>
     public partial class Univariate
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Univariate for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Univariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Univariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -57,8 +57,8 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectUnivariateEntireSeries(RequestContent content, RequestContext context = null)
         {
@@ -66,9 +66,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateEntireSeriesRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateEntireSeriesRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -91,18 +91,18 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectUnivariateEntireSeriesAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectUnivariateEntireSeriesAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Univariate.DetectUnivariateEntireSeries");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateEntireSeriesRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateEntireSeriesRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -123,8 +123,8 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectUnivariateLastPoint(RequestContent content, RequestContext context = null)
         {
@@ -132,9 +132,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateLastPointRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateLastPointRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -155,18 +155,18 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectUnivariateLastPointAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectUnivariateLastPointAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Univariate.DetectUnivariateLastPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateLastPointRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateLastPointRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -182,14 +182,14 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UnivariateLastDetectionResult> DetectUnivariateLastPoint(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.UnivariateLastDetectionResult> DetectUnivariateLastPoint(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = DetectUnivariateLastPoint(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((UnivariateLastDetectionResult)result, result);
+            Response result = this.DetectUnivariateLastPoint(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((UnivariateLastDetectionResult)result), result);
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UnivariateLastDetectionResult>> DetectUnivariateLastPointAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.UnivariateLastDetectionResult>> DetectUnivariateLastPointAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await DetectUnivariateLastPointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UnivariateLastDetectionResult)result, result);
+            Response result = await this.DetectUnivariateLastPointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((UnivariateLastDetectionResult)result), result);
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectUnivariateChangePoint(RequestContent content, RequestContext context = null)
         {
@@ -227,9 +227,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateChangePointRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateChangePointRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -249,18 +249,18 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectUnivariateChangePointAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectUnivariateChangePointAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Univariate.DetectUnivariateChangePoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectUnivariateChangePointRequest(content, context);
+                using HttpMessage message = this.CreateDetectUnivariateChangePointRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -273,27 +273,27 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Evaluate the change point score of every series point. </summary>
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UnivariateChangePointDetectionResult> DetectUnivariateChangePoint(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult> DetectUnivariateChangePoint(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = DetectUnivariateChangePoint(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((UnivariateChangePointDetectionResult)result, result);
+            Response result = this.DetectUnivariateChangePoint(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((UnivariateChangePointDetectionResult)result), result);
         }
 
         /// <summary> Evaluate the change point score of every series point. </summary>
         /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UnivariateChangePointDetectionResult>> DetectUnivariateChangePointAsync(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>> DetectUnivariateChangePointAsync(UnivariateChangePointDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await DetectUnivariateChangePointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UnivariateChangePointDetectionResult)result, result);
+            Response result = await this.DetectUnivariateChangePointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((UnivariateChangePointDetectionResult)result), result);
         }
     }
 }

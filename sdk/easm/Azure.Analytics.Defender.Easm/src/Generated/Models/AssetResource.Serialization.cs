@@ -14,12 +14,12 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The items in the current page of results.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.AsAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.ContactAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.DomainAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.HostAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpAddressAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpBlockAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.PageAssetResource"/>, and <see cref="Azure.Analytics.Defender.Easm.SslCertAssetResource"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownAssetResource))]
-    public abstract partial class AssetResource : IJsonModel<AssetResource>
+    [PersistableModelProxyAttribute(typeof(UnknownAssetResource))]
+    public abstract partial class AssetResource : IJsonModel<global::Azure.Analytics.Defender.Easm.AssetResource>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetResource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetResource"/> for deserialization. </summary>
         internal AssetResource()
         {
         }
@@ -28,55 +28,55 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetResource(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.AssetResource.DeserializeAssetResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetResource IPersistableModel<AssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AssetResource IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AssetResource"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Defender.Easm.AssetResource"/> from. </param>
         public static explicit operator AssetResource(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAssetResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Defender.Easm.AssetResource.DeserializeAssetResource(document.RootElement, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.AssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,60 +84,60 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetResource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Uuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedDate))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(UpdatedDate))
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (string item in Labels)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -146,32 +146,32 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Wildcard))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Wildcard))
             {
                 writer.WritePropertyName("wildcard"u8);
                 writer.WriteBooleanValue(Wildcard.Value);
             }
-            if (Optional.IsDefined(DiscoGroupName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DiscoGroupName))
             {
                 writer.WritePropertyName("discoGroupName"u8);
                 writer.WriteStringValue(DiscoGroupName);
             }
-            if (Optional.IsCollectionDefined(AuditTrail))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AuditTrail))
             {
                 writer.WritePropertyName("auditTrail"u8);
                 writer.WriteStartArray();
                 foreach (AuditTrailItem item in AuditTrail)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AuditTrailItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Reason))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -179,9 +179,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -190,26 +190,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetResource IJsonModel<AssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AssetResource IJsonModel<global::Azure.Analytics.Defender.Easm.AssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetResource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetResource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.AssetResource.DeserializeAssetResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AssetResource DeserializeAssetResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -218,24 +218,24 @@ namespace Azure.Analytics.Defender.Easm
                 switch (discriminator.GetString())
                 {
                     case "as":
-                        return AsAssetResource.DeserializeAsAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.AsAssetResource.DeserializeAsAssetResource(element, options);
                     case "contact":
-                        return ContactAssetResource.DeserializeContactAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.ContactAssetResource.DeserializeContactAssetResource(element, options);
                     case "domain":
-                        return DomainAssetResource.DeserializeDomainAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.DomainAssetResource.DeserializeDomainAssetResource(element, options);
                     case "host":
-                        return HostAssetResource.DeserializeHostAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.HostAssetResource.DeserializeHostAssetResource(element, options);
                     case "ipAddress":
-                        return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
                     case "ipBlock":
-                        return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
                     case "page":
-                        return PageAssetResource.DeserializePageAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.PageAssetResource.DeserializePageAssetResource(element, options);
                     case "sslCert":
-                        return SslCertAssetResource.DeserializeSslCertAssetResource(element, options);
+                        return global::Azure.Analytics.Defender.Easm.SslCertAssetResource.DeserializeSslCertAssetResource(element, options);
                 }
             }
-            return UnknownAssetResource.DeserializeUnknownAssetResource(element, options);
+            return global::Azure.Analytics.Defender.Easm.UnknownAssetResource.DeserializeUnknownAssetResource(element, options);
         }
     }
 }

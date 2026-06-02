@@ -14,21 +14,21 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasTypesDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTypesDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypesDef"/>. </summary>
         public AtlasTypesDef()
         {
-            BusinessMetadataDefs = new ChangeTrackingList<AtlasBusinessMetadataDef>();
-            ClassificationDefs = new ChangeTrackingList<AtlasClassificationDef>();
-            EntityDefs = new ChangeTrackingList<AtlasEntityDef>();
-            EnumDefs = new ChangeTrackingList<AtlasEnumDef>();
-            RelationshipDefs = new ChangeTrackingList<AtlasRelationshipDef>();
-            StructDefs = new ChangeTrackingList<AtlasStructDef>();
-            TermTemplateDefs = new ChangeTrackingList<TermTemplateDef>();
+            BusinessMetadataDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef>();
+            ClassificationDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef>();
+            EntityDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntityDef>();
+            EnumDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEnumDef>();
+            RelationshipDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef>();
+            StructDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasStructDef>();
+            TermTemplateDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermTemplateDef>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTypesDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTypesDef"/>. </summary>
         /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
         /// <param name="classificationDefs"> An array of classification definitions. </param>
         /// <param name="entityDefs"> An array of entity definitions. </param>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="structDefs"> An array of struct definitions. </param>
         /// <param name="termTemplateDefs"> An array of term template definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTypesDef(IList<AtlasBusinessMetadataDef> businessMetadataDefs, IList<AtlasClassificationDef> classificationDefs, IList<AtlasEntityDef> entityDefs, IList<AtlasEnumDef> enumDefs, IList<AtlasRelationshipDef> relationshipDefs, IList<AtlasStructDef> structDefs, IList<TermTemplateDef> termTemplateDefs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasTypesDef(IList<global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef> businessMetadataDefs, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef> classificationDefs, IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityDef> entityDefs, IList<global::Azure.Analytics.Purview.DataMap.AtlasEnumDef> enumDefs, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef> relationshipDefs, IList<global::Azure.Analytics.Purview.DataMap.AtlasStructDef> structDefs, IList<global::Azure.Analytics.Purview.DataMap.TermTemplateDef> termTemplateDefs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BusinessMetadataDefs = businessMetadataDefs;
             ClassificationDefs = classificationDefs;
@@ -50,24 +50,24 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> businessMetadataDefs. </summary>
-        public IList<AtlasBusinessMetadataDef> BusinessMetadataDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef> BusinessMetadataDefs { get; }
 
         /// <summary> An array of classification definitions. </summary>
-        public IList<AtlasClassificationDef> ClassificationDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassificationDef> ClassificationDefs { get; }
 
         /// <summary> An array of entity definitions. </summary>
-        public IList<AtlasEntityDef> EntityDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityDef> EntityDefs { get; }
 
         /// <summary> An array of enum definitions. </summary>
-        public IList<AtlasEnumDef> EnumDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasEnumDef> EnumDefs { get; }
 
         /// <summary> An array of relationship definitions. </summary>
-        public IList<AtlasRelationshipDef> RelationshipDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipDef> RelationshipDefs { get; }
 
         /// <summary> An array of struct definitions. </summary>
-        public IList<AtlasStructDef> StructDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasStructDef> StructDefs { get; }
 
         /// <summary> An array of term template definitions. </summary>
-        public IList<TermTemplateDef> TermTemplateDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.TermTemplateDef> TermTemplateDefs { get; }
     }
 }

@@ -11,51 +11,51 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileSearchToolFiltersType value) => value switch
         {
-            FileSearchToolFiltersType.Eq => "eq",
-            FileSearchToolFiltersType.Ne => "ne",
-            FileSearchToolFiltersType.Gt => "gt",
-            FileSearchToolFiltersType.Gte => "gte",
-            FileSearchToolFiltersType.Lt => "lt",
-            FileSearchToolFiltersType.Lte => "lte",
-            FileSearchToolFiltersType.In => "in",
-            FileSearchToolFiltersType.Nin => "nin",
+            global::OpenAI.FileSearchToolFiltersType.Eq => "eq",
+            global::OpenAI.FileSearchToolFiltersType.Ne => "ne",
+            global::OpenAI.FileSearchToolFiltersType.Gt => "gt",
+            global::OpenAI.FileSearchToolFiltersType.Gte => "gte",
+            global::OpenAI.FileSearchToolFiltersType.Lt => "lt",
+            global::OpenAI.FileSearchToolFiltersType.Lte => "lte",
+            global::OpenAI.FileSearchToolFiltersType.In => "in",
+            global::OpenAI.FileSearchToolFiltersType.Nin => "nin",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FileSearchToolFiltersType ToFileSearchToolFiltersType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
             {
-                return FileSearchToolFiltersType.Eq;
+                return global::OpenAI.FileSearchToolFiltersType.Eq;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
             {
-                return FileSearchToolFiltersType.Ne;
+                return global::OpenAI.FileSearchToolFiltersType.Ne;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
             {
-                return FileSearchToolFiltersType.Gt;
+                return global::OpenAI.FileSearchToolFiltersType.Gt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
             {
-                return FileSearchToolFiltersType.Gte;
+                return global::OpenAI.FileSearchToolFiltersType.Gte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
             {
-                return FileSearchToolFiltersType.Lt;
+                return global::OpenAI.FileSearchToolFiltersType.Lt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
             {
-                return FileSearchToolFiltersType.Lte;
+                return global::OpenAI.FileSearchToolFiltersType.Lte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
             {
-                return FileSearchToolFiltersType.In;
+                return global::OpenAI.FileSearchToolFiltersType.In;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
             {
-                return FileSearchToolFiltersType.Nin;
+                return global::OpenAI.FileSearchToolFiltersType.Nin;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.");
         }

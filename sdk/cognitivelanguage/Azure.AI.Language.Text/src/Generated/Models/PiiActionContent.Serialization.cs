@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
-    public partial class PiiActionContent : IJsonModel<PiiActionContent>
+    public partial class PiiActionContent : IJsonModel<global::Azure.AI.Language.Text.PiiActionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PiiActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePiiActionContent(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.PiiActionContent.DeserializePiiActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiActionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.PiiActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PiiActionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.PiiActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PiiActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiActionContent IPersistableModel<PiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PiiActionContent IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.PiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,27 +68,27 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PiiActionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.PiiActionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(Domain))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -98,12 +98,12 @@ namespace Azure.AI.Language.Text
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludePiiCategories))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(ExcludePiiCategories))
             {
                 writer.WritePropertyName("excludePiiCategories"u8);
                 writer.WriteStartArray();
@@ -113,42 +113,42 @@ namespace Azure.AI.Language.Text
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ValueExclusionPolicy))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(ValueExclusionPolicy))
             {
                 writer.WritePropertyName("valueExclusionPolicy"u8);
-                writer.WriteObjectValue(ValueExclusionPolicy, options);
+                writer.WriteObjectValue<ValueExclusionPolicy>(ValueExclusionPolicy, options);
             }
-            if (Optional.IsCollectionDefined(EntitySynonyms))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(EntitySynonyms))
             {
                 writer.WritePropertyName("entitySynonyms"u8);
                 writer.WriteStartArray();
                 foreach (EntitySynonyms item in EntitySynonyms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<EntitySynonyms>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RedactionPolicies))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(RedactionPolicies))
             {
                 writer.WritePropertyName("redactionPolicies"u8);
                 writer.WriteStartArray();
                 foreach (BaseRedactionPolicy item in RedactionPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BaseRedactionPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConfidenceScoreThreshold))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(ConfidenceScoreThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
-                writer.WriteObjectValue(ConfidenceScoreThreshold, options);
+                writer.WriteObjectValue<ConfidenceScoreThreshold>(ConfidenceScoreThreshold, options);
             }
-            if (Optional.IsDefined(DisableEntityValidation))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(DisableEntityValidation))
             {
                 writer.WritePropertyName("disableEntityValidation"u8);
                 writer.WriteBooleanValue(DisableEntityValidation.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -156,9 +156,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -167,46 +167,46 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiActionContent IJsonModel<PiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PiiActionContent IJsonModel<global::Azure.AI.Language.Text.PiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PiiActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.PiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PiiActionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.PiiActionContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiActionContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.PiiActionContent.DeserializePiiActionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PiiActionContent DeserializePiiActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             bool? loggingOptOut = default;
             string modelVersion = default;
             PiiDomain? domain = default;
-            IList<PiiCategory> piiCategories = default;
+            IList<global::Azure.AI.Language.Text.PiiCategory> piiCategories = default;
             StringIndexType? stringIndexType = default;
-            IList<PiiCategoriesExclude> excludePiiCategories = default;
+            IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> excludePiiCategories = default;
             ValueExclusionPolicy valueExclusionPolicy = default;
-            IList<EntitySynonyms> entitySynonyms = default;
-            IList<BaseRedactionPolicy> redactionPolicies = default;
+            IList<global::Azure.AI.Language.Text.EntitySynonyms> entitySynonyms = default;
+            IList<global::Azure.AI.Language.Text.BaseRedactionPolicy> redactionPolicies = default;
             ConfidenceScoreThreshold confidenceScoreThreshold = default;
             bool? disableEntityValidation = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("loggingOptOut"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("domain"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,11 +229,11 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("piiCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<PiiCategory> array = new List<PiiCategory>();
+                    List<global::Azure.AI.Language.Text.PiiCategory> array = new List<global::Azure.AI.Language.Text.PiiCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new PiiCategory(item.GetString()));
@@ -243,7 +243,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("stringIndexType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -252,11 +252,11 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("excludePiiCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<PiiCategoriesExclude> array = new List<PiiCategoriesExclude>();
+                    List<global::Azure.AI.Language.Text.PiiCategoriesExclude> array = new List<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new PiiCategoriesExclude(item.GetString()));
@@ -266,74 +266,74 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("valueExclusionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    valueExclusionPolicy = ValueExclusionPolicy.DeserializeValueExclusionPolicy(prop.Value, options);
+                    valueExclusionPolicy = global::Azure.AI.Language.Text.ValueExclusionPolicy.DeserializeValueExclusionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("entitySynonyms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<EntitySynonyms> array = new List<EntitySynonyms>();
+                    List<global::Azure.AI.Language.Text.EntitySynonyms> array = new List<global::Azure.AI.Language.Text.EntitySynonyms>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Text.EntitySynonyms.DeserializeEntitySynonyms(item, options));
+                        array.Add(global::Azure.AI.Language.Text.EntitySynonyms.DeserializeEntitySynonyms(item, options));
                     }
                     entitySynonyms = array;
                     continue;
                 }
                 if (prop.NameEquals("redactionPolicies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BaseRedactionPolicy> array = new List<BaseRedactionPolicy>();
+                    List<global::Azure.AI.Language.Text.BaseRedactionPolicy> array = new List<global::Azure.AI.Language.Text.BaseRedactionPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BaseRedactionPolicy.DeserializeBaseRedactionPolicy(item, options));
+                        array.Add(global::Azure.AI.Language.Text.BaseRedactionPolicy.DeserializeBaseRedactionPolicy(item, options));
                     }
                     redactionPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("confidenceScoreThreshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    confidenceScoreThreshold = ConfidenceScoreThreshold.DeserializeConfidenceScoreThreshold(prop.Value, options);
+                    confidenceScoreThreshold = global::Azure.AI.Language.Text.ConfidenceScoreThreshold.DeserializeConfidenceScoreThreshold(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("disableEntityValidation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     disableEntityValidation = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PiiActionContent(
                 loggingOptOut,
                 modelVersion,
                 domain,
-                piiCategories ?? new ChangeTrackingList<PiiCategory>(),
+                (piiCategories ?? new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategory>()),
                 stringIndexType,
-                excludePiiCategories ?? new ChangeTrackingList<PiiCategoriesExclude>(),
+                (excludePiiCategories ?? new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>()),
                 valueExclusionPolicy,
-                entitySynonyms ?? new ChangeTrackingList<EntitySynonyms>(),
-                redactionPolicies ?? new ChangeTrackingList<BaseRedactionPolicy>(),
+                (entitySynonyms ?? new ChangeTrackingList<global::Azure.AI.Language.Text.EntitySynonyms>()),
+                (redactionPolicies ?? new ChangeTrackingList<global::Azure.AI.Language.Text.BaseRedactionPolicy>()),
                 confidenceScoreThreshold,
                 disableEntityValidation,
                 additionalBinaryDataProperties);

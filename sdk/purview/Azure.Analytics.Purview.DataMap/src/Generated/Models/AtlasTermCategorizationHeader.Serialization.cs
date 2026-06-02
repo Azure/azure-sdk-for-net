@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The basic information for term categorization. </summary>
-    public partial class AtlasTermCategorizationHeader : IJsonModel<AtlasTermCategorizationHeader>
+    public partial class AtlasTermCategorizationHeader : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasTermCategorizationHeader PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasTermCategorizationHeader(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader.DeserializeAtlasTermCategorizationHeader(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTermCategorizationHeader)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTermCategorizationHeader)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasTermCategorizationHeader>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasTermCategorizationHeader IPersistableModel<AtlasTermCategorizationHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasTermCategorizationHeader IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasTermCategorizationHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasTermCategorizationHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,37 +68,37 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasTermCategorizationHeader)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CategoryGuid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CategoryGuid))
             {
                 writer.WritePropertyName("categoryGuid"u8);
                 writer.WriteStringValue(CategoryGuid.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayText))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (Optional.IsDefined(RelationGuid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(RelationGuid))
             {
                 writer.WritePropertyName("relationGuid"u8);
                 writer.WriteStringValue(RelationGuid.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,26 +117,26 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasTermCategorizationHeader IJsonModel<AtlasTermCategorizationHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasTermCategorizationHeader IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasTermCategorizationHeader JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasTermCategorizationHeader)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasTermCategorizationHeader(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader.DeserializeAtlasTermCategorizationHeader(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasTermCategorizationHeader DeserializeAtlasTermCategorizationHeader(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -145,12 +145,12 @@ namespace Azure.Analytics.Purview.DataMap
             string displayText = default;
             Guid? relationGuid = default;
             AtlasTermRelationshipStatus? status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("categoryGuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("relationGuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -178,16 +178,16 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     status = new AtlasTermRelationshipStatus(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasTermCategorizationHeader(

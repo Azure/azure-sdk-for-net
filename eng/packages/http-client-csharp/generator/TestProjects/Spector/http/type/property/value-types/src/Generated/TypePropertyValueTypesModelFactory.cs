@@ -42,7 +42,7 @@ namespace _Type.Property.ValueTypes
 
         public static CollectionsIntProperty CollectionsIntProperty(IEnumerable<int> @property = default) => throw null;
 
-        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<InnerModel> @property = default) => throw null;
+        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<global::_Type.Property.ValueTypes.InnerModel> @property = default) => throw null;
 
         public static DictionaryStringProperty DictionaryStringProperty(IDictionary<string, string> @property = default) => throw null;
 

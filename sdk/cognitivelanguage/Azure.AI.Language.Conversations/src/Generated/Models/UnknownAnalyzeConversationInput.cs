@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownAnalyzeConversationInput : AnalyzeConversationInput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownAnalyzeConversationInput"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeConversationInput(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeConversationInput(AnalyzeConversationInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

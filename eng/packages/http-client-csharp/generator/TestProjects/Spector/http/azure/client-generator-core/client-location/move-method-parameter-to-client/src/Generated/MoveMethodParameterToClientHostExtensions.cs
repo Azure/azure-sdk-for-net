@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MoveMethodParameterToClientHostExtensions
     {
         public static IClientBuilder AddMoveMethodParameterToClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMoveMethodParameterToClient(this IHostApplicationBuilder host, string sectionName, Action<MoveMethodParameterToClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMoveMethodParameterToClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient.MoveMethodParameterToClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMoveMethodParameterToClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMoveMethodParameterToClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MoveMethodParameterToClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMoveMethodParameterToClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient.MoveMethodParameterToClientSettings> configureSettings) => throw null;
     }
 }

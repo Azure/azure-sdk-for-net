@@ -14,26 +14,26 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SavedFilterPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilterPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SavedFilterPayload"/>. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="description"> A human readable description of the saved filter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
         public SavedFilterPayload(string filter, string description)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-            Argument.AssertNotNull(description, nameof(description));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(filter, nameof(filter));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(description, nameof(description));
 
             Filter = filter;
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilterPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SavedFilterPayload"/>. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="description"> A human readable description of the saved filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavedFilterPayload(string filter, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavedFilterPayload(string filter, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Filter = filter;
             Description = description;

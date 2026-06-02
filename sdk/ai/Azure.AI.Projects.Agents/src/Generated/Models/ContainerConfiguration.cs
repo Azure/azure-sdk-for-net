@@ -11,22 +11,22 @@ namespace Azure.AI.Projects.Agents
     public partial class ContainerConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ContainerConfiguration"/>. </summary>
         /// <param name="image"> The container image for the hosted agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public ContainerConfiguration(string image)
         {
-            Argument.AssertNotNull(image, nameof(image));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(image, nameof(image));
 
             Image = image;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ContainerConfiguration"/>. </summary>
         /// <param name="image"> The container image for the hosted agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerConfiguration(string image, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerConfiguration(string image, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

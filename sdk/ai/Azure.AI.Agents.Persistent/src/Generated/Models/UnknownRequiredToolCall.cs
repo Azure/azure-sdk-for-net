@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownRequiredToolCall : RequiredToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRequiredToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownRequiredToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        internal UnknownRequiredToolCall(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type ?? "unknown", additionalBinaryDataProperties, id)
+        internal UnknownRequiredToolCall(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id) : base((@type ?? "unknown"), additionalBinaryDataProperties, id)
         {
         }
     }

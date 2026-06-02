@@ -15,9 +15,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class FailedLockToken
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.FailedLockToken"/>. </summary>
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         internal FailedLockToken(string lockToken, ResponseError error)
@@ -26,11 +26,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.FailedLockToken"/>. </summary>
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailedLockToken(string lockToken, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailedLockToken(string lockToken, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
             Error = error;

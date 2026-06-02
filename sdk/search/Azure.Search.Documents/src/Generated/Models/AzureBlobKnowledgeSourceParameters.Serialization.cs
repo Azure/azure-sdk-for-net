@@ -15,9 +15,9 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
-    public partial class AzureBlobKnowledgeSourceParameters : IJsonModel<AzureBlobKnowledgeSourceParameters>
+    public partial class AzureBlobKnowledgeSourceParameters : IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters"/> for deserialization. </summary>
         internal AzureBlobKnowledgeSourceParameters()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureBlobKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters.DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureBlobKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureBlobKnowledgeSourceParameters IPersistableModel<AzureBlobKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureBlobKnowledgeSourceParameters IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureBlobKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,36 +75,36 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(FolderPath))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(IsADLSGen2))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsADLSGen2))
             {
                 writer.WritePropertyName("isADLSGen2"u8);
                 writer.WriteBooleanValue(IsADLSGen2.Value);
             }
-            if (Optional.IsDefined(IngestionParameters))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IngestionParameters))
             {
                 writer.WritePropertyName("ingestionParameters"u8);
-                writer.WriteObjectValue(IngestionParameters, options);
+                writer.WriteObjectValue<KnowledgeSourceIngestionParameters>(IngestionParameters, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedResources))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(CreatedResources)))
             {
                 writer.WritePropertyName("createdResources"u8);
-                writer.WriteObjectValue(CreatedResources, options);
+                writer.WriteObjectValue<CreatedResources>(CreatedResources, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -112,9 +112,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -123,26 +123,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureBlobKnowledgeSourceParameters IJsonModel<AzureBlobKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureBlobKnowledgeSourceParameters IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureBlobKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters.DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureBlobKnowledgeSourceParameters DeserializeAzureBlobKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isADLSGen2 = default;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
             CreatedResources createdResources = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("connectionString"u8))
@@ -167,7 +167,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("folderPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         folderPath = null;
                         continue;
@@ -177,7 +177,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("isADLSGen2"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -186,26 +186,26 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("ingestionParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         ingestionParameters = null;
                         continue;
                     }
-                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
+                    ingestionParameters = global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createdResources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    createdResources = CreatedResources.DeserializeCreatedResources(prop.Value, options);
+                    createdResources = global::Azure.Search.Documents.Indexes.Models.CreatedResources.DeserializeCreatedResources(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureBlobKnowledgeSourceParameters(

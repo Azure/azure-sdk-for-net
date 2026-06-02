@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
     public partial class AcsChatParticipantAddedToThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ParticipantAdded = participantAdded;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="time"> The time at which the user was added to the thread. </param>
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
-        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             Time = time;
             AddedByCommunicationIdentifier = addedByCommunicationIdentifier;

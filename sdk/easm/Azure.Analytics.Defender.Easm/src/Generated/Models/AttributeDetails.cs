@@ -14,15 +14,15 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AttributeDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttributeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AttributeDetails"/>. </summary>
         internal AttributeDetails()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttributeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AttributeDetails"/>. </summary>
         /// <param name="attributeType"></param>
         /// <param name="attributeValue"></param>
         /// <param name="sources"></param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttributeDetails(string attributeType, string attributeValue, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttributeDetails(string attributeType, string attributeValue, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AttributeType = attributeType;
             AttributeValue = attributeValue;
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
         public string AttributeValue { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }

@@ -12,72 +12,72 @@ using Azure.AI.Projects.Evaluation;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluator Generation Job resource — a long-running job that generates rubric-based evaluator definitions from source materials. On success, the result is the persisted EvaluatorVersion. </summary>
-    public partial class EvaluatorGenerationJob : IJsonModel<EvaluatorGenerationJob>
+    public partial class EvaluatorGenerationJob : IJsonModel<global::Azure.AI.Projects.EvaluatorGenerationJob>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorGenerationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvaluatorGenerationJob(document.RootElement, options);
+                        return global::Azure.AI.Projects.EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.EvaluatorGenerationJob)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.EvaluatorGenerationJob)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluatorGenerationJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorGenerationJob IPersistableModel<EvaluatorGenerationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EvaluatorGenerationJob IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluatorGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="evaluatorGenerationJob"> The <see cref="EvaluatorGenerationJob"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="evaluatorGenerationJob"> The <see cref="global::Azure.AI.Projects.EvaluatorGenerationJob"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(EvaluatorGenerationJob evaluatorGenerationJob)
         {
-            if (evaluatorGenerationJob == null)
+            if ((evaluatorGenerationJob == null))
             {
                 return null;
             }
-            return BinaryContent.Create(evaluatorGenerationJob, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(evaluatorGenerationJob, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorGenerationJob"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.EvaluatorGenerationJob"/> from. </param>
         public static explicit operator EvaluatorGenerationJob(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEvaluatorGenerationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob(document.RootElement, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvaluatorGenerationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.EvaluatorGenerationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -85,52 +85,52 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.EvaluatorGenerationJob)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Inputs))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
+                writer.WriteObjectValue<EvaluatorGenerationInputs>(Inputs, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Result))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(Result)))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WriteObjectValue<EvaluatorVersion>(Result, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(Error)))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<FoundryOpenAIError>(Error, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedAt))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(FinishedAt)))
             {
                 writer.WritePropertyName("finished_at"u8);
                 writer.WriteNumberValue(FinishedAt.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(Usage))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(Usage)))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                writer.WriteObjectValue<EvaluatorGenerationTokenUsage>(Usage, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -138,9 +138,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -149,26 +149,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorGenerationJob IJsonModel<EvaluatorGenerationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EvaluatorGenerationJob IJsonModel<global::Azure.AI.Projects.EvaluatorGenerationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorGenerationJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.EvaluatorGenerationJob)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluatorGenerationJob(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EvaluatorGenerationJob DeserializeEvaluatorGenerationJob(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -180,7 +180,7 @@ namespace Azure.AI.Projects
             DateTimeOffset createdAt = default;
             DateTimeOffset? finishedAt = default;
             EvaluatorGenerationTokenUsage usage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -190,20 +190,20 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    inputs = EvaluatorGenerationInputs.DeserializeEvaluatorGenerationInputs(prop.Value, options);
+                    inputs = global::Azure.AI.Projects.EvaluatorGenerationInputs.DeserializeEvaluatorGenerationInputs(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    result = EvaluatorVersion.DeserializeEvaluatorVersion(prop.Value, options);
+                    result = global::Azure.AI.Projects.Evaluation.EvaluatorVersion.DeserializeEvaluatorVersion(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -213,39 +213,39 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
+                    error = global::Azure.AI.Projects.FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("finished_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    finishedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    finishedAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    usage = EvaluatorGenerationTokenUsage.DeserializeEvaluatorGenerationTokenUsage(prop.Value, options);
+                    usage = global::Azure.AI.Projects.EvaluatorGenerationTokenUsage.DeserializeEvaluatorGenerationTokenUsage(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EvaluatorGenerationJob(

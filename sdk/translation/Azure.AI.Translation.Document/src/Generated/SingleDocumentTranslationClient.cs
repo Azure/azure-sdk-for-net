@@ -17,9 +17,9 @@ namespace Azure.AI.Translation.Document
     /// <summary> The SingleDocumentTranslationClient. </summary>
     public partial class SingleDocumentTranslationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient for mocking. </summary>
@@ -30,16 +30,16 @@ namespace Azure.AI.Translation.Document
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SingleDocumentTranslationClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SingleDocumentTranslationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
         {
         }
 
@@ -47,20 +47,20 @@ namespace Azure.AI.Translation.Document
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal SingleDocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentTranslationClientOptions options)
+        internal SingleDocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DocumentTranslationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DocumentTranslationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -70,8 +70,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SingleDocumentTranslationClient(global::System.Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -79,14 +79,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SingleDocumentTranslationClient(global::System.Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient from a <see cref="SingleDocumentTranslationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SingleDocumentTranslationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public SingleDocumentTranslationClient(SingleDocumentTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -128,9 +128,9 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
@@ -138,10 +138,10 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
+                using HttpMessage message = this.CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -182,20 +182,20 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
+                using HttpMessage message = this.CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

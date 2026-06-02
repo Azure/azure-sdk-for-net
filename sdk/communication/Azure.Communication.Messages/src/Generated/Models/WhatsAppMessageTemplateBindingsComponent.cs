@@ -15,22 +15,22 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateBindingsComponent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent"/>. </summary>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsComponent(string refValue)
         {
-            Argument.AssertNotNull(refValue, nameof(refValue));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(refValue, nameof(refValue));
 
             RefValue = refValue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent"/>. </summary>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatsAppMessageTemplateBindingsComponent(string refValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatsAppMessageTemplateBindingsComponent(string refValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RefValue = refValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

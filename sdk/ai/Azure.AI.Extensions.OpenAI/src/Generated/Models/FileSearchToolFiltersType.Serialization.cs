@@ -11,51 +11,51 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileSearchToolFiltersType value) => value switch
         {
-            FileSearchToolFiltersType.Eq => "eq",
-            FileSearchToolFiltersType.Ne => "ne",
-            FileSearchToolFiltersType.Gt => "gt",
-            FileSearchToolFiltersType.Gte => "gte",
-            FileSearchToolFiltersType.Lt => "lt",
-            FileSearchToolFiltersType.Lte => "lte",
-            FileSearchToolFiltersType.In => "in",
-            FileSearchToolFiltersType.Nin => "nin",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Eq => "eq",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Ne => "ne",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Gt => "gt",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Gte => "gte",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Lt => "lt",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Lte => "lte",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.In => "in",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Nin => "nin",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FileSearchToolFiltersType ToFileSearchToolFiltersType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
             {
-                return FileSearchToolFiltersType.Eq;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Eq;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
             {
-                return FileSearchToolFiltersType.Ne;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Ne;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
             {
-                return FileSearchToolFiltersType.Gt;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Gt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
             {
-                return FileSearchToolFiltersType.Gte;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Gte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
             {
-                return FileSearchToolFiltersType.Lt;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Lt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
             {
-                return FileSearchToolFiltersType.Lte;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Lte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
             {
-                return FileSearchToolFiltersType.In;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.In;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
             {
-                return FileSearchToolFiltersType.Nin;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType.Nin;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.");
         }

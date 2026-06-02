@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal readonly partial struct ImageGenToolSize : IEquatable<ImageGenToolSize>
+    internal readonly partial struct ImageGenToolSize : IEquatable<global::Azure.AI.Projects.Agents.ImageGenToolSize>
     {
         private readonly string _value;
         private const string _1024x1024Value = "1024x1024";
@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         private const string _1536x1024Value = "1536x1024";
         private const string AutoValue = "auto";
 
-        /// <summary> Initializes a new instance of <see cref="ImageGenToolSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ImageGenToolSize"/>. </summary>
         /// <param name="value"> The value. </param>
         public ImageGenToolSize(string value)
         {
@@ -34,34 +34,34 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the Auto. </summary>
         public static ImageGenToolSize Auto { get; } = new ImageGenToolSize(AutoValue);
 
-        /// <summary> Determines if two <see cref="ImageGenToolSize"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.ImageGenToolSize"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageGenToolSize left, ImageGenToolSize right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImageGenToolSize"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.ImageGenToolSize"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageGenToolSize left, ImageGenToolSize right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.ImageGenToolSize"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImageGenToolSize(string value) => new ImageGenToolSize(value);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.ImageGenToolSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageGenToolSize?(string value) => value == null ? null : new ImageGenToolSize(value);
+        public static implicit operator ImageGenToolSize?(string value) => (value == null) ? null : new ImageGenToolSize(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImageGenToolSize other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImageGenToolSize other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImageGenToolSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImageGenToolSize other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

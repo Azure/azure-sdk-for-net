@@ -15,25 +15,25 @@ namespace Azure.AI.Translation.Document
     public partial class SupportedFileFormats
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
-        internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
+        internal SupportedFileFormats(IEnumerable<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedFileFormats(IReadOnlyList<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> list of objects. </summary>
-        public IReadOnlyList<DocumentTranslationFileFormat> Value { get; }
+        public IReadOnlyList<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat> Value { get; }
     }
 }

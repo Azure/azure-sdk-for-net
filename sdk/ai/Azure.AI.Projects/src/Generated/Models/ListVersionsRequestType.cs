@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary></summary>
-    public readonly partial struct ListVersionsRequestType : IEquatable<ListVersionsRequestType>
+    public readonly partial struct ListVersionsRequestType : IEquatable<global::Azure.AI.Projects.Evaluation.ListVersionsRequestType>
     {
         private readonly string _value;
         /// <summary> Built-in evaluator (Microsoft provided). </summary>
@@ -18,12 +18,12 @@ namespace Azure.AI.Projects.Evaluation
         private const string CustomValue = "custom";
         private const string AllValue = "all";
 
-        /// <summary> Initializes a new instance of <see cref="ListVersionsRequestType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ListVersionsRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ListVersionsRequestType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -37,34 +37,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Gets the All. </summary>
         public static ListVersionsRequestType All { get; } = new ListVersionsRequestType(AllValue);
 
-        /// <summary> Determines if two <see cref="ListVersionsRequestType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.ListVersionsRequestType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ListVersionsRequestType left, ListVersionsRequestType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ListVersionsRequestType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.ListVersionsRequestType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ListVersionsRequestType left, ListVersionsRequestType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ListVersionsRequestType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.ListVersionsRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ListVersionsRequestType(string value) => new ListVersionsRequestType(value);
 
-        /// <summary> Converts a string to a <see cref="ListVersionsRequestType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.ListVersionsRequestType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListVersionsRequestType?(string value) => value == null ? null : new ListVersionsRequestType(value);
+        public static implicit operator ListVersionsRequestType?(string value) => (value == null) ? null : new ListVersionsRequestType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ListVersionsRequestType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ListVersionsRequestType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ListVersionsRequestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ListVersionsRequestType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

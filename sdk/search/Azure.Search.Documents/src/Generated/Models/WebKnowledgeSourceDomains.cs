@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebKnowledgeSourceDomains
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceDomains"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomains"/>. </summary>
         public WebKnowledgeSourceDomains()
         {
-            AllowedDomains = new ChangeTrackingList<WebKnowledgeSourceDomain>();
-            BlockedDomains = new ChangeTrackingList<WebKnowledgeSourceDomain>();
+            AllowedDomains = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain>();
+            BlockedDomains = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceDomains"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomains"/>. </summary>
         /// <param name="allowedDomains"> Domains that are allowed for web results. </param>
         /// <param name="blockedDomains"> Domains that are blocked from web results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebKnowledgeSourceDomains(IList<WebKnowledgeSourceDomain> allowedDomains, IList<WebKnowledgeSourceDomain> blockedDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebKnowledgeSourceDomains(IList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain> allowedDomains, IList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain> blockedDomains, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AllowedDomains = allowedDomains;
             BlockedDomains = blockedDomains;
@@ -36,9 +36,9 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Domains that are allowed for web results. </summary>
-        public IList<WebKnowledgeSourceDomain> AllowedDomains { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain> AllowedDomains { get; }
 
         /// <summary> Domains that are blocked from web results. </summary>
-        public IList<WebKnowledgeSourceDomain> BlockedDomains { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain> BlockedDomains { get; }
     }
 }

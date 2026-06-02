@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
     public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -23,10 +23,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
-            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
+            DeliveryAttempts = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
-        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> additionalBinaryDataProperties, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to, additionalBinaryDataProperties)
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to, additionalBinaryDataProperties)
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DeliveryStatusDetails { get; }
 
         /// <summary> List of details of delivery attempts made. </summary>
-        public IReadOnlyList<AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
 
         /// <summary> The time at which the SMS delivery report was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }

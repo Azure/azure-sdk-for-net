@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Barcode kind. </summary>
-    public readonly partial struct DocumentBarcodeKind : IEquatable<DocumentBarcodeKind>
+    public readonly partial struct DocumentBarcodeKind : IEquatable<global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind>
     {
         private readonly string _value;
         /// <summary> QR code, as defined in ISO/IEC 18004:2015. </summary>
@@ -49,12 +49,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> MaxiCode, as defined in ISO/IEC 16023:2000. </summary>
         private const string MaxiCodeValue = "MaxiCode";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcodeKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentBarcodeKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -110,34 +110,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> MaxiCode, as defined in ISO/IEC 16023:2000. </summary>
         public static DocumentBarcodeKind MaxiCode { get; } = new DocumentBarcodeKind(MaxiCodeValue);
 
-        /// <summary> Determines if two <see cref="DocumentBarcodeKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentBarcodeKind left, DocumentBarcodeKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentBarcodeKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentBarcodeKind left, DocumentBarcodeKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentBarcodeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentBarcodeKind(string value) => new DocumentBarcodeKind(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentBarcodeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcodeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentBarcodeKind?(string value) => value == null ? null : new DocumentBarcodeKind(value);
+        public static implicit operator DocumentBarcodeKind?(string value) => (value == null) ? null : new DocumentBarcodeKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentBarcodeKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentBarcodeKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentBarcodeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentBarcodeKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

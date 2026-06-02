@@ -12,28 +12,28 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAzureAISearchToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource"/>. </summary>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
-        public ResponsesAzureAISearchToolResource(IEnumerable<ResponsesAISearchIndexResource> indexes)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
+        public ResponsesAzureAISearchToolResource(IEnumerable<global::Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource> indexes)
         {
-            Argument.AssertNotNull(indexes, nameof(indexes));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(indexes, nameof(indexes));
 
             Indexes = indexes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource"/>. </summary>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureAISearchToolResource(IList<ResponsesAISearchIndexResource> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAzureAISearchToolResource(IList<global::Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource> indexes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Indexes = indexes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,6 +43,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </summary>
-        public IList<ResponsesAISearchIndexResource> Indexes { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource> Indexes { get; }
     }
 }

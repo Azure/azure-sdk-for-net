@@ -17,40 +17,40 @@ namespace Encode.Datetime._ResponseHeader
     {
         protected ResponseHeader() => throw null;
 
-        internal ResponseHeader(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ResponseHeader(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContext context) => throw null;
 
-        public virtual Task<Response> DefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(RequestContext context) => throw null;
 
         public virtual Response Default(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc3339(RequestContext context) => throw null;
 
-        public virtual Task<Response> Rfc3339Async(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Rfc3339Async(RequestContext context) => throw null;
 
         public virtual Response Rfc3339(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Rfc3339Async(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Rfc3339Async(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc7231(RequestContext context) => throw null;
 
-        public virtual Task<Response> Rfc7231Async(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Rfc7231Async(RequestContext context) => throw null;
 
         public virtual Response Rfc7231(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Rfc7231Async(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Rfc7231Async(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UnixTimestamp(RequestContext context) => throw null;
 
-        public virtual Task<Response> UnixTimestampAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampAsync(RequestContext context) => throw null;
 
         public virtual Response UnixTimestamp(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> UnixTimestampAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

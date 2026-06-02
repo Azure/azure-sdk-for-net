@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the exhaustive KNN algorithm used during querying, which will perform brute-force search across the entire vector index. </summary>
     public partial class ExhaustiveKnnAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ExhaustiveKnnAlgorithmConfiguration(string name) : base(name, VectorSearchAlgorithmKind.ExhaustiveKnn)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ExhaustiveKnnAlgorithmConfiguration(string name) : base(name, global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmKind.ExhaustiveKnn)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to exhaustive KNN algorithm. </param>
-        internal ExhaustiveKnnAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExhaustiveKnnParameters parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal ExhaustiveKnnAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ExhaustiveKnnParameters parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

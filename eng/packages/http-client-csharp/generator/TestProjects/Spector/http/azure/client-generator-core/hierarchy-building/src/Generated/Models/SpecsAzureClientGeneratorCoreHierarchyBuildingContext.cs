@@ -9,11 +9,11 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    [ModelReaderWriterBuildable(typeof(Animal))]
-    [ModelReaderWriterBuildable(typeof(Dog))]
-    [ModelReaderWriterBuildable(typeof(Pet))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnimal))]
-    [ModelReaderWriterBuildable(typeof(UnknownPet))]
+    [ModelReaderWriterBuildableAttribute(typeof(Animal))]
+    [ModelReaderWriterBuildableAttribute(typeof(Dog))]
+    [ModelReaderWriterBuildableAttribute(typeof(Pet))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownAnimal))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownPet))]
     public partial class SpecsAzureClientGeneratorCoreHierarchyBuildingContext : ModelReaderWriterContext
     {
     }

@@ -11,19 +11,19 @@ namespace OpenAI
     internal partial class InternalReasoning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalReasoning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalReasoning"/>. </summary>
         internal InternalReasoning()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalReasoning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalReasoning"/>. </summary>
         /// <param name="effort"></param>
         /// <param name="summary"></param>
         /// <param name="generateSummary"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalReasoning(ResponseReasoningEffort? effort, ResponseReasoningSummary? summary, ResponseReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalReasoning(ResponseReasoningEffort? effort, ResponseReasoningSummary? summary, ResponseReasoningGenerateSummary? generateSummary, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Effort = effort;
             Summary = summary;

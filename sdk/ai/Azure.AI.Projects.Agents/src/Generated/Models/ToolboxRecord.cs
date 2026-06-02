@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class ToolboxRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects.Agents
             DefaultVersion = defaultVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxRecord(string id, string name, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxRecord(string id, string name, string defaultVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

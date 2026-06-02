@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class InnerModel : IJsonModel<InnerModel>
+    public partial class InnerModel : IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>
     {
         internal InnerModel() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IPersistableModel<InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        InnerModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IJsonModel<InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        InnerModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual InnerModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

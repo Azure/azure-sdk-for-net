@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes stop words from a token stream. This token filter is implemented using Apache Lucene. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
-    public partial class StopwordsTokenFilter : TokenFilter, IJsonModel<StopwordsTokenFilter>
+    public partial class StopwordsTokenFilter : TokenFilter, IJsonModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="StopwordsTokenFilter"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter"/> for deserialization. </summary>
         internal StopwordsTokenFilter()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStopwordsTokenFilter(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter.DeserializeStopwordsTokenFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StopwordsTokenFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StopwordsTokenFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StopwordsTokenFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StopwordsTokenFilter IPersistableModel<StopwordsTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (StopwordsTokenFilter)PersistableModelCreateCore(data, options);
+        StopwordsTokenFilter IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => ((StopwordsTokenFilter)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StopwordsTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StopwordsTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,19 +74,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StopwordsTokenFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Stopwords))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
                 foreach (string item in Stopwords)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -95,17 +95,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StopwordsList))
+            if (global::Azure.Search.Documents.Optional.IsDefined(StopwordsList))
             {
                 writer.WritePropertyName("stopwordsList"u8);
                 writer.WriteStringValue(StopwordsList.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(RemoveTrailingStopWords))
+            if (global::Azure.Search.Documents.Optional.IsDefined(RemoveTrailingStopWords))
             {
                 writer.WritePropertyName("removeTrailing"u8);
                 writer.WriteBooleanValue(RemoveTrailingStopWords.Value);
@@ -114,32 +114,32 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StopwordsTokenFilter IJsonModel<StopwordsTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StopwordsTokenFilter)JsonModelCreateCore(ref reader, options);
+        StopwordsTokenFilter IJsonModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((StopwordsTokenFilter)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StopwordsTokenFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStopwordsTokenFilter(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.StopwordsTokenFilter.DeserializeStopwordsTokenFilter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static StopwordsTokenFilter DeserializeStopwordsTokenFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string odataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IList<string> stopwords = default;
             StopwordsList? stopwordsList = default;
             bool? ignoreCase = default;
@@ -158,14 +158,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("stopwords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -179,7 +179,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("stopwordsList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -188,7 +188,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("ignoreCase"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -197,23 +197,23 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("removeTrailing"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     removeTrailingStopWords = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new StopwordsTokenFilter(
                 odataType,
                 name,
                 additionalBinaryDataProperties,
-                stopwords ?? new ChangeTrackingList<string>(),
+                (stopwords ?? new ChangeTrackingList<string>()),
                 stopwordsList,
                 ignoreCase,
                 removeTrailingStopWords);

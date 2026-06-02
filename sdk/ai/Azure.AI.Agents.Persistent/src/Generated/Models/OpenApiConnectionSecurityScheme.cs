@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class OpenApiConnectionSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiConnectionSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionSecurityScheme"/>. </summary>
         /// <param name="connectionId"> Connection id for Connection auth type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         public OpenApiConnectionSecurityScheme(string connectionId)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(connectionId, nameof(connectionId));
 
             ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiConnectionSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionSecurityScheme"/>. </summary>
         /// <param name="connectionId"> Connection id for Connection auth type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiConnectionSecurityScheme(string connectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiConnectionSecurityScheme(string connectionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

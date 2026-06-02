@@ -11,21 +11,21 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RankerVersionType value) => value switch
         {
-            RankerVersionType.Auto => "auto",
-            RankerVersionType.Default20241115 => "default-2024-11-15",
+            global::Azure.AI.Projects.RankerVersionType.Auto => "auto",
+            global::Azure.AI.Projects.RankerVersionType.Default20241115 => "default-2024-11-15",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RankerVersionType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static RankerVersionType ToRankerVersionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return RankerVersionType.Auto;
+                return global::Azure.AI.Projects.RankerVersionType.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default-2024-11-15"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "default-2024-11-15"))
             {
-                return RankerVersionType.Default20241115;
+                return global::Azure.AI.Projects.RankerVersionType.Default20241115;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RankerVersionType value.");
         }

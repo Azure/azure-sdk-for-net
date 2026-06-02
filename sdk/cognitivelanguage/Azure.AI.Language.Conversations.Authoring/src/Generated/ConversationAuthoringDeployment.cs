@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> The ConversationAuthoringDeployment sub-client. </summary>
     public partial class ConversationAuthoringDeployment
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ConversationAuthoringDeployment for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ConversationAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -55,9 +55,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context)
         {
@@ -65,10 +65,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                using HttpMessage message = this.CreateGetDeploymentRequest(projectName, deploymentName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -89,20 +89,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeployment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                using HttpMessage message = this.CreateGetDeploymentRequest(projectName, deploymentName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,32 +116,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            Response result = GetDeployment(projectName, deploymentName, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringProjectDeployment)result, result);
+            Response result = this.GetDeployment(projectName, deploymentName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringProjectDeployment)result), result);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            Response result = await GetDeploymentAsync(projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringProjectDeployment)result, result);
+            Response result = await this.GetDeploymentAsync(projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringProjectDeployment)result), result);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -150,8 +150,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
@@ -159,12 +159,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeployProjectRequest(projectName, deploymentName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -179,21 +179,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeployProject");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeployProjectRequest(projectName, deploymentName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProjectAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -208,15 +208,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringCreateDeploymentDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return DeployProject(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext());
+            return this.DeployProject(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -225,15 +225,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringCreateDeploymentDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringCreateDeploymentDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return await DeployProjectAsync(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeployProjectAsync(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a project deployment. </summary>
@@ -241,8 +241,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
@@ -250,11 +250,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteDeploymentRequest(projectName, deploymentName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -268,20 +268,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeployment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteDeploymentRequest(projectName, deploymentName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -295,14 +295,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return DeleteDeployment(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext());
+            return this.DeleteDeployment(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a project deployment. </summary>
@@ -310,14 +310,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return await DeleteDeploymentAsync(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDeploymentAsync(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
@@ -326,8 +326,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
@@ -335,12 +335,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -355,21 +355,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeploymentFromResources");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResourcesAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -384,15 +384,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return DeleteDeploymentFromResources(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext());
+            return this.DeleteDeploymentFromResources(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
@@ -401,15 +401,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return await DeleteDeploymentFromResourcesAsync(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDeploymentFromResourcesAsync(waitUntil, projectName, deploymentName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -424,9 +424,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, RequestContext context)
         {
@@ -434,11 +434,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -460,21 +460,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentDeleteFromResourcesStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -489,17 +489,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringDeploymentDeleteFromResourcesState)result, result);
+            Response result = this.GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringDeploymentDeleteFromResourcesState)result), result);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
@@ -507,17 +507,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringDeploymentDeleteFromResourcesState)result, result);
+            Response result = await this.GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringDeploymentDeleteFromResourcesState)result), result);
         }
 
         /// <summary>
@@ -532,9 +532,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeploymentStatus(string projectName, string deploymentName, string jobId, RequestContext context)
         {
@@ -542,11 +542,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -568,21 +568,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -597,17 +597,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringDeploymentState> GetDeploymentStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentState> GetDeploymentStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetDeploymentStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringDeploymentState)result, result);
+            Response result = this.GetDeploymentStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringDeploymentState)result), result);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
@@ -615,17 +615,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringDeploymentState>> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentState>> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetDeploymentStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringDeploymentState)result, result);
+            Response result = await this.GetDeploymentStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringDeploymentState)result), result);
         }
     }
 }

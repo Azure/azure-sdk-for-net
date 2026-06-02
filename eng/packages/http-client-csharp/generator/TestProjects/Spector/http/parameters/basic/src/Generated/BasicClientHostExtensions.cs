@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Parameters.Basic
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class BasicClientHostExtensions
     {
         public static IClientBuilder AddBasicClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddBasicClient(this IHostApplicationBuilder host, string sectionName, Action<BasicClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddBasicClient(this IHostApplicationBuilder host, string sectionName, Action<global::Parameters.Basic.BasicClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedBasicClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedBasicClient(this IHostApplicationBuilder host, string key, string sectionName, Action<BasicClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedBasicClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Parameters.Basic.BasicClientSettings> configureSettings) => throw null;
     }
 }

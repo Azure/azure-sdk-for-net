@@ -10,9 +10,9 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalTopLogProb : IJsonModel<InternalTopLogProb>
+    internal partial class InternalTopLogProb : IJsonModel<global::OpenAI.InternalTopLogProb>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalTopLogProb"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalTopLogProb"/> for deserialization. </summary>
         internal InternalTopLogProb()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalTopLogProb PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalTopLogProb(document.RootElement, options);
+                        return global::OpenAI.InternalTopLogProb.DeserializeInternalTopLogProb(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalTopLogProb)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalTopLogProb)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalTopLogProb)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalTopLogProb)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalTopLogProb>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalTopLogProb>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalTopLogProb IPersistableModel<InternalTopLogProb>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalTopLogProb IPersistableModel<global::OpenAI.InternalTopLogProb>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalTopLogProb>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalTopLogProb>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalTopLogProb>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalTopLogProb>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,10 +70,10 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalTopLogProb)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalTopLogProb)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
@@ -86,7 +86,7 @@ namespace OpenAI
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -94,9 +94,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -105,33 +105,33 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalTopLogProb IJsonModel<InternalTopLogProb>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalTopLogProb IJsonModel<global::OpenAI.InternalTopLogProb>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalTopLogProb JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalTopLogProb>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalTopLogProb)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalTopLogProb)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalTopLogProb(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalTopLogProb.DeserializeInternalTopLogProb(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalTopLogProb DeserializeInternalTopLogProb(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string token = default;
             double logprob = default;
             IList<long> bytes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("token"u8))
@@ -154,9 +154,9 @@ namespace OpenAI
                     bytes = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalTopLogProb(token, logprob, bytes, additionalBinaryDataProperties);

@@ -14,17 +14,17 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
-            Dimensions = new ChangeTrackingList<NameAndDescription>();
+            Dimensions = new ChangeTrackingList<global::Azure.Developer.LoadTesting.NameAndDescription>();
             SupportedAggregationTypes = new ChangeTrackingList<string>();
-            MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
+            MetricAvailabilities = new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricAvailability>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricDefinition"/>. </summary>
         /// <param name="dimensions"> List of dimensions. </param>
         /// <param name="description"> The metric description. </param>
         /// <param name="name"> The metric name. </param>
@@ -37,7 +37,7 @@ namespace Azure.Developer.LoadTesting
         /// frequency).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinition(IList<NameAndDescription> dimensions, string description, string name, string @namespace, AggregationType? primaryAggregationType, IList<string> supportedAggregationTypes, MetricUnit? unit, IList<MetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricDefinition(IList<global::Azure.Developer.LoadTesting.NameAndDescription> dimensions, string description, string name, string @namespace, AggregationType? primaryAggregationType, IList<string> supportedAggregationTypes, MetricUnit? unit, IList<global::Azure.Developer.LoadTesting.MetricAvailability> metricAvailabilities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Dimensions = dimensions;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> List of dimensions. </summary>
-        public IList<NameAndDescription> Dimensions { get; }
+        public IList<global::Azure.Developer.LoadTesting.NameAndDescription> Dimensions { get; }
 
         /// <summary> The metric description. </summary>
         public string Description { get; }
@@ -75,6 +75,6 @@ namespace Azure.Developer.LoadTesting
         /// Metric availability specifies the time grain (aggregation interval or
         /// frequency).
         /// </summary>
-        public IList<MetricAvailability> MetricAvailabilities { get; }
+        public IList<global::Azure.Developer.LoadTesting.MetricAvailability> MetricAvailabilities { get; }
     }
 }

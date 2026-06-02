@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class ClassifierDocumentTypeDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails"/>. </summary>
         /// <param name="sourceKind"> Type of training data source. </param>
         /// <param name="blobSource">
         /// Azure Blob Storage location containing the training data for a classifier
@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
         /// specified.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClassifierDocumentTypeDetails(ContentSourceKind? sourceKind, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClassifierDocumentTypeDetails(ContentSourceKind? sourceKind, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SourceKind = sourceKind;
             BlobSource = blobSource;

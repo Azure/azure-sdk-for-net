@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> SecurityEncryptionTypes enums. </summary>
-    public readonly partial struct SecurityEncryptionTypes : IEquatable<SecurityEncryptionTypes>
+    public readonly partial struct SecurityEncryptionTypes : IEquatable<global::Azure.Compute.Batch.SecurityEncryptionTypes>
     {
         private readonly string _value;
         /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
         private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
 
-        /// <summary> Initializes a new instance of <see cref="SecurityEncryptionTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.SecurityEncryptionTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityEncryptionTypes(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
         public static SecurityEncryptionTypes VMGuestStateOnly { get; } = new SecurityEncryptionTypes(VMGuestStateOnlyValue);
 
-        /// <summary> Determines if two <see cref="SecurityEncryptionTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.SecurityEncryptionTypes"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityEncryptionTypes left, SecurityEncryptionTypes right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SecurityEncryptionTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.SecurityEncryptionTypes"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityEncryptionTypes left, SecurityEncryptionTypes right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SecurityEncryptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.SecurityEncryptionTypes"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SecurityEncryptionTypes(string value) => new SecurityEncryptionTypes(value);
 
-        /// <summary> Converts a string to a <see cref="SecurityEncryptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.SecurityEncryptionTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityEncryptionTypes?(string value) => value == null ? null : new SecurityEncryptionTypes(value);
+        public static implicit operator SecurityEncryptionTypes?(string value) => (value == null) ? null : new SecurityEncryptionTypes(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SecurityEncryptionTypes other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SecurityEncryptionTypes other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SecurityEncryptionTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityEncryptionTypes other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

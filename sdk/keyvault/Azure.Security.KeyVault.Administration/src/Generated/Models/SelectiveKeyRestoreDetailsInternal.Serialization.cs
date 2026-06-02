@@ -14,61 +14,61 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SelectiveKeyRestoreDetailsInternal : IJsonModel<SelectiveKeyRestoreDetailsInternal>
+    internal partial class SelectiveKeyRestoreDetailsInternal : IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SelectiveKeyRestoreDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
+                        return global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal.DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Security.KeyVault.Administration.AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SelectiveKeyRestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelectiveKeyRestoreDetailsInternal IPersistableModel<SelectiveKeyRestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SelectiveKeyRestoreDetailsInternal IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SelectiveKeyRestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelectiveKeyRestoreDetailsInternal"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal"/> from. </param>
         public static explicit operator SelectiveKeyRestoreDetailsInternal(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal.DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SelectiveKeyRestoreDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,42 +76,42 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StatusDetails))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(Error))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<KeyVaultServiceError>(Error, options);
             }
-            if (Optional.IsDefined(JobId))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(StartTime))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteNumberValue(StartTime.Value, "U");
             }
-            if (Optional.IsDefined(EndTime))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteNumberValue(EndTime.Value, "U");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -119,9 +119,9 @@ namespace Azure.Security.KeyVault.Administration.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -130,26 +130,26 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelectiveKeyRestoreDetailsInternal IJsonModel<SelectiveKeyRestoreDetailsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SelectiveKeyRestoreDetailsInternal IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SelectiveKeyRestoreDetailsInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal.DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SelectiveKeyRestoreDetailsInternal DeserializeSelectiveKeyRestoreDetailsInternal(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -159,12 +159,12 @@ namespace Azure.Security.KeyVault.Administration.Models
             string jobId = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -178,12 +178,12 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         error = null;
                         continue;
                     }
-                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(prop.Value, options);
+                    error = global::Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError.DeserializeKeyVaultServiceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -193,26 +193,26 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startTime = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         endTime = null;
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endTime = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SelectiveKeyRestoreDetailsInternal(

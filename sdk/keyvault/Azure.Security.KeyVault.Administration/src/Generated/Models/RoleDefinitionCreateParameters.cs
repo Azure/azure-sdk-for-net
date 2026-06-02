@@ -13,19 +13,19 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RoleDefinitionCreateParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionCreateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionCreateParameters"/>. </summary>
         /// <param name="properties"> Role definition properties. </param>
         public RoleDefinitionCreateParameters(RoleDefinitionProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionCreateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionCreateParameters"/>. </summary>
         /// <param name="properties"> Role definition properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleDefinitionCreateParameters(RoleDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleDefinitionCreateParameters(RoleDefinitionProperties properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

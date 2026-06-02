@@ -12,11 +12,11 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownConversationContact : ConversationContact
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownConversationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationContact(string id, MessagePlatformKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownConversationContact(string id, MessagePlatformKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.Override
     {
         protected RequireOptionalParameter() => throw null;
 
-        internal RequireOptionalParameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal RequireOptionalParameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RequireOptional(string param1, string param2 = default, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RequireOptionalAsync(string param1, string param2 = default, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RequireOptionalAsync(string param1, string param2 = default, RequestContext context = null) => throw null;
 
         public virtual Response RequireOptional(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RequireOptionalAsync(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RequireOptionalAsync(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
     }
 }

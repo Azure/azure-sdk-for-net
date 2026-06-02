@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="SyntheticReplacementPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskPolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CharacterMaskPolicyType"/>, <see cref="Azure.AI.Language.Text.SyntheticReplacementPolicyType"/>, <see cref="Azure.AI.Language.Text.NoMaskPolicyType"/>, and <see cref="Azure.AI.Language.Text.EntityMaskPolicyType"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBaseRedactionPolicy))]
-    public abstract partial class BaseRedactionPolicy : IJsonModel<BaseRedactionPolicy>
+    [PersistableModelProxyAttribute(typeof(UnknownBaseRedactionPolicy))]
+    public abstract partial class BaseRedactionPolicy : IJsonModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BaseRedactionPolicy"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.BaseRedactionPolicy"/> for deserialization. </summary>
         internal BaseRedactionPolicy()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BaseRedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBaseRedactionPolicy(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.BaseRedactionPolicy.DeserializeBaseRedactionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseRedactionPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseRedactionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BaseRedactionPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseRedactionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BaseRedactionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseRedactionPolicy IPersistableModel<BaseRedactionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BaseRedactionPolicy IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BaseRedactionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BaseRedactionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BaseRedactionPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseRedactionPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("policyKind"u8);
             writer.WriteStringValue(PolicyKind.ToString());
-            if (Optional.IsCollectionDefined(EntityTypes))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(EntityTypes))
             {
                 writer.WritePropertyName("entityTypes"u8);
                 writer.WriteStartArray();
@@ -93,17 +93,17 @@ namespace Azure.AI.Language.Text
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyName))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(IsDefaultPolicy))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(IsDefaultPolicy))
             {
                 writer.WritePropertyName("isDefaultPolicy"u8);
                 writer.WriteBooleanValue(IsDefaultPolicy.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -111,9 +111,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -122,26 +122,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseRedactionPolicy IJsonModel<BaseRedactionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BaseRedactionPolicy IJsonModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BaseRedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.BaseRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BaseRedactionPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.BaseRedactionPolicy)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseRedactionPolicy(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.BaseRedactionPolicy.DeserializeBaseRedactionPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BaseRedactionPolicy DeserializeBaseRedactionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -150,16 +150,16 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "characterMask":
-                        return CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
+                        return global::Azure.AI.Language.Text.CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
                     case "syntheticReplacement":
-                        return SyntheticReplacementPolicyType.DeserializeSyntheticReplacementPolicyType(element, options);
+                        return global::Azure.AI.Language.Text.SyntheticReplacementPolicyType.DeserializeSyntheticReplacementPolicyType(element, options);
                     case "noMask":
-                        return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
+                        return global::Azure.AI.Language.Text.NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
                     case "entityMask":
-                        return EntityMaskPolicyType.DeserializeEntityMaskPolicyType(element, options);
+                        return global::Azure.AI.Language.Text.EntityMaskPolicyType.DeserializeEntityMaskPolicyType(element, options);
                 }
             }
-            return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);
+            return global::Azure.AI.Language.Text.UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);
         }
     }
 }

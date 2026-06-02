@@ -14,27 +14,27 @@ namespace Azure.AI.Agents.Persistent
     public partial class ToolApproval
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolApproval"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolApproval"/>. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="approve"> The approval boolean value to be submitted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
         public ToolApproval(string toolCallId, bool approve)
         {
-            Argument.AssertNotNull(toolCallId, nameof(toolCallId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(toolCallId, nameof(toolCallId));
 
             ToolCallId = toolCallId;
             Approve = approve;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolApproval"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolApproval"/>. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="approve"> The approval boolean value to be submitted. </param>
         /// <param name="headers"> Headers to be attached to the approval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolApproval(string toolCallId, bool approve, IDictionary<string, string> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolApproval(string toolCallId, bool approve, IDictionary<string, string> headers, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToolCallId = toolCallId;
             Approve = approve;

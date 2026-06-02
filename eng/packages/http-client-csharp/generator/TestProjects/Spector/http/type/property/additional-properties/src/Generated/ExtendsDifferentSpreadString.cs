@@ -18,24 +18,24 @@ namespace _Type.Property.AdditionalProperties
     {
         protected ExtendsDifferentSpreadString() => throw null;
 
-        internal ExtendsDifferentSpreadString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ExtendsDifferentSpreadString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<DifferentSpreadStringDerived> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.AdditionalProperties.DifferentSpreadStringDerived> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DifferentSpreadStringDerived>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.AdditionalProperties.DifferentSpreadStringDerived>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(DifferentSpreadStringDerived body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(DifferentSpreadStringDerived body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(DifferentSpreadStringDerived body, CancellationToken cancellationToken = default) => throw null;
     }
 }

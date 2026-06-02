@@ -19,40 +19,40 @@ namespace Encode.Bytes._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<DefaultBytesProperty> Default(DefaultBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Bytes.DefaultBytesProperty> Default(DefaultBytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DefaultBytesProperty>> DefaultAsync(DefaultBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Bytes.DefaultBytesProperty>> DefaultAsync(DefaultBytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Base64(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Base64Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Base64Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Base64BytesProperty> Base64(Base64BytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Bytes.Base64BytesProperty> Base64(Base64BytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Base64BytesProperty>> Base64Async(Base64BytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Bytes.Base64BytesProperty>> Base64Async(Base64BytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Base64url(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Base64urlAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Base64urlAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Base64urlBytesProperty> Base64url(Base64urlBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Bytes.Base64urlBytesProperty> Base64url(Base64urlBytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Base64urlBytesProperty>> Base64urlAsync(Base64urlBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Bytes.Base64urlBytesProperty>> Base64urlAsync(Base64urlBytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Base64urlArray(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Base64urlArrayAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Base64urlArrayAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Base64urlArrayBytesProperty> Base64urlArray(Base64urlArrayBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Bytes.Base64urlArrayBytesProperty> Base64urlArray(Base64urlArrayBytesProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Base64urlArrayBytesProperty>> Base64urlArrayAsync(Base64urlArrayBytesProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Bytes.Base64urlArrayBytesProperty>> Base64urlArrayAsync(Base64urlArrayBytesProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

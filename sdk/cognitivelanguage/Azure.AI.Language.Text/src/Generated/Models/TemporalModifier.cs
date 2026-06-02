@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
-    public readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
+    public readonly partial struct TemporalModifier : IEquatable<global::Azure.AI.Language.Text.TemporalModifier>
     {
         private readonly string _value;
         /// <summary> After an approximate time. </summary>
@@ -51,12 +51,12 @@ namespace Azure.AI.Language.Text
         /// <summary> More than a specific time. </summary>
         private const string MoreValue = "More";
 
-        /// <summary> Initializes a new instance of <see cref="TemporalModifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalModifier"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TemporalModifier(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -115,34 +115,34 @@ namespace Azure.AI.Language.Text
         /// <summary> More than a specific time. </summary>
         public static TemporalModifier More { get; } = new TemporalModifier(MoreValue);
 
-        /// <summary> Determines if two <see cref="TemporalModifier"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.TemporalModifier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemporalModifier left, TemporalModifier right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TemporalModifier"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.TemporalModifier"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemporalModifier left, TemporalModifier right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TemporalModifier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.TemporalModifier"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TemporalModifier(string value) => new TemporalModifier(value);
 
-        /// <summary> Converts a string to a <see cref="TemporalModifier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.TemporalModifier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TemporalModifier?(string value) => value == null ? null : new TemporalModifier(value);
+        public static implicit operator TemporalModifier?(string value) => (value == null) ? null : new TemporalModifier(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TemporalModifier other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TemporalModifier other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TemporalModifier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TemporalModifier other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

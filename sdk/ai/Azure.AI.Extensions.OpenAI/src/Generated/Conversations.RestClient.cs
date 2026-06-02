@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateCreateConversationRequest(BinaryContent content, string userIsolationKey, RequestOptions options)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
             uri.AppendPath("/openai/v1/conversations", false);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -39,7 +39,7 @@ namespace Azure.AI.Extensions.OpenAI
             uri.AppendPath(conversationId, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }

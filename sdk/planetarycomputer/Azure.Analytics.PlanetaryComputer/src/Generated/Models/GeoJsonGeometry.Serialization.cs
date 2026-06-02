@@ -16,12 +16,12 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Supported geometry types include:
     /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
     /// Used for spatial filtering in STAC.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.PlanetaryComputer.PointGeometry"/>, <see cref="Azure.Analytics.PlanetaryComputer.PolygonGeometry"/>, <see cref="Azure.Analytics.PlanetaryComputer.MultiPolygon"/>, <see cref="Azure.Analytics.PlanetaryComputer.MultiLineString"/>, <see cref="Azure.Analytics.PlanetaryComputer.LineString"/>, and <see cref="Azure.Analytics.PlanetaryComputer.MultiPoint"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownGeoJsonGeometry))]
-    public abstract partial class GeoJsonGeometry : IJsonModel<GeoJsonGeometry>
+    [PersistableModelProxyAttribute(typeof(UnknownGeoJsonGeometry))]
+    public abstract partial class GeoJsonGeometry : IJsonModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>
     {
-        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry"/> for deserialization. </summary>
         internal GeoJsonGeometry()
         {
         }
@@ -30,48 +30,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGeoJsonGeometry(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry.DeserializeGeoJsonGeometry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GeoJsonGeometry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonGeometry IPersistableModel<GeoJsonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GeoJsonGeometry IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GeoJsonGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GeoJsonGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,14 +79,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(BoundingBox))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -104,9 +104,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -115,26 +115,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonGeometry IJsonModel<GeoJsonGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GeoJsonGeometry IJsonModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGeoJsonGeometry(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry.DeserializeGeoJsonGeometry(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static GeoJsonGeometry DeserializeGeoJsonGeometry(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -143,20 +143,20 @@ namespace Azure.Analytics.PlanetaryComputer
                 switch (discriminator.GetString())
                 {
                     case "Point":
-                        return PointGeometry.DeserializePointGeometry(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.PointGeometry.DeserializePointGeometry(element, options);
                     case "Polygon":
-                        return PolygonGeometry.DeserializePolygonGeometry(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.PolygonGeometry.DeserializePolygonGeometry(element, options);
                     case "MultiPolygon":
-                        return MultiPolygon.DeserializeMultiPolygon(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.MultiPolygon.DeserializeMultiPolygon(element, options);
                     case "MultiLineString":
-                        return MultiLineString.DeserializeMultiLineString(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.MultiLineString.DeserializeMultiLineString(element, options);
                     case "LineString":
-                        return LineString.DeserializeLineString(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.LineString.DeserializeLineString(element, options);
                     case "MultiPoint":
-                        return MultiPoint.DeserializeMultiPoint(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.MultiPoint.DeserializeMultiPoint(element, options);
                 }
             }
-            return UnknownGeoJsonGeometry.DeserializeUnknownGeoJsonGeometry(element, options);
+            return global::Azure.Analytics.PlanetaryComputer.UnknownGeoJsonGeometry.DeserializeUnknownGeoJsonGeometry(element, options);
         }
     }
 }

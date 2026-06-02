@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents a sentence target and the assessments or target objects related to it. </summary>
-    public partial class SentenceTarget : IJsonModel<SentenceTarget>
+    public partial class SentenceTarget : IJsonModel<global::Azure.AI.Language.Text.SentenceTarget>
     {
-        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceTarget"/> for deserialization. </summary>
         internal SentenceTarget()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SentenceTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSentenceTarget(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.SentenceTarget.DeserializeSentenceTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentenceTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentenceTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SentenceTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentenceTarget IPersistableModel<SentenceTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SentenceTarget IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SentenceTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SentenceTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.SentenceTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,15 +73,15 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentenceTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceTarget)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
+            writer.WriteObjectValue<TargetConfidenceScoreLabel>(ConfidenceScores, options);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -92,10 +92,10 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (TargetRelation item in Relations)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<TargetRelation>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -103,9 +103,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -114,26 +114,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentenceTarget IJsonModel<SentenceTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SentenceTarget IJsonModel<global::Azure.AI.Language.Text.SentenceTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SentenceTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentenceTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceTarget)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentenceTarget(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.SentenceTarget.DeserializeSentenceTarget(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SentenceTarget DeserializeSentenceTarget(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -142,8 +142,8 @@ namespace Azure.AI.Language.Text
             int offset = default;
             int length = default;
             string text = default;
-            IList<TargetRelation> relations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.TargetRelation> relations = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sentiment"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(prop.Value, options);
+                    confidenceScores = global::Azure.AI.Language.Text.TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("offset"u8))
@@ -173,17 +173,17 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("relations"u8))
                 {
-                    List<TargetRelation> array = new List<TargetRelation>();
+                    List<global::Azure.AI.Language.Text.TargetRelation> array = new List<global::Azure.AI.Language.Text.TargetRelation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TargetRelation.DeserializeTargetRelation(item, options));
+                        array.Add(global::Azure.AI.Language.Text.TargetRelation.DeserializeTargetRelation(item, options));
                     }
                     relations = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SentenceTarget(

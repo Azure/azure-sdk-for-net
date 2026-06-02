@@ -15,26 +15,26 @@ namespace Azure.Communication.Messages
     public partial class ActionGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroup"/>. </summary>
         /// <param name="title"> Title of the ActionGroup. </param>
         /// <param name="items"> Array of items in ActionGroup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="items"/> is null. </exception>
-        public ActionGroup(string title, IEnumerable<ActionGroupItem> items)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="title"/> or <paramref name="items"/> is null. </exception>
+        public ActionGroup(string title, IEnumerable<global::Azure.Communication.Messages.ActionGroupItem> items)
         {
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(items, nameof(items));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(title, nameof(title));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(items, nameof(items));
 
             Title = title;
             Items = items.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroup"/>. </summary>
         /// <param name="title"> Title of the ActionGroup. </param>
         /// <param name="items"> Array of items in ActionGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroup(string title, IList<ActionGroupItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionGroup(string title, IList<global::Azure.Communication.Messages.ActionGroupItem> items, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Items = items;
@@ -45,6 +45,6 @@ namespace Azure.Communication.Messages
         public string Title { get; }
 
         /// <summary> Array of items in ActionGroup. </summary>
-        public IList<ActionGroupItem> Items { get; }
+        public IList<global::Azure.Communication.Messages.ActionGroupItem> Items { get; }
     }
 }

@@ -11,9 +11,9 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The prompt agent definition. </summary>
-    public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition, IJsonModel<DeclarativeAgentDefinition>
+    public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition, IJsonModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition"/> for deserialization. </summary>
         internal DeclarativeAgentDefinition()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeclarativeAgentDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeclarativeAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeclarativeAgentDefinition IPersistableModel<DeclarativeAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeclarativeAgentDefinition)PersistableModelCreateCore(data, options);
+        DeclarativeAgentDefinition IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DeclarativeAgentDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeclarativeAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeclarativeAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,69 +71,69 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Instructions))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
-            if (Optional.IsDefined(Temperature))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(TopP))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(TopP))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(TopP.Value);
             }
-            if (Optional.IsDefined(ReasoningOptions))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(ReasoningOptions))
             {
                 writer.WritePropertyName("reasoning"u8);
-                writer.WriteObjectValue(ReasoningOptions, options);
+                writer.WriteObjectValue<ResponseReasoningOptions>(ReasoningOptions, options);
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (ResponseTool item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ResponseTool>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(ToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(ToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(ToolChoice))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsDefined(TextOptions))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(TextOptions))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(TextOptions, options);
+                writer.WriteObjectValue<ResponseTextOptions>(TextOptions, options);
             }
-            if (Optional.IsCollectionDefined(StructuredInputs))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(StructuredInputs))
             {
                 writer.WritePropertyName("structured_inputs"u8);
                 writer.WriteStartObject();
                 foreach (var item in StructuredInputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<StructuredInputDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -141,41 +141,41 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeclarativeAgentDefinition IJsonModel<DeclarativeAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeclarativeAgentDefinition)JsonModelCreateCore(ref reader, options);
+        DeclarativeAgentDefinition IJsonModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DeclarativeAgentDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeclarativeAgentDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DeclarativeAgentDefinition DeserializeDeclarativeAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string model = default;
             string instructions = default;
             float? temperature = default;
             float? topP = default;
             ResponseReasoningOptions reasoningOptions = default;
-            IList<ResponseTool> tools = default;
+            IList<global::OpenAI.Responses.ResponseTool> tools = default;
             BinaryData toolChoice = default;
             ResponseTextOptions textOptions = default;
-            IDictionary<string, StructuredInputDefinition> structuredInputs = default;
+            IDictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -185,11 +185,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("rai_config"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    contentFilterConfiguration = global::Azure.AI.Projects.Agents.ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         instructions = null;
                         continue;
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         temperature = null;
                         continue;
@@ -219,7 +219,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         topP = null;
                         continue;
@@ -239,11 +239,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tool_choice"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -253,21 +253,21 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("structured_inputs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, StructuredInputDefinition> dictionary = new Dictionary<string, StructuredInputDefinition>();
+                    Dictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition> dictionary = new Dictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Agents.StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
                     }
                     structuredInputs = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DeclarativeAgentDefinition(
@@ -279,10 +279,10 @@ namespace Azure.AI.Projects.Agents
                 temperature,
                 topP,
                 reasoningOptions,
-                tools ?? new ChangeTrackingList<ResponseTool>(),
+                (tools ?? new ChangeTrackingList<global::OpenAI.Responses.ResponseTool>()),
                 toolChoice,
                 textOptions,
-                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
+                (structuredInputs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition>()));
         }
     }
 }

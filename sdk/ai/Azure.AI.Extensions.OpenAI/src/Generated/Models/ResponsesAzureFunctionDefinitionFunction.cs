@@ -12,27 +12,27 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAzureFunctionDefinitionFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionDefinitionFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinitionFunction"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public ResponsesAzureFunctionDefinitionFunction(string name, IDictionary<string, BinaryData> parameters)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public ResponsesAzureFunctionDefinitionFunction(string name, IDictionary<string, global::System.BinaryData> parameters)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(parameters, nameof(parameters));
 
             Name = name;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionDefinitionFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinitionFunction"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureFunctionDefinitionFunction(string name, string description, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAzureFunctionDefinitionFunction(string name, string description, IDictionary<string, global::System.BinaryData> parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -48,8 +48,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The parameters the functions accepts, described as a JSON Schema object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -72,6 +72,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; }
+        public IDictionary<string, global::System.BinaryData> Parameters { get; }
     }
 }

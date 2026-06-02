@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Statistics for the queue. </summary>
-    public partial class RouterQueueStatistics : IJsonModel<RouterQueueStatistics>
+    public partial class RouterQueueStatistics : IJsonModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>
     {
-        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueueStatistics"/> for deserialization. </summary>
         internal RouterQueueStatistics()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterQueueStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRouterQueueStatistics(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.RouterQueueStatistics.DeserializeRouterQueueStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterQueueStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterQueueStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RouterQueueStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterQueueStatistics IPersistableModel<RouterQueueStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RouterQueueStatistics IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RouterQueueStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RouterQueueStatistics"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Communication.JobRouter.RouterQueueStatistics"/> from. </param>
         public static explicit operator RouterQueueStatistics(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRouterQueueStatistics(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Communication.JobRouter.RouterQueueStatistics.DeserializeRouterQueueStatistics(document.RootElement, global::Azure.Communication.JobRouter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RouterQueueStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,26 +81,26 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterQueueStatistics)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("queueId"u8);
             writer.WriteStringValue(QueueId);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (Optional.IsCollectionDefined(EstimatedWaitTimes))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(EstimatedWaitTimes))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
-                WriteEstimatedWaitTimes(writer, options);
+                this.WriteEstimatedWaitTimes(writer, options);
             }
-            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(LongestJobWaitTimeMinutes))
             {
                 writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
                 writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -108,9 +108,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -119,34 +119,34 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RouterQueueStatistics IJsonModel<RouterQueueStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RouterQueueStatistics IJsonModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouterQueueStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RouterQueueStatistics)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRouterQueueStatistics(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.RouterQueueStatistics.DeserializeRouterQueueStatistics(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RouterQueueStatistics DeserializeRouterQueueStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string queueId = default;
             int length = default;
-            IDictionary<int, TimeSpan> estimatedWaitTimes = default;
+            IDictionary<int, global::System.TimeSpan> estimatedWaitTimes = default;
             double? longestJobWaitTimeMinutes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("queueId"u8))
@@ -166,19 +166,19 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("longestJobWaitTimeMinutes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     longestJobWaitTimeMinutes = prop.Value.GetDouble();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes ?? new ChangeTrackingDictionary<int, TimeSpan>(), longestJobWaitTimeMinutes, additionalBinaryDataProperties);
+            return new RouterQueueStatistics(queueId, length, (estimatedWaitTimes ?? new ChangeTrackingDictionary<int, global::System.TimeSpan>()), longestJobWaitTimeMinutes, additionalBinaryDataProperties);
         }
     }
 }

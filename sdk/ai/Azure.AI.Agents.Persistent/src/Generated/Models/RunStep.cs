@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStep
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStep"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStep"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
         /// <param name="assistantId"> The ID of the agent associated with the run step. </param>
@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStep"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStep"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.run.step'. </param>
         /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
@@ -67,10 +67,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="usage"> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStep(string id, string @object, RunStepType @type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, RunStepCompletionUsage usage, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStep(string id, string @object, RunStepType @type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, RunStepCompletionUsage usage, IReadOnlyDictionary<string, string> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             Type = @type;
             AssistantId = assistantId;
             ThreadId = threadId;

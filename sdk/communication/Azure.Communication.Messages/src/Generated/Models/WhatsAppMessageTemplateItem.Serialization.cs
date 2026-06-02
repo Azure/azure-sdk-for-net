@@ -14,9 +14,9 @@ using Azure.Communication.Messages;
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
-    public partial class WhatsAppMessageTemplateItem : MessageTemplateItem, IJsonModel<WhatsAppMessageTemplateItem>
+    public partial class WhatsAppMessageTemplateItem : MessageTemplateItem, IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem"/> for deserialization. </summary>
         internal WhatsAppMessageTemplateItem()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTemplateItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWhatsAppMessageTemplateItem(document.RootElement, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem.DeserializeWhatsAppMessageTemplateItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WhatsAppMessageTemplateItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppMessageTemplateItem IPersistableModel<WhatsAppMessageTemplateItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (WhatsAppMessageTemplateItem)PersistableModelCreateCore(data, options);
+        WhatsAppMessageTemplateItem IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WhatsAppMessageTemplateItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WhatsAppMessageTemplateItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WhatsAppMessageTemplateItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,21 +74,21 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Content))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Content);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Content))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Content))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -96,26 +96,26 @@ namespace Azure.Communication.Messages.Models.Channels
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppMessageTemplateItem IJsonModel<WhatsAppMessageTemplateItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WhatsAppMessageTemplateItem)JsonModelCreateCore(ref reader, options);
+        WhatsAppMessageTemplateItem IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WhatsAppMessageTemplateItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTemplateItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWhatsAppMessageTemplateItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem.DeserializeWhatsAppMessageTemplateItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WhatsAppMessageTemplateItem DeserializeWhatsAppMessageTemplateItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -123,7 +123,7 @@ namespace Azure.Communication.Messages.Models.Channels
             string language = default;
             MessageTemplateStatus status = default;
             CommunicationMessagesChannel kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             BinaryData content = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,16 +149,16 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    content = BinaryData.FromString(prop.Value.GetRawText());
+                    content = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WhatsAppMessageTemplateItem(

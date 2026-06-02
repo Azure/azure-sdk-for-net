@@ -13,22 +13,22 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence is set based on cron expression. </summary>
     public partial class RecurrenceWithCron : LoadTestingRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceWithCron"/>. </summary>
         /// <param name="cronExpression"> Cron expression for the recurrence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
-        public RecurrenceWithCron(string cronExpression) : base(Frequency.Cron)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
+        public RecurrenceWithCron(string cronExpression) : base(global::Azure.Developer.LoadTesting.Frequency.Cron)
         {
-            Argument.AssertNotNull(cronExpression, nameof(cronExpression));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(cronExpression, nameof(cronExpression));
 
             CronExpression = cronExpression;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceWithCron"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cronExpression"> Cron expression for the recurrence. </param>
-        internal RecurrenceWithCron(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cronExpression) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
+        internal RecurrenceWithCron(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string cronExpression) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             CronExpression = cronExpression;
         }

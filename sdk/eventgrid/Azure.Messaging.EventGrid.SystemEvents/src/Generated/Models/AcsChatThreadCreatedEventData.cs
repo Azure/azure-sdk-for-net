@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreated event. </summary>
     public partial class AcsChatThreadCreatedEventData : AcsChatThreadEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
         /// <param name="properties"> The thread properties. </param>
@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
+            Participants = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <param name="retentionPolicy"> The retention policy for the chat. </param>
-        internal AcsChatThreadCreatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<AcsChatThreadParticipantProperties> participants, AcsChatRetentionPolicy retentionPolicy) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        internal AcsChatThreadCreatedEventData(string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants, AcsChatRetentionPolicy retentionPolicy) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             Properties = properties;
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public IReadOnlyDictionary<string, string> Metadata { get; }
 
         /// <summary> The list of properties of participants who are part of the thread. </summary>
-        public IReadOnlyList<AcsChatThreadParticipantProperties> Participants { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> Participants { get; }
 
         /// <summary> The retention policy for the chat. </summary>
         public AcsChatRetentionPolicy RetentionPolicy { get; }

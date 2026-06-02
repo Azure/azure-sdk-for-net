@@ -12,14 +12,14 @@ namespace Azure.AI.Projects.Agents
     public partial class OpenAPIFunctionEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAPIFunctionEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenAPIFunctionEntry"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAPIFunctionEntry(string name, string description, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAPIFunctionEntry(string name, string description, IDictionary<string, global::System.BinaryData> parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -29,8 +29,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The parameters the functions accepts, described as a JSON Schema object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -53,6 +53,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; }
+        public IDictionary<string, global::System.BinaryData> Parameters { get; }
     }
 }

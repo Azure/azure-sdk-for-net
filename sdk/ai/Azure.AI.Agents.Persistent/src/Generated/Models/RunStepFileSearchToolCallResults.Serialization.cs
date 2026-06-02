@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The results of the file search. </summary>
-    public partial class RunStepFileSearchToolCallResults : IJsonModel<RunStepFileSearchToolCallResults>
+    public partial class RunStepFileSearchToolCallResults : IJsonModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults"/> for deserialization. </summary>
         internal RunStepFileSearchToolCallResults()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepFileSearchToolCallResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepFileSearchToolCallResults(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults.DeserializeRunStepFileSearchToolCallResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepFileSearchToolCallResults)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepFileSearchToolCallResults)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepFileSearchToolCallResults>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepFileSearchToolCallResults IPersistableModel<RunStepFileSearchToolCallResults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStepFileSearchToolCallResults IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepFileSearchToolCallResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepFileSearchToolCallResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,24 +73,24 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepFileSearchToolCallResults)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RankingOptions))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptions, options);
+                writer.WriteObjectValue<FileSearchRankingOptions>(RankingOptions, options);
             }
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (RunStepFileSearchToolCallResult item in Results)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<RunStepFileSearchToolCallResult>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -98,9 +98,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -109,56 +109,56 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepFileSearchToolCallResults IJsonModel<RunStepFileSearchToolCallResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStepFileSearchToolCallResults IJsonModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepFileSearchToolCallResults JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepFileSearchToolCallResults)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepFileSearchToolCallResults(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults.DeserializeRunStepFileSearchToolCallResults(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepFileSearchToolCallResults DeserializeRunStepFileSearchToolCallResults(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             FileSearchRankingOptions rankingOptions = default;
-            IReadOnlyList<RunStepFileSearchToolCallResult> results = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> results = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ranking_options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    rankingOptions = FileSearchRankingOptions.DeserializeFileSearchRankingOptions(prop.Value, options);
+                    rankingOptions = global::Azure.AI.Agents.Persistent.FileSearchRankingOptions.DeserializeFileSearchRankingOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
                 {
-                    List<RunStepFileSearchToolCallResult> array = new List<RunStepFileSearchToolCallResult>();
+                    List<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> array = new List<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunStepFileSearchToolCallResult.DeserializeRunStepFileSearchToolCallResult(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult.DeserializeRunStepFileSearchToolCallResult(item, options));
                     }
                     results = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RunStepFileSearchToolCallResults(rankingOptions, results, additionalBinaryDataProperties);

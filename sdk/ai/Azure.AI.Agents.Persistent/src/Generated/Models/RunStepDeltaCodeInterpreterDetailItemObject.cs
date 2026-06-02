@@ -14,15 +14,15 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepDeltaCodeInterpreterDetailItemObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
         internal RunStepDeltaCodeInterpreterDetailItemObject()
         {
-            Outputs = new ChangeTrackingList<RunStepDeltaCodeInterpreterOutput>();
+            Outputs = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
         /// <param name="input"> The input into the Code Interpreter tool call. </param>
         /// <param name="outputs">
         /// The outputs from the Code Interpreter tool call. Code Interpreter can output one or more
@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// different object type.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaCodeInterpreterDetailItemObject(string input, IReadOnlyList<RunStepDeltaCodeInterpreterOutput> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaCodeInterpreterDetailItemObject(string input, IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Input = input;
             Outputs = outputs;
@@ -45,6 +45,6 @@ namespace Azure.AI.Agents.Persistent
         /// items, including text (`logs`) or images (`image`). Each of these are represented by a
         /// different object type.
         /// </summary>
-        public IReadOnlyList<RunStepDeltaCodeInterpreterOutput> Outputs { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput> Outputs { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The kind of asset. </summary>
-    public readonly partial struct AuditTrailItemKind : IEquatable<AuditTrailItemKind>
+    public readonly partial struct AuditTrailItemKind : IEquatable<global::Azure.Analytics.Defender.Easm.AuditTrailItemKind>
     {
         private readonly string _value;
         private const string AsValue = "as";
@@ -23,12 +23,12 @@ namespace Azure.Analytics.Defender.Easm
         private const string PageValue = "page";
         private const string SslCertValue = "sslCert";
 
-        /// <summary> Initializes a new instance of <see cref="AuditTrailItemKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuditTrailItemKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -57,34 +57,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the SslCert. </summary>
         public static AuditTrailItemKind SslCert { get; } = new AuditTrailItemKind(SslCertValue);
 
-        /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuditTrailItemKind left, AuditTrailItemKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItemKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuditTrailItemKind left, AuditTrailItemKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AuditTrailItemKind(string value) => new AuditTrailItemKind(value);
 
-        /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuditTrailItemKind?(string value) => value == null ? null : new AuditTrailItemKind(value);
+        public static implicit operator AuditTrailItemKind?(string value) => (value == null) ? null : new AuditTrailItemKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AuditTrailItemKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AuditTrailItemKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AuditTrailItemKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AuditTrailItemKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

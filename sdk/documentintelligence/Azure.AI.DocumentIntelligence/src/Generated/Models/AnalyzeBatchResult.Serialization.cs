@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Batch document analysis result. </summary>
-    public partial class AnalyzeBatchResult : IJsonModel<AnalyzeBatchResult>
+    public partial class AnalyzeBatchResult : IJsonModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult"/> for deserialization. </summary>
         internal AnalyzeBatchResult()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeBatchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeBatchResult(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult.DeserializeAnalyzeBatchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeBatchResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeBatchResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeBatchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeBatchResult IPersistableModel<AnalyzeBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeBatchResult IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeBatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,10 +74,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeBatchResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("succeededCount"u8);
             writer.WriteNumberValue(SucceededCount);
@@ -85,17 +85,17 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteNumberValue(FailedCount);
             writer.WritePropertyName("skippedCount"u8);
             writer.WriteNumberValue(SkippedCount);
-            if (Optional.IsCollectionDefined(Details))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (AnalyzeBatchResultDetails item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AnalyzeBatchResultDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -103,9 +103,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -114,34 +114,34 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeBatchResult IJsonModel<AnalyzeBatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeBatchResult IJsonModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeBatchResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeBatchResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeBatchResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult.DeserializeAnalyzeBatchResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeBatchResult DeserializeAnalyzeBatchResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int succeededCount = default;
             int failedCount = default;
             int skippedCount = default;
-            IReadOnlyList<AnalyzeBatchResultDetails> details = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> details = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("succeededCount"u8))
@@ -161,32 +161,32 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("details"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AnalyzeBatchResultDetails> array = new List<AnalyzeBatchResultDetails>();
+                    List<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> array = new List<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeBatchResultDetails.DeserializeAnalyzeBatchResultDetails(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails.DeserializeAnalyzeBatchResultDetails(item, options));
                     }
                     details = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details ?? new ChangeTrackingList<AnalyzeBatchResultDetails>(), additionalBinaryDataProperties);
+            return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, (details ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails>()), additionalBinaryDataProperties);
         }
 
         /// <summary> Converts a response to a AnalyzeBatchResult using the LRO result path. </summary>
         /// <param name="response"> The response from the service. </param>
         internal static AnalyzeBatchResult FromLroResponse(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAnalyzeBatchResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult.DeserializeAnalyzeBatchResult(document.RootElement.GetProperty("result"), global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.WireOptions);
         }
     }
 }

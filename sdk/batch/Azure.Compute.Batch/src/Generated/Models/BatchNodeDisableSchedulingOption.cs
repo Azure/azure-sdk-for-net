@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodeDisableSchedulingOption enums. </summary>
-    public readonly partial struct BatchNodeDisableSchedulingOption : IEquatable<BatchNodeDisableSchedulingOption>
+    public readonly partial struct BatchNodeDisableSchedulingOption : IEquatable<global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption>
     {
         private readonly string _value;
         /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks may run again on other Compute Nodes, or when Task scheduling is re-enabled on this Compute Node. Enter offline state as soon as Tasks have been terminated. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Enter offline state when all Tasks have completed. </summary>
         private const string TaskCompletionValue = "taskcompletion";
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeDisableSchedulingOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Enter offline state when all Tasks have completed. </summary>
         public static BatchNodeDisableSchedulingOption TaskCompletion { get; } = new BatchNodeDisableSchedulingOption(TaskCompletionValue);
 
-        /// <summary> Determines if two <see cref="BatchNodeDisableSchedulingOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchNodeDisableSchedulingOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeDisableSchedulingOption(string value) => new BatchNodeDisableSchedulingOption(value);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeDisableSchedulingOption?(string value) => value == null ? null : new BatchNodeDisableSchedulingOption(value);
+        public static implicit operator BatchNodeDisableSchedulingOption?(string value) => (value == null) ? null : new BatchNodeDisableSchedulingOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchNodeDisableSchedulingOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchNodeDisableSchedulingOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchNodeDisableSchedulingOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchNodeDisableSchedulingOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

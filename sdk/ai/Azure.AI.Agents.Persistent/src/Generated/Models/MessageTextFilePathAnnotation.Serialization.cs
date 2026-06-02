@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A citation within the message that points to a file located at a specific path. </summary>
-    public partial class MessageTextFilePathAnnotation : MessageTextAnnotation, IJsonModel<MessageTextFilePathAnnotation>
+    public partial class MessageTextFilePathAnnotation : MessageTextAnnotation, IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation"/> for deserialization. </summary>
         internal MessageTextFilePathAnnotation()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTextAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMessageTextFilePathAnnotation(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageTextFilePathAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageTextFilePathAnnotation IPersistableModel<MessageTextFilePathAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => (MessageTextFilePathAnnotation)PersistableModelCreateCore(data, options);
+        MessageTextFilePathAnnotation IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MessageTextFilePathAnnotation)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageTextFilePathAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MessageTextFilePathAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,20 +73,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue(InternalDetails, options);
-            if (Optional.IsDefined(StartIndex))
+            writer.WriteObjectValue<InternalMessageTextFilePathDetails>(InternalDetails, options);
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(StartIndex))
             {
                 writer.WritePropertyName("start_index"u8);
                 writer.WriteNumberValue(StartIndex.Value);
             }
-            if (Optional.IsDefined(EndIndex))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(EndIndex))
             {
                 writer.WritePropertyName("end_index"u8);
                 writer.WriteNumberValue(EndIndex.Value);
@@ -95,32 +95,32 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageTextFilePathAnnotation IJsonModel<MessageTextFilePathAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MessageTextFilePathAnnotation)JsonModelCreateCore(ref reader, options);
+        MessageTextFilePathAnnotation IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MessageTextFilePathAnnotation)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTextAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageTextFilePathAnnotation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageTextFilePathAnnotation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MessageTextFilePathAnnotation DeserializeMessageTextFilePathAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "file_path";
             string text = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InternalMessageTextFilePathDetails internalDetails = default;
             int? startIndex = default;
             int? endIndex = default;
@@ -138,12 +138,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("file_path"u8))
                 {
-                    internalDetails = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(prop.Value, options);
+                    internalDetails = global::Azure.AI.Agents.Persistent.InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("start_index"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -152,16 +152,16 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("end_index"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     endIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MessageTextFilePathAnnotation(

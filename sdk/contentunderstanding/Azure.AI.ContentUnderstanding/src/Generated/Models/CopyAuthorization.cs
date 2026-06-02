@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class CopyAuthorization
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CopyAuthorization"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.CopyAuthorization"/>. </summary>
         /// <param name="source"> Full path of the source analyzer. </param>
         /// <param name="targetAzureResourceId"> Azure resource ID of the target location to copy to. </param>
         /// <param name="expiresAt"> Date/time when the copy authorization expires. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.ContentUnderstanding
             ExpiresAt = expiresAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopyAuthorization"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.CopyAuthorization"/>. </summary>
         /// <param name="source"> Full path of the source analyzer. </param>
         /// <param name="targetAzureResourceId"> Azure resource ID of the target location to copy to. </param>
         /// <param name="expiresAt"> Date/time when the copy authorization expires. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyAuthorization(string source, string targetAzureResourceId, DateTimeOffset expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopyAuthorization(string source, string targetAzureResourceId, DateTimeOffset expiresAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             TargetAzureResourceId = targetAzureResourceId;

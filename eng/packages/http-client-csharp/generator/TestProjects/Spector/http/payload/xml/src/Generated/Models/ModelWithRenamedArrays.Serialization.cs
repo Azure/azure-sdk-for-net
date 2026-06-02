@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithRenamedArrays : IPersistableModel<ModelWithRenamedArrays>, IXmlSerializable
+    public partial class ModelWithRenamedArrays : IPersistableModel<global::Payload.Xml.ModelWithRenamedArrays>, IXmlSerializable
     {
         internal ModelWithRenamedArrays() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithRenamedArrays>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithRenamedArrays>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithRenamedArrays IPersistableModel<ModelWithRenamedArrays>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithRenamedArrays IPersistableModel<global::Payload.Xml.ModelWithRenamedArrays>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithRenamedArrays>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithRenamedArrays>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithRenamedArrays"> The <see cref="ModelWithRenamedArrays"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithRenamedArrays"> The <see cref="global::Payload.Xml.ModelWithRenamedArrays"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRenamedArrays modelWithRenamedArrays) => throw null;
 
         public static explicit operator ModelWithRenamedArrays(Response response) => throw null;

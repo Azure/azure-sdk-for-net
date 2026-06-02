@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentSingleLabelClassificationEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSingleLabelClassificationEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult"/>. </summary>
         /// <param name="expectedClass"> Represents the document's expected class. </param>
         /// <param name="predictedClass"> Represents the document's predicted class. </param>
         internal DocumentSingleLabelClassificationEvalResult(string expectedClass, string predictedClass)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text.Authoring
             PredictedClass = predictedClass;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSingleLabelClassificationEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult"/>. </summary>
         /// <param name="expectedClass"> Represents the document's expected class. </param>
         /// <param name="predictedClass"> Represents the document's predicted class. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSingleLabelClassificationEvalResult(string expectedClass, string predictedClass, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSingleLabelClassificationEvalResult(string expectedClass, string predictedClass, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedClass = expectedClass;
             PredictedClass = predictedClass;

@@ -12,41 +12,41 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Client options for <see cref="ConversationAnalysisAuthoring"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoring"/>. </summary>
     public partial class ConversationAnalysisAuthoringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
+        private const global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview;
 
         /// <summary> Initializes a new instance of ConversationAnalysisAuthoringOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ConversationAnalysisAuthoringClientOptions(ServiceVersion version = LatestVersion)
+        public ConversationAnalysisAuthoringClientOptions(global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_04_01 => "2023-04-01",
-                ServiceVersion.V2025_11_01 => "2025-11-01",
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
-                ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
+                global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_01 => "2023-04-01",
+                global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01 => "2025-11-01",
+                global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                global::Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of ConversationAnalysisAuthoringOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ConversationAnalysisAuthoringClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-11-15-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

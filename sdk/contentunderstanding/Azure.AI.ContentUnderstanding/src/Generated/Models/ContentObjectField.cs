@@ -13,20 +13,20 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Object field extracted from the content. </summary>
     public partial class ContentObjectField : ContentField
     {
-        /// <summary> Initializes a new instance of <see cref="ContentObjectField"/>. </summary>
-        internal ContentObjectField() : base(ContentFieldType.Object)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentObjectField"/>. </summary>
+        internal ContentObjectField() : base(global::Azure.AI.ContentUnderstanding.ContentFieldType.Object)
         {
-            ValueObject = new ChangeTrackingDictionary<string, ContentField>();
+            ValueObject = new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentObjectField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentObjectField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueObject"> Object field value. </param>
-        internal ContentObjectField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ContentField> valueObject) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
+        internal ContentObjectField(ContentFieldType @type, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> valueObject) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
         {
             ValueObject = valueObject;
         }

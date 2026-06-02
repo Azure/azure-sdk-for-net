@@ -11,22 +11,22 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation rule action for continuous evaluation. </summary>
     public partial class ContinuousEvaluationRuleAction : EvaluationRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="ContinuousEvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction"/>. </summary>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evalId"/> is null. </exception>
-        public ContinuousEvaluationRuleAction(string evalId) : base(EvaluationRuleActionType.ContinuousEvaluation)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="evalId"/> is null. </exception>
+        public ContinuousEvaluationRuleAction(string evalId) : base(global::Azure.AI.Projects.EvaluationRuleActionType.ContinuousEvaluation)
         {
-            Argument.AssertNotNull(evalId, nameof(evalId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evalId, nameof(evalId));
 
             EvalId = evalId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContinuousEvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
-        internal ContinuousEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, int? maxHourlyRuns) : base(@type, additionalBinaryDataProperties)
+        internal ContinuousEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string evalId, int? maxHourlyRuns) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             MaxHourlyRuns = maxHourlyRuns;

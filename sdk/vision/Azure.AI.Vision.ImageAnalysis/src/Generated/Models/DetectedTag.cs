@@ -17,9 +17,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DetectedTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTag"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
         /// Higher values indicating higher confidence.
@@ -31,14 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTag"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="name"> Name of the entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTag(float confidence, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTag(float confidence, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Confidence = confidence;
             Name = name;

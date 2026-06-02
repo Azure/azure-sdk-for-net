@@ -15,25 +15,25 @@ namespace Azure.Communication.Messages
     public partial class AddParticipantsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.AddParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
-        internal AddParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants)
+        internal AddParticipantsResult(IEnumerable<global::Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants)
         {
             InvalidParticipants = invalidParticipants.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.AddParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddParticipantsResult(IList<UpdateParticipantsResult> invalidParticipants, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddParticipantsResult(IList<global::Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InvalidParticipants = invalidParticipants;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of Ids with Errors if failed to be added. </summary>
-        public IList<UpdateParticipantsResult> InvalidParticipants { get; }
+        public IList<global::Azure.Communication.Messages.UpdateParticipantsResult> InvalidParticipants { get; }
     }
 }

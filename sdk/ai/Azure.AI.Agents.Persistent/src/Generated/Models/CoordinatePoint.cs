@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class CoordinatePoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CoordinatePoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CoordinatePoint"/>. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
         internal CoordinatePoint(int x, int y)
@@ -25,11 +25,11 @@ namespace Azure.AI.Agents.Persistent
             Y = y;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CoordinatePoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CoordinatePoint"/>. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CoordinatePoint(int x, int y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CoordinatePoint(int x, int y, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

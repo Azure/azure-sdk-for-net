@@ -11,21 +11,21 @@ namespace Azure.AI.Projects
     public partial class InputFileContentParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputFileContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InputFileContentParam"/>. </summary>
         public InputFileContentParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputFileContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InputFileContentParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_file`. </param>
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
         /// <param name="fileUri"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, global::System.Uri fileUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;
@@ -48,6 +48,6 @@ namespace Azure.AI.Projects
         public string FileData { get; set; }
 
         /// <summary> Gets or sets the FileUri. </summary>
-        public Uri FileUri { get; set; }
+        public global::System.Uri FileUri { get; set; }
     }
 }

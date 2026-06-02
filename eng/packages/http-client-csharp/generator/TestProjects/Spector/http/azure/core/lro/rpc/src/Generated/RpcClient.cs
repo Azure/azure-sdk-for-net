@@ -17,23 +17,23 @@ namespace Specs.Azure.Core.Lro.Rpc
 {
     public partial class RpcClient
     {
-        public RpcClient() : this(new Uri("http://localhost:3000"), new RpcClientOptions()) => throw null;
+        public RpcClient() : this(new global::System.Uri("http://localhost:3000"), new RpcClientOptions()) => throw null;
 
-        internal RpcClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RpcClientOptions options) => throw null;
+        internal RpcClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, RpcClientOptions options) => throw null;
 
-        public RpcClient(Uri endpoint, RpcClientOptions options) : this(null, endpoint, options) => throw null;
+        public RpcClient(global::System.Uri endpoint, RpcClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public RpcClient(RpcClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public RpcClient(RpcClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Operation<BinaryData> LongRunningRpc(WaitUntil waitUntil, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Operation<global::System.BinaryData> LongRunningRpc(WaitUntil waitUntil, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Operation<BinaryData>> LongRunningRpcAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Operation<global::System.BinaryData>> LongRunningRpcAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Operation<GenerationResult> LongRunningRpc(WaitUntil waitUntil, GenerationOptions body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<global::Specs.Azure.Core.Lro.Rpc.GenerationResult> LongRunningRpc(WaitUntil waitUntil, GenerationOptions body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Operation<GenerationResult>> LongRunningRpcAsync(WaitUntil waitUntil, GenerationOptions body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Operation<global::Specs.Azure.Core.Lro.Rpc.GenerationResult>> LongRunningRpcAsync(WaitUntil waitUntil, GenerationOptions body, CancellationToken cancellationToken = default) => throw null;
     }
 }

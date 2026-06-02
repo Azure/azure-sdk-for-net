@@ -14,19 +14,19 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxHardwareProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxHardwareProfile"/>. </summary>
         internal DevBoxHardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxHardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
         /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxHardwareProfile(SkuName? skuName, int? vcpUs, int? memoryGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxHardwareProfile(SkuName? skuName, int? vcpUs, int? memoryGB, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SkuName = skuName;
             VCPUs = vcpUs;

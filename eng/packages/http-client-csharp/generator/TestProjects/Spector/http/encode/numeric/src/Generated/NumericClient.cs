@@ -14,14 +14,14 @@ namespace Encode.Numeric
 {
     public partial class NumericClient
     {
-        public NumericClient() : this(new Uri("http://localhost:3000"), new NumericClientOptions()) => throw null;
+        public NumericClient() : this(new global::System.Uri("http://localhost:3000"), new NumericClientOptions()) => throw null;
 
-        internal NumericClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NumericClientOptions options) => throw null;
+        internal NumericClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NumericClientOptions options) => throw null;
 
-        public NumericClient(Uri endpoint, NumericClientOptions options) : this(null, endpoint, options) => throw null;
+        public NumericClient(global::System.Uri endpoint, NumericClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NumericClient(NumericClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NumericClient(NumericClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

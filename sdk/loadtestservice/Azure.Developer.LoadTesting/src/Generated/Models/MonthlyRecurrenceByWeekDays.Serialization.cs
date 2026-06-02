@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
-    public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence, IJsonModel<MonthlyRecurrenceByWeekDays>
+    public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence, IJsonModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/> for deserialization. </summary>
         internal MonthlyRecurrenceByWeekDays()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonthlyRecurrenceByWeekDays>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonthlyRecurrenceByWeekDays IPersistableModel<MonthlyRecurrenceByWeekDays>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonthlyRecurrenceByWeekDays)PersistableModelCreateCore(data, options);
+        MonthlyRecurrenceByWeekDays IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MonthlyRecurrenceByWeekDays)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonthlyRecurrenceByWeekDays>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonthlyRecurrenceByWeekDays>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,13 +73,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(WeekDaysInMonth))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(WeekDaysInMonth))
             {
                 writer.WritePropertyName("weekDaysInMonth"u8);
                 writer.WriteStartArray();
@@ -97,33 +97,33 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonthlyRecurrenceByWeekDays IJsonModel<MonthlyRecurrenceByWeekDays>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonthlyRecurrenceByWeekDays)JsonModelCreateCore(ref reader, options);
+        MonthlyRecurrenceByWeekDays IJsonModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MonthlyRecurrenceByWeekDays)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MonthlyRecurrenceByWeekDays DeserializeMonthlyRecurrenceByWeekDays(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             Frequency frequency = default;
             RecurrenceEnd recurrenceEnd = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<WeekDays> weekDaysInMonth = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Developer.LoadTesting.WeekDays> weekDaysInMonth = default;
             int index = default;
             int interval = default;
             foreach (var prop in element.EnumerateObject())
@@ -135,20 +135,20 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("recurrenceEnd"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    recurrenceEnd = RecurrenceEnd.DeserializeRecurrenceEnd(prop.Value, options);
+                    recurrenceEnd = global::Azure.Developer.LoadTesting.RecurrenceEnd.DeserializeRecurrenceEnd(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("weekDaysInMonth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WeekDays> array = new List<WeekDays>();
+                    List<global::Azure.Developer.LoadTesting.WeekDays> array = new List<global::Azure.Developer.LoadTesting.WeekDays>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new WeekDays(item.GetString()));
@@ -166,16 +166,16 @@ namespace Azure.Developer.LoadTesting
                     interval = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MonthlyRecurrenceByWeekDays(
                 frequency,
                 recurrenceEnd,
                 additionalBinaryDataProperties,
-                weekDaysInMonth ?? new ChangeTrackingList<WeekDays>(),
+                (weekDaysInMonth ?? new ChangeTrackingList<global::Azure.Developer.LoadTesting.WeekDays>()),
                 index,
                 interval);
         }

@@ -20,7 +20,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> The DataClient sub-client. </summary>
     public partial class DataClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DataClient for mocking. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DataClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DataClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -57,9 +57,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileMatrixDefinitions(string tileMatrixSetId, RequestContext context)
         {
@@ -67,9 +67,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
+                using HttpMessage message = this.CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -89,19 +89,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrixDefinitions");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
+                using HttpMessage message = this.CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -114,29 +114,29 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Return Matrix Definition. </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileMatrixSet> GetTileMatrixDefinitions(string tileMatrixSetId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet> GetTileMatrixDefinitions(string tileMatrixSetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetTileMatrixDefinitions(tileMatrixSetId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TileMatrixSet)result, result);
+            Response result = this.GetTileMatrixDefinitions(tileMatrixSetId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TileMatrixSet)result), result);
         }
 
         /// <summary> Return Matrix Definition. </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileMatrixSet>> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TileMatrixSet>> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetTileMatrixDefinitionsAsync(tileMatrixSetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TileMatrixSet)result, result);
+            Response result = await this.GetTileMatrixDefinitionsAsync(tileMatrixSetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TileMatrixSet)result), result);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileMatrices(RequestContext context)
         {
@@ -156,7 +156,7 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileMatricesRequest(context);
+                using HttpMessage message = this.CreateGetTileMatricesRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -175,15 +175,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileMatricesAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTileMatricesAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrices");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileMatricesRequest(context);
+                using HttpMessage message = this.CreateGetTileMatricesRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -231,9 +231,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
@@ -241,10 +241,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -292,20 +292,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAssetStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -346,16 +346,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetStatisticsResponse> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.AssetStatisticsResponse> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((AssetStatisticsResponse)result, result);
+            Response result = this.GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AssetStatisticsResponse)result), result);
         }
 
         /// <summary> Per Asset statistics. </summary>
@@ -389,16 +389,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetStatisticsResponse>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.AssetStatisticsResponse>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AssetStatisticsResponse)result, result);
+            Response result = await this.GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AssetStatisticsResponse)result), result);
         }
 
         /// <summary>
@@ -412,9 +412,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAvailableAssets(string collectionId, string itemId, RequestContext context)
         {
@@ -422,10 +422,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAvailableAssetsRequest(collectionId, itemId, context);
+                using HttpMessage message = this.CreateGetAvailableAssetsRequest(collectionId, itemId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -446,20 +446,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAvailableAssetsAsync(string collectionId, string itemId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetAvailableAssetsAsync(string collectionId, string itemId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAvailableAssets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAvailableAssetsRequest(collectionId, itemId, context);
+                using HttpMessage message = this.CreateGetAvailableAssetsRequest(collectionId, itemId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -480,9 +480,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetBounds(string collectionId, string itemId, RequestContext context)
         {
@@ -490,10 +490,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetBoundsRequest(collectionId, itemId, context);
+                using HttpMessage message = this.CreateGetBoundsRequest(collectionId, itemId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -514,20 +514,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBoundsAsync(string collectionId, string itemId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetBoundsAsync(string collectionId, string itemId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetBounds");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetBoundsRequest(collectionId, itemId, context);
+                using HttpMessage message = this.CreateGetBoundsRequest(collectionId, itemId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -541,32 +541,32 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemBounds> GetBounds(string collectionId, string itemId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.StacItemBounds> GetBounds(string collectionId, string itemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetBounds(collectionId, itemId, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemBounds)result, result);
+            Response result = this.GetBounds(collectionId, itemId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((StacItemBounds)result), result);
         }
 
         /// <summary> Return all Bounds. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemBounds>> GetBoundsAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.StacItemBounds>> GetBoundsAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetBoundsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemBounds)result, result);
+            Response result = await this.GetBoundsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((StacItemBounds)result), result);
         }
 
         /// <summary>
@@ -600,9 +600,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CropGeoJson(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
@@ -610,12 +610,12 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -656,22 +656,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -705,18 +705,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> CropGeoJson(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from a geojson feature. </summary>
@@ -743,18 +743,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -788,9 +788,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
@@ -798,12 +798,12 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -844,22 +844,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJsonWithDimensions");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -893,18 +893,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from a geojson feature. </summary>
@@ -931,18 +931,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -985,9 +985,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetGeoJsonStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
@@ -995,11 +995,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1049,21 +1049,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetGeoJsonStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1106,17 +1106,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
+            Response result = this.GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((StacItemStatisticsGeoJson)result), result);
         }
 
         /// <summary> Get Statistics from a geojson feature. </summary>
@@ -1152,17 +1152,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
+            Response result = await this.GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((StacItemStatisticsGeoJson)result), result);
         }
 
         /// <summary>
@@ -1177,9 +1177,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
@@ -1187,10 +1187,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = this.CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1212,20 +1212,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetInfoGeoJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = this.CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1240,16 +1240,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoGeoJsonFeature> GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature> GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetInfoGeoJson(collectionId, itemId, assets, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
+            Response result = this.GetInfoGeoJson(collectionId, itemId, assets, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerInfoGeoJsonFeature)result), result);
         }
 
         /// <summary> Return Info Geojson. </summary>
@@ -1257,16 +1257,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoGeoJsonFeature>> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetInfoGeoJsonAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
+            Response result = await this.GetInfoGeoJsonAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerInfoGeoJsonFeature)result), result);
         }
 
         /// <summary>
@@ -1281,9 +1281,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
@@ -1291,10 +1291,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = this.CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1316,20 +1316,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetDetails");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = this.CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1344,16 +1344,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoMapResponse> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerInfoMapResponse> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerInfoMapResponse)result, result);
+            Response result = this.GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerInfoMapResponse)result), result);
         }
 
         /// <summary> Return dataset's basic info. </summary>
@@ -1361,16 +1361,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoMapResponse>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerInfoMapResponse>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerInfoMapResponse)result, result);
+            Response result = await this.GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerInfoMapResponse)result), result);
         }
 
         /// <summary>
@@ -1408,9 +1408,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -1418,11 +1418,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1467,21 +1467,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPart");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1519,17 +1519,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from part of a dataset. </summary>
@@ -1560,17 +1560,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -1608,9 +1608,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -1618,11 +1618,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1667,21 +1667,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPartWithDimensions");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1719,17 +1719,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from part of a dataset. </summary>
@@ -1760,17 +1760,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -1794,9 +1794,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
@@ -1804,10 +1804,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
+                using HttpMessage message = this.CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1838,20 +1838,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
+                using HttpMessage message = this.CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1875,16 +1875,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetPoint(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+            Response result = this.GetPoint(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerCoreModelsResponsesPoint)result), result);
         }
 
         /// <summary> Get Point value for a dataset. </summary>
@@ -1901,16 +1901,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetPointAsync(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+            Response result = await this.GetPointAsync(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerCoreModelsResponsesPoint)result), result);
         }
 
         /// <summary>
@@ -1943,9 +1943,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -1953,10 +1953,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1996,20 +1996,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreview");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2042,16 +2042,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create preview of a dataset. </summary>
@@ -2077,16 +2077,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -2119,9 +2119,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -2129,11 +2129,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2173,21 +2173,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreviewWithFormat");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2220,17 +2220,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create preview of a dataset. </summary>
@@ -2256,17 +2256,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -2280,9 +2280,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateStaticImage(string collectionId, RequestContent content, RequestContext context = null)
         {
@@ -2290,10 +2290,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
+                using HttpMessage message = this.CreateCreateStaticImageRequest(collectionId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2314,20 +2314,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateStaticImageAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateStaticImageAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CreateStaticImage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
+                using HttpMessage message = this.CreateCreateStaticImageRequest(collectionId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2341,32 +2341,32 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="body"> Image request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ImageResponse> CreateStaticImage(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.ImageResponse> CreateStaticImage(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateStaticImage(collectionId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ImageResponse)result, result);
+            Response result = this.CreateStaticImage(collectionId, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ImageResponse)result), result);
         }
 
         /// <summary> Create a new image export. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="body"> Image request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ImageResponse>> CreateStaticImageAsync(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.ImageResponse>> CreateStaticImageAsync(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateStaticImageAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ImageResponse)result, result);
+            Response result = await this.CreateStaticImageAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ImageResponse)result), result);
         }
 
         /// <summary>
@@ -2380,9 +2380,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetStaticImage(string collectionId, string id, RequestContext context)
         {
@@ -2390,10 +2390,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
+                using HttpMessage message = this.CreateGetStaticImageRequest(collectionId, id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2414,20 +2414,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStaticImage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
+                using HttpMessage message = this.CreateGetStaticImageRequest(collectionId, id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2441,32 +2441,32 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetStaticImage(string collectionId, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetStaticImage(string collectionId, string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = GetStaticImage(collectionId, id, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetStaticImage(collectionId, id, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Fetch an existing image export by ID. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetStaticImageAsync(string collectionId, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetStaticImageAsync(string collectionId, string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = await GetStaticImageAsync(collectionId, id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetStaticImageAsync(collectionId, id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -2507,9 +2507,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
@@ -2517,10 +2517,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2568,20 +2568,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
+                using HttpMessage message = this.CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2622,16 +2622,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerStacItemStatistics> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerStacItemStatistics)result, result);
+            Response result = this.GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerStacItemStatistics)result), result);
         }
 
         /// <summary> Merged assets statistics. </summary>
@@ -2665,16 +2665,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerStacItemStatistics>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerStacItemStatistics)result, result);
+            Response result = await this.GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerStacItemStatistics)result), result);
         }
 
         /// <summary>
@@ -2715,9 +2715,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -2725,11 +2725,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2777,21 +2777,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2832,17 +2832,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = this.GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TileJsonMetadata)result), result);
         }
 
         /// <summary> Return the TileJson Tilematrixsetid As a path. </summary>
@@ -2876,17 +2876,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = await this.GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TileJsonMetadata)result), result);
         }
 
         /// <summary>
@@ -2936,9 +2936,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
         /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
@@ -2946,12 +2946,12 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
+                using HttpMessage message = this.CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3008,22 +3008,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
         /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
+                using HttpMessage message = this.CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3073,18 +3073,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
         /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create map tile from a dataset. </summary>
@@ -3127,18 +3127,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
         /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -3176,9 +3176,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -3186,11 +3186,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3235,21 +3235,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetWmtsCapabilities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3287,17 +3287,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> OGC WMTS endpoint. </summary>
@@ -3328,17 +3328,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -3353,9 +3353,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassMapLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
@@ -3363,9 +3363,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-                using HttpMessage message = CreateGetClassMapLegendRequest(classmapName, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetClassMapLegendRequest(classmapName, trimStart, trimEnd, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3387,19 +3387,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassMapLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetClassMapLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetClassMapLegend");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-                using HttpMessage message = CreateGetClassMapLegendRequest(classmapName, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetClassMapLegendRequest(classmapName, trimStart, trimEnd, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3414,15 +3414,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ClassMapLegendResponse> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.ClassMapLegendResponse> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            return Response.FromValue((ClassMapLegendResponse)result, result);
+            Response result = this.GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ClassMapLegendResponse)result), result);
         }
 
         /// <summary> Generate values and color swatches mapping for a given classmap. </summary>
@@ -3430,15 +3430,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ClassMapLegendResponse>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.ClassMapLegendResponse>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = await GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ClassMapLegendResponse)result, result);
+            Response result = await this.GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ClassMapLegendResponse)result), result);
         }
 
         /// <summary>
@@ -3470,9 +3470,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIntervalLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
@@ -3480,9 +3480,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-                using HttpMessage message = CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3521,19 +3521,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetIntervalLegend");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-                using HttpMessage message = CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3567,17 +3567,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<IList<IList<long>>>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            List<IList<IList<long>>> value = new List<IList<IList<long>>>();
+            Response result = this.GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
+            List<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>> value = new List<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyList<IList<IList<long>>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>)value), result);
         }
 
         /// <summary>
@@ -3604,17 +3604,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<IList<IList<long>>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<IList<IList<long>>> value = new List<IList<IList<long>>>();
+            Response result = await this.GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>> value = new List<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyList<IList<IList<long>>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<long>>>)value), result);
         }
 
         /// <summary>
@@ -3634,9 +3634,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetLegend(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
@@ -3644,9 +3644,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-                using HttpMessage message = CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3673,19 +3673,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLegendAsync(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetLegendAsync(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetLegend");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-                using HttpMessage message = CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
+                using HttpMessage message = this.CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3707,15 +3707,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetLegend(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetLegend(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-            Response result = GetLegend(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetLegend(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -3730,15 +3730,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetLegendAsync(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetLegendAsync(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-            Response result = await GetLegendAsync(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetLegendAsync(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -3762,9 +3762,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
         {
@@ -3772,9 +3772,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
+                using HttpMessage message = this.CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3805,19 +3805,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
+                using HttpMessage message = this.CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3841,22 +3841,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<StacItemPointAsset>> GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>> GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext());
-            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            Response result = this.GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset> value = new List<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset.DeserializeStacItemPointAsset(item, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>)value), result);
         }
 
         /// <summary> Return a list of assets for a given point. </summary>
@@ -3873,22 +3873,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<StacItemPointAsset>>> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>>> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            Response result = await this.GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset> value = new List<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset.DeserializeStacItemPointAsset(item, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset>)value), result);
         }
 
         /// <summary>
@@ -3923,9 +3923,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
@@ -3933,11 +3933,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
+                using HttpMessage message = this.CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3979,21 +3979,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForTile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
+                using HttpMessage message = this.CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4028,24 +4028,24 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<TilerAssetGeoJson>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
-            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            Response result = this.GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson> value = new List<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>)value), result);
         }
 
         /// <summary> Return a list of assets which overlap a given tile. </summary>
@@ -4073,24 +4073,24 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<TilerAssetGeoJson>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            Response result = await this.GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson> value = new List<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>)value), result);
         }
 
         /// <summary>
@@ -4103,9 +4103,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsSearchInfo(string searchId, RequestContext context)
         {
@@ -4113,9 +4113,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-                using HttpMessage message = CreateGetMosaicsSearchInfoRequest(searchId, context);
+                using HttpMessage message = this.CreateGetMosaicsSearchInfoRequest(searchId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4135,19 +4135,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsSearchInfoAsync(string searchId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsSearchInfoAsync(string searchId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsSearchInfo");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-                using HttpMessage message = CreateGetMosaicsSearchInfoRequest(searchId, context);
+                using HttpMessage message = this.CreateGetMosaicsSearchInfoRequest(searchId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4160,29 +4160,29 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Get Search query metadata. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerStacSearchRegistration> GetMosaicsSearchInfo(string searchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration> GetMosaicsSearchInfo(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = GetMosaicsSearchInfo(searchId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerStacSearchRegistration)result, result);
+            Response result = this.GetMosaicsSearchInfo(searchId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerStacSearchRegistration)result), result);
         }
 
         /// <summary> Get Search query metadata. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerStacSearchRegistration>> GetMosaicsSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration>> GetMosaicsSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = await GetMosaicsSearchInfoAsync(searchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerStacSearchRegistration)result, result);
+            Response result = await this.GetMosaicsSearchInfoAsync(searchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerStacSearchRegistration)result), result);
         }
 
         /// <summary>
@@ -4195,8 +4195,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RegisterMosaicsSearch(RequestContent content, RequestContext context = null)
         {
@@ -4204,9 +4204,9 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRegisterMosaicsSearchRequest(content, context);
+                using HttpMessage message = this.CreateRegisterMosaicsSearchRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4226,18 +4226,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RegisterMosaicsSearchAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RegisterMosaicsSearchAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.RegisterMosaicsSearch");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRegisterMosaicsSearchRequest(content, context);
+                using HttpMessage message = this.CreateRegisterMosaicsSearchRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4259,23 +4259,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, global::System.BinaryData> query = default, IDictionary<string, global::System.BinaryData> filter = default, string datetime = default, IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
-                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
+                (collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>()),
                 intersects,
-                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (query ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (filter ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 datetime,
-                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
+                (sortBy?.ToList() as IList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> ?? new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension>()),
                 filterLanguage,
                 metadata,
                 default);
-            Response result = RegisterMosaicsSearch(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
+            Response result = this.RegisterMosaicsSearch(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TilerMosaicSearchRegistrationResult)result), result);
         }
 
         /// <summary> Register a Search query. </summary>
@@ -4290,23 +4290,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, global::System.BinaryData> query = default, IDictionary<string, global::System.BinaryData> filter = default, string datetime = default, IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
-                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
+                (collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>()),
                 intersects,
-                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (query ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (filter ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 datetime,
-                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
+                (sortBy?.ToList() as IList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> ?? new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension>()),
                 filterLanguage,
                 metadata,
                 default);
-            Response result = await RegisterMosaicsSearchAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
+            Response result = await this.RegisterMosaicsSearchAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TilerMosaicSearchRegistrationResult)result), result);
         }
 
         /// <summary>
@@ -4356,9 +4356,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -4366,10 +4366,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4426,20 +4426,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4489,16 +4489,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = this.GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TileJsonMetadata)result), result);
         }
 
         /// <summary> Return TileJSON document for a searchId. </summary>
@@ -4541,16 +4541,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = await this.GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TileJsonMetadata)result), result);
         }
 
         /// <summary>
@@ -4607,9 +4607,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -4617,11 +4617,11 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4685,21 +4685,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-                using HttpMessage message = CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4756,17 +4756,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create map tile. </summary>
@@ -4816,17 +4816,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -4863,9 +4863,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
@@ -4873,10 +4873,10 @@ namespace Azure.Analytics.PlanetaryComputer
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4920,20 +4920,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsWmtsCapabilities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-                using HttpMessage message = CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = this.CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4970,16 +4970,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> OGC WMTS endpoint. </summary>
@@ -5009,16 +5009,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colorMap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
     }
 }

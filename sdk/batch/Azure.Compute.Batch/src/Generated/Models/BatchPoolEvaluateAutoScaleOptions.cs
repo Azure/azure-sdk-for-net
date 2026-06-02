@@ -14,22 +14,22 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolEvaluateAutoScaleOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolEvaluateAutoScaleOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolEvaluateAutoScaleOptions"/>. </summary>
         /// <param name="autoScaleFormula"> The formula for the desired number of Compute Nodes in the Pool. The formula is validated and its results calculated, but it is not applied to the Pool. To apply the formula to the Pool, 'Enable automatic scaling on a Pool'. For more information about specifying this formula, see Automatically scale Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-automatic-scaling). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoScaleFormula"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="autoScaleFormula"/> is null. </exception>
         public BatchPoolEvaluateAutoScaleOptions(string autoScaleFormula)
         {
-            Argument.AssertNotNull(autoScaleFormula, nameof(autoScaleFormula));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(autoScaleFormula, nameof(autoScaleFormula));
 
             AutoScaleFormula = autoScaleFormula;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolEvaluateAutoScaleOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolEvaluateAutoScaleOptions"/>. </summary>
         /// <param name="autoScaleFormula"> The formula for the desired number of Compute Nodes in the Pool. The formula is validated and its results calculated, but it is not applied to the Pool. To apply the formula to the Pool, 'Enable automatic scaling on a Pool'. For more information about specifying this formula, see Automatically scale Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-automatic-scaling). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolEvaluateAutoScaleOptions(string autoScaleFormula, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolEvaluateAutoScaleOptions(string autoScaleFormula, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleFormula = autoScaleFormula;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

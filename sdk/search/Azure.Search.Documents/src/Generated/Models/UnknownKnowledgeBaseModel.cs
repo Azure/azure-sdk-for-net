@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownKnowledgeBaseModel : KnowledgeBaseModel
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownKnowledgeBaseModel"/>. </summary>
         /// <param name="kind"> The AI model to be used for query planning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

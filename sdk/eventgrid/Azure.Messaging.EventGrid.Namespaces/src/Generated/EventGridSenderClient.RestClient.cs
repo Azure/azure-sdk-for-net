@@ -24,14 +24,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/topics/", false);
             uri.AppendPath(topicName, true);
             uri.AppendPath(":publish", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/cloudevents+json; charset=utf-8");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -45,14 +45,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/topics/", false);
             uri.AppendPath(topicName, true);
             uri.AppendPath(":publish", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

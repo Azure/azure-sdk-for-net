@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill to translate text from one language to another. </summary>
-    public partial class TextTranslationSkill : SearchIndexerSkill, IJsonModel<TextTranslationSkill>
+    public partial class TextTranslationSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill"/> for deserialization. </summary>
         internal TextTranslationSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTextTranslationSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill.DeserializeTextTranslationSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextTranslationSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextTranslationSkill IPersistableModel<TextTranslationSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextTranslationSkill)PersistableModelCreateCore(data, options);
+        TextTranslationSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((TextTranslationSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextTranslationSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TextTranslationSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,20 +74,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("defaultToLanguageCode"u8);
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
-            if (Optional.IsDefined(DefaultFromLanguageCode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DefaultFromLanguageCode))
             {
                 writer.WritePropertyName("defaultFromLanguageCode"u8);
                 writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
             }
-            if (Optional.IsDefined(SuggestedFrom))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SuggestedFrom))
             {
                 writer.WritePropertyName("suggestedFrom"u8);
                 writer.WriteStringValue(SuggestedFrom.Value.ToString());
@@ -96,26 +96,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextTranslationSkill IJsonModel<TextTranslationSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TextTranslationSkill)JsonModelCreateCore(ref reader, options);
+        TextTranslationSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((TextTranslationSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextTranslationSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTextTranslationSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill.DeserializeTextTranslationSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TextTranslationSkill DeserializeTextTranslationSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -123,9 +123,9 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             TextTranslationSkillLanguage defaultToLanguageCode = default;
             TextTranslationSkillLanguage? defaultFromLanguageCode = default;
             TextTranslationSkillLanguage? suggestedFrom = default;
@@ -153,20 +153,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultFromLanguageCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("suggestedFrom"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         suggestedFrom = null;
                         continue;
@@ -195,9 +195,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     suggestedFrom = new TextTranslationSkillLanguage(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TextTranslationSkill(

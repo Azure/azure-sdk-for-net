@@ -15,16 +15,16 @@ namespace Azure.AI.Language.Text
     public partial class SentenceTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceTarget"/>. </summary>
         /// <param name="sentiment"> The sentiment of the sentence. </param>
         /// <param name="confidenceScores"> Represents the confidence scores across all sentiment classes: positive and negative. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        internal SentenceTarget(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
+        internal SentenceTarget(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<global::Azure.AI.Language.Text.TargetRelation> relations)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text
             Relations = relations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceTarget"/>. </summary>
         /// <param name="sentiment"> The sentiment of the sentence. </param>
         /// <param name="confidenceScores"> Represents the confidence scores across all sentiment classes: positive and negative. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentenceTarget(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<TargetRelation> relations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentenceTarget(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<global::Azure.AI.Language.Text.TargetRelation> relations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -69,6 +69,6 @@ namespace Azure.AI.Language.Text
         public string Text { get; }
 
         /// <summary> The array of either assessment or target objects which is related to the target. </summary>
-        public IList<TargetRelation> Relations { get; }
+        public IList<global::Azure.AI.Language.Text.TargetRelation> Relations { get; }
     }
 }

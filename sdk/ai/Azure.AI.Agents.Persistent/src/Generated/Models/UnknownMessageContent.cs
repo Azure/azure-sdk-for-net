@@ -12,10 +12,10 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownMessageContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownMessageContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageContent(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageContent(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

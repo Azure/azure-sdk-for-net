@@ -15,22 +15,22 @@ namespace Azure.AI.Translation.Text
     public partial class TranslateInputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslateInputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslateInputItem"/>. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <param name="translationTargets"> Translation target parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="translationTargets"/> is null. </exception>
-        public TranslateInputItem(string text, IEnumerable<TranslationTarget> translationTargets)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> or <paramref name="translationTargets"/> is null. </exception>
+        public TranslateInputItem(string text, IEnumerable<global::Azure.AI.Translation.Text.TranslationTarget> translationTargets)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(translationTargets, nameof(translationTargets));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(translationTargets, nameof(translationTargets));
 
             Text = text;
             TranslationTargets = translationTargets.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateInputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslateInputItem"/>. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <param name="script"> Specifies the script of the input text. </param>
         /// <param name="language">
@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="translationTargets"> Translation target parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslateInputItem(string text, string script, string language, TextType? textType, IList<TranslationTarget> translationTargets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslateInputItem(string text, string script, string language, TextType? textType, IList<global::Azure.AI.Translation.Text.TranslationTarget> translationTargets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Script = script;
@@ -78,6 +78,6 @@ namespace Azure.AI.Translation.Text
         public TextType? TextType { get; set; }
 
         /// <summary> Translation target parameters. </summary>
-        public IList<TranslationTarget> TranslationTargets { get; }
+        public IList<global::Azure.AI.Translation.Text.TranslationTarget> TranslationTargets { get; }
     }
 }

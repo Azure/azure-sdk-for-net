@@ -14,54 +14,54 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Parameters to query a knowledge base. </summary>
-    public partial class QuestionAnswersConfig : IJsonModel<QuestionAnswersConfig>
+    public partial class QuestionAnswersConfig : IJsonModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QuestionAnswersConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQuestionAnswersConfig(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig.DeserializeQuestionAnswersConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnswersConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnswersConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnswersConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnswersConfig IPersistableModel<QuestionAnswersConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QuestionAnswersConfig IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnswersConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuestionAnswersConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,62 +69,62 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QuestionAnswersConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(QnaId))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(QnaId))
             {
                 writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
-            if (Optional.IsDefined(Question))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Top))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Optional.IsDefined(UserId))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(ConfidenceThreshold))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(AnswerContext))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AnswerContext, options);
+                writer.WriteObjectValue<KnowledgeBaseAnswerContext>(AnswerContext, options);
             }
-            if (Optional.IsDefined(RankerKind))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(RankerKind))
             {
                 writer.WritePropertyName("rankerType"u8);
                 writer.WriteStringValue(RankerKind.Value.ToString());
             }
-            if (Optional.IsDefined(Filters))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                writer.WriteObjectValue<QueryFilters>(Filters, options);
             }
-            if (Optional.IsDefined(ShortAnswerOptions))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue(ShortAnswerOptions, options);
+                writer.WriteObjectValue<ShortAnswerConfig>(ShortAnswerOptions, options);
             }
-            if (Optional.IsDefined(IncludeUnstructuredSources))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(IncludeUnstructuredSources))
             {
                 writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -132,9 +132,9 @@ namespace Azure.AI.Language.Conversations.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -143,26 +143,26 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnswersConfig IJsonModel<QuestionAnswersConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QuestionAnswersConfig IJsonModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QuestionAnswersConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QuestionAnswersConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuestionAnswersConfig(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig.DeserializeQuestionAnswersConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static QuestionAnswersConfig DeserializeQuestionAnswersConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -176,12 +176,12 @@ namespace Azure.AI.Language.Conversations.Models
             QueryFilters filters = default;
             ShortAnswerConfig shortAnswerOptions = default;
             bool? includeUnstructuredSources = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("qnaId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -195,7 +195,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("top"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("confidenceScoreThreshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -218,16 +218,16 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("context"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    answerContext = KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(prop.Value, options);
+                    answerContext = global::Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rankerType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -236,34 +236,34 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("filters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    filters = QueryFilters.DeserializeQueryFilters(prop.Value, options);
+                    filters = global::Azure.AI.Language.Conversations.Models.QueryFilters.DeserializeQueryFilters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("answerSpanRequest"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    shortAnswerOptions = ShortAnswerConfig.DeserializeShortAnswerConfig(prop.Value, options);
+                    shortAnswerOptions = global::Azure.AI.Language.Conversations.Models.ShortAnswerConfig.DeserializeShortAnswerConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("includeUnstructuredSources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     includeUnstructuredSources = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new QuestionAnswersConfig(

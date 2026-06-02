@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageImageFileParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageImageFileParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageImageFileParam"/>. </summary>
         /// <param name="fileId"> The ID of the previously uploaded image file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         public MessageImageFileParam(string fileId)
         {
-            Argument.AssertNotNull(fileId, nameof(fileId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(fileId, nameof(fileId));
 
             FileId = fileId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageImageFileParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageImageFileParam"/>. </summary>
         /// <param name="fileId"> The ID of the previously uploaded image file. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageImageFileParam(string fileId, ImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageImageFileParam(string fileId, ImageDetailLevel? detail, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             Detail = detail;

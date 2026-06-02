@@ -14,46 +14,46 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Extension methods to add <see cref="ConfigurationClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
-    [Experimental("SCME0002")]
+    /// <summary> Extension methods to add <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/> to an <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>. </summary>
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ConfigurationClientHostExtensions
     {
-        /// <summary> Adds a singleton <see cref="ConfigurationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <summary> Adds a singleton <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddConfigurationClient(this IHostApplicationBuilder host, string sectionName)
         {
             return host.AddAzureClient<ConfigurationClient, ConfigurationClientSettings>(sectionName);
         }
 
-        /// <summary> Adds a singleton <see cref="ConfigurationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="ConfigurationClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddConfigurationClient(this IHostApplicationBuilder host, string sectionName, Action<ConfigurationClientSettings> configureSettings)
+        /// <summary> Adds a singleton <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Data.AppConfiguration.ConfigurationClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddConfigurationClient(this IHostApplicationBuilder host, string sectionName, Action<global::Azure.Data.AppConfiguration.ConfigurationClientSettings> configureSettings)
         {
             return host.AddAzureClient<ConfigurationClient, ConfigurationClientSettings>(sectionName, configureSettings);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="ConfigurationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddKeyedConfigurationClient(this IHostApplicationBuilder host, string key, string sectionName)
         {
             return host.AddKeyedAzureClient<ConfigurationClient, ConfigurationClientSettings>(key, sectionName);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="ConfigurationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Data.AppConfiguration.ConfigurationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="ConfigurationClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedConfigurationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ConfigurationClientSettings> configureSettings)
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Data.AppConfiguration.ConfigurationClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedConfigurationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Azure.Data.AppConfiguration.ConfigurationClientSettings> configureSettings)
         {
             return host.AddKeyedAzureClient<ConfigurationClient, ConfigurationClientSettings>(key, sectionName, configureSettings);
         }

@@ -14,21 +14,21 @@ namespace Azure.AI.VoiceLive
     public partial class ServerEventWarningDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventWarningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerEventWarningDetails"/>. </summary>
         /// <param name="message"> A human-readable warning message. </param>
         internal ServerEventWarningDetails(string message)
         {
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventWarningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerEventWarningDetails"/>. </summary>
         /// <param name="message"> A human-readable warning message. </param>
         /// <param name="code"> Warning code, if any. </param>
         /// <param name="param"> Parameter related to the warning, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEventWarningDetails(string message, string code, string @param, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerEventWarningDetails(string message, string code, string @param, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             Code = code;

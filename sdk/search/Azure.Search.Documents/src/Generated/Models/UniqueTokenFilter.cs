@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Filters out tokens with same text as the previous token. This token filter is implemented using Apache Lucene. </summary>
     public partial class UniqueTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="UniqueTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UniqueTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UniqueTokenFilter(string name) : base("#Microsoft.Azure.Search.UniqueTokenFilter", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="UniqueTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UniqueTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="onlyOnSamePosition"> A value indicating whether to remove duplicates only at the same position. Default is false. </param>
-        internal UniqueTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? onlyOnSamePosition) : base(odataType, name, additionalBinaryDataProperties)
+        internal UniqueTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool? onlyOnSamePosition) : base(odataType, name, additionalBinaryDataProperties)
         {
             OnlyOnSamePosition = onlyOnSamePosition;
         }

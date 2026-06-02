@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory operation kind. </summary>
-    public readonly partial struct MemoryOperationKind : IEquatable<MemoryOperationKind>
+    public readonly partial struct MemoryOperationKind : IEquatable<global::Azure.AI.Projects.Memory.MemoryOperationKind>
     {
         private readonly string _value;
         /// <summary> Create a new memory item. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Delete an existing memory item. </summary>
         private const string DeleteValue = "delete";
 
-        /// <summary> Initializes a new instance of <see cref="MemoryOperationKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MemoryOperationKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -38,34 +38,34 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Delete an existing memory item. </summary>
         public static MemoryOperationKind Delete { get; } = new MemoryOperationKind(DeleteValue);
 
-        /// <summary> Determines if two <see cref="MemoryOperationKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Memory.MemoryOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MemoryOperationKind left, MemoryOperationKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MemoryOperationKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Memory.MemoryOperationKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MemoryOperationKind left, MemoryOperationKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MemoryOperationKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Memory.MemoryOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MemoryOperationKind(string value) => new MemoryOperationKind(value);
 
-        /// <summary> Converts a string to a <see cref="MemoryOperationKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Memory.MemoryOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MemoryOperationKind?(string value) => value == null ? null : new MemoryOperationKind(value);
+        public static implicit operator MemoryOperationKind?(string value) => (value == null) ? null : new MemoryOperationKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MemoryOperationKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MemoryOperationKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MemoryOperationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MemoryOperationKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

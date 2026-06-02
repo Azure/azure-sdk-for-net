@@ -14,25 +14,25 @@ namespace Azure.Communication.Messages
     /// <summary> The action content of type ActionGroup. </summary>
     public partial class ActionGroupContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="ActionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroupContent"/>. </summary>
         /// <param name="title"> Title of the actionGroup content. </param>
         /// <param name="groups"> Set or group of actions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="groups"/> is null. </exception>
-        public ActionGroupContent(string title, IEnumerable<ActionGroup> groups) : base(MessageContentKind.Group)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="title"/> or <paramref name="groups"/> is null. </exception>
+        public ActionGroupContent(string title, IEnumerable<global::Azure.Communication.Messages.ActionGroup> groups) : base(global::Azure.Communication.Messages.MessageContentKind.Group)
         {
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(groups, nameof(groups));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(title, nameof(title));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(groups, nameof(groups));
 
             Title = title;
             Groups = groups.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroupContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="title"> Title of the actionGroup content. </param>
         /// <param name="groups"> Set or group of actions. </param>
-        internal ActionGroupContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, IList<ActionGroup> groups) : base(kind, additionalBinaryDataProperties)
+        internal ActionGroupContent(MessageContentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string title, IList<global::Azure.Communication.Messages.ActionGroup> groups) : base(kind, additionalBinaryDataProperties)
         {
             Title = title;
             Groups = groups;
@@ -42,6 +42,6 @@ namespace Azure.Communication.Messages
         public string Title { get; }
 
         /// <summary> Set or group of actions. </summary>
-        public IList<ActionGroup> Groups { get; }
+        public IList<global::Azure.Communication.Messages.ActionGroup> Groups { get; }
     }
 }

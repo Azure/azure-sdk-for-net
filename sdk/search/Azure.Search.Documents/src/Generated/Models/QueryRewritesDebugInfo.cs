@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Models
     public partial class QueryRewritesDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryRewritesDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryRewritesDebugInfo"/>. </summary>
         internal QueryRewritesDebugInfo()
         {
-            Vectors = new ChangeTrackingList<QueryRewritesValuesDebugInfo>();
+            Vectors = new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryRewritesDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryRewritesDebugInfo"/>. </summary>
         /// <param name="text"> List of query rewrites generated for the text query. </param>
         /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text, IReadOnlyList<QueryRewritesValuesDebugInfo> vectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text, IReadOnlyList<global::Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo> vectors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Vectors = vectors;
@@ -38,6 +38,6 @@ namespace Azure.Search.Documents.Models
         public QueryRewritesValuesDebugInfo Text { get; }
 
         /// <summary> List of query rewrites generated for the vectorizable text queries. </summary>
-        public IReadOnlyList<QueryRewritesValuesDebugInfo> Vectors { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo> Vectors { get; }
     }
 }

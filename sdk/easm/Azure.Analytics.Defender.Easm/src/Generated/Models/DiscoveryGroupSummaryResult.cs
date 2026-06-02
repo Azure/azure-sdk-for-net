@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoveryGroupSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             DisplayName = displayName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroupSummaryResult(string id, string name, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryGroupSummaryResult(string id, string name, string displayName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

@@ -13,14 +13,14 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
     public partial class ManualReclassifyExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of <see cref="ManualReclassifyExceptionAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ManualReclassifyExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        internal ManualReclassifyExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, int? priority, IList<RouterWorkerSelector> workerSelectors) : base(id, kind, additionalBinaryDataProperties)
+        internal ManualReclassifyExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, int? priority, IList<global::Azure.Communication.JobRouter.RouterWorkerSelector> workerSelectors) : base(id, kind, additionalBinaryDataProperties)
         {
             QueueId = queueId;
             Priority = priority;

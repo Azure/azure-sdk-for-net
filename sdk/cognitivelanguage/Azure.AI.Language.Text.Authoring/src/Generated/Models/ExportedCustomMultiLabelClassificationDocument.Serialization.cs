@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported document of a custom multi-label classification project. </summary>
-    public partial class ExportedCustomMultiLabelClassificationDocument : IJsonModel<ExportedCustomMultiLabelClassificationDocument>
+    public partial class ExportedCustomMultiLabelClassificationDocument : IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExportedCustomMultiLabelClassificationDocument PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExportedCustomMultiLabelClassificationDocument(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument.DeserializeExportedCustomMultiLabelClassificationDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomMultiLabelClassificationDocument)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomMultiLabelClassificationDocument)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedCustomMultiLabelClassificationDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomMultiLabelClassificationDocument IPersistableModel<ExportedCustomMultiLabelClassificationDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExportedCustomMultiLabelClassificationDocument IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedCustomMultiLabelClassificationDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExportedCustomMultiLabelClassificationDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,37 +68,37 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomMultiLabelClassificationDocument)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Classes))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Classes))
             {
                 writer.WritePropertyName("classes"u8);
                 writer.WriteStartArray();
                 foreach (ExportedDocumentClass item in Classes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ExportedDocumentClass>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Location))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsDefined(Language))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(Dataset))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,46 +117,46 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomMultiLabelClassificationDocument IJsonModel<ExportedCustomMultiLabelClassificationDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExportedCustomMultiLabelClassificationDocument IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExportedCustomMultiLabelClassificationDocument JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomMultiLabelClassificationDocument)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedCustomMultiLabelClassificationDocument(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument.DeserializeExportedCustomMultiLabelClassificationDocument(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExportedCustomMultiLabelClassificationDocument DeserializeExportedCustomMultiLabelClassificationDocument(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<ExportedDocumentClass> classes = default;
+            IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass> classes = default;
             string location = default;
             string language = default;
             string dataset = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("classes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ExportedDocumentClass> array = new List<ExportedDocumentClass>();
+                    List<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass> array = new List<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExportedDocumentClass.DeserializeExportedDocumentClass(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass.DeserializeExportedDocumentClass(item, options));
                     }
                     classes = array;
                     continue;
@@ -176,12 +176,12 @@ namespace Azure.AI.Language.Text.Authoring
                     dataset = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportedCustomMultiLabelClassificationDocument(classes ?? new ChangeTrackingList<ExportedDocumentClass>(), location, language, dataset, additionalBinaryDataProperties);
+            return new ExportedCustomMultiLabelClassificationDocument((classes ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass>()), location, language, dataset, additionalBinaryDataProperties);
         }
     }
 }

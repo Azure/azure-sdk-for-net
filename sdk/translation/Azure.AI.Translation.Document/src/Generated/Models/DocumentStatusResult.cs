@@ -15,9 +15,9 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentStatusResult"/>. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
-        internal DocumentStatusResult(Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id)
+        internal DocumentStatusResult(global::System.Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id)
         {
             SourceDocumentUri = sourceDocumentUri;
             CreatedOn = createdOn;
@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentStatusResult"/>. </summary>
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
@@ -53,7 +53,7 @@ namespace Azure.AI.Translation.Document
         /// inner error with more descriptive details.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id, long charactersCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, JsonElement error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentStatusResult(global::System.Uri translatedDocumentUri, global::System.Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id, long charactersCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, JsonElement error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;

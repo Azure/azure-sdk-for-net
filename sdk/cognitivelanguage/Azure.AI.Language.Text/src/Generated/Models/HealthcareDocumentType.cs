@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Document type. </summary>
-    public readonly partial struct HealthcareDocumentType : IEquatable<HealthcareDocumentType>
+    public readonly partial struct HealthcareDocumentType : IEquatable<global::Azure.AI.Language.Text.HealthcareDocumentType>
     {
         private readonly string _value;
         /// <summary> None document type. </summary>
@@ -33,12 +33,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Procedure note document type. </summary>
         private const string ProcedureNoteValue = "ProcedureNote";
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareDocumentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthcareDocumentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -70,34 +70,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Procedure note document type. </summary>
         public static HealthcareDocumentType ProcedureNote { get; } = new HealthcareDocumentType(ProcedureNoteValue);
 
-        /// <summary> Determines if two <see cref="HealthcareDocumentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.HealthcareDocumentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthcareDocumentType left, HealthcareDocumentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HealthcareDocumentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.HealthcareDocumentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthcareDocumentType left, HealthcareDocumentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HealthcareDocumentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.HealthcareDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator HealthcareDocumentType(string value) => new HealthcareDocumentType(value);
 
-        /// <summary> Converts a string to a <see cref="HealthcareDocumentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.HealthcareDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthcareDocumentType?(string value) => value == null ? null : new HealthcareDocumentType(value);
+        public static implicit operator HealthcareDocumentType?(string value) => (value == null) ? null : new HealthcareDocumentType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HealthcareDocumentType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is HealthcareDocumentType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(HealthcareDocumentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HealthcareDocumentType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

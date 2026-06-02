@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class VirtualMachineScaleSetLifecycleHookEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventProperties"/>. </summary>
         /// <param name="type"> Defines the type or scenario for sending a Virtual Machine Scale Set Lifecycle Hook event to the customer. </param>
         /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
         /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the Lifecycle Hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
@@ -30,11 +30,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MaxWaitUntil = maxWaitUntil;
             TimeCreated = timeCreated;
             DefaultAction = defaultAction;
-            TargetResources = new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTargetResource>();
+            TargetResources = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>();
             State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventProperties"/>. </summary>
         /// <param name="type"> Defines the type or scenario for sending a Virtual Machine Scale Set Lifecycle Hook event to the customer. </param>
         /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
         /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the Lifecycle Hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="state"> Specifies the state of the Virtual Machine Scale Set Lifecycle Hook event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventProperties(VirtualMachineScaleSetLifecycleHookEventType @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction defaultAction, IReadOnlyList<VirtualMachineScaleSetLifecycleHookEventTargetResource> targetResources, VirtualMachineScaleSetLifecycleHookEventAdditionalContext additionalContext, VirtualMachineScaleSetLifecycleHookEventState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetLifecycleHookEventProperties(VirtualMachineScaleSetLifecycleHookEventType @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction defaultAction, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource> targetResources, VirtualMachineScaleSetLifecycleHookEventAdditionalContext additionalContext, VirtualMachineScaleSetLifecycleHookEventState state, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             WaitUntil = waitUntil;
@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public LifecycleHookAction DefaultAction { get; }
 
         /// <summary> List of target resources which are getting processed in the Virtual Machine Scale Set Lifecycle Hook event. </summary>
-        public IReadOnlyList<VirtualMachineScaleSetLifecycleHookEventTargetResource> TargetResources { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource> TargetResources { get; }
 
         /// <summary>
         /// Additional key-value pairs set on the Lifecycle Hook event that gives customer some useful context/data.

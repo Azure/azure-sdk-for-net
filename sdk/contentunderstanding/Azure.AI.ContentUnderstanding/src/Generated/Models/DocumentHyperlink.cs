@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentHyperlink
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentHyperlink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentHyperlink"/>. </summary>
         /// <param name="content"> Hyperlinked content. </param>
         /// <param name="uri"> URL of the hyperlink. </param>
         internal DocumentHyperlink(string content, string uri)
@@ -25,13 +25,13 @@ namespace Azure.AI.ContentUnderstanding
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentHyperlink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentHyperlink"/>. </summary>
         /// <param name="content"> Hyperlinked content. </param>
         /// <param name="uri"> URL of the hyperlink. </param>
         /// <param name="span"> Span of the hyperlink in the markdown content. </param>
         /// <param name="source"> Position of the hyperlink. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentHyperlink(string content, string uri, ContentSpan span, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentHyperlink(string content, string uri, ContentSpan span, string source, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Uri = uri;

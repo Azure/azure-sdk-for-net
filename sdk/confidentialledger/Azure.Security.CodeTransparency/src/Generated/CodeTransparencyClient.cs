@@ -18,7 +18,7 @@ namespace Azure.Security.CodeTransparency
     /// <summary> The CodeTransparencyClient. </summary>
     public partial class CodeTransparencyClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
         private readonly string _apiVersion;
@@ -31,8 +31,8 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Initializes a new instance of CodeTransparencyClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public CodeTransparencyClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CodeTransparencyClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public CodeTransparencyClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CodeTransparencyClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.Security.CodeTransparency
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal CodeTransparencyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CodeTransparencyClientOptions options)
+        internal CodeTransparencyClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CodeTransparencyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new CodeTransparencyClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -61,8 +61,8 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Initializes a new instance of CodeTransparencyClient from a <see cref="CodeTransparencyClientSettings"/>. </summary>
         /// <param name="settings"> The settings for CodeTransparencyClient. </param>
-        [Experimental("SCME0002")]
-        public CodeTransparencyClient(CodeTransparencyClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public CodeTransparencyClient(CodeTransparencyClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Security.CodeTransparency
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTransparencyConfigCbor(RequestContext context)
         {
@@ -89,7 +89,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTransparencyConfigCborRequest(context);
+                using HttpMessage message = this.CreateGetTransparencyConfigCborRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -108,15 +108,15 @@ namespace Azure.Security.CodeTransparency
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTransparencyConfigCborAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTransparencyConfigCborAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetTransparencyConfigCbor");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTransparencyConfigCborRequest(context);
+                using HttpMessage message = this.CreateGetTransparencyConfigCborRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -128,20 +128,20 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the transparency service configuration, mandatory in IETF SCITT draft. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetTransparencyConfigCbor(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetTransparencyConfigCbor(CancellationToken cancellationToken = default)
         {
-            Response result = GetTransparencyConfigCbor(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetTransparencyConfigCbor(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Get the transparency service configuration, mandatory in IETF SCITT draft. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetTransparencyConfigCborAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetTransparencyConfigCborAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetTransparencyConfigCborAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetTransparencyConfigCborAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.Security.CodeTransparency
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPublicKeys(RequestContext context)
         {
@@ -161,7 +161,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                using HttpMessage message = this.CreateGetPublicKeysRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -180,15 +180,15 @@ namespace Azure.Security.CodeTransparency
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetPublicKeysAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                using HttpMessage message = this.CreateGetPublicKeysRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -200,20 +200,20 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<JwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Security.CodeTransparency.JwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
         {
-            Response result = GetPublicKeys(cancellationToken.ToRequestContext());
-            return Response.FromValue((JwksDocument)result, result);
+            Response result = this.GetPublicKeys(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((JwksDocument)result), result);
         }
 
         /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<JwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Security.CodeTransparency.JwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetPublicKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((JwksDocument)result, result);
+            Response result = await this.GetPublicKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((JwksDocument)result), result);
         }
 
         /// <summary>
@@ -226,9 +226,9 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetOperation(string operationId, RequestContext context)
         {
@@ -236,9 +236,9 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                using HttpMessage message = this.CreateGetOperationRequest(operationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -258,19 +258,19 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetOperationAsync(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperation");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                using HttpMessage message = this.CreateGetOperationRequest(operationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -283,29 +283,29 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetOperation(operationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -318,9 +318,9 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEntry(string entryId, RequestContext context)
         {
@@ -328,9 +328,9 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-                using HttpMessage message = CreateGetEntryRequest(entryId, context);
+                using HttpMessage message = this.CreateGetEntryRequest(entryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -350,19 +350,19 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEntryAsync(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntry");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-                using HttpMessage message = CreateGetEntryRequest(entryId, context);
+                using HttpMessage message = this.CreateGetEntryRequest(entryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -375,29 +375,29 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get receipt. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            Response result = GetEntry(entryId, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetEntry(entryId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Get receipt. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            Response result = await GetEntryAsync(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetEntryAsync(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -410,9 +410,9 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEntryStatement(string entryId, RequestContext context)
         {
@@ -420,9 +420,9 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-                using HttpMessage message = CreateGetEntryStatementRequest(entryId, context);
+                using HttpMessage message = this.CreateGetEntryStatementRequest(entryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -442,19 +442,19 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEntryStatementAsync(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatement");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+                global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-                using HttpMessage message = CreateGetEntryStatementRequest(entryId, context);
+                using HttpMessage message = this.CreateGetEntryStatementRequest(entryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -467,29 +467,29 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get the transparent statement consisting of the signed statement and the receipt embedded in the header. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            Response result = GetEntryStatement(entryId, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetEntryStatement(entryId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Get the transparent statement consisting of the signed statement and the receipt embedded in the header. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            global::Azure.Security.CodeTransparency.Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            Response result = await GetEntryStatementAsync(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetEntryStatementAsync(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
     }
 }

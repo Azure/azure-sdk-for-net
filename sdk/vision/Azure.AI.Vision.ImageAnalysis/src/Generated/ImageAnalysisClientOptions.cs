@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Client options for <see cref="ImageAnalysisClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisClient"/>. </summary>
     public partial class ImageAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
+        private const global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion.V2023_10_01;
 
         /// <summary> Initializes a new instance of ImageAnalysisClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ImageAnalysisClientOptions(ServiceVersion version = LatestVersion)
+        public ImageAnalysisClientOptions(global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_10_01 => "2023-10-01",
+                global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion.V2023_10_01 => "2023-10-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ImageAnalysisClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2023-10-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

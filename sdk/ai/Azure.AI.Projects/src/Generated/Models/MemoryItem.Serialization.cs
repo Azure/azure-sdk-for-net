@@ -12,12 +12,12 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Memory.UserProfileMemoryItem"/>, <see cref="Azure.AI.Projects.Memory.ChatSummaryMemoryItem"/>, and <see cref="Azure.AI.Projects.ProceduralMemoryItem"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMemoryItem))]
-    public abstract partial class MemoryItem : IJsonModel<MemoryItem>
+    [PersistableModelProxyAttribute(typeof(UnknownMemoryItem))]
+    public abstract partial class MemoryItem : IJsonModel<global::Azure.AI.Projects.Memory.MemoryItem>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryItem"/> for deserialization. </summary>
         internal MemoryItem()
         {
         }
@@ -26,56 +26,56 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryItem(document.RootElement, options);
+                        return global::Azure.AI.Projects.Memory.MemoryItem.DeserializeMemoryItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryItem IPersistableModel<MemoryItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MemoryItem IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryItem"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.Memory.MemoryItem"/> from. </param>
         public static explicit operator MemoryItem(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMemoryItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.Memory.MemoryItem.DeserializeMemoryItem(document.RootElement, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Memory.MemoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -83,10 +83,10 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryItem)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("memory_id"u8);
             writer.WriteStringValue(MemoryId);
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects.Memory
             writer.WriteStringValue(Content);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.AI.Projects.Memory
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,26 +117,26 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryItem IJsonModel<MemoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MemoryItem IJsonModel<global::Azure.AI.Projects.Memory.MemoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Memory.MemoryItem.DeserializeMemoryItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MemoryItem DeserializeMemoryItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -145,14 +145,14 @@ namespace Azure.AI.Projects.Memory
                 switch (discriminator.GetString())
                 {
                     case "user_profile":
-                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
+                        return global::Azure.AI.Projects.Memory.UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
                     case "chat_summary":
-                        return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
+                        return global::Azure.AI.Projects.Memory.ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
                     case "procedural":
-                        return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
+                        return global::Azure.AI.Projects.ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
                 }
             }
-            return UnknownMemoryItem.DeserializeUnknownMemoryItem(element, options);
+            return global::Azure.AI.Projects.Memory.UnknownMemoryItem.DeserializeUnknownMemoryItem(element, options);
         }
     }
 }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The details of the HTTP request. </summary>
-    public partial class ResourceHttpRequest : IJsonModel<ResourceHttpRequest>
+    public partial class ResourceHttpRequest : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceHttpRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceHttpRequest(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest.DeserializeResourceHttpRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceHttpRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceHttpRequest IPersistableModel<ResourceHttpRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceHttpRequest IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceHttpRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceHttpRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientRequestId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Optional.IsDefined(ClientIpAddress))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ClientIpAddress))
             {
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIpAddress);
             }
-            if (Optional.IsDefined(MethodString))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(MethodString))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(MethodString);
             }
-            if (Optional.IsDefined(Url))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,26 +112,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceHttpRequest IJsonModel<ResourceHttpRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceHttpRequest IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceHttpRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceHttpRequest(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ResourceHttpRequest.DeserializeResourceHttpRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResourceHttpRequest DeserializeResourceHttpRequest(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string clientIpAddress = default;
             string methodString = default;
             string url = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientRequestId"u8))
@@ -162,9 +162,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     url = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResourceHttpRequest(clientRequestId, clientIpAddress, methodString, url, additionalBinaryDataProperties);

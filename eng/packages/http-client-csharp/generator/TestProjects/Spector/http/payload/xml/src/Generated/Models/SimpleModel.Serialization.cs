@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class SimpleModel : IPersistableModel<SimpleModel>, IXmlSerializable
+    public partial class SimpleModel : IPersistableModel<global::Payload.Xml.SimpleModel>, IXmlSerializable
     {
         internal SimpleModel() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.SimpleModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SimpleModel IPersistableModel<global::Payload.Xml.SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="simpleModel"> The <see cref="SimpleModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="simpleModel"> The <see cref="global::Payload.Xml.SimpleModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SimpleModel simpleModel) => throw null;
 
         public static explicit operator SimpleModel(Response response) => throw null;

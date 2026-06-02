@@ -15,24 +15,24 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class TranscriptConversationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptConversationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TranscriptConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="inverseTextNormalized"> Inverse text normalization (ITN) representation of input. The inverse-text-normalized form is the recognized text from Microsoft's speech-to-text API, with phone numbers, numbers, abbreviations, and other transformations applied. </param>
         /// <param name="maskedInverseTextNormalized"> Inverse-text-normalized format with profanity masking applied. </param>
         /// <param name="text"> Display form of the recognized text from the speech-to-text API, with punctuation and capitalization added. </param>
         /// <param name="lexical"> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/>, <paramref name="inverseTextNormalized"/>, <paramref name="maskedInverseTextNormalized"/>, <paramref name="text"/> or <paramref name="lexical"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/>, <paramref name="inverseTextNormalized"/>, <paramref name="maskedInverseTextNormalized"/>, <paramref name="text"/> or <paramref name="lexical"/> is null. </exception>
         public TranscriptConversationItem(string id, string participantId, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(participantId, nameof(participantId));
-            Argument.AssertNotNull(inverseTextNormalized, nameof(inverseTextNormalized));
-            Argument.AssertNotNull(maskedInverseTextNormalized, nameof(maskedInverseTextNormalized));
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(lexical, nameof(lexical));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(participantId, nameof(participantId));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(inverseTextNormalized, nameof(inverseTextNormalized));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(maskedInverseTextNormalized, nameof(maskedInverseTextNormalized));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(lexical, nameof(lexical));
 
             Id = id;
             ParticipantId = participantId;
@@ -40,10 +40,10 @@ namespace Azure.AI.Language.Conversations.Models
             MaskedInverseTextNormalized = maskedInverseTextNormalized;
             Text = text;
             Lexical = lexical;
-            WordLevelTimings = new ChangeTrackingList<WordLevelTiming>();
+            WordLevelTimings = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.WordLevelTiming>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptConversationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TranscriptConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
         /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<WordLevelTiming> wordLevelTimings, ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<global::Azure.AI.Language.Conversations.Models.WordLevelTiming> wordLevelTimings, ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParticipantId = participantId;
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Models
         public string Lexical { get; }
 
         /// <summary> List of word-level audio timing information. </summary>
-        public IList<WordLevelTiming> WordLevelTimings { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.WordLevelTiming> WordLevelTimings { get; }
 
         /// <summary> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </summary>
         public ConversationItemLevelTiming ConversationItemLevelTiming { get; set; }

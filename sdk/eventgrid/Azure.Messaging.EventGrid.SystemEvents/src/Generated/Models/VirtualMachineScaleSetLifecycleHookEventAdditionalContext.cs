@@ -19,17 +19,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class VirtualMachineScaleSetLifecycleHookEventAdditionalContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
         internal VirtualMachineScaleSetLifecycleHookEventAdditionalContext()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
         /// <param name="priority"> Can only be present for a Lifecycle Hook event of type "UpgradeAutoOSScheduling". Denotes the priority of the Virtual Machine Scale Set Lifecycle Hook event for the Auto OS Upgrade scheduled on the Virtual Machine Scale Set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventAdditionalContext(string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetLifecycleHookEventAdditionalContext(string priority, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

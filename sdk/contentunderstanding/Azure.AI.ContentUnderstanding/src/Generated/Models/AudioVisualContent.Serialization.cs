@@ -12,9 +12,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Audio visual content.  Ex. audio/wav, video/mp4. </summary>
-    public partial class AudioVisualContent : AnalysisContent, IJsonModel<AudioVisualContent>
+    public partial class AudioVisualContent : AnalysisContent, IJsonModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AudioVisualContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AudioVisualContent"/> for deserialization. </summary>
         internal AudioVisualContent()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAudioVisualContent(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.AudioVisualContent.DeserializeAudioVisualContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioVisualContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AudioVisualContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AudioVisualContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AudioVisualContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AudioVisualContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioVisualContent IPersistableModel<AudioVisualContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (AudioVisualContent)PersistableModelCreateCore(data, options);
+        AudioVisualContent IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AudioVisualContent)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AudioVisualContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AudioVisualContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,27 +72,27 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AudioVisualContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AudioVisualContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("startTimeMs"u8);
             writer.WriteNumberValue(StartTimeMsValue);
             writer.WritePropertyName("endTimeMs"u8);
             writer.WriteNumberValue(EndTimeMsValue);
-            if (Optional.IsDefined(Width))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Optional.IsDefined(Height))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (Optional.IsCollectionDefined(CameraShotTimesMsValues))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(CameraShotTimesMsValues))
             {
                 writer.WritePropertyName("cameraShotTimesMs"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeyFrameTimesMsValues))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(KeyFrameTimesMsValues))
             {
                 writer.WritePropertyName("keyFrameTimesMs"u8);
                 writer.WriteStartArray();
@@ -112,23 +112,23 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TranscriptPhrases))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(TranscriptPhrases))
             {
                 writer.WritePropertyName("transcriptPhrases"u8);
                 writer.WriteStartArray();
                 foreach (TranscriptPhrase item in TranscriptPhrases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TranscriptPhrase>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Segments))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();
                 foreach (AudioVisualContentSegment item in Segments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AudioVisualContentSegment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,19 +136,19 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioVisualContent IJsonModel<AudioVisualContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AudioVisualContent)JsonModelCreateCore(ref reader, options);
+        AudioVisualContent IJsonModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AudioVisualContent)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalysisContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AudioVisualContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.AudioVisualContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAudioVisualContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.AudioVisualContent.DeserializeAudioVisualContent(document.RootElement, options);
         }
     }
 }

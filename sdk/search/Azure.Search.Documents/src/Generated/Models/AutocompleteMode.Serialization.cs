@@ -14,26 +14,26 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutocompleteMode value) => value switch
         {
-            AutocompleteMode.OneTerm => "oneTerm",
-            AutocompleteMode.TwoTerms => "twoTerms",
-            AutocompleteMode.OneTermWithContext => "oneTermWithContext",
+            global::Azure.Search.Documents.Models.AutocompleteMode.OneTerm => "oneTerm",
+            global::Azure.Search.Documents.Models.AutocompleteMode.TwoTerms => "twoTerms",
+            global::Azure.Search.Documents.Models.AutocompleteMode.OneTermWithContext => "oneTermWithContext",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static AutocompleteMode ToAutocompleteMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTerm"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "oneTerm"))
             {
-                return AutocompleteMode.OneTerm;
+                return global::Azure.Search.Documents.Models.AutocompleteMode.OneTerm;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "twoTerms"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "twoTerms"))
             {
-                return AutocompleteMode.TwoTerms;
+                return global::Azure.Search.Documents.Models.AutocompleteMode.TwoTerms;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "oneTermWithContext"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "oneTermWithContext"))
             {
-                return AutocompleteMode.OneTermWithContext;
+                return global::Azure.Search.Documents.Models.AutocompleteMode.OneTermWithContext;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.");
         }

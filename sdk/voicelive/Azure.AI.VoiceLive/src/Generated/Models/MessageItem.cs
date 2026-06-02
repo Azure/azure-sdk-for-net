@@ -14,26 +14,26 @@ namespace Azure.AI.VoiceLive
     /// <summary> A message item within a conversation. </summary>
     public partial class MessageItem : ConversationRequestItem
     {
-        /// <summary> Initializes a new instance of <see cref="MessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MessageItem"/>. </summary>
         /// <param name="role"> The role of the message origionator. </param>
         /// <param name="content"> The content parts of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public MessageItem(ResponseMessageRole role, IEnumerable<MessageContentPart> content) : base(ItemType.Message)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public MessageItem(ResponseMessageRole role, IEnumerable<global::Azure.AI.VoiceLive.MessageContentPart> content) : base(global::Azure.AI.VoiceLive.ItemType.Message)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(content, nameof(content));
 
             Role = role;
             Content = content.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message origionator. </param>
         /// <param name="content"> The content parts of the message. </param>
         /// <param name="status"> Processing status of the message item. </param>
-        internal MessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
+        internal MessageItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<global::Azure.AI.VoiceLive.MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
         internal ResponseMessageRole Role { get; set; }
 
         /// <summary> The content parts of the message. </summary>
-        public IList<MessageContentPart> Content { get; }
+        public IList<global::Azure.AI.VoiceLive.MessageContentPart> Content { get; }
 
         /// <summary> Processing status of the message item. </summary>
         public ItemParamStatus? Status { get; set; }

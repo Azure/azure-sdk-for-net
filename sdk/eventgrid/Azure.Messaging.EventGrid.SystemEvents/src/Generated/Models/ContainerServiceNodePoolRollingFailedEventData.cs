@@ -13,16 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingFailed event. </summary>
     public partial class ContainerServiceNodePoolRollingFailedEventData : ContainerServiceNodePoolRollingEventData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         internal ContainerServiceNodePoolRollingFailedEventData(string nodePoolName) : base(nodePoolName)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNodePoolRollingFailedEventData(string nodePoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nodePoolName, additionalBinaryDataProperties)
+        internal ContainerServiceNodePoolRollingFailedEventData(string nodePoolName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(nodePoolName, additionalBinaryDataProperties)
         {
         }
     }

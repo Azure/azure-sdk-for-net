@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionStarted event. </summary>
-    [JsonConverter(typeof(AvsScriptExecutionStartedEventDataConverter))]
-    public partial class AvsScriptExecutionStartedEventData : AvsScriptExecutionEventData, IJsonModel<AvsScriptExecutionStartedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData.AvsScriptExecutionStartedEventDataConverter))]
+    public partial class AvsScriptExecutionStartedEventData : AvsScriptExecutionEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionStartedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData"/> for deserialization. </summary>
         internal AvsScriptExecutionStartedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AvsScriptExecutionEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvsScriptExecutionStartedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData.DeserializeAvsScriptExecutionStartedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsScriptExecutionStartedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvsScriptExecutionStartedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsScriptExecutionStartedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsScriptExecutionStartedEventData IPersistableModel<AvsScriptExecutionStartedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsScriptExecutionStartedEventData)PersistableModelCreateCore(data, options);
+        AvsScriptExecutionStartedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AvsScriptExecutionStartedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsScriptExecutionStartedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvsScriptExecutionStartedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,43 +75,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvsScriptExecutionStartedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsScriptExecutionStartedEventData IJsonModel<AvsScriptExecutionStartedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvsScriptExecutionStartedEventData)JsonModelCreateCore(ref reader, options);
+        AvsScriptExecutionStartedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AvsScriptExecutionStartedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AvsScriptExecutionEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AvsScriptExecutionStartedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvsScriptExecutionStartedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData.DeserializeAvsScriptExecutionStartedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AvsScriptExecutionStartedEventData DeserializeAvsScriptExecutionStartedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string operationId = default;
             string cmdletId = default;
             IReadOnlyList<string> output = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationId"u8))
@@ -126,14 +126,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -145,15 +145,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     output = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvsScriptExecutionStartedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AvsScriptExecutionStartedEventData(operationId, cmdletId, (output ?? new ChangeTrackingList<string>()), additionalBinaryDataProperties);
         }
 
-        internal partial class AvsScriptExecutionStartedEventDataConverter : JsonConverter<AvsScriptExecutionStartedEventData>
+        internal partial class AvsScriptExecutionStartedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AvsScriptExecutionStartedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AvsScriptExecutionStartedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -170,8 +170,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AvsScriptExecutionStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAvsScriptExecutionStartedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsScriptExecutionStartedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

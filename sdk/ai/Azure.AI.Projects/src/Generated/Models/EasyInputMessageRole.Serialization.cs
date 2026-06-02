@@ -11,31 +11,31 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EasyInputMessageRole value) => value switch
         {
-            EasyInputMessageRole.User => "user",
-            EasyInputMessageRole.Assistant => "assistant",
-            EasyInputMessageRole.System => "system",
-            EasyInputMessageRole.Developer => "developer",
+            global::Azure.AI.Projects.EasyInputMessageRole.User => "user",
+            global::Azure.AI.Projects.EasyInputMessageRole.Assistant => "assistant",
+            global::Azure.AI.Projects.EasyInputMessageRole.System => "system",
+            global::Azure.AI.Projects.EasyInputMessageRole.Developer => "developer",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EasyInputMessageRole value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static EasyInputMessageRole ToEasyInputMessageRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "user"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "user"))
             {
-                return EasyInputMessageRole.User;
+                return global::Azure.AI.Projects.EasyInputMessageRole.User;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "assistant"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "assistant"))
             {
-                return EasyInputMessageRole.Assistant;
+                return global::Azure.AI.Projects.EasyInputMessageRole.Assistant;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
             {
-                return EasyInputMessageRole.System;
+                return global::Azure.AI.Projects.EasyInputMessageRole.System;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "developer"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "developer"))
             {
-                return EasyInputMessageRole.Developer;
+                return global::Azure.AI.Projects.EasyInputMessageRole.Developer;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EasyInputMessageRole value.");
         }

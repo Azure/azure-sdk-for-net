@@ -11,23 +11,23 @@ namespace Azure.AI.Projects
     /// <summary> A memory item containing a procedure extracted from conversations. </summary>
     public partial class ProceduralMemoryItem : MemoryItem
     {
-        /// <summary> Initializes a new instance of <see cref="ProceduralMemoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ProceduralMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
-        internal ProceduralMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.Procedural)
+        internal ProceduralMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, global::Azure.AI.Projects.Memory.MemoryItemKind.Procedural)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProceduralMemoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ProceduralMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProceduralMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedAt, scope, content, kind, additionalBinaryDataProperties)
+        internal ProceduralMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedAt, scope, content, kind, additionalBinaryDataProperties)
         {
         }
     }

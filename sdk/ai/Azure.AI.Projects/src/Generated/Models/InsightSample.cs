@@ -10,19 +10,19 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// A sample from the analysis.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationResultSample"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.EvaluationResultSample"/>.
     /// </summary>
     public abstract partial class InsightSample
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightSample"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
         /// <param name="type"> Sample type. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
-        private protected InsightSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo)
+        private protected InsightSample(string id, SampleType @type, IDictionary<string, global::System.BinaryData> features, IDictionary<string, global::System.BinaryData> correlationInfo)
         {
             Id = id;
             Type = @type;
@@ -30,13 +30,13 @@ namespace Azure.AI.Projects.Evaluation
             CorrelationInfo = correlationInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightSample"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
         /// <param name="type"> Sample type. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightSample(string id, SampleType @type, IDictionary<string, global::System.BinaryData> features, IDictionary<string, global::System.BinaryData> correlationInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
@@ -53,8 +53,8 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary>
         /// Features to help with additional filtering of data in UX.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -77,12 +77,12 @@ namespace Azure.AI.Projects.Evaluation
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Features { get; }
+        public IDictionary<string, global::System.BinaryData> Features { get; }
 
         /// <summary>
         /// Info about the correlation for the analysis sample.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -105,6 +105,6 @@ namespace Azure.AI.Projects.Evaluation
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> CorrelationInfo { get; }
+        public IDictionary<string, global::System.BinaryData> CorrelationInfo { get; }
     }
 }

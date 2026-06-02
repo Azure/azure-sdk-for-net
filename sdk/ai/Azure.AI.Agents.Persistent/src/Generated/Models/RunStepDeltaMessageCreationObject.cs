@@ -14,17 +14,17 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepDeltaMessageCreationObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMessageCreationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject"/>. </summary>
         internal RunStepDeltaMessageCreationObject()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMessageCreationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject"/>. </summary>
         /// <param name="messageId"> The ID of the newly-created message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaMessageCreationObject(string messageId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaMessageCreationObject(string messageId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

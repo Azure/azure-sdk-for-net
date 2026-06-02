@@ -22,7 +22,7 @@ namespace Specs.Azure.Core.Basic
             set => throw null;
         }
 
-        public IList<UserOrder> Orders => throw null;
+        public IList<global::Specs.Azure.Core.Basic.UserOrder> Orders => throw null;
 
         public ETag Etag => throw null;
     }

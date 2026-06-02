@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     public partial class CodeInterpreterToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolResource"/>. </summary>
         public CodeInterpreterToolResource()
         {
             FileIds = new ChangeTrackingList<string>();
-            DataSources = new ChangeTrackingList<VectorStoreDataSource>();
+            DataSources = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolResource"/>. </summary>
         /// <param name="fileIds">
         /// A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files
         /// associated with the tool.
         /// </param>
         /// <param name="dataSources"> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CodeInterpreterToolResource(IList<string> fileIds, IList<VectorStoreDataSource> dataSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeInterpreterToolResource(IList<string> fileIds, IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileIds = fileIds;
             DataSources = dataSources;
@@ -44,6 +44,6 @@ namespace Azure.AI.Agents.Persistent
         public IList<string> FileIds { get; }
 
         /// <summary> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </summary>
-        public IList<VectorStoreDataSource> DataSources { get; }
+        public IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> DataSources { get; }
     }
 }

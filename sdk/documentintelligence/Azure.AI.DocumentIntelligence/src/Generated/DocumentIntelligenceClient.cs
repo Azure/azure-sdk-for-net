@@ -17,9 +17,9 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> The DocumentIntelligenceClient. </summary>
     public partial class DocumentIntelligenceClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClient for mocking. </summary>
@@ -30,16 +30,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of DocumentIntelligenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -47,20 +47,20 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentIntelligenceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentIntelligenceClientOptions options)
+        internal DocumentIntelligenceClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DocumentIntelligenceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DocumentIntelligenceClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -70,8 +70,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceClient(global::System.Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -79,14 +79,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceClient(global::System.Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClient from a <see cref="DocumentIntelligenceClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DocumentIntelligenceClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DocumentIntelligenceClient(DocumentIntelligenceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -107,13 +107,13 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAnalyzeBatchResults(string modelId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAnalyzeBatchResults(string modelId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
@@ -128,13 +128,13 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAnalyzeBatchResultsAsync(string modelId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAnalyzeBatchResultsAsync(string modelId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
@@ -142,12 +142,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> List batch document analysis results. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<AnalyzeBatchOperationDetails> GetAnalyzeBatchResults(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.DocumentIntelligence.AnalyzeBatchOperationDetails> GetAnalyzeBatchResults(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
@@ -155,12 +155,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> List batch document analysis results. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<AnalyzeBatchOperationDetails> GetAnalyzeBatchResultsAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.DocumentIntelligence.AnalyzeBatchOperationDetails> GetAnalyzeBatchResultsAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }

@@ -16,23 +16,23 @@ namespace Payload.Head
 {
     public partial class HeadClient
     {
-        public HeadClient() : this(new Uri("http://localhost:3000"), new HeadClientOptions()) => throw null;
+        public HeadClient() : this(new global::System.Uri("http://localhost:3000"), new HeadClientOptions()) => throw null;
 
-        internal HeadClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, HeadClientOptions options) => throw null;
+        internal HeadClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, HeadClientOptions options) => throw null;
 
-        public HeadClient(Uri endpoint, HeadClientOptions options) : this(null, endpoint, options) => throw null;
+        public HeadClient(global::System.Uri endpoint, HeadClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public HeadClient(HeadClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public HeadClient(HeadClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ContentTypeHeaderInResponse(RequestContext context) => throw null;
 
-        public virtual Task<Response> ContentTypeHeaderInResponseAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ContentTypeHeaderInResponseAsync(RequestContext context) => throw null;
 
         public virtual Response ContentTypeHeaderInResponse(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ContentTypeHeaderInResponseAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ContentTypeHeaderInResponseAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

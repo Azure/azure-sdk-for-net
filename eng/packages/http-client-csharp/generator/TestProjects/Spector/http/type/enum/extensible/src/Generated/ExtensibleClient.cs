@@ -13,14 +13,14 @@ namespace _Type._Enum.Extensible
 {
     public partial class ExtensibleClient
     {
-        public ExtensibleClient() : this(new Uri("http://localhost:3000"), new ExtensibleClientOptions()) => throw null;
+        public ExtensibleClient() : this(new global::System.Uri("http://localhost:3000"), new ExtensibleClientOptions()) => throw null;
 
-        internal ExtensibleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ExtensibleClientOptions options) => throw null;
+        internal ExtensibleClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ExtensibleClientOptions options) => throw null;
 
-        public ExtensibleClient(Uri endpoint, ExtensibleClientOptions options) : this(null, endpoint, options) => throw null;
+        public ExtensibleClient(global::System.Uri endpoint, ExtensibleClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ExtensibleClient(ExtensibleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ExtensibleClient(ExtensibleClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

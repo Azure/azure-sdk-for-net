@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the parsing mode for indexing from an Azure blob data source. </summary>
-    public readonly partial struct BlobIndexerParsingMode : IEquatable<BlobIndexerParsingMode>
+    public readonly partial struct BlobIndexerParsingMode : IEquatable<global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode>
     {
         private readonly string _value;
         /// <summary> Set to default for normal file processing. </summary>
@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Set to markdown to extract content from markdown files. </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerParsingMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -61,34 +61,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Set to markdown to extract content from markdown files. </summary>
         public static BlobIndexerParsingMode Markdown { get; } = new BlobIndexerParsingMode(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerParsingMode(string value) => new BlobIndexerParsingMode(value);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerParsingMode?(string value) => value == null ? null : new BlobIndexerParsingMode(value);
+        public static implicit operator BlobIndexerParsingMode?(string value) => (value == null) ? null : new BlobIndexerParsingMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BlobIndexerParsingMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BlobIndexerParsingMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BlobIndexerParsingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BlobIndexerParsingMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

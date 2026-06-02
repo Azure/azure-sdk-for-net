@@ -14,15 +14,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class QueryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.QueryResult"/>. </summary>
         internal QueryResult()
         {
-            Value = new ChangeTrackingList<SearchResultValue>();
+            Value = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchResultValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.QueryResult"/>. </summary>
         /// <param name="searchCount">
         /// The total number of search results (not the number of documents in a single
         /// page).
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="value"> Search result value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResult(int? searchCount, bool? searchCountApproximate, string continuationToken, SearchFacetResultValue searchFacets, IList<SearchResultValue> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryResult(int? searchCount, bool? searchCountApproximate, string continuationToken, SearchFacetResultValue searchFacets, IList<global::Azure.Analytics.Purview.DataMap.SearchResultValue> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchCount = searchCount;
             SearchCountApproximate = searchCountApproximate;
@@ -66,6 +66,6 @@ namespace Azure.Analytics.Purview.DataMap
         public SearchFacetResultValue SearchFacets { get; }
 
         /// <summary> Search result value. </summary>
-        public IList<SearchResultValue> Value { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchResultValue> Value { get; }
     }
 }

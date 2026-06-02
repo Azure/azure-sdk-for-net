@@ -15,23 +15,23 @@ namespace Azure.AI.Language.Text
     public partial class HealthcareRelation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareRelation"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
-        internal HealthcareRelation(RelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
+        internal HealthcareRelation(RelationType relationType, IEnumerable<global::Azure.AI.Language.Text.HealthcareRelationEntity> entities)
         {
             RelationType = relationType;
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareRelation"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted relation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareRelation(RelationType relationType, IList<HealthcareRelationEntity> entities, double? confidenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareRelation(RelationType relationType, IList<global::Azure.AI.Language.Text.HealthcareRelationEntity> entities, double? confidenceScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RelationType = relationType;
             Entities = entities;
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Text
         public RelationType RelationType { get; }
 
         /// <summary> The entities in the relation. </summary>
-        public IList<HealthcareRelationEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.HealthcareRelationEntity> Entities { get; }
 
         /// <summary> Confidence score between 0 and 1 of the extracted relation. </summary>
         public double? ConfidenceScore { get; }

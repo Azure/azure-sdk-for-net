@@ -19,16 +19,16 @@ namespace Client.Naming.EnumConflict
     {
         protected SecondOperations() => throw null;
 
-        internal SecondOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal SecondOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Second(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SecondAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SecondAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<SecondModel> Second(SecondModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel> Second(SecondModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SecondModel>> SecondAsync(SecondModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Client.Naming.EnumConflict.SecondNamespace.SecondModel>> SecondAsync(SecondModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileSearchToolFiltersType1 value) => value switch
         {
-            FileSearchToolFiltersType1.And => "and",
-            FileSearchToolFiltersType1.Or => "or",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType1.And => "and",
+            global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType1.Or => "or",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType1 value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FileSearchToolFiltersType1 ToFileSearchToolFiltersType1(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "and"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "and"))
             {
-                return FileSearchToolFiltersType1.And;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType1.And;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "or"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "or"))
             {
-                return FileSearchToolFiltersType1.Or;
+                return global::Azure.AI.Extensions.OpenAI.FileSearchToolFiltersType1.Or;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType1 value.");
         }

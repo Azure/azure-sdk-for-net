@@ -13,82 +13,82 @@ using Azure.Core;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Translate Request Content. </summary>
-    public partial class DocumentTranslateContent : IJsonModel<DocumentTranslateContent>
+    public partial class DocumentTranslateContent : IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTranslateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Translation.Document.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentTranslateContent(document.RootElement, options);
+                        return global::Azure.AI.Translation.Document.DocumentTranslateContent.DeserializeDocumentTranslateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Translation.Document.AzureAITranslationDocumentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTranslateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTranslateContent IPersistableModel<DocumentTranslateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentTranslateContent IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTranslateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="documentTranslateContent"> The <see cref="DocumentTranslateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="documentTranslateContent"> The <see cref="global::Azure.AI.Translation.Document.DocumentTranslateContent"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DocumentTranslateContent documentTranslateContent)
         {
-            if (documentTranslateContent == null)
+            if ((documentTranslateContent == null))
             {
                 return null;
             }
-            return RequestContent.Create(documentTranslateContent, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(documentTranslateContent, global::Azure.AI.Translation.Document.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTranslateContent IJsonModel<DocumentTranslateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentTranslateContent IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTranslateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslateContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentTranslateContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Translation.Document.DocumentTranslateContent.DeserializeDocumentTranslateContent(document.RootElement, options);
         }
     }
 }

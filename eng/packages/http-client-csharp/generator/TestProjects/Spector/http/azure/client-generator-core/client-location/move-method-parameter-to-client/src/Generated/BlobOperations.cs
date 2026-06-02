@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
     {
         protected BlobOperations() => throw null;
 
-        internal BlobOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string storageAccount) => throw null;
+        internal BlobOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string storageAccount) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetBlob(string container, string blob, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetBlobAsync(string container, string blob, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetBlobAsync(string container, string blob, RequestContext context) => throw null;
 
-        public virtual Response<Blob> GetBlob(string container, string blob, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient.Blob> GetBlob(string container, string blob, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Blob>> GetBlobAsync(string container, string blob, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient.Blob>> GetBlobAsync(string container, string blob, CancellationToken cancellationToken = default) => throw null;
     }
 }

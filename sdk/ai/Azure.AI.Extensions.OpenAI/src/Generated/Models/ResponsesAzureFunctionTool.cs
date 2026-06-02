@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
     public partial class ResponsesAzureFunctionTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
-        public ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base(ToolType.AzureFunction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
+        public ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base(global::Azure.AI.Extensions.OpenAI.ToolType.AzureFunction)
         {
-            Argument.AssertNotNull(azureFunction, nameof(azureFunction));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
             AzureFunction = azureFunction;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesAzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesAzureFunctionTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             AzureFunction = azureFunction;
             ToolConfigs = toolConfigs;
@@ -44,6 +44,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
     }
 }

@@ -10,10 +10,10 @@ namespace OpenAI
 {
     internal partial class UnknownTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.UnknownTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

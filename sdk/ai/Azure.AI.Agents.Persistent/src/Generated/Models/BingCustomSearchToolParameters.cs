@@ -15,28 +15,28 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingCustomSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
+        public BingCustomSearchToolParameters(IEnumerable<global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchToolParameters(IList<BingCustomSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingCustomSearchToolParameters(IList<global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> searchConfigurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,6 +46,6 @@ namespace Azure.AI.Agents.Persistent
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<BingCustomSearchConfiguration> SearchConfigurations { get; }
+        public IList<global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> SearchConfigurations { get; }
     }
 }

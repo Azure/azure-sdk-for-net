@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines behavior of the index projections in relation to the rest of the indexer. </summary>
-    public readonly partial struct IndexProjectionMode : IEquatable<IndexProjectionMode>
+    public readonly partial struct IndexProjectionMode : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode>
     {
         private readonly string _value;
         /// <summary> The source document will be skipped from writing into the indexer's target index. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The source document will be written into the indexer's target index. This is the default pattern. </summary>
         private const string IncludeIndexingParentDocumentsValue = "includeIndexingParentDocuments";
 
-        /// <summary> Initializes a new instance of <see cref="IndexProjectionMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexProjectionMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The source document will be written into the indexer's target index. This is the default pattern. </summary>
         public static IndexProjectionMode IncludeIndexingParentDocuments { get; } = new IndexProjectionMode(IncludeIndexingParentDocumentsValue);
 
-        /// <summary> Determines if two <see cref="IndexProjectionMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexProjectionMode left, IndexProjectionMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexProjectionMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexProjectionMode left, IndexProjectionMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexProjectionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexProjectionMode(string value) => new IndexProjectionMode(value);
 
-        /// <summary> Converts a string to a <see cref="IndexProjectionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexProjectionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexProjectionMode?(string value) => value == null ? null : new IndexProjectionMode(value);
+        public static implicit operator IndexProjectionMode?(string value) => (value == null) ? null : new IndexProjectionMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexProjectionMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexProjectionMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexProjectionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexProjectionMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

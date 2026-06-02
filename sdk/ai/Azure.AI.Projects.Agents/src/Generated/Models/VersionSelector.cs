@@ -12,28 +12,28 @@ namespace Azure.AI.Projects.Agents
     public partial class VersionSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VersionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionSelector"/>. </summary>
         /// <param name="versionSelectionRules"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionSelectionRules"/> is null. </exception>
-        public VersionSelector(IEnumerable<VersionSelectionRule> versionSelectionRules)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="versionSelectionRules"/> is null. </exception>
+        public VersionSelector(IEnumerable<global::Azure.AI.Projects.Agents.VersionSelectionRule> versionSelectionRules)
         {
-            Argument.AssertNotNull(versionSelectionRules, nameof(versionSelectionRules));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(versionSelectionRules, nameof(versionSelectionRules));
 
             VersionSelectionRules = versionSelectionRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionSelector"/>. </summary>
         /// <param name="versionSelectionRules"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VersionSelector(IList<VersionSelectionRule> versionSelectionRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VersionSelector(IList<global::Azure.AI.Projects.Agents.VersionSelectionRule> versionSelectionRules, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VersionSelectionRules = versionSelectionRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the VersionSelectionRules. </summary>
-        public IList<VersionSelectionRule> VersionSelectionRules { get; }
+        public IList<global::Azure.AI.Projects.Agents.VersionSelectionRule> VersionSelectionRules { get; }
     }
 }

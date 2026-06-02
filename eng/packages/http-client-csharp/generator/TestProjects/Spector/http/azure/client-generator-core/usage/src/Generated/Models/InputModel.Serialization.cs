@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
-    public partial class InputModel : IJsonModel<InputModel>
+    public partial class InputModel : IJsonModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>
     {
         internal InputModel() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<InputModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        InputModel IPersistableModel<InputModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        InputModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<InputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="inputModel"> The <see cref="InputModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="inputModel"> The <see cref="global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(InputModel inputModel) => throw null;
 
-        void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        InputModel IJsonModel<InputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        InputModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.InputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual InputModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

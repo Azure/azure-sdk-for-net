@@ -18,17 +18,17 @@ namespace Azure.Communication.Messages
     /// <summary> The ConversationThreadClient. </summary>
     public partial class ConversationThreadClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ConversationThreadClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationThreadClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationThreadClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
         {
         }
 
@@ -36,20 +36,20 @@ namespace Azure.Communication.Messages
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ConversationThreadClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CommunicationMessagesClientOptions options)
+        internal ConversationThreadClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new CommunicationMessagesClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -59,14 +59,14 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationThreadClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationThreadClient(global::System.Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of ConversationThreadClient from a <see cref="ConversationThreadClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ConversationThreadClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public ConversationThreadClient(ConversationThreadClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -88,9 +88,9 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddParticipants(string conversationId, RequestContent content, RequestContext context = null)
         {
@@ -98,10 +98,10 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddParticipantsRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateAddParticipantsRequest(conversationId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -122,20 +122,20 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AddParticipants");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddParticipantsRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateAddParticipantsRequest(conversationId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -149,32 +149,32 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the payload for adding participants to a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AddParticipantsResult> AddParticipants(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = AddParticipants(conversationId, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((AddParticipantsResult)result, result);
+            Response result = this.AddParticipants(conversationId, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AddParticipantsResult)result), result);
         }
 
         /// <summary> Adds participants to a specific conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the payload for adding participants to a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.Messages.AddParticipantsResult>> AddParticipantsAsync(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await AddParticipantsAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AddParticipantsResult)result, result);
+            Response result = await this.AddParticipantsAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AddParticipantsResult)result), result);
         }
 
         /// <summary>
@@ -188,9 +188,9 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveParticipants(string conversationId, RequestContent content, RequestContext context = null)
         {
@@ -198,10 +198,10 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveParticipantsRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateRemoveParticipantsRequest(conversationId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -222,20 +222,20 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationThreadClient.RemoveParticipants");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveParticipantsRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateRemoveParticipantsRequest(conversationId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -249,32 +249,32 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the request body for removing participants from a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.Messages.RemoveParticipantsResult> RemoveParticipants(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = RemoveParticipants(conversationId, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((RemoveParticipantsResult)result, result);
+            Response result = this.RemoveParticipants(conversationId, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RemoveParticipantsResult)result), result);
         }
 
         /// <summary> remove a participant from a conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the request body for removing participants from a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.Messages.RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await RemoveParticipantsAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RemoveParticipantsResult)result, result);
+            Response result = await this.RemoveParticipantsAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RemoveParticipantsResult)result), result);
         }
 
         /// <summary>
@@ -289,9 +289,9 @@ namespace Azure.Communication.Messages
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
             return new ConversationThreadClientGetConversationsCollectionResult(
                 this,
@@ -314,9 +314,9 @@ namespace Azure.Communication.Messages
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
             return new ConversationThreadClientGetConversationsAsyncCollectionResult(
                 this,
@@ -332,8 +332,8 @@ namespace Azure.Communication.Messages
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<CommunicationConversation> GetConversations(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Communication.Messages.CommunicationConversation> GetConversations(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
             return new ConversationThreadClientGetConversationsCollectionResultOfT(
                 this,
@@ -349,8 +349,8 @@ namespace Azure.Communication.Messages
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<CommunicationConversation> GetConversationsAsync(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Communication.Messages.CommunicationConversation> GetConversationsAsync(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
             return new ConversationThreadClientGetConversationsAsyncCollectionResultOfT(
                 this,
@@ -373,13 +373,13 @@ namespace Azure.Communication.Messages
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMessages(string conversationId, int? maxPageSize, string participantId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetMessages(string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             return new ConversationThreadClientGetMessagesCollectionResult(
                 this,
@@ -402,13 +402,13 @@ namespace Azure.Communication.Messages
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMessagesAsync(string conversationId, int? maxPageSize, string participantId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetMessagesAsync(string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             return new ConversationThreadClientGetMessagesAsyncCollectionResult(
                 this,
@@ -424,12 +424,12 @@ namespace Azure.Communication.Messages
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ConversationMessageItem> GetMessages(string conversationId, int? maxPageSize = default, string participantId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Communication.Messages.ConversationMessageItem> GetMessages(string conversationId, int? maxPageSize = default, string participantId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             return new ConversationThreadClientGetMessagesCollectionResultOfT(
                 this,
@@ -445,12 +445,12 @@ namespace Azure.Communication.Messages
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxPageSize = default, string participantId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Communication.Messages.ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxPageSize = default, string participantId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             return new ConversationThreadClientGetMessagesAsyncCollectionResultOfT(
                 this,
@@ -472,9 +472,9 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SendMessage(string conversationId, RequestContent content, RequestContext context = null)
         {
@@ -482,10 +482,10 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendMessageRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateSendMessageRequest(conversationId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -506,20 +506,20 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SendMessageAsync(string conversationId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SendMessageAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationThreadClient.SendMessage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendMessageRequest(conversationId, content, context);
+                using HttpMessage message = this.CreateSendMessageRequest(conversationId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -533,32 +533,32 @@ namespace Azure.Communication.Messages
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the conversation message to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SendConversationMessageResult> SendMessage(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.Messages.SendConversationMessageResult> SendMessage(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = SendMessage(conversationId, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((SendConversationMessageResult)result, result);
+            Response result = this.SendMessage(conversationId, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SendConversationMessageResult)result), result);
         }
 
         /// <summary> Sends a conversation message from Business to User. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="options"> Details of the conversation message to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SendConversationMessageResult>> SendMessageAsync(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.Messages.SendConversationMessageResult>> SendMessageAsync(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await SendMessageAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SendConversationMessageResult)result, result);
+            Response result = await this.SendMessageAsync(conversationId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SendConversationMessageResult)result), result);
         }
 
         /// <summary>
@@ -571,9 +571,9 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnalyzeConversation(string conversationId, RequestContext context)
         {
@@ -581,9 +581,9 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-                using HttpMessage message = CreateAnalyzeConversationRequest(conversationId, context);
+                using HttpMessage message = this.CreateAnalyzeConversationRequest(conversationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -603,19 +603,19 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnalyzeConversationAsync(string conversationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> AnalyzeConversationAsync(string conversationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AnalyzeConversation");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-                using HttpMessage message = CreateAnalyzeConversationRequest(conversationId, context);
+                using HttpMessage message = this.CreateAnalyzeConversationRequest(conversationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -628,29 +628,29 @@ namespace Azure.Communication.Messages
         /// <summary> Get AI Analysis of a conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GetConversationThreadAnalysisResult> AnalyzeConversation(string conversationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.Messages.GetConversationThreadAnalysisResult> AnalyzeConversation(string conversationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            Response result = AnalyzeConversation(conversationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((GetConversationThreadAnalysisResult)result, result);
+            Response result = this.AnalyzeConversation(conversationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((GetConversationThreadAnalysisResult)result), result);
         }
 
         /// <summary> Get AI Analysis of a conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GetConversationThreadAnalysisResult>> AnalyzeConversationAsync(string conversationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.Messages.GetConversationThreadAnalysisResult>> AnalyzeConversationAsync(string conversationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            global::Azure.Communication.Messages.Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            Response result = await AnalyzeConversationAsync(conversationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((GetConversationThreadAnalysisResult)result, result);
+            Response result = await this.AnalyzeConversationAsync(conversationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((GetConversationThreadAnalysisResult)result), result);
         }
     }
 }

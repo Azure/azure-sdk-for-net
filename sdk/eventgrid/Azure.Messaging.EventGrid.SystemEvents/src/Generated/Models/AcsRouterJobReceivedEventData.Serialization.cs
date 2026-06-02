@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
-    [JsonConverter(typeof(AcsRouterJobReceivedEventDataConverter))]
-    public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobReceivedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData.AcsRouterJobReceivedEventDataConverter))]
+    public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData"/> for deserialization. </summary>
         internal AcsRouterJobReceivedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsRouterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData.DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRouterJobReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterJobReceivedEventData IPersistableModel<AcsRouterJobReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobReceivedEventData)PersistableModelCreateCore(data, options);
+        AcsRouterJobReceivedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsRouterJobReceivedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRouterJobReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsRouterJobReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,38 +75,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Status))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ClassificationPolicyId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsDefined(Priority))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("requestedWorkerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (AcsRouterWorkerSelector item in RequestedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AcsRouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ScheduledOn))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledOn"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
@@ -117,40 +117,40 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterJobReceivedEventData IJsonModel<AcsRouterJobReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsRouterJobReceivedEventData)JsonModelCreateCore(ref reader, options);
+        AcsRouterJobReceivedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsRouterJobReceivedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsRouterEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData.DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsRouterJobReceivedEventData DeserializeAcsRouterJobReceivedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string jobId = default;
             string channelReference = default;
             string channelId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
             AcsRouterJobStatus? status = default;
             string classificationPolicyId = default;
             int? priority = default;
-            IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors = default;
+            IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors = default;
             DateTimeOffset? scheduledOn = default;
             bool unavailableForMatching = default;
             foreach (var prop in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("jobStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("priority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -234,17 +234,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("requestedWorkerSelectors"u8))
                 {
-                    List<AcsRouterWorkerSelector> array = new List<AcsRouterWorkerSelector>();
+                    List<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> array = new List<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item, options));
+                        array.Add(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item, options));
                     }
                     requestedWorkerSelectors = array;
                     continue;
                 }
                 if (prop.NameEquals("scheduledOn"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -256,9 +256,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     unavailableForMatching = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsRouterJobReceivedEventData(
@@ -277,7 +277,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 unavailableForMatching);
         }
 
-        internal partial class AcsRouterJobReceivedEventDataConverter : JsonConverter<AcsRouterJobReceivedEventData>
+        internal partial class AcsRouterJobReceivedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsRouterJobReceivedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsRouterJobReceivedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -294,8 +294,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsRouterJobReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRouterJobReceivedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobReceivedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

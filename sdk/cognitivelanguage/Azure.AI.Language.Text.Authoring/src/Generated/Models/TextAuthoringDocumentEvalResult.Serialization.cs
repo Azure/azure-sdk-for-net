@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Represents the evaluation result of a document.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntityRecognitionDocumentEvalResult"/>, <see cref="CustomHealthcareDocumentEvalResult"/>, <see cref="CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="CustomTextSentimentDocumentEvalResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownTextAuthoringDocumentEvalResult))]
-    public abstract partial class TextAuthoringDocumentEvalResult : IJsonModel<TextAuthoringDocumentEvalResult>
+    [PersistableModelProxyAttribute(typeof(UnknownTextAuthoringDocumentEvalResult))]
+    public abstract partial class TextAuthoringDocumentEvalResult : IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>
     {
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringDocumentEvalResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult"/> for deserialization. </summary>
         internal TextAuthoringDocumentEvalResult()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringDocumentEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTextAuthoringDocumentEvalResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringDocumentEvalResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringDocumentEvalResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringDocumentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringDocumentEvalResult IPersistableModel<TextAuthoringDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TextAuthoringDocumentEvalResult IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TextAuthoringDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,12 +76,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringDocumentEvalResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("projectKind"u8);
                 writer.WriteStringValue(ProjectKind.ToString());
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStringValue(Location);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -98,9 +98,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -109,26 +109,26 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringDocumentEvalResult IJsonModel<TextAuthoringDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TextAuthoringDocumentEvalResult IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringDocumentEvalResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringDocumentEvalResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTextAuthoringDocumentEvalResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TextAuthoringDocumentEvalResult DeserializeTextAuthoringDocumentEvalResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -137,18 +137,18 @@ namespace Azure.AI.Language.Text.Authoring
                 switch (discriminator.GetString())
                 {
                     case "CustomEntityRecognition":
-                        return CustomEntityRecognitionDocumentEvalResult.DeserializeCustomEntityRecognitionDocumentEvalResult(element, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult.DeserializeCustomEntityRecognitionDocumentEvalResult(element, options);
                     case "CustomHealthcare":
-                        return CustomHealthcareDocumentEvalResult.DeserializeCustomHealthcareDocumentEvalResult(element, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult.DeserializeCustomHealthcareDocumentEvalResult(element, options);
                     case "CustomMultiLabelClassification":
-                        return CustomMultiLabelClassificationDocumentEvalResult.DeserializeCustomMultiLabelClassificationDocumentEvalResult(element, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult.DeserializeCustomMultiLabelClassificationDocumentEvalResult(element, options);
                     case "CustomSingleLabelClassification":
-                        return CustomSingleLabelClassificationDocumentEvalResult.DeserializeCustomSingleLabelClassificationDocumentEvalResult(element, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult.DeserializeCustomSingleLabelClassificationDocumentEvalResult(element, options);
                     case "CustomTextSentiment":
-                        return CustomTextSentimentDocumentEvalResult.DeserializeCustomTextSentimentDocumentEvalResult(element, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult.DeserializeCustomTextSentimentDocumentEvalResult(element, options);
                 }
             }
-            return UnknownTextAuthoringDocumentEvalResult.DeserializeUnknownTextAuthoringDocumentEvalResult(element, options);
+            return global::Azure.AI.Language.Text.Authoring.UnknownTextAuthoringDocumentEvalResult.DeserializeUnknownTextAuthoringDocumentEvalResult(element, options);
         }
     }
 }

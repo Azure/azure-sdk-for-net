@@ -24,15 +24,15 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/atlas/v2/lineage/", false);
             uri.AppendPath(guid, true);
-            if (depth != null)
+            if ((depth != null))
             {
-                uri.AppendQuery("depth", TypeFormatters.ConvertToString(depth), true);
+                uri.AppendQuery("depth", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(depth), true);
             }
             uri.AppendQuery("direction", direction, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -45,23 +45,23 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/lineage/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/next", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("direction", direction, true);
-            if (offset != null)
+            if ((offset != null))
             {
-                uri.AppendQuery("offset", TypeFormatters.ConvertToString(offset), true);
+                uri.AppendQuery("offset", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(offset), true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(limit), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -73,19 +73,19 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/atlas/v2/lineage/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
-            if (depth != null)
+            if ((depth != null))
             {
-                uri.AppendQuery("depth", TypeFormatters.ConvertToString(depth), true);
+                uri.AppendQuery("depth", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(depth), true);
             }
             uri.AppendQuery("direction", direction, true);
-            if (attribute != null)
+            if ((attribute != null))
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

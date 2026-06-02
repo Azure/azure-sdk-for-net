@@ -13,9 +13,9 @@ namespace Azure.AI.Projects.Agents
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateCreateToolboxVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/toolboxes/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/toolboxes/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -59,23 +59,23 @@ namespace Azure.AI.Projects.Agents
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/toolboxes", false);
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -93,23 +93,23 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/toolboxes/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/toolboxes/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/toolboxes/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

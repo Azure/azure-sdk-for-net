@@ -12,42 +12,42 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.Query.Logs
 {
-    /// <summary> Client options for <see cref="LogsQueryClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Monitor.Query.Logs.LogsQueryClient"/>. </summary>
     public partial class LogsQueryClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const global::Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion LatestVersion = global::Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of LogsQueryClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public LogsQueryClientOptions(ServiceVersion version = LatestVersion)
+        public LogsQueryClientOptions(global::Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V1 => "v1",
+                global::Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of LogsQueryClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal LogsQueryClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "v1";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            if (section["Audience"] is string audience)
+            if ((section["Audience"] is string audience))
             {
-                Audience = new LogsQueryAudience(audience);
+                this.Audience = new LogsQueryAudience(audience);
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

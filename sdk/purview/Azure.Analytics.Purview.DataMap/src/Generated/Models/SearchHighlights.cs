@@ -19,9 +19,9 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class SearchHighlights
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchHighlights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchHighlights"/>. </summary>
         internal SearchHighlights()
         {
             Id = new ChangeTrackingList<string>();
@@ -31,14 +31,14 @@ namespace Azure.Analytics.Purview.DataMap
             EntityType = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchHighlights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchHighlights"/>. </summary>
         /// <param name="id"> Id. </param>
         /// <param name="qualifiedName"> Qualified name. </param>
         /// <param name="name"> Name. </param>
         /// <param name="description"> Description. </param>
         /// <param name="entityType"> Entity type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchHighlights(IList<string> id, IList<string> qualifiedName, IList<string> name, IList<string> description, IList<string> entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchHighlights(IList<string> id, IList<string> qualifiedName, IList<string> name, IList<string> description, IList<string> entityType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             QualifiedName = qualifiedName;

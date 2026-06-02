@@ -14,14 +14,14 @@ namespace Payload.MediaType
 {
     public partial class MediaTypeClient
     {
-        public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions()) => throw null;
+        public MediaTypeClient() : this(new global::System.Uri("http://localhost:3000"), new MediaTypeClientOptions()) => throw null;
 
-        internal MediaTypeClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MediaTypeClientOptions options) => throw null;
+        internal MediaTypeClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MediaTypeClientOptions options) => throw null;
 
-        public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options) : this(null, endpoint, options) => throw null;
+        public MediaTypeClient(global::System.Uri endpoint, MediaTypeClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MediaTypeClient(MediaTypeClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MediaTypeClient(MediaTypeClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

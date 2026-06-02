@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class LinuxUserConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LinuxUserConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.LinuxUserConfiguration"/>. </summary>
         public LinuxUserConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinuxUserConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.LinuxUserConfiguration"/>. </summary>
         /// <param name="uid"> The user ID of the user Account. The uid and gid properties must be specified together or not at all. If not specified the underlying operating system picks the uid. </param>
         /// <param name="gid"> The group ID for the user Account. The uid and gid properties must be specified together or not at all. If not specified the underlying operating system picks the gid. </param>
         /// <param name="sshPrivateKey"> The SSH private key for the user Account. The private key must not be password protected. The private key is used to automatically configure asymmetric-key based authentication for SSH between Compute Nodes in a Linux Pool when the Pool's enableInterNodeCommunication property is true (it is ignored if enableInterNodeCommunication is false). It does this by placing the key pair into the user's .ssh directory. If not specified, password-less SSH is not configured between Compute Nodes (no modification of the user's .ssh directory is done). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxUserConfiguration(int? uid, int? gid, string sshPrivateKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxUserConfiguration(int? uid, int? gid, string sshPrivateKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uid = uid;
             Gid = gid;

@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentCaption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentCaption"/>. </summary>
         /// <param name="content"> Content of the caption. </param>
         internal DocumentCaption(string content)
         {
@@ -24,13 +24,13 @@ namespace Azure.AI.ContentUnderstanding
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentCaption"/>. </summary>
         /// <param name="content"> Content of the caption. </param>
         /// <param name="source"> Encoded source that identifies the position of the caption in the content. </param>
         /// <param name="span"> Span of the caption in the markdown content. </param>
         /// <param name="elements"> Child elements of the caption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentCaption(string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentCaption(string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Source = source;

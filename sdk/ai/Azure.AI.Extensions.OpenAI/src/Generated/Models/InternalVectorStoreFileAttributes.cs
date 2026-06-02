@@ -11,12 +11,12 @@ namespace OpenAI
     internal partial class InternalVectorStoreFileAttributes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
         private IDictionary<string, string> _additionalStringProperties;
         private IDictionary<string, double> _additionalDoubleProperties;
         private IDictionary<string, bool> _additionalBooleanProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalVectorStoreFileAttributes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalVectorStoreFileAttributes"/>. </summary>
         public InternalVectorStoreFileAttributes()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
@@ -24,12 +24,12 @@ namespace OpenAI
             _additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalVectorStoreFileAttributes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalVectorStoreFileAttributes"/>. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalDoubleProperties"></param>
         /// <param name="additionalBooleanProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalVectorStoreFileAttributes(IDictionary<string, string> additionalProperties, IDictionary<string, double> additionalDoubleProperties, IDictionary<string, bool> additionalBooleanProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalVectorStoreFileAttributes(IDictionary<string, string> additionalProperties, IDictionary<string, double> additionalDoubleProperties, IDictionary<string, bool> additionalBooleanProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalStringProperties = additionalProperties;
             _additionalDoubleProperties = additionalDoubleProperties;

@@ -11,16 +11,16 @@ namespace OpenAI
     public partial class EmptyModelParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EmptyModelParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.EmptyModelParam"/>. </summary>
         public EmptyModelParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmptyModelParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.EmptyModelParam"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmptyModelParam(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmptyModelParam(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

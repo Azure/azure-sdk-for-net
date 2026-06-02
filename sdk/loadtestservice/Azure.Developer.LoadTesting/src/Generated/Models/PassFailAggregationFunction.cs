@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Aggregation functions for pass/fail criteria. </summary>
-    public readonly partial struct PassFailAggregationFunction : IEquatable<PassFailAggregationFunction>
+    public readonly partial struct PassFailAggregationFunction : IEquatable<global::Azure.Developer.LoadTesting.PassFailAggregationFunction>
     {
         private readonly string _value;
         /// <summary> Criteria applies for count value. </summary>
@@ -45,12 +45,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Criteria applies for maximum value. </summary>
         private const string MaximumValue = "max";
 
-        /// <summary> Initializes a new instance of <see cref="PassFailAggregationFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailAggregationFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PassFailAggregationFunction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -100,34 +100,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Criteria applies for maximum value. </summary>
         public static PassFailAggregationFunction Maximum { get; } = new PassFailAggregationFunction(MaximumValue);
 
-        /// <summary> Determines if two <see cref="PassFailAggregationFunction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PassFailAggregationFunction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PassFailAggregationFunction left, PassFailAggregationFunction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PassFailAggregationFunction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PassFailAggregationFunction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PassFailAggregationFunction left, PassFailAggregationFunction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PassFailAggregationFunction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PassFailAggregationFunction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PassFailAggregationFunction(string value) => new PassFailAggregationFunction(value);
 
-        /// <summary> Converts a string to a <see cref="PassFailAggregationFunction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PassFailAggregationFunction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PassFailAggregationFunction?(string value) => value == null ? null : new PassFailAggregationFunction(value);
+        public static implicit operator PassFailAggregationFunction?(string value) => (value == null) ? null : new PassFailAggregationFunction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PassFailAggregationFunction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PassFailAggregationFunction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PassFailAggregationFunction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PassFailAggregationFunction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

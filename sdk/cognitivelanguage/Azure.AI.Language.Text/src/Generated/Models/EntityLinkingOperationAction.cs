@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text Entity linking LRO task. </summary>
     public partial class EntityLinkingOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingOperationAction"/>. </summary>
-        public EntityLinkingOperationAction() : base(AnalyzeTextOperationActionKind.EntityLinking)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingOperationAction"/>. </summary>
+        public EntityLinkingOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.EntityLinking)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Task parameters. </param>
-        internal EntityLinkingOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityLinkingActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal EntityLinkingOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EntityLinkingActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

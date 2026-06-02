@@ -12,12 +12,12 @@ using System.Globalization;
 namespace BasicTypeSpec
 {
     /// <summary></summary>
-    public readonly partial struct ThingModelOptionalLiteralInt : IEquatable<ThingModelOptionalLiteralInt>
+    public readonly partial struct ThingModelOptionalLiteralInt : IEquatable<global::BasicTypeSpec.ThingModelOptionalLiteralInt>
     {
         private readonly int _value;
         private const int _456Value = 456;
 
-        /// <summary> Initializes a new instance of <see cref="ThingModelOptionalLiteralInt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralInt"/>. </summary>
         /// <param name="value"> The value. </param>
         public ThingModelOptionalLiteralInt(int value)
         {
@@ -27,32 +27,32 @@ namespace BasicTypeSpec
         /// <summary> Gets the _456. </summary>
         public static ThingModelOptionalLiteralInt _456 { get; } = new ThingModelOptionalLiteralInt(_456Value);
 
-        /// <summary> Determines if two <see cref="ThingModelOptionalLiteralInt"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralInt"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThingModelOptionalLiteralInt left, ThingModelOptionalLiteralInt right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThingModelOptionalLiteralInt"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralInt"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThingModelOptionalLiteralInt left, ThingModelOptionalLiteralInt right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThingModelOptionalLiteralInt"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralInt"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ThingModelOptionalLiteralInt(int value) => new ThingModelOptionalLiteralInt(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThingModelOptionalLiteralInt other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ThingModelOptionalLiteralInt other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ThingModelOptionalLiteralInt other) => Equals(_value, other._value);
+        public bool Equals(ThingModelOptionalLiteralInt other) => int.Equals(_value, other._value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <inheritdoc/>
-        public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
+        public override string ToString() => _value.ToString(global::System.Globalization.CultureInfo.InvariantCulture);
     }
 }

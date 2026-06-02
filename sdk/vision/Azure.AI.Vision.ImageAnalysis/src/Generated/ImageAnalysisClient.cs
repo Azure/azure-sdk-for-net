@@ -19,9 +19,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> The ImageAnalysisClient. </summary>
     public partial class ImageAnalysisClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ImageAnalysisClient for mocking. </summary>
@@ -32,16 +32,16 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
         {
         }
 
@@ -49,20 +49,20 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ImageAnalysisClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ImageAnalysisClientOptions options)
+        internal ImageAnalysisClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ImageAnalysisClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Vision.ImageAnalysis.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new ImageAnalysisClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -72,8 +72,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(global::System.Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -81,14 +81,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(global::System.Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisClient from a <see cref="ImageAnalysisClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ImageAnalysisClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public ImageAnalysisClient(ImageAnalysisClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -137,15 +137,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual Response AnalyzeFromImageData(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = this.CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -193,15 +193,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> AnalyzeFromImageDataAsync(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = this.CreateAnalyzeFromImageDataRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromImageData(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
-            return Response.FromValue((ImageAnalysisResult)result, result);
+            Response result = this.AnalyzeFromImageData(visualFeatures, global::Azure.Core.RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ImageAnalysisResult)result), result);
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
@@ -280,11 +280,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromImageDataAsync(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ImageAnalysisResult)result, result);
+            Response result = await this.AnalyzeFromImageDataAsync(visualFeatures, global::Azure.Core.RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ImageAnalysisResult)result), result);
         }
 
         /// <summary>
@@ -325,15 +325,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual Response AnalyzeFromUrl(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = this.CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -381,15 +381,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> AnalyzeFromUrlAsync(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = this.CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -430,11 +430,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
-            return Response.FromValue((ImageAnalysisResult)result, result);
+            Response result = this.AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ImageAnalysisResult)result), result);
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
@@ -468,11 +468,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ImageAnalysisResult)result, result);
+            Response result = await this.AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ImageAnalysisResult)result), result);
         }
     }
 }

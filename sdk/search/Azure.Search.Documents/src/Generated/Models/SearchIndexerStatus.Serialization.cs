@@ -15,61 +15,61 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the current status and execution history of an indexer. </summary>
-    public partial class SearchIndexerStatus : IJsonModel<SearchIndexerStatus>
+    public partial class SearchIndexerStatus : IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchIndexerStatus(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexerStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerStatus IPersistableModel<SearchIndexerStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchIndexerStatus IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerStatus"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus"/> from. </param>
         public static explicit operator SearchIndexerStatus(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexerStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchIndexerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,52 +77,52 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
+                writer.WriteObjectValue<IndexerRuntime>(Runtime, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastResult))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(LastResult)))
             {
                 writer.WritePropertyName("lastResult"u8);
-                writer.WriteObjectValue(LastResult, options);
+                writer.WriteObjectValue<IndexerExecutionResult>(LastResult, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("executionHistory"u8);
                 writer.WriteStartArray();
                 foreach (IndexerExecutionResult item in ExecutionHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<IndexerExecutionResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits, options);
+                writer.WriteObjectValue<SearchIndexerLimits>(Limits, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(CurrentState)))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState, options);
+                writer.WriteObjectValue<IndexerState>(CurrentState, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -130,9 +130,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -141,26 +141,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerStatus IJsonModel<SearchIndexerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchIndexerStatus IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchIndexerStatus(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -168,10 +168,10 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexerStatus status = default;
             IndexerRuntime runtime = default;
             IndexerExecutionResult lastResult = default;
-            IReadOnlyList<IndexerExecutionResult> executionHistory = default;
+            IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
             IndexerState currentState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -186,45 +186,45 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("runtime"u8))
                 {
-                    runtime = IndexerRuntime.DeserializeIndexerRuntime(prop.Value, options);
+                    runtime = global::Azure.Search.Documents.Indexes.Models.IndexerRuntime.DeserializeIndexerRuntime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastResult"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(prop.Value, options);
+                    lastResult = global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult.DeserializeIndexerExecutionResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("executionHistory"u8))
                 {
-                    List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
+                    List<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> array = new List<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult.DeserializeIndexerExecutionResult(item, options));
                     }
                     executionHistory = array;
                     continue;
                 }
                 if (prop.NameEquals("limits"u8))
                 {
-                    limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(prop.Value, options);
+                    limits = global::Azure.Search.Documents.Indexes.Models.SearchIndexerLimits.DeserializeSearchIndexerLimits(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("currentState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    currentState = IndexerState.DeserializeIndexerState(prop.Value, options);
+                    currentState = global::Azure.Search.Documents.Indexes.Models.IndexerState.DeserializeIndexerState(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SearchIndexerStatus(

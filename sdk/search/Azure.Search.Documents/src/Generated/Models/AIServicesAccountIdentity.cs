@@ -14,23 +14,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The multi-region account of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesAccountIdentity"/>. </summary>
         /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subdomainUri"/> is null. </exception>
-        public AIServicesAccountIdentity(Uri subdomainUri) : base("#Microsoft.Azure.Search.AIServicesByIdentity")
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="subdomainUri"/> is null. </exception>
+        public AIServicesAccountIdentity(global::System.Uri subdomainUri) : base("#Microsoft.Azure.Search.AIServicesByIdentity")
         {
-            Argument.AssertNotNull(subdomainUri, nameof(subdomainUri));
+            global::Azure.Search.Documents.Argument.AssertNotNull(subdomainUri, nameof(subdomainUri));
 
             SubdomainUri = subdomainUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesAccountIdentity"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
-        internal AIServicesAccountIdentity(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchIndexerDataIdentity identity, Uri subdomainUri) : base(odataType, description, additionalBinaryDataProperties)
+        internal AIServicesAccountIdentity(string odataType, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SearchIndexerDataIdentity identity, global::System.Uri subdomainUri) : base(odataType, description, additionalBinaryDataProperties)
         {
             Identity = identity;
             SubdomainUri = subdomainUri;
@@ -40,6 +40,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchIndexerDataIdentity Identity { get; set; }
 
         /// <summary> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </summary>
-        public Uri SubdomainUri { get; set; }
+        public global::System.Uri SubdomainUri { get; set; }
     }
 }

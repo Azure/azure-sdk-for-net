@@ -11,19 +11,19 @@ namespace Azure.AI.Projects
     public partial class ResponseUsageInputTokensDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ResponseUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens"></param>
         internal ResponseUsageInputTokensDetails(long cachedTokens)
         {
             CachedTokens = cachedTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ResponseUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseUsageInputTokensDetails(long cachedTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseUsageInputTokensDetails(long cachedTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CachedTokens = cachedTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

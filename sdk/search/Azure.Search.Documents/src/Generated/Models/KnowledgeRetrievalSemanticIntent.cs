@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> A semantic query intent. </summary>
     public partial class KnowledgeRetrievalSemanticIntent : KnowledgeRetrievalIntent
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/>. </summary>
         /// <param name="search"> The semantic query to execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="search"/> is null. </exception>
-        public KnowledgeRetrievalSemanticIntent(string search) : base(KnowledgeRetrievalIntentType.Semantic)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="search"/> is null. </exception>
+        public KnowledgeRetrievalSemanticIntent(string search) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntentType.Semantic)
         {
-            Argument.AssertNotNull(search, nameof(search));
+            global::Azure.Search.Documents.Argument.AssertNotNull(search, nameof(search));
 
             Search = search;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/>. </summary>
         /// <param name="type"> The type of the intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="search"> The semantic query to execute. </param>
-        internal KnowledgeRetrievalSemanticIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string search) : base(@type, additionalBinaryDataProperties)
+        internal KnowledgeRetrievalSemanticIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string search) : base(@type, additionalBinaryDataProperties)
         {
             Search = search;
         }

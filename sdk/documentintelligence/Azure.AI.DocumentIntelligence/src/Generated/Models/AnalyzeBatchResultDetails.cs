@@ -14,24 +14,24 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeBatchResultDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResultDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails"/>. </summary>
         /// <param name="status"> Analyze status.  succeeded, failed, or skipped. </param>
         /// <param name="sourceUri"> URL of the source document. </param>
-        internal AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status, Uri sourceUri)
+        internal AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status, global::System.Uri sourceUri)
         {
             Status = status;
             SourceUri = sourceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResultDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails"/>. </summary>
         /// <param name="status"> Analyze status.  succeeded, failed, or skipped. </param>
         /// <param name="sourceUri"> URL of the source document. </param>
         /// <param name="resultUri"> URL of the analyze result JSON. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status, Uri sourceUri, Uri resultUri, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status, global::System.Uri sourceUri, global::System.Uri resultUri, DocumentIntelligenceError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             SourceUri = sourceUri;
@@ -44,10 +44,10 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentIntelligenceOperationStatus Status { get; }
 
         /// <summary> URL of the source document. </summary>
-        public Uri SourceUri { get; }
+        public global::System.Uri SourceUri { get; }
 
         /// <summary> URL of the analyze result JSON. </summary>
-        public Uri ResultUri { get; }
+        public global::System.Uri ResultUri { get; }
 
         /// <summary> Encountered error. </summary>
         public DocumentIntelligenceError Error { get; }

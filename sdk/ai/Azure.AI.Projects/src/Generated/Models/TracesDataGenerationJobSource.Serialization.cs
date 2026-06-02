@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
-    public partial class TracesDataGenerationJobSource : DataGenerationJobSource, IJsonModel<TracesDataGenerationJobSource>
+    public partial class TracesDataGenerationJobSource : DataGenerationJobSource, IJsonModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>
     {
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TracesDataGenerationJobSource"/> for deserialization. </summary>
         internal TracesDataGenerationJobSource()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTracesDataGenerationJobSource(document.RootElement, options);
+                        return global::Azure.AI.Projects.TracesDataGenerationJobSource.DeserializeTracesDataGenerationJobSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TracesDataGenerationJobSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.TracesDataGenerationJobSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TracesDataGenerationJobSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.TracesDataGenerationJobSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TracesDataGenerationJobSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TracesDataGenerationJobSource IPersistableModel<TracesDataGenerationJobSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TracesDataGenerationJobSource)PersistableModelCreateCore(data, options);
+        TracesDataGenerationJobSource IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((TracesDataGenerationJobSource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TracesDataGenerationJobSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TracesDataGenerationJobSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,35 +70,35 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TracesDataGenerationJobSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.TracesDataGenerationJobSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AgentId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentId))
             {
                 writer.WritePropertyName("agent_id"u8);
                 writer.WriteStringValue(AgentId);
             }
-            if (Optional.IsDefined(AgentName))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agent_name"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agent_version"u8);
                 writer.WriteStringValue(AgentVersion);
             }
             writer.WritePropertyName("start_time"u8);
             writer.WriteNumberValue(StartTime, "U");
-            if (Optional.IsDefined(EndTime))
+            if (global::Azure.AI.Projects.Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteNumberValue(EndTime.Value, "U");
@@ -107,31 +107,31 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TracesDataGenerationJobSource IJsonModel<TracesDataGenerationJobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TracesDataGenerationJobSource)JsonModelCreateCore(ref reader, options);
+        TracesDataGenerationJobSource IJsonModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((TracesDataGenerationJobSource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.TracesDataGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TracesDataGenerationJobSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.TracesDataGenerationJobSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTracesDataGenerationJobSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.TracesDataGenerationJobSource.DeserializeTracesDataGenerationJobSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TracesDataGenerationJobSource DeserializeTracesDataGenerationJobSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             DataGenerationJobSourceType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string description = default;
             string agentId = default;
             string agentName = default;
@@ -167,21 +167,21 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startTime = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endTime = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TracesDataGenerationJobSource(

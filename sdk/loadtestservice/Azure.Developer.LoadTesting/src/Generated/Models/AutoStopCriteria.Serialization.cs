@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </summary>
-    public partial class AutoStopCriteria : IJsonModel<AutoStopCriteria>
+    public partial class AutoStopCriteria : IJsonModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AutoStopCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAutoStopCriteria(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.AutoStopCriteria.DeserializeAutoStopCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.AutoStopCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.AutoStopCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutoStopCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoStopCriteria IPersistableModel<AutoStopCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AutoStopCriteria IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutoStopCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AutoStopCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.AutoStopCriteria)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutoStopDisabled))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(AutoStopDisabled))
             {
                 writer.WritePropertyName("autoStopDisabled"u8);
                 writer.WriteBooleanValue(AutoStopDisabled.Value);
             }
-            if (Optional.IsDefined(ErrorRate))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(ErrorRate))
             {
                 writer.WritePropertyName("errorRate"u8);
                 writer.WriteNumberValue(ErrorRate.Value);
             }
-            if (Optional.IsDefined(ErrorRateTimeWindow))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(ErrorRateTimeWindow))
             {
                 writer.WritePropertyName("errorRateTimeWindowInSeconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(ErrorRateTimeWindow.Value.TotalSeconds)));
+                writer.WriteNumberValue(global::System.Convert.ToInt32(global::System.Math.Round(ErrorRateTimeWindow.Value.TotalSeconds)));
             }
-            if (Optional.IsDefined(MaximumVirtualUsersPerEngine))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(MaximumVirtualUsersPerEngine))
             {
                 writer.WritePropertyName("maximumVirtualUsersPerEngine"u8);
                 writer.WriteNumberValue(MaximumVirtualUsersPerEngine.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,26 +112,26 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoStopCriteria IJsonModel<AutoStopCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AutoStopCriteria IJsonModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AutoStopCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.AutoStopCriteria)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoStopCriteria(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.AutoStopCriteria.DeserializeAutoStopCriteria(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AutoStopCriteria DeserializeAutoStopCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -139,12 +139,12 @@ namespace Azure.Developer.LoadTesting
             float? errorRate = default;
             TimeSpan? errorRateTimeWindow = default;
             int? maximumVirtualUsersPerEngine = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("autoStopDisabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -153,7 +153,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("errorRate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -162,25 +162,25 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("errorRateTimeWindowInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    errorRateTimeWindow = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    errorRateTimeWindow = global::System.TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("maximumVirtualUsersPerEngine"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     maximumVirtualUsersPerEngine = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindow, maximumVirtualUsersPerEngine, additionalBinaryDataProperties);

@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Text
     public partial class SentimentResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
-        internal SentimentResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<SentimentActionResult> documents)
+        internal SentimentResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors, string modelVersion, IEnumerable<global::Azure.AI.Language.Text.SentimentActionResult> documents)
         {
             Errors = errors.ToList();
             ModelVersion = modelVersion;
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentimentResult(IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<SentimentActionResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentimentResult(IList<global::Azure.AI.Language.Text.DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<global::Azure.AI.Language.Text.SentimentActionResult> documents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
@@ -53,6 +53,6 @@ namespace Azure.AI.Language.Text
         public string ModelVersion { get; }
 
         /// <summary> The sentiment analysis results for each document in the input. </summary>
-        public IList<SentimentActionResult> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.SentimentActionResult> Documents { get; }
     }
 }

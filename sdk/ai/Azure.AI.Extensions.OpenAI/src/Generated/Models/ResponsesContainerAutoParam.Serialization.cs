@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesContainerAutoParam. </summary>
-    public partial class ResponsesContainerAutoParam : ResponsesFunctionShellToolParamEnvironment, IJsonModel<ResponsesContainerAutoParam>
+    public partial class ResponsesContainerAutoParam : ResponsesFunctionShellToolParamEnvironment, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesFunctionShellToolParamEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesContainerAutoParam(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam.DeserializeResponsesContainerAutoParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerAutoParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerAutoParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesContainerAutoParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerAutoParam IPersistableModel<ResponsesContainerAutoParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesContainerAutoParam)PersistableModelCreateCore(data, options);
+        ResponsesContainerAutoParam IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesContainerAutoParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesContainerAutoParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesContainerAutoParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,19 +65,19 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerAutoParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(FileIds))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
                 foreach (string item in FileIds)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -86,58 +86,58 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MemoryLimit))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(MemoryLimit))
             {
                 writer.WritePropertyName("memory_limit"u8);
                 writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Skills))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Skills))
             {
                 writer.WritePropertyName("skills"u8);
                 writer.WriteStartArray();
                 foreach (ContainerSkill item in Skills)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContainerSkill>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkPolicy))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("network_policy"u8);
-                writer.WriteObjectValue(NetworkPolicy, options);
+                writer.WriteObjectValue<ResponsesContainerNetworkPolicyParam>(NetworkPolicy, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerAutoParam IJsonModel<ResponsesContainerAutoParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesContainerAutoParam)JsonModelCreateCore(ref reader, options);
+        ResponsesContainerAutoParam IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesContainerAutoParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesFunctionShellToolParamEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerAutoParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesContainerAutoParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam.DeserializeResponsesContainerAutoParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesContainerAutoParam DeserializeResponsesContainerAutoParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             FunctionShellToolParamEnvironmentType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IList<string> fileIds = default;
             ResponsesContainerMemoryLimit? memoryLimit = default;
-            IList<ContainerSkill> skills = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ContainerSkill> skills = default;
             ResponsesContainerNetworkPolicyParam networkPolicy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,14 +148,14 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("file_ids"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -169,7 +169,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("memory_limit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         memoryLimit = null;
                         continue;
@@ -179,38 +179,38 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("skills"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContainerSkill> array = new List<ContainerSkill>();
+                    List<global::Azure.AI.Extensions.OpenAI.ContainerSkill> array = new List<global::Azure.AI.Extensions.OpenAI.ContainerSkill>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerSkill.DeserializeContainerSkill(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ContainerSkill.DeserializeContainerSkill(item, options));
                     }
                     skills = array;
                     continue;
                 }
                 if (prop.NameEquals("network_policy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    networkPolicy = ResponsesContainerNetworkPolicyParam.DeserializeResponsesContainerNetworkPolicyParam(prop.Value, options);
+                    networkPolicy = global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyParam.DeserializeResponsesContainerNetworkPolicyParam(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesContainerAutoParam(
                 @type,
                 additionalBinaryDataProperties,
-                fileIds ?? new ChangeTrackingList<string>(),
+                (fileIds ?? new ChangeTrackingList<string>()),
                 memoryLimit,
-                skills ?? new ChangeTrackingList<ContainerSkill>(),
+                (skills ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ContainerSkill>()),
                 networkPolicy);
         }
     }

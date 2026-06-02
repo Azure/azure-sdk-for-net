@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiEntityReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiEntityReference"/>. </summary>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         internal ApiEntityReference(string id)
         {
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiEntityReference"/>. </summary>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiEntityReference(string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

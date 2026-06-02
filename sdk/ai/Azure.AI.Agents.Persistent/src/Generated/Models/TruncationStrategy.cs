@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Possible truncation strategies for the thread. </summary>
-    public readonly partial struct TruncationStrategy : IEquatable<TruncationStrategy>
+    public readonly partial struct TruncationStrategy : IEquatable<global::Azure.AI.Agents.Persistent.TruncationStrategy>
     {
         private readonly string _value;
         /// <summary> Default value. Messages in the middle of the thread will be dropped to fit the context length of the model. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The thread will truncate to the `lastMessages` count of recent messages. </summary>
         private const string LastMessagesValue = "last_messages";
 
-        /// <summary> Initializes a new instance of <see cref="TruncationStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.TruncationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TruncationStrategy(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The thread will truncate to the `lastMessages` count of recent messages. </summary>
         public static TruncationStrategy LastMessages { get; } = new TruncationStrategy(LastMessagesValue);
 
-        /// <summary> Determines if two <see cref="TruncationStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.TruncationStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TruncationStrategy left, TruncationStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TruncationStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.TruncationStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TruncationStrategy left, TruncationStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TruncationStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.TruncationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TruncationStrategy(string value) => new TruncationStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="TruncationStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.TruncationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TruncationStrategy?(string value) => value == null ? null : new TruncationStrategy(value);
+        public static implicit operator TruncationStrategy?(string value) => (value == null) ? null : new TruncationStrategy(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TruncationStrategy other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TruncationStrategy other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TruncationStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TruncationStrategy other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

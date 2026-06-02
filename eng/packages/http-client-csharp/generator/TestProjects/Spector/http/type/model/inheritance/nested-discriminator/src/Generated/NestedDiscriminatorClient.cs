@@ -17,63 +17,63 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class NestedDiscriminatorClient
     {
-        public NestedDiscriminatorClient() : this(new Uri("http://localhost:3000"), new NestedDiscriminatorClientOptions()) => throw null;
+        public NestedDiscriminatorClient() : this(new global::System.Uri("http://localhost:3000"), new NestedDiscriminatorClientOptions()) => throw null;
 
-        internal NestedDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NestedDiscriminatorClientOptions options) => throw null;
+        internal NestedDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NestedDiscriminatorClientOptions options) => throw null;
 
-        public NestedDiscriminatorClient(Uri endpoint, NestedDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
+        public NestedDiscriminatorClient(global::System.Uri endpoint, NestedDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NestedDiscriminatorClient(NestedDiscriminatorClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NestedDiscriminatorClient(NestedDiscriminatorClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Fish> GetModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> GetModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Fish>> GetModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>> GetModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutModel(Fish input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutModelAsync(Fish input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(Fish input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetRecursiveModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetRecursiveModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetRecursiveModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Fish> GetRecursiveModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> GetRecursiveModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Fish>> GetRecursiveModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>> GetRecursiveModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutRecursiveModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutRecursiveModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutRecursiveModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutRecursiveModel(Fish input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutRecursiveModelAsync(Fish input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutRecursiveModelAsync(Fish input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetMissingDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetMissingDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetMissingDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Fish> GetMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> GetMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Fish>> GetMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>> GetMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetWrongDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetWrongDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetWrongDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Fish> GetWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> GetWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Fish>> GetWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>> GetWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

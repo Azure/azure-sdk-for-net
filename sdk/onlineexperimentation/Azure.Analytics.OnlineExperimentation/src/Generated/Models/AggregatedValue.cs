@@ -14,27 +14,27 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class AggregatedValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AggregatedValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.AggregatedValue"/>. </summary>
         /// <param name="eventName"> The name of the event. </param>
         /// <param name="eventProperty"> The key of the event property to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> or <paramref name="eventProperty"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="eventName"/> or <paramref name="eventProperty"/> is null. </exception>
         public AggregatedValue(string eventName, string eventProperty)
         {
-            Argument.AssertNotNull(eventName, nameof(eventName));
-            Argument.AssertNotNull(eventProperty, nameof(eventProperty));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(eventName, nameof(eventName));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(eventProperty, nameof(eventProperty));
 
             EventName = eventName;
             EventProperty = eventProperty;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AggregatedValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.AggregatedValue"/>. </summary>
         /// <param name="eventName"> The name of the event. </param>
         /// <param name="filter"> [Optional] A condition to filter events. </param>
         /// <param name="eventProperty"> The key of the event property to aggregate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AggregatedValue(string eventName, string filter, string eventProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AggregatedValue(string eventName, string filter, string eventProperty, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EventName = eventName;
             Filter = filter;

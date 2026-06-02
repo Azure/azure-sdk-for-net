@@ -13,31 +13,31 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The IpAddressAsset. </summary>
     public partial class IpAddressAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpAddressAsset"/>. </summary>
         internal IpAddressAsset()
         {
-            Asns = new ChangeTrackingList<ObservedLong>();
-            Reputations = new ChangeTrackingList<ReputationDetails>();
-            WebComponents = new ChangeTrackingList<WebComponent>();
-            NetRanges = new ChangeTrackingList<ObservedString>();
-            Headers = new ChangeTrackingList<ObservedHeader>();
-            Attributes = new ChangeTrackingList<AttributeDetails>();
-            Cookies = new ChangeTrackingList<CookieDetails>();
-            SslCerts = new ChangeTrackingList<SslCertAsset>();
-            Services = new ChangeTrackingList<AssetService>();
-            IpBlocks = new ChangeTrackingList<IpBlock>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            Banners = new ChangeTrackingList<BannerDetails>();
-            ScanMetadata = new ChangeTrackingList<ScanMetadata>();
-            NsRecord = new ChangeTrackingList<ObservedBoolean>();
-            MxRecord = new ChangeTrackingList<ObservedBoolean>();
-            Location = new ChangeTrackingList<ObservedLocation>();
-            Hosts = new ChangeTrackingList<ObservedString>();
-            Nxdomain = new ChangeTrackingList<ObservedBoolean>();
-            SslServerConfig = new ChangeTrackingList<SslServerConfig>();
+            Asns = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            Reputations = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReputationDetails>();
+            WebComponents = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            NetRanges = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Headers = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
+            Attributes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
+            Cookies = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>();
+            SslCerts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            Services = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>();
+            IpBlocks = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            Banners = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.BannerDetails>();
+            ScanMetadata = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ScanMetadata>();
+            NsRecord = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            MxRecord = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            Location = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            Hosts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Nxdomain = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            SslServerConfig = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpAddressAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipAddress"></param>
         /// <param name="asns"></param>
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IpBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        internal IpAddressAsset(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string ipAddress, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> asns, IList<global::Azure.Analytics.Defender.Easm.ReputationDetails> reputations, IList<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents, IList<global::Azure.Analytics.Defender.Easm.ObservedString> netRanges, IList<global::Azure.Analytics.Defender.Easm.ObservedHeader> headers, IList<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes, IList<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies, IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts, IList<global::Azure.Analytics.Defender.Easm.AssetService> services, IList<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<global::Azure.Analytics.Defender.Easm.BannerDetails> banners, IList<global::Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord, IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> location, IList<global::Azure.Analytics.Defender.Easm.ObservedString> hosts, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain, IList<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IpAddress = ipAddress;
             Asns = asns;
@@ -97,37 +97,37 @@ namespace Azure.Analytics.Defender.Easm
         public string IpAddress { get; }
 
         /// <summary> Gets the Asns. </summary>
-        public IList<ObservedLong> Asns { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> Asns { get; }
 
         /// <summary> Gets the Reputations. </summary>
-        public IList<ReputationDetails> Reputations { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ReputationDetails> Reputations { get; }
 
         /// <summary> Gets the WebComponents. </summary>
-        public IList<WebComponent> WebComponents { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get; }
 
         /// <summary> Gets the NetRanges. </summary>
-        public IList<ObservedString> NetRanges { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> NetRanges { get; }
 
         /// <summary> Gets the Headers. </summary>
-        public IList<ObservedHeader> Headers { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedHeader> Headers { get; }
 
         /// <summary> Gets the Attributes. </summary>
-        public IList<AttributeDetails> Attributes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AttributeDetails> Attributes { get; }
 
         /// <summary> Gets the Cookies. </summary>
-        public IList<CookieDetails> Cookies { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.CookieDetails> Cookies { get; }
 
         /// <summary> Gets the SslCerts. </summary>
-        public IList<SslCertAsset> SslCerts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> SslCerts { get; }
 
         /// <summary> Gets the Services. </summary>
-        public IList<AssetService> Services { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetService> Services { get; }
 
         /// <summary> Gets the IpBlocks. </summary>
-        public IList<IpBlock> IpBlocks { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.IpBlock> IpBlocks { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
@@ -139,28 +139,28 @@ namespace Azure.Analytics.Defender.Easm
         public long? Count { get; }
 
         /// <summary> Gets the Banners. </summary>
-        public IList<BannerDetails> Banners { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.BannerDetails> Banners { get; }
 
         /// <summary> Gets the ScanMetadata. </summary>
-        public IList<ScanMetadata> ScanMetadata { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ScanMetadata> ScanMetadata { get; }
 
         /// <summary> Gets the NsRecord. </summary>
-        public IList<ObservedBoolean> NsRecord { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> NsRecord { get; }
 
         /// <summary> Gets the MxRecord. </summary>
-        public IList<ObservedBoolean> MxRecord { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> MxRecord { get; }
 
         /// <summary> Gets the Location. </summary>
-        public IList<ObservedLocation> Location { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> Location { get; }
 
         /// <summary> Gets the Hosts. </summary>
-        public IList<ObservedString> Hosts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Hosts { get; }
 
         /// <summary> Gets the Nxdomain. </summary>
-        public IList<ObservedBoolean> Nxdomain { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> Nxdomain { get; }
 
         /// <summary> Gets the SslServerConfig. </summary>
-        public IList<SslServerConfig> SslServerConfig { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SslServerConfig> SslServerConfig { get; }
 
         /// <summary> Gets the Ipv4. </summary>
         public bool? Ipv4 { get; }

@@ -14,21 +14,21 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class ExperimentMetricValidationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult"/>. </summary>
         /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
         internal ExperimentMetricValidationResult(bool isValid)
         {
             IsValid = isValid;
-            Diagnostics = new ChangeTrackingList<DiagnosticDetail>();
+            Diagnostics = new ChangeTrackingList<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult"/>. </summary>
         /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
         /// <param name="diagnostics"> Diagnostic details from the validation process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetricValidationResult(bool isValid, IReadOnlyList<DiagnosticDetail> diagnostics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentMetricValidationResult(bool isValid, IReadOnlyList<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail> diagnostics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IsValid = isValid;
             Diagnostics = diagnostics;
@@ -39,6 +39,6 @@ namespace Azure.Analytics.OnlineExperimentation
         public bool IsValid { get; }
 
         /// <summary> Diagnostic details from the validation process. </summary>
-        public IReadOnlyList<DiagnosticDetail> Diagnostics { get; }
+        public IReadOnlyList<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail> Diagnostics { get; }
     }
 }

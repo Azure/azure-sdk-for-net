@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class ImageServingStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageServingStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.ImageServingStatistics"/>. </summary>
         internal ImageServingStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageServingStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.ImageServingStatistics"/>. </summary>
         /// <param name="imagesRetrieved"> The number of images retrieved from the asset store. </param>
         /// <param name="imagesSentToModel"> The number of images sent to the downstream model. </param>
         /// <param name="totalImageSizeBytes"> The total size in bytes of images sent to the model. </param>
         /// <param name="verbalizationUsed"> Indicates whether image verbalization was used instead of direct image serving. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageServingStatistics(int? imagesRetrieved, int? imagesSentToModel, long? totalImageSizeBytes, bool? verbalizationUsed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageServingStatistics(int? imagesRetrieved, int? imagesSentToModel, long? totalImageSizeBytes, bool? verbalizationUsed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ImagesRetrieved = imagesRetrieved;
             ImagesSentToModel = imagesSentToModel;

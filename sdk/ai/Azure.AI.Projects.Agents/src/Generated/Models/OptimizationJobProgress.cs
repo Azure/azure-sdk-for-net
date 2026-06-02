@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationJobProgress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobProgress"/>. </summary>
         /// <param name="currentIteration"> 1-based current iteration index. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects.Agents
             ElapsedSeconds = elapsedSeconds;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobProgress"/>. </summary>
         /// <param name="currentIteration"> 1-based current iteration index. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobProgress(int currentIteration, double bestScore, double elapsedSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobProgress(int currentIteration, double bestScore, double elapsedSeconds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CurrentIteration = currentIteration;
             BestScore = bestScore;

@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeSourceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatus"/>. </summary>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>
         public KnowledgeSourceStatus(KnowledgeSourceSynchronizationStatus synchronizationStatus)
         {
             SynchronizationStatus = synchronizationStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatus"/>. </summary>
         /// <param name="kind"> Identifies the Knowledge Source kind directly from the Status response. </param>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>
         /// <param name="synchronizationInterval"> The synchronization interval (e.g., '1d' for daily). Null if no schedule is configured. </param>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="lastSynchronizationState"> Details of the last completed synchronization. Null on first sync. </param>
         /// <param name="statistics"> Statistical information about the knowledge source synchronization history. Null on first sync. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             SynchronizationStatus = synchronizationStatus;

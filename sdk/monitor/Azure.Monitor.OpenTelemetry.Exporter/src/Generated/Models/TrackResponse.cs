@@ -14,20 +14,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TrackResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TrackResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TrackResponse"/>. </summary>
         internal TrackResponse()
         {
-            Errors = new ChangeTrackingList<TelemetryErrorDetails>();
+            Errors = new ChangeTrackingList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrackResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TrackResponse"/>. </summary>
         /// <param name="itemsReceived"> The number of items received. </param>
         /// <param name="itemsAccepted"> The number of items accepted. </param>
         /// <param name="errors"> An array of error detail objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrackResponse(int? itemsReceived, int? itemsAccepted, IList<TelemetryErrorDetails> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrackResponse(int? itemsReceived, int? itemsAccepted, IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryErrorDetails> errors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ItemsReceived = itemsReceived;
             ItemsAccepted = itemsAccepted;
@@ -42,6 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public int? ItemsAccepted { get; }
 
         /// <summary> An array of error detail objects. </summary>
-        public IList<TelemetryErrorDetails> Errors { get; }
+        public IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryErrorDetails> Errors { get; }
     }
 }

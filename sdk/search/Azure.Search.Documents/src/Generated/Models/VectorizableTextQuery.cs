@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when a text value that needs to be vectorized is provided. </summary>
     public partial class VectorizableTextQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of <see cref="VectorizableTextQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableTextQuery"/>. </summary>
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public VectorizableTextQuery(string text) : base(VectorQueryKind.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public VectorizableTextQuery(string text) : base(global::Azure.Search.Documents.Models.VectorQueryKind.Text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Search.Documents.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorizableTextQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableTextQuery"/>. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
         /// <param name="queryRewritesRaw"> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </param>
-        internal VectorizableTextQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, string queryRewritesRaw) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
+        internal VectorizableTextQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text, string queryRewritesRaw) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
         {
             Text = text;
             QueryRewritesRaw = queryRewritesRaw;

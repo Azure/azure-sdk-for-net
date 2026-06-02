@@ -11,16 +11,16 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalFunctionToolParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
         public InternalFunctionToolParam(string name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"></param>
         /// <param name="deferLoading"> Whether this function should be deferred and discovered via tool search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFunctionToolParam(string name, string description, EmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFunctionToolParam(string name, string description, EmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

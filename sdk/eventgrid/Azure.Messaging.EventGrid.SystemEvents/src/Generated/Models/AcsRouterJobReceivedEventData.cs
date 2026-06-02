@@ -13,15 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
     public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         internal AcsRouterJobReceivedEventData(bool unavailableForMatching)
         {
-            RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            RequestedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
             UnavailableForMatching = unavailableForMatching;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? status, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? status, string classificationPolicyId, int? priority, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Status = status;
             ClassificationPolicyId = classificationPolicyId;
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? Priority { get; }
 
         /// <summary> Router Job Received Requested Worker Selectors. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
 
         /// <summary> Router Job Received Scheduled Time in UTC. </summary>
         public DateTimeOffset? ScheduledOn { get; }

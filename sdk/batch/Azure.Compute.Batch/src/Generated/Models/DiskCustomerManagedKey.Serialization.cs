@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
-    public partial class DiskCustomerManagedKey : IJsonModel<DiskCustomerManagedKey>
+    public partial class DiskCustomerManagedKey : IJsonModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DiskCustomerManagedKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+                        return global::Azure.Compute.Batch.DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.DiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.DiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiskCustomerManagedKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskCustomerManagedKey IPersistableModel<DiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DiskCustomerManagedKey IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,27 +68,27 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.DiskCustomerManagedKey)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IdentityReference))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(IdentityReference, options);
+                writer.WriteObjectValue<BatchPoolIdentityReference>(IdentityReference, options);
             }
-            if (Optional.IsDefined(KeyUri))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -96,9 +96,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -107,65 +107,65 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskCustomerManagedKey IJsonModel<DiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DiskCustomerManagedKey IJsonModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DiskCustomerManagedKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.DiskCustomerManagedKey)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DiskCustomerManagedKey DeserializeDiskCustomerManagedKey(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             BatchPoolIdentityReference identityReference = default;
-            Uri keyUri = default;
+            global::System.Uri keyUri = default;
             bool? rotationToLatestKeyVersionEnabled = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("identityReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    identityReference = BatchPoolIdentityReference.DeserializeBatchPoolIdentityReference(prop.Value, options);
+                    identityReference = global::Azure.Compute.Batch.BatchPoolIdentityReference.DeserializeBatchPoolIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("keyUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("rotationToLatestKeyVersionEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     rotationToLatestKeyVersionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DiskCustomerManagedKey(identityReference, keyUri, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties);

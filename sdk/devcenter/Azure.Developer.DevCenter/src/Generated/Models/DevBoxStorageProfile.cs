@@ -14,17 +14,17 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxStorageProfile"/>. </summary>
         internal DevBoxStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxStorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxStorageProfile(OSDisk osDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxStorageProfile(OSDisk osDisk, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OSDisk = osDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,27 +14,27 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringDeploymentResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource"/>. </summary>
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="region"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="region"/> is null. </exception>
         public ConversationAuthoringDeploymentResource(string resourceId, string region)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(region, nameof(region));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(resourceId, nameof(resourceId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(region, nameof(region));
 
             ResourceId = resourceId;
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource"/>. </summary>
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
         /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringDeploymentResource(string resourceId, string region, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringDeploymentResource(string resourceId, string region, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Region = region;

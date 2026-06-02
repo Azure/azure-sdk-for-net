@@ -11,7 +11,7 @@ using Parameters.Basic._ImplicitBody;
 
 namespace Parameters.Basic
 {
-    [ModelReaderWriterBuildable(typeof(User))]
+    [ModelReaderWriterBuildableAttribute(typeof(User))]
     public partial class ParametersBasicContext : ModelReaderWriterContext
     {
     }

@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class RedactedTranscriptContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedactedTranscriptContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.RedactedTranscriptContent"/>. </summary>
         internal RedactedTranscriptContent()
         {
-            AudioTimings = new ChangeTrackingList<AudioTiming>();
+            AudioTimings = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.AudioTiming>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedactedTranscriptContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.RedactedTranscriptContent"/>. </summary>
         /// <param name="inverseTextNormalized"> Redacted output for input in inverse-text-normalized format. </param>
         /// <param name="maskedInverseTextNormalized"> Redacted output for input in masked inverse-text-normalized format. </param>
         /// <param name="text"> Redacted output for input in text (Microsoft's speech-to-text 'display') format. </param>
         /// <param name="lexical"> Redacted output for input in lexical format. </param>
         /// <param name="audioTimings"> List of redacted audio segments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedactedTranscriptContent(string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<AudioTiming> audioTimings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedactedTranscriptContent(string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<global::Azure.AI.Language.Conversations.Models.AudioTiming> audioTimings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InverseTextNormalized = inverseTextNormalized;
             MaskedInverseTextNormalized = maskedInverseTextNormalized;
@@ -53,6 +53,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string Lexical { get; }
 
         /// <summary> List of redacted audio segments. </summary>
-        public IList<AudioTiming> AudioTimings { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.AudioTiming> AudioTimings { get; }
     }
 }

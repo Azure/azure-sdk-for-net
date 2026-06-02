@@ -15,36 +15,36 @@ namespace Azure.Communication.JobRouter
     /// <summary> Client options for clients in this library. </summary>
     public partial class JobRouterClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_18_Preview;
+        private const global::Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion LatestVersion = global::Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion.V2024_01_18_Preview;
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public JobRouterClientOptions(ServiceVersion version = LatestVersion)
+        public JobRouterClientOptions(global::Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_11_01 => "2023-11-01",
-                ServiceVersion.V2024_01_18_Preview => "2024-01-18-preview",
+                global::Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
+                global::Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion.V2024_01_18_Preview => "2024-01-18-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal JobRouterClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-01-18-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

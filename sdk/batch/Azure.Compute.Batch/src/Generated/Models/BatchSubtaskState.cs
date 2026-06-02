@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchSubtaskState enums. </summary>
-    public readonly partial struct BatchSubtaskState : IEquatable<BatchSubtaskState>
+    public readonly partial struct BatchSubtaskState : IEquatable<global::Azure.Compute.Batch.BatchSubtaskState>
     {
         private readonly string _value;
         /// <summary> The Task has been assigned to a Compute Node, but is waiting for a required Job Preparation Task to complete on the Compute Node. If the Job Preparation Task succeeds, the Task will move to running. If the Job Preparation Task fails, the Task will return to active and will be eligible to be assigned to a different Compute Node. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> The Task is no longer eligible to run, usually because the Task has finished successfully, or the Task has finished unsuccessfully and has exhausted its retry limit. A Task is also marked as completed if an error occurred launching the Task, or when the Task has been terminated. </summary>
         private const string CompletedValue = "completed";
 
-        /// <summary> Initializes a new instance of <see cref="BatchSubtaskState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSubtaskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchSubtaskState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> The Task is no longer eligible to run, usually because the Task has finished successfully, or the Task has finished unsuccessfully and has exhausted its retry limit. A Task is also marked as completed if an error occurred launching the Task, or when the Task has been terminated. </summary>
         public static BatchSubtaskState Completed { get; } = new BatchSubtaskState(CompletedValue);
 
-        /// <summary> Determines if two <see cref="BatchSubtaskState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchSubtaskState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchSubtaskState left, BatchSubtaskState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchSubtaskState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchSubtaskState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchSubtaskState left, BatchSubtaskState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchSubtaskState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchSubtaskState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchSubtaskState(string value) => new BatchSubtaskState(value);
 
-        /// <summary> Converts a string to a <see cref="BatchSubtaskState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchSubtaskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchSubtaskState?(string value) => value == null ? null : new BatchSubtaskState(value);
+        public static implicit operator BatchSubtaskState?(string value) => (value == null) ? null : new BatchSubtaskState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchSubtaskState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchSubtaskState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchSubtaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchSubtaskState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsCallParticipantProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantProperties"/>. </summary>
         internal AcsCallParticipantProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the participant user. </param>
         /// <param name="role"> The role of the participant. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallParticipantKind? role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallParticipantKind? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CommunicationIdentifier = communicationIdentifier;
             Role = role;

@@ -12,9 +12,9 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class MCPApprovalResponseRequestItem : ConversationRequestItem, IJsonModel<MCPApprovalResponseRequestItem>
+    internal partial class MCPApprovalResponseRequestItem : ConversationRequestItem, IJsonModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>
     {
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalResponseRequestItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem"/> for deserialization. </summary>
         internal MCPApprovalResponseRequestItem()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationRequestItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMCPApprovalResponseRequestItem(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem.DeserializeMCPApprovalResponseRequestItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MCPApprovalResponseRequestItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MCPApprovalResponseRequestItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MCPApprovalResponseRequestItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCPApprovalResponseRequestItem IPersistableModel<MCPApprovalResponseRequestItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MCPApprovalResponseRequestItem)PersistableModelCreateCore(data, options);
+        MCPApprovalResponseRequestItem IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MCPApprovalResponseRequestItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MCPApprovalResponseRequestItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MCPApprovalResponseRequestItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,10 +72,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MCPApprovalResponseRequestItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("approval_request_id"u8);
@@ -86,32 +86,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCPApprovalResponseRequestItem IJsonModel<MCPApprovalResponseRequestItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MCPApprovalResponseRequestItem)JsonModelCreateCore(ref reader, options);
+        MCPApprovalResponseRequestItem IJsonModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MCPApprovalResponseRequestItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationRequestItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MCPApprovalResponseRequestItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMCPApprovalResponseRequestItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem.DeserializeMCPApprovalResponseRequestItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MCPApprovalResponseRequestItem DeserializeMCPApprovalResponseRequestItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ItemType @type = default;
             string id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string approvalRequestId = default;
             bool approve = default;
             foreach (var prop in element.EnumerateObject())
@@ -136,9 +136,9 @@ namespace Azure.AI.VoiceLive
                     approve = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MCPApprovalResponseRequestItem(@type, id, additionalBinaryDataProperties, approvalRequestId, approve);

@@ -18,30 +18,30 @@ namespace Azure.Communication.Messages
     /// <summary> The NotificationMessagesClient. </summary>
     public partial class NotificationMessagesClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal NotificationMessagesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CommunicationMessagesClientOptions options)
+        internal NotificationMessagesClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new CommunicationMessagesClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -49,8 +49,8 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of NotificationMessagesClient from a <see cref="NotificationMessagesClientSettings"/>. </summary>
         /// <param name="settings"> The settings for NotificationMessagesClient. </param>
-        [Experimental("SCME0002")]
-        public NotificationMessagesClient(NotificationMessagesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public NotificationMessagesClient(NotificationMessagesClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -70,8 +70,8 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Send(RequestContent content, RequestContext context = null)
         {
@@ -79,9 +79,9 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendRequest(content, context);
+                using HttpMessage message = this.CreateSendRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -101,18 +101,18 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SendAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendRequest(content, context);
+                using HttpMessage message = this.CreateSendRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,27 +125,27 @@ namespace Azure.Communication.Messages
         /// <summary> Sends a notification message from Business to User. </summary>
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.Messages.SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            Response result = Send(notificationContent, cancellationToken.ToRequestContext());
-            return Response.FromValue((SendMessageResult)result, result);
+            Response result = this.Send(notificationContent, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SendMessageResult)result), result);
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.Messages.SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            Response result = await SendAsync(notificationContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SendMessageResult)result, result);
+            Response result = await this.SendAsync(notificationContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SendMessageResult)result), result);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="id"> The stream ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DownloadMediaInternal(string id, RequestContext context)
         {
@@ -166,7 +166,7 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
+                using HttpMessage message = this.CreateDownloadMediaInternalRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -186,15 +186,15 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="id"> The stream ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DownloadMediaInternalAsync(string id, RequestContext context)
+        internal virtual async Task<global::Azure.Response> DownloadMediaInternalAsync(string id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
+                using HttpMessage message = this.CreateDownloadMediaInternalRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -207,21 +207,21 @@ namespace Azure.Communication.Messages
         /// <summary> Download the Media payload from a User to Business message. </summary>
         /// <param name="id"> The stream ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::System.BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
         {
-            Response result = DownloadMediaInternal(id, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.DownloadMediaInternal(id, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Download the Media payload from a User to Business message. </summary>
         /// <param name="id"> The stream ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::System.BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
         {
-            Response result = await DownloadMediaInternalAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.DownloadMediaInternalAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -234,8 +234,8 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SendReadReceipt(RequestContent content, RequestContext context = null)
         {
@@ -243,9 +243,9 @@ namespace Azure.Communication.Messages
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                using HttpMessage message = this.CreateSendReadReceiptRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -265,18 +265,18 @@ namespace Azure.Communication.Messages
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SendReadReceiptAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SendReadReceiptAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                using HttpMessage message = this.CreateSendReadReceiptRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -289,25 +289,25 @@ namespace Azure.Communication.Messages
         /// <summary> Sends a read receipt update from Business to User. </summary>
         /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SendReadReceipt(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            return SendReadReceipt(readReceiptContent, cancellationToken.ToRequestContext());
+            return this.SendReadReceipt(readReceiptContent, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sends a read receipt update from Business to User. </summary>
         /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            return await SendReadReceiptAsync(readReceiptContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.SendReadReceiptAsync(readReceiptContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

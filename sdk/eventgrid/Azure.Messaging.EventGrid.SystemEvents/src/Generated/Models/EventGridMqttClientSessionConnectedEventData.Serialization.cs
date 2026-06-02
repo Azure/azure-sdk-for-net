@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionConnected event. </summary>
-    [JsonConverter(typeof(EventGridMqttClientSessionConnectedEventDataConverter))]
-    public partial class EventGridMqttClientSessionConnectedEventData : EventGridMqttClientEventData, IJsonModel<EventGridMqttClientSessionConnectedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData.EventGridMqttClientSessionConnectedEventDataConverter))]
+    public partial class EventGridMqttClientSessionConnectedEventData : EventGridMqttClientEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData"/> for deserialization. </summary>
         internal EventGridMqttClientSessionConnectedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EventGridMqttClientEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData.DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMqttClientSessionConnectedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridMqttClientSessionConnectedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventGridMqttClientSessionConnectedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventGridMqttClientSessionConnectedEventData IPersistableModel<EventGridMqttClientSessionConnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventGridMqttClientSessionConnectedEventData)PersistableModelCreateCore(data, options);
+        EventGridMqttClientSessionConnectedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((EventGridMqttClientSessionConnectedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventGridMqttClientSessionConnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EventGridMqttClientSessionConnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,15 +75,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EventGridMqttClientSessionConnectedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("clientSessionName"u8);
             writer.WriteStringValue(ClientSessionName);
-            if (Optional.IsDefined(SequenceNumber))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
@@ -92,33 +92,33 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventGridMqttClientSessionConnectedEventData IJsonModel<EventGridMqttClientSessionConnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventGridMqttClientSessionConnectedEventData)JsonModelCreateCore(ref reader, options);
+        EventGridMqttClientSessionConnectedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((EventGridMqttClientSessionConnectedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EventGridMqttClientEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EventGridMqttClientSessionConnectedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData.DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EventGridMqttClientSessionConnectedEventData DeserializeEventGridMqttClientSessionConnectedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string clientAuthenticationName = default;
             string clientName = default;
             string namespaceName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string clientSessionName = default;
             long? sequenceNumber = default;
             foreach (var prop in element.EnumerateObject())
@@ -145,16 +145,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("sequenceNumber"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EventGridMqttClientSessionConnectedEventData(
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 sequenceNumber);
         }
 
-        internal partial class EventGridMqttClientSessionConnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionConnectedEventData>
+        internal partial class EventGridMqttClientSessionConnectedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientSessionConnectedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<EventGridMqttClientSessionConnectedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -183,8 +183,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override EventGridMqttClientSessionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

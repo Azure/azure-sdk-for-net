@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantRemoved event. </summary>
-    [JsonConverter(typeof(AcsChatParticipantRemovedFromThreadEventDataConverter))]
-    public partial class AcsChatParticipantRemovedFromThreadEventData : AcsChatEventInThreadBaseProperties, IJsonModel<AcsChatParticipantRemovedFromThreadEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData.AcsChatParticipantRemovedFromThreadEventDataConverter))]
+    public partial class AcsChatParticipantRemovedFromThreadEventData : AcsChatEventInThreadBaseProperties, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData"/> for deserialization. </summary>
         internal AcsChatParticipantRemovedFromThreadEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsChatEventInThreadBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData.DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsChatParticipantRemovedFromThreadEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsChatParticipantRemovedFromThreadEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatParticipantRemovedFromThreadEventData IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatParticipantRemovedFromThreadEventData)PersistableModelCreateCore(data, options);
+        AcsChatParticipantRemovedFromThreadEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsChatParticipantRemovedFromThreadEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsChatParticipantRemovedFromThreadEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,22 +75,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsChatParticipantRemovedFromThreadEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Time))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("removedByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(RemovedByCommunicationIdentifier, options);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(RemovedByCommunicationIdentifier, options);
             writer.WritePropertyName("participantRemoved"u8);
-            writer.WriteObjectValue(ParticipantRemoved, options);
-            if (Optional.IsDefined(Version))
+            writer.WriteObjectValue<AcsChatThreadParticipantProperties>(ParticipantRemoved, options);
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -99,32 +99,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatParticipantRemovedFromThreadEventData IJsonModel<AcsChatParticipantRemovedFromThreadEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsChatParticipantRemovedFromThreadEventData)JsonModelCreateCore(ref reader, options);
+        AcsChatParticipantRemovedFromThreadEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsChatParticipantRemovedFromThreadEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsChatEventInThreadBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsChatParticipantRemovedFromThreadEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData.DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsChatParticipantRemovedFromThreadEventData DeserializeAcsChatParticipantRemovedFromThreadEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string transactionId = default;
             string threadId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DateTimeOffset? time = default;
             CommunicationIdentifierModel removedByCommunicationIdentifier = default;
             AcsChatThreadParticipantProperties participantRemoved = default;
@@ -143,7 +143,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("time"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -152,26 +152,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("removedByCommunicationIdentifier"u8))
                 {
-                    removedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    removedByCommunicationIdentifier = global::Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("participantRemoved"u8))
                 {
-                    participantRemoved = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(prop.Value, options);
+                    participantRemoved = global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     version = prop.Value.GetInt64();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsChatParticipantRemovedFromThreadEventData(
@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 version);
         }
 
-        internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadEventData>
+        internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -192,7 +192,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsChatParticipantRemovedFromThreadEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsChatParticipantRemovedFromThreadEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatParticipantRemovedFromThreadEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -201,8 +201,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsChatParticipantRemovedFromThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

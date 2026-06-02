@@ -16,19 +16,19 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseErrorAdditionalInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorAdditionalInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo"/>. </summary>
         internal KnowledgeBaseErrorAdditionalInfo()
         {
-            Info = new ChangeTrackingDictionary<string, BinaryData>();
+            Info = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorAdditionalInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo"/>. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseErrorAdditionalInfo(string @type, IReadOnlyDictionary<string, BinaryData> info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseErrorAdditionalInfo(string @type, IReadOnlyDictionary<string, global::System.BinaryData> info, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Info = info;
@@ -40,8 +40,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary>
         /// The additional info.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -64,6 +64,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Info { get; }
+        public IReadOnlyDictionary<string, global::System.BinaryData> Info { get; }
     }
 }

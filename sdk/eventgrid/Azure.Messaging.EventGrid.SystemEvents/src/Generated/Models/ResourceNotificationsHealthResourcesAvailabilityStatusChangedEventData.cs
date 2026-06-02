@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// </summary>
     public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData : ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
+        internal ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
         {
         }
     }

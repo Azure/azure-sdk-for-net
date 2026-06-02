@@ -13,12 +13,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferExpired event. </summary>
     public partial class AcsRouterWorkerOfferExpiredEventData : AcsRouterWorkerEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferExpiredEventData"/>. </summary>
         internal AcsRouterWorkerOfferExpiredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferExpiredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Expired Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Expired Offer Id. </param>
-        internal AcsRouterWorkerOfferExpiredEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
+        internal AcsRouterWorkerOfferExpiredEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;

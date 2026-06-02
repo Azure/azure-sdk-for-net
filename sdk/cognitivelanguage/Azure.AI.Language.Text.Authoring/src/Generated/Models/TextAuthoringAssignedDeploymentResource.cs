@@ -15,20 +15,20 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringAssignedDeploymentResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="region"> The resource region. </param>
         internal TextAuthoringAssignedDeploymentResource(AzureLocation region)
         {
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringAssignedDeploymentResource(string azureResourceId, AzureLocation region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringAssignedDeploymentResource(string azureResourceId, AzureLocation region, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             Region = region;

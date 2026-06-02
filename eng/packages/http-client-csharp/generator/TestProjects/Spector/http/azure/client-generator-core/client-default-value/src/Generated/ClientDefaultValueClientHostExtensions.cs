@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ClientDefaultValueClientHostExtensions
     {
         public static IClientBuilder AddClientDefaultValueClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddClientDefaultValueClient(this IHostApplicationBuilder host, string sectionName, Action<ClientDefaultValueClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddClientDefaultValueClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientDefaultValue.ClientDefaultValueClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedClientDefaultValueClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedClientDefaultValueClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ClientDefaultValueClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedClientDefaultValueClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientDefaultValue.ClientDefaultValueClientSettings> configureSettings) => throw null;
     }
 }

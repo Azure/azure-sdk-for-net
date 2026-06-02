@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> The ProjectEvaluators sub-client. </summary>
     public partial class ProjectEvaluators
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ProjectEvaluators for mocking. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectEvaluators(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectEvaluators(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -48,13 +48,13 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetVersions(string name, string @type, int? limit, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectEvaluatorsGetVersionsCollectionResult(this, name, @type, limit, options);
         }
@@ -71,13 +71,13 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetVersionsAsync(string name, string @type, int? limit, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectEvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
         }
@@ -87,12 +87,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<EvaluatorVersion> GetVersions(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersions(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectEvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
@@ -102,12 +102,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<EvaluatorVersion> GetVersionsAsync(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersionsAsync(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectEvaluatorsGetVersionsAsyncCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetLatestVersions(string @type, int? limit, RequestOptions options)
         {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetLatestVersionsAsync(string @type, int? limit, RequestOptions options)
         {
@@ -152,8 +152,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<EvaluatorVersion> GetLatestVersions(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersions(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             return new ProjectEvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
@@ -162,8 +162,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<EvaluatorVersion> GetLatestVersionsAsync(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersionsAsync(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             return new ProjectEvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
@@ -179,17 +179,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -203,49 +203,49 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluatorVersion> GetVersion(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetVersion(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
+            ClientResult result = this.GetVersion(name, version, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluatorVersion>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
+            ClientResult result = await this.GetVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -259,17 +259,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -283,47 +283,47 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult DeleteVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return DeleteVersion(name, version, cancellationToken.ToRequestOptions());
+            return this.DeleteVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await DeleteVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,17 +337,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -361,49 +361,49 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The name of the resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateVersionAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluatorVersion> CreateVersion(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion> CreateVersion(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = CreateVersion(name, evaluatorVersion, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
+            ClientResult result = this.CreateVersion(name, evaluatorVersion, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluatorVersion>> CreateVersionAsync(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>> CreateVersionAsync(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = await CreateVersionAsync(name, evaluatorVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
+            ClientResult result = await this.CreateVersionAsync(name, evaluatorVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -418,18 +418,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="version"> The version of the EvaluatorVersion to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateVersion(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateVersionRequest(name, version, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -444,18 +444,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="version"> The version of the EvaluatorVersion to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateVersionAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateVersionAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateVersionRequest(name, version, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -471,18 +471,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -498,18 +498,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
@@ -518,17 +518,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<PendingUploadResult> StartPendingUpload(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.PendingUploadResult> StartPendingUpload(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
+            ClientResult result = this.StartPendingUpload(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((PendingUploadResult)result), result.GetRawResponse());
         }
 
         /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
@@ -537,17 +537,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<PendingUploadResult>> StartPendingUploadAsync(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.PendingUploadResult>> StartPendingUploadAsync(string name, string version, PendingUploadConfiguration pendingUploadRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
+            ClientResult result = await this.StartPendingUploadAsync(name, version, pendingUploadRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((PendingUploadResult)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -563,18 +563,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetCredentials(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGetCredentialsRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetCredentialsRequest(name, version, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -590,18 +590,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetCredentialsAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetCredentialsAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGetCredentialsRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetCredentialsRequest(name, version, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
@@ -610,17 +610,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="credentialRequest"> The credential request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DatasetCredential> GetCredentials(string name, string version, EvaluatorCredentialRequest credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.DatasetCredential> GetCredentials(string name, string version, EvaluatorCredentialRequest credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-            ClientResult result = GetCredentials(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+            ClientResult result = this.GetCredentials(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((DatasetCredential)result), result.GetRawResponse());
         }
 
         /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
@@ -629,17 +629,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="credentialRequest"> The credential request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DatasetCredential>> GetCredentialsAsync(string name, string version, EvaluatorCredentialRequest credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.DatasetCredential>> GetCredentialsAsync(string name, string version, EvaluatorCredentialRequest credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-            ClientResult result = await GetCredentialsAsync(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+            ClientResult result = await this.GetCredentialsAsync(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((DatasetCredential)result), result.GetRawResponse());
         }
     }
 }

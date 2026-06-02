@@ -17,22 +17,22 @@ namespace Azure.Compute.Batch
     public partial class BatchAffinityInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchAffinityInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchAffinityInfo"/>. </summary>
         /// <param name="affinityId"> An opaque string representing the location of a Compute Node or a Task that has run previously. You can pass the affinityId of a Node to indicate that this Task needs to run on that Compute Node. Note that this is just a soft affinity. If the target Compute Node is busy or unavailable at the time the Task is scheduled, then the Task will be scheduled elsewhere. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="affinityId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="affinityId"/> is null. </exception>
         public BatchAffinityInfo(string affinityId)
         {
-            Argument.AssertNotNull(affinityId, nameof(affinityId));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(affinityId, nameof(affinityId));
 
             AffinityId = affinityId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAffinityInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchAffinityInfo"/>. </summary>
         /// <param name="affinityId"> An opaque string representing the location of a Compute Node or a Task that has run previously. You can pass the affinityId of a Node to indicate that this Task needs to run on that Compute Node. Note that this is just a soft affinity. If the target Compute Node is busy or unavailable at the time the Task is scheduled, then the Task will be scheduled elsewhere. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAffinityInfo(string affinityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAffinityInfo(string affinityId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AffinityId = affinityId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

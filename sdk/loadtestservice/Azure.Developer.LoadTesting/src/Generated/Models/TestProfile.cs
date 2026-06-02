@@ -15,14 +15,14 @@ namespace Azure.Developer.LoadTesting
     public partial class TestProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfile"/>. </summary>
         public TestProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfile"/>. </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="displayName"> Display name of the test profile. </param>
         /// <param name="description"> Description for the test profile. </param>
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestProfileId = testProfileId;
             DisplayName = displayName;

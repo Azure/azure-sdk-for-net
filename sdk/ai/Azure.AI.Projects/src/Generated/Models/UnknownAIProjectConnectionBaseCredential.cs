@@ -9,10 +9,10 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownAIProjectConnectionBaseCredential : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAIProjectConnectionBaseCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownAIProjectConnectionBaseCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAIProjectConnectionBaseCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownAIProjectConnectionBaseCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

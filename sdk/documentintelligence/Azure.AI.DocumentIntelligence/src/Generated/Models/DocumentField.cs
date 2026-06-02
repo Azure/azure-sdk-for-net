@@ -14,21 +14,21 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentField"/>. </summary>
         /// <param name="fieldType"> Data type of the field value. </param>
         internal DocumentField(DocumentFieldType fieldType)
         {
             FieldType = fieldType;
-            ValueList = new ChangeTrackingList<DocumentField>();
-            ValueObject = new ChangeTrackingDictionary<string, DocumentField>();
+            ValueList = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentField>();
+            ValueObject = new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField>();
             ValueSelectionGroup = new ChangeTrackingList<string>();
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
-            Spans = new ChangeTrackingList<DocumentSpan>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            Spans = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentField"/>. </summary>
         /// <param name="fieldType"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentField> valueList, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float? confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FieldType = fieldType;
             ValueString = valueString;
@@ -106,7 +106,7 @@ namespace Azure.AI.DocumentIntelligence
         public string ValueCountryRegion { get; }
 
         /// <summary> Array of field values. </summary>
-        public IReadOnlyList<DocumentField> ValueList { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentField> ValueList { get; }
 
         /// <summary> Currency value. </summary>
         public CurrencyValue ValueCurrency { get; }
@@ -124,10 +124,10 @@ namespace Azure.AI.DocumentIntelligence
         public string Content { get; }
 
         /// <summary> Bounding regions covering the field. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the field in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Confidence of correctly extracting the field. </summary>
         public float? Confidence { get; }

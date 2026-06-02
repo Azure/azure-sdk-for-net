@@ -12,47 +12,47 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.CodeTransparency
 {
-    /// <summary> Client options for <see cref="CodeTransparencyClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Security.CodeTransparency.CodeTransparencyClient"/>. </summary>
     public partial class CodeTransparencyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_31_Preview;
+        private const global::Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion LatestVersion = global::Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_01_31_Preview;
 
         /// <summary> Initializes a new instance of CodeTransparencyClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public CodeTransparencyClientOptions(ServiceVersion version = LatestVersion)
+        public CodeTransparencyClientOptions(global::Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2025_01_31_Preview => "2025-01-31-preview",
+                global::Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_01_31_Preview => "2025-01-31-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of CodeTransparencyClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal CodeTransparencyClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-01-31-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
             if (double.TryParse(section["CacheTTLSeconds"], out double cacheTTLSeconds))
             {
-                CacheTTLSeconds = cacheTTLSeconds;
+                this.CacheTTLSeconds = cacheTTLSeconds;
             }
             string identityClientEndpoint = section["IdentityClientEndpoint"];
             if (!string.IsNullOrEmpty(identityClientEndpoint))
             {
-                IdentityClientEndpoint = identityClientEndpoint;
+                this.IdentityClientEndpoint = identityClientEndpoint;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

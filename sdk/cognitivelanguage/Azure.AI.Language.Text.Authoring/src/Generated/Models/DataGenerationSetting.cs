@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DataGenerationSetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationSetting"/>. </summary>
         /// <param name="enableDataGeneration"> If set to true, augment customer provided training data with synthetic data to improve model quality. </param>
         /// <param name="dataGenerationConnectionInfo"> Represents the connection info for the Azure resource to use during data generation as part of training a custom model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataGenerationConnectionInfo"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataGenerationConnectionInfo"/> is null. </exception>
         public DataGenerationSetting(bool enableDataGeneration, DataGenerationConnectionInfo dataGenerationConnectionInfo)
         {
-            Argument.AssertNotNull(dataGenerationConnectionInfo, nameof(dataGenerationConnectionInfo));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(dataGenerationConnectionInfo, nameof(dataGenerationConnectionInfo));
 
             EnableDataGeneration = enableDataGeneration;
             DataGenerationConnectionInfo = dataGenerationConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationSetting"/>. </summary>
         /// <param name="enableDataGeneration"> If set to true, augment customer provided training data with synthetic data to improve model quality. </param>
         /// <param name="dataGenerationConnectionInfo"> Represents the connection info for the Azure resource to use during data generation as part of training a custom model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationSetting(bool enableDataGeneration, DataGenerationConnectionInfo dataGenerationConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationSetting(bool enableDataGeneration, DataGenerationConnectionInfo dataGenerationConnectionInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EnableDataGeneration = enableDataGeneration;
             DataGenerationConnectionInfo = dataGenerationConnectionInfo;

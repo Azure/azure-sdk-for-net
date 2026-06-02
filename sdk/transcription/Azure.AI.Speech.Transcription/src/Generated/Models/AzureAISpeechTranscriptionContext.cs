@@ -11,18 +11,18 @@ namespace Azure.AI.Speech.Transcription
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ChannelCombinedPhrases))]
-    [ModelReaderWriterBuildable(typeof(EnhancedModeProperties))]
-    [ModelReaderWriterBuildable(typeof(Error))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
-    [ModelReaderWriterBuildable(typeof(InnerError))]
-    [ModelReaderWriterBuildable(typeof(PhraseListProperties))]
-    [ModelReaderWriterBuildable(typeof(TranscribedPhrase))]
-    [ModelReaderWriterBuildable(typeof(TranscribedWord))]
-    [ModelReaderWriterBuildable(typeof(TranscriptionContent))]
-    [ModelReaderWriterBuildable(typeof(TranscriptionDiarizationOptions))]
-    [ModelReaderWriterBuildable(typeof(TranscriptionOptions))]
-    [ModelReaderWriterBuildable(typeof(TranscriptionResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(ChannelCombinedPhrases))]
+    [ModelReaderWriterBuildableAttribute(typeof(EnhancedModeProperties))]
+    [ModelReaderWriterBuildableAttribute(typeof(Error))]
+    [ModelReaderWriterBuildableAttribute(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildableAttribute(typeof(InnerError))]
+    [ModelReaderWriterBuildableAttribute(typeof(PhraseListProperties))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscribedPhrase))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscribedWord))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscriptionContent))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscriptionDiarizationOptions))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscriptionOptions))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranscriptionResult))]
     public partial class AzureAISpeechTranscriptionContext : ModelReaderWriterContext
     {
     }

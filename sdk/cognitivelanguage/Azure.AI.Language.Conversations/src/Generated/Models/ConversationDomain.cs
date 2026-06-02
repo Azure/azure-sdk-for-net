@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Enumeration of supported conversational domains. </summary>
-    public readonly partial struct ConversationDomain : IEquatable<ConversationDomain>
+    public readonly partial struct ConversationDomain : IEquatable<global::Azure.AI.Language.Conversations.Models.ConversationDomain>
     {
         private readonly string _value;
         /// <summary> Enumeration of supported conversational domains. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Enumeration of supported conversational domains. </summary>
         private const string GenericValue = "generic";
 
-        /// <summary> Initializes a new instance of <see cref="ConversationDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationDomain(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Enumeration of supported conversational domains. </summary>
         public static ConversationDomain Generic { get; } = new ConversationDomain(GenericValue);
 
-        /// <summary> Determines if two <see cref="ConversationDomain"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ConversationDomain"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationDomain left, ConversationDomain right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConversationDomain"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ConversationDomain"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationDomain left, ConversationDomain right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ConversationDomain"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConversationDomain(string value) => new ConversationDomain(value);
 
-        /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ConversationDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationDomain?(string value) => value == null ? null : new ConversationDomain(value);
+        public static implicit operator ConversationDomain?(string value) => (value == null) ? null : new ConversationDomain(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConversationDomain other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConversationDomain other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConversationDomain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConversationDomain other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

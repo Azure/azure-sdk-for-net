@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownVersionIndicator : VersionIndicator
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVersionIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownVersionIndicator"/>. </summary>
         /// <param name="type"> The type of version indicator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVersionIndicator(VersionIndicatorType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownVersionIndicator(VersionIndicatorType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

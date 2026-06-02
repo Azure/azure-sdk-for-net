@@ -12,30 +12,30 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, and <see cref="SessionResponseMcpApprovalResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.SessionResponseMessageItem"/>, <see cref="Azure.AI.VoiceLive.ResponseFunctionCallItem"/>, <see cref="Azure.AI.VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="Azure.AI.VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="Azure.AI.VoiceLive.SessionResponseMcpCallItem"/>, <see cref="Azure.AI.VoiceLive.SessionResponseMcpApprovalRequestItem"/>, and <see cref="Azure.AI.VoiceLive.SessionResponseMcpApprovalResponseItem"/>.
     /// </summary>
     public abstract partial class SessionResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseItem"/>. </summary>
         /// <param name="type"></param>
         private protected SessionResponseItem(ItemType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionResponseItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
-            Object = @object;
+            this.Object = @object;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

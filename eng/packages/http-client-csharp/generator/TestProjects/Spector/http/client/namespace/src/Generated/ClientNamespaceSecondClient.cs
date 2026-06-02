@@ -17,23 +17,23 @@ namespace Client.Clientnamespace.Second
 {
     public partial class ClientNamespaceSecondClient
     {
-        public ClientNamespaceSecondClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
+        public ClientNamespaceSecondClient() : this(new global::System.Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
-        internal ClientNamespaceSecondClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
+        internal ClientNamespaceSecondClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
 
-        public ClientNamespaceSecondClient(Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
+        public ClientNamespaceSecondClient(global::System.Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ClientNamespaceSecondClient(ClientNamespaceSecondClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ClientNamespaceSecondClient(ClientNamespaceSecondClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetSecond(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetSecondAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetSecondAsync(RequestContext context) => throw null;
 
-        public virtual Response<SecondClientResult> GetSecond(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Client.Clientnamespace.Second.SecondClientResult> GetSecond(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SecondClientResult>> GetSecondAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Client.Clientnamespace.Second.SecondClientResult>> GetSecondAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

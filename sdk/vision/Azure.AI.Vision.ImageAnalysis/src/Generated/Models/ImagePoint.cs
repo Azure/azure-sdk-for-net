@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImagePoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImagePoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImagePoint"/>. </summary>
         /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
         /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
         internal ImagePoint(int x, int y)
@@ -25,11 +25,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             Y = y;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImagePoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImagePoint"/>. </summary>
         /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
         /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImagePoint(int x, int y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImagePoint(int x, int y, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

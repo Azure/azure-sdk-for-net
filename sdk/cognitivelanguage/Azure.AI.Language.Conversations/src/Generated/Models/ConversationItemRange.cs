@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationItemRange
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationItemRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationItemRange"/>. </summary>
         /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
         /// <param name="count"> The number of continuous conversation items for this intent. </param>
         internal ConversationItemRange(int offset, int count)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Conversations.Models
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationItemRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationItemRange"/>. </summary>
         /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
         /// <param name="count"> The number of continuous conversation items for this intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationItemRange(int offset, int count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationItemRange(int offset, int count, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Count = count;

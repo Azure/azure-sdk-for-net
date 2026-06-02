@@ -11,19 +11,19 @@ namespace OpenAI
     internal partial class InternalRankingOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalRankingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalRankingOptions"/>. </summary>
         public InternalRankingOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalRankingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalRankingOptions"/>. </summary>
         /// <param name="ranker"> The ranker to use for the file search. </param>
         /// <param name="scoreThreshold"> The score threshold for the file search, a number between 0 and 1. Numbers closer to 1 will attempt to return only the most relevant results, but may return fewer results. </param>
         /// <param name="hybridSearch"> Weights that control how reciprocal rank fusion balances semantic embedding matches versus sparse keyword matches when hybrid search is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalRankingOptions(RankerVersionType? ranker, double? scoreThreshold, HybridSearchOptions hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalRankingOptions(RankerVersionType? ranker, double? scoreThreshold, HybridSearchOptions hybridSearch, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Ranker = ranker;
             ScoreThreshold = scoreThreshold;

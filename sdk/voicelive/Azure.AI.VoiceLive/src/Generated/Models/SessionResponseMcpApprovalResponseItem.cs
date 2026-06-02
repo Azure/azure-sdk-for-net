@@ -13,16 +13,16 @@ namespace Azure.AI.VoiceLive
     /// <summary> A response item that represents a response to an MCP approval request. </summary>
     public partial class SessionResponseMcpApprovalResponseItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpApprovalResponseItem"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request. </param>
         /// <param name="approve"> Whether the tool call was approved. </param>
-        internal SessionResponseMcpApprovalResponseItem(string approvalRequestId, bool approve) : base(ItemType.McpApprovalResponse)
+        internal SessionResponseMcpApprovalResponseItem(string approvalRequestId, bool approve) : base(global::Azure.AI.VoiceLive.ItemType.McpApprovalResponse)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpApprovalResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="approvalRequestId"> The ID of the approval request. </param>
         /// <param name="approve"> Whether the tool call was approved. </param>
         /// <param name="reason"> The reason for the approval decision. </param>
-        internal SessionResponseMcpApprovalResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMcpApprovalResponseItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;

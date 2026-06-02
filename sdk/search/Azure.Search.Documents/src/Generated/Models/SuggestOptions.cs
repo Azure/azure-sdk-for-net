@@ -14,9 +14,9 @@ namespace Azure.Search.Documents
     public partial class SuggestOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.SuggestOptions"/>. </summary>
         /// <param name="filter"> An OData expression that filters the documents considered for suggestions. </param>
         /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </param>
         /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting of suggestions is disabled. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents
         /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
         /// <param name="size"> The number of suggestions to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestOptions(string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, string searchText, string searchFieldsRaw, string selectRaw, string suggesterName, int? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuggestOptions(string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, string searchText, string searchFieldsRaw, string selectRaw, string suggesterName, int? size, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Filter = filter;
             UseFuzzyMatching = useFuzzyMatching;

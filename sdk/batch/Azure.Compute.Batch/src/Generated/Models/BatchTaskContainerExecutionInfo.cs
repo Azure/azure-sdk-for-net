@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskContainerExecutionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskContainerExecutionInfo"/>. </summary>
         internal BatchTaskContainerExecutionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskContainerExecutionInfo"/>. </summary>
         /// <param name="containerId"> The ID of the container. </param>
         /// <param name="state"> The state of the container. This is the state of the container according to the Docker service. It is equivalent to the status field returned by "docker inspect". </param>
         /// <param name="error"> Detailed error information about the container. This is the detailed error string from the Docker service, if available. It is equivalent to the error field returned by "docker inspect". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskContainerExecutionInfo(string containerId, string state, string error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskContainerExecutionInfo(string containerId, string state, string error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContainerId = containerId;
             State = state;

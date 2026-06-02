@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaDetailsRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaDetailsRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailsRequestContent"/>. </summary>
         /// <param name="deltaDetailType"> The type of delta detail to retrieve. </param>
         /// <param name="kind"> The type of asset. </param>
         public DeltaDetailsRequestContent(DeltaDetailType deltaDetailType, GlobalAssetType kind)
@@ -25,13 +25,13 @@ namespace Azure.Analytics.Defender.Easm
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaDetailsRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailsRequestContent"/>. </summary>
         /// <param name="deltaDetailType"> The type of delta detail to retrieve. </param>
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="kind"> The type of asset. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaDetailsRequestContent(DeltaDetailType deltaDetailType, int? priorDays, GlobalAssetType kind, string date, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaDetailsRequestContent(DeltaDetailType deltaDetailType, int? priorDays, GlobalAssetType kind, string date, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DeltaDetailType = deltaDetailType;
             PriorDays = priorDays;

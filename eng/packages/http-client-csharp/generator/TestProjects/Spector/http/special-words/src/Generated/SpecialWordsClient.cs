@@ -17,14 +17,14 @@ namespace SpecialWords
 {
     public partial class SpecialWordsClient
     {
-        public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
+        public SpecialWordsClient() : this(new global::System.Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
 
-        internal SpecialWordsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SpecialWordsClientOptions options) => throw null;
+        internal SpecialWordsClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, SpecialWordsClientOptions options) => throw null;
 
-        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) : this(null, endpoint, options) => throw null;
+        public SpecialWordsClient(global::System.Uri endpoint, SpecialWordsClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public SpecialWordsClient(SpecialWordsClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public SpecialWordsClient(SpecialWordsClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -38,6 +38,6 @@ namespace SpecialWords
 
         public virtual Operations GetOperationsClient() => throw null;
 
-        public virtual Parameters GetParametersClient() => throw null;
+        public virtual global::SpecialWords.Parameters GetParametersClient() => throw null;
     }
 }

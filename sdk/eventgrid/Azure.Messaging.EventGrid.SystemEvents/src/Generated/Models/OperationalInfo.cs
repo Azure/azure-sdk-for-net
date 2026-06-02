@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class OperationalInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.OperationalInfo"/>. </summary>
         /// <param name="activityId"> The activity ID associated with the operation generating the Lifecycle Hook event. </param>
         internal OperationalInfo(string activityId)
         {
             ActivityId = activityId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.OperationalInfo"/>. </summary>
         /// <param name="activityId"> The activity ID associated with the operation generating the Lifecycle Hook event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInfo(string activityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInfo(string activityId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ActivityId = activityId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

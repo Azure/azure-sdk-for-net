@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaResult"/>. </summary>
         /// <param name="kind"> Shows the asset kind. </param>
         /// <param name="name"> Shows the asset name. </param>
         /// <param name="createdAt"> Shows the date when the asset was originally created. </param>
@@ -31,14 +31,14 @@ namespace Azure.Analytics.Defender.Easm
             State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaResult"/>. </summary>
         /// <param name="kind"> Shows the asset kind. </param>
         /// <param name="name"> Shows the asset name. </param>
         /// <param name="createdAt"> Shows the date when the asset was originally created. </param>
         /// <param name="updatedAt"> Shows the date when the asset was last updated, usually the date the we trying to pull up the results for. </param>
         /// <param name="state"> Shows the inventory state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaResult(GlobalAssetType kind, string name, DateTimeOffset createdAt, DateTimeOffset updatedAt, GlobalInventoryState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaResult(GlobalAssetType kind, string name, DateTimeOffset createdAt, DateTimeOffset updatedAt, GlobalInventoryState state, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;

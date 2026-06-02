@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -250,22 +250,22 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (includeTermTemplate != null)
+            if ((includeTermTemplate != null))
             {
-                uri.AppendQuery("includeTermTemplate", TypeFormatters.ConvertToString(includeTermTemplate), true);
+                uri.AppendQuery("includeTermTemplate", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(includeTermTemplate), true);
             }
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -295,7 +295,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.DataMap
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -323,22 +323,22 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs/headers", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (includeTermTemplate != null)
+            if ((includeTermTemplate != null))
             {
-                uri.AppendQuery("includeTermTemplate", TypeFormatters.ConvertToString(includeTermTemplate), true);
+                uri.AppendQuery("includeTermTemplate", global::Azure.Analytics.Purview.DataMap.TypeFormatters.ConvertToString(includeTermTemplate), true);
             }
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -350,14 +350,14 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/types/termtemplatedef/guid/", false);
             uri.AppendPath(guid, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -369,14 +369,14 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/datamap/api", false);
             uri.AppendPath("/types/termtemplatedef/name/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

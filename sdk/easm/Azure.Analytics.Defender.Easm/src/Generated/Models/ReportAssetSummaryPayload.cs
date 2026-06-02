@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportAssetSummaryPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload"/>. </summary>
         public ReportAssetSummaryPayload()
         {
             MetricCategories = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Defender.Easm
             Filters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload"/>. </summary>
         /// <param name="metricCategories"> Categories to retrieve risk reporting data for. </param>
         /// <param name="metrics"> Metrics to retrieve risk reporting data for. </param>
         /// <param name="filters"> Query filters to apply to the asset summary. </param>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="labelName"> Currently unused. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSummaryPayload(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSummaryPayload(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MetricCategories = metricCategories;
             Metrics = metrics;

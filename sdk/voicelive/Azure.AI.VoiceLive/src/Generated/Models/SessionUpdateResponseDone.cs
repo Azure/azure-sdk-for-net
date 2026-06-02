@@ -17,19 +17,19 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateResponseDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseDone"/>. </summary>
         /// <param name="response"></param>
-        internal SessionUpdateResponseDone(SessionResponse response) : base(ServerEventType.ResponseDone)
+        internal SessionUpdateResponseDone(SessionResponse response) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseDone)
         {
             Response = response;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
-        internal SessionUpdateResponseDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, SessionResponse response) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SessionResponse response) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
         }

@@ -12,29 +12,29 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    public partial class Input : IJsonModel<Input>
+    public partial class Input : IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>
     {
         internal Input() => throw null;
 
-        protected virtual Input PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        protected virtual global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Input>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Input IPersistableModel<Input>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Input>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="input"> The <see cref="Input"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Input input) => throw null;
+        /// <param name="input"> The <see cref="global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
+        public static implicit operator RequestContent(global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input input) => throw null;
 
-        void IJsonModel<Input>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Input IJsonModel<Input>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Input JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

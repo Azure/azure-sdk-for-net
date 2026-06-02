@@ -19,33 +19,33 @@ namespace Routes._QueryParameters
     {
         protected QueryParameters() => throw null;
 
-        internal QueryParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal QueryParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response TemplateOnly(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> TemplateOnlyAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> TemplateOnlyAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response TemplateOnly(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> TemplateOnlyAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> TemplateOnlyAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Explicit(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> ExplicitAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ExplicitAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response Explicit(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ExplicitAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ExplicitAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response AnnotationOnly(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> AnnotationOnlyAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> AnnotationOnlyAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response AnnotationOnly(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> AnnotationOnlyAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> AnnotationOnlyAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual QueryParametersQueryExpansion GetQueryParametersQueryExpansionClient() => throw null;
 

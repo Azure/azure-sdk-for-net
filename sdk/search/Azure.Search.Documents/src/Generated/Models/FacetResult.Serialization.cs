@@ -13,54 +13,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
-    public partial class FacetResult : IJsonModel<FacetResult>
+    public partial class FacetResult : IJsonModel<global::Azure.Search.Documents.Models.FacetResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FacetResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFacetResult(document.RootElement, options);
+                        return global::Azure.Search.Documents.Models.FacetResult.DeserializeFacetResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacetResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.FacetResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FacetResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.FacetResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FacetResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FacetResult IPersistableModel<FacetResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FacetResult IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FacetResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FacetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Models.FacetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,49 +68,49 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(FacetResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.FacetResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Count)))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Avg))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Avg)))
             {
                 writer.WritePropertyName("avg"u8);
                 writer.WriteNumberValue(Avg.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Min))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Min)))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Max))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Max)))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Sum))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Sum)))
             {
                 writer.WritePropertyName("sum"u8);
                 writer.WriteNumberValue(Sum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Cardinality))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Cardinality)))
             {
                 writer.WritePropertyName("cardinality"u8);
                 writer.WriteNumberValue(Cardinality.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Facets))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(Facets)))
             {
                 writer.WritePropertyName("@search.facets"u8);
                 writer.WriteStartObject();
                 foreach (var item in Facets)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -118,13 +118,13 @@ namespace Azure.Search.Documents.Models
                     writer.WriteStartArray();
                     foreach (FacetResult item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        writer.WriteObjectValue<FacetResult>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -132,9 +132,9 @@ namespace Azure.Search.Documents.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -143,19 +143,19 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FacetResult IJsonModel<FacetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FacetResult IJsonModel<global::Azure.Search.Documents.Models.FacetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FacetResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(FacetResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.FacetResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFacetResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Models.FacetResult.DeserializeFacetResult(document.RootElement, options);
         }
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class EdgeSolutionVersionPublishedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionPublishedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EdgeSolutionVersionPublishedEventData"/>. </summary>
         /// <param name="externalValidationId"> A GUID to uniquely track External Solution Validation. </param>
         /// <param name="targetId"> ARM ID of the Target resource. </param>
         /// <param name="solutionTemplateId"> ARM ID of the Solution Template resource. </param>
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="solutionVersionId"> ARM ID of the Solution Version resource. </param>
         /// <param name="apiVersion"> API Version supported for the resources. </param>
         /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
-        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, Uri callbackUrl)
+        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, global::System.Uri callbackUrl)
         {
             ExternalValidationId = externalValidationId;
             TargetId = targetId;
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CallbackUrl = callbackUrl;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionPublishedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EdgeSolutionVersionPublishedEventData"/>. </summary>
         /// <param name="externalValidationId"> A GUID to uniquely track External Solution Validation. </param>
         /// <param name="targetId"> ARM ID of the Target resource. </param>
         /// <param name="solutionTemplateId"> ARM ID of the Solution Template resource. </param>
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="apiVersion"> API Version supported for the resources. </param>
         /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, Uri callbackUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, global::System.Uri callbackUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExternalValidationId = externalValidationId;
             TargetId = targetId;
@@ -75,6 +75,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ApiVersion { get; }
 
         /// <summary> Direct URL to callback for updating validation status. </summary>
-        public Uri CallbackUrl { get; }
+        public global::System.Uri CallbackUrl { get; }
     }
 }

@@ -9,35 +9,35 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Speech.Transcription
 {
-    /// <summary> Client options for <see cref="TranscriptionClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Speech.Transcription.TranscriptionClient"/>. </summary>
     public partial class TranscriptionClientOptions : ClientPipelineOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V20251015;
+        private const global::Azure.AI.Speech.Transcription.TranscriptionClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Speech.Transcription.TranscriptionClientOptions.ServiceVersion.V20251015;
 
         /// <summary> Initializes a new instance of TranscriptionClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public TranscriptionClientOptions(ServiceVersion version = LatestVersion)
+        public TranscriptionClientOptions(global::Azure.AI.Speech.Transcription.TranscriptionClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V20251015 => "2025-10-15",
+                global::Azure.AI.Speech.Transcription.TranscriptionClientOptions.ServiceVersion.V20251015 => "2025-10-15",
                 _ => throw new NotSupportedException()
             };
         }
 
         /// <summary> Initializes a new instance of TranscriptionClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal TranscriptionClientOptions(IConfigurationSection section) : base(section)
         {
             Version = "2025-10-15";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
         }
 

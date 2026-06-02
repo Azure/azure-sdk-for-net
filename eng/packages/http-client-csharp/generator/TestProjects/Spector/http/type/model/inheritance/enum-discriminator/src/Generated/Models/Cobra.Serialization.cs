@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    public partial class Cobra : Snake, IJsonModel<Cobra>
+    public partial class Cobra : Snake, IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>
     {
         internal Cobra() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Cobra>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Cobra IPersistableModel<Cobra>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Cobra IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Cobra>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Cobra>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Cobra IJsonModel<Cobra>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Cobra IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Cobra>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Snake JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

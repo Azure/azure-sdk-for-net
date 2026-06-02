@@ -13,23 +13,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> A function call output item within a conversation. </summary>
     public partial class ResponseFunctionCallOutputItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseFunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal ResponseFunctionCallOutputItem(string callId, string output) : base(ItemType.FunctionCallOutput)
+        internal ResponseFunctionCallOutputItem(string callId, string output) : base(global::Azure.AI.VoiceLive.ItemType.FunctionCallOutput)
         {
             CallId = callId;
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseFunctionCallOutputItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal ResponseFunctionCallOutputItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseFunctionCallOutputItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;

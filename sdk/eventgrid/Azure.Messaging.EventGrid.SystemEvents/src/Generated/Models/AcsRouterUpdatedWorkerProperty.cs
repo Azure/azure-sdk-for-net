@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Worker properties that can be updated. </summary>
-    public readonly partial struct AcsRouterUpdatedWorkerProperty : IEquatable<AcsRouterUpdatedWorkerProperty>
+    public readonly partial struct AcsRouterUpdatedWorkerProperty : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty>
     {
         private readonly string _value;
         /// <summary> AvailableForOffers. </summary>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> ChannelConfigurations. </summary>
         private const string ChannelConfigurationsValue = "ChannelConfigurations";
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterUpdatedWorkerProperty(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> ChannelConfigurations. </summary>
         public static AcsRouterUpdatedWorkerProperty ChannelConfigurations { get; } = new AcsRouterUpdatedWorkerProperty(ChannelConfigurationsValue);
 
-        /// <summary> Determines if two <see cref="AcsRouterUpdatedWorkerProperty"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsRouterUpdatedWorkerProperty"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterUpdatedWorkerProperty(string value) => new AcsRouterUpdatedWorkerProperty(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterUpdatedWorkerProperty?(string value) => value == null ? null : new AcsRouterUpdatedWorkerProperty(value);
+        public static implicit operator AcsRouterUpdatedWorkerProperty?(string value) => (value == null) ? null : new AcsRouterUpdatedWorkerProperty(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsRouterUpdatedWorkerProperty other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsRouterUpdatedWorkerProperty other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsRouterUpdatedWorkerProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsRouterUpdatedWorkerProperty other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

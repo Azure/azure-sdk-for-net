@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class ManagedDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ManagedDisk"/>. </summary>
         public ManagedDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ManagedDisk"/>. </summary>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </param>
         /// <param name="storageAccountType"> The storage account type for managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(DiskEncryptionSetParameters diskEncryptionSet, StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDisk(DiskEncryptionSetParameters diskEncryptionSet, StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionSet = diskEncryptionSet;
             StorageAccountType = storageAccountType;

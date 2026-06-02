@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Per-task evaluation result for a single candidate. </summary>
-    public partial class OptimizationTaskResult : IJsonModel<OptimizationTaskResult>
+    public partial class OptimizationTaskResult : IJsonModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>
     {
-        /// <summary> Initializes a new instance of <see cref="OptimizationTaskResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationTaskResult"/> for deserialization. </summary>
         internal OptimizationTaskResult()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationTaskResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOptimizationTaskResult(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.OptimizationTaskResult.DeserializeOptimizationTaskResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationTaskResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationTaskResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationTaskResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationTaskResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OptimizationTaskResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationTaskResult IPersistableModel<OptimizationTaskResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationTaskResult IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OptimizationTaskResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OptimizationTaskResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationTaskResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationTaskResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("task_name"u8);
             writer.WriteStringValue(TaskName);
-            if (Optional.IsDefined(Query))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
@@ -98,19 +98,19 @@ namespace Azure.AI.Projects.Agents
             writer.WriteNumberValue(DurationSeconds.TotalSeconds);
             writer.WritePropertyName("passed"u8);
             writer.WriteBooleanValue(Passed);
-            if (Optional.IsDefined(ErrorMessage))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("error_message"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsCollectionDefined(Rationales))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Rationales))
             {
                 writer.WritePropertyName("rationales"u8);
                 writer.WriteStartObject();
                 foreach (var item in Rationales)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -119,17 +119,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Response))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStringValue(Response);
             }
-            if (Optional.IsDefined(RunId))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -137,9 +137,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -148,26 +148,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationTaskResult IJsonModel<OptimizationTaskResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationTaskResult IJsonModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationTaskResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationTaskResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationTaskResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOptimizationTaskResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.OptimizationTaskResult.DeserializeOptimizationTaskResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OptimizationTaskResult DeserializeOptimizationTaskResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, string> rationales = default;
             string response = default;
             string runId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("task_name"u8))
@@ -217,7 +217,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("duration_seconds"u8))
                 {
-                    durationSeconds = TimeSpan.FromSeconds(prop.Value.GetDouble());
+                    durationSeconds = global::System.TimeSpan.FromSeconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (prop.NameEquals("passed"u8))
@@ -232,14 +232,14 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("rationales"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -261,9 +261,9 @@ namespace Azure.AI.Projects.Agents
                     runId = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OptimizationTaskResult(
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                 durationSeconds,
                 passed,
                 errorMessage,
-                rationales ?? new ChangeTrackingDictionary<string, string>(),
+                (rationales ?? new ChangeTrackingDictionary<string, string>()),
                 response,
                 runId,
                 additionalBinaryDataProperties);

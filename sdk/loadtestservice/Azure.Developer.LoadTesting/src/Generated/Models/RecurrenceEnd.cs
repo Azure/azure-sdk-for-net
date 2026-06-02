@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class RecurrenceEnd
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceEnd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceEnd"/>. </summary>
         public RecurrenceEnd()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceEnd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceEnd"/>. </summary>
         /// <param name="numberOfOccurrences"> Number of occurrences after which the recurrence will end. </param>
         /// <param name="endDateTime"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecurrenceEnd(int? numberOfOccurrences, DateTimeOffset? endDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecurrenceEnd(int? numberOfOccurrences, DateTimeOffset? endDateTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NumberOfOccurrences = numberOfOccurrences;
             EndDateTime = endDateTime;

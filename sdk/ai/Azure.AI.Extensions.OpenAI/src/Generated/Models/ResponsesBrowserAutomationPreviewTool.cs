@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
     public partial class ResponsesBrowserAutomationPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool"/>. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="browserAutomationPreview"/> is null. </exception>
-        public ResponsesBrowserAutomationPreviewTool(ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(ToolType.BrowserAutomationPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="browserAutomationPreview"/> is null. </exception>
+        public ResponsesBrowserAutomationPreviewTool(ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(global::Azure.AI.Extensions.OpenAI.ToolType.BrowserAutomationPreview)
         {
-            Argument.AssertNotNull(browserAutomationPreview, nameof(browserAutomationPreview));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(browserAutomationPreview, nameof(browserAutomationPreview));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             BrowserAutomationPreview = browserAutomationPreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        internal ResponsesBrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesBrowserAutomationPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
         public ResponsesBrowserAutomationToolParameters BrowserAutomationPreview { get; set; }

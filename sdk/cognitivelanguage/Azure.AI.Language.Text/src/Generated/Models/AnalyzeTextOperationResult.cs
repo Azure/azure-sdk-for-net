@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// Contains the AnalyzeText long running operation result object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="HealthcareOperationResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/>, <see cref="SentimentOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, and <see cref="AbstractiveSummarizationOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CustomEntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Azure.AI.Language.Text.EntityLinkingOperationResult"/>, <see cref="Azure.AI.Language.Text.EntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.HealthcareOperationResult"/>, <see cref="Azure.AI.Language.Text.KeyPhraseExtractionOperationResult"/>, <see cref="Azure.AI.Language.Text.PiiEntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.SentimentOperationResult"/>, <see cref="Azure.AI.Language.Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Azure.AI.Language.Text.AbstractiveSummarizationOperationResult"/>.
     /// </summary>
     public abstract partial class AnalyzeTextOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> Kind of the task. </param>
@@ -30,13 +30,13 @@ namespace Azure.AI.Language.Text
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;

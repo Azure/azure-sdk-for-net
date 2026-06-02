@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct TextAuthoringCompositionMode : IEquatable<TextAuthoringCompositionMode>
+    public readonly partial struct TextAuthoringCompositionMode : IEquatable<global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode>
     {
         private readonly string _value;
         /// <summary> Every component's match or prediction is returned as a separate instance of the entity. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them. </summary>
         private const string CombineComponentsValue = "combineComponents";
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringCompositionMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAuthoringCompositionMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them. </summary>
         public static TextAuthoringCompositionMode CombineComponents { get; } = new TextAuthoringCompositionMode(CombineComponentsValue);
 
-        /// <summary> Determines if two <see cref="TextAuthoringCompositionMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextAuthoringCompositionMode left, TextAuthoringCompositionMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TextAuthoringCompositionMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextAuthoringCompositionMode left, TextAuthoringCompositionMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TextAuthoringCompositionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TextAuthoringCompositionMode(string value) => new TextAuthoringCompositionMode(value);
 
-        /// <summary> Converts a string to a <see cref="TextAuthoringCompositionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextAuthoringCompositionMode?(string value) => value == null ? null : new TextAuthoringCompositionMode(value);
+        public static implicit operator TextAuthoringCompositionMode?(string value) => (value == null) ? null : new TextAuthoringCompositionMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TextAuthoringCompositionMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TextAuthoringCompositionMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TextAuthoringCompositionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TextAuthoringCompositionMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

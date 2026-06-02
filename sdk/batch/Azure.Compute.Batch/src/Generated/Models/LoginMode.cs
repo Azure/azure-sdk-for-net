@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> LoginMode enums. </summary>
-    public readonly partial struct LoginMode : IEquatable<LoginMode>
+    public readonly partial struct LoginMode : IEquatable<global::Azure.Compute.Batch.LoginMode>
     {
         private readonly string _value;
         /// <summary> The LOGON32_LOGON_BATCH Win32 login mode. The batch login mode is recommended for long running parallel processes. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> The LOGON32_LOGON_INTERACTIVE Win32 login mode. UAC is enabled on Windows VirtualMachineConfiguration Pools. If this option is used with an elevated user identity in a Windows VirtualMachineConfiguration Pool, the user session will not be elevated unless the application executed by the Task command line is configured to always require administrative privilege or to always require maximum privilege. </summary>
         private const string InteractiveValue = "interactive";
 
-        /// <summary> Initializes a new instance of <see cref="LoginMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.LoginMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoginMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> The LOGON32_LOGON_INTERACTIVE Win32 login mode. UAC is enabled on Windows VirtualMachineConfiguration Pools. If this option is used with an elevated user identity in a Windows VirtualMachineConfiguration Pool, the user session will not be elevated unless the application executed by the Task command line is configured to always require administrative privilege or to always require maximum privilege. </summary>
         public static LoginMode Interactive { get; } = new LoginMode(InteractiveValue);
 
-        /// <summary> Determines if two <see cref="LoginMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.LoginMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoginMode left, LoginMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LoginMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.LoginMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoginMode left, LoginMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LoginMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.LoginMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LoginMode(string value) => new LoginMode(value);
 
-        /// <summary> Converts a string to a <see cref="LoginMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.LoginMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoginMode?(string value) => value == null ? null : new LoginMode(value);
+        public static implicit operator LoginMode?(string value) => (value == null) ? null : new LoginMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LoginMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LoginMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LoginMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LoginMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

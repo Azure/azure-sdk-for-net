@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The status of an agent session. </summary>
-    public readonly partial struct AgentSessionStatus : IEquatable<AgentSessionStatus>
+    public readonly partial struct AgentSessionStatus : IEquatable<global::Azure.AI.Projects.Agents.AgentSessionStatus>
     {
         private readonly string _value;
         /// <summary> Session initialization is in progress. </summary>
@@ -28,12 +28,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Session TTL exceeded (30 days from last activity). </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="AgentSessionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentSessionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentSessionStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -62,34 +62,34 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Session TTL exceeded (30 days from last activity). </summary>
         public static AgentSessionStatus Expired { get; } = new AgentSessionStatus(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="AgentSessionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.AgentSessionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentSessionStatus left, AgentSessionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AgentSessionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.AgentSessionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentSessionStatus left, AgentSessionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AgentSessionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.AgentSessionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AgentSessionStatus(string value) => new AgentSessionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AgentSessionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.AgentSessionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentSessionStatus?(string value) => value == null ? null : new AgentSessionStatus(value);
+        public static implicit operator AgentSessionStatus?(string value) => (value == null) ? null : new AgentSessionStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AgentSessionStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AgentSessionStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AgentSessionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentSessionStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

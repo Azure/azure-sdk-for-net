@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Custom source record with last updated date-time. </summary>
-    public partial class QnaSourceRecord : IJsonModel<QnaSourceRecord>
+    public partial class QnaSourceRecord : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord"/> for deserialization. </summary>
         internal QnaSourceRecord()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QnaSourceRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQnaSourceRecord(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord.DeserializeQnaSourceRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Authoring.AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QnaSourceRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QnaSourceRecord IPersistableModel<QnaSourceRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QnaSourceRecord IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QnaSourceRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QnaSourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,12 +73,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -89,17 +89,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             writer.WriteStringValue(SourceUri.AbsoluteUri);
             writer.WritePropertyName("sourceKind"u8);
             writer.WriteStringValue(SourceKind.ToString());
-            if (Optional.IsDefined(ContentStructureKind))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(ContentStructureKind))
             {
                 writer.WritePropertyName("contentStructureKind"u8);
                 writer.WriteStringValue(ContentStructureKind.Value.ToString());
             }
-            if (Optional.IsDefined(LastUpdatedDateTime))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(LastUpdatedDateTime))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
                 writer.WriteStringValue(LastUpdatedDateTime.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,36 +118,36 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QnaSourceRecord IJsonModel<QnaSourceRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QnaSourceRecord IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QnaSourceRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQnaSourceRecord(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord.DeserializeQnaSourceRecord(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static QnaSourceRecord DeserializeQnaSourceRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string displayName = default;
             string source = default;
-            Uri sourceUri = default;
+            global::System.Uri sourceUri = default;
             SourceKind sourceKind = default;
             SourceContentStructureKind? contentStructureKind = default;
             DateTimeOffset? lastUpdatedDateTime = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("displayName"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("sourceUri"u8))
                 {
-                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sourceKind"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("contentStructureKind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -181,16 +181,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     lastUpdatedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new QnaSourceRecord(

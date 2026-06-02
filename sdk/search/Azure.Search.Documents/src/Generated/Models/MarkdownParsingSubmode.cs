@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the submode that will determine whether a markdown file will be parsed into exactly one search document or multiple search documents. Default is `oneToMany`. </summary>
-    public readonly partial struct MarkdownParsingSubmode : IEquatable<MarkdownParsingSubmode>
+    public readonly partial struct MarkdownParsingSubmode : IEquatable<global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode>
     {
         private readonly string _value;
         /// <summary> Indicates that each section of the markdown file (up to a specified depth) will be parsed into individual search documents. This can result in a single markdown file producing multiple search documents. This is the default sub-mode. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that each markdown file will be parsed into a single search document. </summary>
         private const string OneToOneValue = "oneToOne";
 
-        /// <summary> Initializes a new instance of <see cref="MarkdownParsingSubmode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarkdownParsingSubmode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that each markdown file will be parsed into a single search document. </summary>
         public static MarkdownParsingSubmode OneToOne { get; } = new MarkdownParsingSubmode(OneToOneValue);
 
-        /// <summary> Determines if two <see cref="MarkdownParsingSubmode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarkdownParsingSubmode left, MarkdownParsingSubmode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MarkdownParsingSubmode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarkdownParsingSubmode left, MarkdownParsingSubmode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MarkdownParsingSubmode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MarkdownParsingSubmode(string value) => new MarkdownParsingSubmode(value);
 
-        /// <summary> Converts a string to a <see cref="MarkdownParsingSubmode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.MarkdownParsingSubmode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarkdownParsingSubmode?(string value) => value == null ? null : new MarkdownParsingSubmode(value);
+        public static implicit operator MarkdownParsingSubmode?(string value) => (value == null) ? null : new MarkdownParsingSubmode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MarkdownParsingSubmode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MarkdownParsingSubmode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MarkdownParsingSubmode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MarkdownParsingSubmode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

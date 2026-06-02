@@ -12,23 +12,23 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The items in the current page of results.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.AsAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.ContactAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.DomainAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.HostAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpAddressAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpBlockAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.PageAssetResource"/>, and <see cref="Azure.Analytics.Defender.Easm.SslCertAssetResource"/>.
     /// </summary>
     public abstract partial class AssetResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetResource"/>. </summary>
         /// <param name="kind"> Discriminator property for AssetResource. </param>
         private protected AssetResource(string kind)
         {
             Kind = kind;
             Labels = new ChangeTrackingList<string>();
-            AuditTrail = new ChangeTrackingList<AuditTrailItem>();
+            AuditTrail = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetResource"/>. </summary>
         /// <param name="kind"> Discriminator property for AssetResource. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail, string reason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Defender.Easm
         public string DiscoGroupName { get; }
 
         /// <summary> The history of how this asset was pulled into the workspace through the discovery process. </summary>
-        public IList<AuditTrailItem> AuditTrail { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AuditTrailItem> AuditTrail { get; }
 
         /// <summary> Gets the Reason. </summary>
         public string Reason { get; }

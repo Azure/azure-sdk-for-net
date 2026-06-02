@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
-    public partial class RoutineRun : IJsonModel<RoutineRun>
+    public partial class RoutineRun : IJsonModel<global::Azure.AI.Projects.RoutineRun>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoutineRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoutineRun(document.RootElement, options);
+                        return global::Azure.AI.Projects.RoutineRun.DeserializeRoutineRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutineRun)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RoutineRun)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoutineRun)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RoutineRun)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoutineRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.RoutineRun>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoutineRun IPersistableModel<RoutineRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoutineRun IPersistableModel<global::Azure.AI.Projects.RoutineRun>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoutineRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.RoutineRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoutineRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.RoutineRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,122 +65,122 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoutineRun)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RoutineRun)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Phase))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerType))
+            if (global::Azure.AI.Projects.Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("trigger_type"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerName))
+            if (global::Azure.AI.Projects.Optional.IsDefined(TriggerName))
             {
                 writer.WritePropertyName("trigger_name"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (Optional.IsDefined(AttemptSource))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AttemptSource))
             {
                 writer.WritePropertyName("attempt_source"u8);
                 writer.WriteStringValue(AttemptSource.Value.ToString());
             }
-            if (Optional.IsDefined(ActionType))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("action_type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Optional.IsDefined(AgentId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentId))
             {
                 writer.WritePropertyName("agent_id"u8);
                 writer.WriteStringValue(AgentId);
             }
-            if (Optional.IsDefined(AgentEndpointId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentEndpointId))
             {
                 writer.WritePropertyName("agent_endpoint_id"u8);
                 writer.WriteStringValue(AgentEndpointId);
             }
-            if (Optional.IsDefined(ConversationId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ConversationId))
             {
                 writer.WritePropertyName("conversation_id"u8);
                 writer.WriteStringValue(ConversationId);
             }
-            if (Optional.IsDefined(SessionId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("session_id"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(TriggeredAt))
+            if (global::Azure.AI.Projects.Optional.IsDefined(TriggeredAt))
             {
                 writer.WritePropertyName("triggered_at"u8);
                 writer.WriteNumberValue(TriggeredAt.Value, "U");
             }
-            if (Optional.IsDefined(ScheduledFireAt))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ScheduledFireAt))
             {
                 writer.WritePropertyName("scheduled_fire_at"u8);
                 writer.WriteNumberValue(ScheduledFireAt.Value, "U");
             }
-            if (Optional.IsDefined(StartedAt))
+            if (global::Azure.AI.Projects.Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("started_at"u8);
                 writer.WriteNumberValue(StartedAt.Value, "U");
             }
-            if (Optional.IsDefined(EndedAt))
+            if (global::Azure.AI.Projects.Optional.IsDefined(EndedAt))
             {
                 writer.WritePropertyName("ended_at"u8);
                 writer.WriteNumberValue(EndedAt.Value, "U");
             }
-            if (Optional.IsDefined(DispatchId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(DispatchId))
             {
                 writer.WritePropertyName("dispatch_id"u8);
                 writer.WriteStringValue(DispatchId);
             }
-            if (Optional.IsDefined(ActionCorrelationId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ActionCorrelationId))
             {
                 writer.WritePropertyName("action_correlation_id"u8);
                 writer.WriteStringValue(ActionCorrelationId);
             }
-            if (Optional.IsDefined(ResponseId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ResponseId))
             {
                 writer.WritePropertyName("response_id"u8);
                 writer.WriteStringValue(ResponseId);
             }
-            if (Optional.IsDefined(TaskId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("task_id"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Optional.IsDefined(ErrorStatusCode))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ErrorStatusCode))
             {
                 writer.WritePropertyName("error_status_code"u8);
                 writer.WriteNumberValue(ErrorStatusCode.Value);
             }
-            if (Optional.IsDefined(ErrorType))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("error_type"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("error_message"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -188,9 +188,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -199,26 +199,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoutineRun IJsonModel<RoutineRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoutineRun IJsonModel<global::Azure.AI.Projects.RoutineRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoutineRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RoutineRun>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoutineRun)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RoutineRun)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoutineRun(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.RoutineRun.DeserializeRoutineRun(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RoutineRun DeserializeRoutineRun(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -244,7 +244,7 @@ namespace Azure.AI.Projects
             int? errorStatusCode = default;
             string errorType = default;
             string errorMessage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -259,7 +259,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("phase"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -268,7 +268,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("trigger_type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -282,7 +282,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("attempt_source"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -291,7 +291,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("action_type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -320,38 +320,38 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("triggered_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    triggeredAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("scheduled_fire_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    scheduledFireAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("started_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startedAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("ended_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endedAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("dispatch_id"u8))
@@ -376,7 +376,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("error_status_code"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -393,9 +393,9 @@ namespace Azure.AI.Projects
                     errorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RoutineRun(

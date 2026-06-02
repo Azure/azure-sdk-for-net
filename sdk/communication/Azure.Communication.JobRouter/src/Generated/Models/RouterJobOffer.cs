@@ -14,9 +14,9 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobOffer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobOffer"/>. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         internal RouterJobOffer(string jobId, int capacityCost)
@@ -25,14 +25,14 @@ namespace Azure.Communication.JobRouter
             CapacityCost = capacityCost;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobOffer"/>. </summary>
         /// <param name="offerId"> Id of an offer. </param>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
         /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterJobOffer(string offerId, string jobId, int capacityCost, DateTimeOffset? offeredAt, DateTimeOffset? expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterJobOffer(string offerId, string jobId, int capacityCost, DateTimeOffset? offeredAt, DateTimeOffset? expiresAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OfferId = offerId;
             JobId = jobId;

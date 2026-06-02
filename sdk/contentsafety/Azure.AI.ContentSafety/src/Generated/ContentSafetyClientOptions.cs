@@ -15,36 +15,36 @@ namespace Azure.AI.ContentSafety
     /// <summary> Client options for clients in this library. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01;
+        private const global::Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion LatestVersion = global::Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2024_09_01;
 
         /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
+        public ContentSafetyClientOptions(global::Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_10_01 => "2023-10-01",
-                ServiceVersion.V2024_09_01 => "2024-09-01",
+                global::Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2023_10_01 => "2023-10-01",
+                global::Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2024_09_01 => "2024-09-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of ContentSafetyClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ContentSafetyClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-09-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

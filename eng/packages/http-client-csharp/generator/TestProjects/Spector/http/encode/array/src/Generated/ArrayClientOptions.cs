@@ -15,7 +15,7 @@ namespace Encode._Array
     {
         public ArrayClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ArrayClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

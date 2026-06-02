@@ -14,29 +14,29 @@ namespace Azure.AI.DocumentIntelligence
     public partial class BuildClassifierOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BuildClassifierOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BuildClassifierOptions"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="documentTypes"/> is null. </exception>
-        public BuildClassifierOptions(string classifierId, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="documentTypes"/> is null. </exception>
+        public BuildClassifierOptions(string classifierId, IDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes)
         {
-            Argument.AssertNotNull(classifierId, nameof(classifierId));
-            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ClassifierId = classifierId;
             DocumentTypes = documentTypes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildClassifierOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BuildClassifierOptions"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="allowOverwrite"> Allow overwriting an existing classifier with the same name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BuildClassifierOptions(string classifierId, string description, string baseClassifierId, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, bool? allowOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BuildClassifierOptions(string classifierId, string description, string baseClassifierId, IDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes, bool? allowOverwrite, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClassifierId = classifierId;
             Description = description;
@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
         public string BaseClassifierId { get; set; }
 
         /// <summary> List of document types to classify against. </summary>
-        public IDictionary<string, ClassifierDocumentTypeDetails> DocumentTypes { get; }
+        public IDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> DocumentTypes { get; }
 
         /// <summary> Allow overwriting an existing classifier with the same name. </summary>
         public bool? AllowOverwrite { get; set; }

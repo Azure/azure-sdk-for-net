@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
-    public readonly partial struct ExtractiveSummarizationSortingCriteria : IEquatable<ExtractiveSummarizationSortingCriteria>
+    public readonly partial struct ExtractiveSummarizationSortingCriteria : IEquatable<global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria>
     {
         private readonly string _value;
         /// <summary> Indicates that results should be sorted in order of appearance in the text. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
         private const string RankValue = "Rank";
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExtractiveSummarizationSortingCriteria(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
         public static ExtractiveSummarizationSortingCriteria Rank { get; } = new ExtractiveSummarizationSortingCriteria(RankValue);
 
-        /// <summary> Determines if two <see cref="ExtractiveSummarizationSortingCriteria"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExtractiveSummarizationSortingCriteria"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ExtractiveSummarizationSortingCriteria(string value) => new ExtractiveSummarizationSortingCriteria(value);
 
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtractiveSummarizationSortingCriteria?(string value) => value == null ? null : new ExtractiveSummarizationSortingCriteria(value);
+        public static implicit operator ExtractiveSummarizationSortingCriteria?(string value) => (value == null) ? null : new ExtractiveSummarizationSortingCriteria(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExtractiveSummarizationSortingCriteria other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ExtractiveSummarizationSortingCriteria other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ExtractiveSummarizationSortingCriteria other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ExtractiveSummarizationSortingCriteria other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

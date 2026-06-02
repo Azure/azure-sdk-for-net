@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Supported algorithms for terrain and index-based analysis. </summary>
-    public readonly partial struct TerrainAlgorithm : IEquatable<TerrainAlgorithm>
+    public readonly partial struct TerrainAlgorithm : IEquatable<global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm>
     {
         private readonly string _value;
         /// <summary> Creates hillshade visualization from elevation data. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
         private const string TerrainrgbValue = "terrainrgb";
 
-        /// <summary> Initializes a new instance of <see cref="TerrainAlgorithm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TerrainAlgorithm(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
         public static TerrainAlgorithm Terrainrgb { get; } = new TerrainAlgorithm(TerrainrgbValue);
 
-        /// <summary> Determines if two <see cref="TerrainAlgorithm"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TerrainAlgorithm left, TerrainAlgorithm right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TerrainAlgorithm"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TerrainAlgorithm left, TerrainAlgorithm right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TerrainAlgorithm"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TerrainAlgorithm(string value) => new TerrainAlgorithm(value);
 
-        /// <summary> Converts a string to a <see cref="TerrainAlgorithm"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.TerrainAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TerrainAlgorithm?(string value) => value == null ? null : new TerrainAlgorithm(value);
+        public static implicit operator TerrainAlgorithm?(string value) => (value == null) ? null : new TerrainAlgorithm(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TerrainAlgorithm other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TerrainAlgorithm other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TerrainAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TerrainAlgorithm other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

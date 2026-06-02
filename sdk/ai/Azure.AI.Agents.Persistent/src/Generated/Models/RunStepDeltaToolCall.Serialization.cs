@@ -13,12 +13,12 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMcpToolCall"/>, <see cref="RunStepDeltaOpenAPIToolCall"/>, <see cref="RunStepDeltaConnectedAgentToolCall"/>, <see cref="RunStepDeltaFunctionToolCall"/>, <see cref="RunStepDeltaFileSearchToolCall"/>, <see cref="RunStepDeltaCodeInterpreterToolCall"/>, <see cref="RunStepDeltaBingGroundingToolCall"/>, <see cref="RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="RunStepDeltaAzureFunctionToolCall"/>, <see cref="RunStepDeltaDeepResearchToolCall"/>, <see cref="RunStepDeltaAzureAISearchToolCall"/>, <see cref="RunStepDeltaComputerUseToolCall"/>, <see cref="RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="RunStepDeltaSharepointToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaSharepointToolCall"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownRunStepDeltaToolCall))]
-    public abstract partial class RunStepDeltaToolCall : IJsonModel<RunStepDeltaToolCall>
+    [PersistableModelProxyAttribute(typeof(UnknownRunStepDeltaToolCall))]
+    public abstract partial class RunStepDeltaToolCall : IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall"/> for deserialization. </summary>
         internal RunStepDeltaToolCall()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepDeltaToolCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepDeltaToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall.DeserializeRunStepDeltaToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepDeltaToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaToolCall IPersistableModel<RunStepDeltaToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStepDeltaToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepDeltaToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepDeltaToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,10 +76,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -91,26 +91,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaToolCall IJsonModel<RunStepDeltaToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStepDeltaToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepDeltaToolCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepDeltaToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall.DeserializeRunStepDeltaToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepDeltaToolCall DeserializeRunStepDeltaToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -119,36 +119,36 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "mcp":
-                        return RunStepDeltaMcpToolCall.DeserializeRunStepDeltaMcpToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall.DeserializeRunStepDeltaMcpToolCall(element, options);
                     case "openapi":
-                        return RunStepDeltaOpenAPIToolCall.DeserializeRunStepDeltaOpenAPIToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall.DeserializeRunStepDeltaOpenAPIToolCall(element, options);
                     case "connected_agent":
-                        return RunStepDeltaConnectedAgentToolCall.DeserializeRunStepDeltaConnectedAgentToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall.DeserializeRunStepDeltaConnectedAgentToolCall(element, options);
                     case "function":
-                        return RunStepDeltaFunctionToolCall.DeserializeRunStepDeltaFunctionToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall.DeserializeRunStepDeltaFunctionToolCall(element, options);
                     case "file_search":
-                        return RunStepDeltaFileSearchToolCall.DeserializeRunStepDeltaFileSearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall.DeserializeRunStepDeltaFileSearchToolCall(element, options);
                     case "code_interpreter":
-                        return RunStepDeltaCodeInterpreterToolCall.DeserializeRunStepDeltaCodeInterpreterToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall.DeserializeRunStepDeltaCodeInterpreterToolCall(element, options);
                     case "bing_grounding":
-                        return RunStepDeltaBingGroundingToolCall.DeserializeRunStepDeltaBingGroundingToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall.DeserializeRunStepDeltaBingGroundingToolCall(element, options);
                     case "bing_custom_search":
-                        return RunStepDeltaCustomBingGroundingToolCall.DeserializeRunStepDeltaCustomBingGroundingToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall.DeserializeRunStepDeltaCustomBingGroundingToolCall(element, options);
                     case "azure_function":
-                        return RunStepDeltaAzureFunctionToolCall.DeserializeRunStepDeltaAzureFunctionToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaAzureFunctionToolCall.DeserializeRunStepDeltaAzureFunctionToolCall(element, options);
                     case "deep_research":
-                        return RunStepDeltaDeepResearchToolCall.DeserializeRunStepDeltaDeepResearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall.DeserializeRunStepDeltaDeepResearchToolCall(element, options);
                     case "azure_ai_search":
-                        return RunStepDeltaAzureAISearchToolCall.DeserializeRunStepDeltaAzureAISearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall.DeserializeRunStepDeltaAzureAISearchToolCall(element, options);
                     case "computer_use_preview":
-                        return RunStepDeltaComputerUseToolCall.DeserializeRunStepDeltaComputerUseToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaComputerUseToolCall.DeserializeRunStepDeltaComputerUseToolCall(element, options);
                     case "fabric_dataagent":
-                        return RunStepDeltaMicrosoftFabricToolCall.DeserializeRunStepDeltaMicrosoftFabricToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall.DeserializeRunStepDeltaMicrosoftFabricToolCall(element, options);
                     case "sharepoint_grounding":
-                        return RunStepDeltaSharepointToolCall.DeserializeRunStepDeltaSharepointToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaSharepointToolCall.DeserializeRunStepDeltaSharepointToolCall(element, options);
                 }
             }
-            return UnknownRunStepDeltaToolCall.DeserializeUnknownRunStepDeltaToolCall(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownRunStepDeltaToolCall.DeserializeUnknownRunStepDeltaToolCall(element, options);
         }
     }
 }

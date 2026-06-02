@@ -17,20 +17,20 @@ namespace Payload.MultiPart._FormData.File
     {
         protected FormDataFile() => throw null;
 
-        internal FormDataFile(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal FormDataFile(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response UploadFileSpecificContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UploadFileSpecificContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UploadFileSpecificContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Response UploadFileRequiredFilename(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UploadFileRequiredFilenameAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UploadFileRequiredFilenameAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Response UploadFileArray(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UploadFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UploadFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
     }
 }

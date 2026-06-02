@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating what maskingMode to use to mask the personal information detected in the input text. </summary>
-    public readonly partial struct PiiDetectionSkillMaskingMode : IEquatable<PiiDetectionSkillMaskingMode>
+    public readonly partial struct PiiDetectionSkillMaskingMode : IEquatable<global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode>
     {
         private readonly string _value;
         /// <summary> No masking occurs and the maskedText output will not be returned. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Replaces the detected entities with the character given in the maskingCharacter parameter. The character will be repeated to the length of the detected entity so that the offsets will correctly correspond to both the input text as well as the output maskedText. </summary>
         private const string ReplaceValue = "replace";
 
-        /// <summary> Initializes a new instance of <see cref="PiiDetectionSkillMaskingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PiiDetectionSkillMaskingMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Replaces the detected entities with the character given in the maskingCharacter parameter. The character will be repeated to the length of the detected entity so that the offsets will correctly correspond to both the input text as well as the output maskedText. </summary>
         public static PiiDetectionSkillMaskingMode Replace { get; } = new PiiDetectionSkillMaskingMode(ReplaceValue);
 
-        /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PiiDetectionSkillMaskingMode left, PiiDetectionSkillMaskingMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PiiDetectionSkillMaskingMode left, PiiDetectionSkillMaskingMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PiiDetectionSkillMaskingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PiiDetectionSkillMaskingMode(string value) => new PiiDetectionSkillMaskingMode(value);
 
-        /// <summary> Converts a string to a <see cref="PiiDetectionSkillMaskingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkillMaskingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiDetectionSkillMaskingMode?(string value) => value == null ? null : new PiiDetectionSkillMaskingMode(value);
+        public static implicit operator PiiDetectionSkillMaskingMode?(string value) => (value == null) ? null : new PiiDetectionSkillMaskingMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PiiDetectionSkillMaskingMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PiiDetectionSkillMaskingMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PiiDetectionSkillMaskingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PiiDetectionSkillMaskingMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

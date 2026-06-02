@@ -9,13 +9,13 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    [ModelReaderWriterBuildable(typeof(Fish))]
-    [ModelReaderWriterBuildable(typeof(GoblinShark))]
-    [ModelReaderWriterBuildable(typeof(Salmon))]
-    [ModelReaderWriterBuildable(typeof(SawShark))]
-    [ModelReaderWriterBuildable(typeof(Shark))]
-    [ModelReaderWriterBuildable(typeof(UnknownFish))]
-    [ModelReaderWriterBuildable(typeof(UnknownShark))]
+    [ModelReaderWriterBuildableAttribute(typeof(Fish))]
+    [ModelReaderWriterBuildableAttribute(typeof(GoblinShark))]
+    [ModelReaderWriterBuildableAttribute(typeof(Salmon))]
+    [ModelReaderWriterBuildableAttribute(typeof(SawShark))]
+    [ModelReaderWriterBuildableAttribute(typeof(Shark))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownFish))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownShark))]
     public partial class _TypeModelInheritanceNestedDiscriminatorContext : ModelReaderWriterContext
     {
     }

@@ -11,51 +11,51 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileSearchToolFiltersType value) => value switch
         {
-            FileSearchToolFiltersType.Eq => "eq",
-            FileSearchToolFiltersType.Ne => "ne",
-            FileSearchToolFiltersType.Gt => "gt",
-            FileSearchToolFiltersType.Gte => "gte",
-            FileSearchToolFiltersType.Lt => "lt",
-            FileSearchToolFiltersType.Lte => "lte",
-            FileSearchToolFiltersType.In => "in",
-            FileSearchToolFiltersType.Nin => "nin",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Eq => "eq",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Ne => "ne",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Gt => "gt",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Gte => "gte",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Lt => "lt",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Lte => "lte",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.In => "in",
+            global::Azure.AI.Projects.FileSearchToolFiltersType.Nin => "nin",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FileSearchToolFiltersType ToFileSearchToolFiltersType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "eq"))
             {
-                return FileSearchToolFiltersType.Eq;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Eq;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ne"))
             {
-                return FileSearchToolFiltersType.Ne;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Ne;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gt"))
             {
-                return FileSearchToolFiltersType.Gt;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Gt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gte"))
             {
-                return FileSearchToolFiltersType.Gte;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Gte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lt"))
             {
-                return FileSearchToolFiltersType.Lt;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Lt;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lte"))
             {
-                return FileSearchToolFiltersType.Lte;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Lte;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in"))
             {
-                return FileSearchToolFiltersType.In;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.In;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "nin"))
             {
-                return FileSearchToolFiltersType.Nin;
+                return global::Azure.AI.Projects.FileSearchToolFiltersType.Nin;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileSearchToolFiltersType value.");
         }

@@ -11,13 +11,13 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An agent implementing the A2A protocol. </summary>
     public partial class A2APreviewTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
-        public A2APreviewTool() : base(ToolType.A2aPreview)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.A2APreviewTool"/>. </summary>
+        public A2APreviewTool() : base(global::OpenAI.ToolType.A2aPreview)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.A2APreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, Uri baseUri, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal A2APreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, global::System.Uri baseUri, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The connection ID in the project for the A2A server.

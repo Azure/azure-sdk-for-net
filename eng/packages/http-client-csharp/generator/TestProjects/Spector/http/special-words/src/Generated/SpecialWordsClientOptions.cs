@@ -15,7 +15,7 @@ namespace SpecialWords
     {
         public SpecialWordsClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal SpecialWordsClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

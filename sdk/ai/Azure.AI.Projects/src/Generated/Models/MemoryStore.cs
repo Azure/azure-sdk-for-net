@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStore"/>. </summary>
         /// <param name="id"> The unique identifier of the memory store. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
         /// <param name="updatedAt"> The Unix timestamp (seconds) when the memory store was last updated. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Memory
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStore"/>. </summary>
         /// <param name="object"> The object type, which is always 'memory_store'. </param>
         /// <param name="id"> The unique identifier of the memory store. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
@@ -40,9 +40,9 @@ namespace Azure.AI.Projects.Memory
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="definition"> The definition of the memory store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStore(string @object, string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, string description, IDictionary<string, string> metadata, MemoryStoreDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStore(string @object, string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, string description, IDictionary<string, string> metadata, MemoryStoreDefinition definition, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             Id = id;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;

@@ -15,7 +15,7 @@ namespace Authentication.Union
     {
         public UnionClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal UnionClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

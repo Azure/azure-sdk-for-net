@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Allows you to generate a vector embedding for a given text input using the Azure OpenAI resource. </summary>
-    public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill, IJsonModel<AzureOpenAIEmbeddingSkill>
+    public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIEmbeddingSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill"/> for deserialization. </summary>
         internal AzureOpenAIEmbeddingSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureOpenAIEmbeddingSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOpenAIEmbeddingSkill IPersistableModel<AzureOpenAIEmbeddingSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOpenAIEmbeddingSkill)PersistableModelCreateCore(data, options);
+        AzureOpenAIEmbeddingSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureOpenAIEmbeddingSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureOpenAIEmbeddingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureOpenAIEmbeddingSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,38 +74,38 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ResourceUri))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthenticationIdentity))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AuthenticationIdentity))
             {
                 writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthenticationIdentity, options);
+                writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthenticationIdentity, options);
             }
-            if (Optional.IsDefined(ModelName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ModelName))
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName.Value.ToString());
             }
-            if (Optional.IsDefined(Dimensions))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(Dimensions.Value);
@@ -114,26 +114,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOpenAIEmbeddingSkill IJsonModel<AzureOpenAIEmbeddingSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureOpenAIEmbeddingSkill)JsonModelCreateCore(ref reader, options);
+        AzureOpenAIEmbeddingSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureOpenAIEmbeddingSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureOpenAIEmbeddingSkill DeserializeAzureOpenAIEmbeddingSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -141,10 +141,10 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri resourceUri = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            global::System.Uri resourceUri = default;
             string deploymentName = default;
             string apiKey = default;
             SearchIndexerDataIdentity authenticationIdentity = default;
@@ -174,31 +174,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
                 if (prop.NameEquals("resourceUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("deploymentId"u8))
@@ -213,16 +213,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    authenticationIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    authenticationIdentity = global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modelName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -231,7 +231,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dimensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         dimensions = null;
                         continue;
@@ -239,9 +239,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     dimensions = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureOpenAIEmbeddingSkill(

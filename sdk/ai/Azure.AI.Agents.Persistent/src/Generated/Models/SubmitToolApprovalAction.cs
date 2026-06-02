@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The details for required tool call approval that must be submitted for an agent thread run to continue. </summary>
     public partial class SubmitToolApprovalAction : RequiredAction
     {
-        /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SubmitToolApprovalAction"/>. </summary>
         /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
         internal SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval) : base("submit_tool_approval")
         {
             SubmitToolApproval = submitToolApproval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SubmitToolApprovalAction"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
-        internal SubmitToolApprovalAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SubmitToolApprovalDetails submitToolApproval) : base(@type, additionalBinaryDataProperties)
+        internal SubmitToolApprovalAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SubmitToolApprovalDetails submitToolApproval) : base(@type, additionalBinaryDataProperties)
         {
             SubmitToolApproval = submitToolApproval;
         }

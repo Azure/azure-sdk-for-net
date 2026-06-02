@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the invocation of connected agent as a part of a streaming run step. </summary>
-    public partial class RunStepDeltaConnectedAgentToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaConnectedAgentToolCall>
+    public partial class RunStepDeltaConnectedAgentToolCall : RunStepDeltaToolCall, IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaConnectedAgentToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall"/> for deserialization. </summary>
         internal RunStepDeltaConnectedAgentToolCall()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepDeltaToolCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepDeltaConnectedAgentToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall.DeserializeRunStepDeltaConnectedAgentToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaConnectedAgentToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaConnectedAgentToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepDeltaConnectedAgentToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaConnectedAgentToolCall IPersistableModel<RunStepDeltaConnectedAgentToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (RunStepDeltaConnectedAgentToolCall)PersistableModelCreateCore(data, options);
+        RunStepDeltaConnectedAgentToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RunStepDeltaConnectedAgentToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepDeltaConnectedAgentToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepDeltaConnectedAgentToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,45 +73,45 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaConnectedAgentToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connected_agent"u8);
-            writer.WriteObjectValue(ConnectedAgent, options);
+            writer.WriteObjectValue<RunStepConnectedAgent>(ConnectedAgent, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaConnectedAgentToolCall IJsonModel<RunStepDeltaConnectedAgentToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RunStepDeltaConnectedAgentToolCall)JsonModelCreateCore(ref reader, options);
+        RunStepDeltaConnectedAgentToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RunStepDeltaConnectedAgentToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepDeltaToolCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaConnectedAgentToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepDeltaConnectedAgentToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall.DeserializeRunStepDeltaConnectedAgentToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepDeltaConnectedAgentToolCall DeserializeRunStepDeltaConnectedAgentToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int index = default;
             string id = default;
             string @type = "connected_agent";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             RunStepConnectedAgent connectedAgent = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("connected_agent"u8))
                 {
-                    connectedAgent = RunStepConnectedAgent.DeserializeRunStepConnectedAgent(prop.Value, options);
+                    connectedAgent = global::Azure.AI.Agents.Persistent.RunStepConnectedAgent.DeserializeRunStepConnectedAgent(prop.Value, options);
                     continue;
                 }
             }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The AzureDataExplorerDataConnectionProperties. </summary>
-    public partial class AzureDataExplorerDataConnectionProperties : DataConnectionProperties, IJsonModel<AzureDataExplorerDataConnectionProperties>
+    public partial class AzureDataExplorerDataConnectionProperties : DataConnectionProperties, IJsonModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties.DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureDataExplorerDataConnectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDataExplorerDataConnectionProperties IPersistableModel<AzureDataExplorerDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureDataExplorerDataConnectionProperties)PersistableModelCreateCore(data, options);
+        AzureDataExplorerDataConnectionProperties IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureDataExplorerDataConnectionProperties)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureDataExplorerDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureDataExplorerDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,23 +68,23 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ClusterName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(Region))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -93,30 +93,30 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDataExplorerDataConnectionProperties IJsonModel<AzureDataExplorerDataConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureDataExplorerDataConnectionProperties)JsonModelCreateCore(ref reader, options);
+        AzureDataExplorerDataConnectionProperties IJsonModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureDataExplorerDataConnectionProperties)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties.DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureDataExplorerDataConnectionProperties DeserializeAzureDataExplorerDataConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string clusterName = default;
             string region = default;
             string databaseName = default;
@@ -137,9 +137,9 @@ namespace Azure.Analytics.Defender.Easm
                     databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureDataExplorerDataConnectionProperties(additionalBinaryDataProperties, clusterName, region, databaseName);

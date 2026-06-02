@@ -12,11 +12,11 @@ namespace Azure.AI.Language.Text.Authoring
 {
     internal partial class UnknownTextAuthoringEvalSummary : TextAuthoringEvalSummary
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTextAuthoringEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.UnknownTextAuthoringEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTextAuthoringEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(projectKind != default ? projectKind : "unknown", evaluationOptions, additionalBinaryDataProperties)
+        internal UnknownTextAuthoringEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((projectKind != default) ? projectKind : "unknown", evaluationOptions, additionalBinaryDataProperties)
         {
         }
     }

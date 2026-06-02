@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectsAgentVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -57,10 +57,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentGuid"> The unique GUID identifier of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
-            Object = @object;
+            this.Object = @object;
             Id = id;
             Name = name;
             Version = version;

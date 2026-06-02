@@ -13,21 +13,21 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a UserCount metric definition. Counts unique users who encounter a specified event. </summary>
     public partial class UserCountMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="UserCountMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition"/>. </summary>
         /// <param name="event"> Event to observe. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="event"/> is null. </exception>
-        public UserCountMetricDefinition(ObservedEvent @event) : base(ExperimentMetricType.UserCount)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="event"/> is null. </exception>
+        public UserCountMetricDefinition(ObservedEvent @event) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.UserCount)
         {
-            Argument.AssertNotNull(@event, nameof(@event));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(@event, nameof(@event));
 
             Event = @event;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserCountMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="event"> Event to observe. </param>
-        internal UserCountMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedEvent @event) : base(@type, additionalBinaryDataProperties)
+        internal UserCountMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ObservedEvent @event) : base(@type, additionalBinaryDataProperties)
         {
             Event = @event;
         }

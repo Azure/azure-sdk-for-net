@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Project assets that need to be imported. </summary>
-    public partial class ImportJobOptions : IJsonModel<ImportJobOptions>
+    public partial class ImportJobOptions : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImportJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImportJobOptions(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions.DeserializeImportJobOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Authoring.AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImportJobOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImportJobOptions IPersistableModel<ImportJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImportJobOptions IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImportJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="importJobOptions"> The <see cref="ImportJobOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="importJobOptions"> The <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ImportJobOptions importJobOptions)
         {
-            if (importJobOptions == null)
+            if ((importJobOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(importJobOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(importJobOptions, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImportJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,27 +79,27 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImportJobOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Metadata))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                writer.WriteObjectValue<QuestionAnsweringProject>(Metadata, options);
             }
-            if (Optional.IsDefined(Assets))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue(Assets, options);
+                writer.WriteObjectValue<QuestionAnsweringAuthoringAssets>(Assets, options);
             }
-            if (Optional.IsDefined(FileUri))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("fileUri"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,65 +118,65 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImportJobOptions IJsonModel<ImportJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImportJobOptions IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImportJobOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImportJobOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportJobOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions.DeserializeImportJobOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ImportJobOptions DeserializeImportJobOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             QuestionAnsweringProject metadata = default;
             QuestionAnsweringAuthoringAssets assets = default;
-            Uri fileUri = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            global::System.Uri fileUri = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    metadata = QuestionAnsweringProject.DeserializeQuestionAnsweringProject(prop.Value, options);
+                    metadata = global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject.DeserializeQuestionAnsweringProject(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("assets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    assets = QuestionAnsweringAuthoringAssets.DeserializeQuestionAnsweringAuthoringAssets(prop.Value, options);
+                    assets = global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets.DeserializeQuestionAnsweringAuthoringAssets(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fileUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ImportJobOptions(metadata, assets, fileUri, additionalBinaryDataProperties);

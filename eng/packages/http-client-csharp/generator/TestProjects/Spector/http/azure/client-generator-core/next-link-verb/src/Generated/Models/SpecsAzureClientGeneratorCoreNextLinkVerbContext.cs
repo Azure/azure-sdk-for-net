@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
-    [ModelReaderWriterBuildable(typeof(Test))]
+    [ModelReaderWriterBuildableAttribute(typeof(Test))]
     public partial class SpecsAzureClientGeneratorCoreNextLinkVerbContext : ModelReaderWriterContext
     {
     }

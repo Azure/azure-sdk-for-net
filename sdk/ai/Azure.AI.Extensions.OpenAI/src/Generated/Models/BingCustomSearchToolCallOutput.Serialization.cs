@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a Bing custom search tool call. </summary>
-    public partial class BingCustomSearchToolCallOutput : AgentResponseItem, IJsonModel<BingCustomSearchToolCallOutput>
+    public partial class BingCustomSearchToolCallOutput : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolCallOutput"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput"/> for deserialization. </summary>
         internal BingCustomSearchToolCallOutput()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBingCustomSearchToolCallOutput(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BingCustomSearchToolCallOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BingCustomSearchToolCallOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BingCustomSearchToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingCustomSearchToolCallOutput IPersistableModel<BingCustomSearchToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (BingCustomSearchToolCallOutput)PersistableModelCreateCore(data, options);
+        BingCustomSearchToolCallOutput IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => ((BingCustomSearchToolCallOutput)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BingCustomSearchToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BingCustomSearchToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,23 +70,23 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BingCustomSearchToolCallOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            if (Optional.IsDefined(Output))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Output);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Output))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Output))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -96,26 +96,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingCustomSearchToolCallOutput IJsonModel<BingCustomSearchToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BingCustomSearchToolCallOutput)JsonModelCreateCore(ref reader, options);
+        BingCustomSearchToolCallOutput IJsonModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((BingCustomSearchToolCallOutput)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BingCustomSearchToolCallOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBingCustomSearchToolCallOutput(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BingCustomSearchToolCallOutput DeserializeBingCustomSearchToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -123,7 +123,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string callId = default;
             BinaryData output = default;
             ToolCallStatus status = default;
@@ -141,11 +141,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -160,11 +160,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -172,9 +172,9 @@ namespace Azure.AI.Extensions.OpenAI
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BingCustomSearchToolCallOutput(

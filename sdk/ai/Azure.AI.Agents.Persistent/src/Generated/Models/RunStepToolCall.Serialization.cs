@@ -13,12 +13,12 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepSharepointToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, and <see cref="RunStepConnectedAgentToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownRunStepToolCall))]
-    public abstract partial class RunStepToolCall : IJsonModel<RunStepToolCall>
+    [PersistableModelProxyAttribute(typeof(UnknownRunStepToolCall))]
+    public abstract partial class RunStepToolCall : IJsonModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCall"/> for deserialization. </summary>
         internal RunStepToolCall()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepToolCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepToolCall.DeserializeRunStepToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepToolCall IPersistableModel<RunStepToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStepToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,16 +76,16 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepToolCall)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -93,9 +93,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -104,26 +104,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepToolCall IJsonModel<RunStepToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStepToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepToolCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepToolCall.DeserializeRunStepToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepToolCall DeserializeRunStepToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -132,38 +132,38 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "code_interpreter":
-                        return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
                     case "file_search":
-                        return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
                     case "bing_grounding":
-                        return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "azure_ai_search":
-                        return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
                     case "browser_automation":
-                        return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
                     case "mcp":
-                        return RunStepMcpToolCall.DeserializeRunStepMcpToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepMcpToolCall.DeserializeRunStepMcpToolCall(element, options);
                     case "computer_use_preview":
-                        return RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
                     case "sharepoint_grounding":
-                        return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
                     case "fabric_dataagent":
-                        return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
                     case "bing_custom_search":
-                        return RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
                     case "azure_function":
-                        return RunStepAzureFunctionToolCall.DeserializeRunStepAzureFunctionToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall.DeserializeRunStepAzureFunctionToolCall(element, options);
                     case "function":
-                        return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
                     case "openapi":
-                        return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
                     case "deep_research":
-                        return RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
                     case "connected_agent":
-                        return RunStepConnectedAgentToolCall.DeserializeRunStepConnectedAgentToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall.DeserializeRunStepConnectedAgentToolCall(element, options);
                 }
             }
-            return UnknownRunStepToolCall.DeserializeUnknownRunStepToolCall(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownRunStepToolCall.DeserializeUnknownRunStepToolCall(element, options);
         }
     }
 }

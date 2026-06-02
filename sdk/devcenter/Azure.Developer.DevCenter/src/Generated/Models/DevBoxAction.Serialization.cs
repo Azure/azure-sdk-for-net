@@ -15,9 +15,9 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An action which will take place on a Dev Box. </summary>
-    public partial class DevBoxAction : IJsonModel<DevBoxAction>
+    public partial class DevBoxAction : IJsonModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>
     {
-        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxAction"/> for deserialization. </summary>
         internal DevBoxAction()
         {
         }
@@ -26,55 +26,55 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevBoxAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDevBoxAction(document.RootElement, options);
+                        return global::Azure.Developer.DevCenter.Models.DevBoxAction.DeserializeDevBoxAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBoxAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBoxAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevBoxAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevBoxAction IPersistableModel<DevBoxAction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DevBoxAction IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevBoxAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevBoxAction"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.DevCenter.Models.DevBoxAction"/> from. </param>
         public static explicit operator DevBoxAction(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevBoxAction(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.DevCenter.Models.DevBoxAction.DeserializeDevBoxAction(document.RootElement, global::Azure.Developer.DevCenter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DevBoxAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -82,12 +82,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevBoxAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBoxAction)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -96,17 +96,17 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("sourceId"u8);
             writer.WriteStringValue(SourceId);
-            if (Optional.IsDefined(SuspendedUntil))
+            if (global::Azure.Developer.DevCenter.Optional.IsDefined(SuspendedUntil))
             {
                 writer.WritePropertyName("suspendedUntil"u8);
                 writer.WriteStringValue(SuspendedUntil.Value, "O");
             }
-            if (Optional.IsDefined(NextAction))
+            if (global::Azure.Developer.DevCenter.Optional.IsDefined(NextAction))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(NextAction, options);
+                writer.WriteObjectValue<DevBoxNextAction>(NextAction, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,26 +125,26 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevBoxAction IJsonModel<DevBoxAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DevBoxAction IJsonModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevBoxAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevBoxAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBoxAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.DevCenter.Models.DevBoxAction.DeserializeDevBoxAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DevBoxAction DeserializeDevBoxAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -153,7 +153,7 @@ namespace Azure.Developer.DevCenter.Models
             string sourceId = default;
             DateTimeOffset? suspendedUntil = default;
             DevBoxNextAction nextAction = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -173,7 +173,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("suspendedUntil"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -182,16 +182,16 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("next"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    nextAction = DevBoxNextAction.DeserializeDevBoxNextAction(prop.Value, options);
+                    nextAction = global::Azure.Developer.DevCenter.Models.DevBoxNextAction.DeserializeDevBoxNextAction(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DevBoxAction(

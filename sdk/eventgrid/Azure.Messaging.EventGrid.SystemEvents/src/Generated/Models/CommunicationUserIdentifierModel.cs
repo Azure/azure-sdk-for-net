@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class CommunicationUserIdentifierModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"> The Id of the communication user. </param>
         internal CommunicationUserIdentifierModel(string id)
         {
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"> The Id of the communication user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationUserIdentifierModel(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunicationUserIdentifierModel(string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

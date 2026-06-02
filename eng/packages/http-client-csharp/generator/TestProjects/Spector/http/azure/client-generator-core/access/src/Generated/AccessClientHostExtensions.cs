@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.Access
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class AccessClientHostExtensions
     {
         public static IClientBuilder AddAccessClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddAccessClient(this IHostApplicationBuilder host, string sectionName, Action<AccessClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddAccessClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.Access.AccessClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedAccessClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedAccessClient(this IHostApplicationBuilder host, string key, string sectionName, Action<AccessClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedAccessClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.Access.AccessClientSettings> configureSettings) => throw null;
     }
 }

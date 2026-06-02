@@ -13,11 +13,11 @@ namespace Server.Path.Multiple
 {
     public partial class MultipleClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        private const global::Server.Path.Multiple.MultipleClientOptions.ServiceVersion LatestVersion = global::Server.Path.Multiple.MultipleClientOptions.ServiceVersion.V1_0;
 
-        public MultipleClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public MultipleClientOptions(global::Server.Path.Multiple.MultipleClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MultipleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

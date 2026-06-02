@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepDeepResearchToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="deepResearch"> The detailed information about the automated browser tasks performed by the model. </param>
         internal RunStepDeepResearchToolCall(string id, RunStepDeepResearchToolCallDetails deepResearch) : base("deep_research", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             DeepResearch = deepResearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deepResearch"> The detailed information about the automated browser tasks performed by the model. </param>
-        internal RunStepDeepResearchToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepDeepResearchToolCallDetails deepResearch) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepDeepResearchToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepDeepResearchToolCallDetails deepResearch) : base(@type, id, additionalBinaryDataProperties)
         {
             DeepResearch = deepResearch;
         }

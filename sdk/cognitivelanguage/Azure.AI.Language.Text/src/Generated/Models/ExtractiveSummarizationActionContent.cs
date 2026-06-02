@@ -14,14 +14,14 @@ namespace Azure.AI.Language.Text
     public partial class ExtractiveSummarizationActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationActionContent"/>. </summary>
         public ExtractiveSummarizationActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

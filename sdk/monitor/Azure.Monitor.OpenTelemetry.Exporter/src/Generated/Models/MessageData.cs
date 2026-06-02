@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MessageData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="MessageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MessageData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="message"> Trace message. </param>
         public MessageData(int version, string message) : base(version)
@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MessageData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="severityLevel"> Trace severity level. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal MessageData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
+        internal MessageData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Message = message;
             SeverityLevel = severityLevel;

@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the area entity resolution model. </summary>
     public partial class AreaResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="AreaResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AreaResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
-        internal AreaResolution(double value, AreaUnit unit) : base(ResolutionKind.AreaResolution)
+        internal AreaResolution(double value, AreaUnit unit) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.AreaResolution)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AreaResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AreaResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
-        internal AreaResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, AreaUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal AreaResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, AreaUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

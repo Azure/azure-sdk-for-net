@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Possible values for the status of a run step. </summary>
-    public readonly partial struct RunStepStatus : IEquatable<RunStepStatus>
+    public readonly partial struct RunStepStatus : IEquatable<global::Azure.AI.Agents.Persistent.RunStepStatus>
     {
         private readonly string _value;
         /// <summary> Represents a run step still in progress. </summary>
@@ -25,12 +25,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a run step that expired before otherwise finishing. </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="RunStepStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunStepStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a run step that expired before otherwise finishing. </summary>
         public static RunStepStatus Expired { get; } = new RunStepStatus(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="RunStepStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunStepStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunStepStatus left, RunStepStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RunStepStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunStepStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunStepStatus left, RunStepStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RunStepStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunStepStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RunStepStatus(string value) => new RunStepStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RunStepStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunStepStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunStepStatus?(string value) => value == null ? null : new RunStepStatus(value);
+        public static implicit operator RunStepStatus?(string value) => (value == null) ? null : new RunStepStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RunStepStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RunStepStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RunStepStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RunStepStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,12 +14,12 @@ namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
     /// Operation info.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/>, <see cref="DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentClassifierBuildOperationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, and <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDocumentIntelligenceOperationDetails))]
-    public abstract partial class DocumentIntelligenceOperationDetails : IJsonModel<DocumentIntelligenceOperationDetails>
+    [PersistableModelProxyAttribute(typeof(UnknownDocumentIntelligenceOperationDetails))]
+    public abstract partial class DocumentIntelligenceOperationDetails : IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceOperationDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails"/> for deserialization. </summary>
         internal DocumentIntelligenceOperationDetails()
         {
         }
@@ -28,55 +28,55 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentIntelligenceOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails.DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentIntelligenceOperationDetails IPersistableModel<DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentIntelligenceOperationDetails IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentIntelligenceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DocumentIntelligenceOperationDetails"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails"/> from. </param>
         public static explicit operator DocumentIntelligenceOperationDetails(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDocumentIntelligenceOperationDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails.DeserializeDocumentIntelligenceOperationDetails(document.RootElement, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentIntelligenceOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,16 +84,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(PercentCompleted))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(PercentCompleted))
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(PercentCompleted.Value);
@@ -106,19 +106,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
-            if (Optional.IsDefined(ApiVersion))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -127,12 +127,12 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Error))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -140,9 +140,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -151,26 +151,26 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentIntelligenceOperationDetails IJsonModel<DocumentIntelligenceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentIntelligenceOperationDetails IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentIntelligenceOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails.DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentIntelligenceOperationDetails DeserializeDocumentIntelligenceOperationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -179,18 +179,18 @@ namespace Azure.AI.DocumentIntelligence
                 switch (discriminator.GetString())
                 {
                     case "documentModelBuild":
-                        return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose":
-                        return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo":
-                        return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
                     case "documentClassifierCopyTo":
-                        return DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
                     case "documentClassifierBuild":
-                        return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
                 }
             }
-            return UnknownDocumentIntelligenceOperationDetails.DeserializeUnknownDocumentIntelligenceOperationDetails(element, options);
+            return global::Azure.AI.DocumentIntelligence.UnknownDocumentIntelligenceOperationDetails.DeserializeUnknownDocumentIntelligenceOperationDetails(element, options);
         }
     }
 }

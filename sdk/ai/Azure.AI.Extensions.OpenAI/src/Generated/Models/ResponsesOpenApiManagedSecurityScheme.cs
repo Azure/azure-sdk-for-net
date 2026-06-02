@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesOpenApiManagedSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audience"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="audience"/> is null. </exception>
         public ResponsesOpenApiManagedSecurityScheme(string audience)
         {
-            Argument.AssertNotNull(audience, nameof(audience));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(audience, nameof(audience));
 
             Audience = audience;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesOpenApiManagedSecurityScheme(string audience, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesOpenApiManagedSecurityScheme(string audience, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Audience = audience;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,14 +12,14 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Figure in a document.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentChartFigure"/> and <see cref="DocumentMermaidFigure"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.DocumentChartFigure"/> and <see cref="Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/>.
     /// </summary>
     public abstract partial class DocumentFigure
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFigure"/>. </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
         private protected DocumentFigure(DocumentFigureKind kind, string id)
@@ -27,10 +27,10 @@ namespace Azure.AI.ContentUnderstanding
             Kind = kind;
             Id = id;
             Elements = new ChangeTrackingList<string>();
-            Footnotes = new ChangeTrackingList<DocumentFootnote>();
+            Footnotes = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFigure"/>. </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> Description of the figure. </param>
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;
@@ -74,7 +74,7 @@ namespace Azure.AI.ContentUnderstanding
         public DocumentCaption Caption { get; }
 
         /// <summary> List of figure footnotes. </summary>
-        public IList<DocumentFootnote> Footnotes { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> Footnotes { get; }
 
         /// <summary> Description of the figure. </summary>
         public string Description { get; }

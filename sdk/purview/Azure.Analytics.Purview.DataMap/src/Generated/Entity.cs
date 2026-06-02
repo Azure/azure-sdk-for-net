@@ -19,7 +19,7 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The Entity sub-client. </summary>
     public partial class Entity
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Entity for mocking. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Entity(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Entity(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -70,8 +70,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdate(RequestContent content, string businessAttributeUpdateBehavior = default, string collectionId = default, RequestContext context = null)
         {
@@ -79,9 +79,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
+                using HttpMessage message = this.CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -115,18 +115,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, string businessAttributeUpdateBehavior = default, string collectionId = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrUpdateAsync(RequestContent content, string businessAttributeUpdateBehavior = default, string collectionId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
+                using HttpMessage message = this.CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -155,14 +155,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrUpdate(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.CreateOrUpdate(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -184,14 +184,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrUpdateAsync(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.CreateOrUpdateAsync(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -206,8 +206,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetByIds(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
@@ -215,9 +215,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
+                using HttpMessage message = this.CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -239,18 +239,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
+                using HttpMessage message = this.CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -265,14 +265,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntitiesWithExtInfo> GetByIds(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo> GetByIds(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-            Response result = GetByIds(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
+            Response result = this.GetByIds(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasEntitiesWithExtInfo)result), result);
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
@@ -280,14 +280,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-            Response result = await GetByIdsAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
+            Response result = await this.GetByIdsAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasEntitiesWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -315,8 +315,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BatchCreateOrUpdate(RequestContent content, string collectionId = default, string businessAttributeUpdateBehavior = default, RequestContext context = null)
         {
@@ -324,9 +324,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
+                using HttpMessage message = this.CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -361,18 +361,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchCreateOrUpdateAsync(RequestContent content, string collectionId = default, string businessAttributeUpdateBehavior = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> BatchCreateOrUpdateAsync(RequestContent content, string collectionId = default, string businessAttributeUpdateBehavior = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
+                using HttpMessage message = this.CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -402,14 +402,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = BatchCreateOrUpdate(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.BatchCreateOrUpdate(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -432,14 +432,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await BatchCreateOrUpdateAsync(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.BatchCreateOrUpdateAsync(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -453,8 +453,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BatchDelete(IEnumerable<string> guid, RequestContext context)
         {
@@ -462,9 +462,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateBatchDeleteRequest(guid, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -485,18 +485,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchDeleteAsync(IEnumerable<string> guid, RequestContext context)
+        public virtual async Task<global::Azure.Response> BatchDeleteAsync(IEnumerable<string> guid, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateBatchDeleteRequest(guid, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -512,14 +512,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> BatchDelete(IEnumerable<string> guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> BatchDelete(IEnumerable<string> guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-            Response result = BatchDelete(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.BatchDelete(guid, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -528,14 +528,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> BatchDeleteAsync(IEnumerable<string> guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> BatchDeleteAsync(IEnumerable<string> guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(guid, nameof(guid));
 
-            Response result = await BatchDeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.BatchDeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -548,8 +548,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddClassification(RequestContent content, RequestContext context = null)
         {
@@ -557,9 +557,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationRequest(content, context);
+                using HttpMessage message = this.CreateAddClassificationRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -579,18 +579,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationRequest(content, context);
+                using HttpMessage message = this.CreateAddClassificationRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -603,25 +603,25 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddClassification(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            return AddClassification(body, cancellationToken.ToRequestContext());
+            return this.AddClassification(body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddClassificationAsync(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            return await AddClassificationAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.AddClassificationAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -636,9 +636,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEntity(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
@@ -646,9 +646,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
+                using HttpMessage message = this.CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -670,19 +670,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntityAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEntityAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
+                using HttpMessage message = this.CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -697,15 +697,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityWithExtInfo> GetEntity(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo> GetEntity(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetEntity(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
+            Response result = this.GetEntity(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasEntityWithExtInfo)result), result);
         }
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
@@ -713,15 +713,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetEntityAsync(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>> GetEntityAsync(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetEntityAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
+            Response result = await this.GetEntityAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasEntityWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -740,9 +740,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateAttributeById(string guid, string name, RequestContent content, RequestContext context = null)
         {
@@ -750,11 +750,11 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
+                using HttpMessage message = this.CreateUpdateAttributeByIdRequest(guid, name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -780,21 +780,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAttributeByIdAsync(string guid, string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateAttributeByIdAsync(string guid, string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
+                using HttpMessage message = this.CreateUpdateAttributeByIdRequest(guid, name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -815,17 +815,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="body"> The value of the attribute. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> UpdateAttributeById(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> UpdateAttributeById(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateAttributeById(guid, name, RequestContent.Create(body), cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.UpdateAttributeById(guid, name, global::Azure.Core.RequestContent.Create(body), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -839,17 +839,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="body"> The value of the attribute. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> UpdateAttributeByIdAsync(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> UpdateAttributeByIdAsync(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateAttributeByIdAsync(guid, name, RequestContent.Create(body), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.UpdateAttributeByIdAsync(guid, name, global::Azure.Core.RequestContent.Create(body), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -862,9 +862,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string guid, RequestContext context)
         {
@@ -872,9 +872,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateDeleteRequest(guid, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -894,19 +894,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteAsync(string guid, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.Delete");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateDeleteRequest(guid, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -919,29 +919,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> Delete(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> Delete(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = Delete(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.Delete(guid, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> DeleteAsync(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> DeleteAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -955,9 +955,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassification(string guid, string classificationName, RequestContext context)
         {
@@ -965,10 +965,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
+                using HttpMessage message = this.CreateGetClassificationRequest(guid, classificationName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -989,20 +989,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
+                using HttpMessage message = this.CreateGetClassificationRequest(guid, classificationName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1016,32 +1016,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasClassification> GetClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasClassification> GetClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            Response result = GetClassification(guid, classificationName, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasClassification)result, result);
+            Response result = this.GetClassification(guid, classificationName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasClassification)result), result);
         }
 
         /// <summary> Get classification for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasClassification>> GetClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasClassification>> GetClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            Response result = await GetClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasClassification)result, result);
+            Response result = await this.GetClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasClassification)result), result);
         }
 
         /// <summary>
@@ -1055,9 +1055,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveClassification(string guid, string classificationName, RequestContext context)
         {
@@ -1065,10 +1065,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
+                using HttpMessage message = this.CreateRemoveClassificationRequest(guid, classificationName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1089,20 +1089,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, RequestContext context)
+        public virtual async Task<global::Azure.Response> RemoveClassificationAsync(string guid, string classificationName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
+                using HttpMessage message = this.CreateRemoveClassificationRequest(guid, classificationName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1116,30 +1116,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RemoveClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            return RemoveClassification(guid, classificationName, cancellationToken.ToRequestContext());
+            return this.RemoveClassification(guid, classificationName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            return await RemoveClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RemoveClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1152,9 +1152,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassifications(string guid, RequestContext context)
         {
@@ -1162,9 +1162,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
+                using HttpMessage message = this.CreateGetClassificationsRequest(guid, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1184,19 +1184,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetClassificationsAsync(string guid, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
+                using HttpMessage message = this.CreateGetClassificationsRequest(guid, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1209,29 +1209,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasClassifications> GetClassifications(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasClassifications> GetClassifications(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetClassifications(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasClassifications)result, result);
+            Response result = this.GetClassifications(guid, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasClassifications)result), result);
         }
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasClassifications>> GetClassificationsAsync(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasClassifications>> GetClassificationsAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetClassificationsAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasClassifications)result, result);
+            Response result = await this.GetClassificationsAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasClassifications)result), result);
         }
 
         /// <summary>
@@ -1245,9 +1245,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
         {
@@ -1255,10 +1255,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
+                using HttpMessage message = this.CreateAddClassificationsRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1279,20 +1279,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
+                using HttpMessage message = this.CreateAddClassificationsRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1306,32 +1306,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be added. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AddClassifications(string guid, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddClassifications(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.AddClassifications(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be added. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddClassificationsAsync(string guid, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.AddClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1345,9 +1345,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
         {
@@ -1355,10 +1355,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
+                using HttpMessage message = this.CreateUpdateClassificationsRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1379,20 +1379,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
+                using HttpMessage message = this.CreateUpdateClassificationsRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1406,32 +1406,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UpdateClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response UpdateClassifications(string guid, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return UpdateClassifications(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.UpdateClassifications(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> UpdateClassificationsAsync(string guid, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await UpdateClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.UpdateClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1460,9 +1460,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetByUniqueAttribute(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
@@ -1470,9 +1470,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
+                using HttpMessage message = this.CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1508,19 +1508,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
+                using HttpMessage message = this.CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1551,15 +1551,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityWithExtInfo> GetByUniqueAttribute(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo> GetByUniqueAttribute(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = GetByUniqueAttribute(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
+            Response result = this.GetByUniqueAttribute(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasEntityWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -1583,15 +1583,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = await GetByUniqueAttributeAsync(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
+            Response result = await this.GetByUniqueAttributeAsync(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasEntityWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -1621,9 +1621,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -1631,10 +1631,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1671,20 +1671,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1716,16 +1716,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateByUniqueAttribute(typeName, body, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.UpdateByUniqueAttribute(typeName, body, attribute, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -1750,16 +1750,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateByUniqueAttributeAsync(typeName, body, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.UpdateByUniqueAttributeAsync(typeName, body, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -1786,9 +1786,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteByUniqueAttribute(string typeName, string attribute, RequestContext context)
         {
@@ -1796,9 +1796,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
+                using HttpMessage message = this.CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1832,19 +1832,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attribute, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteByUniqueAttributeAsync(string typeName, string attribute, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
+                using HttpMessage message = this.CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1873,15 +1873,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> DeleteByUniqueAttribute(string typeName, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> DeleteByUniqueAttribute(string typeName, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = DeleteByUniqueAttribute(typeName, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.DeleteByUniqueAttribute(typeName, attribute, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -1903,15 +1903,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> DeleteByUniqueAttributeAsync(string typeName, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> DeleteByUniqueAttributeAsync(string typeName, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = await DeleteByUniqueAttributeAsync(typeName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.DeleteByUniqueAttributeAsync(typeName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary>
@@ -1930,9 +1930,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute, RequestContext context)
         {
@@ -1940,10 +1940,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
+                using HttpMessage message = this.CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1969,20 +1969,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute, RequestContext context)
+        public virtual async Task<global::Azure.Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-                using HttpMessage message = CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
+                using HttpMessage message = this.CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2003,15 +2003,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            return RemoveClassificationByUniqueAttribute(typeName, classificationName, attribute, cancellationToken.ToRequestContext());
+            return this.RemoveClassificationByUniqueAttribute(typeName, classificationName, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2025,15 +2025,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            return await RemoveClassificationByUniqueAttributeAsync(typeName, classificationName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RemoveClassificationByUniqueAttributeAsync(typeName, classificationName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2051,9 +2051,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -2061,10 +2061,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2089,20 +2089,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2120,16 +2120,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddClassificationsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.AddClassificationsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Add classification to the entity identified by its type and unique attributes. </summary>
@@ -2140,16 +2140,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddClassificationsByUniqueAttributeAsync(string typeName, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddClassificationsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.AddClassificationsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2167,9 +2167,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -2177,10 +2177,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2205,20 +2205,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2236,16 +2236,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return UpdateClassificationsUniqueByAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.UpdateClassificationsUniqueByAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Update classification on an entity identified by its type and unique attributes. </summary>
@@ -2256,16 +2256,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await UpdateClassificationsUniqueByAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.UpdateClassificationsUniqueByAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2278,8 +2278,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BatchSetClassifications(RequestContent content, RequestContext context = null)
         {
@@ -2287,9 +2287,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
+                using HttpMessage message = this.CreateBatchSetClassificationsRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2309,18 +2309,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchSetClassificationsAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> BatchSetClassificationsAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
+                using HttpMessage message = this.CreateBatchSetClassificationsRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2333,51 +2333,51 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = BatchSetClassifications(body, cancellationToken.ToRequestContext());
+            Response result = this.BatchSetClassifications(body, cancellationToken.ToRequestContext());
             List<string> value = new List<string>();
             BinaryData data = result.Content;
             Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
             jsonReader.Read();
             while (jsonReader.Read())
             {
-                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                if ((jsonReader.TokenType == global::System.Text.Json.JsonTokenType.EndArray))
                 {
                     break;
                 }
                 value.Add(jsonReader.GetString());
             }
-            return Response.FromValue((IReadOnlyList<string>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<string>)value), result);
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await BatchSetClassificationsAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await this.BatchSetClassificationsAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             List<string> value = new List<string>();
             BinaryData data = result.Content;
             Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
             jsonReader.Read();
             while (jsonReader.Read())
             {
-                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                if ((jsonReader.TokenType == global::System.Text.Json.JsonTokenType.EndArray))
                 {
                     break;
                 }
                 value.Add(jsonReader.GetString());
             }
-            return Response.FromValue((IReadOnlyList<string>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<string>)value), result);
         }
 
         /// <summary>
@@ -2410,9 +2410,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BatchGetByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
@@ -2420,9 +2420,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
+                using HttpMessage message = this.CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2462,19 +2462,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
+        public virtual async Task<global::Azure.Response> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
+                using HttpMessage message = this.CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2509,15 +2509,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = BatchGetByUniqueAttributes(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
+            Response result = this.BatchGetByUniqueAttributes(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasEntitiesWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -2545,15 +2545,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = await BatchGetByUniqueAttributesAsync(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
+            Response result = await this.BatchGetByUniqueAttributesAsync(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasEntitiesWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -2566,9 +2566,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetHeader(string guid, RequestContext context)
         {
@@ -2576,9 +2576,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                using HttpMessage message = this.CreateGetHeaderRequest(guid, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2598,19 +2598,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetHeaderAsync(string guid, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                using HttpMessage message = this.CreateGetHeaderRequest(guid, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2623,29 +2623,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityHeader> GetHeader(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GetHeader(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetHeader(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityHeader)result, result);
+            Response result = this.GetHeader(guid, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasEntityHeader)result), result);
         }
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntityHeader>> GetHeaderAsync(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> GetHeaderAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetHeaderAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityHeader)result, result);
+            Response result = await this.GetHeaderAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasEntityHeader)result), result);
         }
 
         /// <summary>
@@ -2659,9 +2659,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
         {
@@ -2669,10 +2669,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
+                using HttpMessage message = this.CreateRemoveBusinessMetadataRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2693,20 +2693,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
+                using HttpMessage message = this.CreateRemoveBusinessMetadataRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2720,32 +2720,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response RemoveBusinessMetadata(string guid, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return RemoveBusinessMetadata(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return this.RemoveBusinessMetadata(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveBusinessMetadataAsync(string guid, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await RemoveBusinessMetadataAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return await this.RemoveBusinessMetadataAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2763,9 +2763,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// default is false.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? overwrite = default, RequestContext context = null)
         {
@@ -2773,10 +2773,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
+                using HttpMessage message = this.CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2801,20 +2801,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// default is false.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? overwrite = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? overwrite = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
+                using HttpMessage message = this.CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2832,16 +2832,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// default is false.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddOrUpdateBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return AddOrUpdateBusinessMetadata(guid, content, overwrite, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return this.AddOrUpdateBusinessMetadata(guid, content, overwrite, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Add business metadata to an entity. </summary>
@@ -2852,16 +2852,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// default is false.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddOrUpdateBusinessMetadataAsync(string guid, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await AddOrUpdateBusinessMetadataAsync(guid, content, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return await this.AddOrUpdateBusinessMetadataAsync(guid, content, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2876,9 +2876,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveBusinessMetadataAttributes(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
         {
@@ -2886,11 +2886,11 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
+                using HttpMessage message = this.CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2912,21 +2912,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
+                using HttpMessage message = this.CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2941,17 +2941,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response RemoveBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, global::System.BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return RemoveBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return this.RemoveBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete business metadata attributes from an entity. </summary>
@@ -2959,17 +2959,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, global::System.BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await RemoveBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return await this.RemoveBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2984,9 +2984,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddOrUpdateBusinessMetadataAttributes(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
         {
@@ -2994,11 +2994,11 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
+                using HttpMessage message = this.CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3020,21 +3020,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
+                using HttpMessage message = this.CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3049,17 +3049,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddOrUpdateBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, global::System.BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return AddOrUpdateBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return this.AddOrUpdateBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Add or update business metadata attributes. </summary>
@@ -3067,17 +3067,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, global::System.BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await AddOrUpdateBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            return await this.AddOrUpdateBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3089,7 +3089,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetBusinessMetadataTemplate(RequestContext context)
         {
@@ -3097,7 +3097,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
+                using HttpMessage message = this.CreateGetBusinessMetadataTemplateRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3116,15 +3116,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBusinessMetadataTemplateAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetBusinessMetadataTemplateAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetBusinessMetadataTemplate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
+                using HttpMessage message = this.CreateGetBusinessMetadataTemplateRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3136,20 +3136,20 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetBusinessMetadataTemplate(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetBusinessMetadataTemplate(CancellationToken cancellationToken = default)
         {
-            Response result = GetBusinessMetadataTemplate(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetBusinessMetadataTemplate(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetBusinessMetadataTemplateAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetBusinessMetadataTemplateAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetBusinessMetadataTemplateAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetBusinessMetadataTemplateAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -3163,8 +3163,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
         {
@@ -3172,9 +3172,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
+                using HttpMessage message = this.CreateImportBusinessMetadataRequest(content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3195,18 +3195,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
+                using HttpMessage message = this.CreateImportBusinessMetadataRequest(content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3227,9 +3227,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveLabels(string guid, RequestContent content, RequestContext context = null)
         {
@@ -3237,9 +3237,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateRemoveLabelsRequest(guid, content, context);
+                using HttpMessage message = this.CreateRemoveLabelsRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3260,19 +3260,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateRemoveLabelsRequest(guid, content, context);
+                using HttpMessage message = this.CreateRemoveLabelsRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3286,30 +3286,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RemoveLabels(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return RemoveLabels(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.RemoveLabels(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await RemoveLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.RemoveLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3323,9 +3323,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
@@ -3333,9 +3333,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                using HttpMessage message = this.CreateSetLabelsRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3356,19 +3356,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                using HttpMessage message = this.CreateSetLabelsRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3382,30 +3382,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be set to the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetLabels(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return SetLabels(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.SetLabels(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Set labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be set to the entity. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> SetLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await SetLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.SetLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3419,9 +3419,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
@@ -3429,9 +3429,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                using HttpMessage message = this.CreateAddLabelRequest(guid, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3452,19 +3452,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                using HttpMessage message = this.CreateAddLabelRequest(guid, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3478,30 +3478,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be added. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddLabel(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddLabel(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.AddLabel(guid, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Add given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be added. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddLabelAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddLabelAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.AddLabelAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3529,9 +3529,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -3539,9 +3539,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3576,19 +3576,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3618,15 +3618,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return RemoveLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.RemoveLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3649,15 +3649,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3685,9 +3685,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -3695,9 +3695,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3732,19 +3732,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3774,15 +3774,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return SetLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.SetLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3805,15 +3805,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await SetLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.SetLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3841,9 +3841,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
@@ -3851,9 +3851,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3888,19 +3888,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                using HttpMessage message = this.CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3930,15 +3930,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.AddLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3961,15 +3961,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.AddLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3983,9 +3983,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response MoveEntitiesToCollection(string collectionId, RequestContent content, RequestContext context = null)
         {
@@ -3993,10 +3993,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
+                using HttpMessage message = this.CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4017,20 +4017,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> MoveEntitiesToCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
+                using HttpMessage message = this.CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4044,32 +4044,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = MoveEntitiesToCollection(collectionId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = this.MoveEntitiesToCollection(collectionId, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await MoveEntitiesToCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            Response result = await this.MoveEntitiesToCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EntityMutationResult)result), result);
         }
     }
 }

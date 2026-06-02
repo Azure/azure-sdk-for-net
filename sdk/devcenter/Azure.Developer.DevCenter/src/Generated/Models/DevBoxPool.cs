@@ -15,9 +15,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxPool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxPool"/>. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
@@ -29,7 +29,7 @@ namespace Azure.Developer.DevCenter.Models
             HealthStatus = healthStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxPool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;

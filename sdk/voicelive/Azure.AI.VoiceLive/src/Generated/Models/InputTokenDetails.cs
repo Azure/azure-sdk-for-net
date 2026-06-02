@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class InputTokenDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InputTokenDetails"/>. </summary>
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.VoiceLive
             CachedTokensDetails = cachedTokensDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InputTokenDetails"/>. </summary>
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
         /// <param name="imageTokens"> Number of image tokens used in the input. </param>
         /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, int imageTokens, CachedTokenDetails cachedTokensDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, int imageTokens, CachedTokenDetails cachedTokensDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CachedTokens = cachedTokens;
             TextTokens = textTokens;

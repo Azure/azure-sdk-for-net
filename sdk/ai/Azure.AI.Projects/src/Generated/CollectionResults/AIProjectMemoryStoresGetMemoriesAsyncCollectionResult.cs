@@ -62,13 +62,13 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override async IAsyncEnumerable<global::System.ClientModel.ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetMemoriesRequest(_name, _content, _kind, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
+                ClientResult result = await this.GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextToken = ((AgentsPagedResultMemoryItem)result).LastId;
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Memory
             string nextPage = ((AgentsPagedResultMemoryItem)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
+                return global::System.ClientModel.ContinuationToken.FromBytes(global::System.BinaryData.FromString(nextPage));
             }
             else
             {
@@ -98,9 +98,9 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        private async ValueTask<global::System.ClientModel.ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            return global::System.ClientModel.ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

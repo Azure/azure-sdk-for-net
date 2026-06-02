@@ -13,17 +13,17 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class DataSourceCredentials
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DataSourceCredentials"/>. </summary>
         public DataSourceCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DataSourceCredentials"/>. </summary>
         /// <param name="connectionString"> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourceCredentials(string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataSourceCredentials(string connectionString, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,30 +14,30 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationExportedUtterance
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedUtterance"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance"/>. </summary>
         /// <param name="text"> The utterance text. </param>
         /// <param name="intent"> The intent of the utterance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="intent"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> or <paramref name="intent"/> is null. </exception>
         public ConversationExportedUtterance(string text, string intent)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(intent, nameof(intent));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(intent, nameof(intent));
 
-            Entities = new ChangeTrackingList<ExportedUtteranceEntityLabel>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel>();
             Text = text;
             Intent = intent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedUtterance"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance"/>. </summary>
         /// <param name="entities"> Represents the entity labels of the utterance. </param>
         /// <param name="text"> The utterance text. </param>
         /// <param name="language"> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedUtterance(IList<ExportedUtteranceEntityLabel> entities, string text, string language, string intent, DatasetType? dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationExportedUtterance(IList<global::Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel> entities, string text, string language, string intent, DatasetType? dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             Text = text;
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the entity labels of the utterance. </summary>
-        public IList<ExportedUtteranceEntityLabel> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel> Entities { get; }
 
         /// <summary> The utterance text. </summary>
         public string Text { get; }

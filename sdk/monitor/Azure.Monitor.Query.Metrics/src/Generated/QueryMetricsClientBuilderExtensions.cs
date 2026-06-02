@@ -12,27 +12,27 @@ using Azure.Monitor.Query.Metrics;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class QueryMetricsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="MetricsClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="MetricsClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<MetricsClient, MetricsClientOptions> AddMetricsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<global::Azure.Monitor.Query.Metrics.MetricsClient, global::Azure.Monitor.Query.Metrics.MetricsClientOptions> AddMetricsClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Monitor.Query.Metrics.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<MetricsClient, MetricsClientOptions>((options, credential) => new MetricsClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="MetricsClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="MetricsClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<MetricsClient, MetricsClientOptions> AddMetricsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Monitor.Query.Metrics.MetricsClient, global::Azure.Monitor.Query.Metrics.MetricsClientOptions> AddMetricsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<MetricsClient, MetricsClientOptions>(configuration);

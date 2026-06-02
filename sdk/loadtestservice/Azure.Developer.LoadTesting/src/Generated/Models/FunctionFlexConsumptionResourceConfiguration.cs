@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class FunctionFlexConsumptionResourceConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FunctionFlexConsumptionResourceConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration"/>. </summary>
         /// <param name="instanceMemoryMB"> Memory size of the instance. Supported values are 2048, 4096. </param>
         public FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB)
         {
             InstanceMemoryMB = instanceMemoryMB;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionFlexConsumptionResourceConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration"/>. </summary>
         /// <param name="instanceMemoryMB"> Memory size of the instance. Supported values are 2048, 4096. </param>
         /// <param name="httpConcurrency"> HTTP Concurrency for the function app. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB, long? httpConcurrency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB, long? httpConcurrency, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InstanceMemoryMB = instanceMemoryMB;
             HttpConcurrency = httpConcurrency;

@@ -14,21 +14,21 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a set of queue selectors that will be attached if the given condition resolves to true. </summary>
     public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<RouterQueueSelector> queueSelectors) : base(QueueSelectorAttachmentKind.Conditional)
+        internal ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<global::Azure.Communication.JobRouter.RouterQueueSelector> queueSelectors) : base(global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind.Conditional)
         {
             Condition = condition;
             QueueSelectors = queueSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind, additionalBinaryDataProperties)
+        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RouterRule condition, IList<global::Azure.Communication.JobRouter.RouterQueueSelector> queueSelectors) : base(kind, additionalBinaryDataProperties)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;

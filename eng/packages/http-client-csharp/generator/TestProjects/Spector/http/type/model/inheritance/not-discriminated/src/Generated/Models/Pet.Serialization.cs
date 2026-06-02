@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public partial class Pet : IJsonModel<Pet>
+    public partial class Pet : IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>
     {
         internal Pet() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Pet IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Pet IJsonModel<Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Pet IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

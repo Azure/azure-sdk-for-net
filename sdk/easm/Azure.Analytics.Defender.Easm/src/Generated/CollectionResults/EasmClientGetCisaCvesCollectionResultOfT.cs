@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetCisaCvesCollectionResultOfT : Pageable<CisaCveResult>
+    internal partial class EasmClientGetCisaCvesCollectionResultOfT : Pageable<global::Azure.Analytics.Defender.Easm.CisaCveResult>
     {
         private readonly EasmClient _client;
         private readonly RequestContext _context;
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EasmClientGetCisaCvesCollectionResultOfT(EasmClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EasmClientGetCisaCvesCollectionResultOfT(EasmClient client, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
@@ -34,20 +34,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EasmClientGetCisaCvesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CisaCveResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Analytics.Defender.Easm.CisaCveResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedCisaCveResult result = (PagedCisaCveResult)response;
-                yield return Page<CisaCveResult>.FromValues((IReadOnlyList<CisaCveResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedCisaCveResult result = ((PagedCisaCveResult)response);
+                yield return global::Azure.Page<CisaCveResult>.FromValues(((IReadOnlyList<global::Azure.Analytics.Defender.Easm.CisaCveResult>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -57,9 +57,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCisaCvesRequest(nextLink, _context) : _client.CreateGetCisaCvesRequest(_context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetCisaCvesRequest(nextLink, _context) : _client.CreateGetCisaCvesRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

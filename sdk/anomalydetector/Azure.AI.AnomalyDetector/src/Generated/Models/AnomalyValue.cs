@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
         /// Indicates the significance of the anomaly. The higher the severity, the more
@@ -28,10 +28,10 @@ namespace Azure.AI.AnomalyDetector
             IsAnomaly = isAnomaly;
             Severity = severity;
             Score = score;
-            Interpretation = new ChangeTrackingList<AnomalyInterpretation>();
+            Interpretation = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyInterpretation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
         /// Indicates the significance of the anomaly. The higher the severity, the more
@@ -40,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="score"> Raw anomaly score of severity, to help indicate the degree of abnormality. </param>
         /// <param name="interpretation"> Interpretation of this anomalous time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyValue(bool isAnomaly, float severity, float score, IList<AnomalyInterpretation> interpretation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyValue(bool isAnomaly, float severity, float score, IList<global::Azure.AI.AnomalyDetector.AnomalyInterpretation> interpretation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IsAnomaly = isAnomaly;
             Severity = severity;
@@ -62,6 +62,6 @@ namespace Azure.AI.AnomalyDetector
         public float Score { get; }
 
         /// <summary> Interpretation of this anomalous time stamp. </summary>
-        public IList<AnomalyInterpretation> Interpretation { get; }
+        public IList<global::Azure.AI.AnomalyDetector.AnomalyInterpretation> Interpretation { get; }
     }
 }

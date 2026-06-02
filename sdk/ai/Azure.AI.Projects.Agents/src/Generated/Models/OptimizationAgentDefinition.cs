@@ -12,16 +12,16 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationAgentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationAgentDefinition"/>. </summary>
         internal OptimizationAgentDefinition()
         {
-            Skills = new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            Tools = new ChangeTrackingList<IDictionary<string, BinaryData>>();
+            Skills = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            Tools = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationAgentDefinition"/>. </summary>
         /// <param name="agentName"> Agent name. </param>
         /// <param name="agentVersion"> Agent version. </param>
         /// <param name="model"> Model deployment name. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> Agent skills. </param>
         /// <param name="tools"> Agent tools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationAgentDefinition(string agentName, string agentVersion, string model, string systemPrompt, IList<IDictionary<string, BinaryData>> skills, IList<IDictionary<string, BinaryData>> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationAgentDefinition(string agentName, string agentVersion, string model, string systemPrompt, IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> skills, IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> tools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;
@@ -54,8 +54,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Agent skills.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -78,12 +78,12 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IDictionary<string, BinaryData>> Skills { get; }
+        public IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Skills { get; }
 
         /// <summary>
         /// Agent tools.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -106,6 +106,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IDictionary<string, BinaryData>> Tools { get; }
+        public IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Tools { get; }
     }
 }

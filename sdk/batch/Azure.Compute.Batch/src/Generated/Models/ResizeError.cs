@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class ResizeError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResizeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ResizeError"/>. </summary>
         internal ResizeError()
         {
-            Values = new ChangeTrackingList<BatchNameValuePair>();
+            Values = new ChangeTrackingList<global::Azure.Compute.Batch.BatchNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResizeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ResizeError"/>. </summary>
         /// <param name="code"> An identifier for the Pool resize error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the Pool resize error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the Pool resize error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResizeError(string code, string message, IList<BatchNameValuePair> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResizeError(string code, string message, IList<global::Azure.Compute.Batch.BatchNameValuePair> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> A list of additional error details related to the Pool resize error. </summary>
-        public IList<BatchNameValuePair> Values { get; }
+        public IList<global::Azure.Compute.Batch.BatchNameValuePair> Values { get; }
     }
 }

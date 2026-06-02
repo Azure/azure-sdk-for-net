@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultSetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }

@@ -14,9 +14,9 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for datetime entity instances. </summary>
-    public partial class DateTimeResolution : ResolutionBase, IJsonModel<DateTimeResolution>
+    public partial class DateTimeResolution : ResolutionBase, IJsonModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>
     {
-        /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeResolution"/> for deserialization. </summary>
         internal DateTimeResolution()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDateTimeResolution(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.DateTimeResolution.DeserializeDateTimeResolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateTimeResolution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.DateTimeResolution)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DateTimeResolution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.DateTimeResolution)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DateTimeResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DateTimeResolution IPersistableModel<DateTimeResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateTimeResolution)PersistableModelCreateCore(data, options);
+        DateTimeResolution IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DateTimeResolution)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DateTimeResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DateTimeResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,10 +74,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DateTimeResolution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.DateTimeResolution)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("timex"u8);
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStringValue(DateTimeSubKind.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Modifier))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(Modifier))
             {
                 writer.WritePropertyName("modifier"u8);
                 writer.WriteStringValue(Modifier.Value.ToString());
@@ -95,31 +95,31 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DateTimeResolution IJsonModel<DateTimeResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DateTimeResolution)JsonModelCreateCore(ref reader, options);
+        DateTimeResolution IJsonModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DateTimeResolution)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResolutionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DateTimeResolution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.DateTimeResolution)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDateTimeResolution(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.DateTimeResolution.DeserializeDateTimeResolution(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DateTimeResolution DeserializeDateTimeResolution(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ResolutionKind resolutionKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string timex = default;
             DateTimeSubKind dateTimeSubKind = default;
             string value = default;
@@ -148,16 +148,16 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("modifier"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     modifier = new TemporalModifier(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DateTimeResolution(

@@ -13,13 +13,13 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedLocation. </summary>
     public partial class ObservedLocation : ObservedValue
     {
-        /// <summary> Initializes a new instance of <see cref="ObservedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocation"/>. </summary>
         internal ObservedLocation()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocation"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        internal ObservedLocation(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedLocationDetails value, IList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
+        internal ObservedLocation(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ObservedLocationDetails value, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             Value = value;
             Sources = sources;
@@ -37,6 +37,6 @@ namespace Azure.Analytics.Defender.Easm
         public ObservedLocationDetails Value { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
     }
 }

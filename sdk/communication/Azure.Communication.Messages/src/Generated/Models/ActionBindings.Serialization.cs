@@ -14,12 +14,12 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Binding actions to the interactive message.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppListActionBindings"/>, <see cref="WhatsAppButtonActionBindings"/>, and <see cref="WhatsAppUrlActionBindings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings"/>, <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownActionBindings))]
-    public abstract partial class ActionBindings : IJsonModel<ActionBindings>
+    [PersistableModelProxyAttribute(typeof(UnknownActionBindings))]
+    public abstract partial class ActionBindings : IJsonModel<global::Azure.Communication.Messages.ActionBindings>
     {
-        /// <summary> Initializes a new instance of <see cref="ActionBindings"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionBindings"/> for deserialization. </summary>
         internal ActionBindings()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ActionBindings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionBindings(document.RootElement, options);
+                        return global::Azure.Communication.Messages.ActionBindings.DeserializeActionBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionBindings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ActionBindings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionBindings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ActionBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionBindings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.ActionBindings>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionBindings IPersistableModel<ActionBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActionBindings IPersistableModel<global::Azure.Communication.Messages.ActionBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.ActionBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.ActionBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,14 +77,14 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ActionBindings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ActionBindings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.Communication.Messages
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,26 +103,26 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionBindings IJsonModel<ActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActionBindings IJsonModel<global::Azure.Communication.Messages.ActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ActionBindings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ActionBindings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ActionBindings)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionBindings(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.ActionBindings.DeserializeActionBindings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ActionBindings DeserializeActionBindings(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -131,14 +131,14 @@ namespace Azure.Communication.Messages
                 switch (discriminator.GetString())
                 {
                     case "whatsAppListAction":
-                        return WhatsAppListActionBindings.DeserializeWhatsAppListActionBindings(element, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings.DeserializeWhatsAppListActionBindings(element, options);
                     case "whatsAppButtonAction":
-                        return WhatsAppButtonActionBindings.DeserializeWhatsAppButtonActionBindings(element, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings.DeserializeWhatsAppButtonActionBindings(element, options);
                     case "whatsAppUrlAction":
-                        return WhatsAppUrlActionBindings.DeserializeWhatsAppUrlActionBindings(element, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings.DeserializeWhatsAppUrlActionBindings(element, options);
                 }
             }
-            return UnknownActionBindings.DeserializeUnknownActionBindings(element, options);
+            return global::Azure.Communication.Messages.UnknownActionBindings.DeserializeUnknownActionBindings(element, options);
         }
     }
 }

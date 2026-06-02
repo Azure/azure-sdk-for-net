@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownStructuredToolOutput : StructuredToolOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStructuredToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownStructuredToolOutput"/>. </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStructuredToolOutput(string @type, string toolCallId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", toolCallId, additionalBinaryDataProperties)
+        internal UnknownStructuredToolOutput(string @type, string toolCallId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), toolCallId, additionalBinaryDataProperties)
         {
         }
     }

@@ -11,19 +11,19 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesFunctionToolParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResponsesFunctionToolParam(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="shouldDeferLoading"> Whether this function should be deferred and discovered via tool search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? isStrict, string @type, bool? shouldDeferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? isStrict, string @type, bool? shouldDeferLoading, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

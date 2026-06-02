@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeRetrievalReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeRetrievalReasoningEffort"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.UnknownKnowledgeRetrievalReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeRetrievalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeRetrievalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

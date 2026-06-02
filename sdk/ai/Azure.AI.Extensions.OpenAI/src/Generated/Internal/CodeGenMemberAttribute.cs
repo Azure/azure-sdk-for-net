@@ -6,7 +6,7 @@ using System;
 
 namespace Microsoft.TypeSpec.Generator.Customizations
 {
-    [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
+    [AttributeUsageAttribute((global::System.AttributeTargets.Property | global::System.AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute
     {
         /// <param name="originalName"> The original name of the member. </param>

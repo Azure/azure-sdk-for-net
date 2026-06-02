@@ -14,21 +14,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiCenterApiDefinitionAddedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiDefinitionAddedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
         internal ApiCenterApiDefinitionAddedEventData(string title)
         {
             Title = title;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiDefinitionAddedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
         /// <param name="description"> API definition description. </param>
         /// <param name="specification"> API definition specification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterApiDefinitionAddedEventData(string title, string description, ApiCenterApiSpecification specification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterApiDefinitionAddedEventData(string title, string description, ApiCenterApiSpecification specification, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;

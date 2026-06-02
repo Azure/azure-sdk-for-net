@@ -14,19 +14,19 @@ namespace Azure.AI.VoiceLive
     public partial class AudioNoiseReduction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AudioNoiseReduction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioNoiseReduction"/>. </summary>
         /// <param name="type"> The type of noise reduction model. </param>
         public AudioNoiseReduction(AudioNoiseReductionType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioNoiseReduction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioNoiseReduction"/>. </summary>
         /// <param name="type"> The type of noise reduction model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioNoiseReduction(AudioNoiseReductionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioNoiseReduction(AudioNoiseReductionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

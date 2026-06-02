@@ -15,9 +15,9 @@ using Azure;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the state of a training job. </summary>
-    public partial class ConversationAuthoringTrainingState : IJsonModel<ConversationAuthoringTrainingState>
+    public partial class ConversationAuthoringTrainingState : IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingState"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState"/> for deserialization. </summary>
         internal ConversationAuthoringTrainingState()
         {
         }
@@ -26,55 +26,55 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationAuthoringTrainingState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationAuthoringTrainingState(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState.DeserializeConversationAuthoringTrainingState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringTrainingState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringTrainingState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationAuthoringTrainingState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationAuthoringTrainingState IPersistableModel<ConversationAuthoringTrainingState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationAuthoringTrainingState IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationAuthoringTrainingState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConversationAuthoringTrainingState"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState"/> from. </param>
         public static explicit operator ConversationAuthoringTrainingState(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationAuthoringTrainingState(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState.DeserializeConversationAuthoringTrainingState(document.RootElement, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationAuthoringTrainingState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -82,12 +82,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringTrainingState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
@@ -96,46 +96,46 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
-            if (Optional.IsDefined(ExpiresOn))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Warnings))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(Warnings))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
                 foreach (ResponseError item in Warnings)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    ((IJsonModel<global::Azure.ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (ResponseError item in Errors)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    ((IJsonModel<global::Azure.ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<ConversationAuthoringTrainingJobResult>(Result, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -143,9 +143,9 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -154,26 +154,26 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationAuthoringTrainingState IJsonModel<ConversationAuthoringTrainingState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationAuthoringTrainingState IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationAuthoringTrainingState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringTrainingState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationAuthoringTrainingState(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState.DeserializeConversationAuthoringTrainingState(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationAuthoringTrainingState DeserializeConversationAuthoringTrainingState(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -182,10 +182,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             DateTimeOffset lastUpdatedOn = default;
             DateTimeOffset? expiresOn = default;
             ConversationAuthoringOperationStatus status = default;
-            IList<ResponseError> warnings = default;
-            IList<ResponseError> errors = default;
+            IList<global::Azure.ResponseError> warnings = default;
+            IList<global::Azure.ResponseError> errors = default;
             ConversationAuthoringTrainingJobResult result = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobId"u8))
@@ -205,7 +205,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -219,20 +219,20 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("warnings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<global::Azure.ResponseError> array = new List<global::Azure.ResponseError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureAILanguageConversationsAuthoringContext.Default));
+                            array.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(item.GetRawText())), options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default));
                         }
                     }
                     warnings = array;
@@ -240,20 +240,20 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("errors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<global::Azure.ResponseError> array = new List<global::Azure.ResponseError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureAILanguageConversationsAuthoringContext.Default));
+                            array.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(item.GetRawText())), options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default));
                         }
                     }
                     errors = array;
@@ -261,12 +261,12 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("result"u8))
                 {
-                    result = ConversationAuthoringTrainingJobResult.DeserializeConversationAuthoringTrainingJobResult(prop.Value, options);
+                    result = global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult.DeserializeConversationAuthoringTrainingJobResult(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConversationAuthoringTrainingState(
@@ -275,8 +275,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 lastUpdatedOn,
                 expiresOn,
                 status,
-                warnings ?? new ChangeTrackingList<ResponseError>(),
-                errors ?? new ChangeTrackingList<ResponseError>(),
+                (warnings ?? new ChangeTrackingList<global::Azure.ResponseError>()),
+                (errors ?? new ChangeTrackingList<global::Azure.ResponseError>()),
                 result,
                 additionalBinaryDataProperties);
         }

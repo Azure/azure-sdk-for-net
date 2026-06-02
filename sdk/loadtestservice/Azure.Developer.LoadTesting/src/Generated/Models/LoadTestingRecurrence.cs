@@ -12,25 +12,25 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Recurrence model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.DailyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.HourlyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="Azure.Developer.LoadTesting.RecurrenceWithCron"/>, and <see cref="Azure.Developer.LoadTesting.WeeklyRecurrence"/>.
     /// </summary>
     public abstract partial class LoadTestingRecurrence
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         private protected LoadTestingRecurrence(Frequency frequency)
         {
             Frequency = frequency;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             RecurrenceEnd = recurrenceEnd;

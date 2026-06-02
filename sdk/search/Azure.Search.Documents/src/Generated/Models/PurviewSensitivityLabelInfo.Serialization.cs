@@ -14,54 +14,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Information about the sensitivity label applied to a document. </summary>
-    public partial class PurviewSensitivityLabelInfo : IJsonModel<PurviewSensitivityLabelInfo>
+    public partial class PurviewSensitivityLabelInfo : IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PurviewSensitivityLabelInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePurviewSensitivityLabelInfo(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewSensitivityLabelInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewSensitivityLabelInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PurviewSensitivityLabelInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewSensitivityLabelInfo IPersistableModel<PurviewSensitivityLabelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PurviewSensitivityLabelInfo IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PurviewSensitivityLabelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PurviewSensitivityLabelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,42 +69,42 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PurviewSensitivityLabelInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SensitivityLabelId))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SensitivityLabelId))
             {
                 writer.WritePropertyName("sensitivityLabelId"u8);
                 writer.WriteStringValue(SensitivityLabelId);
             }
-            if (Optional.IsDefined(ToolTip))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ToolTip))
             {
                 writer.WritePropertyName("toolTip"u8);
                 writer.WriteStringValue(ToolTip);
             }
-            if (Optional.IsDefined(Priority))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Color))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Color))
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
             }
-            if (Optional.IsDefined(IsEncrypted))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -112,9 +112,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -123,26 +123,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewSensitivityLabelInfo IJsonModel<PurviewSensitivityLabelInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PurviewSensitivityLabelInfo IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PurviewSensitivityLabelInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PurviewSensitivityLabelInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePurviewSensitivityLabelInfo(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PurviewSensitivityLabelInfo DeserializePurviewSensitivityLabelInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? priority = default;
             string color = default;
             bool? isEncrypted = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("displayName"u8))
@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("priority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -186,16 +186,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("isEncrypted"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     isEncrypted = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PurviewSensitivityLabelInfo(

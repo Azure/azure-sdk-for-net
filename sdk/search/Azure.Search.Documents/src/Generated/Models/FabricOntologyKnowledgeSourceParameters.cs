@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FabricOntologyKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricOntologyKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FabricOntologyKnowledgeSourceParameters"/>. </summary>
         /// <param name="workspaceId"> The Fabric workspace ID containing the ontology. </param>
         /// <param name="ontologyId"> The ID of the ontology to use from the Fabric workspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="ontologyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="ontologyId"/> is null. </exception>
         public FabricOntologyKnowledgeSourceParameters(string workspaceId, string ontologyId)
         {
-            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(ontologyId, nameof(ontologyId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(ontologyId, nameof(ontologyId));
 
             WorkspaceId = workspaceId;
             OntologyId = ontologyId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricOntologyKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FabricOntologyKnowledgeSourceParameters"/>. </summary>
         /// <param name="workspaceId"> The Fabric workspace ID containing the ontology. </param>
         /// <param name="ontologyId"> The ID of the ontology to use from the Fabric workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricOntologyKnowledgeSourceParameters(string workspaceId, string ontologyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricOntologyKnowledgeSourceParameters(string workspaceId, string ontologyId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             OntologyId = ontologyId;

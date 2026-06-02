@@ -18,17 +18,17 @@ namespace Azure.Compute.Batch
     public partial class BatchNodePlacementConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodePlacementConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodePlacementConfiguration"/>. </summary>
         public BatchNodePlacementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodePlacementConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodePlacementConfiguration"/>. </summary>
         /// <param name="policy"> Node placement Policy type on Batch Pools. Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodePlacementConfiguration(BatchNodePlacementPolicyType? policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodePlacementConfiguration(BatchNodePlacementPolicyType? policy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Policy = policy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -13,28 +13,28 @@ using Azure.Core;
 
 namespace _Type.Property.Optional
 {
-    public partial class IntLiteralProperty : IJsonModel<IntLiteralProperty>
+    public partial class IntLiteralProperty : IJsonModel<global::_Type.Property.Optional.IntLiteralProperty>
     {
         protected virtual IntLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<IntLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.Optional.IntLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        IntLiteralProperty IPersistableModel<IntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        IntLiteralProperty IPersistableModel<global::_Type.Property.Optional.IntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<IntLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.Optional.IntLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="intLiteralProperty"> The <see cref="IntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="intLiteralProperty"> The <see cref="global::_Type.Property.Optional.IntLiteralProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(IntLiteralProperty intLiteralProperty) => throw null;
 
         public static explicit operator IntLiteralProperty(Response response) => throw null;
 
-        void IJsonModel<IntLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.Optional.IntLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        IntLiteralProperty IJsonModel<IntLiteralProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        IntLiteralProperty IJsonModel<global::_Type.Property.Optional.IntLiteralProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual IntLiteralProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

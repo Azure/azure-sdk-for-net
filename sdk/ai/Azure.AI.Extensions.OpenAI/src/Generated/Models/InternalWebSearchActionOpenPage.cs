@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalWebSearchActionOpenPage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalWebSearchActionOpenPage"/>. </summary>
         public InternalWebSearchActionOpenPage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalWebSearchActionOpenPage"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="url"> The URL opened by the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalWebSearchActionOpenPage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalWebSearchActionOpenPage(string @type, global::System.Uri url, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;
@@ -32,6 +32,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; set; }
+        public global::System.Uri Url { get; set; }
     }
 }

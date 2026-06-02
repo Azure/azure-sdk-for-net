@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class EvaluationRulesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<EvaluationRule>
+    internal partial class EvaluationRulesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.EvaluationRule>
     {
         private readonly EvaluationRules _client;
         private readonly string _actionType;
@@ -35,17 +35,17 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override async IAsyncEnumerable<global::System.ClientModel.ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_actionType, _agentName, _enabled, _options);
-            Uri nextPageUri = null;
+            global::System.Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
+                ClientResult result = await this.GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextPageUri = ((PagedEvaluationRule)result).NextLink;
-                if (nextPageUri == null)
+                if ((nextPageUri == null))
                 {
                     yield break;
                 }
@@ -58,10 +58,10 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedEvaluationRule)page).NextLink;
-            if (nextPage != null)
+            global::System.Uri nextPage = ((PagedEvaluationRule)page).NextLink;
+            if ((nextPage != null))
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
+                return global::System.ClientModel.ContinuationToken.FromBytes(global::System.BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -72,20 +72,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<EvaluationRule> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<global::Azure.AI.Projects.Evaluation.EvaluationRule> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (EvaluationRule item in ((PagedEvaluationRule)page).Value)
             {
                 yield return item;
-                await Task.Yield();
+                await global::System.Threading.Tasks.Task.Yield();
             }
         }
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        private async ValueTask<global::System.ClientModel.ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            return global::System.ClientModel.ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

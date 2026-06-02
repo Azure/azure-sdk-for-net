@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class SummaryContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SummaryContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SummaryContext"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         internal SummaryContext(int offset, int length)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SummaryContext"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryContext(int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryContext(int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Length = length;

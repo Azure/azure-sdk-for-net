@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the assets of an orchestration project. </summary>
-    public partial class OrchestrationExportedProjectAsset : ConversationAuthoringExportedProjectAsset, IJsonModel<OrchestrationExportedProjectAsset>
+    public partial class OrchestrationExportedProjectAsset : ConversationAuthoringExportedProjectAsset, IJsonModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationAuthoringExportedProjectAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOrchestrationExportedProjectAsset(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset.DeserializeOrchestrationExportedProjectAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrchestrationExportedProjectAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OrchestrationExportedProjectAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OrchestrationExportedProjectAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OrchestrationExportedProjectAsset IPersistableModel<OrchestrationExportedProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (OrchestrationExportedProjectAsset)PersistableModelCreateCore(data, options);
+        OrchestrationExportedProjectAsset IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => ((OrchestrationExportedProjectAsset)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OrchestrationExportedProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OrchestrationExportedProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,29 +68,29 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OrchestrationExportedProjectAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Intents))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(Intents))
             {
                 writer.WritePropertyName("intents"u8);
                 writer.WriteStartArray();
                 foreach (OrchestrationExportedIntent item in Intents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<OrchestrationExportedIntent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Utterances))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(Utterances))
             {
                 writer.WritePropertyName("utterances"u8);
                 writer.WriteStartArray();
                 foreach (OrchestrationExportedUtterance item in Utterances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<OrchestrationExportedUtterance>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,33 +98,33 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OrchestrationExportedProjectAsset IJsonModel<OrchestrationExportedProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OrchestrationExportedProjectAsset)JsonModelCreateCore(ref reader, options);
+        OrchestrationExportedProjectAsset IJsonModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((OrchestrationExportedProjectAsset)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationAuthoringExportedProjectAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OrchestrationExportedProjectAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrchestrationExportedProjectAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset.DeserializeOrchestrationExportedProjectAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OrchestrationExportedProjectAsset DeserializeOrchestrationExportedProjectAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ConversationAuthoringProjectKind projectKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<OrchestrationExportedIntent> intents = default;
-            IList<OrchestrationExportedUtterance> utterances = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent> intents = default;
+            IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance> utterances = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("projectKind"u8))
@@ -134,38 +134,38 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("intents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<OrchestrationExportedIntent> array = new List<OrchestrationExportedIntent>();
+                    List<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent> array = new List<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OrchestrationExportedIntent.DeserializeOrchestrationExportedIntent(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent.DeserializeOrchestrationExportedIntent(item, options));
                     }
                     intents = array;
                     continue;
                 }
                 if (prop.NameEquals("utterances"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<OrchestrationExportedUtterance> array = new List<OrchestrationExportedUtterance>();
+                    List<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance> array = new List<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OrchestrationExportedUtterance.DeserializeOrchestrationExportedUtterance(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance.DeserializeOrchestrationExportedUtterance(item, options));
                     }
                     utterances = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OrchestrationExportedProjectAsset(projectKind, additionalBinaryDataProperties, intents ?? new ChangeTrackingList<OrchestrationExportedIntent>(), utterances ?? new ChangeTrackingList<OrchestrationExportedUtterance>());
+            return new OrchestrationExportedProjectAsset(projectKind, additionalBinaryDataProperties, (intents ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent>()), (utterances ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance>()));
         }
     }
 }

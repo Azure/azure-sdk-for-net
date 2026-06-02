@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsePromptCacheRetention value) => value switch
         {
-            ResponsePromptCacheRetention.InMemory => "in-memory",
-            ResponsePromptCacheRetention._24h => "24h",
+            global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention.InMemory => "in-memory",
+            global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention._24h => "24h",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsePromptCacheRetention value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsePromptCacheRetention ToResponsePromptCacheRetention(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in-memory"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in-memory"))
             {
-                return ResponsePromptCacheRetention.InMemory;
+                return global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention.InMemory;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "24h"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "24h"))
             {
-                return ResponsePromptCacheRetention._24h;
+                return global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention._24h;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsePromptCacheRetention value.");
         }

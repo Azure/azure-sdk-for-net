@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class NamedEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NamedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NamedEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NamedEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Category = category;

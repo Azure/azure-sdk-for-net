@@ -14,23 +14,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Language specific stemming filter. This token filter is implemented using Apache Lucene. See https://learn.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
     public partial class StemmerTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="StemmerTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StemmerTokenFilter(string name, StemmerTokenFilterLanguage language) : base("#Microsoft.Azure.Search.StemmerTokenFilter", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StemmerTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="language"> The language to use. </param>
-        internal StemmerTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, StemmerTokenFilterLanguage language) : base(odataType, name, additionalBinaryDataProperties)
+        internal StemmerTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, StemmerTokenFilterLanguage language) : base(odataType, name, additionalBinaryDataProperties)
         {
             Language = language;
         }

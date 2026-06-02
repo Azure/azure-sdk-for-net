@@ -12,8 +12,8 @@ namespace Encode.Duration._Property
 {
     public partial class FloatMillisecondsDurationArrayProperty
     {
-        public FloatMillisecondsDurationArrayProperty(IEnumerable<TimeSpan> value) => throw null;
+        public FloatMillisecondsDurationArrayProperty(IEnumerable<global::System.TimeSpan> value) => throw null;
 
-        public IList<TimeSpan> Value => throw null;
+        public IList<global::System.TimeSpan> Value => throw null;
     }
 }

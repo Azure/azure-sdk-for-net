@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
     public partial class BingCustomSearchToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolDefinition"/>. </summary>
         /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearch"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="bingCustomSearch"/> is null. </exception>
         public BingCustomSearchToolDefinition(BingCustomSearchToolParameters bingCustomSearch) : base("bing_custom_search")
         {
-            Argument.AssertNotNull(bingCustomSearch, nameof(bingCustomSearch));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(bingCustomSearch, nameof(bingCustomSearch));
 
             BingCustomSearch = bingCustomSearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
-        internal BingCustomSearchToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingCustomSearchToolParameters bingCustomSearch) : base(@type, additionalBinaryDataProperties)
+        internal BingCustomSearchToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BingCustomSearchToolParameters bingCustomSearch) : base(@type, additionalBinaryDataProperties)
         {
             BingCustomSearch = bingCustomSearch;
         }

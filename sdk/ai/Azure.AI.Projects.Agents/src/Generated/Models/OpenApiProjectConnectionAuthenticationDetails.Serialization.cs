@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
-    public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiProjectConnectionAuthenticationDetails>
+    public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails"/> for deserialization. </summary>
         internal OpenApiProjectConnectionAuthenticationDetails()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenApiProjectConnectionAuthenticationDetails(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails.DeserializeOpenApiProjectConnectionAuthenticationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiProjectConnectionAuthenticationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiProjectConnectionAuthenticationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiProjectConnectionAuthenticationDetails IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenApiProjectConnectionAuthenticationDetails)PersistableModelCreateCore(data, options);
+        OpenApiProjectConnectionAuthenticationDetails IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => ((OpenApiProjectConnectionAuthenticationDetails)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenApiProjectConnectionAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,43 +70,43 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OpenApiProjectConnectionAuthenticationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("security_scheme"u8);
-            writer.WriteObjectValue(SecurityScheme, options);
+            writer.WriteObjectValue<OpenApiProjectConnectionSecurityScheme>(SecurityScheme, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiProjectConnectionAuthenticationDetails IJsonModel<OpenApiProjectConnectionAuthenticationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OpenApiProjectConnectionAuthenticationDetails)JsonModelCreateCore(ref reader, options);
+        OpenApiProjectConnectionAuthenticationDetails IJsonModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((OpenApiProjectConnectionAuthenticationDetails)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override OpenApiAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OpenApiProjectConnectionAuthenticationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenApiProjectConnectionAuthenticationDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails.DeserializeOpenApiProjectConnectionAuthenticationDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OpenApiProjectConnectionAuthenticationDetails DeserializeOpenApiProjectConnectionAuthenticationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             OpenApiAuthType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             OpenApiProjectConnectionSecurityScheme securityScheme = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -117,12 +117,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("security_scheme"u8))
                 {
-                    securityScheme = OpenApiProjectConnectionSecurityScheme.DeserializeOpenApiProjectConnectionSecurityScheme(prop.Value, options);
+                    securityScheme = global::Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.DeserializeOpenApiProjectConnectionSecurityScheme(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OpenApiProjectConnectionAuthenticationDetails(@type, additionalBinaryDataProperties, securityScheme);

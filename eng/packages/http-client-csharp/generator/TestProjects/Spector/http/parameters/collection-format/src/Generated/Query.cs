@@ -18,40 +18,40 @@ namespace Parameters.CollectionFormat._Query
     {
         protected Query() => throw null;
 
-        internal Query(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Query(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Multi(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        public virtual Task<Response> MultiAsync(IEnumerable<string> colors, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> MultiAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
         public virtual Response Multi(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> MultiAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> MultiAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Ssv(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        public virtual Task<Response> SsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
         public virtual Response Ssv(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Pipes(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        public virtual Task<Response> PipesAsync(IEnumerable<string> colors, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PipesAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
         public virtual Response Pipes(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PipesAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PipesAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> CsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
     }
 }

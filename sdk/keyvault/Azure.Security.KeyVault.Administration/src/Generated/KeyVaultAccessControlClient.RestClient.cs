@@ -29,14 +29,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
             uri.AppendPath(roleDefinitionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -49,14 +49,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
             uri.AppendPath(roleDefinitionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -71,14 +71,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
             uri.AppendPath(roleDefinitionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -90,23 +90,23 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetRoleDefinitionsRequest(global::System.Uri nextPage, string scope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -115,16 +115,16 @@ namespace Azure.Security.KeyVault.Administration
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -137,14 +137,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
             uri.AppendPath(roleAssignmentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -157,14 +157,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
             uri.AppendPath(roleAssignmentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -179,14 +179,14 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
             uri.AppendPath(roleAssignmentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -198,23 +198,23 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetRoleAssignmentsRequest(global::System.Uri nextPage, string scope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -223,16 +223,16 @@ namespace Azure.Security.KeyVault.Administration
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

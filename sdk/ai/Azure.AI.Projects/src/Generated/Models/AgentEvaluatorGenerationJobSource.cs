@@ -10,23 +10,23 @@ namespace Azure.AI.Projects
     /// <summary> Agent source for evaluator generation jobs — references an agent to fetch instructions and metadata from. </summary>
     public partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="AgentEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="agentName"> The agent name to fetch instructions from. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public AgentEvaluatorGenerationJobSource(string agentName) : base(EvaluatorGenerationJobSourceType.Agent)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        public AgentEvaluatorGenerationJobSource(string agentName) : base(global::Azure.AI.Projects.EvaluatorGenerationJobSourceType.Agent)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="agentName"> The agent name to fetch instructions from. </param>
         /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
-        internal AgentEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentName, string agentVersion) : base(@type, additionalBinaryDataProperties)
+        internal AgentEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string description, string agentName, string agentVersion) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             AgentName = agentName;

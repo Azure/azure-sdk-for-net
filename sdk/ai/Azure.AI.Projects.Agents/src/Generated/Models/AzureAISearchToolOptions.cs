@@ -12,28 +12,28 @@ namespace Azure.AI.Projects.Agents
     public partial class AzureAISearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureAISearchToolOptions"/>. </summary>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
-        public AzureAISearchToolOptions(IEnumerable<AzureAISearchToolIndex> indexes)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
+        public AzureAISearchToolOptions(IEnumerable<global::Azure.AI.Projects.Agents.AzureAISearchToolIndex> indexes)
         {
-            Argument.AssertNotNull(indexes, nameof(indexes));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(indexes, nameof(indexes));
 
             Indexes = indexes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureAISearchToolOptions"/>. </summary>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolOptions(IList<AzureAISearchToolIndex> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolOptions(IList<global::Azure.AI.Projects.Agents.AzureAISearchToolIndex> indexes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Indexes = indexes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

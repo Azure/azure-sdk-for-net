@@ -19,7 +19,7 @@ namespace Azure.Template
         /// <param name="name"> The widget name. </param>
         /// <param name="manufacturerId"> The ID of the widget's manufacturer. </param>
         /// <param name="sharedModel"> The faked shared model. </param>
-        /// <returns> A new <see cref="Template.WidgetSuite"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Template.WidgetSuite"/> instance for mocking. </returns>
         public static WidgetSuite WidgetSuite(string name = default, string manufacturerId = default, FakedSharedModel sharedModel = default)
         {
             return new WidgetSuite(name, manufacturerId, sharedModel, additionalBinaryDataProperties: null);
@@ -28,7 +28,7 @@ namespace Azure.Template
         /// <summary> Faked shared model. </summary>
         /// <param name="tag"> The tag. </param>
         /// <param name="createdAt"> The created date. </param>
-        /// <returns> A new <see cref="Template.FakedSharedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Template.FakedSharedModel"/> instance for mocking. </returns>
         public static FakedSharedModel FakedSharedModel(string tag = default, DateTimeOffset createdAt = default)
         {
             return new FakedSharedModel(tag, createdAt, additionalBinaryDataProperties: null);
@@ -39,7 +39,7 @@ namespace Azure.Template
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is "Failed". </param>
         /// <param name="result"> The result of the operation. </param>
-        /// <returns> A new <see cref="Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> instance for mocking. </returns>
         public static ResourceOperationStatusWidgetSuiteWidgetSuiteError ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id = default, OperationState status = default, ResponseError error = default, WidgetSuite result = default)
         {
             return new ResourceOperationStatusWidgetSuiteWidgetSuiteError(id, status, error, result, additionalBinaryDataProperties: null);

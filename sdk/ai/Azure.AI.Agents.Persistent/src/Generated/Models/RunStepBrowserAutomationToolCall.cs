@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
     public partial class RunStepBrowserAutomationToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepBrowserAutomationToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="browserAutomation"> Details of the browser automation tool call. </param>
         internal RunStepBrowserAutomationToolCall(string id, BrowserAutomationToolCallDetails browserAutomation) : base("browser_automation", id)
@@ -21,12 +21,12 @@ namespace Azure.AI.Agents.Persistent
             BrowserAutomation = browserAutomation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepBrowserAutomationToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="browserAutomation"> Details of the browser automation tool call. </param>
-        internal RunStepBrowserAutomationToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolCallDetails browserAutomation) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepBrowserAutomationToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BrowserAutomationToolCallDetails browserAutomation) : base(@type, id, additionalBinaryDataProperties)
         {
             BrowserAutomation = browserAutomation;
         }

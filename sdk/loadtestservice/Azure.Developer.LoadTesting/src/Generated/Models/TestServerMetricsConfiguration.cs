@@ -14,23 +14,23 @@ namespace Azure.Developer.LoadTesting
     public partial class TestServerMetricsConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestServerMetricsConfiguration"/>. </summary>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public TestServerMetricsConfiguration(IDictionary<string, ResourceMetric> metrics)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        public TestServerMetricsConfiguration(IDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric> metrics)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(metrics, nameof(metrics));
 
             Metrics = metrics;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestServerMetricsConfiguration"/>. </summary>
         /// <param name="testId"> Test identifier. </param>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
@@ -42,7 +42,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestServerMetricsConfiguration(string testId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestServerMetricsConfiguration(string testId, IDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestId = testId;
             Metrics = metrics;
@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </summary>
-        public IDictionary<string, ResourceMetric> Metrics { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric> Metrics { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }

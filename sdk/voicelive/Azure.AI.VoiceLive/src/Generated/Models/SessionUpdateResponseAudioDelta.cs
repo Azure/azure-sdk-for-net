@@ -13,13 +13,13 @@ namespace Azure.AI.VoiceLive
     /// <summary> Returned when the model-generated audio is updated. </summary>
     public partial class SessionUpdateResponseAudioDelta : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDelta"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
-        internal SessionUpdateResponseAudioDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(ServerEventType.ResponseAudioDelta)
+        internal SessionUpdateResponseAudioDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAudioDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             Delta = delta;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
-        internal SessionUpdateResponseAudioDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAudioDelta(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Base64-encoded audio data delta.
         /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// To assign a byte[] to this property use <see cref="global::System.BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>

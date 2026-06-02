@@ -15,54 +15,54 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Consolidates all general ingestion settings for knowledge sources. </summary>
-    public partial class KnowledgeSourceIngestionParameters : IJsonModel<KnowledgeSourceIngestionParameters>
+    public partial class KnowledgeSourceIngestionParameters : IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeSourceIngestionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeSourceIngestionParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceIngestionParameters IPersistableModel<KnowledgeSourceIngestionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceIngestionParameters IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeSourceIngestionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeSourceIngestionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,37 +70,37 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Identity))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity, options);
             }
-            if (Optional.IsDefined(EmbeddingModel))
+            if (global::Azure.Search.Documents.Optional.IsDefined(EmbeddingModel))
             {
                 writer.WritePropertyName("embeddingModel"u8);
-                writer.WriteObjectValue(EmbeddingModel, options);
+                writer.WriteObjectValue<KnowledgeSourceVectorizer>(EmbeddingModel, options);
             }
-            if (Optional.IsDefined(ChatCompletionModel))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ChatCompletionModel))
             {
                 writer.WritePropertyName("chatCompletionModel"u8);
-                writer.WriteObjectValue(ChatCompletionModel, options);
+                writer.WriteObjectValue<KnowledgeBaseModel>(ChatCompletionModel, options);
             }
-            if (Optional.IsDefined(DisableImageVerbalization))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DisableImageVerbalization))
             {
                 writer.WritePropertyName("disableImageVerbalization"u8);
                 writer.WriteBooleanValue(DisableImageVerbalization.Value);
             }
-            if (Optional.IsDefined(IngestionSchedule))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IngestionSchedule))
             {
                 writer.WritePropertyName("ingestionSchedule"u8);
-                writer.WriteObjectValue(IngestionSchedule, options);
+                writer.WriteObjectValue<IndexingSchedule>(IngestionSchedule, options);
             }
-            if (Optional.IsCollectionDefined(IngestionPermissionOptions))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(IngestionPermissionOptions))
             {
                 writer.WritePropertyName("ingestionPermissionOptions"u8);
                 writer.WriteStartArray();
@@ -110,27 +110,27 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentExtractionMode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ContentExtractionMode))
             {
                 writer.WritePropertyName("contentExtractionMode"u8);
                 writer.WriteStringValue(ContentExtractionMode.Value.ToString());
             }
-            if (Optional.IsDefined(AiServices))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AiServices))
             {
                 writer.WritePropertyName("aiServices"u8);
-                writer.WriteObjectValue(AiServices, options);
+                writer.WriteObjectValue<AIServices>(AiServices, options);
             }
-            if (Optional.IsDefined(AssetStore))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AssetStore))
             {
                 writer.WritePropertyName("assetStore"u8);
-                writer.WriteObjectValue(AssetStore, options);
+                writer.WriteObjectValue<AssetStore>(AssetStore, options);
             }
-            if (Optional.IsDefined(FreshnessPolicy))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FreshnessPolicy))
             {
                 writer.WritePropertyName("freshnessPolicy"u8);
-                writer.WriteObjectValue(FreshnessPolicy, options);
+                writer.WriteObjectValue<FreshnessPolicy>(FreshnessPolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -138,9 +138,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -149,26 +149,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceIngestionParameters IJsonModel<KnowledgeSourceIngestionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceIngestionParameters IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeSourceIngestionParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeSourceIngestionParameters DeserializeKnowledgeSourceIngestionParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -177,47 +177,47 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseModel chatCompletionModel = default;
             bool? disableImageVerbalization = default;
             IndexingSchedule ingestionSchedule = default;
-            IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             AIServices aiServices = default;
             AssetStore assetStore = default;
             FreshnessPolicy freshnessPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("identity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         identity = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    identity = global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("embeddingModel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         embeddingModel = null;
                         continue;
                     }
-                    embeddingModel = KnowledgeSourceVectorizer.DeserializeKnowledgeSourceVectorizer(prop.Value, options);
+                    embeddingModel = global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceVectorizer.DeserializeKnowledgeSourceVectorizer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("chatCompletionModel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         chatCompletionModel = null;
                         continue;
                     }
-                    chatCompletionModel = KnowledgeBaseModel.DeserializeKnowledgeBaseModel(prop.Value, options);
+                    chatCompletionModel = global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel.DeserializeKnowledgeBaseModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("disableImageVerbalization"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -226,21 +226,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("ingestionSchedule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         ingestionSchedule = null;
                         continue;
                     }
-                    ingestionSchedule = IndexingSchedule.DeserializeIndexingSchedule(prop.Value, options);
+                    ingestionSchedule = global::Azure.Search.Documents.Indexes.Models.IndexingSchedule.DeserializeIndexingSchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ingestionPermissionOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<KnowledgeSourceIngestionPermissionOption> array = new List<KnowledgeSourceIngestionPermissionOption>();
+                    List<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption> array = new List<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new KnowledgeSourceIngestionPermissionOption(item.GetString()));
@@ -250,7 +250,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("contentExtractionMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         contentExtractionMode = null;
                         continue;
@@ -260,35 +260,35 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("aiServices"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         aiServices = null;
                         continue;
                     }
-                    aiServices = AIServices.DeserializeAIServices(prop.Value, options);
+                    aiServices = global::Azure.Search.Documents.KnowledgeBases.Models.AIServices.DeserializeAIServices(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("assetStore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    assetStore = AssetStore.DeserializeAssetStore(prop.Value, options);
+                    assetStore = global::Azure.Search.Documents.KnowledgeBases.Models.AssetStore.DeserializeAssetStore(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("freshnessPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
+                    freshnessPolicy = global::Azure.Search.Documents.KnowledgeBases.Models.FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeSourceIngestionParameters(
@@ -297,7 +297,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 chatCompletionModel,
                 disableImageVerbalization,
                 ingestionSchedule,
-                ingestionPermissionOptions ?? new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>(),
+                (ingestionPermissionOptions ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption>()),
                 contentExtractionMode,
                 aiServices,
                 assetStore,

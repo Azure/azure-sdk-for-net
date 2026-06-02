@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A collection of vector-store operations under `/vector_stores`. </summary>
     public partial class VectorStores
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VectorStores for mocking. </summary>
@@ -32,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -56,8 +56,8 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVectorStore(RequestContent content, RequestContext context = null)
         {
@@ -65,9 +65,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -87,18 +87,18 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStores.CreateVectorStore");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,19 +116,19 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentsVectorStore> CreateVectorStore(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> CreateVectorStore(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest spreadModel = new CreateVectorStoreRequest(
-                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 name,
                 storeConfiguration,
                 expiresAfter,
                 chunkingStrategy,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = CreateVectorStore(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            Response result = this.CreateVectorStore(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary> Creates a vector store. </summary>
@@ -139,19 +139,19 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentsVectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = default, string name = default, VectorStoreConfiguration storeConfiguration = default, VectorStoreExpirationPolicy expiresAfter = default, VectorStoreChunkingStrategy chunkingStrategy = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest spreadModel = new CreateVectorStoreRequest(
-                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 name,
                 storeConfiguration,
                 expiresAfter,
                 chunkingStrategy,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = await CreateVectorStoreAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            Response result = await this.CreateVectorStoreAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary>
@@ -164,9 +164,9 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStore(string vectorStoreId, RequestContext context)
         {
@@ -174,9 +174,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = this.CreateGetVectorStoreRequest(vectorStoreId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -196,19 +196,19 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStore");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = this.CreateGetVectorStoreRequest(vectorStoreId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -221,29 +221,29 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Returns the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentsVectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            Response result = GetVectorStore(vectorStoreId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            Response result = this.GetVectorStore(vectorStoreId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary> Returns the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentsVectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            Response result = await GetVectorStoreAsync(vectorStoreId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            Response result = await this.GetVectorStoreAsync(vectorStoreId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary>
@@ -257,9 +257,9 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ModifyVectorStore(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
@@ -267,10 +267,10 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateModifyVectorStoreRequest(vectorStoreId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -291,20 +291,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStores.ModifyVectorStore");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateModifyVectorStoreRequest(vectorStoreId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -320,16 +320,16 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="expiresAfter"> Details on when this vector store expires. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentsVectorStore> ModifyVectorStore(string vectorStoreId, string name = default, VectorStoreExpirationPolicy expiresAfter = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> ModifyVectorStore(string vectorStoreId, string name = default, VectorStoreExpirationPolicy expiresAfter = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = ModifyVectorStore(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = this.ModifyVectorStore(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary> Modifies an existing vector store. </summary>
@@ -338,16 +338,16 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="expiresAfter"> Details on when this vector store expires. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentsVectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = default, VectorStoreExpirationPolicy expiresAfter = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = default, VectorStoreExpirationPolicy expiresAfter = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await ModifyVectorStoreAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentsVectorStore)result, result);
+            ModifyVectorStoreRequest spreadModel = new ModifyVectorStoreRequest(name, expiresAfter, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = await this.ModifyVectorStoreAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentsVectorStore)result), result);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteVectorStore(string vectorStoreId, RequestContext context)
         {
@@ -368,7 +368,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = this.CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -388,15 +388,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalDeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStores.InternalDeleteVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = this.CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -409,21 +409,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Deletes the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalVectorStoreDeletionStatus> InternalDeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.InternalVectorStoreDeletionStatus> InternalDeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
-            Response result = InternalDeleteVectorStore(vectorStoreId, cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalVectorStoreDeletionStatus)result, result);
+            Response result = this.InternalDeleteVectorStore(vectorStoreId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((InternalVectorStoreDeletionStatus)result), result);
         }
 
         /// <summary> Deletes the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalVectorStoreDeletionStatus>> InternalDeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.InternalVectorStoreDeletionStatus>> InternalDeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalDeleteVectorStoreAsync(vectorStoreId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalVectorStoreDeletionStatus)result, result);
+            Response result = await this.InternalDeleteVectorStoreAsync(vectorStoreId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((InternalVectorStoreDeletionStatus)result), result);
         }
     }
 }

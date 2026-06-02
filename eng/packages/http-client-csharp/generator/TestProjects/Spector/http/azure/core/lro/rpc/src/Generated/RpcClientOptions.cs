@@ -13,11 +13,11 @@ namespace Specs.Azure.Core.Lro.Rpc
 {
     public partial class RpcClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::Specs.Azure.Core.Lro.Rpc.RpcClientOptions.ServiceVersion LatestVersion = global::Specs.Azure.Core.Lro.Rpc.RpcClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public RpcClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public RpcClientOptions(global::Specs.Azure.Core.Lro.Rpc.RpcClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal RpcClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

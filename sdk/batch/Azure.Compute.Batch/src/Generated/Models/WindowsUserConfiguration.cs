@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class WindowsUserConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WindowsUserConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.WindowsUserConfiguration"/>. </summary>
         public WindowsUserConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WindowsUserConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.WindowsUserConfiguration"/>. </summary>
         /// <param name="loginMode"> The login mode for the user. The default is 'batch'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsUserConfiguration(LoginMode? loginMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsUserConfiguration(LoginMode? loginMode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoginMode = loginMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

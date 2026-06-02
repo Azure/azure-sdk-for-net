@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Client.Clientnamespace.Second.Sub
 {
-    public readonly partial struct SecondClientEnumType : IEquatable<SecondClientEnumType>
+    public readonly partial struct SecondClientEnumType : IEquatable<global::Client.Clientnamespace.Second.Sub.SecondClientEnumType>
     {
         public SecondClientEnumType(string value) => throw null;
 
@@ -20,20 +20,20 @@ namespace Client.Clientnamespace.Second.Sub
 
         public static bool operator !=(SecondClientEnumType left, SecondClientEnumType right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="SecondClientEnumType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Client.Clientnamespace.Second.Sub.SecondClientEnumType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SecondClientEnumType(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="SecondClientEnumType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Client.Clientnamespace.Second.Sub.SecondClientEnumType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SecondClientEnumType?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(SecondClientEnumType other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

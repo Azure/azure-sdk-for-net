@@ -14,19 +14,19 @@ namespace Azure.Developer.LoadTesting
     public partial class RecurrenceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceStatus"/>. </summary>
         internal RecurrenceStatus()
         {
-            NextScheduledDateTimes = new ChangeTrackingList<DateTimeOffset>();
+            NextScheduledDateTimes = new ChangeTrackingList<global::System.DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RecurrenceStatus"/>. </summary>
         /// <param name="remainingOccurrences"> The number of occurrences remaining for the trigger. Null if recurrence end has end date instead of number of occurrences. </param>
         /// <param name="nextScheduledDateTimes"> The next three execution times of the trigger. (RFC 3339 literal format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecurrenceStatus(int? remainingOccurrences, IList<DateTimeOffset> nextScheduledDateTimes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecurrenceStatus(int? remainingOccurrences, IList<global::System.DateTimeOffset> nextScheduledDateTimes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RemainingOccurrences = remainingOccurrences;
             NextScheduledDateTimes = nextScheduledDateTimes;
@@ -37,6 +37,6 @@ namespace Azure.Developer.LoadTesting
         public int? RemainingOccurrences { get; }
 
         /// <summary> The next three execution times of the trigger. (RFC 3339 literal format). </summary>
-        public IList<DateTimeOffset> NextScheduledDateTimes { get; }
+        public IList<global::System.DateTimeOffset> NextScheduledDateTimes { get; }
     }
 }

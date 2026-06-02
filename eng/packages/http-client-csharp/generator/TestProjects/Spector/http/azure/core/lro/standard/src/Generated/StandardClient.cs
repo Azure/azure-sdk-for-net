@@ -17,39 +17,39 @@ namespace Specs.Azure.Core.Lro.Standard
 {
     public partial class StandardClient
     {
-        public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
+        public StandardClient() : this(new global::System.Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
 
-        internal StandardClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, StandardClientOptions options) => throw null;
+        internal StandardClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, StandardClientOptions options) => throw null;
 
-        public StandardClient(Uri endpoint, StandardClientOptions options) : this(null, endpoint, options) => throw null;
+        public StandardClient(global::System.Uri endpoint, StandardClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public StandardClient(StandardClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public StandardClient(StandardClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Operation<global::System.BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Operation<global::System.BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<global::Specs.Azure.Core.Lro.Standard.User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Operation<global::Specs.Azure.Core.Lro.Standard.User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context) => throw null;
 
-        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context) => throw null;
 
         public virtual Operation Delete(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Operation> DeleteAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
+        public virtual Operation<global::System.BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-        public virtual Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Operation<global::System.BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Operation<global::Specs.Azure.Core.Lro.Standard.ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Operation<global::Specs.Azure.Core.Lro.Standard.ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
     }
 }

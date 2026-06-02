@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CustomEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomEntity(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Aliases = new ChangeTrackingList<CustomEntityAlias>();
+            Aliases = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.CustomEntityAlias>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
         /// <param name="description"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
         /// <param name="type"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="defaultFuzzyEditDistance"> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </param>
         /// <param name="aliases"> An array of complex objects that can be used to specify alternative spellings or synonyms to the root entity name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntity(string name, string description, string @type, string subtype, string id, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, bool? defaultCaseSensitive, bool? defaultAccentSensitive, int? defaultFuzzyEditDistance, IList<CustomEntityAlias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomEntity(string name, string description, string @type, string subtype, string id, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, bool? defaultCaseSensitive, bool? defaultAccentSensitive, int? defaultFuzzyEditDistance, IList<global::Azure.Search.Documents.Indexes.Models.CustomEntityAlias> aliases, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

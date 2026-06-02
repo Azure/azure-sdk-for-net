@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageTaskAssignmentQueuedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentQueuedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData"/>. </summary>
         internal StorageTaskAssignmentQueuedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentQueuedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData"/>. </summary>
         /// <param name="queuedOn"> The time at which a storage task was queued. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentQueuedEventData(DateTimeOffset? queuedOn, string taskExecutionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTaskAssignmentQueuedEventData(DateTimeOffset? queuedOn, string taskExecutionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QueuedOn = queuedOn;
             TaskExecutionId = taskExecutionId;

@@ -15,30 +15,30 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ContentColumnMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentColumnMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping"/>. </summary>
         /// <param name="name"> Target index field name. </param>
         /// <param name="sourceField"> SQL column name. </param>
         /// <param name="searchFieldType"> Azure AI Search field type (e.g., Edm.String, Edm.Int32). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sourceField"/> or <paramref name="searchFieldType"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="sourceField"/> or <paramref name="searchFieldType"/> is null. </exception>
         public ContentColumnMapping(string name, string sourceField, string searchFieldType)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sourceField, nameof(sourceField));
-            Argument.AssertNotNull(searchFieldType, nameof(searchFieldType));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(sourceField, nameof(sourceField));
+            global::Azure.Search.Documents.Argument.AssertNotNull(searchFieldType, nameof(searchFieldType));
 
             Name = name;
             SourceField = sourceField;
             SearchFieldType = searchFieldType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentColumnMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping"/>. </summary>
         /// <param name="name"> Target index field name. </param>
         /// <param name="sourceField"> SQL column name. </param>
         /// <param name="searchFieldType"> Azure AI Search field type (e.g., Edm.String, Edm.Int32). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentColumnMapping(string name, string sourceField, string searchFieldType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentColumnMapping(string name, string sourceField, string searchFieldType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SourceField = sourceField;

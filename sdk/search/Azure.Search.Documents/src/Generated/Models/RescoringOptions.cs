@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class RescoringOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RescoringOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.RescoringOptions"/>. </summary>
         public RescoringOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RescoringOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.RescoringOptions"/>. </summary>
         /// <param name="enableRescoring"> If set to true, after the initial search on the compressed vectors, the similarity scores are recalculated using the full-precision vectors. This will improve recall at the expense of latency. </param>
         /// <param name="defaultOversampling"> Default oversampling factor. Oversampling retrieves a greater set of potential documents to offset the resolution loss due to quantization. This increases the set of results that will be rescored on full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when 'enableRescoring' is true. Higher values improve recall at the expense of latency. </param>
         /// <param name="rescoreStorageMethod"> Controls the storage method for original vectors. This setting is immutable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RescoringOptions(bool? enableRescoring, double? defaultOversampling, VectorSearchCompressionRescoreStorageMethod? rescoreStorageMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RescoringOptions(bool? enableRescoring, double? defaultOversampling, VectorSearchCompressionRescoreStorageMethod? rescoreStorageMethod, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EnableRescoring = enableRescoring;
             DefaultOversampling = defaultOversampling;

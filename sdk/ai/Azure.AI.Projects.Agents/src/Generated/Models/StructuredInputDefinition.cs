@@ -12,21 +12,21 @@ namespace Azure.AI.Projects.Agents
     public partial class StructuredInputDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.StructuredInputDefinition"/>. </summary>
         public StructuredInputDefinition()
         {
-            Schema = new ChangeTrackingDictionary<string, BinaryData>();
+            Schema = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.StructuredInputDefinition"/>. </summary>
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
         /// <param name="isRequired"> Whether the input property is required when the agent is invoked. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredInputDefinition(string description, BinaryData defaultValue, IDictionary<string, BinaryData> schema, bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredInputDefinition(string description, BinaryData defaultValue, IDictionary<string, global::System.BinaryData> schema, bool? isRequired, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DefaultValue = defaultValue;
@@ -40,8 +40,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The default value for the input if no run-time value is provided.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -68,8 +68,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The JSON schema for the structured input (optional).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -92,6 +92,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Schema { get; }
+        public IDictionary<string, global::System.BinaryData> Schema { get; }
     }
 }

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Script definition with list of script into which given script can be translitered. </summary>
-    public partial class TransliterableScript : LanguageScript, IJsonModel<TransliterableScript>
+    public partial class TransliterableScript : LanguageScript, IJsonModel<global::Azure.AI.Translation.Text.TransliterableScript>
     {
-        /// <summary> Initializes a new instance of <see cref="TransliterableScript"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TransliterableScript"/> for deserialization. </summary>
         internal TransliterableScript()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LanguageScript PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Translation.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTransliterableScript(document.RootElement, options);
+                        return global::Azure.AI.Translation.Text.TransliterableScript.DeserializeTransliterableScript(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TransliterableScript)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Translation.Text.AzureAITranslationTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TransliterableScript)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TransliterableScript>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransliterableScript IPersistableModel<TransliterableScript>.Create(BinaryData data, ModelReaderWriterOptions options) => (TransliterableScript)PersistableModelCreateCore(data, options);
+        TransliterableScript IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>.Create(BinaryData data, ModelReaderWriterOptions options) => ((TransliterableScript)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TransliterableScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TransliterableScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Translation.Text.TransliterableScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TransliterableScript)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("toScripts"u8);
             writer.WriteStartArray();
             foreach (LanguageScript item in ToScripts)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<LanguageScript>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransliterableScript IJsonModel<TransliterableScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TransliterableScript)JsonModelCreateCore(ref reader, options);
+        TransliterableScript IJsonModel<global::Azure.AI.Translation.Text.TransliterableScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((TransliterableScript)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LanguageScript JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Text.TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Text.TransliterableScript)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTransliterableScript(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Translation.Text.TransliterableScript.DeserializeTransliterableScript(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TransliterableScript DeserializeTransliterableScript(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -117,8 +117,8 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             LanguageDirectionality directionality = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<LanguageScript> toScripts = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Translation.Text.LanguageScript> toScripts = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("code"u8))
@@ -143,17 +143,17 @@ namespace Azure.AI.Translation.Text
                 }
                 if (prop.NameEquals("toScripts"u8))
                 {
-                    List<LanguageScript> array = new List<LanguageScript>();
+                    List<global::Azure.AI.Translation.Text.LanguageScript> array = new List<global::Azure.AI.Translation.Text.LanguageScript>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLanguageScript(item, options));
+                        array.Add(global::Azure.AI.Translation.Text.LanguageScript.DeserializeLanguageScript(item, options));
                     }
                     toScripts = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TransliterableScript(

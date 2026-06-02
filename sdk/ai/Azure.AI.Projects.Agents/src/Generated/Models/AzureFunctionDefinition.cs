@@ -11,30 +11,30 @@ namespace Azure.AI.Projects.Agents
     public partial class AzureFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionDefinition"/>. </summary>
         /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
         public AzureFunctionDefinition(AzureFunctionDefinitionFunction function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding)
         {
-            Argument.AssertNotNull(function, nameof(function));
-            Argument.AssertNotNull(inputBinding, nameof(inputBinding));
-            Argument.AssertNotNull(outputBinding, nameof(outputBinding));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(function, nameof(function));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(inputBinding, nameof(inputBinding));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(outputBinding, nameof(outputBinding));
 
             Function = function;
             InputBinding = inputBinding;
             OutputBinding = outputBinding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionDefinition"/>. </summary>
         /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionDefinition(AzureFunctionDefinitionFunction function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFunctionDefinition(AzureFunctionDefinitionFunction function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Function = function;
             InputBinding = inputBinding;

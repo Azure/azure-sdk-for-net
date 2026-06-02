@@ -15,20 +15,20 @@ namespace Azure.Monitor.Query.Metrics.Models
     public partial class MetricsQueryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="metrics"> The value of the collection. </param>
-        internal MetricsQueryResult(string startTime, string endTime, IEnumerable<MetricResult> metrics)
+        internal MetricsQueryResult(string startTime, string endTime, IEnumerable<global::Azure.Monitor.Query.Metrics.Models.MetricResult> metrics)
         {
             StartTime = startTime;
             EndTime = endTime;
             Metrics = metrics.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="granularity">
@@ -43,7 +43,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="metrics"> The value of the collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsQueryResult(string startTime, string endTime, string granularity, string @namespace, string resourceRegion, string resourceId, IList<MetricResult> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricsQueryResult(string startTime, string endTime, string granularity, string @namespace, string resourceRegion, string resourceId, IList<global::Azure.Monitor.Query.Metrics.Models.MetricResult> metrics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -71,6 +71,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         public string ResourceRegion { get; }
 
         /// <summary> The value of the collection. </summary>
-        public IList<MetricResult> Metrics { get; }
+        public IList<global::Azure.Monitor.Query.Metrics.Models.MetricResult> Metrics { get; }
     }
 }

@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownRunStepDeltaCodeInterpreterOutput : RunStepDeltaCodeInterpreterOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRunStepDeltaCodeInterpreterOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownRunStepDeltaCodeInterpreterOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRunStepDeltaCodeInterpreterOutput(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, @type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownRunStepDeltaCodeInterpreterOutput(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(index, (@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

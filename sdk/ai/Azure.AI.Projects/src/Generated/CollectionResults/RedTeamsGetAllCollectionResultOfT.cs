@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class RedTeamsGetAllCollectionResultOfT : CollectionResult<RedTeam>
+    internal partial class RedTeamsGetAllCollectionResultOfT : CollectionResult<global::Azure.AI.Projects.Evaluation.RedTeam>
     {
         private readonly RedTeams _client;
         private readonly RequestOptions _options;
@@ -25,17 +25,17 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override IEnumerable<global::System.ClientModel.ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_options);
-            Uri nextPageUri = null;
+            global::System.Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = GetNextResponse(message);
+                ClientResult result = this.GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedRedTeam)result).NextLink;
-                if (nextPageUri == null)
+                if ((nextPageUri == null))
                 {
                     yield break;
                 }
@@ -48,10 +48,10 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedRedTeam)page).NextLink;
-            if (nextPage != null)
+            global::System.Uri nextPage = ((PagedRedTeam)page).NextLink;
+            if ((nextPage != null))
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
+                return global::System.ClientModel.ContinuationToken.FromBytes(global::System.BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<RedTeam> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<global::Azure.AI.Projects.Evaluation.RedTeam> GetValuesFromPage(ClientResult page)
         {
             return ((PagedRedTeam)page).Value;
         }
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            return global::System.ClientModel.ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }

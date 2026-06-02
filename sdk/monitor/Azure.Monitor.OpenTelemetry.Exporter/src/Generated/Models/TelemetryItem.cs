@@ -14,9 +14,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryItem"/>. </summary>
         /// <param name="name"> Type name of telemetry data item. </param>
         /// <param name="time">
         /// Event date time when telemetry item was created. This is the wall clock time on
@@ -35,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryItem"/>. </summary>
         /// <param name="version">
         /// Envelope version. For internal use only. By assigning this the default, it will
         /// not be serialized within the payload unless changed to a value other than #1.
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// </param>
         /// <param name="data"> Telemetry data item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryItem(int? version, string name, DateTimeOffset time, float? sampleRate, string sequence, string instrumentationKey, IDictionary<string, string> tags, MonitorBase data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryItem(int? version, string name, DateTimeOffset time, float? sampleRate, string sequence, string instrumentationKey, IDictionary<string, string> tags, MonitorBase data, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Name = name;

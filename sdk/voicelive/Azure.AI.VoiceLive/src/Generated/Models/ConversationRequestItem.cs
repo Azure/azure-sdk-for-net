@@ -12,25 +12,25 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.MessageItem"/>, <see cref="Azure.AI.VoiceLive.FunctionCallItem"/>, and <see cref="Azure.AI.VoiceLive.FunctionCallOutputItem"/>.
     /// </summary>
     public abstract partial class ConversationRequestItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ConversationRequestItem"/>. </summary>
         /// <param name="type"></param>
         private protected ConversationRequestItem(ItemType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ConversationRequestItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationRequestItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationRequestItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;

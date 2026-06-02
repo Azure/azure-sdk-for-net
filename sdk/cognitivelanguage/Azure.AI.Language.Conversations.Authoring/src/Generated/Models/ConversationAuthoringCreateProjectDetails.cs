@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringCreateProjectDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
         public ConversationAuthoringCreateProjectDetails(ConversationAuthoringProjectKind projectKind, string projectName, string language)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(language, nameof(language));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(language, nameof(language));
 
             ProjectKind = projectKind;
             ProjectName = projectName;
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringCreateProjectDetails(ConversationAuthoringProjectKind projectKind, ConversationAuthoringProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringCreateProjectDetails(ConversationAuthoringProjectKind projectKind, ConversationAuthoringProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             Settings = settings;

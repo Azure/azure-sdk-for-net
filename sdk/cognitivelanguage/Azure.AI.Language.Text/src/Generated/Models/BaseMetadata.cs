@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for entity Metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="AddressMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/>, and <see cref="NumericRangeMetadata"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.AgeMetadata"/>, <see cref="Azure.AI.Language.Text.VolumeMetadata"/>, <see cref="Azure.AI.Language.Text.SpeedMetadata"/>, <see cref="Azure.AI.Language.Text.AreaMetadata"/>, <see cref="Azure.AI.Language.Text.LengthMetadata"/>, <see cref="Azure.AI.Language.Text.InformationMetadata"/>, <see cref="Azure.AI.Language.Text.TemperatureMetadata"/>, <see cref="Azure.AI.Language.Text.WeightMetadata"/>, <see cref="Azure.AI.Language.Text.CurrencyMetadata"/>, <see cref="Azure.AI.Language.Text.AddressMetadata"/>, <see cref="Azure.AI.Language.Text.DateMetadata"/>, <see cref="Azure.AI.Language.Text.DateTimeMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSetMetadata"/>, <see cref="Azure.AI.Language.Text.TimeMetadata"/>, <see cref="Azure.AI.Language.Text.NumberMetadata"/>, <see cref="Azure.AI.Language.Text.OrdinalMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSpanMetadata"/>, and <see cref="Azure.AI.Language.Text.NumericRangeMetadata"/>.
     /// </summary>
     public abstract partial class BaseMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BaseMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.BaseMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         private protected BaseMetadata(MetadataKind metadataKind)
         {
             MetadataKind = metadataKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.BaseMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BaseMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MetadataKind = metadataKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

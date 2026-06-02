@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionsParameters"/>. </summary>
         public SearchIndexerIndexProjectionsParameters()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionsParameters"/>. </summary>
         /// <param name="projectionMode"> Defines behavior of the index projections in relation to the rest of the indexer. </param>
         /// <param name="additionalProperties"></param>
         internal SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode, IDictionary<string, object> additionalProperties)

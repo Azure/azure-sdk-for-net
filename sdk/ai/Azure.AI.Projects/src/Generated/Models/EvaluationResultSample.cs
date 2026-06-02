@@ -10,24 +10,24 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> A sample from the evaluation result. </summary>
     public partial class EvaluationResultSample : InsightSample
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationResultSample"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationResultSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
-        internal EvaluationResultSample(string id, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, EvalResult evaluationResult) : base(id, SampleType.EvaluationResultSample, features, correlationInfo)
+        internal EvaluationResultSample(string id, IDictionary<string, global::System.BinaryData> features, IDictionary<string, global::System.BinaryData> correlationInfo, EvalResult evaluationResult) : base(id, global::Azure.AI.Projects.Evaluation.SampleType.EvaluationResultSample, features, correlationInfo)
         {
             EvaluationResult = evaluationResult;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationResultSample"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationResultSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
         /// <param name="type"> Sample type. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
-        internal EvaluationResultSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvalResult evaluationResult) : base(id, @type, features, correlationInfo, additionalBinaryDataProperties)
+        internal EvaluationResultSample(string id, SampleType @type, IDictionary<string, global::System.BinaryData> features, IDictionary<string, global::System.BinaryData> correlationInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EvalResult evaluationResult) : base(id, @type, features, correlationInfo, additionalBinaryDataProperties)
         {
             EvaluationResult = evaluationResult;
         }

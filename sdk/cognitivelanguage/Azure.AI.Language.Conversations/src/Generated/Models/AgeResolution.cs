@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the Age entity resolution model. </summary>
     public partial class AgeResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="AgeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AgeResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Age Unit of measurement. </param>
-        internal AgeResolution(double value, AgeUnit unit) : base(ResolutionKind.AgeResolution)
+        internal AgeResolution(double value, AgeUnit unit) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.AgeResolution)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AgeResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Age Unit of measurement. </param>
-        internal AgeResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, AgeUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal AgeResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, AgeUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

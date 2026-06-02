@@ -23,12 +23,12 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateConversationItemCreated : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemCreated"/>. </summary>
-        internal SessionUpdateConversationItemCreated() : base(ServerEventType.ConversationItemCreated)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated"/>. </summary>
+        internal SessionUpdateConversationItemCreated() : base(global::Azure.AI.VoiceLive.ServerEventType.ConversationItemCreated)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemCreated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string previousItemId, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;

@@ -17,16 +17,16 @@ namespace Service.MultipleServices.ServiceB
     {
         protected BOperations() => throw null;
 
-        internal BOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal BOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response OpB(RequestContext context) => throw null;
 
-        public virtual Task<Response> OpBAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OpBAsync(RequestContext context) => throw null;
 
         public virtual Response OpB(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OpBAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> OpBAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

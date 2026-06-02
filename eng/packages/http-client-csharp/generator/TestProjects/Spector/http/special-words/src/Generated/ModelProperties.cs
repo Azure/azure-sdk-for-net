@@ -18,32 +18,32 @@ namespace SpecialWords._ModelProperties
     {
         protected ModelProperties() => throw null;
 
-        internal ModelProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SameAsModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SameAsModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SameAsModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SameAsModel(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SameAsModelAsync(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SameAsModelAsync(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response DictMethods(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> DictMethodsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> DictMethodsAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response DictMethods(DictMethods body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DictMethodsAsync(DictMethods body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DictMethodsAsync(DictMethods body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithList(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> WithListAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> WithListAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response WithList(ModelWithList body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithListAsync(ModelWithList body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithListAsync(ModelWithList body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class LineageRelation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LineageRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.LineageRelation"/>. </summary>
         internal LineageRelation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LineageRelation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.LineageRelation"/>. </summary>
         /// <param name="fromEntityId"> The GUID of from-entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="toEntityId"> The GUID of to-entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LineageRelation(string fromEntityId, string relationshipId, string toEntityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LineageRelation(string fromEntityId, string relationshipId, string toEntityId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FromEntityId = fromEntityId;
             RelationshipId = relationshipId;

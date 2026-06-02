@@ -27,18 +27,18 @@ namespace Azure.AI.Language.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:analyze-text", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (showStatistics != null)
+            if ((showStatistics != null))
             {
-                uri.AppendQuery("showStats", TypeFormatters.ConvertToString(showStatistics), true);
+                uri.AppendQuery("showStats", global::Azure.AI.Language.Text.TypeFormatters.ConvertToString(showStatistics), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -52,26 +52,26 @@ namespace Azure.AI.Language.Text
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-text/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (showStats != null)
+            if ((showStats != null))
             {
-                uri.AppendQuery("showStats", TypeFormatters.ConvertToString(showStats), true);
+                uri.AppendQuery("showStats", global::Azure.AI.Language.Text.TypeFormatters.ConvertToString(showStats), true);
             }
-            if (top != null)
+            if ((top != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Text.TypeFormatters.ConvertToString(top), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Text.TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -82,14 +82,14 @@ namespace Azure.AI.Language.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-text/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -103,14 +103,14 @@ namespace Azure.AI.Language.Text
             uri.AppendPath("/analyze-text/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
             uri.AppendPath(":cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
     }

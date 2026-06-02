@@ -9,10 +9,10 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class UnknownInputContent : InputContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInputContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.UnknownInputContent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInputContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownInputContent(InputContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

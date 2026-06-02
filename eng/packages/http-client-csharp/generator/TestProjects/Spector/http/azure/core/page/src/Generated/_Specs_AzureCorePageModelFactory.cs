@@ -15,7 +15,7 @@ namespace Specs.Azure.Core.Page
     public static partial class _Specs_AzureCorePageModelFactory
     {
 
-        public static User User(int id = default, string name = default, IEnumerable<UserOrder> orders = default, ETag etag = default) => throw null;
+        public static User User(int id = default, string name = default, IEnumerable<global::Specs.Azure.Core.Page.UserOrder> orders = default, ETag etag = default) => throw null;
 
         public static UserOrder UserOrder(int id = default, int userId = default, string detail = default) => throw null;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> DiskEncryptionTarget enums. </summary>
-    public readonly partial struct DiskEncryptionTarget : IEquatable<DiskEncryptionTarget>
+    public readonly partial struct DiskEncryptionTarget : IEquatable<global::Azure.Compute.Batch.DiskEncryptionTarget>
     {
         private readonly string _value;
         /// <summary> The OS Disk on the compute node is encrypted. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
         private const string TemporaryDiskValue = "temporarydisk";
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.DiskEncryptionTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskEncryptionTarget(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
         public static DiskEncryptionTarget TemporaryDisk { get; } = new DiskEncryptionTarget(TemporaryDiskValue);
 
-        /// <summary> Determines if two <see cref="DiskEncryptionTarget"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.DiskEncryptionTarget"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskEncryptionTarget left, DiskEncryptionTarget right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DiskEncryptionTarget"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.DiskEncryptionTarget"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskEncryptionTarget left, DiskEncryptionTarget right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.DiskEncryptionTarget"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DiskEncryptionTarget(string value) => new DiskEncryptionTarget(value);
 
-        /// <summary> Converts a string to a <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.DiskEncryptionTarget"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskEncryptionTarget?(string value) => value == null ? null : new DiskEncryptionTarget(value);
+        public static implicit operator DiskEncryptionTarget?(string value) => (value == null) ? null : new DiskEncryptionTarget(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DiskEncryptionTarget other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DiskEncryptionTarget other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DiskEncryptionTarget other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DiskEncryptionTarget other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

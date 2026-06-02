@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a Fabric Data Agent document reference. </summary>
     public partial class KnowledgeBaseFabricDataAgentReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricDataAgentReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricDataAgentReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseFabricDataAgentReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.FabricDataAgent, id, activitySource)
+        internal KnowledgeBaseFabricDataAgentReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.FabricDataAgent, id, activitySource)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricDataAgentReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricDataAgentReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> The Fabric workspace ID. </param>
         /// <param name="dataAgentId"> The Fabric Data Agent ID. </param>
-        internal KnowledgeBaseFabricDataAgentReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string dataAgentId) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseFabricDataAgentReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workspaceId, string dataAgentId) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             DataAgentId = dataAgentId;

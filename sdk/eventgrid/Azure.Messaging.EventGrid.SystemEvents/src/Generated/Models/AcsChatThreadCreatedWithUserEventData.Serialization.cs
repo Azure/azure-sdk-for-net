@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
-    [JsonConverter(typeof(AcsChatThreadCreatedWithUserEventDataConverter))]
-    public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<AcsChatThreadCreatedWithUserEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData.AcsChatThreadCreatedWithUserEventDataConverter))]
+    public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData"/> for deserialization. </summary>
         internal AcsChatThreadCreatedWithUserEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsChatEventBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData.DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsChatThreadCreatedWithUserEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsChatThreadCreatedWithUserEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsChatThreadCreatedWithUserEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatThreadCreatedWithUserEventData IPersistableModel<AcsChatThreadCreatedWithUserEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatThreadCreatedWithUserEventData)PersistableModelCreateCore(data, options);
+        AcsChatThreadCreatedWithUserEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsChatThreadCreatedWithUserEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsChatThreadCreatedWithUserEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsChatThreadCreatedWithUserEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,20 +75,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsChatThreadCreatedWithUserEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("createdByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(CreatedByCommunicationIdentifier, options);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(CreatedByCommunicationIdentifier, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             foreach (var item in Properties)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -96,14 +96,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue<object>(item.Value, options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
+            if (((options.Format != "W") && global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsCollectionDefined(Metadata)))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,64 +112,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
                 foreach (AcsChatThreadParticipantProperties item in Participants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AcsChatThreadParticipantProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                writer.WriteObjectValue<AcsChatRetentionPolicy>(RetentionPolicy, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatThreadCreatedWithUserEventData IJsonModel<AcsChatThreadCreatedWithUserEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsChatThreadCreatedWithUserEventData)JsonModelCreateCore(ref reader, options);
+        AcsChatThreadCreatedWithUserEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsChatThreadCreatedWithUserEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsChatEventBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsChatThreadCreatedWithUserEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData.DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsChatThreadCreatedWithUserEventData DeserializeAcsChatThreadCreatedWithUserEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             CommunicationIdentifierModel recipientCommunicationIdentifier = default;
             string transactionId = default;
             string threadId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DateTimeOffset? createTime = default;
             long? version = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             IReadOnlyDictionary<string, object> properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            IReadOnlyList<AcsChatThreadParticipantProperties> participants = default;
+            IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> participants = default;
             AcsChatRetentionPolicy retentionPolicy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recipientCommunicationIdentifier"u8))
                 {
-                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    recipientCommunicationIdentifier = global::Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("transactionId"u8))
@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("createTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("createdByCommunicationIdentifier"u8))
                 {
-                    createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    createdByCommunicationIdentifier = global::Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -224,14 +224,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -245,26 +245,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("participants"u8))
                 {
-                    List<AcsChatThreadParticipantProperties> array = new List<AcsChatThreadParticipantProperties>();
+                    List<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties> array = new List<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(item, options));
+                        array.Add(global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(item, options));
                     }
                     participants = array;
                     continue;
                 }
                 if (prop.NameEquals("retentionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    retentionPolicy = AcsChatRetentionPolicy.DeserializeAcsChatRetentionPolicy(prop.Value, options);
+                    retentionPolicy = global::Azure.Messaging.EventGrid.SystemEvents.AcsChatRetentionPolicy.DeserializeAcsChatRetentionPolicy(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsChatThreadCreatedWithUserEventData(
@@ -276,12 +276,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 version,
                 createdByCommunicationIdentifier,
                 properties,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 participants,
                 retentionPolicy);
         }
 
-        internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>
+        internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsChatThreadCreatedWithUserEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsChatThreadCreatedWithUserEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadCreatedWithUserEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -298,8 +298,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsChatThreadCreatedWithUserEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

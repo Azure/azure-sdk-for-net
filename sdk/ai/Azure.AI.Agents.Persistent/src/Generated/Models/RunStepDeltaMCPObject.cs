@@ -13,22 +13,22 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents an invocation of mcp as part of a streaming run step. </summary>
     public partial class RunStepDeltaMCPObject : RunStepDeltaDetail
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMCPObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/>. </summary>
         internal RunStepDeltaMCPObject() : base("mcp")
         {
-            ToolCalls = new ChangeTrackingList<RunStepDeltaMcpToolCall>();
+            ToolCalls = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMCPObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        internal RunStepDeltaMCPObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RunStepDeltaMcpToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepDeltaMCPObject(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }
 
         /// <summary> The collection of tool calls for the tool call detail item. </summary>
-        public IList<RunStepDeltaMcpToolCall> ToolCalls { get; }
+        public IList<global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall> ToolCalls { get; }
     }
 }

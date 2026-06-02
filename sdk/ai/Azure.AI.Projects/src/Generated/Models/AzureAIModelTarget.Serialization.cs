@@ -11,54 +11,54 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
-    public partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<AzureAIModelTarget>
+    public partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureAIModelTarget(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.AzureAIModelTarget.DeserializeAzureAIModelTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIModelTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIModelTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAIModelTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAIModelTarget IPersistableModel<AzureAIModelTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAIModelTarget)PersistableModelCreateCore(data, options);
+        AzureAIModelTarget IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureAIModelTarget)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAIModelTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureAIModelTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -66,51 +66,51 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIModelTarget)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(SamplingParams))
+            if (global::Azure.AI.Projects.Optional.IsDefined(SamplingParams))
             {
                 writer.WritePropertyName("sampling_params"u8);
-                writer.WriteObjectValue(SamplingParams, options);
+                writer.WriteObjectValue<ModelSamplingParams>(SamplingParams, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAIModelTarget IJsonModel<AzureAIModelTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureAIModelTarget)JsonModelCreateCore(ref reader, options);
+        AzureAIModelTarget IJsonModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureAIModelTarget)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AzureAIModelTarget)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureAIModelTarget(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.AzureAIModelTarget.DeserializeAzureAIModelTarget(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureAIModelTarget DeserializeAzureAIModelTarget(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "azure_ai_model";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string model = default;
             ModelSamplingParams samplingParams = default;
             foreach (var prop in element.EnumerateObject())
@@ -127,16 +127,16 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("sampling_params"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    samplingParams = ModelSamplingParams.DeserializeModelSamplingParams(prop.Value, options);
+                    samplingParams = global::Azure.AI.Projects.Evaluation.ModelSamplingParams.DeserializeModelSamplingParams(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureAIModelTarget(@type, additionalBinaryDataProperties, model, samplingParams);

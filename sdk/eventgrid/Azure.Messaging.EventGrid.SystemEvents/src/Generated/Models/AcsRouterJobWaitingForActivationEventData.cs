@@ -13,16 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWaitingForActivation event. </summary>
     public partial class AcsRouterJobWaitingForActivationEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData"/>. </summary>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
         internal AcsRouterJobWaitingForActivationEventData(bool unavailableForMatching)
         {
-            ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
-            ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            ExpiredAttachedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
+            ExpiredRequestedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
             UnavailableForMatching = unavailableForMatching;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWaitingForActivationEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="expiredRequestedWorkerSelectors"> Router Job Waiting For Activation Requested Worker Selector Expired. </param>
         /// <param name="scheduledOn"> Router Job Waiting For Activation Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
-        internal AcsRouterJobWaitingForActivationEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobWaitingForActivationEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Priority = priority;
             ExpiredAttachedWorkerSelectors = expiredAttachedWorkerSelectors;
@@ -48,10 +48,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? Priority { get; }
 
         /// <summary> Router Job Waiting For Activation Worker Selector Expired. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> ExpiredAttachedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredAttachedWorkerSelectors { get; }
 
         /// <summary> Router Job Waiting For Activation Requested Worker Selector Expired. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get; }
 
         /// <summary> Router Job Waiting For Activation Scheduled Time in UTC. </summary>
         public DateTimeOffset? ScheduledOn { get; }

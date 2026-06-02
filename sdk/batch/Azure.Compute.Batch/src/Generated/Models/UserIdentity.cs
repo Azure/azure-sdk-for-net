@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class UserIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UserIdentity"/>. </summary>
         public UserIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UserIdentity"/>. </summary>
         /// <param name="username"> The name of the user identity under which the Task is run. The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
         /// <param name="autoUser"> The auto user under which the Task is run. The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserIdentity(string username, AutoUserSpecification autoUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserIdentity(string username, AutoUserSpecification autoUser, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             AutoUser = autoUser;

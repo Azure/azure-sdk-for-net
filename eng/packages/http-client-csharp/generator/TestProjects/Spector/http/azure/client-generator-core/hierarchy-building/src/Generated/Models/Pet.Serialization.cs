@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    public partial class Pet : Animal, IJsonModel<Pet>
+    public partial class Pet : Animal, IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>
     {
         internal Pet() => throw null;
 
@@ -21,22 +21,22 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Pet IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="pet"> The <see cref="Pet"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="pet"> The <see cref="global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Pet pet) => throw null;
 
         public static explicit operator Pet(Response response) => throw null;
 
-        void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Pet IJsonModel<Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Pet IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Animal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

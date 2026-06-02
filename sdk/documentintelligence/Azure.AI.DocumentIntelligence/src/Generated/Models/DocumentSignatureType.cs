@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Presence of signature. </summary>
-    public readonly partial struct DocumentSignatureType : IEquatable<DocumentSignatureType>
+    public readonly partial struct DocumentSignatureType : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentSignatureType>
     {
         private readonly string _value;
         /// <summary> A signature is detected. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> No signatures are detected. </summary>
         private const string UnsignedValue = "unsigned";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSignatureType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentSignatureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentSignatureType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> No signatures are detected. </summary>
         public static DocumentSignatureType Unsigned { get; } = new DocumentSignatureType(UnsignedValue);
 
-        /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentSignatureType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentSignatureType left, DocumentSignatureType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentSignatureType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentSignatureType left, DocumentSignatureType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentSignatureType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentSignatureType(string value) => new DocumentSignatureType(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentSignatureType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentSignatureType?(string value) => value == null ? null : new DocumentSignatureType(value);
+        public static implicit operator DocumentSignatureType?(string value) => (value == null) ? null : new DocumentSignatureType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentSignatureType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentSignatureType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentSignatureType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentSignatureType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

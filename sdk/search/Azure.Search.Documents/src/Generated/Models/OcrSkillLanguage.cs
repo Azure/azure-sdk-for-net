@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input by OcrSkill. </summary>
-    public readonly partial struct OcrSkillLanguage : IEquatable<OcrSkillLanguage>
+    public readonly partial struct OcrSkillLanguage : IEquatable<global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage>
     {
         private readonly string _value;
         /// <summary> Afrikaans. </summary>
@@ -356,12 +356,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Unknown (All). </summary>
         private const string UnkValue = "unk";
 
-        /// <summary> Initializes a new instance of <see cref="OcrSkillLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OcrSkillLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -876,34 +876,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Unknown (All). </summary>
         public static OcrSkillLanguage Unk { get; } = new OcrSkillLanguage(UnkValue);
 
-        /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OcrSkillLanguage left, OcrSkillLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OcrSkillLanguage left, OcrSkillLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OcrSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OcrSkillLanguage(string value) => new OcrSkillLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="OcrSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OcrSkillLanguage?(string value) => value == null ? null : new OcrSkillLanguage(value);
+        public static implicit operator OcrSkillLanguage?(string value) => (value == null) ? null : new OcrSkillLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OcrSkillLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OcrSkillLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OcrSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OcrSkillLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

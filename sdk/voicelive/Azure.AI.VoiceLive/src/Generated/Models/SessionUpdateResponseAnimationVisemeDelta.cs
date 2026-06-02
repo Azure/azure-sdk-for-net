@@ -13,14 +13,14 @@ namespace Azure.AI.VoiceLive
     /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
     public partial class SessionUpdateResponseAnimationVisemeDelta : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal SessionUpdateResponseAnimationVisemeDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(ServerEventType.ResponseAnimationVisemeDelta)
+        internal SessionUpdateResponseAnimationVisemeDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAnimationVisemeDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
             VisemeId = visemeId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal SessionUpdateResponseAnimationVisemeDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAnimationVisemeDelta(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

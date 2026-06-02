@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Type.Property.Nullable
 {
-    public partial class CollectionsByteProperty : IJsonModel<CollectionsByteProperty>
+    public partial class CollectionsByteProperty : IJsonModel<global::_Type.Property.Nullable.CollectionsByteProperty>
     {
         internal CollectionsByteProperty() => throw null;
 
@@ -20,19 +20,19 @@ namespace _Type.Property.Nullable
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<CollectionsByteProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.Nullable.CollectionsByteProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        CollectionsByteProperty IPersistableModel<CollectionsByteProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        CollectionsByteProperty IPersistableModel<global::_Type.Property.Nullable.CollectionsByteProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<CollectionsByteProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.Nullable.CollectionsByteProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator CollectionsByteProperty(Response response) => throw null;
 
-        void IJsonModel<CollectionsByteProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.Nullable.CollectionsByteProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        CollectionsByteProperty IJsonModel<CollectionsByteProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        CollectionsByteProperty IJsonModel<global::_Type.Property.Nullable.CollectionsByteProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CollectionsByteProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

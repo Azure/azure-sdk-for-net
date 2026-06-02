@@ -12,17 +12,17 @@ namespace Azure.AI.Projects.Evaluation
     public partial class TaxonomySubCategory
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaxonomySubCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.TaxonomySubCategory"/>. </summary>
         /// <param name="id"> Unique identifier of the taxonomy sub-category. </param>
         /// <param name="name"> Name of the taxonomy sub-category. </param>
         /// <param name="isEnabled"> List of taxonomy items under this sub-category. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public TaxonomySubCategory(string id, string name, bool isEnabled)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;
@@ -30,14 +30,14 @@ namespace Azure.AI.Projects.Evaluation
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaxonomySubCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.TaxonomySubCategory"/>. </summary>
         /// <param name="id"> Unique identifier of the taxonomy sub-category. </param>
         /// <param name="name"> Name of the taxonomy sub-category. </param>
         /// <param name="description"> Description of the taxonomy sub-category. </param>
         /// <param name="isEnabled"> List of taxonomy items under this sub-category. </param>
         /// <param name="properties"> Additional properties for the taxonomy sub-category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaxonomySubCategory(string id, string name, string description, bool isEnabled, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaxonomySubCategory(string id, string name, string description, bool isEnabled, IDictionary<string, string> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

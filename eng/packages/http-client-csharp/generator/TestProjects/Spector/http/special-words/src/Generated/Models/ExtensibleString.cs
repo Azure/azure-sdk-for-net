@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace SpecialWords._ExtensibleStrings
 {
-    public readonly partial struct ExtensibleString : IEquatable<ExtensibleString>
+    public readonly partial struct ExtensibleString : IEquatable<global::SpecialWords._ExtensibleStrings.ExtensibleString>
     {
         public ExtensibleString(string value) => throw null;
 
@@ -84,20 +84,20 @@ namespace SpecialWords._ExtensibleStrings
 
         public static bool operator !=(ExtensibleString left, ExtensibleString right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ExtensibleString"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::SpecialWords._ExtensibleStrings.ExtensibleString"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ExtensibleString(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ExtensibleString"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::SpecialWords._ExtensibleStrings.ExtensibleString"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ExtensibleString?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(ExtensibleString other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

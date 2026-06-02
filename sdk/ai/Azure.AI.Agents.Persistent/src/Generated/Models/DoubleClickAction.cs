@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A double click action. </summary>
     public partial class DoubleClickAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         internal DoubleClickAction(int x, int y) : base("double_click")
@@ -22,12 +22,12 @@ namespace Azure.AI.Agents.Persistent
             Y = y;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DoubleClickAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        internal DoubleClickAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int x, int y) : base(@type, additionalBinaryDataProperties)
+        internal DoubleClickAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int x, int y) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

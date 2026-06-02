@@ -17,9 +17,9 @@ namespace Azure.Analytics.PlanetaryComputer
     /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
     /// Represents a collection of STAC collections with links.
     /// </summary>
-    public partial class StacCatalogCollections : IJsonModel<StacCatalogCollections>
+    public partial class StacCatalogCollections : IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>
     {
-        /// <summary> Initializes a new instance of <see cref="StacCatalogCollections"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections"/> for deserialization. </summary>
         internal StacCatalogCollections()
         {
         }
@@ -28,55 +28,55 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacCatalogCollections PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStacCatalogCollections(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections.DeserializeStacCatalogCollections(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StacCatalogCollections)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StacCatalogCollections)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacCatalogCollections>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacCatalogCollections IPersistableModel<StacCatalogCollections>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StacCatalogCollections IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacCatalogCollections>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacCatalogCollections"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections"/> from. </param>
         public static explicit operator StacCatalogCollections(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStacCatalogCollections(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections.DeserializeStacCatalogCollections(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StacCatalogCollections>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,26 +84,26 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacCatalogCollections)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("links"u8);
             writer.WriteStartArray();
             foreach (StacLink item in Links)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<StacLink>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("collections"u8);
             writer.WriteStartArray();
             foreach (StacCollectionResource item in Collections)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<StacCollectionResource>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -111,9 +111,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -122,57 +122,57 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacCatalogCollections IJsonModel<StacCatalogCollections>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StacCatalogCollections IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacCatalogCollections JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacCatalogCollections)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStacCatalogCollections(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections.DeserializeStacCatalogCollections(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static StacCatalogCollections DeserializeStacCatalogCollections(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<StacLink> links = default;
-            IList<StacCollectionResource> collections = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource> collections = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("links"u8))
                 {
-                    List<StacLink> array = new List<StacLink>();
+                    List<global::Azure.Analytics.PlanetaryComputer.StacLink> array = new List<global::Azure.Analytics.PlanetaryComputer.StacLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StacLink.DeserializeStacLink(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.StacLink.DeserializeStacLink(item, options));
                     }
                     links = array;
                     continue;
                 }
                 if (prop.NameEquals("collections"u8))
                 {
-                    List<StacCollectionResource> array = new List<StacCollectionResource>();
+                    List<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource> array = new List<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StacCollectionResource.DeserializeStacCollectionResource(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.StacCollectionResource.DeserializeStacCollectionResource(item, options));
                     }
                     collections = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new StacCatalogCollections(links, collections, additionalBinaryDataProperties);

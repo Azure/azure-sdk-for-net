@@ -14,15 +14,15 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class RenderOptionLegend
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionLegend"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionLegend"/>. </summary>
         public RenderOptionLegend()
         {
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionLegend"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionLegend"/>. </summary>
         /// <param name="type">
         /// Legend type to make,
         /// one of: `continuous`,
@@ -43,7 +43,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// as scaled values.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionLegend(LegendConfigType? @type, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderOptionLegend(LegendConfigType? @type, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Labels = labels;

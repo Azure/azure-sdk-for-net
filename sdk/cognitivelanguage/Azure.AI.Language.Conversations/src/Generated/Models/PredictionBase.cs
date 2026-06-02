@@ -12,25 +12,25 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the base class of prediction
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.ConversationPrediction"/> and <see cref="Azure.AI.Language.Conversations.Models.OrchestrationPrediction"/>.
     /// </summary>
     public abstract partial class PredictionBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PredictionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.PredictionBase"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         private protected PredictionBase(ProjectKind projectKind)
         {
             ProjectKind = projectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PredictionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.PredictionBase"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PredictionBase(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PredictionBase(ProjectKind projectKind, string topIntent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             TopIntent = topIntent;

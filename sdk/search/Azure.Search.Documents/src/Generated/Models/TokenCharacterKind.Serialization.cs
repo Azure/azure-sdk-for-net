@@ -14,36 +14,36 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TokenCharacterKind value) => value switch
         {
-            TokenCharacterKind.Letter => "letter",
-            TokenCharacterKind.Digit => "digit",
-            TokenCharacterKind.Whitespace => "whitespace",
-            TokenCharacterKind.Punctuation => "punctuation",
-            TokenCharacterKind.Symbol => "symbol",
+            global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Letter => "letter",
+            global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Digit => "digit",
+            global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Whitespace => "whitespace",
+            global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Punctuation => "punctuation",
+            global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Symbol => "symbol",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenCharacterKind value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static TokenCharacterKind ToTokenCharacterKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "letter"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "letter"))
             {
-                return TokenCharacterKind.Letter;
+                return global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Letter;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "digit"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "digit"))
             {
-                return TokenCharacterKind.Digit;
+                return global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Digit;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "whitespace"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "whitespace"))
             {
-                return TokenCharacterKind.Whitespace;
+                return global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Whitespace;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "punctuation"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "punctuation"))
             {
-                return TokenCharacterKind.Punctuation;
+                return global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Punctuation;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "symbol"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "symbol"))
             {
-                return TokenCharacterKind.Symbol;
+                return global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind.Symbol;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenCharacterKind value.");
         }

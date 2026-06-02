@@ -13,14 +13,14 @@ namespace _Type.Dictionary
 {
     public partial class DictionaryClient
     {
-        public DictionaryClient() : this(new Uri("http://localhost:3000"), new DictionaryClientOptions()) => throw null;
+        public DictionaryClient() : this(new global::System.Uri("http://localhost:3000"), new DictionaryClientOptions()) => throw null;
 
-        internal DictionaryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DictionaryClientOptions options) => throw null;
+        internal DictionaryClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DictionaryClientOptions options) => throw null;
 
-        public DictionaryClient(Uri endpoint, DictionaryClientOptions options) : this(null, endpoint, options) => throw null;
+        public DictionaryClient(global::System.Uri endpoint, DictionaryClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public DictionaryClient(DictionaryClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public DictionaryClient(DictionaryClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

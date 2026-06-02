@@ -12,28 +12,28 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesBingGroundingSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public ResponsesBingGroundingSearchToolParameters(IEnumerable<ResponsesBingGroundingSearchConfiguration> searchConfigurations)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
+        public ResponsesBingGroundingSearchToolParameters(IEnumerable<global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesBingGroundingSearchToolParameters(IList<ResponsesBingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesBingGroundingSearchToolParameters(IList<global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,6 +43,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </summary>
-        public IList<ResponsesBingGroundingSearchConfiguration> SearchConfigurations { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration> SearchConfigurations { get; }
     }
 }

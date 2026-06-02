@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchContextSize value) => value switch
         {
-            SearchContextSize.Low => "low",
-            SearchContextSize.Medium => "medium",
-            SearchContextSize.High => "high",
+            global::Azure.AI.Extensions.OpenAI.SearchContextSize.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.SearchContextSize.Medium => "medium",
+            global::Azure.AI.Extensions.OpenAI.SearchContextSize.High => "high",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchContextSize value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SearchContextSize ToSearchContextSize(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return SearchContextSize.Low;
+                return global::Azure.AI.Extensions.OpenAI.SearchContextSize.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return SearchContextSize.Medium;
+                return global::Azure.AI.Extensions.OpenAI.SearchContextSize.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return SearchContextSize.High;
+                return global::Azure.AI.Extensions.OpenAI.SearchContextSize.High;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchContextSize value.");
         }

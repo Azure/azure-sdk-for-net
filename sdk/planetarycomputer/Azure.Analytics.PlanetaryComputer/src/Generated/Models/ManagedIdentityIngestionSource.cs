@@ -13,24 +13,24 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Managed Identity ingestion source. </summary>
     public partial class ManagedIdentityIngestionSource : IngestionSource
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, IngestionSourceType.BlobManagedIdentity)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
+        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, global::Azure.Analytics.PlanetaryComputer.IngestionSourceType.BlobManagedIdentity)
         {
-            Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 
             ConnectionInfo = connectionInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
-        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
+        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
         }

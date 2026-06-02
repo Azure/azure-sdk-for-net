@@ -13,9 +13,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for analyzers. </summary>
-    public partial class LexicalAnalyzer : IJsonModel<LexicalAnalyzer>
+    public partial class LexicalAnalyzer : IJsonModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>
     {
-        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer"/> for deserialization. </summary>
         internal LexicalAnalyzer()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LexicalAnalyzer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLexicalAnalyzer(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer.DeserializeLexicalAnalyzer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LexicalAnalyzer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LexicalAnalyzer IPersistableModel<LexicalAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LexicalAnalyzer IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LexicalAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LexicalAnalyzer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,16 +73,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -90,9 +90,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -101,26 +101,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LexicalAnalyzer IJsonModel<LexicalAnalyzer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LexicalAnalyzer IJsonModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LexicalAnalyzer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLexicalAnalyzer(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer.DeserializeLexicalAnalyzer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LexicalAnalyzer DeserializeLexicalAnalyzer(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -129,16 +129,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Azure.Search.CustomAnalyzer":
-                        return CustomAnalyzer.DeserializeCustomAnalyzer(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.CustomAnalyzer.DeserializeCustomAnalyzer(element, options);
                     case "#Microsoft.Azure.Search.PatternAnalyzer":
-                        return PatternAnalyzer.DeserializePatternAnalyzer(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.PatternAnalyzer.DeserializePatternAnalyzer(element, options);
                     case "#Microsoft.Azure.Search.StandardAnalyzer":
-                        return LuceneStandardAnalyzer.DeserializeLuceneStandardAnalyzer(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.LuceneStandardAnalyzer.DeserializeLuceneStandardAnalyzer(element, options);
                     case "#Microsoft.Azure.Search.StopAnalyzer":
-                        return StopAnalyzer.DeserializeStopAnalyzer(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.StopAnalyzer.DeserializeStopAnalyzer(element, options);
                 }
             }
-            return UnknownLexicalAnalyzer.DeserializeUnknownLexicalAnalyzer(element, options);
+            return global::Azure.Search.Documents.Indexes.Models.UnknownLexicalAnalyzer.DeserializeUnknownLexicalAnalyzer(element, options);
         }
     }
 }

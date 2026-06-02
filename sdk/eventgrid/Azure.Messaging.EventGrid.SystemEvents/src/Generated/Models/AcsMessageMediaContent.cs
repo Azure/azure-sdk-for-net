@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageMediaContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageMediaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> Required. The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> Required. The media identifier. </param>
         internal AcsMessageMediaContent(string mimeType, string mediaId)
@@ -25,14 +25,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MediaId = mediaId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageMediaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> Required. The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> Required. The media identifier. </param>
         /// <param name="fileName"> Optional. The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> Optional. The caption for the media object, if supported and provided. </param>
         /// <param name="animated"> Optional. Set to true if the sticker is animated; false otherwise. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption, bool? animated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption, bool? animated, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MimeType = mimeType;
             MediaId = mediaId;

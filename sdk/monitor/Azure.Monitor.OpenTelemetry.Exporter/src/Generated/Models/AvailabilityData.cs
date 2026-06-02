@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class AvailabilityData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="AvailabilityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.AvailabilityData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="id">
         /// Identifier of a test run. Use it to correlate steps of test run and telemetry
@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailabilityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.AvailabilityData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="message"> Diagnostic message for the result. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal AvailabilityData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, string id, string name, string duration, bool success, string runLocation, string message, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
+        internal AvailabilityData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, string id, string name, string duration, bool success, string runLocation, string message, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Id = id;
             Name = name;

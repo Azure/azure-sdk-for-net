@@ -14,17 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiManagementGatewayApiRemovedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayApiRemovedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayApiRemovedEventData"/>. </summary>
         internal ApiManagementGatewayApiRemovedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayApiRemovedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayApiRemovedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/apis/&lt;ResourceName&gt;`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayApiRemovedEventData(string resourceUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementGatewayApiRemovedEventData(string resourceUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceUri = resourceUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

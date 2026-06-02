@@ -9,11 +9,11 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownVersionSelectionRule : VersionSelectionRule
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVersionSelectionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownVersionSelectionRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", agentVersion, additionalBinaryDataProperties)
+        internal UnknownVersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", agentVersion, additionalBinaryDataProperties)
         {
         }
     }

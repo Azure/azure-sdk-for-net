@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class HostEndpointSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.HostEndpointSettings"/>. </summary>
         public HostEndpointSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.HostEndpointSettings"/>. </summary>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(string inVmAccessControlProfileReferenceId, HostEndpointSettingsModeType? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostEndpointSettings(string inVmAccessControlProfileReferenceId, HostEndpointSettingsModeType? mode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
             Mode = mode;

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Figure containing a diagram, such as a flowchart or network diagram. </summary>
-    public partial class DocumentMermaidFigure : DocumentFigure, IJsonModel<DocumentMermaidFigure>
+    public partial class DocumentMermaidFigure : DocumentFigure, IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentMermaidFigure"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/> for deserialization. </summary>
         internal DocumentMermaidFigure()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DocumentFigure PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentMermaidFigure(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure.DeserializeDocumentMermaidFigure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentMermaidFigure)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentMermaidFigure)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentMermaidFigure>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentMermaidFigure IPersistableModel<DocumentMermaidFigure>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentMermaidFigure)PersistableModelCreateCore(data, options);
+        DocumentMermaidFigure IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DocumentMermaidFigure)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentMermaidFigure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentMermaidFigure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentMermaidFigure)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("content"u8);
@@ -85,26 +85,26 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentMermaidFigure IJsonModel<DocumentMermaidFigure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentMermaidFigure)JsonModelCreateCore(ref reader, options);
+        DocumentMermaidFigure IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DocumentMermaidFigure)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DocumentFigure JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentMermaidFigure)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentMermaidFigure(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure.DeserializeDocumentMermaidFigure(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentMermaidFigure DeserializeDocumentMermaidFigure(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -114,10 +114,10 @@ namespace Azure.AI.ContentUnderstanding
             ContentSpan span = default;
             IList<string> elements = default;
             DocumentCaption caption = default;
-            IList<DocumentFootnote> footnotes = default;
+            IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default;
             string description = default;
             SemanticRole? role = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string content = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,23 +138,23 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("span"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    span = ContentSpan.DeserializeContentSpan(prop.Value, options);
+                    span = global::Azure.AI.ContentUnderstanding.ContentSpan.DeserializeContentSpan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("elements"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -168,23 +168,23 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("caption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(prop.Value, options);
+                    caption = global::Azure.AI.ContentUnderstanding.DocumentCaption.DeserializeDocumentCaption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("footnotes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentFootnote> array = new List<DocumentFootnote>();
+                    List<global::Azure.AI.ContentUnderstanding.DocumentFootnote> array = new List<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.DocumentFootnote.DeserializeDocumentFootnote(item, options));
                     }
                     footnotes = array;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -208,9 +208,9 @@ namespace Azure.AI.ContentUnderstanding
                     content = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentMermaidFigure(
@@ -218,9 +218,9 @@ namespace Azure.AI.ContentUnderstanding
                 id,
                 source,
                 span,
-                elements ?? new ChangeTrackingList<string>(),
+                (elements ?? new ChangeTrackingList<string>()),
                 caption,
-                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                (footnotes ?? new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>()),
                 description,
                 role,
                 additionalBinaryDataProperties,

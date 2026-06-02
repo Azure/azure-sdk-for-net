@@ -13,28 +13,28 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for a CustomHealthcare project. </summary>
     public partial class ExportedCustomHealthcareProjectAsset : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomHealthcareProjectAsset"/>. </summary>
-        public ExportedCustomHealthcareProjectAsset() : base(TextAuthoringProjectKind.CustomHealthcare)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset"/>. </summary>
+        public ExportedCustomHealthcareProjectAsset() : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomHealthcare)
         {
-            Entities = new ChangeTrackingList<TextAuthoringExportedCompositeEntity>();
-            Documents = new ChangeTrackingList<ExportedCustomHealthcareDocument>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>();
+            Documents = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomHealthcareProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="entities"> The list of entities belonging to the project. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        internal ExportedCustomHealthcareProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TextAuthoringExportedCompositeEntity> entities, IList<ExportedCustomHealthcareDocument> documents) : base(projectKind, additionalBinaryDataProperties)
+        internal ExportedCustomHealthcareProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> entities, IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> documents) : base(projectKind, additionalBinaryDataProperties)
         {
             Entities = entities;
             Documents = documents;
         }
 
         /// <summary> The list of entities belonging to the project. </summary>
-        public IList<TextAuthoringExportedCompositeEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> Entities { get; }
 
         /// <summary> The list of documents belonging to the project. </summary>
-        public IList<ExportedCustomHealthcareDocument> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> Documents { get; }
     }
 }

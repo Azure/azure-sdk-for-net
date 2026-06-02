@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ProjectConversationUpdateOptions. </summary>
-    public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
+    public partial class ProjectConversationUpdateOptions : IJsonModel<global::Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>
     {
     }
 }

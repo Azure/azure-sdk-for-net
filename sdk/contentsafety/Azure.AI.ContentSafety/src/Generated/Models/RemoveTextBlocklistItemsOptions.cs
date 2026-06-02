@@ -15,22 +15,22 @@ namespace Azure.AI.ContentSafety
     public partial class RemoveTextBlocklistItemsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RemoveTextBlocklistItemsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItemIds"> Array of blocklistItemIds to remove. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blocklistItemIds"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="blocklistItemIds"/> is null. </exception>
         public RemoveTextBlocklistItemsOptions(IEnumerable<string> blocklistItemIds)
         {
-            Argument.AssertNotNull(blocklistItemIds, nameof(blocklistItemIds));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(blocklistItemIds, nameof(blocklistItemIds));
 
             BlocklistItemIds = blocklistItemIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoveTextBlocklistItemsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItemIds"> Array of blocklistItemIds to remove. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveTextBlocklistItemsOptions(IList<string> blocklistItemIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoveTextBlocklistItemsOptions(IList<string> blocklistItemIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistItemIds = blocklistItemIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

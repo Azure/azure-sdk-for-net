@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class OutputFileDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileDestination"/>. </summary>
         public OutputFileDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileDestination"/>. </summary>
         /// <param name="container"> A location in Azure blob storage to which files are uploaded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFileDestination(OutputFileBlobContainerDestination container, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputFileDestination(OutputFileBlobContainerDestination container, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Container = container;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

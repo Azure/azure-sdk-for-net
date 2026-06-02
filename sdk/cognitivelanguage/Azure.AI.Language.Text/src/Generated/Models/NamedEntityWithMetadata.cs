@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class NamedEntityWithMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NamedEntityWithMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NamedEntityWithMetadata"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -29,10 +29,10 @@ namespace Azure.AI.Language.Text
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Tags = new ChangeTrackingList<EntityTag>();
+            Tags = new ChangeTrackingList<global::Azure.AI.Language.Text.EntityTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamedEntityWithMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NamedEntityWithMetadata"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Text
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
         /// <param name="metadata"> The entity metadata object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamedEntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, string @type, IList<EntityTag> tags, BaseMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamedEntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, string @type, IList<global::Azure.AI.Language.Text.EntityTag> tags, BaseMetadata metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Category = category;
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Text
         public string Type { get; }
 
         /// <summary> List of entity tags. Tags are to express some similarities/affinity between entities. </summary>
-        public IList<EntityTag> Tags { get; }
+        public IList<global::Azure.AI.Language.Text.EntityTag> Tags { get; }
 
         /// <summary> The entity metadata object. </summary>
         public BaseMetadata Metadata { get; }

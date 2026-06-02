@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
     public partial class AnalyzeTextPiiResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPiiResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextPiiResult"/>. </summary>
         /// <param name="results"> The list of pii results. </param>
-        internal AnalyzeTextPiiResult(PiiResult results) : base(AnalyzeTextResultsKind.PiiEntityRecognitionResults)
+        internal AnalyzeTextPiiResult(PiiResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.PiiEntityRecognitionResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPiiResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextPiiResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> The list of pii results. </param>
-        internal AnalyzeTextPiiResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PiiResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextPiiResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, PiiResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A GitHub issue routine trigger. </summary>
-    public partial class GitHubIssueRoutineTrigger : RoutineTrigger, IJsonModel<GitHubIssueRoutineTrigger>
+    public partial class GitHubIssueRoutineTrigger : RoutineTrigger, IJsonModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>
     {
-        /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.GitHubIssueRoutineTrigger"/> for deserialization. </summary>
         internal GitHubIssueRoutineTrigger()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGitHubIssueRoutineTrigger(document.RootElement, options);
+                        return global::Azure.AI.Projects.GitHubIssueRoutineTrigger.DeserializeGitHubIssueRoutineTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubIssueRoutineTrigger)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.GitHubIssueRoutineTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubIssueRoutineTrigger)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.GitHubIssueRoutineTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitHubIssueRoutineTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubIssueRoutineTrigger IPersistableModel<GitHubIssueRoutineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (GitHubIssueRoutineTrigger)PersistableModelCreateCore(data, options);
+        GitHubIssueRoutineTrigger IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => ((GitHubIssueRoutineTrigger)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitHubIssueRoutineTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitHubIssueRoutineTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(GitHubIssueRoutineTrigger)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.GitHubIssueRoutineTrigger)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connection_id"u8);
@@ -88,31 +88,31 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubIssueRoutineTrigger IJsonModel<GitHubIssueRoutineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GitHubIssueRoutineTrigger)JsonModelCreateCore(ref reader, options);
+        GitHubIssueRoutineTrigger IJsonModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((GitHubIssueRoutineTrigger)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.GitHubIssueRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(GitHubIssueRoutineTrigger)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.GitHubIssueRoutineTrigger)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGitHubIssueRoutineTrigger(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.GitHubIssueRoutineTrigger.DeserializeGitHubIssueRoutineTrigger(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static GitHubIssueRoutineTrigger DeserializeGitHubIssueRoutineTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             RoutineTriggerType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string connectionId = default;
             string owner = default;
             string repository = default;
@@ -144,9 +144,9 @@ namespace Azure.AI.Projects
                     issueEvent = new GitHubIssueEvent(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new GitHubIssueRoutineTrigger(

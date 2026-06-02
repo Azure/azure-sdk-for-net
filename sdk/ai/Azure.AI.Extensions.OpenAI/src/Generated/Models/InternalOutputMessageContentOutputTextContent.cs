@@ -11,24 +11,24 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputMessageContentOutputTextContent : InternalOutputMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
+        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<global::OpenAI.InternalAnnotation> annotations, IEnumerable<global::OpenAI.InternalLogProb> logprobs) : base(global::Azure.AI.Extensions.OpenAI.OutputMessageContentType.OutputText)
         {
             Text = text;
             Annotations = annotations.ToList();
             Logprobs = logprobs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<InternalAnnotation> annotations, IList<InternalLogProb> logprobs) : base(@type, additionalBinaryDataProperties)
+        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text, IList<global::OpenAI.InternalAnnotation> annotations, IList<global::OpenAI.InternalLogProb> logprobs) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -39,9 +39,9 @@ namespace Azure.AI.Extensions.OpenAI
         public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
-        public IList<InternalAnnotation> Annotations { get; }
+        public IList<global::OpenAI.InternalAnnotation> Annotations { get; }
 
         /// <summary> Gets the Logprobs. </summary>
-        public IList<InternalLogProb> Logprobs { get; }
+        public IList<global::OpenAI.InternalLogProb> Logprobs { get; }
     }
 }

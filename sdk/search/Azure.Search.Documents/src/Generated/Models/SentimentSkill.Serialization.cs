@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
-    public partial class SentimentSkill : SearchIndexerSkill, IJsonModel<SentimentSkill>
+    public partial class SentimentSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkill"/> for deserialization. </summary>
         internal SentimentSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSentimentSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SentimentSkill.DeserializeSentimentSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SentimentSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SentimentSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SentimentSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentSkill IPersistableModel<SentimentSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (SentimentSkill)PersistableModelCreateCore(data, options);
+        SentimentSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SentimentSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SentimentSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SentimentSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,23 +74,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentimentSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SentimentSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (Optional.IsDefined(IncludeOpinionMining))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IncludeOpinionMining))
             {
                 writer.WritePropertyName("includeOpinionMining"u8);
                 writer.WriteBooleanValue(IncludeOpinionMining.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
@@ -99,26 +99,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentSkill IJsonModel<SentimentSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SentimentSkill)JsonModelCreateCore(ref reader, options);
+        SentimentSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SentimentSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SentimentSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentimentSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SentimentSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.SentimentSkill.DeserializeSentimentSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SentimentSkill DeserializeSentimentSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -126,9 +126,9 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             SentimentSkillLanguage? defaultLanguageCode = default;
             bool? includeOpinionMining = default;
             string modelVersion = default;
@@ -156,27 +156,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         defaultLanguageCode = null;
                         continue;
@@ -186,7 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("includeOpinionMining"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -195,7 +195,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         modelVersion = null;
                         continue;
@@ -203,9 +203,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     modelVersion = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SentimentSkill(

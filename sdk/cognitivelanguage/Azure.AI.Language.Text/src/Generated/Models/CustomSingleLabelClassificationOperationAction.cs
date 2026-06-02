@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Use custom models to classify text into single label taxonomy. </summary>
     public partial class CustomSingleLabelClassificationOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationOperationAction"/>. </summary>
-        public CustomSingleLabelClassificationOperationAction() : base(AnalyzeTextOperationActionKind.CustomSingleLabelClassification)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction"/>. </summary>
+        public CustomSingleLabelClassificationOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.CustomSingleLabelClassification)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal CustomSingleLabelClassificationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomSingleLabelClassificationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal CustomSingleLabelClassificationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, CustomSingleLabelClassificationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }

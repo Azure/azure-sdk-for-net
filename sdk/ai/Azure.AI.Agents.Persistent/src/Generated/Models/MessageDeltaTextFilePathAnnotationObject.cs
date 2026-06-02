@@ -14,17 +14,17 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageDeltaTextFilePathAnnotationObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFilePathAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotationObject"/>. </summary>
         internal MessageDeltaTextFilePathAnnotationObject()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFilePathAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotationObject"/>. </summary>
         /// <param name="fileId"> The file ID for the annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaTextFilePathAnnotationObject(string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaTextFilePathAnnotationObject(string fileId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

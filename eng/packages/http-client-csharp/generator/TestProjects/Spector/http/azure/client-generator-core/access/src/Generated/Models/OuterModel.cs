@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         internal OuterModel(string name, InnerModel inner) : base(name) => throw null;
 
-        internal OuterModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, InnerModel inner) : base(name, additionalBinaryDataProperties) => throw null;
+        internal OuterModel(string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InnerModel inner) : base(name, additionalBinaryDataProperties) => throw null;
 
         public InnerModel Inner => throw null;
     }

@@ -17,13 +17,13 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateResponseAudioTranscriptDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTranscriptDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="transcript"> The final transcript of the audio. </param>
-        internal SessionUpdateResponseAudioTranscriptDone(string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(ServerEventType.ResponseAudioTranscriptDone)
+        internal SessionUpdateResponseAudioTranscriptDone(string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAudioTranscriptDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
             Transcript = transcript;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTranscriptDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="transcript"> The final transcript of the audio. </param>
-        internal SessionUpdateResponseAudioTranscriptDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAudioTranscriptDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

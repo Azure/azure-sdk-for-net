@@ -15,15 +15,15 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class LongRunningOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LongRunningOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.LongRunningOperation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="type"> Operation type. </param>
         /// <param name="creationTime"> The UTC time at which the operation was created. </param>
         /// <param name="statusHistory"> The history of the operation status in time. </param>
-        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory)
+        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, IEnumerable<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory)
         {
             Id = id;
             Status = status;
@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
             AdditionalInformation = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LongRunningOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.LongRunningOperation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="type"> Operation type. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="additionalInformation"> Additional information elements about the particular operation type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, string collectionId, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IDictionary<string, string> additionalInformation, ErrorInfo error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, string collectionId, IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IDictionary<string, string> additionalInformation, ErrorInfo error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -76,7 +76,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string CollectionId { get; }
 
         /// <summary> The history of the operation status in time. </summary>
-        public IList<OperationStatusHistoryItem> StatusHistory { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> StatusHistory { get; }
 
         /// <summary> The UTC time at which the operation was started. </summary>
         public DateTimeOffset? StartTime { get; }

@@ -11,12 +11,12 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesFabricIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesToolboxSearchPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponsesComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesComputerTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam"/>, and <see cref="Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownTool))]
-    public abstract partial class ResponsesTool : IJsonModel<ResponsesTool>
+    [PersistableModelProxyAttribute(typeof(UnknownTool))]
+    public abstract partial class ResponsesTool : IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesTool"/> for deserialization. </summary>
         internal ResponsesTool()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesTool(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesTool IPersistableModel<ResponsesTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResponsesTool IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,14 +74,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesTool)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -89,9 +89,9 @@ namespace Azure.AI.Extensions.OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -100,26 +100,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesTool IJsonModel<ResponsesTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResponsesTool IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesTool DeserializeResponsesTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -128,66 +128,66 @@ namespace Azure.AI.Extensions.OpenAI
                 switch (discriminator.GetString())
                 {
                     case "bing_grounding":
-                        return ResponsesBingGroundingTool.DeserializeResponsesBingGroundingTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool.DeserializeResponsesBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
-                        return ResponsesMicrosoftFabricPreviewTool.DeserializeResponsesMicrosoftFabricPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool.DeserializeResponsesMicrosoftFabricPreviewTool(element, options);
                     case "sharepoint_grounding_preview":
-                        return ResponsesSharepointPreviewTool.DeserializeResponsesSharepointPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool.DeserializeResponsesSharepointPreviewTool(element, options);
                     case "azure_ai_search":
-                        return ResponsesAzureAISearchTool.DeserializeResponsesAzureAISearchTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool.DeserializeResponsesAzureAISearchTool(element, options);
                     case "openapi":
-                        return ResponsesOpenApiTool.DeserializeResponsesOpenApiTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool.DeserializeResponsesOpenApiTool(element, options);
                     case "bing_custom_search_preview":
-                        return ResponsesBingCustomSearchPreviewTool.DeserializeResponsesBingCustomSearchPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool.DeserializeResponsesBingCustomSearchPreviewTool(element, options);
                     case "browser_automation_preview":
-                        return ResponsesBrowserAutomationPreviewTool.DeserializeResponsesBrowserAutomationPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool.DeserializeResponsesBrowserAutomationPreviewTool(element, options);
                     case "azure_function":
-                        return ResponsesAzureFunctionTool.DeserializeResponsesAzureFunctionTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool.DeserializeResponsesAzureFunctionTool(element, options);
                     case "capture_structured_outputs":
-                        return ResponsesCaptureStructuredOutputsTool.DeserializeResponsesCaptureStructuredOutputsTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool.DeserializeResponsesCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
-                        return ResponsesA2APreviewTool.DeserializeResponsesA2APreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool.DeserializeResponsesA2APreviewTool(element, options);
                     case "work_iq_preview":
-                        return ResponsesWorkIQPreviewTool.DeserializeResponsesWorkIQPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool.DeserializeResponsesWorkIQPreviewTool(element, options);
                     case "fabric_iq_preview":
-                        return ResponsesFabricIQPreviewTool.DeserializeResponsesFabricIQPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool.DeserializeResponsesFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
-                        return ResponsesMemorySearchPreviewTool.DeserializeResponsesMemorySearchPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool.DeserializeResponsesMemorySearchPreviewTool(element, options);
                     case "toolbox_search_preview":
-                        return ResponsesToolboxSearchPreviewTool.DeserializeResponsesToolboxSearchPreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool.DeserializeResponsesToolboxSearchPreviewTool(element, options);
                     case "code_interpreter":
-                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                        return global::OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                        return global::OpenAI.InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
-                        return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
-                        return ResponsesWebSearchTool.DeserializeResponsesWebSearchTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool.DeserializeResponsesWebSearchTool(element, options);
                     case "mcp":
-                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                        return global::OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
-                        return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
+                        return global::OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
-                        return ResponsesLocalShellToolParam.DeserializeResponsesLocalShellToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam.DeserializeResponsesLocalShellToolParam(element, options);
                     case "shell":
-                        return ResponsesFunctionShellToolParam.DeserializeResponsesFunctionShellToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam.DeserializeResponsesFunctionShellToolParam(element, options);
                     case "custom":
-                        return ResponsesCustomToolParam.DeserializeResponsesCustomToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam.DeserializeResponsesCustomToolParam(element, options);
                     case "web_search_preview":
-                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
+                        return global::OpenAI.InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
-                        return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
                     case "computer":
-                        return ResponsesComputerTool.DeserializeResponsesComputerTool(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesComputerTool.DeserializeResponsesComputerTool(element, options);
                     case "namespace":
-                        return ResponsesNamespaceToolParam.DeserializeResponsesNamespaceToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam.DeserializeResponsesNamespaceToolParam(element, options);
                     case "tool_search":
-                        return ResponsesToolSearchToolParam.DeserializeResponsesToolSearchToolParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam.DeserializeResponsesToolSearchToolParam(element, options);
                 }
             }
-            return UnknownTool.DeserializeUnknownTool(element, options);
+            return global::Azure.AI.Extensions.OpenAI.UnknownTool.DeserializeUnknownTool(element, options);
         }
     }
 }

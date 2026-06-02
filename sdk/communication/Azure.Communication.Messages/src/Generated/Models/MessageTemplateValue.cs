@@ -12,14 +12,14 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The class describes a parameter of a template.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/>, and <see cref="MessageTemplateQuickAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.MessageTemplateText"/>, <see cref="Azure.Communication.Messages.MessageTemplateImage"/>, <see cref="Azure.Communication.Messages.MessageTemplateDocument"/>, <see cref="Azure.Communication.Messages.MessageTemplateVideo"/>, <see cref="Azure.Communication.Messages.MessageTemplateLocation"/>, and <see cref="Azure.Communication.Messages.MessageTemplateQuickAction"/>.
     /// </summary>
     public abstract partial class MessageTemplateValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateValue"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         private protected MessageTemplateValue(string name, MessageTemplateValueKind kind)
@@ -28,11 +28,11 @@ namespace Azure.Communication.Messages
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateValue"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Kind = kind;

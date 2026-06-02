@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FreshnessScoringParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FreshnessScoringParameters"/>. </summary>
         /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
         public FreshnessScoringParameters(TimeSpan boostingDuration)
         {
             BoostingDuration = boostingDuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FreshnessScoringParameters"/>. </summary>
         /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FreshnessScoringParameters(TimeSpan boostingDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FreshnessScoringParameters(TimeSpan boostingDuration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoostingDuration = boostingDuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

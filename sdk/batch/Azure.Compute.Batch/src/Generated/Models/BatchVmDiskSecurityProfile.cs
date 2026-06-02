@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class BatchVmDiskSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchVmDiskSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchVmDiskSecurityProfile"/>. </summary>
         public BatchVmDiskSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchVmDiskSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchVmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. <b>Note</b>: It can be set for only Confidential VMs and is required when using Confidential VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchVmDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SecurityEncryptionType = securityEncryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

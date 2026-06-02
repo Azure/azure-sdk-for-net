@@ -18,16 +18,16 @@ namespace Client.Structure.ClientOperationGroup
     {
         protected Group4() => throw null;
 
-        internal Group4(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal Group4(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Four(RequestContext context) => throw null;
 
-        public virtual Task<Response> FourAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FourAsync(RequestContext context) => throw null;
 
         public virtual Response Four(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FourAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FourAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,54 +14,54 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
-    public partial class LogsBatchQueryResult : LogsQueryResult, IJsonModel<LogsBatchQueryResult>
+    public partial class LogsBatchQueryResult : LogsQueryResult, IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LogsQueryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.Query.Logs.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLogsBatchQueryResult(document.RootElement, options);
+                        return global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.Query.Logs.AzureMonitorQueryLogsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogsBatchQueryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogsBatchQueryResult IPersistableModel<LogsBatchQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogsBatchQueryResult)PersistableModelCreateCore(data, options);
+        LogsBatchQueryResult IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => ((LogsBatchQueryResult)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogsBatchQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogsBatchQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,30 +69,30 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Tables))
+            if (global::Azure.Monitor.Query.Logs.Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (LogsTable item in Tables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<LogsTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Statistics))
+            if (global::Azure.Monitor.Query.Logs.Optional.IsCollectionDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteStartObject();
                 foreach (var item in Statistics)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -100,22 +100,22 @@ namespace Azure.Monitor.Query.Logs.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Render))
+            if (global::Azure.Monitor.Query.Logs.Optional.IsCollectionDefined(Render))
             {
                 writer.WritePropertyName("render"u8);
                 writer.WriteStartObject();
                 foreach (var item in Render)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -123,9 +123,9 @@ namespace Azure.Monitor.Query.Logs.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -135,45 +135,45 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogsBatchQueryResult IJsonModel<LogsBatchQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LogsBatchQueryResult)JsonModelCreateCore(ref reader, options);
+        LogsBatchQueryResult IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((LogsBatchQueryResult)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LogsQueryResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogsBatchQueryResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IReadOnlyList<LogsTable> allTables = default;
+            IReadOnlyList<global::Azure.Monitor.Query.Logs.Models.LogsTable> allTables = default;
             JsonElement error = default;
             JsonElement statistics = default;
             JsonElement visualization = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<LogsTable> tables = default;
-            IDictionary<string, BinaryData> statistics0 = default;
-            IDictionary<string, BinaryData> render = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Monitor.Query.Logs.Models.LogsTable> tables = default;
+            IDictionary<string, global::System.BinaryData> statistics0 = default;
+            IDictionary<string, global::System.BinaryData> render = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tables"u8))
                 {
-                    List<LogsTable> array = new List<LogsTable>();
+                    List<global::Azure.Monitor.Query.Logs.Models.LogsTable> array = new List<global::Azure.Monitor.Query.Logs.Models.LogsTable>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogsTable.DeserializeLogsTable(item, options));
+                        array.Add(global::Azure.Monitor.Query.Logs.Models.LogsTable.DeserializeLogsTable(item, options));
                     }
                     allTables = array;
                     continue;
@@ -195,34 +195,34 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (prop.NameEquals("tables"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<LogsTable> array = new List<LogsTable>();
+                    List<global::Azure.Monitor.Query.Logs.Models.LogsTable> array = new List<global::Azure.Monitor.Query.Logs.Models.LogsTable>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogsTable.DeserializeLogsTable(item, options));
+                        array.Add(global::Azure.Monitor.Query.Logs.Models.LogsTable.DeserializeLogsTable(item, options));
                     }
                     tables = array;
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     statistics0 = dictionary;
@@ -230,28 +230,28 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (prop.NameEquals("render"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     render = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LogsBatchQueryResult(
@@ -260,9 +260,9 @@ namespace Azure.Monitor.Query.Logs.Models
                 statistics,
                 visualization,
                 additionalBinaryDataProperties,
-                tables ?? new ChangeTrackingList<LogsTable>(),
-                statistics0 ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                render ?? new ChangeTrackingDictionary<string, BinaryData>());
+                (tables ?? new ChangeTrackingList<global::Azure.Monitor.Query.Logs.Models.LogsTable>()),
+                (statistics0 ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (render ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()));
         }
     }
 }

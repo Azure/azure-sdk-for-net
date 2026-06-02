@@ -14,24 +14,24 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportAssetSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryResult"/>. </summary>
         internal ReportAssetSummaryResult()
         {
-            AssetSummaries = new ChangeTrackingList<AssetSummaryResult>();
+            AssetSummaries = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSummaryResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryResult"/>. </summary>
         /// <param name="assetSummaries"> The collection of asset summaries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSummaryResult(IList<AssetSummaryResult> assetSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSummaryResult(IList<global::Azure.Analytics.Defender.Easm.AssetSummaryResult> assetSummaries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssetSummaries = assetSummaries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The collection of asset summaries. </summary>
-        public IList<AssetSummaryResult> AssetSummaries { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetSummaryResult> AssetSummaries { get; }
     }
 }

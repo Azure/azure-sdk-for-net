@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an LLM query planning activity record. </summary>
     public partial class KnowledgeBaseModelQueryPlanningActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.ModelQueryPlanning)
+        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.ModelQueryPlanning)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM query planning activity. </param>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;

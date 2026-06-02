@@ -32,14 +32,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
             uri.AppendPath(":addOrUpdateBlocklistItems", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -53,14 +53,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -74,14 +74,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -92,14 +92,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -113,14 +113,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath(name, true);
             uri.AppendPath("/blocklistItems/", false);
             uri.AppendPath(blocklistItemId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -133,31 +133,31 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blocklistItems", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.ContentSafety.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.ContentSafety.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.ContentSafety.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTextBlocklistItemsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTextBlocklistItemsRequest(global::System.Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -166,20 +166,20 @@ namespace Azure.AI.ContentSafety
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.ContentSafety.TypeFormatters.ConvertToString(maxpagesize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -190,19 +190,19 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text/blocklists", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTextBlocklistsRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetTextBlocklistsRequest(global::System.Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -211,16 +211,16 @@ namespace Azure.AI.ContentSafety
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -233,14 +233,14 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/text/blocklists/", false);
             uri.AppendPath(name, true);
             uri.AppendPath(":removeBlocklistItems", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

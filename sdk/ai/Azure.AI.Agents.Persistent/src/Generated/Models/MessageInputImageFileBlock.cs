@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> An image-file block in a new message, referencing an internally uploaded image by file ID. </summary>
     public partial class MessageInputImageFileBlock : MessageInputContentBlock
     {
-        /// <summary> Initializes a new instance of <see cref="MessageInputImageFileBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageFileBlock"/>. </summary>
         /// <param name="imageFile"> Information about the referenced image file, including file ID and optional detail level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageFile"/> is null. </exception>
-        public MessageInputImageFileBlock(MessageImageFileParam imageFile) : base(MessageBlockType.ImageFile)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="imageFile"/> is null. </exception>
+        public MessageInputImageFileBlock(MessageImageFileParam imageFile) : base(global::Azure.AI.Agents.Persistent.MessageBlockType.ImageFile)
         {
-            Argument.AssertNotNull(imageFile, nameof(imageFile));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(imageFile, nameof(imageFile));
 
             ImageFile = imageFile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageInputImageFileBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageFileBlock"/>. </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageFile"> Information about the referenced image file, including file ID and optional detail level. </param>
-        internal MessageInputImageFileBlock(MessageBlockType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageImageFileParam imageFile) : base(@type, additionalBinaryDataProperties)
+        internal MessageInputImageFileBlock(MessageBlockType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageImageFileParam imageFile) : base(@type, additionalBinaryDataProperties)
         {
             ImageFile = imageFile;
         }

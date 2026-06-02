@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Else : IJsonModel<Else>
+    public partial class Else : IJsonModel<global::SpecialWords._Models.Else>
     {
         internal Else() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Else>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Else>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Else IPersistableModel<Else>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Else IPersistableModel<global::SpecialWords._Models.Else>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Else>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Else>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="else"> The <see cref="Else"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="else"> The <see cref="global::SpecialWords._Models.Else"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Else @else) => throw null;
 
-        void IJsonModel<Else>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Else>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Else IJsonModel<Else>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Else IJsonModel<global::SpecialWords._Models.Else>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Else JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

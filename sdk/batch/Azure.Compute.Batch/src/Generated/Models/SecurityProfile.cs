@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class SecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.SecurityProfile"/>. </summary>
         public SecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.SecurityProfile"/>. </summary>
         /// <param name="isEncryptedAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(bool? isEncryptedAtHost, ProxyAgentSettings proxyAgentSettings, SecurityTypes? securityType, BatchUefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProfile(bool? isEncryptedAtHost, ProxyAgentSettings proxyAgentSettings, SecurityTypes? securityType, BatchUefiSettings uefiSettings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IsEncryptedAtHost = isEncryptedAtHost;
             ProxyAgentSettings = proxyAgentSettings;

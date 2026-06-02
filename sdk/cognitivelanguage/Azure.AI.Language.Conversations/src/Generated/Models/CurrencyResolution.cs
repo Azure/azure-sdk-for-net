@@ -13,22 +13,22 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the currency entity resolution model. </summary>
     public partial class CurrencyResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="CurrencyResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CurrencyResolution"/>. </summary>
         /// <param name="value"> The money amount captured in the extracted entity. </param>
         /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
-        internal CurrencyResolution(double value, string unit) : base(ResolutionKind.CurrencyResolution)
+        internal CurrencyResolution(double value, string unit) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.CurrencyResolution)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CurrencyResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CurrencyResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
         /// <param name="value"> The money amount captured in the extracted entity. </param>
         /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
-        internal CurrencyResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string iso4217, double value, string unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal CurrencyResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string iso4217, double value, string unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Iso4217 = iso4217;
             Value = value;

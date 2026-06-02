@@ -10,20 +10,20 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalCodeInterpreterOutputLogs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
         public InternalCodeInterpreterOutputLogs(string logs)
         {
             Logs = logs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputLogs"/>. </summary>
         /// <param name="type"> The type of the output. Always `logs`. </param>
         /// <param name="logs"> The logs output from the code interpreter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterOutputLogs(string @type, string logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCodeInterpreterOutputLogs(string @type, string logs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Logs = logs;

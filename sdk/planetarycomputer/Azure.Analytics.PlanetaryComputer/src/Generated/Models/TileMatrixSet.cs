@@ -22,12 +22,12 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TileMatrixSet
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSet"/>. </summary>
         /// <param name="crs"> Coordinate reference system identifier. </param>
         /// <param name="tileMatrices"> Array of tile matrices at different zoom levels. </param>
-        internal TileMatrixSet(string crs, IEnumerable<TileMatrix> tileMatrices)
+        internal TileMatrixSet(string crs, IEnumerable<global::Azure.Analytics.PlanetaryComputer.TileMatrix> tileMatrices)
         {
             Keywords = new ChangeTrackingList<string>();
             OrderedAxes = new ChangeTrackingList<string>();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.PlanetaryComputer
             TileMatrices = tileMatrices.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSet"/>. </summary>
         /// <param name="title"> Human-readable title of the tile matrix set. </param>
         /// <param name="description">
         /// Brief narrative description of this tile matrix set, normally available for
@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Geographic extent of the tile matrix set. </param>
         /// <param name="tileMatrices"> Array of tile matrices at different zoom levels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrixSet(string title, string description, IList<string> keywords, string id, string uri, IList<string> orderedAxes, string crs, Uri wellKnownScaleSet, TileMatrixSetBoundingBox boundingBox, IList<TileMatrix> tileMatrices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileMatrixSet(string title, string description, IList<string> keywords, string id, string uri, IList<string> orderedAxes, string crs, global::System.Uri wellKnownScaleSet, TileMatrixSetBoundingBox boundingBox, IList<global::Azure.Analytics.PlanetaryComputer.TileMatrix> tileMatrices, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -96,12 +96,12 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Crs { get; }
 
         /// <summary> URL reference to a standardized scale set. </summary>
-        public Uri WellKnownScaleSet { get; }
+        public global::System.Uri WellKnownScaleSet { get; }
 
         /// <summary> Geographic extent of the tile matrix set. </summary>
         public TileMatrixSetBoundingBox BoundingBox { get; }
 
         /// <summary> Array of tile matrices at different zoom levels. </summary>
-        public IList<TileMatrix> TileMatrices { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.TileMatrix> TileMatrices { get; }
     }
 }

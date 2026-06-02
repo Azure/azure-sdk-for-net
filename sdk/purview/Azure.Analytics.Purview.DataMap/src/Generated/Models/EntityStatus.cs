@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Status - can be active or deleted. </summary>
-    public readonly partial struct EntityStatus : IEquatable<EntityStatus>
+    public readonly partial struct EntityStatus : IEquatable<global::Azure.Analytics.Purview.DataMap.EntityStatus>
     {
         private readonly string _value;
         /// <summary> The status is active. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The status is deleted. </summary>
         private const string DeletedValue = "DELETED";
 
-        /// <summary> Initializes a new instance of <see cref="EntityStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.EntityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The status is deleted. </summary>
         public static EntityStatus Deleted { get; } = new EntityStatus(DeletedValue);
 
-        /// <summary> Determines if two <see cref="EntityStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.EntityStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityStatus left, EntityStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EntityStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.EntityStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityStatus left, EntityStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EntityStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.EntityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EntityStatus(string value) => new EntityStatus(value);
 
-        /// <summary> Converts a string to a <see cref="EntityStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.EntityStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityStatus?(string value) => value == null ? null : new EntityStatus(value);
+        public static implicit operator EntityStatus?(string value) => (value == null) ? null : new EntityStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EntityStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EntityStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EntityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EntityStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

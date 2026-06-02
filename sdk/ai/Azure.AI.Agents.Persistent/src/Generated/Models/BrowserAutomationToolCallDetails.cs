@@ -15,25 +15,25 @@ namespace Azure.AI.Agents.Persistent
     public partial class BrowserAutomationToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided to the Browser Automation tool. </param>
         /// <param name="output"> The output returned by the Browser Automation tool. </param>
         /// <param name="steps"> The steps the Browser Automation tool executed. </param>
-        internal BrowserAutomationToolCallDetails(string input, string output, IEnumerable<BrowserAutomationToolCallStep> steps)
+        internal BrowserAutomationToolCallDetails(string input, string output, IEnumerable<global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep> steps)
         {
             Input = input;
             Output = output;
             Steps = steps.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided to the Browser Automation tool. </param>
         /// <param name="output"> The output returned by the Browser Automation tool. </param>
         /// <param name="steps"> The steps the Browser Automation tool executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolCallDetails(string input, string output, IList<BrowserAutomationToolCallStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolCallDetails(string input, string output, IList<global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep> steps, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
@@ -48,6 +48,6 @@ namespace Azure.AI.Agents.Persistent
         public string Output { get; }
 
         /// <summary> The steps the Browser Automation tool executed. </summary>
-        public IList<BrowserAutomationToolCallStep> Steps { get; }
+        public IList<global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep> Steps { get; }
     }
 }

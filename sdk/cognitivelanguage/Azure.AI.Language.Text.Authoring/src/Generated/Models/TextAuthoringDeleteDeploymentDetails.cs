@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringDeleteDeploymentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringDeleteDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails"/>. </summary>
         public TextAuthoringDeleteDeploymentDetails()
         {
             AssignedResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringDeleteDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails"/>. </summary>
         /// <param name="assignedResourceIds"> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringDeleteDeploymentDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringDeleteDeploymentDetails(IList<string> assignedResourceIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssignedResourceIds = assignedResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

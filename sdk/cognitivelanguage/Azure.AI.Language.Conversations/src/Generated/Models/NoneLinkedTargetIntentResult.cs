@@ -13,19 +13,19 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> A wrap up of non-linked intent response. </summary>
     public partial class NoneLinkedTargetIntentResult : TargetIntentResult
     {
-        /// <summary> Initializes a new instance of <see cref="NoneLinkedTargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.NoneLinkedTargetIntentResult"/>. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal NoneLinkedTargetIntentResult(double confidence) : base(TargetProjectKind.NonLinked, confidence)
+        internal NoneLinkedTargetIntentResult(double confidence) : base(global::Azure.AI.Language.Conversations.Models.TargetProjectKind.NonLinked, confidence)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NoneLinkedTargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.NoneLinkedTargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
-        internal NoneLinkedTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
+        internal NoneLinkedTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ConversationResult result) : base(targetProjectKind, apiVersion, confidence, additionalBinaryDataProperties)
         {
             Result = result;
         }

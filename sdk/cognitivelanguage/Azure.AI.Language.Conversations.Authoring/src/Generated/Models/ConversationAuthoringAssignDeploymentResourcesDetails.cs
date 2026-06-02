@@ -15,28 +15,28 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringAssignDeploymentResourcesDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
-        public ConversationAuthoringAssignDeploymentResourcesDetails(IEnumerable<ConversationAuthoringResourceMetadata> metadata)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
+        public ConversationAuthoringAssignDeploymentResourcesDetails(IEnumerable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringResourceMetadata> metadata)
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(metadata, nameof(metadata));
 
             Metadata = metadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignDeploymentResourcesDetails(IList<ConversationAuthoringResourceMetadata> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringAssignDeploymentResourcesDetails(IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringResourceMetadata> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the metadata for the project resources to be assigned. </summary>
-        public IList<ConversationAuthoringResourceMetadata> Metadata { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringResourceMetadata> Metadata { get; }
     }
 }

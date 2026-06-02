@@ -14,30 +14,30 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedProject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectFileVersion"/> or <paramref name="metadata"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectFileVersion"/> or <paramref name="metadata"/> is null. </exception>
         public TextAuthoringExportedProject(string projectFileVersion, StringIndexType stringIndexType, TextAuthoringCreateProjectDetails metadata)
         {
-            Argument.AssertNotNull(projectFileVersion, nameof(projectFileVersion));
-            Argument.AssertNotNull(metadata, nameof(metadata));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(projectFileVersion, nameof(projectFileVersion));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(metadata, nameof(metadata));
 
             ProjectFileVersion = projectFileVersion;
             StringIndexType = stringIndexType;
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets"> Represents the project assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedProject(string projectFileVersion, StringIndexType stringIndexType, TextAuthoringCreateProjectDetails metadata, TextAuthoringExportedProjectAsset assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedProject(string projectFileVersion, StringIndexType stringIndexType, TextAuthoringCreateProjectDetails metadata, TextAuthoringExportedProjectAsset assets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectFileVersion = projectFileVersion;
             StringIndexType = stringIndexType;

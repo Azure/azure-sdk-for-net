@@ -31,7 +31,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
         /// </param>
         /// <param name="tags"> A list of content tags in the analyzed image. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
         public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = default, DenseCaptionsResult denseCaptions = default, ImageMetadata metadata = default, string modelVersion = default, ObjectsResult objects = default, PeopleResult people = default, ReadResult read = default, SmartCropsResult smartCrops = default, TagsResult tags = default)
         {
             return new ImageAnalysisResult(
@@ -53,7 +53,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="text"> The text of the caption. </param>
-        /// <returns> A new <see cref="ImageAnalysis.CaptionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.CaptionResult"/> instance for mocking. </returns>
         public static CaptionResult CaptionResult(float confidence = default, string text = default)
         {
             return new CaptionResult(confidence, text, additionalBinaryDataProperties: null);
@@ -64,10 +64,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// The first caption always applies to the whole image.
         /// </summary>
         /// <param name="values"> The list of image captions. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DenseCaptionsResult"/> instance for mocking. </returns>
-        public static DenseCaptionsResult DenseCaptionsResult(IEnumerable<DenseCaption> values = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult"/> instance for mocking. </returns>
+        public static DenseCaptionsResult DenseCaptionsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DenseCaption> values = default)
         {
-            values ??= new ChangeTrackingList<DenseCaption>();
+            values ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DenseCaption>();
 
             return new DenseCaptionsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -79,7 +79,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The image region of which this caption applies. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
         public static DenseCaption DenseCaption(float confidence = default, string text = default, ImageBoundingBox boundingBox = default)
         {
             return new DenseCaption(confidence, text, boundingBox, additionalBinaryDataProperties: null);
@@ -90,7 +90,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>
         /// <param name="height"> Height of the area, in pixels. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
         public static ImageBoundingBox ImageBoundingBox(int x = default, int y = default, int width = default, int height = default)
         {
             return new ImageBoundingBox(x, y, width, height, additionalBinaryDataProperties: null);
@@ -99,7 +99,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Metadata associated with the analyzed image. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
         public static ImageMetadata ImageMetadata(int height = default, int width = default)
         {
             return new ImageMetadata(height, width, additionalBinaryDataProperties: null);
@@ -107,10 +107,10 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> Represents a list of physical object detected in an image and their location. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
-        public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
+        public static ObjectsResult ObjectsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedObject> values = default)
         {
-            values ??= new ChangeTrackingList<DetectedObject>();
+            values ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>();
 
             return new ObjectsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -118,10 +118,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Represents a physical object detected in an image. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
-        public static DetectedObject DetectedObject(ImageBoundingBox boundingBox = default, IEnumerable<DetectedTag> tags = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
+        public static DetectedObject DetectedObject(ImageBoundingBox boundingBox = default, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> tags = default)
         {
-            tags ??= new ChangeTrackingList<DetectedTag>();
+            tags ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag>();
 
             return new DetectedObject(boundingBox, tags.ToList(), additionalBinaryDataProperties: null);
         }
@@ -135,7 +135,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="name"> Name of the entity. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
         public static DetectedTag DetectedTag(float confidence = default, string name = default)
         {
             return new DetectedTag(confidence, name, additionalBinaryDataProperties: null);
@@ -143,10 +143,10 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> Represents a list of people detected in an image and their location. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
-        /// <returns> A new <see cref="ImageAnalysis.PeopleResult"/> instance for mocking. </returns>
-        public static PeopleResult PeopleResult(IEnumerable<DetectedPerson> values = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.PeopleResult"/> instance for mocking. </returns>
+        public static PeopleResult PeopleResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedPerson> values = default)
         {
-            values ??= new ChangeTrackingList<DetectedPerson>();
+            values ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedPerson>();
 
             return new PeopleResult(values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -157,7 +157,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
         /// Higher values indicating higher confidence.
         /// </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
         public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = default, float confidence = default)
         {
             return new DetectedPerson(boundingBox, confidence, additionalBinaryDataProperties: null);
@@ -165,20 +165,20 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> The results of a Read (OCR) operation. </summary>
         /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ReadResult"/> instance for mocking. </returns>
-        public static ReadResult ReadResult(IEnumerable<DetectedTextBlock> blocks = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ReadResult"/> instance for mocking. </returns>
+        public static ReadResult ReadResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock> blocks = default)
         {
-            blocks ??= new ChangeTrackingList<DetectedTextBlock>();
+            blocks ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock>();
 
             return new ReadResult(blocks.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a single block of detected text in the image. </summary>
         /// <param name="lines"> A list of text lines in this block. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedTextBlock"/> instance for mocking. </returns>
-        public static DetectedTextBlock DetectedTextBlock(IEnumerable<DetectedTextLine> lines = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock"/> instance for mocking. </returns>
+        public static DetectedTextBlock DetectedTextBlock(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine> lines = default)
         {
-            lines ??= new ChangeTrackingList<DetectedTextLine>();
+            lines ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine>();
 
             return new DetectedTextBlock(lines.ToList(), additionalBinaryDataProperties: null);
         }
@@ -187,11 +187,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> Text content of the detected text line. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="words"> A list of words in this line. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedTextLine"/> instance for mocking. </returns>
-        public static DetectedTextLine DetectedTextLine(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, IEnumerable<DetectedTextWord> words = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine"/> instance for mocking. </returns>
+        public static DetectedTextLine DetectedTextLine(string text = default, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.ImagePoint> boundingPolygon = default, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord> words = default)
         {
-            boundingPolygon ??= new ChangeTrackingList<ImagePoint>();
-            words ??= new ChangeTrackingList<DetectedTextWord>();
+            boundingPolygon ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.ImagePoint>();
+            words ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord>();
 
             return new DetectedTextLine(text, boundingPolygon.ToList(), words.ToList(), additionalBinaryDataProperties: null);
         }
@@ -199,7 +199,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Represents the coordinates of a single pixel in the image. </summary>
         /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
         /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
         public static ImagePoint ImagePoint(int x = default, int y = default)
         {
             return new ImagePoint(x, y, additionalBinaryDataProperties: null);
@@ -212,10 +212,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> Text content of the word. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedTextWord"/> instance for mocking. </returns>
-        public static DetectedTextWord DetectedTextWord(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, float confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextWord"/> instance for mocking. </returns>
+        public static DetectedTextWord DetectedTextWord(string text = default, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.ImagePoint> boundingPolygon = default, float confidence = default)
         {
-            boundingPolygon ??= new ChangeTrackingList<ImagePoint>();
+            boundingPolygon ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.ImagePoint>();
 
             return new DetectedTextWord(text, boundingPolygon.ToList(), confidence, additionalBinaryDataProperties: null);
         }
@@ -225,10 +225,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
         /// </summary>
         /// <param name="values"> A list of crop regions. </param>
-        /// <returns> A new <see cref="ImageAnalysis.SmartCropsResult"/> instance for mocking. </returns>
-        public static SmartCropsResult SmartCropsResult(IEnumerable<CropRegion> values = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.SmartCropsResult"/> instance for mocking. </returns>
+        public static SmartCropsResult SmartCropsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.CropRegion> values = default)
         {
-            values ??= new ChangeTrackingList<CropRegion>();
+            values ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.CropRegion>();
 
             return new SmartCropsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -244,7 +244,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Otherwise, it will be in the range 0.5 to 2.0 (inclusive).
         /// </param>
         /// <param name="boundingBox"> The bounding box of the region. </param>
-        /// <returns> A new <see cref="ImageAnalysis.CropRegion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.CropRegion"/> instance for mocking. </returns>
         public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = default)
         {
             return new CropRegion(aspectRatio, boundingBox, additionalBinaryDataProperties: null);
@@ -255,10 +255,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// that appear in the image.
         /// </summary>
         /// <param name="values"> A list of tags. </param>
-        /// <returns> A new <see cref="ImageAnalysis.TagsResult"/> instance for mocking. </returns>
-        public static TagsResult TagsResult(IEnumerable<DetectedTag> values = default)
+        /// <returns> A new <see cref="global::Azure.AI.Vision.ImageAnalysis.TagsResult"/> instance for mocking. </returns>
+        public static TagsResult TagsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> values = default)
         {
-            values ??= new ChangeTrackingList<DetectedTag>();
+            values ??= new ChangeTrackingList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag>();
 
             return new TagsResult(values.ToList(), additionalBinaryDataProperties: null);
         }

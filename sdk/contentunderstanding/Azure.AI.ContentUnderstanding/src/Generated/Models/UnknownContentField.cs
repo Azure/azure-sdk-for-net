@@ -12,13 +12,13 @@ namespace Azure.AI.ContentUnderstanding
 {
     internal partial class UnknownContentField : ContentField
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownContentField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.UnknownContentField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownContentField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", spans, confidence, sourceValue, additionalBinaryDataProperties)
+        internal UnknownContentField(ContentFieldType @type, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", spans, confidence, sourceValue, additionalBinaryDataProperties)
         {
         }
     }

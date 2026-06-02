@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.Xml
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class XmlClientHostExtensions
     {
         public static IClientBuilder AddXmlClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddXmlClient(this IHostApplicationBuilder host, string sectionName, Action<XmlClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddXmlClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.Xml.XmlClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedXmlClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedXmlClient(this IHostApplicationBuilder host, string key, string sectionName, Action<XmlClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedXmlClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.Xml.XmlClientSettings> configureSettings) => throw null;
     }
 }

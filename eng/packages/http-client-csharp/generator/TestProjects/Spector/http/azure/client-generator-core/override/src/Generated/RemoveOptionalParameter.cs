@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.Override
     {
         protected RemoveOptionalParameter() => throw null;
 
-        internal RemoveOptionalParameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal RemoveOptionalParameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RemoveOptional(string param1, string param2, string param3, string param4, RequestContext context) => throw null;
 
-        public virtual Task<Response> RemoveOptionalAsync(string param1, string param2, string param3, string param4, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RemoveOptionalAsync(string param1, string param2, string param3, string param4, RequestContext context) => throw null;
 
         public virtual Response RemoveOptional(string param1, string param2 = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RemoveOptionalAsync(string param1, string param2 = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RemoveOptionalAsync(string param1, string param2 = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.Communication.Messages
     public partial class MessageReceipt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageReceipt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageReceipt"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="to"> The native external platform user identifier of the recipient. </param>
         internal MessageReceipt(string messageId, string to)
@@ -25,11 +25,11 @@ namespace Azure.Communication.Messages
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageReceipt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageReceipt"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="to"> The native external platform user identifier of the recipient. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageReceipt(string messageId, string to, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageReceipt(string messageId, string to, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             To = to;

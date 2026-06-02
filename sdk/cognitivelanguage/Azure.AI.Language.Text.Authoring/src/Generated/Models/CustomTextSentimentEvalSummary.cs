@@ -13,20 +13,20 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the evaluation summary for a custom text sentiment project. </summary>
     public partial class CustomTextSentimentEvalSummary : TextAuthoringEvalSummary
     {
-        /// <summary> Initializes a new instance of <see cref="CustomTextSentimentEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        internal CustomTextSentimentEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, TextSentimentEvalSummary customTextSentimentEvaluation) : base(TextAuthoringProjectKind.CustomTextSentiment, evaluationOptions)
+        internal CustomTextSentimentEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, TextSentimentEvalSummary customTextSentimentEvaluation) : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomTextSentiment, evaluationOptions)
         {
             CustomTextSentimentEvaluation = customTextSentimentEvaluation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomTextSentimentEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        internal CustomTextSentimentEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, TextSentimentEvalSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
+        internal CustomTextSentimentEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, TextSentimentEvalSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
         {
             CustomTextSentimentEvaluation = customTextSentimentEvaluation;
         }

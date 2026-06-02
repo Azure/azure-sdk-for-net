@@ -17,19 +17,19 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureFunctionToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionToolCallDetails"/>. </summary>
         internal AzureFunctionToolCallDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The Azure function name. </param>
         /// <param name="arguments"> JSON serialized function arguments. </param>
         /// <param name="output"> The function output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionToolCallDetails(string name, string arguments, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFunctionToolCallDetails(string name, string arguments, string output, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Arguments = arguments;

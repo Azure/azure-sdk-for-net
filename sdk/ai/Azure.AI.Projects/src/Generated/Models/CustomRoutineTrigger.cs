@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
     /// <summary> A custom event routine trigger. </summary>
     public partial class CustomRoutineTrigger : RoutineTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.CustomRoutineTrigger"/>. </summary>
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="parameters"/> is null. </exception>
-        public CustomRoutineTrigger(string provider, IDictionary<string, BinaryData> parameters) : base(RoutineTriggerType.Custom)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="provider"/> or <paramref name="parameters"/> is null. </exception>
+        public CustomRoutineTrigger(string provider, IDictionary<string, global::System.BinaryData> parameters) : base(global::Azure.AI.Projects.RoutineTriggerType.Custom)
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            global::Azure.AI.Projects.Argument.AssertNotNull(provider, nameof(provider));
+            global::Azure.AI.Projects.Argument.AssertNotNull(parameters, nameof(parameters));
 
             Provider = provider;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.CustomRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="eventName"> The provider-specific event name that fires the routine. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
-        internal CustomRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provider, string eventName, IDictionary<string, BinaryData> parameters) : base(@type, additionalBinaryDataProperties)
+        internal CustomRoutineTrigger(RoutineTriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string provider, string eventName, IDictionary<string, global::System.BinaryData> parameters) : base(@type, additionalBinaryDataProperties)
         {
             Provider = provider;
             EventName = eventName;
@@ -45,8 +45,8 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Provider-specific trigger parameters.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -69,6 +69,6 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; }
+        public IDictionary<string, global::System.BinaryData> Parameters { get; }
     }
 }

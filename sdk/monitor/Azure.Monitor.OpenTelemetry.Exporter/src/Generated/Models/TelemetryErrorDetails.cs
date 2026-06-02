@@ -13,19 +13,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryErrorDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryErrorDetails"/>. </summary>
         internal TelemetryErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryErrorDetails"/>. </summary>
         /// <param name="index"> The index in the original payload of the item. </param>
         /// <param name="statusCode"> The item specific [HTTP Response status code](#Response Status Codes). </param>
         /// <param name="message"> The error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryErrorDetails(int? index, int? statusCode, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryErrorDetails(int? index, int? statusCode, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Index = index;
             StatusCode = statusCode;

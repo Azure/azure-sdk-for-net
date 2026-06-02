@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class BatchJobScheduleUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleUpdateOptions"/>. </summary>
         public BatchJobScheduleUpdateOptions()
         {
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleUpdateOptions"/>. </summary>
         /// <param name="schedule"> The schedule according to which Jobs will be created. All times are fixed respective to UTC and are not impacted by daylight saving time. If you do not specify this element, the existing schedule is left unchanged. </param>
         /// <param name="jobSpecification"> The details of the Jobs to be created on this schedule. Updates affect only Jobs that are started after the update has taken place. Any currently active Job continues with the older specification. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job Schedule as metadata. If you do not specify this element, existing metadata is left unchanged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobScheduleUpdateOptions(BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobScheduleUpdateOptions(BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Schedule = schedule;
             JobSpecification = jobSpecification;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public BatchJobSpecification JobSpecification { get; set; }
 
         /// <summary> A list of name-value pairs associated with the Job Schedule as metadata. If you do not specify this element, existing metadata is left unchanged. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
     }
 }

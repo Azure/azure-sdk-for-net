@@ -12,16 +12,16 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluationRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRule"/>. </summary>
         /// <param name="action"> Definition of the evaluation rule action. </param>
         /// <param name="eventType"> Event type that the evaluation rule applies to. </param>
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="action"/> is null. </exception>
         public EvaluationRule(EvaluationRuleAction action, EvaluationRuleEventType eventType, bool enabled)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            global::Azure.AI.Projects.Argument.AssertNotNull(action, nameof(action));
 
             Action = action;
             EventType = eventType;
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Evaluation
             SystemData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRule"/>. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="displayName"> Display Name for the evaluation rule. </param>
         /// <param name="description"> Description for the evaluation rule. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
         /// <param name="systemData"> System metadata for the evaluation rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationRule(string id, string displayName, string description, EvaluationRuleAction action, EvaluationRuleFilter filter, EvaluationRuleEventType eventType, bool enabled, IReadOnlyDictionary<string, string> systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationRule(string id, string displayName, string description, EvaluationRuleAction action, EvaluationRuleFilter filter, EvaluationRuleEventType eventType, bool enabled, IReadOnlyDictionary<string, string> systemData, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;

@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerRegisteredEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerRegisteredEventData"/>. </summary>
         internal AcsRouterWorkerRegisteredEventData()
         {
-            QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
-            ChannelConfigurations = new ChangeTrackingList<AcsRouterChannelConfiguration>();
+            QueueAssignments = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails>();
+            ChannelConfigurations = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration>();
             Labels = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerRegisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Registered Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> queueAssignments, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -48,10 +48,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string WorkerId { get; }
 
         /// <summary> Router Worker Registered Queue Info. </summary>
-        public IReadOnlyList<AcsRouterQueueDetails> QueueAssignments { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> QueueAssignments { get; }
 
         /// <summary> Router Worker Registered Channel Configuration. </summary>
-        public IReadOnlyList<AcsRouterChannelConfiguration> ChannelConfigurations { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> ChannelConfigurations { get; }
 
         /// <summary> Router Worker Register Total Capacity. </summary>
         public int? TotalCapacity { get; }

@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a Fabric Ontology retrieval activity record. </summary>
     public partial class KnowledgeBaseFabricOntologyActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseFabricOntologyActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.FabricOntology)
+        internal KnowledgeBaseFabricOntologyActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.FabricOntology)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fabricOntologyArguments"> The Fabric Ontology arguments for the retrieval activity. </param>
-        internal KnowledgeBaseFabricOntologyActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseFabricOntologyActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryTime = queryTime;

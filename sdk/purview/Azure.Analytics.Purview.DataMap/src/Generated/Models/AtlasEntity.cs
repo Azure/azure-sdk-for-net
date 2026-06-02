@@ -15,22 +15,22 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntity"/>. </summary>
         public AtlasEntity()
         {
-            Attributes = new ChangeTrackingDictionary<string, BinaryData>();
-            BusinessAttributes = new ChangeTrackingDictionary<string, BinaryData>();
-            Classifications = new ChangeTrackingList<AtlasClassification>();
+            Attributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            BusinessAttributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Classifications = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
             CustomAttributes = new ChangeTrackingDictionary<string, string>();
             Labels = new ChangeTrackingList<string>();
-            Meanings = new ChangeTrackingList<AtlasTermAssignmentHeader>();
-            RelationshipAttributes = new ChangeTrackingDictionary<string, BinaryData>();
-            Contacts = new ChangeTrackingDictionary<string, IList<ContactInfo>>();
+            Meanings = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>();
+            RelationshipAttributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Contacts = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntity"/>. </summary>
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntity(IDictionary<string, global::System.BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, global::System.BinaryData> businessAttributes, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, global::System.BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> contacts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -86,8 +86,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The attributes of the struct.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Attributes { get; }
+        public IDictionary<string, global::System.BinaryData> Attributes { get; }
 
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
@@ -120,8 +120,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Business attributes
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -144,10 +144,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> BusinessAttributes { get; }
+        public IDictionary<string, global::System.BinaryData> BusinessAttributes { get; }
 
         /// <summary> An array of classifications. </summary>
-        public IList<AtlasClassification> Classifications { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> Classifications { get; }
 
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; set; }
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.DataMap
         public IList<string> Labels { get; }
 
         /// <summary> An array of term assignment headers indicating the meanings of the entity. </summary>
-        public IList<AtlasTermAssignmentHeader> Meanings { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> Meanings { get; }
 
         /// <summary> Used to record the provenance of an instance of an entity or relationship. </summary>
         public int? ProvenanceType { get; set; }
@@ -184,8 +184,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The attributes of relationship.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> RelationshipAttributes { get; }
+        public IDictionary<string, global::System.BinaryData> RelationshipAttributes { get; }
 
         /// <summary>
         /// Status of the entity - can be active or deleted. Deleted entities are not
@@ -226,6 +226,6 @@ namespace Azure.Analytics.Purview.DataMap
         public long? Version { get; set; }
 
         /// <summary> The dictionary of contacts for entities. Key could be Expert or Owner. </summary>
-        public IDictionary<string, IList<ContactInfo>> Contacts { get; }
+        public IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> Contacts { get; }
     }
 }

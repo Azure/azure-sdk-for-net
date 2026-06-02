@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiManagementCircuitBreakerOpenedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
         /// <param name="backendName"> Name of the backend for which the circuit has opened. </param>
         /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
         internal ApiManagementCircuitBreakerOpenedEventData(string backendName, ApiManagementCircuitBreakerProperties circuitBreaker)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CircuitBreaker = circuitBreaker;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
         /// <param name="backendName"> Name of the backend for which the circuit has opened. </param>
         /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCircuitBreakerOpenedEventData(string backendName, ApiManagementCircuitBreakerProperties circuitBreaker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementCircuitBreakerOpenedEventData(string backendName, ApiManagementCircuitBreakerProperties circuitBreaker, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BackendName = backendName;
             CircuitBreaker = circuitBreaker;

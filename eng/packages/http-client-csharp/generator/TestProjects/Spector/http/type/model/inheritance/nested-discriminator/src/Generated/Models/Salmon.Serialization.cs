@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    public partial class Salmon : Fish, IJsonModel<Salmon>
+    public partial class Salmon : Fish, IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>
     {
         internal Salmon() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Salmon>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Salmon IPersistableModel<Salmon>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Salmon IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Salmon>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Salmon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Salmon IJsonModel<Salmon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Salmon IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Salmon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

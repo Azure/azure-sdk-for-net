@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Versioning.Removed
 {
-    public partial class ModelV3 : IJsonModel<ModelV3>
+    public partial class ModelV3 : IJsonModel<global::Versioning.Removed.ModelV3>
     {
         internal ModelV3() => throw null;
 
@@ -21,22 +21,22 @@ namespace Versioning.Removed
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelV3>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Versioning.Removed.ModelV3>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelV3 IPersistableModel<ModelV3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelV3 IPersistableModel<global::Versioning.Removed.ModelV3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelV3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Versioning.Removed.ModelV3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelV3"> The <see cref="ModelV3"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelV3"> The <see cref="global::Versioning.Removed.ModelV3"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelV3 modelV3) => throw null;
 
         public static explicit operator ModelV3(Response response) => throw null;
 
-        void IJsonModel<ModelV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Versioning.Removed.ModelV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ModelV3 IJsonModel<ModelV3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ModelV3 IJsonModel<global::Versioning.Removed.ModelV3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelV3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

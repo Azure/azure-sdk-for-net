@@ -10,21 +10,21 @@ namespace Azure.AI.Projects.Agents
     /// <summary> Version indicator that references a specific agent version by name. </summary>
     public partial class VersionRefIndicator : VersionIndicator
     {
-        /// <summary> Initializes a new instance of <see cref="VersionRefIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionRefIndicator"/>. </summary>
         /// <param name="agentVersion"> The agent version identifier returned by the agent version APIs. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentVersion"/> is null. </exception>
-        public VersionRefIndicator(string agentVersion) : base(VersionIndicatorType.VersionRef)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentVersion"/> is null. </exception>
+        public VersionRefIndicator(string agentVersion) : base(global::Azure.AI.Projects.Agents.VersionIndicatorType.VersionRef)
         {
-            Argument.AssertNotNull(agentVersion, nameof(agentVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agentVersion, nameof(agentVersion));
 
             AgentVersion = agentVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionRefIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionRefIndicator"/>. </summary>
         /// <param name="type"> The type of version indicator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="agentVersion"> The agent version identifier returned by the agent version APIs. </param>
-        internal VersionRefIndicator(VersionIndicatorType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentVersion) : base(@type, additionalBinaryDataProperties)
+        internal VersionRefIndicator(VersionIndicatorType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string agentVersion) : base(@type, additionalBinaryDataProperties)
         {
             AgentVersion = agentVersion;
         }

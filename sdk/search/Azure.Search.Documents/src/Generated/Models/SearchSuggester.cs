@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchSuggester
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchSuggester"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchSuggester"/>. </summary>
         /// <param name="name"> The name of the suggester. </param>
         /// <param name="searchMode"> A value indicating the capabilities of the suggester. </param>
         /// <param name="sourceFields"> The list of field names to which the suggester applies. Each field must be searchable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchSuggester(string name, string searchMode, IList<string> sourceFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchSuggester(string name, string searchMode, IList<string> sourceFields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SearchMode = searchMode;

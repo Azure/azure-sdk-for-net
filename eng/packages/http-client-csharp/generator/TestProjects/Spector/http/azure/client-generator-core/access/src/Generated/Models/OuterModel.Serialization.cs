@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class OuterModel : BaseModel, IJsonModel<OuterModel>
+    public partial class OuterModel : BaseModel, IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>
     {
         internal OuterModel() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<OuterModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        OuterModel IPersistableModel<OuterModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        OuterModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<OuterModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator OuterModel(Response response) => throw null;
 
-        void IJsonModel<OuterModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        OuterModel IJsonModel<OuterModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        OuterModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.OuterModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override BaseModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -15,27 +15,27 @@ namespace Azure.AI.Agents.Persistent
     public partial class ResponseFormatJsonSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchema"/>. </summary>
         /// <param name="name"> The name of a schema. </param>
         /// <param name="schema"> The JSON schema object, describing the response format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="schema"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="schema"/> is null. </exception>
         public ResponseFormatJsonSchema(string name, BinaryData schema)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(schema, nameof(schema));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(schema, nameof(schema));
 
             Name = name;
             Schema = schema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchema"/>. </summary>
         /// <param name="description"> A description of what the response format is for, used by the model to determine how to respond in the format. </param>
         /// <param name="name"> The name of a schema. </param>
         /// <param name="schema"> The JSON schema object, describing the response format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseFormatJsonSchema(string description, string name, BinaryData schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseFormatJsonSchema(string description, string name, BinaryData schema, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Name = name;
@@ -51,8 +51,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The JSON schema object, describing the response format.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

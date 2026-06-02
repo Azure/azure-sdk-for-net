@@ -11,18 +11,18 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionDiarizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionDiarizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions"/>. </summary>
         public TranscriptionDiarizationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionDiarizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions"/>. </summary>
         /// <param name="enabled"> Enable speaker diarization. This is automatically set to true when maxSpeakers is specified. </param>
         /// <param name="maxSpeakers"> Gets or sets a hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionDiarizationOptions(bool? enabled, int? maxSpeakers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionDiarizationOptions(bool? enabled, int? maxSpeakers, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             MaxSpeakers = maxSpeakers;

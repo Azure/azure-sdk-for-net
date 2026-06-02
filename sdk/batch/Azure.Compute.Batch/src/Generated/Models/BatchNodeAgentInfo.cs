@@ -17,9 +17,9 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeAgentInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeAgentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeAgentInfo"/>. </summary>
         /// <param name="version"> The version of the Batch Compute Node agent running on the Compute Node. This version number can be checked against the Compute Node agent release notes located at https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md. </param>
         /// <param name="lastUpdateTime"> The time when the Compute Node agent was updated on the Compute Node. This is the most recent time that the Compute Node agent was updated to a new version. </param>
         internal BatchNodeAgentInfo(string version, DateTimeOffset lastUpdateTime)
@@ -28,11 +28,11 @@ namespace Azure.Compute.Batch
             LastUpdateTime = lastUpdateTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeAgentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeAgentInfo"/>. </summary>
         /// <param name="version"> The version of the Batch Compute Node agent running on the Compute Node. This version number can be checked against the Compute Node agent release notes located at https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md. </param>
         /// <param name="lastUpdateTime"> The time when the Compute Node agent was updated on the Compute Node. This is the most recent time that the Compute Node agent was updated to a new version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeAgentInfo(string version, DateTimeOffset lastUpdateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeAgentInfo(string version, DateTimeOffset lastUpdateTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             LastUpdateTime = lastUpdateTime;

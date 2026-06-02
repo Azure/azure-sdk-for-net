@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> AutoUserScope enums. </summary>
-    public readonly partial struct AutoUserScope : IEquatable<AutoUserScope>
+    public readonly partial struct AutoUserScope : IEquatable<global::Azure.Compute.Batch.AutoUserScope>
     {
         private readonly string _value;
         /// <summary> Specifies that the service should create a new user for the Task. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Specifies that the Task runs as the common auto user Account which is created on every Compute Node in a Pool. </summary>
         private const string PoolValue = "pool";
 
-        /// <summary> Initializes a new instance of <see cref="AutoUserScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutoUserScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoUserScope(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Specifies that the Task runs as the common auto user Account which is created on every Compute Node in a Pool. </summary>
         public static AutoUserScope Pool { get; } = new AutoUserScope(PoolValue);
 
-        /// <summary> Determines if two <see cref="AutoUserScope"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.AutoUserScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoUserScope left, AutoUserScope right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AutoUserScope"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.AutoUserScope"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoUserScope left, AutoUserScope right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AutoUserScope"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.AutoUserScope"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AutoUserScope(string value) => new AutoUserScope(value);
 
-        /// <summary> Converts a string to a <see cref="AutoUserScope"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.AutoUserScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AutoUserScope?(string value) => value == null ? null : new AutoUserScope(value);
+        public static implicit operator AutoUserScope?(string value) => (value == null) ? null : new AutoUserScope(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AutoUserScope other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AutoUserScope other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AutoUserScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AutoUserScope other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

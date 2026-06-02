@@ -14,13 +14,13 @@ namespace Azure.Communication.JobRouter
     public partial class QueueWeightedAllocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.QueueWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueWeightedAllocation(double weight, IReadOnlyList<global::Azure.Communication.JobRouter.RouterQueueSelector> queueSelectors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Weight = weight;
             QueueSelectors = queueSelectors;
@@ -31,6 +31,6 @@ namespace Azure.Communication.JobRouter
         public double Weight { get; }
 
         /// <summary> A collection of queue selectors that will be applied if this allocation is selected. </summary>
-        public IReadOnlyList<RouterQueueSelector> QueueSelectors { get; }
+        public IReadOnlyList<global::Azure.Communication.JobRouter.RouterQueueSelector> QueueSelectors { get; }
     }
 }

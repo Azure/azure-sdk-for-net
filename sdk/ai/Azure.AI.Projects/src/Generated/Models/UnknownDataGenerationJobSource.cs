@@ -9,11 +9,11 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownDataGenerationJobSource : DataGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownDataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", description, additionalBinaryDataProperties)
+        internal UnknownDataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", description, additionalBinaryDataProperties)
         {
         }
     }

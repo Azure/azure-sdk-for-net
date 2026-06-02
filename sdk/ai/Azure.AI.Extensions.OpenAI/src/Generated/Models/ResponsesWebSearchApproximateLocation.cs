@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesWebSearchApproximateLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchApproximateLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation"/>. </summary>
         public ResponsesWebSearchApproximateLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchApproximateLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation"/>. </summary>
         /// <param name="kind"> The type of location approximation. Always `approximate`. </param>
         /// <param name="country"></param>
         /// <param name="region"></param>
         /// <param name="city"></param>
         /// <param name="timezone"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesWebSearchApproximateLocation(string kind, string country, string region, string city, string timezone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesWebSearchApproximateLocation(string kind, string country, string region, string city, string timezone, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Country = country;

@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FieldMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FieldMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FieldMapping"/>. </summary>
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceFieldName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceFieldName"/> is null. </exception>
         public FieldMapping(string sourceFieldName)
         {
-            Argument.AssertNotNull(sourceFieldName, nameof(sourceFieldName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(sourceFieldName, nameof(sourceFieldName));
 
             SourceFieldName = sourceFieldName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FieldMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FieldMapping"/>. </summary>
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
         /// <param name="targetFieldName"> The name of the target field in the index. Same as the source field name by default. </param>
         /// <param name="mappingFunction"> A function to apply to each source field value before indexing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FieldMapping(string sourceFieldName, string targetFieldName, FieldMappingFunction mappingFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FieldMapping(string sourceFieldName, string targetFieldName, FieldMappingFunction mappingFunction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SourceFieldName = sourceFieldName;
             TargetFieldName = targetFieldName;

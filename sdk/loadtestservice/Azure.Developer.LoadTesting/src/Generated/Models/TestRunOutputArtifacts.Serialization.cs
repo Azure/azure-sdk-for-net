@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> The output artifacts for the test run. </summary>
-    public partial class TestRunOutputArtifacts : IJsonModel<TestRunOutputArtifacts>
+    public partial class TestRunOutputArtifacts : IJsonModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunOutputArtifacts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestRunOutputArtifacts(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.TestRunOutputArtifacts.DeserializeTestRunOutputArtifacts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestRunOutputArtifacts)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunOutputArtifacts)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestRunOutputArtifacts)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunOutputArtifacts)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunOutputArtifacts>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunOutputArtifacts IPersistableModel<TestRunOutputArtifacts>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TestRunOutputArtifacts IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunOutputArtifacts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestRunOutputArtifacts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunOutputArtifacts)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunOutputArtifacts)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResultFileInfo))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(ResultFileInfo))
             {
                 writer.WritePropertyName("resultFileInfo"u8);
-                writer.WriteObjectValue(ResultFileInfo, options);
+                writer.WriteObjectValue<TestRunFileInfo>(ResultFileInfo, options);
             }
-            if (Optional.IsDefined(LogsFileInfo))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(LogsFileInfo))
             {
                 writer.WritePropertyName("logsFileInfo"u8);
-                writer.WriteObjectValue(LogsFileInfo, options);
+                writer.WriteObjectValue<TestRunFileInfo>(LogsFileInfo, options);
             }
-            if (Optional.IsDefined(ArtifactsContainerInfo))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(ArtifactsContainerInfo))
             {
                 writer.WritePropertyName("artifactsContainerInfo"u8);
-                writer.WriteObjectValue(ArtifactsContainerInfo, options);
+                writer.WriteObjectValue<ArtifactsContainerInfo>(ArtifactsContainerInfo, options);
             }
-            if (Optional.IsDefined(ReportFileInfo))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(ReportFileInfo))
             {
                 writer.WritePropertyName("reportFileInfo"u8);
-                writer.WriteObjectValue(ReportFileInfo, options);
+                writer.WriteObjectValue<TestRunFileInfo>(ReportFileInfo, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,26 +112,26 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunOutputArtifacts IJsonModel<TestRunOutputArtifacts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TestRunOutputArtifacts IJsonModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunOutputArtifacts JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunOutputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunOutputArtifacts)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunOutputArtifacts)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestRunOutputArtifacts(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.TestRunOutputArtifacts.DeserializeTestRunOutputArtifacts(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TestRunOutputArtifacts DeserializeTestRunOutputArtifacts(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -139,48 +139,48 @@ namespace Azure.Developer.LoadTesting
             TestRunFileInfo logsFileInfo = default;
             ArtifactsContainerInfo artifactsContainerInfo = default;
             TestRunFileInfo reportFileInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resultFileInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    resultFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
+                    resultFileInfo = global::Azure.Developer.LoadTesting.TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logsFileInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    logsFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
+                    logsFileInfo = global::Azure.Developer.LoadTesting.TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("artifactsContainerInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    artifactsContainerInfo = ArtifactsContainerInfo.DeserializeArtifactsContainerInfo(prop.Value, options);
+                    artifactsContainerInfo = global::Azure.Developer.LoadTesting.ArtifactsContainerInfo.DeserializeArtifactsContainerInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportFileInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    reportFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
+                    reportFileInfo = global::Azure.Developer.LoadTesting.TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TestRunOutputArtifacts(resultFileInfo, logsFileInfo, artifactsContainerInfo, reportFileInfo, additionalBinaryDataProperties);

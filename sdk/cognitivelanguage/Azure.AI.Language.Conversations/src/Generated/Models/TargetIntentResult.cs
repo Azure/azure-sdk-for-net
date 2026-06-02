@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the base class of an intent prediction
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.LuisTargetIntentResult"/>, <see cref="Azure.AI.Language.Conversations.Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Azure.AI.Language.Conversations.Models.NoneLinkedTargetIntentResult"/>, and <see cref="Azure.AI.Language.Conversations.Models.ConversationTargetIntentResult"/>.
     /// </summary>
     public abstract partial class TargetIntentResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         private protected TargetIntentResult(TargetProjectKind targetProjectKind, double confidence)
@@ -28,12 +28,12 @@ namespace Azure.AI.Language.Conversations.Models
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetProjectKind = targetProjectKind;
             ApiVersion = apiVersion;

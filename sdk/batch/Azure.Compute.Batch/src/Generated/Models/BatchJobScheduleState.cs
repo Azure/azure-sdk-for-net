@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchJobScheduleState enums. </summary>
-    public readonly partial struct BatchJobScheduleState : IEquatable<BatchJobScheduleState>
+    public readonly partial struct BatchJobScheduleState : IEquatable<global::Azure.Compute.Batch.BatchJobScheduleState>
     {
         private readonly string _value;
         /// <summary> The Job Schedule is active and will create Jobs as per its schedule. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Compute.Batch
         /// <summary> The user has requested that the Job Schedule be deleted, but the delete operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, and will delete any existing Jobs and Tasks under the Job Schedule, including any active Job. The Job Schedule will be deleted when all Jobs and Tasks under the Job Schedule have been deleted. </summary>
         private const string DeletingValue = "deleting";
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobScheduleState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Compute.Batch
         /// <summary> The user has requested that the Job Schedule be deleted, but the delete operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, and will delete any existing Jobs and Tasks under the Job Schedule, including any active Job. The Job Schedule will be deleted when all Jobs and Tasks under the Job Schedule have been deleted. </summary>
         public static BatchJobScheduleState Deleting { get; } = new BatchJobScheduleState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="BatchJobScheduleState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobScheduleState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobScheduleState left, BatchJobScheduleState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchJobScheduleState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobScheduleState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobScheduleState left, BatchJobScheduleState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchJobScheduleState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobScheduleState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchJobScheduleState(string value) => new BatchJobScheduleState(value);
 
-        /// <summary> Converts a string to a <see cref="BatchJobScheduleState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobScheduleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobScheduleState?(string value) => value == null ? null : new BatchJobScheduleState(value);
+        public static implicit operator BatchJobScheduleState?(string value) => (value == null) ? null : new BatchJobScheduleState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchJobScheduleState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchJobScheduleState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchJobScheduleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchJobScheduleState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

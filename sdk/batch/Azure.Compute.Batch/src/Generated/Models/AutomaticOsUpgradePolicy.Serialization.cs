@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> The configuration parameters used for performing automatic OS upgrade. </summary>
-    public partial class AutomaticOsUpgradePolicy : IJsonModel<AutomaticOsUpgradePolicy>
+    public partial class AutomaticOsUpgradePolicy : IJsonModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AutomaticOsUpgradePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAutomaticOsUpgradePolicy(document.RootElement, options);
+                        return global::Azure.Compute.Batch.AutomaticOsUpgradePolicy.DeserializeAutomaticOsUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticOsUpgradePolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.AutomaticOsUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticOsUpgradePolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.AutomaticOsUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutomaticOsUpgradePolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutomaticOsUpgradePolicy IPersistableModel<AutomaticOsUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AutomaticOsUpgradePolicy IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutomaticOsUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AutomaticOsUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AutomaticOsUpgradePolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.AutomaticOsUpgradePolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisableAutomaticRollback))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DisableAutomaticRollback))
             {
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticOsUpgrade))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(EnableAutomaticOsUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOsUpgrade.Value);
             }
-            if (Optional.IsDefined(UseRollingUpgradePolicy))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(UseRollingUpgradePolicy))
             {
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (Optional.IsDefined(OsRollingUpgradeDeferral))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(OsRollingUpgradeDeferral))
             {
                 writer.WritePropertyName("osRollingUpgradeDeferral"u8);
                 writer.WriteBooleanValue(OsRollingUpgradeDeferral.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,26 +112,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutomaticOsUpgradePolicy IJsonModel<AutomaticOsUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AutomaticOsUpgradePolicy IJsonModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AutomaticOsUpgradePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.AutomaticOsUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AutomaticOsUpgradePolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.AutomaticOsUpgradePolicy)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutomaticOsUpgradePolicy(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.AutomaticOsUpgradePolicy.DeserializeAutomaticOsUpgradePolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AutomaticOsUpgradePolicy DeserializeAutomaticOsUpgradePolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -139,12 +139,12 @@ namespace Azure.Compute.Batch
             bool? enableAutomaticOsUpgrade = default;
             bool? useRollingUpgradePolicy = default;
             bool? osRollingUpgradeDeferral = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("disableAutomaticRollback"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -153,7 +153,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("enableAutomaticOSUpgrade"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -162,7 +162,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("useRollingUpgradePolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -171,16 +171,16 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("osRollingUpgradeDeferral"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     osRollingUpgradeDeferral = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AutomaticOsUpgradePolicy(disableAutomaticRollback, enableAutomaticOsUpgrade, useRollingUpgradePolicy, osRollingUpgradeDeferral, additionalBinaryDataProperties);

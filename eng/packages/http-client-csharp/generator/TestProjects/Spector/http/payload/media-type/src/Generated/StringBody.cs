@@ -18,40 +18,40 @@ namespace Payload.MediaType._StringBody
     {
         protected StringBody() => throw null;
 
-        internal StringBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal StringBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SendAsText(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SendAsTextAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SendAsTextAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SendAsText(string text, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SendAsTextAsync(string text, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SendAsTextAsync(string text, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetAsText(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsTextAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsTextAsync(RequestContext context) => throw null;
 
         public virtual Response<string> GetAsText(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<string>> GetAsTextAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<string>> GetAsTextAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SendAsJson(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SendAsJsonAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SendAsJsonAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SendAsJson(string text, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SendAsJsonAsync(string text, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SendAsJsonAsync(string text, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetAsJson(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsJsonAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsJsonAsync(RequestContext context) => throw null;
 
         public virtual Response<string> GetAsJson(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<string>> GetAsJsonAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<string>> GetAsJsonAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

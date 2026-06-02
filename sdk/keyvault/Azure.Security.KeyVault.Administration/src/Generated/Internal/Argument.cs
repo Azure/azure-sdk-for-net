@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T value, string name)
         {
-            if (value is null)
+            if ((value is null))
             {
                 throw new ArgumentNullException(name);
             }
@@ -38,15 +38,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
         {
-            if (value is null)
+            if ((value is null))
             {
                 throw new ArgumentNullException(name);
             }
-            if (value is ICollection<T> collectionOfT && collectionOfT.Count == 0)
+            if (((value is ICollection<T> collectionOfT) && (collectionOfT.Count == 0)))
             {
                 throw new ArgumentException("Value cannot be an empty collection.", name);
             }
-            if (value is ICollection collection && collection.Count == 0)
+            if (((value is ICollection collection) && (collection.Count == 0)))
             {
                 throw new ArgumentException("Value cannot be an empty collection.", name);
             }
@@ -61,11 +61,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
-            if (value is null)
+            if ((value is null))
             {
                 throw new ArgumentNullException(name);
             }
-            if (value.Length == 0)
+            if ((value.Length == 0))
             {
                 throw new ArgumentException("Value cannot be an empty string.", name);
             }
@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The name. </param>
         public static void AssertNotNullOrWhiteSpace(string value, string name)
         {
-            if (value is null)
+            if ((value is null))
             {
                 throw new ArgumentNullException(name);
             }
@@ -92,11 +92,11 @@ namespace Azure.Security.KeyVault.Administration
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
             where T : notnull, IComparable<T>
         {
-            if (minimum.CompareTo(value) > 0)
+            if ((minimum.CompareTo(value) > 0))
             {
                 throw new ArgumentOutOfRangeException(name, "Value is less than the minimum allowed.");
             }
-            if (maximum.CompareTo(value) < 0)
+            if ((maximum.CompareTo(value) < 0))
             {
                 throw new ArgumentOutOfRangeException(name, "Value is greater than the maximum allowed.");
             }
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The name. </param>
         public static string CheckNotNullOrEmpty(string value, string name)
         {
-            AssertNotNullOrEmpty(value, name);
+            global::Azure.Security.KeyVault.Administration.Argument.AssertNotNullOrEmpty(value, name);
             return value;
         }
     }

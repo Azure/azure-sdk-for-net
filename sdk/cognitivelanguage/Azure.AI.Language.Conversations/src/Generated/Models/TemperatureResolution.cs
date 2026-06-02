@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the temperature entity resolution model. </summary>
     public partial class TemperatureResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TemperatureResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
-        internal TemperatureResolution(double value, TemperatureUnit unit) : base(ResolutionKind.TemperatureResolution)
+        internal TemperatureResolution(double value, TemperatureUnit unit) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.TemperatureResolution)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TemperatureResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
-        internal TemperatureResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, TemperatureUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal TemperatureResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, TemperatureUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

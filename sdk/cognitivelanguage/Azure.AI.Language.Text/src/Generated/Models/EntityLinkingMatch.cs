@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class EntityLinkingMatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingMatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingMatch"/>. </summary>
         /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="offset"> Start position for the entity match text. </param>
@@ -29,13 +29,13 @@ namespace Azure.AI.Language.Text
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingMatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingMatch"/>. </summary>
         /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="offset"> Start position for the entity match text. </param>
         /// <param name="length"> Length for the entity match text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityLinkingMatch(double confidenceScore, string text, int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityLinkingMatch(double confidenceScore, string text, int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConfidenceScore = confidenceScore;
             Text = text;

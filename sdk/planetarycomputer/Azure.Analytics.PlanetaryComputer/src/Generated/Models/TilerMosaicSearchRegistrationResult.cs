@@ -14,21 +14,21 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerMosaicSearchRegistrationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerMosaicSearchRegistrationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult"/>. </summary>
         /// <param name="searchId"> Unique identifier for the registered search. </param>
         internal TilerMosaicSearchRegistrationResult(string searchId)
         {
             SearchId = searchId;
-            Links = new ChangeTrackingList<StacLink>();
+            Links = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerMosaicSearchRegistrationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult"/>. </summary>
         /// <param name="searchId"> Unique identifier for the registered search. </param>
         /// <param name="links"> Related links for the registered mosaic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerMosaicSearchRegistrationResult(string searchId, IList<StacLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerMosaicSearchRegistrationResult(string searchId, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchId = searchId;
             Links = links;
@@ -39,6 +39,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public string SearchId { get; }
 
         /// <summary> Related links for the registered mosaic. </summary>
-        public IList<StacLink> Links { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacLink> Links { get; }
     }
 }

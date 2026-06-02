@@ -14,18 +14,18 @@ namespace Azure.AI.Agents.Persistent
     public partial class MCPApprovalPerTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalPerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPApprovalPerTool"/>. </summary>
         public MCPApprovalPerTool()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalPerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPApprovalPerTool"/>. </summary>
         /// <param name="never"> The list of tools, not requiring approval. </param>
         /// <param name="always"> The list of tools, always requiring approval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCPApprovalPerTool(MCPToolList never, MCPToolList always, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MCPApprovalPerTool(MCPToolList never, MCPToolList always, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Never = never;
             Always = always;

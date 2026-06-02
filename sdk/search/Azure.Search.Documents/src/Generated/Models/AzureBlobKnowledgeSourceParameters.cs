@@ -16,22 +16,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureBlobKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
         public AzureBlobKnowledgeSourceParameters(string connectionString, string containerName)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(connectionString, nameof(connectionString));
+            global::Azure.Search.Documents.Argument.AssertNotNull(containerName, nameof(containerName));
 
             ConnectionString = connectionString;
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
         /// <param name="folderPath"> Optional folder path within the container. </param>
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;

@@ -11,6 +11,6 @@ namespace _Type._Array
 {
     public static partial class TypeArrayModelFactory
     {
-        public static InnerModel InnerModel(string @property = default, IEnumerable<InnerModel> children = default) => throw null;
+        public static InnerModel InnerModel(string @property = default, IEnumerable<global::_Type._Array.InnerModel> children = default) => throw null;
     }
 }

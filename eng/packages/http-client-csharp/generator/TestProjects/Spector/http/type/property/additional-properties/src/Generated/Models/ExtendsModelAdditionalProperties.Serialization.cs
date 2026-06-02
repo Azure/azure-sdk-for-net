@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class ExtendsModelAdditionalProperties : IJsonModel<ExtendsModelAdditionalProperties>
+    public partial class ExtendsModelAdditionalProperties : IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>
     {
         internal ExtendsModelAdditionalProperties() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ExtendsModelAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ExtendsModelAdditionalProperties IPersistableModel<ExtendsModelAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ExtendsModelAdditionalProperties IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ExtendsModelAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="extendsModelAdditionalProperties"> The <see cref="ExtendsModelAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="extendsModelAdditionalProperties"> The <see cref="global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsModelAdditionalProperties extendsModelAdditionalProperties) => throw null;
 
         public static explicit operator ExtendsModelAdditionalProperties(Response response) => throw null;
 
-        void IJsonModel<ExtendsModelAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ExtendsModelAdditionalProperties IJsonModel<ExtendsModelAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ExtendsModelAdditionalProperties IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsModelAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ExtendsModelAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -12,10 +12,10 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class SpreadModelArrayRecord
     {
-        public SpreadModelArrayRecord(IEnumerable<ModelForRecord> knownProp) => throw null;
+        public SpreadModelArrayRecord(IEnumerable<global::_Type.Property.AdditionalProperties.ModelForRecord> knownProp) => throw null;
 
-        public IList<ModelForRecord> KnownProp => throw null;
+        public IList<global::_Type.Property.AdditionalProperties.ModelForRecord> KnownProp => throw null;
 
-        public IDictionary<string, IList<BinaryData>> AdditionalProperties => throw null;
+        public IDictionary<string, global::System.Collections.Generic.IList<global::System.BinaryData>> AdditionalProperties => throw null;
     }
 }

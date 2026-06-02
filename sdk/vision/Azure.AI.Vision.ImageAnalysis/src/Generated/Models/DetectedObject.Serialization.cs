@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> Represents a physical object detected in an image. </summary>
-    public partial class DetectedObject : IJsonModel<DetectedObject>
+    public partial class DetectedObject : IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>
     {
-        /// <summary> Initializes a new instance of <see cref="DetectedObject"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedObject"/> for deserialization. </summary>
         internal DetectedObject()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DetectedObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Vision.ImageAnalysis.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDetectedObject(document.RootElement, options);
+                        return global::Azure.AI.Vision.ImageAnalysis.DetectedObject.DeserializeDetectedObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectedObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DetectedObject)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVisionImageAnalysisContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Vision.ImageAnalysis.AzureAIVisionImageAnalysisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DetectedObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DetectedObject)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DetectedObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectedObject IPersistableModel<DetectedObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DetectedObject IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DetectedObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DetectedObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,21 +73,21 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DetectedObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DetectedObject)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox, options);
+            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
             writer.WritePropertyName("tags"u8);
             writer.WriteStartArray();
             foreach (DetectedTag item in Tags)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DetectedTag>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -95,9 +95,9 @@ namespace Azure.AI.Vision.ImageAnalysis
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -106,52 +106,52 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectedObject IJsonModel<DetectedObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DetectedObject IJsonModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DetectedObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DetectedObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.DetectedObject)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDetectedObject(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Vision.ImageAnalysis.DetectedObject.DeserializeDetectedObject(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DetectedObject DeserializeDetectedObject(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ImageBoundingBox boundingBox = default;
-            IReadOnlyList<DetectedTag> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> tags = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(prop.Value, options);
+                    boundingBox = global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox.DeserializeImageBoundingBox(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    List<DetectedTag> array = new List<DetectedTag>();
+                    List<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> array = new List<global::Azure.AI.Vision.ImageAnalysis.DetectedTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTag.DeserializeDetectedTag(item, options));
+                        array.Add(global::Azure.AI.Vision.ImageAnalysis.DetectedTag.DeserializeDetectedTag(item, options));
                     }
                     tags = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DetectedObject(boundingBox, tags, additionalBinaryDataProperties);

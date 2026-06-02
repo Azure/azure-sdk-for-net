@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class TranscriptWord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptWord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.TranscriptWord"/>. </summary>
         /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
@@ -27,13 +27,13 @@ namespace Azure.AI.ContentUnderstanding
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptWord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.TranscriptWord"/>. </summary>
         /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptWord(long startTimeMsValue, long endTimeMsValue, string text, ContentSpan span, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptWord(long startTimeMsValue, long endTimeMsValue, string text, ContentSpan span, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTimeMsValue = startTimeMsValue;
             EndTimeMsValue = endTimeMsValue;

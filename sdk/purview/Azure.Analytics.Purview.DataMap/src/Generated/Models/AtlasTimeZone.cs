@@ -14,15 +14,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasTimeZone
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTimeZone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTimeZone"/>. </summary>
         public AtlasTimeZone()
         {
             AvailableIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTimeZone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTimeZone"/>. </summary>
         /// <param name="dstSavings"> The value of the daylight saving time. </param>
         /// <param name="id"> The ID of the timezone. </param>
         /// <param name="availableIds"> An array of available IDs. </param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="displayName"> The display name of the timezone. </param>
         /// <param name="rawOffset"> The raw offset of the timezone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTimeZone(int? dstSavings, string id, IList<string> availableIds, AtlasTimeZone @default, string displayName, int? rawOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasTimeZone(int? dstSavings, string id, IList<string> availableIds, AtlasTimeZone @default, string displayName, int? rawOffset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DstSavings = dstSavings;
             Id = id;

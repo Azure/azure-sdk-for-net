@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an Azure Blob Storage document reference. </summary>
     public partial class KnowledgeBaseAzureBlobReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureBlobReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseAzureBlobReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.AzureBlob, id, activitySource)
+        internal KnowledgeBaseAzureBlobReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.AzureBlob, id, activitySource)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureBlobReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -29,14 +29,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blobUrl"> The blob URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
-        internal KnowledgeBaseAzureBlobReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri blobUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseAzureBlobReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri blobUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             BlobUrl = blobUrl;
             SearchSensitivityLabelInfo = searchSensitivityLabelInfo;
         }
 
         /// <summary> The blob URL for the reference. </summary>
-        public Uri BlobUrl { get; }
+        public global::System.Uri BlobUrl { get; }
 
         /// <summary> The sensitivity label information for the reference. </summary>
         public PurviewSensitivityLabelInfo SearchSensitivityLabelInfo { get; }

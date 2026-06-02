@@ -12,28 +12,28 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesBingCustomSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public ResponsesBingCustomSearchToolParameters(IEnumerable<ResponsesBingCustomSearchConfiguration> searchConfigurations)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
+        public ResponsesBingCustomSearchToolParameters(IEnumerable<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesBingCustomSearchToolParameters(IList<ResponsesBingCustomSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesBingCustomSearchToolParameters(IList<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration> searchConfigurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,6 +43,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<ResponsesBingCustomSearchConfiguration> SearchConfigurations { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration> SearchConfigurations { get; }
     }
 }

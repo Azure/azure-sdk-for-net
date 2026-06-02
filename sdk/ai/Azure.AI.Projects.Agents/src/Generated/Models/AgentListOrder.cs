@@ -8,50 +8,50 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct AgentListOrder : IEquatable<AgentListOrder>
+    public readonly partial struct AgentListOrder : IEquatable<global::Azure.AI.Projects.Agents.AgentListOrder>
     {
         private readonly string _value;
         private const string AscValue = "asc";
         private const string DescValue = "desc";
 
-        /// <summary> Initializes a new instance of <see cref="AgentListOrder"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentListOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentListOrder(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
 
-        /// <summary> Determines if two <see cref="AgentListOrder"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.AgentListOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentListOrder left, AgentListOrder right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AgentListOrder"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.AgentListOrder"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentListOrder left, AgentListOrder right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AgentListOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.AgentListOrder"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AgentListOrder(string value) => new AgentListOrder(value);
 
-        /// <summary> Converts a string to a <see cref="AgentListOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.AgentListOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentListOrder?(string value) => value == null ? null : new AgentListOrder(value);
+        public static implicit operator AgentListOrder?(string value) => (value == null) ? null : new AgentListOrder(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AgentListOrder other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AgentListOrder other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AgentListOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentListOrder other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

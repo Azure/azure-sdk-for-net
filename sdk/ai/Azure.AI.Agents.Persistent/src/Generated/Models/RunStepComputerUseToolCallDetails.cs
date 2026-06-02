@@ -15,27 +15,27 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepComputerUseToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails"/>. </summary>
         /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="output"> The output from the computer use tool. </param>
-        internal RunStepComputerUseToolCallDetails(ComputerUseAction action, IEnumerable<SafetyCheck> pendingSafetyChecks, ComputerScreenshot output)
+        internal RunStepComputerUseToolCallDetails(ComputerUseAction action, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks, ComputerScreenshot output)
         {
             Action = action;
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Output = output;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<SafetyCheck>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails"/>. </summary>
         /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepComputerUseToolCallDetails(ComputerUseAction action, IList<SafetyCheck> pendingSafetyChecks, ComputerScreenshot output, IList<SafetyCheck> acknowledgedSafetyChecks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepComputerUseToolCallDetails(ComputerUseAction action, IList<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks, ComputerScreenshot output, IList<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             PendingSafetyChecks = pendingSafetyChecks;
@@ -48,12 +48,12 @@ namespace Azure.AI.Agents.Persistent
         public ComputerUseAction Action { get; }
 
         /// <summary> Safety checks that are pending acknowledgment by the developer. </summary>
-        public IList<SafetyCheck> PendingSafetyChecks { get; }
+        public IList<global::Azure.AI.Agents.Persistent.SafetyCheck> PendingSafetyChecks { get; }
 
         /// <summary> The output from the computer use tool. </summary>
         public ComputerScreenshot Output { get; }
 
         /// <summary> Safety checks that have been acknowledged by the developer. </summary>
-        public IList<SafetyCheck> AcknowledgedSafetyChecks { get; }
+        public IList<global::Azure.AI.Agents.Persistent.SafetyCheck> AcknowledgedSafetyChecks { get; }
     }
 }

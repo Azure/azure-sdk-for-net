@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run. </summary>
-    public readonly partial struct IncompleteDetailsReason : IEquatable<IncompleteDetailsReason>
+    public readonly partial struct IncompleteDetailsReason : IEquatable<global::Azure.AI.Agents.Persistent.IncompleteDetailsReason>
     {
         private readonly string _value;
         /// <summary> Maximum completion tokens exceeded. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Maximum prompt tokens exceeded. </summary>
         private const string MaxPromptTokensValue = "max_prompt_tokens";
 
-        /// <summary> Initializes a new instance of <see cref="IncompleteDetailsReason"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.IncompleteDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IncompleteDetailsReason(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Maximum prompt tokens exceeded. </summary>
         public static IncompleteDetailsReason MaxPromptTokens { get; } = new IncompleteDetailsReason(MaxPromptTokensValue);
 
-        /// <summary> Determines if two <see cref="IncompleteDetailsReason"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.IncompleteDetailsReason"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IncompleteDetailsReason left, IncompleteDetailsReason right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IncompleteDetailsReason"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.IncompleteDetailsReason"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IncompleteDetailsReason left, IncompleteDetailsReason right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IncompleteDetailsReason"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.IncompleteDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IncompleteDetailsReason(string value) => new IncompleteDetailsReason(value);
 
-        /// <summary> Converts a string to a <see cref="IncompleteDetailsReason"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.IncompleteDetailsReason"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IncompleteDetailsReason?(string value) => value == null ? null : new IncompleteDetailsReason(value);
+        public static implicit operator IncompleteDetailsReason?(string value) => (value == null) ? null : new IncompleteDetailsReason(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IncompleteDetailsReason other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IncompleteDetailsReason other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IncompleteDetailsReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IncompleteDetailsReason other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

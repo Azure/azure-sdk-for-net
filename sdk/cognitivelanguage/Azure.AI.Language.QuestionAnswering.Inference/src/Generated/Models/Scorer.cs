@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Type of scorer to be used. </summary>
-    public readonly partial struct Scorer : IEquatable<Scorer>
+    public readonly partial struct Scorer : IEquatable<global::Azure.AI.Language.QuestionAnswering.Inference.Scorer>
     {
         private readonly string _value;
         /// <summary> Set this value for scoring based on classic algorithms like wordnet, tfidf, ngram etc. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used. </summary>
         private const string SemanticValue = "Semantic";
 
-        /// <summary> Initializes a new instance of <see cref="Scorer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.Scorer"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Scorer(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used. </summary>
         public static Scorer Semantic { get; } = new Scorer(SemanticValue);
 
-        /// <summary> Determines if two <see cref="Scorer"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.Scorer"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Scorer left, Scorer right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Scorer"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.Scorer"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Scorer left, Scorer right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Scorer"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.Scorer"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator Scorer(string value) => new Scorer(value);
 
-        /// <summary> Converts a string to a <see cref="Scorer"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.Scorer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Scorer?(string value) => value == null ? null : new Scorer(value);
+        public static implicit operator Scorer?(string value) => (value == null) ? null : new Scorer(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Scorer other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is Scorer other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(Scorer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(Scorer other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

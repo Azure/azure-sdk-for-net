@@ -15,20 +15,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ErrorResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ErrorResponse"/>. </summary>
         /// <param name="error"> The error object. </param>
         internal ErrorResponse(ResponseError error)
         {
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ErrorResponse"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="errorCode"> String error code indicating what went wrong. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(ResponseError error, string errorCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorResponse(ResponseError error, string errorCode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             ErrorCode = errorCode;

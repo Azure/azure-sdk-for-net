@@ -13,17 +13,17 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentModelBuildOperationDetails : DocumentIntelligenceOperationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, OperationKind.DocumentModelBuild, resourceLocation)
+        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, global::System.Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, global::Azure.AI.DocumentIntelligence.OperationKind.DocumentModelBuild, resourceLocation)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
+        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, global::System.Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
         {
             Result = result;
         }

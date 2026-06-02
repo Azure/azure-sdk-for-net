@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Type of metadata resource in the system. </summary>
-    public readonly partial struct MosaicMetadataType : IEquatable<MosaicMetadataType>
+    public readonly partial struct MosaicMetadataType : IEquatable<global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType>
     {
         private readonly string _value;
         /// <summary> Metadata for a mosaic of multiple raster assets. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Metadata for a search query result. </summary>
         private const string SearchValue = "search";
 
-        /// <summary> Initializes a new instance of <see cref="MosaicMetadataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MosaicMetadataType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Metadata for a search query result. </summary>
         public static MosaicMetadataType Search { get; } = new MosaicMetadataType(SearchValue);
 
-        /// <summary> Determines if two <see cref="MosaicMetadataType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MosaicMetadataType left, MosaicMetadataType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MosaicMetadataType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MosaicMetadataType left, MosaicMetadataType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MosaicMetadataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MosaicMetadataType(string value) => new MosaicMetadataType(value);
 
-        /// <summary> Converts a string to a <see cref="MosaicMetadataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.MosaicMetadataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MosaicMetadataType?(string value) => value == null ? null : new MosaicMetadataType(value);
+        public static implicit operator MosaicMetadataType?(string value) => (value == null) ? null : new MosaicMetadataType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MosaicMetadataType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MosaicMetadataType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MosaicMetadataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MosaicMetadataType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

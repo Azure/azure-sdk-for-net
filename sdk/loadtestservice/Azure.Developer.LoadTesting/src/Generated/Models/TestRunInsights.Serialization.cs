@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Represents insights for the test run. </summary>
-    public partial class TestRunInsights : IJsonModel<TestRunInsights>
+    public partial class TestRunInsights : IJsonModel<global::Azure.Developer.LoadTesting.TestRunInsights>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunInsights PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestRunInsights(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.TestRunInsights.DeserializeTestRunInsights(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestRunInsights)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunInsights)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestRunInsights)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunInsights)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunInsights>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunInsights IPersistableModel<TestRunInsights>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TestRunInsights IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunInsights>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TestRunInsights"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.LoadTesting.TestRunInsights"/> from. </param>
         public static explicit operator TestRunInsights(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestRunInsights(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.LoadTesting.TestRunInsights.DeserializeTestRunInsights(document.RootElement, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestRunInsights>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.TestRunInsights>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,29 +76,29 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunInsights)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunInsights)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Columns))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(Columns)))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (TestRunInsightColumn item in Columns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TestRunInsightColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Rows))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartObject();
                 foreach (var item in Rows)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -107,7 +107,7 @@ namespace Azure.Developer.LoadTesting
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        if ((item0.Value == null))
                         {
                             writer.WriteNullValue();
                             continue;
@@ -118,17 +118,17 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Version)))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Status)))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -136,9 +136,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -147,60 +147,60 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunInsights IJsonModel<TestRunInsights>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TestRunInsights IJsonModel<global::Azure.Developer.LoadTesting.TestRunInsights>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunInsights JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunInsights>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunInsights)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunInsights)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestRunInsights(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.TestRunInsights.DeserializeTestRunInsights(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TestRunInsights DeserializeTestRunInsights(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IReadOnlyList<TestRunInsightColumn> columns = default;
-            IDictionary<string, IDictionary<string, string>> rows = default;
+            IReadOnlyList<global::Azure.Developer.LoadTesting.TestRunInsightColumn> columns = default;
+            IDictionary<string, global::System.Collections.Generic.IDictionary<string, string>> rows = default;
             long? version = default;
             OperationState? status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("columns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TestRunInsightColumn> array = new List<TestRunInsightColumn>();
+                    List<global::Azure.Developer.LoadTesting.TestRunInsightColumn> array = new List<global::Azure.Developer.LoadTesting.TestRunInsightColumn>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TestRunInsightColumn.DeserializeTestRunInsightColumn(item, options));
+                        array.Add(global::Azure.Developer.LoadTesting.TestRunInsightColumn.DeserializeTestRunInsightColumn(item, options));
                     }
                     columns = array;
                     continue;
                 }
                 if (prop.NameEquals("rows"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IDictionary<string, string>> dictionary = new Dictionary<string, IDictionary<string, string>>();
+                    Dictionary<string, global::System.Collections.Generic.IDictionary<string, string>> dictionary = new Dictionary<string, global::System.Collections.Generic.IDictionary<string, string>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -209,7 +209,7 @@ namespace Azure.Developer.LoadTesting
                             Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
                             foreach (var prop1 in prop0.Value.EnumerateObject())
                             {
-                                if (prop1.Value.ValueKind == JsonValueKind.Null)
+                                if ((prop1.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                                 {
                                     dictionary0.Add(prop1.Name, null);
                                 }
@@ -226,7 +226,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -235,19 +235,19 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     status = new OperationState(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestRunInsights(columns ?? new ChangeTrackingList<TestRunInsightColumn>(), rows ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), version, status, additionalBinaryDataProperties);
+            return new TestRunInsights((columns ?? new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunInsightColumn>()), (rows ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, string>>()), version, status, additionalBinaryDataProperties);
         }
     }
 }

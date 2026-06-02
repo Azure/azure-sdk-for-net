@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class SynchronizationState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SynchronizationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.SynchronizationState"/>. </summary>
         /// <param name="startTime"> The start time of the current synchronization. </param>
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
@@ -28,17 +28,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
             ItemsUpdatesFailed = itemsUpdatesFailed;
             ItemsSkipped = itemsSkipped;
-            Errors = new ChangeTrackingList<KnowledgeSourceSynchronizationError>();
+            Errors = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceSynchronizationError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SynchronizationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.SynchronizationState"/>. </summary>
         /// <param name="startTime"> The start time of the current synchronization. </param>
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
         /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IList<KnowledgeSourceSynchronizationError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceSynchronizationError> errors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
@@ -61,6 +61,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public int ItemsSkipped { get; set; }
 
         /// <summary> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </summary>
-        public IList<KnowledgeSourceSynchronizationError> Errors { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceSynchronizationError> Errors { get; }
     }
 }

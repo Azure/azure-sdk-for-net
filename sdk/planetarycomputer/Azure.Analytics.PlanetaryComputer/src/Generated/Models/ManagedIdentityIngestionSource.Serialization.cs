@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Managed Identity ingestion source. </summary>
-    public partial class ManagedIdentityIngestionSource : IngestionSource, IJsonModel<ManagedIdentityIngestionSource>
+    public partial class ManagedIdentityIngestionSource : IngestionSource, IJsonModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource"/> for deserialization. </summary>
         internal ManagedIdentityIngestionSource()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedIdentityIngestionSource(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource.DeserializeManagedIdentityIngestionSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedIdentityIngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedIdentityIngestionSource IPersistableModel<ManagedIdentityIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedIdentityIngestionSource)PersistableModelCreateCore(data, options);
+        ManagedIdentityIngestionSource IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ManagedIdentityIngestionSource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedIdentityIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedIdentityIngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,45 +73,45 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo, options);
+            writer.WriteObjectValue<ManagedIdentityConnection>(ConnectionInfo, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedIdentityIngestionSource IJsonModel<ManagedIdentityIngestionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedIdentityIngestionSource)JsonModelCreateCore(ref reader, options);
+        ManagedIdentityIngestionSource IJsonModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ManagedIdentityIngestionSource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override IngestionSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedIdentityIngestionSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource.DeserializeManagedIdentityIngestionSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ManagedIdentityIngestionSource DeserializeManagedIdentityIngestionSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             Guid id = default;
             DateTimeOffset? created = default;
             IngestionSourceType kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ManagedIdentityConnection connectionInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -122,7 +122,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("created"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -136,12 +136,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = ManagedIdentityConnection.DeserializeManagedIdentityConnection(prop.Value, options);
+                    connectionInfo = global::Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection.DeserializeManagedIdentityConnection(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ManagedIdentityIngestionSource(id, created, kind, additionalBinaryDataProperties, connectionInfo);

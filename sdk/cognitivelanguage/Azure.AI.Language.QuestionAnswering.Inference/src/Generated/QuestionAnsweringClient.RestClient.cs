@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:query-knowledgebases", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -45,14 +45,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:query-text", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

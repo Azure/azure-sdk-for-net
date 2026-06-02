@@ -15,9 +15,9 @@ namespace Azure.Compute.Batch
     public partial class InboundEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InboundEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.InboundEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
             BackendPort = backendPort;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InboundEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.InboundEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;

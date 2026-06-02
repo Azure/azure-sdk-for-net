@@ -14,27 +14,27 @@ namespace Azure.AI.Agents.Persistent
     public partial class MCPToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolResource"/>. </summary>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="headers"> The headers for the MCP server updates. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="headers"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="headers"/> is null. </exception>
         public MCPToolResource(string serverLabel, IDictionary<string, string> headers)
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(headers, nameof(headers));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(headers, nameof(headers));
 
             ServerLabel = serverLabel;
             Headers = headers;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolResource"/>. </summary>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="headers"> The headers for the MCP server updates. </param>
         /// <param name="requireApprovalInternal"> Does MCP server require approval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, BinaryData requireApprovalInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, BinaryData requireApprovalInternal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Headers = headers;

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode.Datetime
 {
-    public partial class UnixTimestampArrayDatetimeProperty : IJsonModel<UnixTimestampArrayDatetimeProperty>
+    public partial class UnixTimestampArrayDatetimeProperty : IJsonModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>
     {
         internal UnixTimestampArrayDatetimeProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode.Datetime
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<UnixTimestampArrayDatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        UnixTimestampArrayDatetimeProperty IPersistableModel<UnixTimestampArrayDatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UnixTimestampArrayDatetimeProperty IPersistableModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<UnixTimestampArrayDatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="unixTimestampArrayDatetimeProperty"> The <see cref="UnixTimestampArrayDatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="unixTimestampArrayDatetimeProperty"> The <see cref="global::Encode.Datetime.UnixTimestampArrayDatetimeProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(UnixTimestampArrayDatetimeProperty unixTimestampArrayDatetimeProperty) => throw null;
 
         public static explicit operator UnixTimestampArrayDatetimeProperty(Response response) => throw null;
 
-        void IJsonModel<UnixTimestampArrayDatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        UnixTimestampArrayDatetimeProperty IJsonModel<UnixTimestampArrayDatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        UnixTimestampArrayDatetimeProperty IJsonModel<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UnixTimestampArrayDatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
-    public partial class SentimentAnalysisOperationAction : AnalyzeTextOperationAction, IJsonModel<SentimentAnalysisOperationAction>
+    public partial class SentimentAnalysisOperationAction : AnalyzeTextOperationAction, IJsonModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSentimentAnalysisOperationAction(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.SentimentAnalysisOperationAction.DeserializeSentimentAnalysisOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentAnalysisOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentimentAnalysisOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentAnalysisOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentimentAnalysisOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SentimentAnalysisOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentAnalysisOperationAction IPersistableModel<SentimentAnalysisOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (SentimentAnalysisOperationAction)PersistableModelCreateCore(data, options);
+        SentimentAnalysisOperationAction IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SentimentAnalysisOperationAction)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SentimentAnalysisOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SentimentAnalysisOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,47 +68,47 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentimentAnalysisOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentimentAnalysisOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Parameters))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue<SentimentAnalysisActionContent>(Parameters, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentAnalysisOperationAction IJsonModel<SentimentAnalysisOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SentimentAnalysisOperationAction)JsonModelCreateCore(ref reader, options);
+        SentimentAnalysisOperationAction IJsonModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SentimentAnalysisOperationAction)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentimentAnalysisOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentimentAnalysisOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentimentAnalysisOperationAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentAnalysisOperationAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.SentimentAnalysisOperationAction.DeserializeSentimentAnalysisOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SentimentAnalysisOperationAction DeserializeSentimentAnalysisOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
             AnalyzeTextOperationActionKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             SentimentAnalysisActionContent parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -124,16 +124,16 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    parameters = SentimentAnalysisActionContent.DeserializeSentimentAnalysisActionContent(prop.Value, options);
+                    parameters = global::Azure.AI.Language.Text.SentimentAnalysisActionContent.DeserializeSentimentAnalysisActionContent(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SentimentAnalysisOperationAction(name, kind, additionalBinaryDataProperties, parameters);

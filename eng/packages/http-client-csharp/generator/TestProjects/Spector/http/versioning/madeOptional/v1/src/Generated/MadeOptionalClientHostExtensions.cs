@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.MadeOptional
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MadeOptionalClientHostExtensions
     {
         public static IClientBuilder AddMadeOptionalClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMadeOptionalClient(this IHostApplicationBuilder host, string sectionName, Action<MadeOptionalClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMadeOptionalClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.MadeOptional.MadeOptionalClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMadeOptionalClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMadeOptionalClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MadeOptionalClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMadeOptionalClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.MadeOptional.MadeOptionalClientSettings> configureSettings) => throw null;
     }
 }

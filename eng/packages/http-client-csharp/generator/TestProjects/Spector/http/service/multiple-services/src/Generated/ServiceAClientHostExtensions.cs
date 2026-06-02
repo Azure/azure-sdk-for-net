@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Service.MultipleServices.ServiceA
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ServiceAClientHostExtensions
     {
         public static IClientBuilder AddServiceAClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddServiceAClient(this IHostApplicationBuilder host, string sectionName, Action<ServiceAClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddServiceAClient(this IHostApplicationBuilder host, string sectionName, Action<global::Service.MultipleServices.ServiceA.ServiceAClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedServiceAClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedServiceAClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ServiceAClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedServiceAClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Service.MultipleServices.ServiceA.ServiceAClientSettings> configureSettings) => throw null;
     }
 }

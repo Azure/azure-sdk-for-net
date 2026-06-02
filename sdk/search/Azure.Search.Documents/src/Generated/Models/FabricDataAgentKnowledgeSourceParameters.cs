@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FabricDataAgentKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSourceParameters"/>. </summary>
         /// <param name="workspaceId"> Fabric workspace ID. </param>
         /// <param name="dataAgentId"> Specifies which Fabric Data Agent to access. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="dataAgentId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="dataAgentId"/> is null. </exception>
         public FabricDataAgentKnowledgeSourceParameters(string workspaceId, string dataAgentId)
         {
-            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(dataAgentId, nameof(dataAgentId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(dataAgentId, nameof(dataAgentId));
 
             WorkspaceId = workspaceId;
             DataAgentId = dataAgentId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSourceParameters"/>. </summary>
         /// <param name="workspaceId"> Fabric workspace ID. </param>
         /// <param name="dataAgentId"> Specifies which Fabric Data Agent to access. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricDataAgentKnowledgeSourceParameters(string workspaceId, string dataAgentId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricDataAgentKnowledgeSourceParameters(string workspaceId, string dataAgentId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             DataAgentId = dataAgentId;

@@ -13,23 +13,23 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the Sentiment Analysis LRO results. </summary>
     public partial class SentimentOperationResult : AnalyzeTextOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        internal SentimentOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, SentimentResult results) : base(lastUpdateDateTime, status, AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults)
+        internal SentimentOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, SentimentResult results) : base(lastUpdateDateTime, status, global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        internal SentimentOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
+        internal SentimentOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SentimentResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

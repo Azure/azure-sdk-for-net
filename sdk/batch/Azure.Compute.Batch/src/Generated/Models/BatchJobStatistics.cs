@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchJobStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobStatistics"/>. </summary>
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch
         /// <param name="failedTasksCount"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
         /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
-        internal BatchJobStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime)
+        internal BatchJobStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime)
         {
             Uri = uri;
             StartTime = startTime;
@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
             WaitTime = waitTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobStatistics"/>. </summary>
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             StartTime = startTime;
@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }

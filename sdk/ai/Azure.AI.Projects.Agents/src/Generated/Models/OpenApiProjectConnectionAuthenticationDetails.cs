@@ -10,21 +10,21 @@ namespace Azure.AI.Projects.Agents
     /// <summary> Security details for OpenApi project connection authentication. </summary>
     public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme) : base(OpenApiAuthType.ProjectConnection)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
+        public OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme) : base(global::Azure.AI.Projects.Agents.OpenApiAuthType.ProjectConnection)
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
             SecurityScheme = securityScheme;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiProjectConnectionSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OpenApiProjectConnectionSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }

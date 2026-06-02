@@ -12,6 +12,6 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     internal partial class UnknownAnimal : Animal
     {
-        internal UnknownAnimal(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", name, additionalBinaryDataProperties) => throw null;
+        internal UnknownAnimal(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind ?? "unknown"), name, additionalBinaryDataProperties) => throw null;
     }
 }

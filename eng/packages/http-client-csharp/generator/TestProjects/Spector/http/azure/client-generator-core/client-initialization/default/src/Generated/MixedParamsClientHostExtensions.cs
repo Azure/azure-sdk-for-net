@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MixedParamsClientHostExtensions
     {
         public static IClientBuilder AddMixedParamsClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMixedParamsClient(this IHostApplicationBuilder host, string sectionName, Action<MixedParamsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMixedParamsClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParamsClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMixedParamsClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMixedParamsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MixedParamsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMixedParamsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParamsClientSettings> configureSettings) => throw null;
     }
 }

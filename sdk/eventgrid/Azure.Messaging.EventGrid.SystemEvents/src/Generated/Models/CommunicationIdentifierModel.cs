@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class CommunicationIdentifierModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel"/>. </summary>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
         internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser)
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CommunicationUser = communicationUser;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel"/>. </summary>
         /// <param name="kind"> The identifier kind. Only required in responses. </param>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RawId = rawId;

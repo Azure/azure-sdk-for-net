@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasGlossaryExtInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo"/>. </summary>
         internal AtlasGlossaryExtInfo()
         {
-            Classifications = new ChangeTrackingList<AtlasClassification>();
-            Categories = new ChangeTrackingList<AtlasRelatedCategoryHeader>();
-            Terms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            CategoryInfo = new ChangeTrackingDictionary<string, AtlasGlossaryCategory>();
-            TermInfo = new ChangeTrackingDictionary<string, AtlasGlossaryTerm>();
+            Classifications = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            Categories = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
+            Terms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            CategoryInfo = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
+            TermInfo = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo"/>. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="classifications"> An array of classifications. </param>
         /// <param name="longDescription"> The long version description. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryExtInfo(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IList<AtlasRelatedCategoryHeader> categories, string language, IList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, AtlasGlossaryCategory> categoryInfo, IDictionary<string, AtlasGlossaryTerm> termInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasGlossaryExtInfo(string guid, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> categories, string language, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> terms, string usage, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> categoryInfo, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> termInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             Classifications = classifications;
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Guid { get; }
 
         /// <summary> An array of classifications. </summary>
-        public IList<AtlasClassification> Classifications { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> Classifications { get; }
 
         /// <summary> The long version description. </summary>
         public string LongDescription { get; }
@@ -101,21 +101,21 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get; }
 
         /// <summary> An array of categories. </summary>
-        public IList<AtlasRelatedCategoryHeader> Categories { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> Categories { get; }
 
         /// <summary> The language of the glossary. </summary>
         public string Language { get; }
 
         /// <summary> An array of related term headers. </summary>
-        public IList<AtlasRelatedTermHeader> Terms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Terms { get; }
 
         /// <summary> The usage of the glossary. </summary>
         public string Usage { get; }
 
         /// <summary> The glossary category information. </summary>
-        public IDictionary<string, AtlasGlossaryCategory> CategoryInfo { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> CategoryInfo { get; }
 
         /// <summary> The glossary term information. </summary>
-        public IDictionary<string, AtlasGlossaryTerm> TermInfo { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> TermInfo { get; }
     }
 }

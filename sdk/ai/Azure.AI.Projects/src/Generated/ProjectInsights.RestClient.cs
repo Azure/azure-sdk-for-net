@@ -15,27 +15,27 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
         internal PipelineMessage CreateGenerateRequest(BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/insights", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            request.Headers.Set("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.Set("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Headers.Set("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.Set("Repeatability-First-Sent", global::Azure.AI.Projects.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.AI.Projects.SerializationFormat.DateTime_RFC7231));
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -49,17 +49,17 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/insights/", false);
             uri.AppendPath(id, true);
-            if (includeCoordinates != null)
+            if ((includeCoordinates != null))
             {
-                uri.AppendQuery("includeCoordinates", TypeFormatters.ConvertToString(includeCoordinates), true);
+                uri.AppendQuery("includeCoordinates", global::Azure.AI.Projects.TypeFormatters.ConvertToString(includeCoordinates), true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -73,33 +73,33 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/insights", false);
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
-            if (evalId != null)
+            if ((evalId != null))
             {
                 uri.AppendQuery("evalId", evalId, true);
             }
-            if (runId != null)
+            if ((runId != null))
             {
                 uri.AppendQuery("runId", runId, true);
             }
-            if (agentName != null)
+            if ((agentName != null))
             {
                 uri.AppendQuery("agentName", agentName, true);
             }
-            if (includeCoordinates != null)
+            if ((includeCoordinates != null))
             {
-                uri.AppendQuery("includeCoordinates", TypeFormatters.ConvertToString(includeCoordinates), true);
+                uri.AppendQuery("includeCoordinates", global::Azure.AI.Projects.TypeFormatters.ConvertToString(includeCoordinates), true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }

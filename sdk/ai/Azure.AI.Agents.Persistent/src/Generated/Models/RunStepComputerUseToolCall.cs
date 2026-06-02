@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepComputerUseToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="computerUsePreview"> The detailed information about the computer use tool call. </param>
         internal RunStepComputerUseToolCall(string id, RunStepComputerUseToolCallDetails computerUsePreview) : base("computer_use_preview", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             ComputerUsePreview = computerUsePreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="computerUsePreview"> The detailed information about the computer use tool call. </param>
-        internal RunStepComputerUseToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepComputerUseToolCallDetails computerUsePreview) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepComputerUseToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepComputerUseToolCallDetails computerUsePreview) : base(@type, id, additionalBinaryDataProperties)
         {
             ComputerUsePreview = computerUsePreview;
         }

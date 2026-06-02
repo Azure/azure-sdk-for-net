@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Request payload for updating synonyms. </summary>
-    public partial class SynonymAssets : IJsonModel<SynonymAssets>
+    public partial class SynonymAssets : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>
     {
-        /// <summary> Initializes a new instance of <see cref="SynonymAssets"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets"/> for deserialization. </summary>
         internal SynonymAssets()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SynonymAssets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSynonymAssets(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets.DeserializeSynonymAssets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynonymAssets)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Authoring.AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SynonymAssets)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SynonymAssets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SynonymAssets IPersistableModel<SynonymAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SynonymAssets IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SynonymAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="synonymAssets"> The <see cref="SynonymAssets"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="synonymAssets"> The <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SynonymAssets synonymAssets)
         {
-            if (synonymAssets == null)
+            if ((synonymAssets == null))
             {
                 return null;
             }
-            return RequestContent.Create(synonymAssets, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(synonymAssets, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SynonymAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,24 +84,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SynonymAssets)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (WordAlterations item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<WordAlterations>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,56 +120,56 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SynonymAssets IJsonModel<SynonymAssets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SynonymAssets IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SynonymAssets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SynonymAssets)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSynonymAssets(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets.DeserializeSynonymAssets(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SynonymAssets DeserializeSynonymAssets(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<WordAlterations> value = default;
-            Uri nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> value = default;
+            global::System.Uri nextLink = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<WordAlterations> array = new List<WordAlterations>();
+                    List<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> array = new List<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterations.DeserializeWordAlterations(item, options));
+                        array.Add(global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations.DeserializeWordAlterations(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SynonymAssets(value, nextLink, additionalBinaryDataProperties);

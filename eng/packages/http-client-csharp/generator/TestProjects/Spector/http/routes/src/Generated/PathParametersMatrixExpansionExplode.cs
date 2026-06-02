@@ -18,32 +18,32 @@ namespace Routes._PathParameters.MatrixExpansion.Explode
     {
         protected PathParametersMatrixExpansionExplode() => throw null;
 
-        internal PathParametersMatrixExpansionExplode(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PathParametersMatrixExpansionExplode(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Primitive(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> PrimitiveAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PrimitiveAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response Primitive(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PrimitiveAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PrimitiveAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Array(IEnumerable<string> @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> ArrayAsync(IEnumerable<string> @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ArrayAsync(IEnumerable<string> @param, RequestContext context) => throw null;
 
         public virtual Response Array(IEnumerable<string> @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ArrayAsync(IEnumerable<string> @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ArrayAsync(IEnumerable<string> @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Record(IDictionary<string, int> @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RecordAsync(IDictionary<string, int> @param, RequestContext context) => throw null;
 
         public virtual Response Record(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
     }
 }

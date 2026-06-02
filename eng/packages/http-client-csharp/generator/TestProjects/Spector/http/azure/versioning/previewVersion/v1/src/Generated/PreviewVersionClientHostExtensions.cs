@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PreviewVersionClientHostExtensions
     {
         public static IClientBuilder AddPreviewVersionClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddPreviewVersionClient(this IHostApplicationBuilder host, string sectionName, Action<PreviewVersionClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddPreviewVersionClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Versioning.PreviewVersion.PreviewVersionClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedPreviewVersionClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedPreviewVersionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PreviewVersionClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedPreviewVersionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Versioning.PreviewVersion.PreviewVersionClientSettings> configureSettings) => throw null;
     }
 }

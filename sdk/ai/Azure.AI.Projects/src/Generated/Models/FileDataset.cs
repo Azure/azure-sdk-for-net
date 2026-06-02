@@ -10,16 +10,16 @@ namespace Azure.AI.Projects
     /// <summary> FileDatasetVersion Definition. </summary>
     public partial class FileDataset : AIProjectDataset
     {
-        /// <summary> Initializes a new instance of <see cref="FileDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataset"/>. </summary>
         /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public FileDataset(Uri dataUri) : base(dataUri, DatasetType.UriFile)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
+        public FileDataset(global::System.Uri dataUri) : base(dataUri, global::Azure.AI.Projects.DatasetType.UriFile)
         {
-            Argument.AssertNotNull(dataUri, nameof(dataUri));
+            global::Azure.AI.Projects.Argument.AssertNotNull(dataUri, nameof(dataUri));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataset"/>. </summary>
         /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileDataset(Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataUri, @type, isReference, connectionName, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal FileDataset(global::System.Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(dataUri, @type, isReference, connectionName, id, name, version, description, tags, additionalBinaryDataProperties)
         {
         }
     }

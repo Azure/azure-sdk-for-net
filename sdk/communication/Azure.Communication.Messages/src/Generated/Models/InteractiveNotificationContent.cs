@@ -13,26 +13,26 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send an Interactive message notification. </summary>
     public partial class InteractiveNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="InteractiveNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.InteractiveNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="interactiveMessage"> The interactive message content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="interactiveMessage"/> is null. </exception>
-        public InteractiveNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, InteractiveMessage interactiveMessage) : base(channelRegistrationId, to, CommunicationMessageKind.Interactive)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/> or <paramref name="interactiveMessage"/> is null. </exception>
+        public InteractiveNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, InteractiveMessage interactiveMessage) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.Interactive)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(interactiveMessage, nameof(interactiveMessage));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(interactiveMessage, nameof(interactiveMessage));
 
             InteractiveMessage = interactiveMessage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InteractiveNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.InteractiveNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="interactiveMessage"> The interactive message content. </param>
-        internal InteractiveNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InteractiveMessage interactiveMessage) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal InteractiveNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InteractiveMessage interactiveMessage) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             InteractiveMessage = interactiveMessage;
         }

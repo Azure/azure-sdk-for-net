@@ -14,18 +14,18 @@ namespace Azure.Analytics.Defender.Easm
     public partial class WebComponent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.WebComponent"/>. </summary>
         internal WebComponent()
         {
             RuleId = new ChangeTrackingList<string>();
-            Cve = new ChangeTrackingList<CveDetails>();
-            Ports = new ChangeTrackingList<PortDetails>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Cve = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CveDetails>();
+            Ports = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.PortDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.WebComponent"/>. </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="version"></param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sources"></param>
         /// <param name="service"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebComponent(string name, string @type, string version, IList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<CveDetails> cve, long? endOfLife, bool? recent, IList<PortDetails> ports, IList<SourceDetails> sources, string service, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebComponent(string name, string @type, string version, IList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<global::Azure.Analytics.Defender.Easm.CveDetails> cve, long? endOfLife, bool? recent, IList<global::Azure.Analytics.Defender.Easm.PortDetails> ports, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, string service, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
         public long? Count { get; }
 
         /// <summary> Gets the Cve. </summary>
-        public IList<CveDetails> Cve { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.CveDetails> Cve { get; }
 
         /// <summary> Gets the EndOfLife. </summary>
         public long? EndOfLife { get; }
@@ -89,10 +89,10 @@ namespace Azure.Analytics.Defender.Easm
         public bool? Recent { get; }
 
         /// <summary> Gets the Ports. </summary>
-        public IList<PortDetails> Ports { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.PortDetails> Ports { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the Service. </summary>
         public string Service { get; }

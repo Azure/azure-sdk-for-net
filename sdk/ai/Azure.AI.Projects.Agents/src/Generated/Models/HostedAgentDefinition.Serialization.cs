@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The hosted agent definition. </summary>
-    public partial class HostedAgentDefinition : ProjectsAgentDefinition, IJsonModel<HostedAgentDefinition>
+    public partial class HostedAgentDefinition : ProjectsAgentDefinition, IJsonModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.HostedAgentDefinition"/> for deserialization. </summary>
         internal HostedAgentDefinition()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHostedAgentDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.HostedAgentDefinition.DeserializeHostedAgentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.HostedAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.HostedAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HostedAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostedAgentDefinition IPersistableModel<HostedAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostedAgentDefinition)PersistableModelCreateCore(data, options);
+        HostedAgentDefinition IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((HostedAgentDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HostedAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HostedAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,19 +70,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.HostedAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Tools))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (ProjectsAgentTool item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ProjectsAgentTool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,14 +90,14 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Cpu);
             writer.WritePropertyName("memory"u8);
             writer.WriteStringValue(Memory);
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environment_variables"u8);
                 writer.WriteStartObject();
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -106,67 +106,67 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ContainerConfiguration))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("container_configuration"u8);
-                writer.WriteObjectValue(ContainerConfiguration, options);
+                writer.WriteObjectValue<ContainerConfiguration>(ContainerConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(Versions))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("protocol_versions"u8);
                 writer.WriteStartArray();
                 foreach (ProtocolVersionRecord item in Versions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ProtocolVersionRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CodeConfiguration))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("code_configuration"u8);
-                writer.WriteObjectValue(CodeConfiguration, options);
+                writer.WriteObjectValue<CodeConfiguration>(CodeConfiguration, options);
             }
-            if (Optional.IsDefined(TelemetryConfig))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(TelemetryConfig))
             {
                 writer.WritePropertyName("telemetry_config"u8);
-                writer.WriteObjectValue(TelemetryConfig, options);
+                writer.WriteObjectValue<TelemetryConfig>(TelemetryConfig, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostedAgentDefinition IJsonModel<HostedAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HostedAgentDefinition)JsonModelCreateCore(ref reader, options);
+        HostedAgentDefinition IJsonModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((HostedAgentDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.HostedAgentDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHostedAgentDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.HostedAgentDefinition.DeserializeHostedAgentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static HostedAgentDefinition DeserializeHostedAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ProjectsAgentTool> tools = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools = default;
             string cpu = default;
             string memory = default;
             IDictionary<string, string> environmentVariables = default;
             ContainerConfiguration containerConfiguration = default;
-            IList<ProtocolVersionRecord> versions = default;
+            IList<global::Azure.AI.Projects.Agents.ProtocolVersionRecord> versions = default;
             CodeConfiguration codeConfiguration = default;
             TelemetryConfig telemetryConfig = default;
             foreach (var prop in element.EnumerateObject())
@@ -178,23 +178,23 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("rai_config"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    contentFilterConfiguration = global::Azure.AI.Projects.Agents.ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
+                    List<global::Azure.AI.Projects.Agents.ProjectsAgentTool> array = new List<global::Azure.AI.Projects.Agents.ProjectsAgentTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
+                        array.Add(global::Azure.AI.Projects.Agents.ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
                     }
                     tools = array;
                     continue;
@@ -211,14 +211,14 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("environment_variables"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -232,60 +232,60 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("container_configuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    containerConfiguration = ContainerConfiguration.DeserializeContainerConfiguration(prop.Value, options);
+                    containerConfiguration = global::Azure.AI.Projects.Agents.ContainerConfiguration.DeserializeContainerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protocol_versions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
+                    List<global::Azure.AI.Projects.Agents.ProtocolVersionRecord> array = new List<global::Azure.AI.Projects.Agents.ProtocolVersionRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
+                        array.Add(global::Azure.AI.Projects.Agents.ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
                     }
                     versions = array;
                     continue;
                 }
                 if (prop.NameEquals("code_configuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(prop.Value, options);
+                    codeConfiguration = global::Azure.AI.Projects.Agents.CodeConfiguration.DeserializeCodeConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("telemetry_config"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    telemetryConfig = global::Azure.AI.Projects.Agents.TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new HostedAgentDefinition(
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
-                tools ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                (tools ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProjectsAgentTool>()),
                 cpu,
                 memory,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                (environmentVariables ?? new ChangeTrackingDictionary<string, string>()),
                 containerConfiguration,
-                versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
+                (versions ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProtocolVersionRecord>()),
                 codeConfiguration,
                 telemetryConfig);
         }

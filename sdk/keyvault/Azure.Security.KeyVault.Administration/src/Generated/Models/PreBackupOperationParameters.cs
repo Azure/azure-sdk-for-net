@@ -13,19 +13,19 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class PreBackupOperationParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PreBackupOperationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.PreBackupOperationParameters"/>. </summary>
         public PreBackupOperationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreBackupOperationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.PreBackupOperationParameters"/>. </summary>
         /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
         /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
         /// <param name="useManagedIdentity"> Indicates which authentication method should be used. If set to true, Managed HSM will use the configured user-assigned managed identity to authenticate with Azure Storage. Otherwise, a SAS token has to be specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreBackupOperationParameters(string storageResourceUri, string token, bool? useManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreBackupOperationParameters(string storageResourceUri, string token, bool? useManagedIdentity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StorageResourceUri = storageResourceUri;
             Token = token;

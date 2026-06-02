@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageLifecyclePolicyCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="policyRunSummary"> Policy execution summary which shows the completion status of a LCM run". </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TierToColdSummary = tierToColdSummary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="policyRunSummary"> Policy execution summary which shows the completion status of a LCM run". </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyRunSummary policyRunSummary, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyRunSummary policyRunSummary, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ScheduleTime = scheduleTime;
             PolicyRunSummary = policyRunSummary;

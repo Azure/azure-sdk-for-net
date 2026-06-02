@@ -15,21 +15,21 @@ namespace Azure.Communication.JobRouter
     public partial class ExceptionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionPolicy"/>. </summary>
         internal ExceptionPolicy()
         {
-            ExceptionRules = new ChangeTrackingList<ExceptionRule>();
+            ExceptionRules = new ChangeTrackingList<global::Azure.Communication.JobRouter.ExceptionRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of an exception policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionPolicy(ETag eTag, string id, string name, IList<ExceptionRule> exceptionRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExceptionPolicy(ETag eTag, string id, string name, IList<global::Azure.Communication.JobRouter.ExceptionRule> exceptionRules, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;

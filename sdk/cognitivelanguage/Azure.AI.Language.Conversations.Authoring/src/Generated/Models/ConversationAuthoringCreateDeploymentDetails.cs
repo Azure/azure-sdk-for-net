@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringCreateDeploymentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
         public ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel)
         {
-            Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
-            AssignedResources = new ChangeTrackingList<ConversationAuthoringDeploymentResource>();
+            AssignedResources = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
         /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<ConversationAuthoringDeploymentResource> assignedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> assignedResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TrainedModelLabel = trainedModelLabel;
             AssignedResources = assignedResources;
@@ -42,6 +42,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string TrainedModelLabel { get; }
 
         /// <summary> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
-        public IList<ConversationAuthoringDeploymentResource> AssignedResources { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> AssignedResources { get; }
     }
 }

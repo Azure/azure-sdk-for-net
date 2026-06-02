@@ -12,22 +12,22 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base model for interim response configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticInterimResponseConfig"/> and <see cref="LlmInterimResponseConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.StaticInterimResponseConfig"/> and <see cref="Azure.AI.VoiceLive.LlmInterimResponseConfig"/>.
     /// </summary>
     public abstract partial class InterimResponseConfigBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InterimResponseConfigBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InterimResponseConfigBase"/>. </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         private protected InterimResponseConfigBase(InterimResponseConfigType @type)
         {
             Type = @type;
-            Triggers = new ChangeTrackingList<InterimResponseTrigger>();
+            Triggers = new ChangeTrackingList<global::Azure.AI.VoiceLive.InterimResponseTrigger>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InterimResponseConfigBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InterimResponseConfigBase"/>. </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         /// <param name="triggers">
         /// List of triggers that can fire the interim response. Any trigger can activate it (OR logic).
@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InterimResponseConfigBase(InterimResponseConfigType @type, IList<InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InterimResponseConfigBase(InterimResponseConfigType @type, IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Triggers = triggers;
@@ -50,7 +50,7 @@ namespace Azure.AI.VoiceLive
         /// List of triggers that can fire the interim response. Any trigger can activate it (OR logic).
         /// Supported: 'latency', 'tool'.
         /// </summary>
-        public IList<InterimResponseTrigger> Triggers { get; }
+        public IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> Triggers { get; }
 
         /// <summary> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </summary>
         public int? LatencyThresholdMs { get; set; }

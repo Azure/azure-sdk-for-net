@@ -13,19 +13,19 @@ namespace Azure.AI.Projects.Evaluation
     public partial class TaxonomyCategory
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaxonomyCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.TaxonomyCategory"/>. </summary>
         /// <param name="id"> Unique identifier of the taxonomy category. </param>
         /// <param name="name"> Name of the taxonomy category. </param>
         /// <param name="riskCategory"> Risk category associated with this taxonomy category. </param>
         /// <param name="subCategories"> List of taxonomy sub categories. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="subCategories"/> is null. </exception>
-        public TaxonomyCategory(string id, string name, RiskCategory riskCategory, IEnumerable<TaxonomySubCategory> subCategories)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="subCategories"/> is null. </exception>
+        public TaxonomyCategory(string id, string name, RiskCategory riskCategory, IEnumerable<global::Azure.AI.Projects.Evaluation.TaxonomySubCategory> subCategories)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(subCategories, nameof(subCategories));
+            global::Azure.AI.Projects.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(subCategories, nameof(subCategories));
 
             Id = id;
             Name = name;
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Evaluation
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaxonomyCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.TaxonomyCategory"/>. </summary>
         /// <param name="id"> Unique identifier of the taxonomy category. </param>
         /// <param name="name"> Name of the taxonomy category. </param>
         /// <param name="description"> Description of the taxonomy category. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="subCategories"> List of taxonomy sub categories. </param>
         /// <param name="properties"> Additional properties for the taxonomy category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaxonomyCategory(string id, string name, string description, RiskCategory riskCategory, IList<TaxonomySubCategory> subCategories, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaxonomyCategory(string id, string name, string description, RiskCategory riskCategory, IList<global::Azure.AI.Projects.Evaluation.TaxonomySubCategory> subCategories, IDictionary<string, string> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Evaluation
         public RiskCategory RiskCategory { get; set; }
 
         /// <summary> List of taxonomy sub categories. </summary>
-        public IList<TaxonomySubCategory> SubCategories { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.TaxonomySubCategory> SubCategories { get; }
 
         /// <summary> Additional properties for the taxonomy category. </summary>
         public IDictionary<string, string> Properties { get; }

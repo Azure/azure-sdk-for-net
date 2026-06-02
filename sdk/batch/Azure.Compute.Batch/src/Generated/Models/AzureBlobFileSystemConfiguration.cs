@@ -14,25 +14,25 @@ namespace Azure.Compute.Batch
     public partial class AzureBlobFileSystemConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobFileSystemConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AzureBlobFileSystemConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage Account name. </param>
         /// <param name="containerName"> The Azure Blob Storage Container name. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="containerName"/> or <paramref name="relativeMountPath"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="accountName"/>, <paramref name="containerName"/> or <paramref name="relativeMountPath"/> is null. </exception>
         public AzureBlobFileSystemConfiguration(string accountName, string containerName, string relativeMountPath)
         {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(accountName, nameof(accountName));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(containerName, nameof(containerName));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
 
             AccountName = accountName;
             ContainerName = containerName;
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobFileSystemConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AzureBlobFileSystemConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage Account name. </param>
         /// <param name="containerName"> The Azure Blob Storage Container name. </param>
         /// <param name="accountKey"> The Azure Storage Account key. This property is mutually exclusive with both sasKey and identity; exactly one must be specified. </param>
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="identityReference"> The reference to the user assigned identity to use to access containerName. This property is mutually exclusive with both accountKey and sasKey; exactly one must be specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobFileSystemConfiguration(string accountName, string containerName, string accountKey, string sasKey, string blobfuseOptions, string relativeMountPath, BatchNodeIdentityReference identityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobFileSystemConfiguration(string accountName, string containerName, string accountKey, string sasKey, string blobfuseOptions, string relativeMountPath, BatchNodeIdentityReference identityReference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
             ContainerName = containerName;

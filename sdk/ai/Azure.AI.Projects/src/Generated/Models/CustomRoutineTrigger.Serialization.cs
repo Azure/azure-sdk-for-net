@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A custom event routine trigger. </summary>
-    public partial class CustomRoutineTrigger : RoutineTrigger, IJsonModel<CustomRoutineTrigger>
+    public partial class CustomRoutineTrigger : RoutineTrigger, IJsonModel<global::Azure.AI.Projects.CustomRoutineTrigger>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.CustomRoutineTrigger"/> for deserialization. </summary>
         internal CustomRoutineTrigger()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomRoutineTrigger(document.RootElement, options);
+                        return global::Azure.AI.Projects.CustomRoutineTrigger.DeserializeCustomRoutineTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRoutineTrigger)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.CustomRoutineTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRoutineTrigger)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.CustomRoutineTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomRoutineTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomRoutineTrigger IPersistableModel<CustomRoutineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomRoutineTrigger)PersistableModelCreateCore(data, options);
+        CustomRoutineTrigger IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => ((CustomRoutineTrigger)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomRoutineTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomRoutineTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.CustomRoutineTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,15 +70,15 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomRoutineTrigger)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.CustomRoutineTrigger)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider);
-            if (Optional.IsDefined(EventName))
+            if (global::Azure.AI.Projects.Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("event_name"u8);
                 writer.WriteStringValue(EventName);
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -96,9 +96,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -107,34 +107,34 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomRoutineTrigger IJsonModel<CustomRoutineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomRoutineTrigger)JsonModelCreateCore(ref reader, options);
+        CustomRoutineTrigger IJsonModel<global::Azure.AI.Projects.CustomRoutineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((CustomRoutineTrigger)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.CustomRoutineTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomRoutineTrigger)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.CustomRoutineTrigger)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomRoutineTrigger(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.CustomRoutineTrigger.DeserializeCustomRoutineTrigger(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CustomRoutineTrigger DeserializeCustomRoutineTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             RoutineTriggerType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string provider = default;
             string eventName = default;
-            IDictionary<string, BinaryData> parameters = default;
+            IDictionary<string, global::System.BinaryData> parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -154,24 +154,24 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CustomRoutineTrigger(@type, additionalBinaryDataProperties, provider, eventName, parameters);

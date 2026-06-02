@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Video streaming parameters for avatar. </summary>
-    public partial class VideoParams : IJsonModel<VideoParams>
+    public partial class VideoParams : IJsonModel<global::Azure.AI.VoiceLive.VideoParams>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VideoParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVideoParams(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.VideoParams.DeserializeVideoParams(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VideoParams)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VideoParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VideoParams)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VideoParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VideoParams IPersistableModel<VideoParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VideoParams IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VideoParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VideoParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.VideoParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,42 +68,42 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VideoParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VideoParams)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Bitrate))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Bitrate))
             {
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            if (Optional.IsDefined(Codec))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Codec))
             {
                 writer.WritePropertyName("codec"u8);
                 writer.WriteStringValue(Codec);
             }
-            if (Optional.IsDefined(Crop))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop, options);
+                writer.WriteObjectValue<VideoCrop>(Crop, options);
             }
-            if (Optional.IsDefined(Resolution))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution, options);
+                writer.WriteObjectValue<VideoResolution>(Resolution, options);
             }
-            if (Optional.IsDefined(Background))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Background))
             {
                 writer.WritePropertyName("background"u8);
-                writer.WriteObjectValue(Background, options);
+                writer.WriteObjectValue<VideoBackground>(Background, options);
             }
-            if (Optional.IsDefined(GopSize))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(GopSize))
             {
                 writer.WritePropertyName("gop_size"u8);
                 writer.WriteNumberValue(GopSize.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -111,9 +111,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -122,26 +122,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VideoParams IJsonModel<VideoParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VideoParams IJsonModel<global::Azure.AI.VoiceLive.VideoParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VideoParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VideoParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VideoParams)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVideoParams(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.VideoParams.DeserializeVideoParams(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VideoParams DeserializeVideoParams(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -151,12 +151,12 @@ namespace Azure.AI.VoiceLive
             VideoResolution resolution = default;
             VideoBackground background = default;
             int? gopSize = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("bitrate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -170,43 +170,43 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("crop"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    crop = VideoCrop.DeserializeVideoCrop(prop.Value, options);
+                    crop = global::Azure.AI.VoiceLive.VideoCrop.DeserializeVideoCrop(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resolution"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    resolution = VideoResolution.DeserializeVideoResolution(prop.Value, options);
+                    resolution = global::Azure.AI.VoiceLive.VideoResolution.DeserializeVideoResolution(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("background"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    background = VideoBackground.DeserializeVideoBackground(prop.Value, options);
+                    background = global::Azure.AI.VoiceLive.VideoBackground.DeserializeVideoBackground(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("gop_size"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     gopSize = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VideoParams(

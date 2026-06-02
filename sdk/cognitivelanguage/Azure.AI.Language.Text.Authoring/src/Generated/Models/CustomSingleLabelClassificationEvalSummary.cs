@@ -13,20 +13,20 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the evaluation summary for a custom single-label classification project. </summary>
     public partial class CustomSingleLabelClassificationEvalSummary : TextAuthoringEvalSummary
     {
-        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customSingleLabelClassificationEvaluation"> Contains the data related to single label classification evaluation. </param>
-        internal CustomSingleLabelClassificationEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation) : base(TextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions)
+        internal CustomSingleLabelClassificationEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation) : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions)
         {
             CustomSingleLabelClassificationEvaluation = customSingleLabelClassificationEvaluation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customSingleLabelClassificationEvaluation"> Contains the data related to single label classification evaluation. </param>
-        internal CustomSingleLabelClassificationEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
+        internal CustomSingleLabelClassificationEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
         {
             CustomSingleLabelClassificationEvaluation = customSingleLabelClassificationEvaluation;
         }

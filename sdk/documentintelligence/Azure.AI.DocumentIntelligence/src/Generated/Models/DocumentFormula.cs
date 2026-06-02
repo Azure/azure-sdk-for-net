@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentFormula
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFormula"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFormula"/>. </summary>
         /// <param name="kind"> Formula kind. </param>
         /// <param name="value"> LaTex expression describing the formula. </param>
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFormula"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFormula"/>. </summary>
         /// <param name="kind"> Formula kind. </param>
         /// <param name="value"> LaTex expression describing the formula. </param>
         /// <param name="polygon">
@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFormula(DocumentFormulaKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFormula(DocumentFormulaKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

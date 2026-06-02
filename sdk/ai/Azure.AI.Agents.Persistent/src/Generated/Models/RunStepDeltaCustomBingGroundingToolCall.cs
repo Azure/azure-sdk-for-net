@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents the Bing Custom Search tool call in a streaming run step. </summary>
     public partial class RunStepDeltaCustomBingGroundingToolCall : RunStepDeltaToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
@@ -22,13 +22,13 @@ namespace Azure.AI.Agents.Persistent
             BingCustomSearch = bingCustomSearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
-        internal RunStepDeltaCustomBingGroundingToolCall(int index, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> bingCustomSearch) : base(index, id, @type, additionalBinaryDataProperties)
+        internal RunStepDeltaCustomBingGroundingToolCall(int index, string id, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, string> bingCustomSearch) : base(index, id, @type, additionalBinaryDataProperties)
         {
             BingCustomSearch = bingCustomSearch;
         }

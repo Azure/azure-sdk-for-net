@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>
-    public partial class TilerInfoGeoJsonFeature : IJsonModel<TilerInfoGeoJsonFeature>
+    public partial class TilerInfoGeoJsonFeature : IJsonModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>
     {
-        /// <summary> Initializes a new instance of <see cref="TilerInfoGeoJsonFeature"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature"/> for deserialization. </summary>
         internal TilerInfoGeoJsonFeature()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TilerInfoGeoJsonFeature PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTilerInfoGeoJsonFeature(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature.DeserializeTilerInfoGeoJsonFeature(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TilerInfoGeoJsonFeature)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TilerInfoGeoJsonFeature)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TilerInfoGeoJsonFeature>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TilerInfoGeoJsonFeature IPersistableModel<TilerInfoGeoJsonFeature>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TilerInfoGeoJsonFeature IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TilerInfoGeoJsonFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TilerInfoGeoJsonFeature"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature"/> from. </param>
         public static explicit operator TilerInfoGeoJsonFeature(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTilerInfoGeoJsonFeature(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature.DeserializeTilerInfoGeoJsonFeature(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TilerInfoGeoJsonFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,29 +81,29 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TilerInfoGeoJsonFeature)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry, options);
+            writer.WriteObjectValue<GeoJsonGeometry>(Geometry, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             foreach (var item in Properties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WriteObjectValue<TilerInfo>(item.Value, options);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(Id))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(BoundingBox))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -121,9 +121,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -132,35 +132,35 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TilerInfoGeoJsonFeature IJsonModel<TilerInfoGeoJsonFeature>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TilerInfoGeoJsonFeature IJsonModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TilerInfoGeoJsonFeature JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TilerInfoGeoJsonFeature)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTilerInfoGeoJsonFeature(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature.DeserializeTilerInfoGeoJsonFeature(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TilerInfoGeoJsonFeature DeserializeTilerInfoGeoJsonFeature(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             FeatureType @type = default;
             GeoJsonGeometry geometry = default;
-            IDictionary<string, TilerInfo> properties = default;
+            IDictionary<string, global::Azure.Analytics.PlanetaryComputer.TilerInfo> properties = default;
             string id = default;
             IList<float> boundingBox = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,15 +170,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("geometry"u8))
                 {
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
+                    geometry = global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    Dictionary<string, TilerInfo> dictionary = new Dictionary<string, TilerInfo>();
+                    Dictionary<string, global::Azure.Analytics.PlanetaryComputer.TilerInfo> dictionary = new Dictionary<string, global::Azure.Analytics.PlanetaryComputer.TilerInfo>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, TilerInfo.DeserializeTilerInfo(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Analytics.PlanetaryComputer.TilerInfo.DeserializeTilerInfo(prop0.Value, options));
                     }
                     properties = dictionary;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("bbox"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -202,9 +202,9 @@ namespace Azure.Analytics.PlanetaryComputer
                     boundingBox = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TilerInfoGeoJsonFeature(
@@ -212,7 +212,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 geometry,
                 properties,
                 id,
-                boundingBox ?? new ChangeTrackingList<float>(),
+                (boundingBox ?? new ChangeTrackingList<float>()),
                 additionalBinaryDataProperties);
         }
     }

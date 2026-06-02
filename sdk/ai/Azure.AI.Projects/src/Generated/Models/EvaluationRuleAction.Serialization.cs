@@ -11,12 +11,12 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownEvaluationRuleAction))]
-    public abstract partial class EvaluationRuleAction : IJsonModel<EvaluationRuleAction>
+    [PersistableModelProxyAttribute(typeof(UnknownEvaluationRuleAction))]
+    public abstract partial class EvaluationRuleAction : IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationRuleAction"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRuleAction"/> for deserialization. </summary>
         internal EvaluationRuleAction()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluationRuleAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvaluationRuleAction(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationRuleAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationRuleAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationRuleAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationRuleAction IPersistableModel<EvaluationRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EvaluationRuleAction IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvaluationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,14 +74,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluationRuleAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationRuleAction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -89,9 +89,9 @@ namespace Azure.AI.Projects.Evaluation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -100,26 +100,26 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationRuleAction IJsonModel<EvaluationRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EvaluationRuleAction IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluationRuleAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluationRuleAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationRuleAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluationRuleAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EvaluationRuleAction DeserializeEvaluationRuleAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -128,12 +128,12 @@ namespace Azure.AI.Projects.Evaluation
                 switch (discriminator.GetString())
                 {
                     case "continuousEvaluation":
-                        return ContinuousEvaluationRuleAction.DeserializeContinuousEvaluationRuleAction(element, options);
+                        return global::Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction.DeserializeContinuousEvaluationRuleAction(element, options);
                     case "humanEvaluationPreview":
-                        return HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
+                        return global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
                 }
             }
-            return UnknownEvaluationRuleAction.DeserializeUnknownEvaluationRuleAction(element, options);
+            return global::Azure.AI.Projects.Evaluation.UnknownEvaluationRuleAction.DeserializeUnknownEvaluationRuleAction(element, options);
         }
     }
 }

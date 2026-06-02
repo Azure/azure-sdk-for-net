@@ -14,16 +14,16 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateChangePointDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
         internal UnivariateChangePointDetectionResult()
         {
             IsChangePoint = new ChangeTrackingList<bool>();
             ConfidenceScores = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="confidenceScores"> Change point confidence of each point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnivariateChangePointDetectionResult(int? period, IList<bool> isChangePoint, IList<float> confidenceScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnivariateChangePointDetectionResult(int? period, IList<bool> isChangePoint, IList<float> confidenceScores, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Period = period;
             IsChangePoint = isChangePoint;

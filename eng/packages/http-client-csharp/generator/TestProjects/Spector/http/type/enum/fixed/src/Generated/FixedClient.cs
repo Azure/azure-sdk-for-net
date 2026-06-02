@@ -13,14 +13,14 @@ namespace _Type._Enum.Fixed
 {
     public partial class FixedClient
     {
-        public FixedClient() : this(new Uri("http://localhost:3000"), new FixedClientOptions()) => throw null;
+        public FixedClient() : this(new global::System.Uri("http://localhost:3000"), new FixedClientOptions()) => throw null;
 
-        internal FixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, FixedClientOptions options) => throw null;
+        internal FixedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, FixedClientOptions options) => throw null;
 
-        public FixedClient(Uri endpoint, FixedClientOptions options) : this(null, endpoint, options) => throw null;
+        public FixedClient(global::System.Uri endpoint, FixedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public FixedClient(FixedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public FixedClient(FixedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

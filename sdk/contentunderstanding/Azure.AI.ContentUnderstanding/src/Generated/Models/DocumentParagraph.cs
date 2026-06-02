@@ -17,22 +17,22 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentParagraph
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentParagraph"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentParagraph"/>. </summary>
         /// <param name="content"> Paragraph text. </param>
         internal DocumentParagraph(string content)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentParagraph"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentParagraph"/>. </summary>
         /// <param name="role"> Semantic role of the paragraph. </param>
         /// <param name="content"> Paragraph text. </param>
         /// <param name="source"> Encoded source that identifies the position of the paragraph in the content. </param>
         /// <param name="span"> Span of the paragraph in the markdown content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentParagraph(SemanticRole? role, string content, string source, ContentSpan span, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentParagraph(SemanticRole? role, string content, string source, ContentSpan span, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;

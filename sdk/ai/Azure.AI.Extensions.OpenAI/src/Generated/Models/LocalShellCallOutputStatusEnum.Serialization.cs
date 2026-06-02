@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LocalShellCallOutputStatusEnum value) => value switch
         {
-            LocalShellCallOutputStatusEnum.InProgress => "in_progress",
-            LocalShellCallOutputStatusEnum.Completed => "completed",
-            LocalShellCallOutputStatusEnum.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LocalShellCallOutputStatusEnum value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static LocalShellCallOutputStatusEnum ToLocalShellCallOutputStatusEnum(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return LocalShellCallOutputStatusEnum.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return LocalShellCallOutputStatusEnum.Completed;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return LocalShellCallOutputStatusEnum.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LocalShellCallOutputStatusEnum value.");
         }

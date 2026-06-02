@@ -13,9 +13,9 @@ namespace Azure.AI.Projects
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateCreateOrUpdateRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
@@ -23,13 +23,13 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -46,13 +46,13 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -68,13 +68,13 @@ namespace Azure.AI.Projects
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
             uri.AppendPath(":enable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -90,13 +90,13 @@ namespace Azure.AI.Projects
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
             uri.AppendPath(":disable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -110,29 +110,29 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routines", false);
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.TypeFormatters.ConvertToString(limit), true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -147,13 +147,13 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -168,33 +168,33 @@ namespace Azure.AI.Projects
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
             uri.AppendPath("/runs", false);
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.TypeFormatters.ConvertToString(limit), true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -210,13 +210,13 @@ namespace Azure.AI.Projects
             uri.AppendPath("/routines/", false);
             uri.AppendPath(routineName, true);
             uri.AppendPath(":dispatch_async", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }

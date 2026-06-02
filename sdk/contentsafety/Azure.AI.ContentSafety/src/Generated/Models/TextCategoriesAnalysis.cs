@@ -14,20 +14,20 @@ namespace Azure.AI.ContentSafety
     public partial class TextCategoriesAnalysis
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The text analysis category. </param>
         internal TextCategoriesAnalysis(TextCategory category)
         {
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The text analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextCategoriesAnalysis(TextCategory category, int? severity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextCategoriesAnalysis(TextCategory category, int? severity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Severity = severity;

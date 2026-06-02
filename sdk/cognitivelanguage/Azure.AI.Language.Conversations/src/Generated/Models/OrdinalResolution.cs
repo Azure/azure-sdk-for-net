@@ -13,24 +13,24 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> A resolution for ordinal numbers entity instances. </summary>
     public partial class OrdinalResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.OrdinalResolution"/>. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalResolution(string offset, RelativeTo relativeTo, string value) : base(ResolutionKind.OrdinalResolution)
+        internal OrdinalResolution(string offset, RelativeTo relativeTo, string value) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.OrdinalResolution)
         {
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.OrdinalResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string offset, RelativeTo relativeTo, string value) : base(resolutionKind, additionalBinaryDataProperties)
+        internal OrdinalResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string offset, RelativeTo relativeTo, string value) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Offset = offset;
             RelativeTo = relativeTo;

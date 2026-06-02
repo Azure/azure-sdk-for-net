@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a data deletion detection policy utilizing Azure Blob Storage's native soft delete feature for deletion detection. </summary>
     public partial class NativeBlobSoftDeleteDeletionDetectionPolicy : DataDeletionDetectionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
         public NativeBlobSoftDeleteDeletionDetectionPolicy() : base("#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
+        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
         {
         }
     }

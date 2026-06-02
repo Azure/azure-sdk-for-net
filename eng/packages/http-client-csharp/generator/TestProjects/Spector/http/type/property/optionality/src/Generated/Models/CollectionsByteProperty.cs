@@ -14,6 +14,6 @@ namespace _Type.Property.Optional
     {
         public CollectionsByteProperty() => throw null;
 
-        public IList<BinaryData> Property => throw null;
+        public IList<global::System.BinaryData> Property => throw null;
     }
 }

@@ -11,8 +11,8 @@ namespace Payload.Xml
 {
     public partial class ModelWithRenamedUnwrappedModelArray
     {
-        public ModelWithRenamedUnwrappedModelArray(IEnumerable<SimpleModel> items) => throw null;
+        public ModelWithRenamedUnwrappedModelArray(IEnumerable<global::Payload.Xml.SimpleModel> items) => throw null;
 
-        public IList<SimpleModel> Items => throw null;
+        public IList<global::Payload.Xml.SimpleModel> Items => throw null;
     }
 }

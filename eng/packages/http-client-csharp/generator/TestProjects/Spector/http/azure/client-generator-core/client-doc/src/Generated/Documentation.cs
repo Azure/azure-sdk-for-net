@@ -18,16 +18,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation
     {
         protected Documentation() => throw null;
 
-        internal Documentation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Documentation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Harvest(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> HarvestAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> HarvestAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Plant> Harvest(Plant body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant> Harvest(Plant body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Plant>> HarvestAsync(Plant body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>> HarvestAsync(Plant body, CancellationToken cancellationToken = default) => throw null;
     }
 }

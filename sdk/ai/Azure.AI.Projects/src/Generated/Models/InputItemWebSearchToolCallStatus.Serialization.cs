@@ -11,31 +11,31 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemWebSearchToolCallStatus value) => value switch
         {
-            InputItemWebSearchToolCallStatus.InProgress => "in_progress",
-            InputItemWebSearchToolCallStatus.Searching => "searching",
-            InputItemWebSearchToolCallStatus.Completed => "completed",
-            InputItemWebSearchToolCallStatus.Failed => "failed",
+            global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Searching => "searching",
+            global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemWebSearchToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemWebSearchToolCallStatus ToInputItemWebSearchToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemWebSearchToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "searching"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "searching"))
             {
-                return InputItemWebSearchToolCallStatus.Searching;
+                return global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Searching;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemWebSearchToolCallStatus.Completed;
+                return global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return InputItemWebSearchToolCallStatus.Failed;
+                return global::Azure.AI.Projects.InputItemWebSearchToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemWebSearchToolCallStatus value.");
         }

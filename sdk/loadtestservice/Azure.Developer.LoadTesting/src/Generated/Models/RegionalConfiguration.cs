@@ -15,9 +15,9 @@ namespace Azure.Developer.LoadTesting
     public partial class RegionalConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RegionalConfiguration"/>. </summary>
         /// <param name="engineInstances">   The number of engine instances to execute load test in specified region. Supported values are in range of 1-400. </param>
         /// <param name="region">
         /// Azure region name.
@@ -30,7 +30,7 @@ namespace Azure.Developer.LoadTesting
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.RegionalConfiguration"/>. </summary>
         /// <param name="engineInstances">   The number of engine instances to execute load test in specified region. Supported values are in range of 1-400. </param>
         /// <param name="region">
         /// Azure region name.
@@ -38,7 +38,7 @@ namespace Azure.Developer.LoadTesting
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionalConfiguration(int engineInstances, AzureLocation region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegionalConfiguration(int engineInstances, AzureLocation region, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EngineInstances = engineInstances;
             Region = region;

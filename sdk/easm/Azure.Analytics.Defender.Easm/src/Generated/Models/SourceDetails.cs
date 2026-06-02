@@ -14,21 +14,21 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SourceDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SourceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SourceDetails"/>. </summary>
         internal SourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SourceDetails"/>. </summary>
         /// <param name="sourceName"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="reason"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceDetails(string sourceName, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceDetails(string sourceName, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string reason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SourceName = sourceName;
             FirstSeen = firstSeen;

@@ -13,7 +13,7 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> Delta response for each day. </summary>
     public partial class DailyDeltaTypeResult : DeltaTypeResult
     {
-        /// <summary> Initializes a new instance of <see cref="DailyDeltaTypeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult"/>. </summary>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
@@ -24,14 +24,14 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DailyDeltaTypeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult"/>. </summary>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The current number of assets for one asset kind. </param>
-        internal DailyDeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> additionalBinaryDataProperties, long count) : base(kind, removed, added, difference, additionalBinaryDataProperties)
+        internal DailyDeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, long count) : base(kind, removed, added, difference, additionalBinaryDataProperties)
         {
             Count = count;
         }

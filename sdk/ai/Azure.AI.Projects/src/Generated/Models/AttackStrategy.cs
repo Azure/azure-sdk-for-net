@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Strategies for attacks. </summary>
-    public readonly partial struct AttackStrategy : IEquatable<AttackStrategy>
+    public readonly partial struct AttackStrategy : IEquatable<global::Azure.AI.Projects.Evaluation.AttackStrategy>
     {
         private readonly string _value;
         /// <summary> Represents a default set of easy complexity attacks. Easy complexity attacks require less effort, such as translation of a prompt into some encoding, and does not require any Large Language Model to convert or orchestrate. </summary>
@@ -69,12 +69,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
         private const string CrescendoValue = "crescendo";
 
-        /// <summary> Initializes a new instance of <see cref="AttackStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttackStrategy(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -163,34 +163,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
         public static AttackStrategy Crescendo { get; } = new AttackStrategy(CrescendoValue);
 
-        /// <summary> Determines if two <see cref="AttackStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.AttackStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttackStrategy left, AttackStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AttackStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.AttackStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttackStrategy left, AttackStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AttackStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AttackStrategy(string value) => new AttackStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="AttackStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AttackStrategy?(string value) => value == null ? null : new AttackStrategy(value);
+        public static implicit operator AttackStrategy?(string value) => (value == null) ? null : new AttackStrategy(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AttackStrategy other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AttackStrategy other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AttackStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AttackStrategy other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

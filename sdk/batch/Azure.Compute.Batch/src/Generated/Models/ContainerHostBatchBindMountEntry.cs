@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class ContainerHostBatchBindMountEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerHostBatchBindMountEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ContainerHostBatchBindMountEntry"/>. </summary>
         public ContainerHostBatchBindMountEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerHostBatchBindMountEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ContainerHostBatchBindMountEntry"/>. </summary>
         /// <param name="source"> The path which be mounted to container customer can select. </param>
         /// <param name="isReadOnly"> Mount this source path as read-only mode or not. Default value is false (read/write mode). For Linux, if you mount this path as a read/write mode, this does not mean that all users in container have the read/write access for the path, it depends on the access in host VM. If this path is mounted read-only, all users within the container will not be able to modify the path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerHostBatchBindMountEntry(ContainerHostDataPath? source, bool? isReadOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerHostBatchBindMountEntry(ContainerHostDataPath? source, bool? isReadOnly, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             IsReadOnly = isReadOnly;

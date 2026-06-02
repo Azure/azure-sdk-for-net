@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     internal partial class UploadFileRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data, in bytes. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         public UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose)
@@ -25,12 +25,12 @@ namespace Azure.AI.Agents.Persistent
             Purpose = purpose;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data, in bytes. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <param name="filename"> The name of the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose, string filename, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose, string filename, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             Purpose = purpose;
@@ -40,8 +40,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The file data, in bytes.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

@@ -14,19 +14,19 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageIncompleteDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageIncompleteDetails"/>. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
         internal MessageIncompleteDetails(MessageIncompleteDetailsReason reason)
         {
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageIncompleteDetails"/>. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageIncompleteDetails(MessageIncompleteDetailsReason reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageIncompleteDetails(MessageIncompleteDetailsReason reason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

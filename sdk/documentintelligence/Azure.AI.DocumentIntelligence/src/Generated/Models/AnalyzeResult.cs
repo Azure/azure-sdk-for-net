@@ -15,9 +15,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeResult"/>. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
@@ -26,25 +26,25 @@ namespace Azure.AI.DocumentIntelligence
         /// order.
         /// </param>
         /// <param name="pages"> Analyzed pages. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentPage> pages)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages.ToList();
-            Paragraphs = new ChangeTrackingList<DocumentParagraph>();
-            Tables = new ChangeTrackingList<DocumentTable>();
-            Figures = new ChangeTrackingList<DocumentFigure>();
-            Sections = new ChangeTrackingList<DocumentSection>();
-            KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
-            Styles = new ChangeTrackingList<DocumentStyle>();
-            Languages = new ChangeTrackingList<DocumentLanguage>();
-            Documents = new ChangeTrackingList<AnalyzedDocument>();
-            Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
+            Paragraphs = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentParagraph>();
+            Tables = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentTable>();
+            Figures = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFigure>();
+            Sections = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSection>();
+            KeyValuePairs = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair>();
+            Styles = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentStyle>();
+            Languages = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentLanguage>();
+            Documents = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzedDocument>();
+            Warnings = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeResult"/>. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
@@ -64,7 +64,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documents"> Extracted documents. </param>
         /// <param name="warnings"> List of warnings encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentPage> pages, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentParagraph> paragraphs, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentTable> tables, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFigure> figures, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSection> sections, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair> keyValuePairs, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentStyle> styles, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentLanguage> languages, IReadOnlyList<global::Azure.AI.DocumentIntelligence.AnalyzedDocument> documents, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
@@ -100,33 +100,33 @@ namespace Azure.AI.DocumentIntelligence
         public string Content { get; }
 
         /// <summary> Analyzed pages. </summary>
-        public IReadOnlyList<DocumentPage> Pages { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentPage> Pages { get; }
 
         /// <summary> Extracted paragraphs. </summary>
-        public IReadOnlyList<DocumentParagraph> Paragraphs { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentParagraph> Paragraphs { get; }
 
         /// <summary> Extracted tables. </summary>
-        public IReadOnlyList<DocumentTable> Tables { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentTable> Tables { get; }
 
         /// <summary> Extracted figures. </summary>
-        public IReadOnlyList<DocumentFigure> Figures { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFigure> Figures { get; }
 
         /// <summary> Extracted sections. </summary>
-        public IReadOnlyList<DocumentSection> Sections { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSection> Sections { get; }
 
         /// <summary> Extracted key-value pairs. </summary>
-        public IReadOnlyList<DocumentKeyValuePair> KeyValuePairs { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair> KeyValuePairs { get; }
 
         /// <summary> Extracted font styles. </summary>
-        public IReadOnlyList<DocumentStyle> Styles { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentStyle> Styles { get; }
 
         /// <summary> Detected languages. </summary>
-        public IReadOnlyList<DocumentLanguage> Languages { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentLanguage> Languages { get; }
 
         /// <summary> Extracted documents. </summary>
-        public IReadOnlyList<AnalyzedDocument> Documents { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.AnalyzedDocument> Documents { get; }
 
         /// <summary> List of warnings encountered. </summary>
-        public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get; }
     }
 }

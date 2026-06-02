@@ -15,9 +15,9 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> A nested model for XML testing. </summary>
-    public partial class XmlNestedModel : IPersistableModel<XmlNestedModel>, IXmlSerializable
+    public partial class XmlNestedModel : IPersistableModel<global::BasicTypeSpec.XmlNestedModel>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.XmlNestedModel"/> for deserialization. </summary>
         internal XmlNestedModel()
         {
         }
@@ -26,69 +26,69 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual XmlNestedModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeXmlNestedModel(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return global::BasicTypeSpec.XmlNestedModel.DeserializeXmlNestedModel(global::System.Xml.Linq.XElement.Load(dataStream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlNestedModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlNestedModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (MemoryStream stream = new MemoryStream(256))
                     {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        using (XmlWriter writer = global::System.Xml.XmlWriter.Create(stream, global::BasicTypeSpec.ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "XmlNestedModel");
+                            this.WriteXml(writer, options, "XmlNestedModel");
                         }
-                        if (stream.Position > int.MaxValue)
+                        if ((stream.Position > int.MaxValue))
                         {
-                            return BinaryData.FromStream(stream);
+                            return global::System.BinaryData.FromStream(stream);
                         }
                         else
                         {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, ((int)stream.Position)));
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlNestedModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlNestedModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<XmlNestedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.XmlNestedModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        XmlNestedModel IPersistableModel<XmlNestedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        XmlNestedModel IPersistableModel<global::BasicTypeSpec.XmlNestedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<XmlNestedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<global::BasicTypeSpec.XmlNestedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         /// <param name="nameHint"> An optional name hint. </param>
         private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteStartElement(nameHint);
             }
 
-            XmlModelWriteCore(writer, options);
+            this.XmlModelWriteCore(writer, options);
 
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteEndElement();
             }
@@ -98,10 +98,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlNestedModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "X"))
             {
-                throw new FormatException($"The model {nameof(XmlNestedModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlNestedModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartAttribute("nestedId");
@@ -116,7 +116,7 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static XmlNestedModel DeserializeXmlNestedModel(XElement element, ModelReaderWriterOptions options)
         {
-            if (element == null)
+            if ((element == null))
             {
                 return null;
             }
@@ -127,9 +127,9 @@ namespace BasicTypeSpec
             foreach (var attr in element.Attributes())
             {
                 string localName = attr.Name.LocalName;
-                if (localName == "nestedId")
+                if ((localName == "nestedId"))
                 {
-                    nestedId = (int)attr;
+                    nestedId = ((int)attr);
                     continue;
                 }
             }
@@ -137,9 +137,9 @@ namespace BasicTypeSpec
             foreach (var child in element.Elements())
             {
                 string localName = child.Name.LocalName;
-                if (localName == "value")
+                if ((localName == "value"))
                 {
-                    value = (string)child;
+                    value = ((string)child);
                     continue;
                 }
             }
@@ -148,6 +148,6 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => this.WriteXml(writer, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

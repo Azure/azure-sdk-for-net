@@ -11,18 +11,18 @@ namespace OpenAI
 {
     internal partial class InternalFunctionTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalFunctionTool"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
-        public InternalFunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base(ToolType.Function)
+        public InternalFunctionTool(string name, IDictionary<string, global::System.BinaryData> parameters, bool? strict) : base(global::OpenAI.ToolType.Function)
         {
             Name = name;
             Parameters = parameters;
             Strict = strict;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the function to call. </param>
@@ -30,7 +30,7 @@ namespace OpenAI
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
         /// <param name="deferLoading"> Whether this function is deferred and loaded via tool search. </param>
-        internal InternalFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        internal InternalFunctionTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::System.BinaryData> parameters, bool? strict, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -47,8 +47,8 @@ namespace OpenAI
 
         /// <summary>
         /// Gets or sets the Parameters.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -71,7 +71,7 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; set; }
+        public IDictionary<string, global::System.BinaryData> Parameters { get; set; }
 
         /// <summary> Gets or sets the Strict. </summary>
         public bool? Strict { get; set; }

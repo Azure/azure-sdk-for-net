@@ -12,8 +12,8 @@ namespace Encode.Datetime
 {
     public partial class UnixTimestampArrayDatetimeProperty
     {
-        public UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value) => throw null;
+        public UnixTimestampArrayDatetimeProperty(IEnumerable<global::System.DateTimeOffset> value) => throw null;
 
-        public IList<DateTimeOffset> Value => throw null;
+        public IList<global::System.DateTimeOffset> Value => throw null;
     }
 }

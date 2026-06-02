@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Text
     public partial class CustomLabelClassificationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomLabelClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        internal CustomLabelClassificationResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<ClassificationActionResult> documents)
+        internal CustomLabelClassificationResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors, string projectName, string deploymentName, IEnumerable<global::Azure.AI.Language.Text.ClassificationActionResult> documents)
         {
             Errors = errors.ToList();
             ProjectName = projectName;
@@ -30,14 +30,14 @@ namespace Azure.AI.Language.Text
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomLabelClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomLabelClassificationResult(IList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IList<ClassificationActionResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomLabelClassificationResult(IList<global::Azure.AI.Language.Text.DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IList<global::Azure.AI.Language.Text.ClassificationActionResult> documents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Text
         public string DeploymentName { get; }
 
         /// <summary> Response by document. </summary>
-        public IList<ClassificationActionResult> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.ClassificationActionResult> Documents { get; }
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringTrainingJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult"/>. </summary>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents model train status. </param>
@@ -27,14 +27,14 @@ namespace Azure.AI.Language.Text.Authoring
             TrainingStatus = trainingStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult"/>. </summary>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents model train status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimate end date time for training and evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, TextAuthoringSubTrainingState trainingStatus, TextAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, TextAuthoringSubTrainingState trainingStatus, TextAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;

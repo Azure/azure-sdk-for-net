@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Agents
     public partial class CandidateResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CandidateResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateResults"/>. </summary>
         /// <param name="candidateId"> Owning candidate id. </param>
         /// <param name="results"> Per-task evaluation rows. </param>
-        internal CandidateResults(string candidateId, IEnumerable<OptimizationTaskResult> results)
+        internal CandidateResults(string candidateId, IEnumerable<global::Azure.AI.Projects.Agents.OptimizationTaskResult> results)
         {
             CandidateId = candidateId;
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CandidateResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateResults"/>. </summary>
         /// <param name="candidateId"> Owning candidate id. </param>
         /// <param name="results"> Per-task evaluation rows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CandidateResults(string candidateId, IList<OptimizationTaskResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CandidateResults(string candidateId, IList<global::Azure.AI.Projects.Agents.OptimizationTaskResult> results, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             Results = results;
@@ -38,6 +38,6 @@ namespace Azure.AI.Projects.Agents
         public string CandidateId { get; }
 
         /// <summary> Per-task evaluation rows. </summary>
-        public IList<OptimizationTaskResult> Results { get; }
+        public IList<global::Azure.AI.Projects.Agents.OptimizationTaskResult> Results { get; }
     }
 }

@@ -13,10 +13,10 @@ namespace Azure.Compute.Batch
 {
     internal static partial class RawRequestUriBuilderExtensions
     {
-        public static void AppendQueryDelimited<T>(this RawRequestUriBuilder builder, string name, IEnumerable<T> value, string delimiter, SerializationFormat format = SerializationFormat.Default, bool escape = true)
+        public static void AppendQueryDelimited<T>(this RawRequestUriBuilder builder, string name, IEnumerable<T> value, string delimiter, SerializationFormat format = global::Azure.Compute.Batch.SerializationFormat.Default, bool escape = true)
         {
             delimiter ??= ",";
-            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
+            IEnumerable<string> stringValues = value.Select(v => global::Azure.Compute.Batch.TypeFormatters.ConvertToString(v, format));
             builder.AppendQuery(name, string.Join(delimiter, stringValues), escape);
         }
 
@@ -29,20 +29,20 @@ namespace Azure.Compute.Batch
             {
                 paramStartIndex = 1;
             }
-            if (paramStartIndex == -1)
+            if ((paramStartIndex == -1))
             {
                 string prefixedPattern = string.Concat("&", searchPattern);
                 int prefixedIndex = currentQuery.IndexOf(prefixedPattern);
-                if (prefixedIndex >= 0)
+                if ((prefixedIndex >= 0))
                 {
-                    paramStartIndex = prefixedIndex + 1;
+                    paramStartIndex = (prefixedIndex + 1);
                 }
             }
-            if (paramStartIndex >= 0)
+            if ((paramStartIndex >= 0))
             {
-                int valueStartIndex = paramStartIndex + searchPattern.Length;
+                int valueStartIndex = (paramStartIndex + searchPattern.Length);
                 int valueEndIndex = currentQuery.IndexOf('&', valueStartIndex);
-                if (valueEndIndex == -1)
+                if ((valueEndIndex == -1))
                 {
                     valueEndIndex = currentQuery.Length;
                 }

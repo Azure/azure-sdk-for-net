@@ -11,22 +11,22 @@ namespace Azure.AI.Projects.Agents
     public partial class ContentFilterConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ContentFilterConfiguration"/>. </summary>
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
         public ContentFilterConfiguration(string raiPolicyName)
         {
-            Argument.AssertNotNull(raiPolicyName, nameof(raiPolicyName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(raiPolicyName, nameof(raiPolicyName));
 
             RaiPolicyName = raiPolicyName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ContentFilterConfiguration"/>. </summary>
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterConfiguration(string raiPolicyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentFilterConfiguration(string raiPolicyName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RaiPolicyName = raiPolicyName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

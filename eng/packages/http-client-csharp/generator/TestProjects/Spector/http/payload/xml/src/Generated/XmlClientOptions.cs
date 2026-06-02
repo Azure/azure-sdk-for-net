@@ -15,7 +15,7 @@ namespace Payload.Xml
     {
         public XmlClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal XmlClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

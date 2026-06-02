@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class ProxyAgentSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ProxyAgentSettings"/>. </summary>
         public ProxyAgentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ProxyAgentSettings"/>. </summary>
         /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
         /// <param name="imds"> Settings for the IMDS endpoint. </param>
         /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, HostEndpointSettings imds, HostEndpointSettings wireServer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyAgentSettings(bool? enabled, HostEndpointSettings imds, HostEndpointSettings wireServer, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Imds = imds;

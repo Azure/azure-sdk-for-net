@@ -16,9 +16,9 @@ namespace Azure.Compute.Batch
     /// Specifies characteristics for a temporary 'auto pool'. The Batch service will
     /// create this auto Pool when the Job is submitted.
     /// </summary>
-    public partial class BatchAutoPoolSpecification : IJsonModel<BatchAutoPoolSpecification>
+    public partial class BatchAutoPoolSpecification : IJsonModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchAutoPoolSpecification"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchAutoPoolSpecification"/> for deserialization. </summary>
         internal BatchAutoPoolSpecification()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchAutoPoolSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchAutoPoolSpecification(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchAutoPoolSpecification.DeserializeBatchAutoPoolSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoPoolSpecification)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchAutoPoolSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoPoolSpecification)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchAutoPoolSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchAutoPoolSpecification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAutoPoolSpecification IPersistableModel<BatchAutoPoolSpecification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchAutoPoolSpecification IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchAutoPoolSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchAutoPoolSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,29 +76,29 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchAutoPoolSpecification)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchAutoPoolSpecification)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutoPoolIdPrefix))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(AutoPoolIdPrefix))
             {
                 writer.WritePropertyName("autoPoolIdPrefix"u8);
                 writer.WriteStringValue(AutoPoolIdPrefix);
             }
             writer.WritePropertyName("poolLifetimeOption"u8);
             writer.WriteStringValue(PoolLifetimeOption.ToString());
-            if (Optional.IsDefined(KeepAlive))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(KeepAlive))
             {
                 writer.WritePropertyName("keepAlive"u8);
                 writer.WriteBooleanValue(KeepAlive.Value);
             }
-            if (Optional.IsDefined(Pool))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Pool))
             {
                 writer.WritePropertyName("pool"u8);
-                writer.WriteObjectValue(Pool, options);
+                writer.WriteObjectValue<BatchPoolSpecification>(Pool, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,26 +117,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAutoPoolSpecification IJsonModel<BatchAutoPoolSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchAutoPoolSpecification IJsonModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchAutoPoolSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchAutoPoolSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchAutoPoolSpecification)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchAutoPoolSpecification)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchAutoPoolSpecification(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchAutoPoolSpecification.DeserializeBatchAutoPoolSpecification(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchAutoPoolSpecification DeserializeBatchAutoPoolSpecification(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -144,7 +144,7 @@ namespace Azure.Compute.Batch
             BatchPoolLifetimeOption poolLifetimeOption = default;
             bool? keepAlive = default;
             BatchPoolSpecification pool = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("autoPoolIdPrefix"u8))
@@ -159,7 +159,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("keepAlive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -168,16 +168,16 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("pool"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    pool = BatchPoolSpecification.DeserializeBatchPoolSpecification(prop.Value, options);
+                    pool = global::Azure.Compute.Batch.BatchPoolSpecification.DeserializeBatchPoolSpecification(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchAutoPoolSpecification(autoPoolIdPrefix, poolLifetimeOption, keepAlive, pool, additionalBinaryDataProperties);

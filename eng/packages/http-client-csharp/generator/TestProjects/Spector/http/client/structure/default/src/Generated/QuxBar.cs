@@ -18,16 +18,16 @@ namespace Client.Structure.Service._Qux
     {
         protected QuxBar() => throw null;
 
-        internal QuxBar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal QuxBar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Nine(RequestContext context) => throw null;
 
-        public virtual Task<Response> NineAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> NineAsync(RequestContext context) => throw null;
 
         public virtual Response Nine(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> NineAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> NineAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

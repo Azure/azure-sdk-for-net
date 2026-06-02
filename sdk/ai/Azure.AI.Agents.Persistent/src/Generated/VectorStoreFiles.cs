@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFiles
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VectorStoreFiles for mocking. </summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VectorStoreFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VectorStoreFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVectorStoreFile(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
@@ -62,7 +62,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -83,15 +83,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFiles.CreateVectorStoreFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -107,12 +107,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreFileRequest spreadModel = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, default);
-            Response result = CreateVectorStoreFile(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((VectorStoreFile)result, result);
+            Response result = this.CreateVectorStoreFile(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((VectorStoreFile)result), result);
         }
 
         /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
@@ -121,12 +121,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = default, VectorStoreDataSource dataSource = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreFileRequest spreadModel = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, default);
-            Response result = await CreateVectorStoreFileAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VectorStoreFile)result, result);
+            Response result = await this.CreateVectorStoreFileAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((VectorStoreFile)result), result);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
@@ -148,7 +148,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = this.CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -169,15 +169,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFiles.GetVectorStoreFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = this.CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -191,22 +191,22 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = GetVectorStoreFile(vectorStoreId, fileId, cancellationToken.ToRequestContext());
-            return Response.FromValue((VectorStoreFile)result, result);
+            Response result = this.GetVectorStoreFile(vectorStoreId, fileId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((VectorStoreFile)result), result);
         }
 
         /// <summary> Retrieves a vector store file. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetVectorStoreFileAsync(vectorStoreId, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VectorStoreFile)result, result);
+            Response result = await this.GetVectorStoreFileAsync(vectorStoreId, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((VectorStoreFile)result), result);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
@@ -228,7 +228,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = this.CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -249,15 +249,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFiles.InternalDeleteVectorStoreFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = this.CreateInternalDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -271,22 +271,22 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalVectorStoreFileDeletionStatus> InternalDeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.InternalVectorStoreFileDeletionStatus> InternalDeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = InternalDeleteVectorStoreFile(vectorStoreId, fileId, cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalVectorStoreFileDeletionStatus)result, result);
+            Response result = this.InternalDeleteVectorStoreFile(vectorStoreId, fileId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((InternalVectorStoreFileDeletionStatus)result), result);
         }
 
         /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalVectorStoreFileDeletionStatus>> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.InternalVectorStoreFileDeletionStatus>> InternalDeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalDeleteVectorStoreFileAsync(vectorStoreId, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalVectorStoreFileDeletionStatus)result, result);
+            Response result = await this.InternalDeleteVectorStoreFileAsync(vectorStoreId, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((InternalVectorStoreFileDeletionStatus)result), result);
         }
     }
 }

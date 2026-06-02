@@ -16,56 +16,56 @@ namespace Specs.Azure.Core.Page
 {
     public partial class PageClient
     {
-        public PageClient() : this(new Uri("http://localhost:3000"), new PageClientOptions()) => throw null;
+        public PageClient() : this(new global::System.Uri("http://localhost:3000"), new PageClientOptions()) => throw null;
 
-        internal PageClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageClientOptions options) => throw null;
+        internal PageClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PageClientOptions options) => throw null;
 
-        public PageClient(Uri endpoint, PageClientOptions options) : this(null, endpoint, options) => throw null;
+        public PageClient(global::System.Uri endpoint, PageClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public PageClient(PageClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public PageClient(PageClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetWithPage(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetWithPage(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithPageAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithPageAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<User> GetWithPage(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.User> GetWithPage(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetWithPageAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.User> GetWithPageAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetWithParameters(RequestContent content, string another = default, RequestContext context = null) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetWithParameters(RequestContent content, string another = default, RequestContext context = null) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithParametersAsync(RequestContent content, string another = default, RequestContext context = null) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithParametersAsync(RequestContent content, string another = default, RequestContext context = null) => throw null;
 
-        public virtual Pageable<User> GetWithParameters(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.User> GetWithParameters(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetWithParametersAsync(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.User> GetWithParametersAsync(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetWithCustomPageModel(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetWithCustomPageModel(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithCustomPageModelAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithCustomPageModelAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<User> GetWithCustomPageModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.User> GetWithCustomPageModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetWithCustomPageModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.User> GetWithCustomPageModelAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> WithParameterizedNextLink(string @select, bool? includePending, RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> WithParameterizedNextLink(string @select, bool? includePending, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> WithParameterizedNextLinkAsync(string @select, bool? includePending, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> WithParameterizedNextLinkAsync(string @select, bool? includePending, RequestContext context) => throw null;
 
-        public virtual Pageable<User> WithParameterizedNextLink(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.User> WithParameterizedNextLink(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> WithRelativeNextLink(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> WithRelativeNextLink(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> WithRelativeNextLinkAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> WithRelativeNextLinkAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<User> WithRelativeNextLink(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.User> WithRelativeNextLink(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> WithRelativeNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.User> WithRelativeNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual TwoModelsAsPageItem GetTwoModelsAsPageItemClient() => throw null;
     }

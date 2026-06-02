@@ -18,16 +18,16 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     {
         protected DogOperations() => throw null;
 
-        internal DogOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal DogOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response UpdateDogAsDog(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateDogAsDogAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdateDogAsDogAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Dog> UpdateDogAsDog(Dog dog, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Dog> UpdateDogAsDog(Dog dog, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Dog>> UpdateDogAsDogAsync(Dog dog, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Dog>> UpdateDogAsDogAsync(Dog dog, CancellationToken cancellationToken = default) => throw null;
     }
 }

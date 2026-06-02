@@ -16,16 +16,16 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateInputAudioBufferCleared : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferCleared"/>. </summary>
-        internal SessionUpdateInputAudioBufferCleared() : base(ServerEventType.InputAudioBufferCleared)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCleared"/>. </summary>
+        internal SessionUpdateInputAudioBufferCleared() : base(global::Azure.AI.VoiceLive.ServerEventType.InputAudioBufferCleared)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferCleared"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCleared"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionUpdateInputAudioBufferCleared(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateInputAudioBufferCleared(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
         {
         }
     }

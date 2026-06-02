@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The input definition information for a azure function tool as used to configure an agent. </summary>
-    public partial class AzureFunctionToolDefinition : ToolDefinition, IJsonModel<AzureFunctionToolDefinition>
+    public partial class AzureFunctionToolDefinition : ToolDefinition, IJsonModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition"/> for deserialization. </summary>
         internal AzureFunctionToolDefinition()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ToolDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureFunctionToolDefinition(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionToolDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionToolDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureFunctionToolDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureFunctionToolDefinition IPersistableModel<AzureFunctionToolDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionToolDefinition)PersistableModelCreateCore(data, options);
+        AzureFunctionToolDefinition IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureFunctionToolDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureFunctionToolDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureFunctionToolDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureFunctionToolDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azure_function"u8);
-            writer.WriteObjectValue(InternalAzureFunction, options);
+            writer.WriteObjectValue<InternalAzureFunctionDefinition>(InternalAzureFunction, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureFunctionToolDefinition IJsonModel<AzureFunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureFunctionToolDefinition)JsonModelCreateCore(ref reader, options);
+        AzureFunctionToolDefinition IJsonModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureFunctionToolDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ToolDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureFunctionToolDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureFunctionToolDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureFunctionToolDefinition DeserializeAzureFunctionToolDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "azure_function";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InternalAzureFunctionDefinition internalAzureFunction = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +120,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("azure_function"u8))
                 {
-                    internalAzureFunction = InternalAzureFunctionDefinition.DeserializeInternalAzureFunctionDefinition(prop.Value, options);
+                    internalAzureFunction = global::Azure.AI.Agents.Persistent.InternalAzureFunctionDefinition.DeserializeInternalAzureFunctionDefinition(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureFunctionToolDefinition(@type, additionalBinaryDataProperties, internalAzureFunction);

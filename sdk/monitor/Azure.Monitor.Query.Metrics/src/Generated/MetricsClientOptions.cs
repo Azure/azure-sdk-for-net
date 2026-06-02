@@ -12,42 +12,42 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.Query.Metrics
 {
-    /// <summary> Client options for <see cref="MetricsClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Monitor.Query.Metrics.MetricsClient"/>. </summary>
     public partial class MetricsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_01;
+        private const global::Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion LatestVersion = global::Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion.V2024_02_01;
 
         /// <summary> Initializes a new instance of MetricsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public MetricsClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsClientOptions(global::Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_02_01 => "2024-02-01",
+                global::Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion.V2024_02_01 => "2024-02-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of MetricsClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MetricsClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-02-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            if (section["Audience"] is string audience)
+            if ((section["Audience"] is string audience))
             {
-                Audience = new MetricsClientAudience(audience);
+                this.Audience = new MetricsClientAudience(audience);
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

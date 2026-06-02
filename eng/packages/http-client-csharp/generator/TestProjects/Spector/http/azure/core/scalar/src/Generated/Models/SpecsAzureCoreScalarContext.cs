@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.Core.Scalar
 {
-    [ModelReaderWriterBuildable(typeof(AzureLocationModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(AzureLocationModel))]
     public partial class SpecsAzureCoreScalarContext : ModelReaderWriterContext
     {
     }

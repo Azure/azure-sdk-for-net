@@ -14,17 +14,17 @@ namespace Azure.Developer.LoadTesting
     public partial class TestPreferences
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestPreferences"/>. </summary>
         public TestPreferences()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestPreferences"/>. </summary>
         /// <param name="enableAIErrorInsights"> Enable or disable AI based insights on Test Run Errors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestPreferences(bool? enableAIErrorInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestPreferences(bool? enableAIErrorInsights, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EnableAIErrorInsights = enableAIErrorInsights;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -16,9 +16,9 @@ namespace Azure.AI.DocumentIntelligence
     /// A paragraph object consisting with contiguous lines generally with common
     /// alignment and spacing.
     /// </summary>
-    public partial class DocumentParagraph : IJsonModel<DocumentParagraph>
+    public partial class DocumentParagraph : IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentParagraph"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentParagraph"/> for deserialization. </summary>
         internal DocumentParagraph()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentParagraph PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentParagraph(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentParagraph.DeserializeDocumentParagraph(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentParagraph)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentParagraph)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentParagraph)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentParagraph)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentParagraph>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentParagraph IPersistableModel<DocumentParagraph>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentParagraph IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentParagraph>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentParagraph>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,25 +76,25 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentParagraph)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentParagraph)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Role))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
                 foreach (BoundingRegion item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,10 +102,10 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (DocumentSpan item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -113,9 +113,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -124,39 +124,39 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentParagraph IJsonModel<DocumentParagraph>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentParagraph IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentParagraph JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentParagraph>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentParagraph)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentParagraph)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentParagraph(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.DocumentParagraph.DeserializeDocumentParagraph(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentParagraph DeserializeDocumentParagraph(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ParagraphRole? role = default;
             string content = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("role"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -170,34 +170,34 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("boundingRegions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BoundingRegion> array = new List<BoundingRegion>();
+                    List<global::Azure.AI.DocumentIntelligence.BoundingRegion> array = new List<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
                 }
                 if (prop.NameEquals("spans"u8))
                 {
-                    List<DocumentSpan> array = new List<DocumentSpan>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentSpan> array = new List<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentParagraph(role, content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, additionalBinaryDataProperties);
+            return new DocumentParagraph(role, content, (boundingRegions ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>()), spans, additionalBinaryDataProperties);
         }
     }
 }

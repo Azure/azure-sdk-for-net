@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    internal partial class ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT : AsyncPageable<ConversationAuthoringExportedTrainedModel>
+    internal partial class ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT : AsyncPageable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel>
     {
         private readonly ConversationAnalysisAuthoring _client;
         private readonly string _projectName;
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT(ConversationAnalysisAuthoring client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT(ConversationAnalysisAuthoring client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _projectName = projectName;
@@ -47,20 +47,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConversationAuthoringExportedTrainedModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedAnalyzeConversationAuthoringExportedTrainedModel result = (PagedAnalyzeConversationAuthoringExportedTrainedModel)response;
-                yield return Page<ConversationAuthoringExportedTrainedModel>.FromValues((IReadOnlyList<ConversationAuthoringExportedTrainedModel>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedAnalyzeConversationAuthoringExportedTrainedModel result = ((PagedAnalyzeConversationAuthoringExportedTrainedModel)response);
+                yield return global::Azure.Page<ConversationAuthoringExportedTrainedModel>.FromValues(((IReadOnlyList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -70,10 +70,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetExportedModelsRequest(nextLink, pageSize, _context) : _client.CreateGetExportedModelsRequest(_projectName, _maxCount, _skip, pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetExportedModelsRequest(nextLink, pageSize, _context) : _client.CreateGetExportedModelsRequest(_projectName, _maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -26,51 +26,51 @@ namespace Azure.Monitor.Query.Metrics
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/metrics:getBatch", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (startTime != null)
+            if ((startTime != null))
             {
                 uri.AppendQuery("starttime", startTime, true);
             }
-            if (endTime != null)
+            if ((endTime != null))
             {
                 uri.AppendQuery("endtime", endTime, true);
             }
-            if (interval != null)
+            if ((interval != null))
             {
                 uri.AppendQuery("interval", interval, true);
             }
             uri.AppendQuery("metricnamespace", metricNamespace, true);
-            if (metricNames != null && !(metricNames is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((metricNames != null) && !((metricNames is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("metricnames", metricNames, ",", escape: true);
             }
-            if (aggregation != null)
+            if ((aggregation != null))
             {
                 uri.AppendQuery("aggregation", aggregation, true);
             }
-            if (top != null)
+            if ((top != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", global::Azure.Monitor.Query.Metrics.TypeFormatters.ConvertToString(top), true);
             }
-            if (orderBy != null)
+            if ((orderBy != null))
             {
                 uri.AppendQuery("orderby", orderBy, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (rollUpBy != null)
+            if ((rollUpBy != null))
             {
                 uri.AppendQuery("rollupby", rollUpBy, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

@@ -13,11 +13,11 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A representation of a textual item of thread message content. </summary>
     public partial class MessageTextContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The text and associated annotations for this thread message content item. </param>
-        internal MessageTextContent(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMessageTextDetails internalDetails) : base(@type, additionalBinaryDataProperties)
+        internal MessageTextContent(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InternalMessageTextDetails internalDetails) : base(@type, additionalBinaryDataProperties)
         {
             InternalDetails = internalDetails;
         }

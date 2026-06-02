@@ -15,24 +15,24 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentKeyValueElement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeyValueElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValueElement"/>. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
-        internal DocumentKeyValueElement(string content, IEnumerable<DocumentSpan> spans)
+        internal DocumentKeyValueElement(string content, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             Content = content;
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeyValueElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValueElement"/>. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentKeyValueElement(string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentKeyValueElement(string content, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             BoundingRegions = boundingRegions;
@@ -44,9 +44,9 @@ namespace Azure.AI.DocumentIntelligence
         public string Content { get; }
 
         /// <summary> Bounding regions covering the key-value element. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the key-value element in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
     }
 }

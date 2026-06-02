@@ -18,32 +18,32 @@ namespace _Type.Scalar
     {
         protected DecimalType() => throw null;
 
-        internal DecimalType(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal DecimalType(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ResponseBody(RequestContext context) => throw null;
 
-        public virtual Task<Response> ResponseBodyAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ResponseBodyAsync(RequestContext context) => throw null;
 
         public virtual Response<decimal> ResponseBody(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<decimal>> ResponseBodyAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<decimal>> ResponseBodyAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RequestBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response RequestBody(decimal body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RequestBodyAsync(decimal body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RequestBodyAsync(decimal body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RequestParameter(decimal value, RequestContext context) => throw null;
 
-        public virtual Task<Response> RequestParameterAsync(decimal value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RequestParameterAsync(decimal value, RequestContext context) => throw null;
 
         public virtual Response RequestParameter(decimal value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RequestParameterAsync(decimal value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RequestParameterAsync(decimal value, CancellationToken cancellationToken = default) => throw null;
     }
 }

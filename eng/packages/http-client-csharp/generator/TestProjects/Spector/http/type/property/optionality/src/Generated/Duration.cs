@@ -18,40 +18,40 @@ namespace _Type.Property.Optional
     {
         protected Duration() => throw null;
 
-        internal Duration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Duration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<DurationProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.DurationProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DurationProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.DurationProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetDefault(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetDefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetDefaultAsync(RequestContext context) => throw null;
 
-        public virtual Response<DurationProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.DurationProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DurationProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.DurationProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutAll(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutAll(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAllAsync(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutDefault(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutDefault(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(DurationProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

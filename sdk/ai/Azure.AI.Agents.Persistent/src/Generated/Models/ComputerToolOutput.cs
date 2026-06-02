@@ -13,24 +13,24 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The output from a computer use tool to be submitted. </summary>
     public partial class ComputerToolOutput : StructuredToolOutput
     {
-        /// <summary> Initializes a new instance of <see cref="ComputerToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerToolOutput"/>. </summary>
         /// <param name="output"> The output from the computer use tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public ComputerToolOutput(ComputerScreenshot output) : base("computer_call_output")
         {
-            Argument.AssertNotNull(output, nameof(output));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(output, nameof(output));
 
             Output = output;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<SafetyCheck>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerToolOutput"/>. </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
-        internal ComputerToolOutput(string @type, string toolCallId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerScreenshot output, IList<SafetyCheck> acknowledgedSafetyChecks) : base(@type, toolCallId, additionalBinaryDataProperties)
+        internal ComputerToolOutput(string @type, string toolCallId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ComputerScreenshot output, IList<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks) : base(@type, toolCallId, additionalBinaryDataProperties)
         {
             Output = output;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;
@@ -40,6 +40,6 @@ namespace Azure.AI.Agents.Persistent
         public ComputerScreenshot Output { get; }
 
         /// <summary> Safety checks that have been acknowledged by the developer. </summary>
-        public IList<SafetyCheck> AcknowledgedSafetyChecks { get; }
+        public IList<global::Azure.AI.Agents.Persistent.SafetyCheck> AcknowledgedSafetyChecks { get; }
     }
 }

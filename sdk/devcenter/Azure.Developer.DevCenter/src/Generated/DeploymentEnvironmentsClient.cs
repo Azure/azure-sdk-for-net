@@ -19,8 +19,8 @@ namespace Azure.Developer.DevCenter
     /// <summary> The DeploymentEnvironmentsClient. </summary>
     public partial class DeploymentEnvironmentsClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient for mocking. </summary>
@@ -31,8 +31,8 @@ namespace Azure.Developer.DevCenter
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeploymentEnvironmentsClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DeploymentEnvironmentsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DevCenterClientOptions options)
+        internal DeploymentEnvironmentsClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DevCenterClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -63,14 +63,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeploymentEnvironmentsClient(global::System.Uri endpoint, TokenCredential credential, DevCenterClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient from a <see cref="DeploymentEnvironmentsClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeploymentEnvironmentsClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DeploymentEnvironmentsClient(DeploymentEnvironmentsClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -91,13 +91,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAllEnvironments(string projectName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAllEnvironments(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
@@ -112,13 +112,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAllEnvironmentsAsync(string projectName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAllEnvironmentsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
@@ -126,12 +126,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists the environments for a project. </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevCenterEnvironment> GetAllEnvironments(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment> GetAllEnvironments(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
@@ -139,12 +139,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists the environments for a project. </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevCenterEnvironment> GetAllEnvironmentsAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment> GetAllEnvironmentsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
@@ -160,14 +160,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetEnvironments(string projectName, string userId, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetEnvironments(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResult(this, projectName, userId, context, "DeploymentEnvironmentsClient.GetEnvironments");
         }
@@ -183,14 +183,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(string projectName, string userId, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetEnvironmentsAsync(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResult(this, projectName, userId, context, "DeploymentEnvironmentsClient.GetEnvironments");
         }
@@ -199,13 +199,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevCenterEnvironment> GetEnvironments(string projectName, string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment> GetEnvironments(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironments");
         }
@@ -214,13 +214,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevCenterEnvironment> GetEnvironmentsAsync(string projectName, string userId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment> GetEnvironmentsAsync(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironments");
         }
@@ -237,9 +237,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEnvironment(string projectName, string userId, string environmentName, RequestContext context)
         {
@@ -247,11 +247,11 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-                using HttpMessage message = CreateGetEnvironmentRequest(projectName, userId, environmentName, context);
+                using HttpMessage message = this.CreateGetEnvironmentRequest(projectName, userId, environmentName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -273,21 +273,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEnvironmentAsync(string projectName, string userId, string environmentName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEnvironmentAsync(string projectName, string userId, string environmentName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-                using HttpMessage message = CreateGetEnvironmentRequest(projectName, userId, environmentName, context);
+                using HttpMessage message = this.CreateGetEnvironmentRequest(projectName, userId, environmentName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -302,17 +302,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevCenterEnvironment> GetEnvironment(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment> GetEnvironment(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-            Response result = GetEnvironment(projectName, userId, environmentName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevCenterEnvironment)result, result);
+            Response result = this.GetEnvironment(projectName, userId, environmentName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevCenterEnvironment)result), result);
         }
 
         /// <summary> Gets an environment. </summary>
@@ -320,17 +320,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevCenterEnvironment>> GetEnvironmentAsync(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>> GetEnvironmentAsync(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-            Response result = await GetEnvironmentAsync(projectName, userId, environmentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevCenterEnvironment)result, result);
+            Response result = await this.GetEnvironmentAsync(projectName, userId, environmentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevCenterEnvironment)result), result);
         }
 
         /// <summary> Creates or updates an environment. </summary>
@@ -340,22 +340,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(projectName, userId, environmentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                using HttpMessage message = this.CreateCreateOrUpdateEnvironmentRequest(projectName, userId, environmentName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -371,22 +371,22 @@ namespace Azure.Developer.DevCenter
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(projectName, userId, environmentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironmentAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateCreateOrUpdateEnvironmentRequest(projectName, userId, environmentName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironmentAsync", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -401,8 +401,8 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context)
         {
@@ -410,12 +410,12 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-                using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -430,21 +430,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.DeleteEnvironment");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-                Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-                using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironmentAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironmentAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -459,15 +459,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-            return DeleteEnvironment(waitUntil, projectName, userId, environmentName, cancellationToken.ToRequestContext());
+            return this.DeleteEnvironment(waitUntil, projectName, userId, environmentName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an environment and all its associated resources. </summary>
@@ -476,15 +476,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="environmentName"> The name of the environment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
-            return await DeleteEnvironmentAsync(waitUntil, projectName, userId, environmentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteEnvironmentAsync(waitUntil, projectName, userId, environmentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -497,13 +497,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetCatalogs(string projectName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetCatalogs(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetCatalogsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetCatalogs");
         }
@@ -518,13 +518,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetCatalogsAsync(string projectName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetCatalogsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetCatalogs");
         }
@@ -532,12 +532,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all of the catalogs available for a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevCenterCatalog> GetCatalogs(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevCenterCatalog> GetCatalogs(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetCatalogs");
         }
@@ -545,12 +545,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all of the catalogs available for a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevCenterCatalog> GetCatalogsAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevCenterCatalog> GetCatalogsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetCatalogs");
         }
@@ -566,9 +566,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCatalog(string projectName, string catalogName, RequestContext context)
         {
@@ -576,10 +576,10 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-                using HttpMessage message = CreateGetCatalogRequest(projectName, catalogName, context);
+                using HttpMessage message = this.CreateGetCatalogRequest(projectName, catalogName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -600,20 +600,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCatalogAsync(string projectName, string catalogName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCatalogAsync(string projectName, string catalogName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetCatalog");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-                using HttpMessage message = CreateGetCatalogRequest(projectName, catalogName, context);
+                using HttpMessage message = this.CreateGetCatalogRequest(projectName, catalogName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -627,32 +627,32 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevCenterCatalog> GetCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevCenterCatalog> GetCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            Response result = GetCatalog(projectName, catalogName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevCenterCatalog)result, result);
+            Response result = this.GetCatalog(projectName, catalogName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevCenterCatalog)result), result);
         }
 
         /// <summary> Gets the specified catalog within the project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevCenterCatalog>> GetCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevCenterCatalog>> GetCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            Response result = await GetCatalogAsync(projectName, catalogName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevCenterCatalog)result, result);
+            Response result = await this.GetCatalogAsync(projectName, catalogName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevCenterCatalog)result), result);
         }
 
         /// <summary>
@@ -665,13 +665,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetEnvironmentDefinitions(string projectName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetEnvironmentDefinitions(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
@@ -686,13 +686,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetEnvironmentDefinitionsAsync(string projectName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetEnvironmentDefinitionsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
@@ -700,12 +700,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all environment definitions available for a project. </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<EnvironmentDefinition> GetEnvironmentDefinitions(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition> GetEnvironmentDefinitions(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
@@ -713,12 +713,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all environment definitions available for a project. </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<EnvironmentDefinition> GetEnvironmentDefinitionsAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition> GetEnvironmentDefinitionsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
@@ -734,14 +734,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResult(this, projectName, catalogName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
@@ -757,14 +757,14 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult(this, projectName, catalogName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
@@ -773,13 +773,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<EnvironmentDefinition> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
@@ -788,13 +788,13 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<EnvironmentDefinition> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
@@ -811,9 +811,9 @@ namespace Azure.Developer.DevCenter
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="definitionName"> Name of the environment definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEnvironmentDefinition(string projectName, string catalogName, string definitionName, RequestContext context)
         {
@@ -821,11 +821,11 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-                Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
 
-                using HttpMessage message = CreateGetEnvironmentDefinitionRequest(projectName, catalogName, definitionName, context);
+                using HttpMessage message = this.CreateGetEnvironmentDefinitionRequest(projectName, catalogName, definitionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -847,21 +847,21 @@ namespace Azure.Developer.DevCenter
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="definitionName"> Name of the environment definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironmentDefinition");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-                Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
 
-                using HttpMessage message = CreateGetEnvironmentDefinitionRequest(projectName, catalogName, definitionName, context);
+                using HttpMessage message = this.CreateGetEnvironmentDefinitionRequest(projectName, catalogName, definitionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -876,17 +876,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="definitionName"> Name of the environment definition. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EnvironmentDefinition> GetEnvironmentDefinition(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition> GetEnvironmentDefinition(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
 
-            Response result = GetEnvironmentDefinition(projectName, catalogName, definitionName, cancellationToken.ToRequestContext());
-            return Response.FromValue((EnvironmentDefinition)result, result);
+            Response result = this.GetEnvironmentDefinition(projectName, catalogName, definitionName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((EnvironmentDefinition)result), result);
         }
 
         /// <summary> Get an environment definition from a catalog. </summary>
@@ -894,17 +894,17 @@ namespace Azure.Developer.DevCenter
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="definitionName"> Name of the environment definition. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EnvironmentDefinition>> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
 
-            Response result = await GetEnvironmentDefinitionAsync(projectName, catalogName, definitionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EnvironmentDefinition)result, result);
+            Response result = await this.GetEnvironmentDefinitionAsync(projectName, catalogName, definitionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((EnvironmentDefinition)result), result);
         }
 
         /// <summary>
@@ -917,13 +917,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetEnvironmentTypes(string projectName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetEnvironmentTypes(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
@@ -938,13 +938,13 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(string projectName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetEnvironmentTypesAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
@@ -952,12 +952,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all environment types configured for a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevCenterEnvironmentType> GetEnvironmentTypes(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypes(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
@@ -965,12 +965,12 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists all environment types configured for a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }

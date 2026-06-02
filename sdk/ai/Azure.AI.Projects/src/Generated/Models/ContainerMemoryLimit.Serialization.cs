@@ -11,31 +11,31 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerMemoryLimit value) => value switch
         {
-            ContainerMemoryLimit._1g => "1g",
-            ContainerMemoryLimit._4g => "4g",
-            ContainerMemoryLimit._16g => "16g",
-            ContainerMemoryLimit._64g => "64g",
+            global::Azure.AI.Projects.ContainerMemoryLimit._1g => "1g",
+            global::Azure.AI.Projects.ContainerMemoryLimit._4g => "4g",
+            global::Azure.AI.Projects.ContainerMemoryLimit._16g => "16g",
+            global::Azure.AI.Projects.ContainerMemoryLimit._64g => "64g",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerMemoryLimit value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ContainerMemoryLimit ToContainerMemoryLimit(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "1g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "1g"))
             {
-                return ContainerMemoryLimit._1g;
+                return global::Azure.AI.Projects.ContainerMemoryLimit._1g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "4g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "4g"))
             {
-                return ContainerMemoryLimit._4g;
+                return global::Azure.AI.Projects.ContainerMemoryLimit._4g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "16g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "16g"))
             {
-                return ContainerMemoryLimit._16g;
+                return global::Azure.AI.Projects.ContainerMemoryLimit._16g;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "64g"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "64g"))
             {
-                return ContainerMemoryLimit._64g;
+                return global::Azure.AI.Projects.ContainerMemoryLimit._64g;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerMemoryLimit value.");
         }

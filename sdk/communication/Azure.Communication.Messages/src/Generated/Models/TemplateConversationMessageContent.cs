@@ -13,21 +13,21 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a template conversation message. </summary>
     public partial class TemplateConversationMessageContent : ConversationMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="TemplateConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TemplateConversationMessageContent"/>. </summary>
         /// <param name="template"> The template object used to create templates. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public TemplateConversationMessageContent(MessageTemplate template) : base(CommunicationMessageKind.Template)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public TemplateConversationMessageContent(MessageTemplate template) : base(global::Azure.Communication.Messages.CommunicationMessageKind.Template)
         {
-            Argument.AssertNotNull(template, nameof(template));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(template, nameof(template));
 
             Template = template;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TemplateConversationMessageContent"/>. </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal TemplateConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageTemplate template) : base(kind, additionalBinaryDataProperties)
+        internal TemplateConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageTemplate template) : base(kind, additionalBinaryDataProperties)
         {
             Template = template;
         }

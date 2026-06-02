@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
     public partial class SharepointToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SharepointToolDefinition"/>. </summary>
         /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharepointGrounding"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sharepointGrounding"/> is null. </exception>
         public SharepointToolDefinition(SharepointGroundingToolParameters sharepointGrounding) : base("sharepoint_grounding")
         {
-            Argument.AssertNotNull(sharepointGrounding, nameof(sharepointGrounding));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(sharepointGrounding, nameof(sharepointGrounding));
 
             SharepointGrounding = sharepointGrounding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SharepointToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
-        internal SharepointToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharepointGroundingToolParameters sharepointGrounding) : base(@type, additionalBinaryDataProperties)
+        internal SharepointToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SharepointGroundingToolParameters sharepointGrounding) : base(@type, additionalBinaryDataProperties)
         {
             SharepointGrounding = sharepointGrounding;
         }

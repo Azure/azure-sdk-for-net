@@ -11,9 +11,9 @@ namespace OpenAI
     internal partial class InternalLocalShellExecAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellExecAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLocalShellExecAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <param name="env"> Environment variables to set for the command. </param>
         public InternalLocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
@@ -22,7 +22,7 @@ namespace OpenAI
             Env = env;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellExecAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLocalShellExecAction"/>. </summary>
         /// <param name="type"> The type of the local shell action. Always `exec`. </param>
         /// <param name="command"> The command to run. </param>
         /// <param name="timeoutMs"></param>
@@ -30,7 +30,7 @@ namespace OpenAI
         /// <param name="env"> Environment variables to set for the command. </param>
         /// <param name="user"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalLocalShellExecAction(string @type, IList<string> command, long? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalLocalShellExecAction(string @type, IList<string> command, long? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Command = command;

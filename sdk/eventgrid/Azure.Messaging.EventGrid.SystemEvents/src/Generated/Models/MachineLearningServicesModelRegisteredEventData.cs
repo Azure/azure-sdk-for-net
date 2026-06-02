@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MachineLearningServicesModelRegisteredEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelRegisteredEventData"/>. </summary>
         /// <param name="modelName"> The name of the model that was registered. </param>
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion)
@@ -25,13 +25,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelRegisteredEventData"/>. </summary>
         /// <param name="modelName"> The name of the model that was registered. </param>
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;

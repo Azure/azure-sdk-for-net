@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryUpdateResultDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryUpdateResultDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails"/>. </summary>
         /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
         /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
-        internal MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations, MemoryStoreOperationUsage usage)
+        internal MemoryUpdateResultDetails(IEnumerable<global::Azure.AI.Projects.Memory.MemoryOperation> memoryOperations, MemoryStoreOperationUsage usage)
         {
             MemoryOperations = memoryOperations.ToList();
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryUpdateResultDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails"/>. </summary>
         /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
         /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryUpdateResultDetails(IList<MemoryOperation> memoryOperations, MemoryStoreOperationUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryUpdateResultDetails(IList<global::Azure.AI.Projects.Memory.MemoryOperation> memoryOperations, MemoryStoreOperationUsage usage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MemoryOperations = memoryOperations;
             Usage = usage;
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary> A list of individual memory operations that were performed during the update. </summary>
-        public IList<MemoryOperation> MemoryOperations { get; }
+        public IList<global::Azure.AI.Projects.Memory.MemoryOperation> MemoryOperations { get; }
 
         /// <summary> Usage statistics associated with the memory update operation. </summary>
         public MemoryStoreOperationUsage Usage { get; }

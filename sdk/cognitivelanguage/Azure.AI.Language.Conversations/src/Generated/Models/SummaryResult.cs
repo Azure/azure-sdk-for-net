@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class SummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal SummaryResult(IEnumerable<ConversationsSummaryResult> conversations, IEnumerable<DocumentError> errors, string modelVersion)
+        internal SummaryResult(IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> conversations, IEnumerable<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, string modelVersion)
         {
             Conversations = conversations.ToList();
             Errors = errors.ToList();
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryResult(IList<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> conversations, IList<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Errors = errors;
@@ -44,10 +44,10 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> array of conversations. </summary>
-        public IList<ConversationsSummaryResult> Conversations { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationsSummaryResult> Conversations { get; }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.DocumentError> Errors { get; }
 
         /// <summary> statistics. </summary>
         public RequestStatistics Statistics { get; }

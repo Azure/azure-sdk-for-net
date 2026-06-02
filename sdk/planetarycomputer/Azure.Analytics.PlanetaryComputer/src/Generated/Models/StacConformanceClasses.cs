@@ -18,25 +18,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacConformanceClasses
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacConformanceClasses"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacConformanceClasses"/>. </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
-        internal StacConformanceClasses(IEnumerable<Uri> conformsTo)
+        internal StacConformanceClasses(IEnumerable<global::System.Uri> conformsTo)
         {
             ConformsTo = conformsTo.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacConformanceClasses"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacConformanceClasses"/>. </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacConformanceClasses(IList<Uri> conformsTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacConformanceClasses(IList<global::System.Uri> conformsTo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConformsTo = conformsTo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of OGC API conformance classes implemented by this API. </summary>
-        public IList<Uri> ConformsTo { get; }
+        public IList<global::System.Uri> ConformsTo { get; }
     }
 }

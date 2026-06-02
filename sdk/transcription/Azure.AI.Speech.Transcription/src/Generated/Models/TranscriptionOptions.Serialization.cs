@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> Metadata for a transcription request. </summary>
-    public partial class TranscriptionOptions : IJsonModel<TranscriptionOptions>
+    public partial class TranscriptionOptions : IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTranscriptionOptions(document.RootElement, options);
+                        return global::Azure.AI.Speech.Transcription.TranscriptionOptions.DeserializeTranscriptionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptionOptions IPersistableModel<TranscriptionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TranscriptionOptions IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TranscriptionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,23 +65,23 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AudioUri))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(AudioUri))
             {
                 writer.WritePropertyName("audioUrl"u8);
                 writer.WriteStringValue(AudioUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Locales))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsCollectionDefined(Locales))
             {
                 writer.WritePropertyName("locales"u8);
                 writer.WriteStartArray();
                 foreach (string item in Locales)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -90,14 +90,14 @@ namespace Azure.AI.Speech.Transcription
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Models))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsCollectionDefined(Models))
             {
                 writer.WritePropertyName("models"u8);
                 writer.WriteStartObject();
                 foreach (var item in Models)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -106,17 +106,17 @@ namespace Azure.AI.Speech.Transcription
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ProfanityFilterMode))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(ProfanityFilterMode))
             {
                 writer.WritePropertyName("profanityFilterMode"u8);
                 writer.WriteStringValue(ProfanityFilterMode.Value.ToString());
             }
-            if (Optional.IsDefined(DiarizationOptions))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(DiarizationOptions))
             {
                 writer.WritePropertyName("diarization"u8);
-                writer.WriteObjectValue(DiarizationOptions, options);
+                writer.WriteObjectValue<TranscriptionDiarizationOptions>(DiarizationOptions, options);
             }
-            if (Optional.IsCollectionDefined(ActiveChannels))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsCollectionDefined(ActiveChannels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
@@ -126,17 +126,17 @@ namespace Azure.AI.Speech.Transcription
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnhancedMode))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(EnhancedMode))
             {
                 writer.WritePropertyName("enhancedMode"u8);
-                writer.WriteObjectValue(EnhancedMode, options);
+                writer.WriteObjectValue<EnhancedModeProperties>(EnhancedMode, options);
             }
-            if (Optional.IsDefined(PhraseList))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(PhraseList))
             {
                 writer.WritePropertyName("phraseList"u8);
-                writer.WriteObjectValue(PhraseList, options);
+                writer.WriteObjectValue<PhraseListProperties>(PhraseList, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -144,9 +144,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -155,59 +155,59 @@ namespace Azure.AI.Speech.Transcription
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptionOptions IJsonModel<TranscriptionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TranscriptionOptions IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranscriptionOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Speech.Transcription.TranscriptionOptions.DeserializeTranscriptionOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranscriptionOptions DeserializeTranscriptionOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            Uri audioUri = default;
+            global::System.Uri audioUri = default;
             IList<string> locales = default;
-            IDictionary<string, Uri> models = default;
+            IDictionary<string, global::System.Uri> models = default;
             ProfanityFilterMode? profanityFilterMode = default;
             TranscriptionDiarizationOptions diarizationOptions = default;
             IList<int> activeChannels = default;
             EnhancedModeProperties enhancedMode = default;
             PhraseListProperties phraseList = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("audioUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    audioUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    audioUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("locales"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -221,20 +221,20 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("models"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                    Dictionary<string, global::System.Uri> dictionary = new Dictionary<string, global::System.Uri>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, string.IsNullOrEmpty(prop0.Value.GetString()) ? null : new Uri(prop0.Value.GetString(), UriKind.RelativeOrAbsolute));
+                            dictionary.Add(prop0.Name, string.IsNullOrEmpty(prop0.Value.GetString()) ? null : new global::System.Uri(prop0.Value.GetString(), global::System.UriKind.RelativeOrAbsolute));
                         }
                     }
                     models = dictionary;
@@ -242,7 +242,7 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("profanityFilterMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -251,16 +251,16 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("diarization"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    diarizationOptions = TranscriptionDiarizationOptions.DeserializeTranscriptionDiarizationOptions(prop.Value, options);
+                    diarizationOptions = global::Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions.DeserializeTranscriptionDiarizationOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("channels"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -274,34 +274,34 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("enhancedMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    enhancedMode = EnhancedModeProperties.DeserializeEnhancedModeProperties(prop.Value, options);
+                    enhancedMode = global::Azure.AI.Speech.Transcription.EnhancedModeProperties.DeserializeEnhancedModeProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("phraseList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    phraseList = PhraseListProperties.DeserializePhraseListProperties(prop.Value, options);
+                    phraseList = global::Azure.AI.Speech.Transcription.PhraseListProperties.DeserializePhraseListProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TranscriptionOptions(
                 audioUri,
-                locales ?? new ChangeTrackingList<string>(),
-                models ?? new ChangeTrackingDictionary<string, Uri>(),
+                (locales ?? new ChangeTrackingList<string>()),
+                (models ?? new ChangeTrackingDictionary<string, global::System.Uri>()),
                 profanityFilterMode,
                 diarizationOptions,
-                activeChannels ?? new ChangeTrackingList<int>(),
+                (activeChannels ?? new ChangeTrackingList<int>()),
                 enhancedMode,
                 phraseList,
                 additionalBinaryDataProperties);

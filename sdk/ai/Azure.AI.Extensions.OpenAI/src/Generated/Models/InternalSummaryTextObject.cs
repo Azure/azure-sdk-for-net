@@ -9,18 +9,18 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalSummaryTextObject : InternalMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject"/>. </summary>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>
-        public InternalSummaryTextObject(string text) : base(MessageContentType.SummaryText)
+        public InternalSummaryTextObject(string text) : base(global::Azure.AI.Extensions.OpenAI.MessageContentType.SummaryText)
         {
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>
-        internal InternalSummaryTextObject(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal InternalSummaryTextObject(MessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

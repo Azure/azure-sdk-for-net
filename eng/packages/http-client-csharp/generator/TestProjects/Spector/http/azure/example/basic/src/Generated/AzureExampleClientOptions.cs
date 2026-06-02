@@ -13,11 +13,11 @@ namespace AzureExampleBasicClient
 {
     public partial class AzureExampleClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::AzureExampleBasicClient.AzureExampleClientOptions.ServiceVersion LatestVersion = global::AzureExampleBasicClient.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public AzureExampleClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public AzureExampleClientOptions(global::AzureExampleBasicClient.AzureExampleClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal AzureExampleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

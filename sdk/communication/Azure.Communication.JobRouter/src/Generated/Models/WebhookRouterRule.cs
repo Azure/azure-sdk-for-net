@@ -13,18 +13,18 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing a binding to an external web server. </summary>
     public partial class WebhookRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
-        internal WebhookRouterRule() : base(RouterRuleKind.Webhook)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WebhookRouterRule"/>. </summary>
+        internal WebhookRouterRule() : base(global::Azure.Communication.JobRouter.RouterRuleKind.Webhook)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WebhookRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>
         /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
-        internal WebhookRouterRule(RouterRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri authorizationServerUri, OAuth2WebhookClientCredential clientCredential, Uri webhookUri) : base(kind, additionalBinaryDataProperties)
+        internal WebhookRouterRule(RouterRuleKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri authorizationServerUri, OAuth2WebhookClientCredential clientCredential, global::System.Uri webhookUri) : base(kind, additionalBinaryDataProperties)
         {
             AuthorizationServerUri = authorizationServerUri;
             ClientCredential = clientCredential;
@@ -32,12 +32,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Uri for Authorization Server. </summary>
-        public Uri AuthorizationServerUri { get; }
+        public global::System.Uri AuthorizationServerUri { get; }
 
         /// <summary> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </summary>
         public OAuth2WebhookClientCredential ClientCredential { get; }
 
         /// <summary> Uri for Contoso's Web Server. </summary>
-        public Uri WebhookUri { get; }
+        public global::System.Uri WebhookUri { get; }
     }
 }

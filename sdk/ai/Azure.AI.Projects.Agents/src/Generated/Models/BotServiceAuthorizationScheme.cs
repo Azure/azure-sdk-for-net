@@ -10,15 +10,15 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The BotServiceAuthorizationScheme. </summary>
     public partial class BotServiceAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
-        /// <summary> Initializes a new instance of <see cref="BotServiceAuthorizationScheme"/>. </summary>
-        public BotServiceAuthorizationScheme() : base(AgentEndpointAuthorizationSchemeType.BotService)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme"/>. </summary>
+        public BotServiceAuthorizationScheme() : base(global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationSchemeType.BotService)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BotServiceAuthorizationScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal BotServiceAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

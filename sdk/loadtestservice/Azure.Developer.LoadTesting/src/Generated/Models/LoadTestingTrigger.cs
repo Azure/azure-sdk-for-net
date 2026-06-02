@@ -12,14 +12,14 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Trigger model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleTestsTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.ScheduleTestsTrigger"/>.
     /// </summary>
     public abstract partial class LoadTestingTrigger
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingTrigger"/>. </summary>
         /// <param name="displayName"> The name of the trigger. </param>
         /// <param name="kind"> The type of the trigger. </param>
         private protected LoadTestingTrigger(string displayName, TriggerType kind)
@@ -28,7 +28,7 @@ namespace Azure.Developer.LoadTesting
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingTrigger"/>. </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
         /// <param name="displayName"> The name of the trigger. </param>
         /// <param name="description"> The description of the trigger. </param>
@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TriggerId = triggerId;
             DisplayName = displayName;

@@ -12,24 +12,24 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Binding actions to the interactive message.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppListActionBindings"/>, <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings"/>, <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings"/>.
     /// </summary>
     public abstract partial class ActionBindings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionBindings"/>. </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         private protected ActionBindings(MessageActionBindingKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionBindings"/>. </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionBindings(MessageActionBindingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

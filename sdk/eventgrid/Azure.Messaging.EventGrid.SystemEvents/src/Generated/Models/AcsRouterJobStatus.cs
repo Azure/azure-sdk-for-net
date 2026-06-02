@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Acs Router Job Status. </summary>
-    public readonly partial struct AcsRouterJobStatus : IEquatable<AcsRouterJobStatus>
+    public readonly partial struct AcsRouterJobStatus : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus>
     {
         private readonly string _value;
         /// <summary> Router Job Status Pending Classification. </summary>
@@ -39,12 +39,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Job Status Waiting For Activation. </summary>
         private const string WaitingForActivationValue = "WaitingForActivation";
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterJobStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -85,34 +85,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Job Status Waiting For Activation. </summary>
         public static AcsRouterJobStatus WaitingForActivation { get; } = new AcsRouterJobStatus(WaitingForActivationValue);
 
-        /// <summary> Determines if two <see cref="AcsRouterJobStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterJobStatus left, AcsRouterJobStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsRouterJobStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterJobStatus left, AcsRouterJobStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterJobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterJobStatus(string value) => new AcsRouterJobStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterJobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterJobStatus?(string value) => value == null ? null : new AcsRouterJobStatus(value);
+        public static implicit operator AcsRouterJobStatus?(string value) => (value == null) ? null : new AcsRouterJobStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsRouterJobStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsRouterJobStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsRouterJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsRouterJobStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

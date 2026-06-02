@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an agentic reasoning activity record. </summary>
     public partial class KnowledgeBaseAgenticReasoningActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.AgenticReasoning)
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.AgenticReasoning)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             ReasoningTokens = reasoningTokens;
             RetrievalReasoningEffort = retrievalReasoningEffort;

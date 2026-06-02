@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedConversationOrchestration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestration"/>. </summary>
         /// <param name="projectName"> The name of the targeted project. </param>
         /// <param name="deploymentName"> The name of the targeted deployment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public ExportedConversationOrchestration(string projectName, string deploymentName)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestration"/>. </summary>
         /// <param name="projectName"> The name of the targeted project. </param>
         /// <param name="deploymentName"> The name of the targeted deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedConversationOrchestration(string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedConversationOrchestration(string projectName, string deploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;

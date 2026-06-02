@@ -13,12 +13,12 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an annotation to text thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMessageTextAnnotation))]
-    public abstract partial class MessageTextAnnotation : IJsonModel<MessageTextAnnotation>
+    [PersistableModelProxyAttribute(typeof(UnknownMessageTextAnnotation))]
+    public abstract partial class MessageTextAnnotation : IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextAnnotation"/> for deserialization. </summary>
         internal MessageTextAnnotation()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageTextAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMessageTextAnnotation(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.MessageTextAnnotation.DeserializeMessageTextAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageTextAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageTextAnnotation IPersistableModel<MessageTextAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MessageTextAnnotation IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageTextAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MessageTextAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,16 +76,16 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextAnnotation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -93,9 +93,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -104,26 +104,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageTextAnnotation IJsonModel<MessageTextAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MessageTextAnnotation IJsonModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageTextAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageTextAnnotation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageTextAnnotation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.MessageTextAnnotation.DeserializeMessageTextAnnotation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MessageTextAnnotation DeserializeMessageTextAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -132,14 +132,14 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "url_citation":
-                        return MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
                     case "file_citation":
-                        return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
                     case "file_path":
-                        return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
                 }
             }
-            return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);
         }
     }
 }

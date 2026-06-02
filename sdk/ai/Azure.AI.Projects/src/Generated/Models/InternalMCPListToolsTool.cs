@@ -11,9 +11,9 @@ namespace OpenAI
     internal partial class InternalMCPListToolsTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
         public InternalMCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
@@ -22,13 +22,13 @@ namespace OpenAI
             InputSchema = inputSchema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="description"></param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
         /// <param name="annotations"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMCPListToolsTool(string name, string description, MCPListToolsToolInputSchema inputSchema, MCPListToolsToolAnnotations annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMCPListToolsTool(string name, string description, MCPListToolsToolInputSchema inputSchema, MCPListToolsToolAnnotations annotations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

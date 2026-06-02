@@ -9,14 +9,14 @@ namespace Azure.AI.Projects.Memory
 {
     internal partial class UnknownMemoryItem : MemoryItem
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMemoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.UnknownMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedAt, scope, content, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedAt, scope, content, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -15,9 +15,9 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct BoundingRegion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon">
         /// Bounding polygon on the page, or the entire page if not specified.
@@ -31,7 +31,7 @@ namespace Azure.AI.DocumentIntelligence
             Polygon = polygon.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon">
         /// Bounding polygon on the page, or the entire page if not specified.
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Polygon = polygon;

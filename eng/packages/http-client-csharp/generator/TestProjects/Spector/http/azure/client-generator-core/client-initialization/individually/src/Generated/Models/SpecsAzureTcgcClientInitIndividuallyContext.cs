@@ -10,7 +10,7 @@ using Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient;
 
 namespace Specs.Azure.Tcgc.ClientInit.Individually
 {
-    [ModelReaderWriterBuildable(typeof(BlobProperties))]
+    [ModelReaderWriterBuildableAttribute(typeof(BlobProperties))]
     public partial class SpecsAzureTcgcClientInitIndividuallyContext : ModelReaderWriterContext
     {
     }

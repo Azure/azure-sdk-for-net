@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithNamespaceOnProperties : IPersistableModel<ModelWithNamespaceOnProperties>, IXmlSerializable
+    public partial class ModelWithNamespaceOnProperties : IPersistableModel<global::Payload.Xml.ModelWithNamespaceOnProperties>, IXmlSerializable
     {
         internal ModelWithNamespaceOnProperties() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithNamespaceOnProperties>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithNamespaceOnProperties>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithNamespaceOnProperties IPersistableModel<ModelWithNamespaceOnProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithNamespaceOnProperties IPersistableModel<global::Payload.Xml.ModelWithNamespaceOnProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithNamespaceOnProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithNamespaceOnProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithNamespaceOnProperties"> The <see cref="ModelWithNamespaceOnProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithNamespaceOnProperties"> The <see cref="global::Payload.Xml.ModelWithNamespaceOnProperties"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithNamespaceOnProperties modelWithNamespaceOnProperties) => throw null;
 
         public static explicit operator ModelWithNamespaceOnProperties(Response response) => throw null;

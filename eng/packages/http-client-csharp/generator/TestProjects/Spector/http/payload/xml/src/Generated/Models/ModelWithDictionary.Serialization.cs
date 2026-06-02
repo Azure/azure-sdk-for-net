@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithDictionary : IPersistableModel<ModelWithDictionary>, IXmlSerializable
+    public partial class ModelWithDictionary : IPersistableModel<global::Payload.Xml.ModelWithDictionary>, IXmlSerializable
     {
         internal ModelWithDictionary() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithDictionary>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithDictionary>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithDictionary IPersistableModel<ModelWithDictionary>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithDictionary IPersistableModel<global::Payload.Xml.ModelWithDictionary>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithDictionary>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithDictionary>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithDictionary"> The <see cref="ModelWithDictionary"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithDictionary"> The <see cref="global::Payload.Xml.ModelWithDictionary"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithDictionary modelWithDictionary) => throw null;
 
         public static explicit operator ModelWithDictionary(Response response) => throw null;

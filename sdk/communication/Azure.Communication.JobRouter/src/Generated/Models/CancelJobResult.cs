@@ -13,16 +13,16 @@ namespace Azure.Communication.JobRouter
     internal partial class CancelJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CancelJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.CancelJobResult"/>. </summary>
         internal CancelJobResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancelJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.CancelJobResult"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelJobResult(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelJobResult(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

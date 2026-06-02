@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Parameters.Spread._Model
 {
-    public partial class BodyParameter : IJsonModel<BodyParameter>
+    public partial class BodyParameter : IJsonModel<global::Parameters.Spread._Model.BodyParameter>
     {
         internal BodyParameter() => throw null;
 
@@ -20,20 +20,20 @@ namespace Parameters.Spread._Model
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<BodyParameter>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Parameters.Spread._Model.BodyParameter>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BodyParameter IPersistableModel<BodyParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BodyParameter IPersistableModel<global::Parameters.Spread._Model.BodyParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<BodyParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Parameters.Spread._Model.BodyParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="bodyParameter"> The <see cref="BodyParameter"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="bodyParameter"> The <see cref="global::Parameters.Spread._Model.BodyParameter"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BodyParameter bodyParameter) => throw null;
 
-        void IJsonModel<BodyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Parameters.Spread._Model.BodyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        BodyParameter IJsonModel<BodyParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        BodyParameter IJsonModel<global::Parameters.Spread._Model.BodyParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BodyParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -18,48 +18,48 @@ namespace Parameters.Spread._Model
     {
         protected Model() => throw null;
 
-        internal Model(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Model(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadCompositeRequestOnlyWithBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestOnlyWithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadCompositeRequestOnlyWithBody(BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(BodyParameter body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestOnlyWithBodyAsync(BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, RequestContext context) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, RequestContext context) => throw null;
 
         public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadCompositeRequest(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadCompositeRequest(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestAsync(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadCompositeRequestMix(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestMixAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadCompositeRequestMix(string name, string testHeader, string prop, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, string prop, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadCompositeRequestMixAsync(string name, string testHeader, string prop, CancellationToken cancellationToken = default) => throw null;
     }
 }

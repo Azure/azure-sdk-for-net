@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MapsGeofenceGeometry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry"/>. </summary>
         /// <param name="deviceId"> ID of the device. </param>
         /// <param name="geometryId"> The unique ID for the geofence geometry. </param>
         internal MapsGeofenceGeometry(string deviceId, string geometryId)
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             GeometryId = geometryId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry"/>. </summary>
         /// <param name="deviceId"> ID of the device. </param>
         /// <param name="distance"> Distance from the coordinate to the closest border of the geofence. Positive means the coordinate is outside of the geofence. If the coordinate is outside of the geofence, but more than the value of searchBuffer away from the closest geofence border, then the value is 999. Negative means the coordinate is inside of the geofence. If the coordinate is inside the polygon, but more than the value of searchBuffer away from the closest geofencing border,then the value is -999. A value of 999 means that there is great confidence the coordinate is well outside the geofence. A value of -999 means that there is great confidence the coordinate is well within the geofence. </param>
         /// <param name="geometryId"> The unique ID for the geofence geometry. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="nearestLon"> Longitude of the nearest point of the geometry. </param>
         /// <param name="udId"> The unique id returned from user upload service when uploading a geofence. Will not be included in geofencing post API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapsGeofenceGeometry(string deviceId, float? distance, string geometryId, float? nearestLat, float? nearestLon, string udId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapsGeofenceGeometry(string deviceId, float? distance, string geometryId, float? nearestLat, float? nearestLon, string udId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             Distance = distance;

@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Flexibly separates text into terms via a regular expression pattern. This analyzer is implemented using Apache Lucene. </summary>
     public partial class PatternAnalyzer : LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of <see cref="PatternAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PatternAnalyzer"/>. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PatternAnalyzer(string name) : base("#Microsoft.Azure.Search.PatternAnalyzer", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Stopwords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PatternAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PatternAnalyzer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
         /// <param name="flagsInternal"> Regular expression flags, specified as a '|' separated string of RegexFlags values. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal PatternAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
+        internal PatternAnalyzer(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(odataType, name, additionalBinaryDataProperties)
         {
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;

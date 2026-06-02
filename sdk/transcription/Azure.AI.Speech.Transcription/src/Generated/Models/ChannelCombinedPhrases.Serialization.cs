@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> The full transcript per channel. </summary>
-    public partial class ChannelCombinedPhrases : IJsonModel<ChannelCombinedPhrases>
+    public partial class ChannelCombinedPhrases : IJsonModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>
     {
-        /// <summary> Initializes a new instance of <see cref="ChannelCombinedPhrases"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases"/> for deserialization. </summary>
         internal ChannelCombinedPhrases()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ChannelCombinedPhrases PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeChannelCombinedPhrases(document.RootElement, options);
+                        return global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases.DeserializeChannelCombinedPhrases(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChannelCombinedPhrases)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChannelCombinedPhrases)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChannelCombinedPhrases>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChannelCombinedPhrases IPersistableModel<ChannelCombinedPhrases>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ChannelCombinedPhrases IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChannelCombinedPhrases>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChannelCombinedPhrases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,19 +70,19 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ChannelCombinedPhrases)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Channel))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -90,9 +90,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -101,37 +101,37 @@ namespace Azure.AI.Speech.Transcription
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChannelCombinedPhrases IJsonModel<ChannelCombinedPhrases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ChannelCombinedPhrases IJsonModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ChannelCombinedPhrases JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ChannelCombinedPhrases)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChannelCombinedPhrases(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases.DeserializeChannelCombinedPhrases(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ChannelCombinedPhrases DeserializeChannelCombinedPhrases(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int? channel = default;
             string text = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("channel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -143,9 +143,9 @@ namespace Azure.AI.Speech.Transcription
                     text = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ChannelCombinedPhrases(channel, text, additionalBinaryDataProperties);

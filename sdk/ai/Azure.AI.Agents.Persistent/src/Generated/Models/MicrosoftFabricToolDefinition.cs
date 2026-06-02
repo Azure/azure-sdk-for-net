@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
     public partial class MicrosoftFabricToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MicrosoftFabricToolDefinition"/>. </summary>
         /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagent"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fabricDataagent"/> is null. </exception>
         public MicrosoftFabricToolDefinition(FabricDataAgentToolParameters fabricDataagent) : base("fabric_dataagent")
         {
-            Argument.AssertNotNull(fabricDataagent, nameof(fabricDataagent));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(fabricDataagent, nameof(fabricDataagent));
 
             FabricDataagent = fabricDataagent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MicrosoftFabricToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FabricDataAgentToolParameters fabricDataagent) : base(@type, additionalBinaryDataProperties)
+        internal MicrosoftFabricToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, FabricDataAgentToolParameters fabricDataagent) : base(@type, additionalBinaryDataProperties)
         {
             FabricDataagent = fabricDataagent;
         }

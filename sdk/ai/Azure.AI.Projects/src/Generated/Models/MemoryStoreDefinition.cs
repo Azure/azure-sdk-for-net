@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// Base definition for memory store configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemoryStoreDefaultDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition"/>.
     /// </summary>
     public abstract partial class MemoryStoreDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefinition"/>. </summary>
         /// <param name="kind"> The kind of the memory store. </param>
         private protected MemoryStoreDefinition(MemoryStoreKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefinition"/>. </summary>
         /// <param name="kind"> The kind of the memory store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDefinition(MemoryStoreKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDefinition(MemoryStoreKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

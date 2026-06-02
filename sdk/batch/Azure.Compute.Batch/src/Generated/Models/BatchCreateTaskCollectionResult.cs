@@ -14,24 +14,24 @@ namespace Azure.Compute.Batch
     public partial class BatchCreateTaskCollectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchCreateTaskCollectionResult"/>. </summary>
         internal BatchCreateTaskCollectionResult()
         {
-            Results = new ChangeTrackingList<BatchTaskCreateResult>();
+            Results = new ChangeTrackingList<global::Azure.Compute.Batch.BatchTaskCreateResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchCreateTaskCollectionResult"/>. </summary>
         /// <param name="results"> The results of the create Task collection operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchCreateTaskCollectionResult(IList<BatchTaskCreateResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchCreateTaskCollectionResult(IList<global::Azure.Compute.Batch.BatchTaskCreateResult> results, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The results of the create Task collection operation. </summary>
-        public IList<BatchTaskCreateResult> Results { get; }
+        public IList<global::Azure.Compute.Batch.BatchTaskCreateResult> Results { get; }
     }
 }

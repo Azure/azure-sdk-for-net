@@ -10,11 +10,11 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownScheduleTask : ProjectsScheduleTask
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownScheduleTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownScheduleTask"/>. </summary>
         /// <param name="type"> Type of the task. </param>
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", configuration, additionalBinaryDataProperties)
+        internal UnknownScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", configuration, additionalBinaryDataProperties)
         {
         }
     }

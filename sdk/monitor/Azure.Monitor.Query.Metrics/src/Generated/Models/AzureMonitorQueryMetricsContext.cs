@@ -15,15 +15,15 @@ namespace Azure.Monitor.Query.Metrics
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(LocalizableString))]
-    [ModelReaderWriterBuildable(typeof(MetadataValue))]
-    [ModelReaderWriterBuildable(typeof(MetricResult))]
-    [ModelReaderWriterBuildable(typeof(MetricsQueryResourcesResult))]
-    [ModelReaderWriterBuildable(typeof(MetricsQueryResult))]
-    [ModelReaderWriterBuildable(typeof(MetricTimeSeriesElement))]
-    [ModelReaderWriterBuildable(typeof(MetricValue))]
-    [ModelReaderWriterBuildable(typeof(ResourceIdList))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(LocalizableString))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetadataValue))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetricResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetricsQueryResourcesResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetricsQueryResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetricTimeSeriesElement))]
+    [ModelReaderWriterBuildableAttribute(typeof(MetricValue))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResourceIdList))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
     public partial class AzureMonitorQueryMetricsContext : ModelReaderWriterContext
     {
     }

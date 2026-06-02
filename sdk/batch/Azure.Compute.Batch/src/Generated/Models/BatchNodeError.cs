@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeError"/>. </summary>
         internal BatchNodeError()
         {
-            ErrorDetails = new ChangeTrackingList<BatchNameValuePair>();
+            ErrorDetails = new ChangeTrackingList<global::Azure.Compute.Batch.BatchNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeError"/>. </summary>
         /// <param name="code"> An identifier for the Compute Node error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the Compute Node error, intended to be suitable for display in a user interface. </param>
         /// <param name="errorDetails"> The list of additional error details related to the Compute Node error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeError(string code, string message, IList<BatchNameValuePair> errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeError(string code, string message, IList<global::Azure.Compute.Batch.BatchNameValuePair> errorDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> The list of additional error details related to the Compute Node error. </summary>
-        public IList<BatchNameValuePair> ErrorDetails { get; }
+        public IList<global::Azure.Compute.Batch.BatchNameValuePair> ErrorDetails { get; }
     }
 }

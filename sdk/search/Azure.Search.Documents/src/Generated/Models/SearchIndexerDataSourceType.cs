@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the type of a datasource. </summary>
-    public readonly partial struct SearchIndexerDataSourceType : IEquatable<SearchIndexerDataSourceType>
+    public readonly partial struct SearchIndexerDataSourceType : IEquatable<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType>
     {
         private readonly string _value;
         /// <summary> Indicates an Azure SQL datasource. </summary>
@@ -32,12 +32,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates a SharePoint datasource. </summary>
         private const string SharePointValue = "sharepoint";
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchIndexerDataSourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -66,34 +66,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates a SharePoint datasource. </summary>
         public static SearchIndexerDataSourceType SharePoint { get; } = new SearchIndexerDataSourceType(SharePointValue);
 
-        /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SearchIndexerDataSourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SearchIndexerDataSourceType(string value) => new SearchIndexerDataSourceType(value);
 
-        /// <summary> Converts a string to a <see cref="SearchIndexerDataSourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchIndexerDataSourceType?(string value) => value == null ? null : new SearchIndexerDataSourceType(value);
+        public static implicit operator SearchIndexerDataSourceType?(string value) => (value == null) ? null : new SearchIndexerDataSourceType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SearchIndexerDataSourceType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SearchIndexerDataSourceType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SearchIndexerDataSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SearchIndexerDataSourceType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

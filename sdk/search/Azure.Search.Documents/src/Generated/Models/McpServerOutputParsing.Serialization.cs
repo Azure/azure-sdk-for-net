@@ -14,12 +14,12 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Output parsing configuration for an MCP server tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerSplitOutputParsing"/>, and <see cref="McpServerNoneOutputParsing"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.McpServerAutoOutputParsing"/>, <see cref="Azure.Search.Documents.Indexes.Models.McpServerJsonOutputParsing"/>, <see cref="Azure.Search.Documents.Indexes.Models.McpServerSplitOutputParsing"/>, and <see cref="Azure.Search.Documents.Indexes.Models.McpServerNoneOutputParsing"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMcpServerOutputParsing))]
-    public abstract partial class McpServerOutputParsing : IJsonModel<McpServerOutputParsing>
+    [PersistableModelProxyAttribute(typeof(UnknownMcpServerOutputParsing))]
+    public abstract partial class McpServerOutputParsing : IJsonModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsing"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing"/> for deserialization. </summary>
         internal McpServerOutputParsing()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual McpServerOutputParsing PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMcpServerOutputParsing(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing.DeserializeMcpServerOutputParsing(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(McpServerOutputParsing)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(McpServerOutputParsing)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<McpServerOutputParsing>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        McpServerOutputParsing IPersistableModel<McpServerOutputParsing>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        McpServerOutputParsing IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<McpServerOutputParsing>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<McpServerOutputParsing>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,14 +77,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(McpServerOutputParsing)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,26 +103,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        McpServerOutputParsing IJsonModel<McpServerOutputParsing>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        McpServerOutputParsing IJsonModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual McpServerOutputParsing JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(McpServerOutputParsing)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMcpServerOutputParsing(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing.DeserializeMcpServerOutputParsing(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static McpServerOutputParsing DeserializeMcpServerOutputParsing(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -131,16 +131,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "auto":
-                        return McpServerAutoOutputParsing.DeserializeMcpServerAutoOutputParsing(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.McpServerAutoOutputParsing.DeserializeMcpServerAutoOutputParsing(element, options);
                     case "json":
-                        return McpServerJsonOutputParsing.DeserializeMcpServerJsonOutputParsing(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.McpServerJsonOutputParsing.DeserializeMcpServerJsonOutputParsing(element, options);
                     case "split":
-                        return McpServerSplitOutputParsing.DeserializeMcpServerSplitOutputParsing(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.McpServerSplitOutputParsing.DeserializeMcpServerSplitOutputParsing(element, options);
                     case "none":
-                        return McpServerNoneOutputParsing.DeserializeMcpServerNoneOutputParsing(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.McpServerNoneOutputParsing.DeserializeMcpServerNoneOutputParsing(element, options);
                 }
             }
-            return UnknownMcpServerOutputParsing.DeserializeUnknownMcpServerOutputParsing(element, options);
+            return global::Azure.Search.Documents.Indexes.Models.UnknownMcpServerOutputParsing.DeserializeUnknownMcpServerOutputParsing(element, options);
         }
     }
 }

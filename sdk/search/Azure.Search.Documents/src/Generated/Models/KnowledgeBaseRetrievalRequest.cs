@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseRetrievalRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest"/>. </summary>
         public KnowledgeBaseRetrievalRequest()
         {
-            Messages = new ChangeTrackingList<KnowledgeBaseMessage>();
-            Intents = new ChangeTrackingList<KnowledgeRetrievalIntent>();
-            KnowledgeSourceParams = new ChangeTrackingList<KnowledgeSourceParams>();
+            Messages = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage>();
+            Intents = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntent>();
+            KnowledgeSourceParams = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest"/>. </summary>
         /// <param name="messages"> A list of chat message style input. </param>
         /// <param name="intents"> A list of intended queries to execute without model query planning. </param>
         /// <param name="maxRuntimeInSeconds"> The maximum runtime in seconds. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="outputMode"> The output configuration for this retrieval. </param>
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, int? maxOutputDocuments, int? maxOutputSizeInTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRetrievalRequest(IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> messages, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, int? maxOutputDocuments, int? maxOutputSizeInTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
             Intents = intents;
@@ -53,10 +53,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> A list of chat message style input. </summary>
-        public IList<KnowledgeBaseMessage> Messages { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage> Messages { get; }
 
         /// <summary> A list of intended queries to execute without model query planning. </summary>
-        public IList<KnowledgeRetrievalIntent> Intents { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntent> Intents { get; }
 
         /// <summary> The maximum runtime in seconds. </summary>
         public int? MaxRuntimeInSeconds { get; set; }
@@ -80,6 +80,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeRetrievalOutputMode? OutputMode { get; set; }
 
         /// <summary> A list of runtime parameters for the knowledge sources. </summary>
-        public IList<KnowledgeSourceParams> KnowledgeSourceParams { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams> KnowledgeSourceParams { get; }
     }
 }

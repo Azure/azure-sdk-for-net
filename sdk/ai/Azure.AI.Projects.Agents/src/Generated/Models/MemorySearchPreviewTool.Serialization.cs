@@ -11,9 +11,9 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class MemorySearchPreviewTool : ProjectsAgentTool, IJsonModel<MemorySearchPreviewTool>
+    public partial class MemorySearchPreviewTool : ProjectsAgentTool, IJsonModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.MemorySearchPreviewTool"/> for deserialization. </summary>
         internal MemorySearchPreviewTool()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemorySearchPreviewTool(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.MemorySearchPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.MemorySearchPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemorySearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemorySearchPreviewTool IPersistableModel<MemorySearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)PersistableModelCreateCore(data, options);
+        MemorySearchPreviewTool IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MemorySearchPreviewTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemorySearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemorySearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,30 +71,30 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.MemorySearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -102,12 +102,12 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
-            if (Optional.IsDefined(SearchOptions))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(SearchOptions))
             {
                 writer.WritePropertyName("search_options"u8);
-                writer.WriteObjectValue(SearchOptions, options);
+                writer.WriteObjectValue<MemorySearchToolOptions>(SearchOptions, options);
             }
-            if (Optional.IsDefined(UpdateDelayInSecs))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(UpdateDelayInSecs))
             {
                 writer.WritePropertyName("update_delay"u8);
                 writer.WriteNumberValue(UpdateDelayInSecs.Value);
@@ -116,34 +116,34 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemorySearchPreviewTool IJsonModel<MemorySearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)JsonModelCreateCore(ref reader, options);
+        MemorySearchPreviewTool IJsonModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MemorySearchPreviewTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.MemorySearchPreviewTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemorySearchPreviewTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MemorySearchPreviewTool DeserializeMemorySearchPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs = default;
             string memoryStoreName = default;
             string scope = default;
             MemorySearchToolOptions searchOptions = default;
@@ -167,14 +167,14 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Agents.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -191,25 +191,25 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("search_options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    searchOptions = MemorySearchToolOptions.DeserializeMemorySearchToolOptions(prop.Value, options);
+                    searchOptions = global::Azure.AI.Projects.Agents.MemorySearchToolOptions.DeserializeMemorySearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("update_delay"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     updateDelayInSecs = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MemorySearchPreviewTool(
@@ -217,7 +217,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>()),
                 memoryStoreName,
                 scope,
                 searchOptions,

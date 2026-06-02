@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMcpToolCall"/>, <see cref="RunStepDeltaOpenAPIToolCall"/>, <see cref="RunStepDeltaConnectedAgentToolCall"/>, <see cref="RunStepDeltaFunctionToolCall"/>, <see cref="RunStepDeltaFileSearchToolCall"/>, <see cref="RunStepDeltaCodeInterpreterToolCall"/>, <see cref="RunStepDeltaBingGroundingToolCall"/>, <see cref="RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="RunStepDeltaAzureFunctionToolCall"/>, <see cref="RunStepDeltaDeepResearchToolCall"/>, <see cref="RunStepDeltaAzureAISearchToolCall"/>, <see cref="RunStepDeltaComputerUseToolCall"/>, <see cref="RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="RunStepDeltaSharepointToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaSharepointToolCall"/>.
     /// </summary>
     public abstract partial class RunStepDeltaToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Agents.Persistent
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaToolCall(int index, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaToolCall(int index, string id, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Index = index;
             Id = id;

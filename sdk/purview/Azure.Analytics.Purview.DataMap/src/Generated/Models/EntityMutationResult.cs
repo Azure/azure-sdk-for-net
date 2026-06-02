@@ -14,22 +14,22 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class EntityMutationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityMutationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.EntityMutationResult"/>. </summary>
         internal EntityMutationResult()
         {
             GuidAssignments = new ChangeTrackingDictionary<string, string>();
-            MutatedEntities = new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>();
-            PartialUpdatedEntities = new ChangeTrackingList<AtlasEntityHeader>();
+            MutatedEntities = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>>();
+            PartialUpdatedEntities = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityMutationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.EntityMutationResult"/>. </summary>
         /// <param name="guidAssignments"> A map of GUID assignments with entities. </param>
         /// <param name="mutatedEntities"> The entity headers of mutated entities. </param>
         /// <param name="partialUpdatedEntities"> An array of entity headers that partially updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityMutationResult(IDictionary<string, string> guidAssignments, IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities, IList<AtlasEntityHeader> partialUpdatedEntities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityMutationResult(IDictionary<string, string> guidAssignments, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> mutatedEntities, IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> partialUpdatedEntities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             GuidAssignments = guidAssignments;
             MutatedEntities = mutatedEntities;
@@ -41,9 +41,9 @@ namespace Azure.Analytics.Purview.DataMap
         public IDictionary<string, string> GuidAssignments { get; }
 
         /// <summary> The entity headers of mutated entities. </summary>
-        public IDictionary<string, IList<AtlasEntityHeader>> MutatedEntities { get; }
+        public IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> MutatedEntities { get; }
 
         /// <summary> An array of entity headers that partially updated. </summary>
-        public IList<AtlasEntityHeader> PartialUpdatedEntities { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> PartialUpdatedEntities { get; }
     }
 }

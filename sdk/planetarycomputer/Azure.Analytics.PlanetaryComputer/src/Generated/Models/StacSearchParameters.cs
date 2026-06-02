@@ -19,22 +19,22 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacSearchParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacSearchParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacSearchParameters"/>. </summary>
         public StacSearchParameters()
         {
             Collections = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<string>();
             BoundingBox = new ChangeTrackingList<float>();
-            ConformanceClass = new ChangeTrackingDictionary<string, BinaryData>();
-            Query = new ChangeTrackingDictionary<string, BinaryData>();
-            SortBy = new ChangeTrackingList<StacSortExtension>();
-            Fields = new ChangeTrackingList<SearchOptionsFields>();
-            Filter = new ChangeTrackingDictionary<string, BinaryData>();
+            ConformanceClass = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Query = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            SortBy = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension>();
+            Fields = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.SearchOptionsFields>();
+            Filter = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacSearchParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacSearchParameters"/>. </summary>
         /// <param name="collections"> List of collection IDs to search within. </param>
         /// <param name="ids"> List of specific item IDs to return. </param>
         /// <param name="boundingBox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
@@ -65,7 +65,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, IDictionary<string, BinaryData> filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, global::System.BinaryData> conformanceClass, IDictionary<string, global::System.BinaryData> query, IList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> sortBy, IList<global::Azure.Analytics.PlanetaryComputer.SearchOptionsFields> fields, IDictionary<string, global::System.BinaryData> filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -105,8 +105,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary>
         /// Conf
         /// Overrides datetime validation from the base request model.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -129,13 +129,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ConformanceClass { get; }
+        public IDictionary<string, global::System.BinaryData> ConformanceClass { get; }
 
         /// <summary>
         /// STAC Query
         /// See the [STAC Query Extension](https://github.com/stac-api-extensions/query).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -158,25 +158,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Query { get; }
+        public IDictionary<string, global::System.BinaryData> Query { get; }
 
         /// <summary>
         /// Sort criteria for the search results.
         /// See the [STAC Sort Extension](https://github.com/stac-api-extensions/sort).
         /// </summary>
-        public IList<StacSortExtension> SortBy { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacSortExtension> SortBy { get; }
 
         /// <summary>
         /// Specifies which fields to include or exclude in the STAC search results.
         /// See the [STAC Fields Extension](https://github.com/stac-api-extensions/fields).
         /// </summary>
-        public IList<SearchOptionsFields> Fields { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.SearchOptionsFields> Fields { get; }
 
         /// <summary>
         /// CQL2 Filter
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -199,7 +199,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Filter { get; }
+        public IDictionary<string, global::System.BinaryData> Filter { get; }
 
         /// <summary> Coordinate reference system for the filter. </summary>
         public string FilterCoordinateReferenceSystem { get; set; }

@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailDeliveryReportStatusDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
         internal AcsEmailDeliveryReportStatusDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
         /// <param name="statusMessage"> Detailed status message. </param>
         /// <param name="recipientMailServerHostName"> Recipient mail server host name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsEmailDeliveryReportStatusDetails(string statusMessage, string recipientMailServerHostName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsEmailDeliveryReportStatusDetails(string statusMessage, string recipientMailServerHostName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StatusMessage = statusMessage;
             RecipientMailServerHostName = recipientMailServerHostName;

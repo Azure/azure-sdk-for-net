@@ -11,23 +11,23 @@ namespace Azure.AI.Projects
     internal partial class InternalMemorySearchOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMemorySearchOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalMemorySearchOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         internal InternalMemorySearchOptions(string scope)
         {
             Scope = scope;
-            Items = new ChangeTrackingList<InputItem>();
+            Items = new ChangeTrackingList<global::Azure.AI.Projects.InputItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMemorySearchOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalMemorySearchOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="items"> Items for which to search for relevant memories. </param>
         /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
         /// <param name="options"> Memory search options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemorySearchOptions(string scope, IList<InputItem> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemorySearchOptions(string scope, IList<global::Azure.AI.Projects.InputItem> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         public string Scope { get; }
 
         /// <summary> Items for which to search for relevant memories. </summary>
-        public IList<InputItem> Items { get; }
+        public IList<global::Azure.AI.Projects.InputItem> Items { get; }
 
         /// <summary> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </summary>
         public string PreviousSearchId { get; }

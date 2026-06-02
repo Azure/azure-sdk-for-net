@@ -12,14 +12,14 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepSharepointToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, and <see cref="RunStepConnectedAgentToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/>.
     /// </summary>
     public abstract partial class RunStepToolCall
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         private protected RunStepToolCall(string @type, string id)
@@ -28,11 +28,11 @@ namespace Azure.AI.Agents.Persistent
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;

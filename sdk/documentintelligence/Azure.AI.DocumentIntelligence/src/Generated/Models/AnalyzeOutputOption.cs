@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Additional output to generate during analysis. </summary>
-    public readonly partial struct AnalyzeOutputOption : IEquatable<AnalyzeOutputOption>
+    public readonly partial struct AnalyzeOutputOption : IEquatable<global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption>
     {
         private readonly string _value;
         /// <summary> Generate searchable PDF output. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Generate cropped images of detected figures. </summary>
         private const string FiguresValue = "figures";
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyzeOutputOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Generate cropped images of detected figures. </summary>
         public static AnalyzeOutputOption Figures { get; } = new AnalyzeOutputOption(FiguresValue);
 
-        /// <summary> Determines if two <see cref="AnalyzeOutputOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyzeOutputOption left, AnalyzeOutputOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AnalyzeOutputOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyzeOutputOption left, AnalyzeOutputOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AnalyzeOutputOption(string value) => new AnalyzeOutputOption(value);
 
-        /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeOutputOption?(string value) => value == null ? null : new AnalyzeOutputOption(value);
+        public static implicit operator AnalyzeOutputOption?(string value) => (value == null) ? null : new AnalyzeOutputOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AnalyzeOutputOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AnalyzeOutputOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AnalyzeOutputOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnalyzeOutputOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

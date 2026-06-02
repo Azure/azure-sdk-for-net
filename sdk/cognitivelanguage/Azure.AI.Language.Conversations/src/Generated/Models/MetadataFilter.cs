@@ -15,19 +15,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class MetadataFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.MetadataFilter"/>. </summary>
         public MetadataFilter()
         {
-            Metadata = new ChangeTrackingList<MetadataRecord>();
+            Metadata = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.MetadataRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.MetadataFilter"/>. </summary>
         /// <param name="metadata"> List of metadata. </param>
         /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetadataFilter(IList<global::Azure.AI.Language.Conversations.Models.MetadataRecord> metadata, LogicalOperationKind? logicalOperation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             LogicalOperation = logicalOperation;
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> List of metadata. </summary>
-        public IList<MetadataRecord> Metadata { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.MetadataRecord> Metadata { get; }
 
         /// <summary> Operation used to join metadata filters. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }

@@ -15,28 +15,28 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeSourceStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatistics"/>. </summary>
         /// <param name="totalSynchronization"> Total number of synchronizations. </param>
         /// <param name="averageSynchronizationDuration"> Average synchronization duration in HH:MM:SS format. </param>
         /// <param name="averageItemsProcessedPerSynchronization"> Average items processed per synchronization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="averageSynchronizationDuration"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="averageSynchronizationDuration"/> is null. </exception>
         public KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization)
         {
-            Argument.AssertNotNull(averageSynchronizationDuration, nameof(averageSynchronizationDuration));
+            global::Azure.Search.Documents.Argument.AssertNotNull(averageSynchronizationDuration, nameof(averageSynchronizationDuration));
 
             TotalSynchronization = totalSynchronization;
             AverageSynchronizationDuration = averageSynchronizationDuration;
             AverageItemsProcessedPerSynchronization = averageItemsProcessedPerSynchronization;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatistics"/>. </summary>
         /// <param name="totalSynchronization"> Total number of synchronizations. </param>
         /// <param name="averageSynchronizationDuration"> Average synchronization duration in HH:MM:SS format. </param>
         /// <param name="averageItemsProcessedPerSynchronization"> Average items processed per synchronization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceStatistics(int totalSynchronization, string averageSynchronizationDuration, int averageItemsProcessedPerSynchronization, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TotalSynchronization = totalSynchronization;
             AverageSynchronizationDuration = averageSynchronizationDuration;

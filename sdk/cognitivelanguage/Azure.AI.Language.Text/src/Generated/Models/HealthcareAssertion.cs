@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text
     public partial class HealthcareAssertion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareAssertion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareAssertion"/>. </summary>
         internal HealthcareAssertion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareAssertion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareAssertion"/>. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <param name="temporality"> Describes temporal information regarding the entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareAssertion(HealthcareAssertionConditionality? conditionality, HealthcareAssertionCertainty? certainty, HealthcareAssertionAssociation? association, HealthcareAssertionTemporality? temporality, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareAssertion(HealthcareAssertionConditionality? conditionality, HealthcareAssertionCertainty? certainty, HealthcareAssertionAssociation? association, HealthcareAssertionTemporality? temporality, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Conditionality = conditionality;
             Certainty = certainty;

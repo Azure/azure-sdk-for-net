@@ -13,12 +13,12 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a computer use action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClickAction"/>, <see cref="DoubleClickAction"/>, <see cref="DragAction"/>, <see cref="KeyPressAction"/>, <see cref="MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="ScrollAction"/>, <see cref="TypeAction"/>, and <see cref="WaitAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.ClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DoubleClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DragAction"/>, <see cref="Azure.AI.Agents.Persistent.KeyPressAction"/>, <see cref="Azure.AI.Agents.Persistent.MoveAction"/>, <see cref="Azure.AI.Agents.Persistent.ScreenshotAction"/>, <see cref="Azure.AI.Agents.Persistent.ScrollAction"/>, <see cref="Azure.AI.Agents.Persistent.TypeAction"/>, and <see cref="Azure.AI.Agents.Persistent.WaitAction"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownComputerUseAction))]
-    public abstract partial class ComputerUseAction : IJsonModel<ComputerUseAction>
+    [PersistableModelProxyAttribute(typeof(UnknownComputerUseAction))]
+    public abstract partial class ComputerUseAction : IJsonModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputerUseAction"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseAction"/> for deserialization. </summary>
         internal ComputerUseAction()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ComputerUseAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputerUseAction(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.ComputerUseAction.DeserializeComputerUseAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputerUseAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerUseAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputerUseAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerUseAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputerUseAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputerUseAction IPersistableModel<ComputerUseAction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputerUseAction IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputerUseAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputerUseAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ComputerUseAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerUseAction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputerUseAction IJsonModel<ComputerUseAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputerUseAction IJsonModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ComputerUseAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ComputerUseAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ComputerUseAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ComputerUseAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputerUseAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.ComputerUseAction.DeserializeComputerUseAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ComputerUseAction DeserializeComputerUseAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,26 +130,26 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "click":
-                        return ClickAction.DeserializeClickAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.ClickAction.DeserializeClickAction(element, options);
                     case "double_click":
-                        return DoubleClickAction.DeserializeDoubleClickAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.DoubleClickAction.DeserializeDoubleClickAction(element, options);
                     case "drag":
-                        return DragAction.DeserializeDragAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.DragAction.DeserializeDragAction(element, options);
                     case "keypress":
-                        return KeyPressAction.DeserializeKeyPressAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.KeyPressAction.DeserializeKeyPressAction(element, options);
                     case "move":
-                        return MoveAction.DeserializeMoveAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.MoveAction.DeserializeMoveAction(element, options);
                     case "screenshot":
-                        return ScreenshotAction.DeserializeScreenshotAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.ScreenshotAction.DeserializeScreenshotAction(element, options);
                     case "scroll":
-                        return ScrollAction.DeserializeScrollAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.ScrollAction.DeserializeScrollAction(element, options);
                     case "type":
-                        return TypeAction.DeserializeTypeAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.TypeAction.DeserializeTypeAction(element, options);
                     case "wait":
-                        return WaitAction.DeserializeWaitAction(element, options);
+                        return global::Azure.AI.Agents.Persistent.WaitAction.DeserializeWaitAction(element, options);
                 }
             }
-            return UnknownComputerUseAction.DeserializeUnknownComputerUseAction(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownComputerUseAction.DeserializeUnknownComputerUseAction(element, options);
         }
     }
 }

@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class VMExtension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VMExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="type"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="type"/> is null. </exception>
         public VMExtension(string name, string publisher, string @type)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(@type, nameof(@type));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(publisher, nameof(publisher));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(@type, nameof(@type));
 
             Name = name;
             Publisher = publisher;
@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VMExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMExtension(string name, string publisher, string @type, string typeHandlerVersion, bool? isMinorVersionAutoUpgradeEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMExtension(string name, string publisher, string @type, string typeHandlerVersion, bool? isMinorVersionAutoUpgradeEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Publisher = publisher;

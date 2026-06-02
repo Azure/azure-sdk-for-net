@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NotDiscriminatedClientHostExtensions
     {
         public static IClientBuilder AddNotDiscriminatedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNotDiscriminatedClient(this IHostApplicationBuilder host, string sectionName, Action<NotDiscriminatedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNotDiscriminatedClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Inheritance.NotDiscriminated.NotDiscriminatedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNotDiscriminatedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNotDiscriminatedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NotDiscriminatedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNotDiscriminatedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Inheritance.NotDiscriminated.NotDiscriminatedClientSettings> configureSettings) => throw null;
     }
 }

@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class SearchTaxonomySetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchTaxonomySetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchTaxonomySetting"/>. </summary>
         public SearchTaxonomySetting()
         {
             AssetTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchTaxonomySetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchTaxonomySetting"/>. </summary>
         /// <param name="assetTypes"> Asset types. </param>
         /// <param name="facet"> The content of a search facet result item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchTaxonomySetting(IList<string> assetTypes, SearchFacetItem facet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchTaxonomySetting(IList<string> assetTypes, SearchFacetItem facet, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssetTypes = assetTypes;
             Facet = facet;

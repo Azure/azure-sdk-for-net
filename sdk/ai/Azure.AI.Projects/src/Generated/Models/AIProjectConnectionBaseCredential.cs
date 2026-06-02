@@ -9,22 +9,22 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// A base class for connection credentials
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityPreviewCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.AIProjectConnectionApiKeyCredential"/>, <see cref="Azure.AI.Projects.AIProjectConnectionEntraIdCredential"/>, <see cref="Azure.AI.Projects.AIProjectConnectionCustomCredential"/>, <see cref="Azure.AI.Projects.AIProjectConnectionSasCredential"/>, <see cref="Azure.AI.Projects.NoAuthenticationCredentials"/>, and <see cref="Azure.AI.Projects.AgenticIdentityPreviewCredentials"/>.
     /// </summary>
     public abstract partial class AIProjectConnectionBaseCredential
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionBaseCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionBaseCredential"/>. </summary>
         private protected AIProjectConnectionBaseCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionBaseCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionBaseCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectConnectionBaseCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectConnectionBaseCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

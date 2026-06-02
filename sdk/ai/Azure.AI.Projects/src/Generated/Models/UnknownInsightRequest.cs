@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownInsightRequest : InsightRequest
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownInsightRequest(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -15,29 +15,29 @@ namespace Azure.Communication.Messages.Models.Channels
     /// <summary> The WhatsApp-specific template response contract. </summary>
     public partial class WhatsAppMessageTemplateItem : MessageTemplateItem
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal WhatsAppMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status, CommunicationMessagesChannel.WhatsApp)
+        internal WhatsAppMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status, global::Azure.Communication.Messages.CommunicationMessagesChannel.WhatsApp)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> WhatsApp platform's template content. This is the payload returned from WhatsApp API. </param>
-        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData content) : base(name, language, status, kind, additionalBinaryDataProperties)
+        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BinaryData content) : base(name, language, status, kind, additionalBinaryDataProperties)
         {
             Content = content;
         }
 
         /// <summary>
         /// WhatsApp platform's template content. This is the payload returned from WhatsApp API.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

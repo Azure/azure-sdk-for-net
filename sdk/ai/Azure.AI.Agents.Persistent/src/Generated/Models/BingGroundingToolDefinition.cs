@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
     public partial class BingGroundingToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingGroundingToolDefinition"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
         public BingGroundingToolDefinition(BingGroundingSearchToolParameters bingGrounding) : base("bing_grounding")
         {
-            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
 
             BingGrounding = bingGrounding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingGroundingToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal BingGroundingToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
+        internal BingGroundingToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
         {
             BingGrounding = bingGrounding;
         }

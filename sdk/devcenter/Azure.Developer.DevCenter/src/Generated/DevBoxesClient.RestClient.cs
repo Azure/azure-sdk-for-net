@@ -37,19 +37,19 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/pools", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, string projectName, RequestContext context)
+        internal HttpMessage CreateNextGetPoolsRequest(global::System.Uri nextPage, string projectName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -58,16 +58,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -80,14 +80,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(projectName, true);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -101,19 +101,19 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSchedulesRequest(Uri nextPage, string projectName, string poolName, RequestContext context)
+        internal HttpMessage CreateNextGetSchedulesRequest(global::System.Uri nextPage, string projectName, string poolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -122,16 +122,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -146,14 +146,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(scheduleName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -163,19 +163,19 @@ namespace Azure.Developer.DevCenter
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/devboxes", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllDevBoxesRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetAllDevBoxesRequest(global::System.Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -184,16 +184,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -205,19 +205,19 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllDevBoxesByUserRequest(Uri nextPage, string userId, RequestContext context)
+        internal HttpMessage CreateNextGetAllDevBoxesByUserRequest(global::System.Uri nextPage, string userId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -226,16 +226,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -249,19 +249,19 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDevBoxesRequest(Uri nextPage, string projectName, string userId, RequestContext context)
+        internal HttpMessage CreateNextGetDevBoxesRequest(global::System.Uri nextPage, string projectName, string userId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -270,16 +270,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -294,14 +294,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -316,14 +316,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -340,14 +340,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -363,14 +363,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath(":start", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -386,18 +386,18 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath(":stop", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (hibernate != null)
+            if ((hibernate != null))
             {
-                uri.AppendQuery("hibernate", TypeFormatters.ConvertToString(hibernate), true);
+                uri.AppendQuery("hibernate", global::Azure.Developer.DevCenter.TypeFormatters.ConvertToString(hibernate), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -413,14 +413,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath(":restart", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -436,14 +436,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath("/remoteConnection", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -459,19 +459,19 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath("/actions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDevBoxActionsRequest(Uri nextPage, string projectName, string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateNextGetDevBoxActionsRequest(global::System.Uri nextPage, string projectName, string userId, string devBoxName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -480,16 +480,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -506,14 +506,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(devBoxName, true);
             uri.AppendPath("/actions/", false);
             uri.AppendPath(actionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -531,14 +531,14 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/actions/", false);
             uri.AppendPath(actionName, true);
             uri.AppendPath(":skip", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
 
@@ -555,15 +555,15 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/actions/", false);
             uri.AppendPath(actionName, true);
             uri.AppendPath(":delay", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("until", TypeFormatters.ConvertToString(delayUntil, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("until", global::Azure.Developer.DevCenter.TypeFormatters.ConvertToString(delayUntil, global::Azure.Developer.DevCenter.SerializationFormat.DateTime_RFC3339), true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -579,20 +579,20 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath("/actions:delay", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("until", TypeFormatters.ConvertToString(delayUntil, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("until", global::Azure.Developer.DevCenter.TypeFormatters.ConvertToString(delayUntil, global::Azure.Developer.DevCenter.SerializationFormat.DateTime_RFC3339), true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextDelayAllActionsRequest(Uri nextPage, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        internal HttpMessage CreateNextDelayAllActionsRequest(global::System.Uri nextPage, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -601,16 +601,16 @@ namespace Azure.Developer.DevCenter
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

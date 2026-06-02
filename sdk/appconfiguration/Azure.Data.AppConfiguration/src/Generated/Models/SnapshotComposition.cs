@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Composition types. </summary>
-    public readonly partial struct SnapshotComposition : IEquatable<SnapshotComposition>
+    public readonly partial struct SnapshotComposition : IEquatable<global::Azure.Data.AppConfiguration.SnapshotComposition>
     {
         private readonly string _value;
         /// <summary> The 'key' composition type. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The 'key_label' composition type. </summary>
         private const string KeyLabelValue = "key_label";
 
-        /// <summary> Initializes a new instance of <see cref="SnapshotComposition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.SnapshotComposition"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotComposition(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The 'key_label' composition type. </summary>
         public static SnapshotComposition KeyLabel { get; } = new SnapshotComposition(KeyLabelValue);
 
-        /// <summary> Determines if two <see cref="SnapshotComposition"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.SnapshotComposition"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotComposition left, SnapshotComposition right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SnapshotComposition"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.SnapshotComposition"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotComposition left, SnapshotComposition right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SnapshotComposition"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.SnapshotComposition"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SnapshotComposition(string value) => new SnapshotComposition(value);
 
-        /// <summary> Converts a string to a <see cref="SnapshotComposition"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.SnapshotComposition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotComposition?(string value) => value == null ? null : new SnapshotComposition(value);
+        public static implicit operator SnapshotComposition?(string value) => (value == null) ? null : new SnapshotComposition(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SnapshotComposition other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SnapshotComposition other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SnapshotComposition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SnapshotComposition other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

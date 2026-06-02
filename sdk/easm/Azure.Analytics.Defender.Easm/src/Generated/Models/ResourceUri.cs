@@ -14,15 +14,15 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ResourceUri
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceUri"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ResourceUri"/>. </summary>
         internal ResourceUri()
         {
-            Resources = new ChangeTrackingList<DependentResource>();
+            Resources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DependentResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceUri"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ResourceUri"/>. </summary>
         /// <param name="url"></param>
         /// <param name="resources"></param>
         /// <param name="firstSeen"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceUri(Uri url, IList<DependentResource> resources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceUri(global::System.Uri url, IList<global::Azure.Analytics.Defender.Easm.DependentResource> resources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Url = url;
             Resources = resources;
@@ -42,10 +42,10 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Gets the Url. </summary>
-        public Uri Url { get; }
+        public global::System.Uri Url { get; }
 
         /// <summary> Gets the Resources. </summary>
-        public IList<DependentResource> Resources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DependentResource> Resources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }

@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerExecutionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult"/>. </summary>
         internal IndexerExecutionResult()
         {
-            Errors = new ChangeTrackingList<SearchIndexerError>();
-            Warnings = new ChangeTrackingList<SearchIndexerWarning>();
+            Errors = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerError>();
+            Warnings = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerWarning>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="statusDetail"> The outcome of this indexer execution. </param>
         /// <param name="mode"> The mode the indexer is running in. </param>
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors, IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetail = statusDetail;
@@ -74,10 +74,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public DateTimeOffset? EndTime { get; }
 
         /// <summary> The item-level indexing errors. </summary>
-        public IReadOnlyList<SearchIndexerError> Errors { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerError> Errors { get; }
 
         /// <summary> The item-level indexing warnings. </summary>
-        public IReadOnlyList<SearchIndexerWarning> Warnings { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> Warnings { get; }
 
         /// <summary> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </summary>
         public int ItemCount { get; }

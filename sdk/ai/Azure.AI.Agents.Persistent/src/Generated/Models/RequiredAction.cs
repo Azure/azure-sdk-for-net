@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a required action for an agent thread run to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="SubmitToolApprovalAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.SubmitToolOutputsAction"/> and <see cref="Azure.AI.Agents.Persistent.SubmitToolApprovalAction"/>.
     /// </summary>
     public abstract partial class RequiredAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RequiredAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredAction"/>. </summary>
         /// <param name="type"> The object type. </param>
         private protected RequiredAction(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequiredAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredAction"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequiredAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequiredAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

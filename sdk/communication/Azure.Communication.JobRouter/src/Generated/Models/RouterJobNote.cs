@@ -14,13 +14,13 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobNote
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobNote"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobNote"/>. </summary>
         /// <param name="message"> The message contained in the note. </param>
         /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterJobNote(string message, DateTimeOffset? addedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterJobNote(string message, DateTimeOffset? addedAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             AddedAt = addedAt;

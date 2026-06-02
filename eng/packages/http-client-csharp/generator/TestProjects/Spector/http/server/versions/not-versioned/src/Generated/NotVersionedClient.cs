@@ -18,39 +18,39 @@ namespace Server.Versions.NotVersioned
     {
         protected NotVersionedClient() => throw null;
 
-        public NotVersionedClient(Uri endpoint) : this(endpoint, new NotVersionedClientOptions()) => throw null;
+        public NotVersionedClient(global::System.Uri endpoint) : this(endpoint, new NotVersionedClientOptions()) => throw null;
 
-        internal NotVersionedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NotVersionedClientOptions options) => throw null;
+        internal NotVersionedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NotVersionedClientOptions options) => throw null;
 
-        public NotVersionedClient(Uri endpoint, NotVersionedClientOptions options) : this(null, endpoint, options) => throw null;
+        public NotVersionedClient(global::System.Uri endpoint, NotVersionedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NotVersionedClient(NotVersionedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NotVersionedClient(NotVersionedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithoutApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithoutApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithoutApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response WithoutApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithQueryApiVersion(string apiVersion, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryApiVersionAsync(string apiVersion, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryApiVersionAsync(string apiVersion, RequestContext context) => throw null;
 
         public virtual Response WithQueryApiVersion(string apiVersion, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryApiVersionAsync(string apiVersion, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryApiVersionAsync(string apiVersion, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithPathApiVersion(string apiVersion, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithPathApiVersionAsync(string apiVersion, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithPathApiVersionAsync(string apiVersion, RequestContext context) => throw null;
 
         public virtual Response WithPathApiVersion(string apiVersion, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithPathApiVersionAsync(string apiVersion, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithPathApiVersionAsync(string apiVersion, CancellationToken cancellationToken = default) => throw null;
     }
 }

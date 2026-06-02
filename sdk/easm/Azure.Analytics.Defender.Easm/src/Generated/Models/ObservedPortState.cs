@@ -13,12 +13,12 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedPortState. </summary>
     public partial class ObservedPortState : ObservedValue
     {
-        /// <summary> Initializes a new instance of <see cref="ObservedPortState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedPortState"/>. </summary>
         internal ObservedPortState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservedPortState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedPortState"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="port"></param>
-        internal ObservedPortState(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedPortStateValue? value, int? port) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
+        internal ObservedPortState(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ObservedPortStateValue? value, int? port) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             Value = value;
             Port = port;

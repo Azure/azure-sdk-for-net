@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the agent instance. </param>
         /// <param name="clientId"> The client ID of the agent instance. Also referred to as the instance ID. </param>
         internal AgentIdentity(string principalId, string clientId)
@@ -22,11 +22,11 @@ namespace Azure.AI.Projects.Agents
             ClientId = clientId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the agent instance. </param>
         /// <param name="clientId"> The client ID of the agent instance. Also referred to as the instance ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentity(string principalId, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIdentity(string principalId, string clientId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ClientId = clientId;

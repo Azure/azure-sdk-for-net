@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> The result of validating an experiment metric. </summary>
-    public partial class ExperimentMetricValidationResult : IJsonModel<ExperimentMetricValidationResult>
+    public partial class ExperimentMetricValidationResult : IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricValidationResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult"/> for deserialization. </summary>
         internal ExperimentMetricValidationResult()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetricValidationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExperimentMetricValidationResult(document.RootElement, options);
+                        return global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult.DeserializeExperimentMetricValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetricValidationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetricValidationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExperimentMetricValidationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetricValidationResult IPersistableModel<ExperimentMetricValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExperimentMetricValidationResult IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExperimentMetricValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExperimentMetricValidationResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult"/> from. </param>
         public static explicit operator ExperimentMetricValidationResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExperimentMetricValidationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult.DeserializeExperimentMetricValidationResult(document.RootElement, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExperimentMetricValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,24 +81,24 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetricValidationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("isValid"u8);
             writer.WriteBooleanValue(IsValid);
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
                 foreach (DiagnosticDetail item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DiagnosticDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.Analytics.OnlineExperimentation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,32 +117,32 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetricValidationResult IJsonModel<ExperimentMetricValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExperimentMetricValidationResult IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetricValidationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetricValidationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExperimentMetricValidationResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult.DeserializeExperimentMetricValidationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExperimentMetricValidationResult DeserializeExperimentMetricValidationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             bool isValid = default;
-            IReadOnlyList<DiagnosticDetail> diagnostics = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail> diagnostics = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("isValid"u8))
@@ -152,17 +152,17 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("diagnostics"u8))
                 {
-                    List<DiagnosticDetail> array = new List<DiagnosticDetail>();
+                    List<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail> array = new List<global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticDetail.DeserializeDiagnosticDetail(item, options));
+                        array.Add(global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail.DeserializeDiagnosticDetail(item, options));
                     }
                     diagnostics = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExperimentMetricValidationResult(isValid, diagnostics, additionalBinaryDataProperties);

@@ -9,24 +9,24 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InvokeAgentResponsesApiRoutineAction"/> and <see cref="InvokeAgentInvocationsApiRoutineAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.InvokeAgentResponsesApiRoutineAction"/> and <see cref="Azure.AI.Projects.InvokeAgentInvocationsApiRoutineAction"/>.
     /// </summary>
     public abstract partial class RoutineAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         private protected RoutineAction(RoutineActionType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineAction(RoutineActionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The object containing the analyze job LRO job state. </summary>
-    public partial class AnalyzeTextJobState : IJsonModel<AnalyzeTextJobState>
+    public partial class AnalyzeTextJobState : IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextJobState"/> for deserialization. </summary>
         internal AnalyzeTextJobState()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextJobState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeTextJobState(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextJobState)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextJobState)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeTextJobState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextJobState IPersistableModel<AnalyzeTextJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeTextJobState IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeTextJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnalyzeTextJobState"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Language.Text.AnalyzeTextJobState"/> from. </param>
         public static explicit operator AnalyzeTextJobState(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAnalyzeTextJobState(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Language.Text.AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement, global::Azure.AI.Language.Text.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeTextJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,24 +81,24 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextJobState)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("createdDateTime"u8);
             writer.WriteStringValue(CreatedAt, "O");
-            if (Optional.IsDefined(ExpiresOn))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
@@ -107,29 +107,29 @@ namespace Azure.AI.Language.Text
             writer.WriteStringValue(LastUpdatedAt, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Errors))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (AnalyzeTextError item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AnalyzeTextError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Tasks, options);
-            if (Optional.IsDefined(Statistics))
+            writer.WriteObjectValue<TextActions>(Tasks, options);
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<RequestStatistics>(Statistics, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -137,9 +137,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -148,26 +148,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextJobState IJsonModel<AnalyzeTextJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeTextJobState IJsonModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextJobState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AnalyzeTextJobState)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextJobState(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -177,11 +177,11 @@ namespace Azure.AI.Language.Text
             Guid jobId = default;
             DateTimeOffset lastUpdatedAt = default;
             TextActionState status = default;
-            IList<AnalyzeTextError> errors = default;
+            IList<global::Azure.AI.Language.Text.AnalyzeTextError> errors = default;
             string nextLink = default;
             TextActions tasks = default;
             RequestStatistics statistics = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("displayName"u8))
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -220,14 +220,14 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("errors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AnalyzeTextError> array = new List<AnalyzeTextError>();
+                    List<global::Azure.AI.Language.Text.AnalyzeTextError> array = new List<global::Azure.AI.Language.Text.AnalyzeTextError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextError.DeserializeAnalyzeTextError(item, options));
+                        array.Add(global::Azure.AI.Language.Text.AnalyzeTextError.DeserializeAnalyzeTextError(item, options));
                     }
                     errors = array;
                     continue;
@@ -239,21 +239,21 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("tasks"u8))
                 {
-                    tasks = TextActions.DeserializeTextActions(prop.Value, options);
+                    tasks = global::Azure.AI.Language.Text.TextActions.DeserializeTextActions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
+                    statistics = global::Azure.AI.Language.Text.RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnalyzeTextJobState(
@@ -263,7 +263,7 @@ namespace Azure.AI.Language.Text
                 jobId,
                 lastUpdatedAt,
                 status,
-                errors ?? new ChangeTrackingList<AnalyzeTextError>(),
+                (errors ?? new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextError>()),
                 nextLink,
                 tasks,
                 statistics,

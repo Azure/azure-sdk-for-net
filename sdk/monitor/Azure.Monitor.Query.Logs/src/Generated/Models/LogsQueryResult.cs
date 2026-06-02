@@ -15,11 +15,11 @@ namespace Azure.Monitor.Query.Logs.Models
     public partial class LogsQueryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsQueryResult"/>. </summary>
         /// <param name="allTables"> The results of the query in tabular format. </param>
-        internal LogsQueryResult(IEnumerable<LogsTable> allTables)
+        internal LogsQueryResult(IEnumerable<global::Azure.Monitor.Query.Logs.Models.LogsTable> allTables)
         {
             AllTables = allTables.ToList();
         }

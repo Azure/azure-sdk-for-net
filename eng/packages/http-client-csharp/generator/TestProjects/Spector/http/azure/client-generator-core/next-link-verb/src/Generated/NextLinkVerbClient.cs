@@ -15,23 +15,23 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
     public partial class NextLinkVerbClient
     {
-        public NextLinkVerbClient() : this(new Uri("http://localhost:3000"), new NextLinkVerbClientOptions()) => throw null;
+        public NextLinkVerbClient() : this(new global::System.Uri("http://localhost:3000"), new NextLinkVerbClientOptions()) => throw null;
 
-        internal NextLinkVerbClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NextLinkVerbClientOptions options) => throw null;
+        internal NextLinkVerbClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NextLinkVerbClientOptions options) => throw null;
 
-        public NextLinkVerbClient(Uri endpoint, NextLinkVerbClientOptions options) : this(null, endpoint, options) => throw null;
+        public NextLinkVerbClient(global::System.Uri endpoint, NextLinkVerbClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NextLinkVerbClient(NextLinkVerbClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NextLinkVerbClient(NextLinkVerbClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetItems(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetItems(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetItemsAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetItemsAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<Test> GetItems(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test> GetItems(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Test> GetItemsAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test> GetItemsAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

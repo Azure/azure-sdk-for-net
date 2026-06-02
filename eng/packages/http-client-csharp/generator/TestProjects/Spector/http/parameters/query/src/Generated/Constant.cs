@@ -17,16 +17,16 @@ namespace Parameters.Query
     {
         protected Constant() => throw null;
 
-        internal Constant(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Constant(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Post(RequestContext context) => throw null;
 
-        public virtual Task<Response> PostAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PostAsync(RequestContext context) => throw null;
 
         public virtual Response Post(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

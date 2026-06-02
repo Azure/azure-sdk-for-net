@@ -13,11 +13,11 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A representation of image file content in a thread message. </summary>
     public partial class MessageImageFileContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageImageFileContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The image file for this thread message content item. </param>
-        internal MessageImageFileContent(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMessageImageFileDetails internalDetails) : base(@type, additionalBinaryDataProperties)
+        internal MessageImageFileContent(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InternalMessageImageFileDetails internalDetails) : base(@type, additionalBinaryDataProperties)
         {
             InternalDetails = internalDetails;
         }

@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class TagScoringParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TagScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TagScoringParameters"/>. </summary>
         /// <param name="tagsParameter"> The name of the parameter passed in search queries to specify the list of tags to compare against the target field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tagsParameter"/> is null. </exception>
         public TagScoringParameters(string tagsParameter)
         {
-            Argument.AssertNotNull(tagsParameter, nameof(tagsParameter));
+            global::Azure.Search.Documents.Argument.AssertNotNull(tagsParameter, nameof(tagsParameter));
 
             TagsParameter = tagsParameter;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TagScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TagScoringParameters"/>. </summary>
         /// <param name="tagsParameter"> The name of the parameter passed in search queries to specify the list of tags to compare against the target field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagScoringParameters(string tagsParameter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TagScoringParameters(string tagsParameter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TagsParameter = tagsParameter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

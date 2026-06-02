@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Lro.Rpc
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RpcClientHostExtensions
     {
         public static IClientBuilder AddRpcClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRpcClient(this IHostApplicationBuilder host, string sectionName, Action<RpcClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRpcClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Lro.Rpc.RpcClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRpcClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRpcClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RpcClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRpcClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Lro.Rpc.RpcClientSettings> configureSettings) => throw null;
     }
 }

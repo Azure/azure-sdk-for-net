@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A vector store is a collection of processed files can be used by the `file_search` tool. </summary>
-    public partial class PersistentAgentsVectorStore : IJsonModel<PersistentAgentsVectorStore>
+    public partial class PersistentAgentsVectorStore : IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>
     {
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsVectorStore"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore"/> for deserialization. </summary>
         internal PersistentAgentsVectorStore()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PersistentAgentsVectorStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePersistentAgentsVectorStore(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentsVectorStore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentsVectorStore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PersistentAgentsVectorStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PersistentAgentsVectorStore IPersistableModel<PersistentAgentsVectorStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PersistentAgentsVectorStore IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PersistentAgentsVectorStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PersistentAgentsVectorStore"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore"/> from. </param>
         public static explicit operator PersistentAgentsVectorStore(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePersistentAgentsVectorStore(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(document.RootElement, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PersistentAgentsVectorStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,15 +81,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PersistentAgentsVectorStore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(this.Object.ToString());
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("name"u8);
@@ -97,20 +97,20 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("usage_bytes"u8);
             writer.WriteNumberValue(UsageBytes);
             writer.WritePropertyName("file_counts"u8);
-            writer.WriteObjectValue(FileCounts, options);
+            writer.WriteObjectValue<VectorStoreFileCount>(FileCounts, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(ExpiresAfter))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expires_after"u8);
-                writer.WriteObjectValue(ExpiresAfter, options);
+                writer.WriteObjectValue<VectorStoreExpirationPolicy>(ExpiresAfter, options);
             }
-            if (Optional.IsDefined(ExpiresAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(ExpiresAt))
             {
                 writer.WritePropertyName("expires_at"u8);
                 writer.WriteNumberValue(ExpiresAt.Value, "U");
             }
-            if (Optional.IsDefined(LastActiveAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(LastActiveAt))
             {
                 writer.WritePropertyName("last_active_at"u8);
                 writer.WriteNumberValue(LastActiveAt.Value, "U");
@@ -119,14 +119,14 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("last_active_at"u8);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("metadata"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -147,9 +147,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -158,26 +158,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PersistentAgentsVectorStore IJsonModel<PersistentAgentsVectorStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PersistentAgentsVectorStore IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PersistentAgentsVectorStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PersistentAgentsVectorStore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePersistentAgentsVectorStore(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PersistentAgentsVectorStore DeserializePersistentAgentsVectorStore(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -192,7 +192,7 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? expiresAt = default;
             DateTimeOffset? lastActiveAt = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -207,7 +207,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -222,7 +222,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("file_counts"u8))
                 {
-                    fileCounts = VectorStoreFileCount.DeserializeVectorStoreFileCount(prop.Value, options);
+                    fileCounts = global::Azure.AI.Agents.Persistent.VectorStoreFileCount.DeserializeVectorStoreFileCount(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -232,36 +232,36 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("expires_after"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    expiresAfter = VectorStoreExpirationPolicy.DeserializeVectorStoreExpirationPolicy(prop.Value, options);
+                    expiresAfter = global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy.DeserializeVectorStoreExpirationPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("expires_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         expiresAt = null;
                         continue;
                     }
-                    expiresAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    expiresAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("last_active_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         lastActiveAt = null;
                         continue;
                     }
-                    lastActiveAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    lastActiveAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
@@ -269,7 +269,7 @@ namespace Azure.AI.Agents.Persistent
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -281,9 +281,9 @@ namespace Azure.AI.Agents.Persistent
                     metadata = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PersistentAgentsVectorStore(

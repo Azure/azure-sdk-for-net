@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseReasoningGenerateSummary value) => value switch
         {
-            ResponseReasoningGenerateSummary.Auto => "auto",
-            ResponseReasoningGenerateSummary.Concise => "concise",
-            ResponseReasoningGenerateSummary.Detailed => "detailed",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Concise => "concise",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Detailed => "detailed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningGenerateSummary value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseReasoningGenerateSummary ToResponseReasoningGenerateSummary(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ResponseReasoningGenerateSummary.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "concise"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "concise"))
             {
-                return ResponseReasoningGenerateSummary.Concise;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Concise;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "detailed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "detailed"))
             {
-                return ResponseReasoningGenerateSummary.Detailed;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningGenerateSummary.Detailed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningGenerateSummary value.");
         }

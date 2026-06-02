@@ -14,23 +14,23 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class ObservedEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObservedEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ObservedEvent"/>. </summary>
         /// <param name="eventName"> The name of the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public ObservedEvent(string eventName)
         {
-            Argument.AssertNotNull(eventName, nameof(eventName));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(eventName, nameof(eventName));
 
             EventName = eventName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservedEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ObservedEvent"/>. </summary>
         /// <param name="eventName"> The name of the event. </param>
         /// <param name="filter"> [Optional] A condition to filter events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObservedEvent(string eventName, string filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObservedEvent(string eventName, string filter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EventName = eventName;
             Filter = filter;

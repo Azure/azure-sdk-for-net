@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public partial class Siamese : Cat, IJsonModel<Siamese>
+    public partial class Siamese : Cat, IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>
     {
         internal Siamese() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Siamese>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Siamese IPersistableModel<Siamese>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Siamese IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Siamese>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="siamese"> The <see cref="Siamese"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="siamese"> The <see cref="global::_Type.Model.Inheritance.NotDiscriminated.Siamese"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Siamese siamese) => throw null;
 
         public static explicit operator Siamese(Response response) => throw null;
 
-        void IJsonModel<Siamese>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Siamese IJsonModel<Siamese>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Siamese IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

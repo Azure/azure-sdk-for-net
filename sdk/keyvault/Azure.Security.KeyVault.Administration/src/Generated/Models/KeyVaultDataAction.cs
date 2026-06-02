@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Supported permissions for data actions. </summary>
-    public readonly partial struct KeyVaultDataAction : IEquatable<KeyVaultDataAction>
+    public readonly partial struct KeyVaultDataAction : IEquatable<global::Azure.Security.KeyVault.Administration.KeyVaultDataAction>
     {
         private readonly string _value;
         /// <summary> Read HSM key metadata. </summary>
@@ -83,12 +83,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Generate random numbers. </summary>
         private const string RandomNumbersGenerateValue = "Microsoft.KeyVault/managedHsm/rng/action";
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultDataAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultDataAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Security.KeyVault.Administration.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -195,34 +195,34 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Generate random numbers. </summary>
         public static KeyVaultDataAction RandomNumbersGenerate { get; } = new KeyVaultDataAction(RandomNumbersGenerateValue);
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultDataAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultDataAction left, KeyVaultDataAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultDataAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultDataAction left, KeyVaultDataAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultDataAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultDataAction(string value) => new KeyVaultDataAction(value);
 
-        /// <summary> Converts a string to a <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultDataAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultDataAction?(string value) => value == null ? null : new KeyVaultDataAction(value);
+        public static implicit operator KeyVaultDataAction?(string value) => (value == null) ? null : new KeyVaultDataAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KeyVaultDataAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is KeyVaultDataAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(KeyVaultDataAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyVaultDataAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

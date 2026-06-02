@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Union
 {
-    public partial class EnumsOnlyCases : IJsonModel<EnumsOnlyCases>
+    public partial class EnumsOnlyCases : IJsonModel<global::_Type.Union.EnumsOnlyCases>
     {
         internal EnumsOnlyCases() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Union
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<EnumsOnlyCases>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Union.EnumsOnlyCases>.Write(ModelReaderWriterOptions options) => throw null;
 
-        EnumsOnlyCases IPersistableModel<EnumsOnlyCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        EnumsOnlyCases IPersistableModel<global::_Type.Union.EnumsOnlyCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<EnumsOnlyCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Union.EnumsOnlyCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<EnumsOnlyCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Union.EnumsOnlyCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        EnumsOnlyCases IJsonModel<EnumsOnlyCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        EnumsOnlyCases IJsonModel<global::_Type.Union.EnumsOnlyCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual EnumsOnlyCases JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode.Bytes
 {
-    public partial class Base64urlArrayBytesProperty : IJsonModel<Base64urlArrayBytesProperty>
+    public partial class Base64urlArrayBytesProperty : IJsonModel<global::Encode.Bytes.Base64urlArrayBytesProperty>
     {
         internal Base64urlArrayBytesProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode.Bytes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Base64urlArrayBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode.Bytes.Base64urlArrayBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Base64urlArrayBytesProperty IPersistableModel<Base64urlArrayBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Base64urlArrayBytesProperty IPersistableModel<global::Encode.Bytes.Base64urlArrayBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Base64urlArrayBytesProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode.Bytes.Base64urlArrayBytesProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="base64urlArrayBytesProperty"> The <see cref="Base64urlArrayBytesProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="base64urlArrayBytesProperty"> The <see cref="global::Encode.Bytes.Base64urlArrayBytesProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Base64urlArrayBytesProperty base64urlArrayBytesProperty) => throw null;
 
         public static explicit operator Base64urlArrayBytesProperty(Response response) => throw null;
 
-        void IJsonModel<Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode.Bytes.Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Base64urlArrayBytesProperty IJsonModel<Base64urlArrayBytesProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Base64urlArrayBytesProperty IJsonModel<global::Encode.Bytes.Base64urlArrayBytesProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Base64urlArrayBytesProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

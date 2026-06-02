@@ -15,15 +15,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingParametersConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration"/>. </summary>
         /// <param name="parsingMode"> Represents the parsing mode for indexing from an Azure blob data source. </param>
         /// <param name="excludedFileNameExtensions"> Comma-delimited list of filename extensions to ignore when processing from Azure blob storage.  For example, you could exclude ".png, .mp4" to skip over those files during indexing. </param>
         /// <param name="indexedFileNameExtensions"> Comma-delimited list of filename extensions to select when processing from Azure blob storage.  For example, you could focus indexing on specific application files ".docx, .pptx, .msg" to specifically include those file types. </param>
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
         /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </param>
         /// <param name="additionalProperties"></param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;

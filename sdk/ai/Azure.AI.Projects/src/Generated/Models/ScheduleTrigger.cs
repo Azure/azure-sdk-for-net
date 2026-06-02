@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base model for Trigger of the schedule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="RecurrenceTrigger"/>, and <see cref="OneTimeTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.CronTrigger"/>, <see cref="Azure.AI.Projects.Evaluation.RecurrenceTrigger"/>, and <see cref="Azure.AI.Projects.Evaluation.OneTimeTrigger"/>.
     /// </summary>
     public abstract partial class ScheduleTrigger
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ScheduleTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         private protected ScheduleTrigger(TriggerType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ScheduleTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleTrigger(TriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

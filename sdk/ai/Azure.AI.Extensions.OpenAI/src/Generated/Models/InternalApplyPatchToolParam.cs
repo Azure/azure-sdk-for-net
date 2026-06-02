@@ -9,15 +9,15 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalApplyPatchToolParam : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
-        public InternalApplyPatchToolParam() : base(ToolType.ApplyPatch)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalApplyPatchToolParam"/>. </summary>
+        public InternalApplyPatchToolParam() : base(global::Azure.AI.Extensions.OpenAI.ToolType.ApplyPatch)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalApplyPatchToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal InternalApplyPatchToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

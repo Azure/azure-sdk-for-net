@@ -13,28 +13,28 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for a single-label classification project. </summary>
     public partial class ExportedCustomSingleLabelClassificationProjectAsset : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>. </summary>
-        public ExportedCustomSingleLabelClassificationProjectAsset() : base(TextAuthoringProjectKind.CustomSingleLabelClassification)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/>. </summary>
+        public ExportedCustomSingleLabelClassificationProjectAsset() : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomSingleLabelClassification)
         {
-            Classes = new ChangeTrackingList<TextAuthoringExportedClass>();
-            Documents = new ChangeTrackingList<ExportedCustomSingleLabelClassificationDocument>();
+            Classes = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>();
+            Documents = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="classes"> The list of classes belonging to this project. </param>
         /// <param name="documents"> The list of documents belonging to this project. </param>
-        internal ExportedCustomSingleLabelClassificationProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TextAuthoringExportedClass> classes, IList<ExportedCustomSingleLabelClassificationDocument> documents) : base(projectKind, additionalBinaryDataProperties)
+        internal ExportedCustomSingleLabelClassificationProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> classes, IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument> documents) : base(projectKind, additionalBinaryDataProperties)
         {
             Classes = classes;
             Documents = documents;
         }
 
         /// <summary> The list of classes belonging to this project. </summary>
-        public IList<TextAuthoringExportedClass> Classes { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> Classes { get; }
 
         /// <summary> The list of documents belonging to this project. </summary>
-        public IList<ExportedCustomSingleLabelClassificationDocument> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument> Documents { get; }
     }
 }

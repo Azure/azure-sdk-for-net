@@ -16,19 +16,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationSummarizationActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationSummarizationActionContent"/>. </summary>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryAspects"/> is null. </exception>
-        public ConversationSummarizationActionContent(IEnumerable<SummaryAspect> summaryAspects)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="summaryAspects"/> is null. </exception>
+        public ConversationSummarizationActionContent(IEnumerable<global::Azure.AI.Language.Conversations.Models.SummaryAspect> summaryAspects)
         {
-            Argument.AssertNotNull(summaryAspects, nameof(summaryAspects));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(summaryAspects, nameof(summaryAspects));
 
             SummaryAspects = summaryAspects.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationSummarizationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
         /// <param name="instruction"> a text field to allow customers to use natural language to describe their needs for summarization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, string instruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<global::Azure.AI.Language.Conversations.Models.SummaryAspect> summaryAspects, string instruction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Models
         public SummaryLengthBucket? SummaryLength { get; set; }
 
         /// <summary> Array of Summary Aspects. </summary>
-        public IList<SummaryAspect> SummaryAspects { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.SummaryAspect> SummaryAspects { get; }
 
         /// <summary> a text field to allow customers to use natural language to describe their needs for summarization. </summary>
         public string Instruction { get; set; }

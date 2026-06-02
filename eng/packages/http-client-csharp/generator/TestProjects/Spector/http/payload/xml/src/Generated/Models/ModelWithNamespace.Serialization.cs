@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithNamespace : IPersistableModel<ModelWithNamespace>, IXmlSerializable
+    public partial class ModelWithNamespace : IPersistableModel<global::Payload.Xml.ModelWithNamespace>, IXmlSerializable
     {
         internal ModelWithNamespace() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithNamespace>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithNamespace>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithNamespace IPersistableModel<ModelWithNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithNamespace IPersistableModel<global::Payload.Xml.ModelWithNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithNamespace"> The <see cref="ModelWithNamespace"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithNamespace"> The <see cref="global::Payload.Xml.ModelWithNamespace"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithNamespace modelWithNamespace) => throw null;
 
         public static explicit operator ModelWithNamespace(Response response) => throw null;

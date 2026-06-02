@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes the status of a worker selector. </summary>
-    public readonly partial struct RouterWorkerSelectorStatus : IEquatable<RouterWorkerSelectorStatus>
+    public readonly partial struct RouterWorkerSelectorStatus : IEquatable<global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus>
     {
         private readonly string _value;
         /// <summary> Worker selector is valid. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Worker selector is not valid. </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="RouterWorkerSelectorStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouterWorkerSelectorStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Worker selector is not valid. </summary>
         public static RouterWorkerSelectorStatus Expired { get; } = new RouterWorkerSelectorStatus(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="RouterWorkerSelectorStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouterWorkerSelectorStatus left, RouterWorkerSelectorStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RouterWorkerSelectorStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouterWorkerSelectorStatus left, RouterWorkerSelectorStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RouterWorkerSelectorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RouterWorkerSelectorStatus(string value) => new RouterWorkerSelectorStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RouterWorkerSelectorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.RouterWorkerSelectorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouterWorkerSelectorStatus?(string value) => value == null ? null : new RouterWorkerSelectorStatus(value);
+        public static implicit operator RouterWorkerSelectorStatus?(string value) => (value == null) ? null : new RouterWorkerSelectorStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RouterWorkerSelectorStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RouterWorkerSelectorStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RouterWorkerSelectorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RouterWorkerSelectorStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

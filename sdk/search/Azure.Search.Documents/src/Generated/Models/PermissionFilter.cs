@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-    public readonly partial struct PermissionFilter : IEquatable<PermissionFilter>
+    public readonly partial struct PermissionFilter : IEquatable<global::Azure.Search.Documents.Indexes.Models.PermissionFilter>
     {
         private readonly string _value;
         /// <summary> Field represents user IDs that should be used to filter document access on queries. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
         private const string RbacScopeValue = "rbacScope";
 
-        /// <summary> Initializes a new instance of <see cref="PermissionFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.PermissionFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PermissionFilter(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
         public static PermissionFilter RbacScope { get; } = new PermissionFilter(RbacScopeValue);
 
-        /// <summary> Determines if two <see cref="PermissionFilter"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.PermissionFilter"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PermissionFilter left, PermissionFilter right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PermissionFilter"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.PermissionFilter"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PermissionFilter left, PermissionFilter right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PermissionFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.PermissionFilter"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PermissionFilter(string value) => new PermissionFilter(value);
 
-        /// <summary> Converts a string to a <see cref="PermissionFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.PermissionFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PermissionFilter?(string value) => value == null ? null : new PermissionFilter(value);
+        public static implicit operator PermissionFilter?(string value) => (value == null) ? null : new PermissionFilter(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PermissionFilter other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PermissionFilter other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PermissionFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PermissionFilter other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
     public partial class CustomMultiLabelClassificationOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationOperationAction"/>. </summary>
-        public CustomMultiLabelClassificationOperationAction() : base(AnalyzeTextOperationActionKind.CustomMultiLabelClassification)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction"/>. </summary>
+        public CustomMultiLabelClassificationOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.CustomMultiLabelClassification)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal CustomMultiLabelClassificationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomMultiLabelClassificationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal CustomMultiLabelClassificationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, CustomMultiLabelClassificationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }

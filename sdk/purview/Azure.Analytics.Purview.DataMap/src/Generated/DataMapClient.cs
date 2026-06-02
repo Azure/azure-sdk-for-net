@@ -16,12 +16,12 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The DataMapClient. </summary>
     public partial class DataMapClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly string _apiVersion;
         private Entity _cachedEntity;
         private Glossary _cachedGlossary;
-        private Discovery _cachedDiscovery;
+        private global::Azure.Analytics.Purview.DataMap.Discovery _cachedDiscovery;
         private Lineage _cachedLineage;
         private Relationship _cachedRelationship;
         private TypeDefinition _cachedTypeDefinition;
@@ -34,8 +34,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of DataMapClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DataMapClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DataMapClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DataMapClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DataMapClientOptions())
         {
         }
 
@@ -43,20 +43,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DataMapClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DataMapClientOptions options)
+        internal DataMapClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DataMapClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DataMapClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -66,14 +66,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DataMapClient(Uri endpoint, TokenCredential credential, DataMapClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DataMapClient(global::System.Uri endpoint, TokenCredential credential, DataMapClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DataMapClient from a <see cref="DataMapClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DataMapClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DataMapClient(DataMapClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -87,37 +87,37 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of Entity. </summary>
         public virtual Entity GetEntityClient()
         {
-            return Volatile.Read(ref _cachedEntity) ?? Interlocked.CompareExchange(ref _cachedEntity, new Entity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEntity;
+            return (global::System.Threading.Volatile.Read(ref _cachedEntity) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedEntity, new Entity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEntity));
         }
 
         /// <summary> Initializes a new instance of Glossary. </summary>
         public virtual Glossary GetGlossaryClient()
         {
-            return Volatile.Read(ref _cachedGlossary) ?? Interlocked.CompareExchange(ref _cachedGlossary, new Glossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedGlossary;
+            return (global::System.Threading.Volatile.Read(ref _cachedGlossary) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedGlossary, new Glossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedGlossary));
         }
 
         /// <summary> Initializes a new instance of Discovery. </summary>
-        public virtual Discovery GetDiscoveryClient()
+        public virtual global::Azure.Analytics.Purview.DataMap.Discovery GetDiscoveryClient()
         {
-            return Volatile.Read(ref _cachedDiscovery) ?? Interlocked.CompareExchange(ref _cachedDiscovery, new Discovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDiscovery;
+            return (global::System.Threading.Volatile.Read(ref _cachedDiscovery) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedDiscovery, new global::Azure.Analytics.Purview.DataMap.Discovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDiscovery));
         }
 
         /// <summary> Initializes a new instance of Lineage. </summary>
         public virtual Lineage GetLineageClient()
         {
-            return Volatile.Read(ref _cachedLineage) ?? Interlocked.CompareExchange(ref _cachedLineage, new Lineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedLineage;
+            return (global::System.Threading.Volatile.Read(ref _cachedLineage) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedLineage, new Lineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedLineage));
         }
 
         /// <summary> Initializes a new instance of Relationship. </summary>
         public virtual Relationship GetRelationshipClient()
         {
-            return Volatile.Read(ref _cachedRelationship) ?? Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRelationship;
+            return (global::System.Threading.Volatile.Read(ref _cachedRelationship) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRelationship));
         }
 
         /// <summary> Initializes a new instance of TypeDefinition. </summary>
         public virtual TypeDefinition GetTypeDefinitionClient()
         {
-            return Volatile.Read(ref _cachedTypeDefinition) ?? Interlocked.CompareExchange(ref _cachedTypeDefinition, new TypeDefinition(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTypeDefinition;
+            return (global::System.Threading.Volatile.Read(ref _cachedTypeDefinition) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedTypeDefinition, new TypeDefinition(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTypeDefinition));
         }
     }
 }

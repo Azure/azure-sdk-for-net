@@ -12,19 +12,19 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventInputAudioTurnCancel : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnCancel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioTurnCancel"/>. </summary>
         /// <param name="turnId"> The ID of the turn to cancel. </param>
-        public ClientEventInputAudioTurnCancel(string turnId) : base(ClientEventType.InputAudioTurnCancel)
+        public ClientEventInputAudioTurnCancel(string turnId) : base(global::Azure.AI.VoiceLive.ClientEventType.InputAudioTurnCancel)
         {
             TurnId = turnId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnCancel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioTurnCancel"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the turn to cancel. </param>
-        internal ClientEventInputAudioTurnCancel(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioTurnCancel(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
         }

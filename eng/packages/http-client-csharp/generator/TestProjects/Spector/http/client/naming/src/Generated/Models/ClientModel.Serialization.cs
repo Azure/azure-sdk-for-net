@@ -12,29 +12,29 @@ using Azure.Core;
 
 namespace Client.Naming.Model
 {
-    public partial class ClientModel : IJsonModel<ClientModel>
+    public partial class ClientModel : IJsonModel<global::Client.Naming.Model.ClientModel>
     {
         internal ClientModel() => throw null;
 
-        protected virtual ClientModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        protected virtual global::Client.Naming.Model.ClientModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ClientModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Naming.Model.ClientModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ClientModel IPersistableModel<ClientModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        global::Client.Naming.Model.ClientModel IPersistableModel<global::Client.Naming.Model.ClientModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ClientModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Naming.Model.ClientModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="clientModel"> The <see cref="ClientModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ClientModel clientModel) => throw null;
+        /// <param name="clientModel"> The <see cref="global::Client.Naming.Model.ClientModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
+        public static implicit operator RequestContent(global::Client.Naming.Model.ClientModel clientModel) => throw null;
 
-        void IJsonModel<ClientModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Naming.Model.ClientModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ClientModel IJsonModel<ClientModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        global::Client.Naming.Model.ClientModel IJsonModel<global::Client.Naming.Model.ClientModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ClientModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual global::Client.Naming.Model.ClientModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

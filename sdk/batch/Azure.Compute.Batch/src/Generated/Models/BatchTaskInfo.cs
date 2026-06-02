@@ -14,16 +14,16 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskInfo"/>. </summary>
         /// <param name="taskState"> The current state of the Task. </param>
         internal BatchTaskInfo(BatchTaskState taskState)
         {
             TaskState = taskState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskInfo"/>. </summary>
         /// <param name="taskUri"> The URL of the Task. </param>
         /// <param name="jobId"> The ID of the Job to which the Task belongs. </param>
         /// <param name="taskId"> The ID of the Task. </param>
@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskState"> The current state of the Task. </param>
         /// <param name="executionInfo"> Information about the execution of the Task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskInfo(Uri taskUri, string jobId, string taskId, int? subtaskId, BatchTaskState taskState, BatchTaskExecutionInfo executionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskInfo(global::System.Uri taskUri, string jobId, string taskId, int? subtaskId, BatchTaskState taskState, BatchTaskExecutionInfo executionInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TaskUri = taskUri;
             JobId = jobId;
@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL of the Task. </summary>
-        public Uri TaskUri { get; }
+        public global::System.Uri TaskUri { get; }
 
         /// <summary> The ID of the Job to which the Task belongs. </summary>
         public string JobId { get; }

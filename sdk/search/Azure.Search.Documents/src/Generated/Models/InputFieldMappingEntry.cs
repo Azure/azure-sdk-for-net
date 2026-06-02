@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class InputFieldMappingEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputFieldMappingEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InputFieldMappingEntry(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
+            Inputs = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputFieldMappingEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the input. </param>
         /// <param name="source"> The source of the input. </param>
         /// <param name="sourceContext"> The source context used for selecting recursive inputs. </param>
         /// <param name="inputs"> The recursive inputs used when creating a complex type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFieldMappingEntry(string name, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFieldMappingEntry(string name, string source, string sourceContext, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Source = source;
@@ -53,6 +53,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string SourceContext { get; set; }
 
         /// <summary> The recursive inputs used when creating a complex type. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get; }
     }
 }

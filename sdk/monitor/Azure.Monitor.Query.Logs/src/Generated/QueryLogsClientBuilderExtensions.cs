@@ -12,32 +12,32 @@ using Azure.Monitor.Query.Logs;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class QueryLogsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        public static IAzureClientBuilder<LogsQueryClient, LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<global::Azure.Monitor.Query.Logs.LogsQueryClient, global::Azure.Monitor.Query.Logs.LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<LogsQueryClient, LogsQueryClientOptions>((options, credential) => new LogsQueryClient(credential, options));
         }
 
-        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<LogsQueryClient, LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<global::Azure.Monitor.Query.Logs.LogsQueryClient, global::Azure.Monitor.Query.Logs.LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<LogsQueryClient, LogsQueryClientOptions>((options, credential) => new LogsQueryClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="LogsQueryClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<LogsQueryClient, LogsQueryClientOptions> AddLogsQueryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Monitor.Query.Logs.LogsQueryClient, global::Azure.Monitor.Query.Logs.LogsQueryClientOptions> AddLogsQueryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<LogsQueryClient, LogsQueryClientOptions>(configuration);

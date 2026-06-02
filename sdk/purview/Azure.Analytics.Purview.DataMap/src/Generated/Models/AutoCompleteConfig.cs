@@ -15,14 +15,14 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AutoCompleteConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoCompleteConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AutoCompleteConfig"/>. </summary>
         public AutoCompleteConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoCompleteConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AutoCompleteConfig"/>. </summary>
         /// <param name="keywords">
         /// The keywords applied to all fields that support autocomplete operation. It must
         /// be at least 1 character, and no more than 100 characters.
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="filter"> The filter for the autocomplete request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoCompleteConfig(string keywords, int? limit, BinaryData filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoCompleteConfig(string keywords, int? limit, BinaryData filter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Keywords = keywords;
             Limit = limit;
@@ -55,8 +55,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The filter for the autocomplete request.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

@@ -14,24 +14,24 @@ namespace Azure.Template
     public partial class WidgetSuite
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WidgetSuite"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.WidgetSuite"/>. </summary>
         /// <param name="manufacturerId"> The ID of the widget's manufacturer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="manufacturerId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="manufacturerId"/> is null. </exception>
         public WidgetSuite(string manufacturerId)
         {
-            Argument.AssertNotNull(manufacturerId, nameof(manufacturerId));
+            global::Azure.Template.Argument.AssertNotNull(manufacturerId, nameof(manufacturerId));
 
             ManufacturerId = manufacturerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WidgetSuite"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.WidgetSuite"/>. </summary>
         /// <param name="name"> The widget name. </param>
         /// <param name="manufacturerId"> The ID of the widget's manufacturer. </param>
         /// <param name="sharedModel"> The faked shared model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WidgetSuite(string name, string manufacturerId, FakedSharedModel sharedModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WidgetSuite(string name, string manufacturerId, FakedSharedModel sharedModel, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ManufacturerId = manufacturerId;

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting. </summary>
-    public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<WeightedAllocationWorkerSelectorAttachment>
+    public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>
     {
-        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment"/> for deserialization. </summary>
         internal WeightedAllocationWorkerSelectorAttachment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWeightedAllocationWorkerSelectorAttachment(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment.DeserializeWeightedAllocationWorkerSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WeightedAllocationWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WeightedAllocationWorkerSelectorAttachment IPersistableModel<WeightedAllocationWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => (WeightedAllocationWorkerSelectorAttachment)PersistableModelCreateCore(data, options);
+        WeightedAllocationWorkerSelectorAttachment IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WeightedAllocationWorkerSelectorAttachment)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WeightedAllocationWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WeightedAllocationWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,49 +73,49 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("allocations"u8);
             writer.WriteStartArray();
             foreach (WorkerWeightedAllocation item in Allocations)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<WorkerWeightedAllocation>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WeightedAllocationWorkerSelectorAttachment IJsonModel<WeightedAllocationWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WeightedAllocationWorkerSelectorAttachment)JsonModelCreateCore(ref reader, options);
+        WeightedAllocationWorkerSelectorAttachment IJsonModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WeightedAllocationWorkerSelectorAttachment)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WeightedAllocationWorkerSelectorAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWeightedAllocationWorkerSelectorAttachment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment.DeserializeWeightedAllocationWorkerSelectorAttachment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WeightedAllocationWorkerSelectorAttachment DeserializeWeightedAllocationWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             WorkerSelectorAttachmentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<WorkerWeightedAllocation> allocations = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IReadOnlyList<global::Azure.Communication.JobRouter.WorkerWeightedAllocation> allocations = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -125,17 +125,17 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("allocations"u8))
                 {
-                    List<WorkerWeightedAllocation> array = new List<WorkerWeightedAllocation>();
+                    List<global::Azure.Communication.JobRouter.WorkerWeightedAllocation> array = new List<global::Azure.Communication.JobRouter.WorkerWeightedAllocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WorkerWeightedAllocation.DeserializeWorkerWeightedAllocation(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.WorkerWeightedAllocation.DeserializeWorkerWeightedAllocation(item, options));
                     }
                     allocations = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WeightedAllocationWorkerSelectorAttachment(kind, additionalBinaryDataProperties, allocations);

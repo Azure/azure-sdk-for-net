@@ -14,18 +14,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class ProjectDeployment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment"/>. </summary>
         internal ProjectDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment"/>. </summary>
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectDeployment(string deploymentName, DateTimeOffset? lastDeployedDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectDeployment(string deploymentName, DateTimeOffset? lastDeployedDateTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DeploymentName = deploymentName;
             LastDeployedDateTime = lastDeployedDateTime;

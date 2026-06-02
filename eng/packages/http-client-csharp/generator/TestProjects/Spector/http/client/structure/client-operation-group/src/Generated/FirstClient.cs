@@ -19,24 +19,24 @@ namespace Client.Structure.ClientOperationGroup
     {
         protected FirstClient() => throw null;
 
-        public FirstClient(Uri endpoint, ClientType client) : this(endpoint, client, new FirstClientOptions()) => throw null;
+        public FirstClient(global::System.Uri endpoint, ClientType client) : this(endpoint, client, new FirstClientOptions()) => throw null;
 
-        internal FirstClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, FirstClientOptions options) => throw null;
+        internal FirstClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientType client, FirstClientOptions options) => throw null;
 
-        public FirstClient(Uri endpoint, ClientType client, FirstClientOptions options) : this(null, endpoint, client, options) => throw null;
+        public FirstClient(global::System.Uri endpoint, ClientType client, FirstClientOptions options) : this(null, endpoint, client, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public FirstClient(FirstClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public FirstClient(FirstClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, (settings?.Client ?? default), settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response One(RequestContext context) => throw null;
 
-        public virtual Task<Response> OneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OneAsync(RequestContext context) => throw null;
 
         public virtual Response One(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> OneAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Group3 GetGroup3Client() => throw null;
 

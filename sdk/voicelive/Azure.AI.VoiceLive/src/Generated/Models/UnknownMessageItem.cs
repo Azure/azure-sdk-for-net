@@ -12,14 +12,14 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownMessageItem : MessageItem
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message origionator. </param>
         /// <param name="content"> The content parts of the message. </param>
         /// <param name="status"> Processing status of the message item. </param>
-        internal UnknownMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type != default ? @type : "unknown", id, additionalBinaryDataProperties, role != default ? role : "unknown", content, status)
+        internal UnknownMessageItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<global::Azure.AI.VoiceLive.MessageContentPart> content, ItemParamStatus? status) : base((@type != default) ? @type : "unknown", id, additionalBinaryDataProperties, (role != default) ? role : "unknown", content, status)
         {
         }
     }

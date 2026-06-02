@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies the Azure OpenAI resource used to do query planning. </summary>
     public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel"/>. </summary>
         /// <param name="azureOpenAIParameters"> Azure OpenAI parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureOpenAIParameters"/> is null. </exception>
-        public KnowledgeBaseAzureOpenAIModel(AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(KnowledgeBaseModelKind.AzureOpenAI)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="azureOpenAIParameters"/> is null. </exception>
+        public KnowledgeBaseAzureOpenAIModel(AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModelKind.AzureOpenAI)
         {
-            Argument.AssertNotNull(azureOpenAIParameters, nameof(azureOpenAIParameters));
+            global::Azure.Search.Documents.Argument.AssertNotNull(azureOpenAIParameters, nameof(azureOpenAIParameters));
 
             AzureOpenAIParameters = azureOpenAIParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel"/>. </summary>
         /// <param name="kind"> The AI model to be used for query planning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureOpenAIParameters"> Azure OpenAI parameters. </param>
-        internal KnowledgeBaseAzureOpenAIModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
+        internal KnowledgeBaseAzureOpenAIModel(KnowledgeBaseModelKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
         {
             AzureOpenAIParameters = azureOpenAIParameters;
         }

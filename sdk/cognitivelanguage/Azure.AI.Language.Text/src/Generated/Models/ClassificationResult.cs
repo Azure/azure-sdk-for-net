@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class ClassificationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ClassificationResult"/>. </summary>
         /// <param name="category"> Classification type. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
         internal ClassificationResult(string category, double confidenceScore)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ClassificationResult"/>. </summary>
         /// <param name="category"> Classification type. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClassificationResult(string category, double confidenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClassificationResult(string category, double confidenceScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             ConfidenceScore = confidenceScore;

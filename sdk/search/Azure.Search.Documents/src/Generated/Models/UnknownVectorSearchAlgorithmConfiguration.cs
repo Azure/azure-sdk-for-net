@@ -12,11 +12,11 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchAlgorithmConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVectorSearchAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownVectorSearchAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(name, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepAzureAISearchToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepAzureAISearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
         internal RunStepAzureAISearchToolCall(string id, IReadOnlyDictionary<string, string> azureAISearch) : base("azure_ai_search", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             AzureAISearch = azureAISearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepAzureAISearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
-        internal RunStepAzureAISearchToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> azureAISearch) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepAzureAISearchToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> azureAISearch) : base(@type, id, additionalBinaryDataProperties)
         {
             AzureAISearch = azureAISearch;
         }

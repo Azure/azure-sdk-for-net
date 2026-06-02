@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> An object representing the location and content of a table cell. </summary>
-    public partial class DocumentTableCell : IJsonModel<DocumentTableCell>
+    public partial class DocumentTableCell : IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTableCell"/> for deserialization. </summary>
         internal DocumentTableCell()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTableCell PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentTableCell(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentTableCell.DeserializeDocumentTableCell(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTableCell)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentTableCell)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTableCell)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentTableCell)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTableCell>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTableCell IPersistableModel<DocumentTableCell>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentTableCell IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTableCell>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentTableCell>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,12 +73,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTableCell)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentTableCell)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Kind))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -87,25 +87,25 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteNumberValue(RowIndex);
             writer.WritePropertyName("columnIndex"u8);
             writer.WriteNumberValue(ColumnIndex);
-            if (Optional.IsDefined(RowSpan))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(RowSpan))
             {
                 writer.WritePropertyName("rowSpan"u8);
                 writer.WriteNumberValue(RowSpan.Value);
             }
-            if (Optional.IsDefined(ColumnSpan))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(ColumnSpan))
             {
                 writer.WritePropertyName("columnSpan"u8);
                 writer.WriteNumberValue(ColumnSpan.Value);
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
                 foreach (BoundingRegion item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,16 +113,16 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (DocumentSpan item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Elements))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
                 foreach (string item in Elements)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -131,7 +131,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -139,9 +139,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -150,26 +150,26 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTableCell IJsonModel<DocumentTableCell>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentTableCell IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTableCell JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentTableCell>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTableCell)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentTableCell)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentTableCell(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.DocumentTableCell.DeserializeDocumentTableCell(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentTableCell DeserializeDocumentTableCell(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -179,15 +179,15 @@ namespace Azure.AI.DocumentIntelligence
             int? rowSpan = default;
             int? columnSpan = default;
             string content = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default;
             IReadOnlyList<string> elements = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -206,7 +206,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("rowSpan"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -215,7 +215,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("columnSpan"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,38 +229,38 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("boundingRegions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BoundingRegion> array = new List<BoundingRegion>();
+                    List<global::Azure.AI.DocumentIntelligence.BoundingRegion> array = new List<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
                 }
                 if (prop.NameEquals("spans"u8))
                 {
-                    List<DocumentSpan> array = new List<DocumentSpan>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentSpan> array = new List<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
                 }
                 if (prop.NameEquals("elements"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -272,9 +272,9 @@ namespace Azure.AI.DocumentIntelligence
                     elements = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentTableCell(
@@ -284,9 +284,9 @@ namespace Azure.AI.DocumentIntelligence
                 rowSpan,
                 columnSpan,
                 content,
-                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                (boundingRegions ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>()),
                 spans,
-                elements ?? new ChangeTrackingList<string>(),
+                (elements ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

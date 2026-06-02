@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Visibility
 {
-    public partial class VisibilityModel : IJsonModel<VisibilityModel>
+    public partial class VisibilityModel : IJsonModel<global::_Type.Model.Visibility.VisibilityModel>
     {
         internal VisibilityModel() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Model.Visibility
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<VisibilityModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Visibility.VisibilityModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        VisibilityModel IPersistableModel<VisibilityModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        VisibilityModel IPersistableModel<global::_Type.Model.Visibility.VisibilityModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<VisibilityModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Visibility.VisibilityModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="visibilityModel"> The <see cref="VisibilityModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="visibilityModel"> The <see cref="global::_Type.Model.Visibility.VisibilityModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(VisibilityModel visibilityModel) => throw null;
 
         public static explicit operator VisibilityModel(Response response) => throw null;
 
-        void IJsonModel<VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Visibility.VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        VisibilityModel IJsonModel<VisibilityModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        VisibilityModel IJsonModel<global::_Type.Model.Visibility.VisibilityModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual VisibilityModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

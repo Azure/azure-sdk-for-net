@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesContainerNetworkPolicyDisabledParam. </summary>
     public partial class ResponsesContainerNetworkPolicyDisabledParam : ResponsesContainerNetworkPolicyParam
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
-        public ResponsesContainerNetworkPolicyDisabledParam() : base(ContainerNetworkPolicyParamType.Disabled)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
+        public ResponsesContainerNetworkPolicyDisabledParam() : base(global::Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType.Disabled)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

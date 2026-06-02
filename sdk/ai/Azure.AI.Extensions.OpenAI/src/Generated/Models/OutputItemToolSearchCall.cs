@@ -11,15 +11,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The OutputItemToolSearchCall. </summary>
     public partial class OutputItemToolSearchCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchCall"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
-        public OutputItemToolSearchCall(string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status) : base(AgentResponseItemKind.ToolSearchCall)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
+        public OutputItemToolSearchCall(string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.ToolSearchCall)
         {
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(arguments, nameof(arguments));
 
             CallId = callId;
             Execution = execution;
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Execution = execution;
@@ -55,8 +55,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// Arguments used for the tool search call.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

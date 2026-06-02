@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedCustomTextSentimentDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomTextSentimentDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument"/>. </summary>
         public ExportedCustomTextSentimentDocument()
         {
-            SentimentSpans = new ChangeTrackingList<ExportedDocumentSentimentLabel>();
+            SentimentSpans = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomTextSentimentDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument"/>. </summary>
         /// <param name="sentimentSpans"></param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCustomTextSentimentDocument(IList<ExportedDocumentSentimentLabel> sentimentSpans, string location, string language, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedCustomTextSentimentDocument(IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel> sentimentSpans, string location, string language, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SentimentSpans = sentimentSpans;
             Location = location;
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Gets the SentimentSpans. </summary>
-        public IList<ExportedDocumentSentimentLabel> SentimentSpans { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel> SentimentSpans { get; }
 
         /// <summary> The location of the document in the storage. </summary>
         public string Location { get; set; }

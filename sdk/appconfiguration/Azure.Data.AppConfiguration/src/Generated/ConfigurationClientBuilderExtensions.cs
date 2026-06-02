@@ -11,15 +11,15 @@ using Azure.Data.AppConfiguration;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class ConfigurationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="ConfigurationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="ConfigurationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Data.AppConfiguration.ConfigurationClient, global::Azure.Data.AppConfiguration.ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(configuration);

@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentHealthcareEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentHealthcareEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult"/>. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
-        internal DocumentHealthcareEvalResult(IEnumerable<DocumentEntityRegionEvalResult> entities)
+        internal DocumentHealthcareEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> entities)
         {
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentHealthcareEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult"/>. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentHealthcareEvalResult(IList<DocumentEntityRegionEvalResult> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentHealthcareEvalResult(IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the document labelled entities. </summary>
-        public IList<DocumentEntityRegionEvalResult> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> Entities { get; }
     }
 }

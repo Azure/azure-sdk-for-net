@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type._Enum.Extensible
 {
-    public readonly partial struct DaysOfWeekExtensibleEnum : IEquatable<DaysOfWeekExtensibleEnum>
+    public readonly partial struct DaysOfWeekExtensibleEnum : IEquatable<global::_Type._Enum.Extensible.DaysOfWeekExtensibleEnum>
     {
         public DaysOfWeekExtensibleEnum(string value) => throw null;
 
@@ -32,20 +32,20 @@ namespace _Type._Enum.Extensible
 
         public static bool operator !=(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type._Enum.Extensible.DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DaysOfWeekExtensibleEnum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type._Enum.Extensible.DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DaysOfWeekExtensibleEnum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(DaysOfWeekExtensibleEnum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

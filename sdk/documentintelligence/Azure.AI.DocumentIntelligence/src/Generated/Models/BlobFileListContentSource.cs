@@ -14,26 +14,26 @@ namespace Azure.AI.DocumentIntelligence
     public partial class BlobFileListContentSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BlobFileListContentSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BlobFileListContentSource"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileList"/> is null. </exception>
-        public BlobFileListContentSource(Uri containerUri, string fileList)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileList"/> is null. </exception>
+        public BlobFileListContentSource(global::System.Uri containerUri, string fileList)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
-            Argument.AssertNotNull(fileList, nameof(fileList));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(containerUri, nameof(containerUri));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(fileList, nameof(fileList));
 
             ContainerUri = containerUri;
             FileList = fileList;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobFileListContentSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BlobFileListContentSource"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobFileListContentSource(Uri containerUri, string fileList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobFileListContentSource(global::System.Uri containerUri, string fileList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             FileList = fileList;
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUri { get; set; }
+        public global::System.Uri ContainerUri { get; set; }
 
         /// <summary> Path to a JSONL file within the container specifying a subset of documents. </summary>
         public string FileList { get; set; }

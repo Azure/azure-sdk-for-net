@@ -17,19 +17,19 @@ namespace Azure.Compute.Batch
     public partial class BatchJobScheduleExecutionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleExecutionInfo"/>. </summary>
         internal BatchJobScheduleExecutionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleExecutionInfo"/>. </summary>
         /// <param name="nextRunTime"> The next time at which a Job will be created under this schedule. This property is meaningful only if the schedule is in the active state when the time comes around. For example, if the schedule is disabled, no Job will be created at nextRunTime unless the Job is enabled before then. </param>
         /// <param name="recentJob"> Information about the most recent Job under the Job Schedule. This property is present only if the at least one Job has run under the schedule. </param>
         /// <param name="endTime"> The time at which the schedule ended. This property is set only if the Job Schedule is in the completed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobScheduleExecutionInfo(DateTimeOffset? nextRunTime, RecentBatchJob recentJob, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobScheduleExecutionInfo(DateTimeOffset? nextRunTime, RecentBatchJob recentJob, DateTimeOffset? endTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NextRunTime = nextRunTime;
             RecentJob = recentJob;

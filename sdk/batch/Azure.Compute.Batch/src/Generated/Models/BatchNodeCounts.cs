@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeCounts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeCounts"/>. </summary>
         /// <param name="creating"> The number of Compute Nodes in the creating state. </param>
         /// <param name="idle"> The number of Compute Nodes in the idle state. </param>
         /// <param name="offline"> The number of Compute Nodes in the offline state. </param>
@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch
             UpgradingOS = upgradingOS;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeCounts"/>. </summary>
         /// <param name="creating"> The number of Compute Nodes in the creating state. </param>
         /// <param name="idle"> The number of Compute Nodes in the idle state. </param>
         /// <param name="offline"> The number of Compute Nodes in the offline state. </param>
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
         /// <param name="total"> The total number of Compute Nodes. </param>
         /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOS, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Creating = creating;
             Idle = idle;

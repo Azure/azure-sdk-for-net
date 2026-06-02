@@ -14,54 +14,54 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Supported parameters for a conversational pii task. </summary>
-    public partial class ConversationPiiActionContent : IJsonModel<ConversationPiiActionContent>
+    public partial class ConversationPiiActionContent : IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationPiiActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationPiiActionContent(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent.DeserializeConversationPiiActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationPiiActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationPiiActionContent IPersistableModel<ConversationPiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationPiiActionContent IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationPiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationPiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,22 +69,22 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (global::Azure.AI.Language.Conversations.Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -94,22 +94,22 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RedactAudioTiming))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(RedactAudioTiming))
             {
                 writer.WritePropertyName("redactAudioTiming"u8);
                 writer.WriteBooleanValue(RedactAudioTiming.Value);
             }
-            if (Optional.IsDefined(RedactionSource))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(RedactionSource))
             {
                 writer.WritePropertyName("redactionSource"u8);
                 writer.WriteStringValue(RedactionSource.Value.ToString());
             }
-            if (Optional.IsDefined(RedactionCharacter))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(RedactionCharacter))
             {
                 writer.WritePropertyName("redactionCharacter"u8);
                 writer.WriteStringValue(RedactionCharacter.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludePiiCategories))
+            if (global::Azure.AI.Language.Conversations.Optional.IsCollectionDefined(ExcludePiiCategories))
             {
                 writer.WritePropertyName("excludePiiCategories"u8);
                 writer.WriteStartArray();
@@ -119,12 +119,12 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RedactionPolicy))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(RedactionPolicy))
             {
                 writer.WritePropertyName("redactionPolicy"u8);
-                writer.WriteObjectValue(RedactionPolicy, options);
+                writer.WriteObjectValue<BaseRedactionPolicy>(RedactionPolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -132,9 +132,9 @@ namespace Azure.AI.Language.Conversations.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -143,43 +143,43 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationPiiActionContent IJsonModel<ConversationPiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationPiiActionContent IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationPiiActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationPiiActionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationPiiActionContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent.DeserializeConversationPiiActionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationPiiActionContent DeserializeConversationPiiActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             bool? loggingOptOut = default;
             string modelVersion = default;
-            IList<ConversationPiiCategories> piiCategories = default;
+            IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories> piiCategories = default;
             bool? redactAudioTiming = default;
             TranscriptContentType? redactionSource = default;
             RedactionCharacter? redactionCharacter = default;
-            IList<ConversationPiiCategoryExclusions> excludePiiCategories = default;
+            IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions> excludePiiCategories = default;
             BaseRedactionPolicy redactionPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("loggingOptOut"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -193,11 +193,11 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("piiCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConversationPiiCategories> array = new List<ConversationPiiCategories>();
+                    List<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories> array = new List<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ConversationPiiCategories(item.GetString()));
@@ -207,7 +207,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("redactAudioTiming"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -216,7 +216,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("redactionSource"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -225,7 +225,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("redactionCharacter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -234,11 +234,11 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("excludePiiCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConversationPiiCategoryExclusions> array = new List<ConversationPiiCategoryExclusions>();
+                    List<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions> array = new List<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ConversationPiiCategoryExclusions(item.GetString()));
@@ -248,26 +248,26 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("redactionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(prop.Value, options);
+                    redactionPolicy = global::Azure.AI.Language.Conversations.Models.BaseRedactionPolicy.DeserializeBaseRedactionPolicy(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConversationPiiActionContent(
                 loggingOptOut,
                 modelVersion,
-                piiCategories ?? new ChangeTrackingList<ConversationPiiCategories>(),
+                (piiCategories ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories>()),
                 redactAudioTiming,
                 redactionSource,
                 redactionCharacter,
-                excludePiiCategories ?? new ChangeTrackingList<ConversationPiiCategoryExclusions>(),
+                (excludePiiCategories ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions>()),
                 redactionPolicy,
                 additionalBinaryDataProperties);
         }

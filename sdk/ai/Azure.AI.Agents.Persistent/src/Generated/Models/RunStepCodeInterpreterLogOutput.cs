@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A representation of a log output emitted by a code interpreter tool in response to a tool call by the model. </summary>
     public partial class RunStepCodeInterpreterLogOutput : RunStepCodeInterpreterToolCallOutput
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
         internal RunStepCodeInterpreterLogOutput(string logs) : base("logs")
         {
             Logs = logs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        internal RunStepCodeInterpreterLogOutput(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string logs) : base(@type, additionalBinaryDataProperties)
+        internal RunStepCodeInterpreterLogOutput(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string logs) : base(@type, additionalBinaryDataProperties)
         {
             Logs = logs;
         }

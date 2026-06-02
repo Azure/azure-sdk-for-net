@@ -18,32 +18,32 @@ namespace Parameters.BodyOptionality
 {
     public partial class BodyOptionalityClient
     {
-        public BodyOptionalityClient() : this(new Uri("http://localhost:3000"), new BodyOptionalityClientOptions()) => throw null;
+        public BodyOptionalityClient() : this(new global::System.Uri("http://localhost:3000"), new BodyOptionalityClientOptions()) => throw null;
 
-        internal BodyOptionalityClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BodyOptionalityClientOptions options) => throw null;
+        internal BodyOptionalityClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, BodyOptionalityClientOptions options) => throw null;
 
-        public BodyOptionalityClient(Uri endpoint, BodyOptionalityClientOptions options) : this(null, endpoint, options) => throw null;
+        public BodyOptionalityClient(global::System.Uri endpoint, BodyOptionalityClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public BodyOptionalityClient(BodyOptionalityClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public BodyOptionalityClient(BodyOptionalityClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RequiredExplicit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RequiredExplicitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RequiredExplicitAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response RequiredExplicit(BodyModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RequiredExplicitAsync(BodyModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RequiredExplicitAsync(BodyModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RequiredImplicit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RequiredImplicitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RequiredImplicitAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response RequiredImplicit(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RequiredImplicitAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RequiredImplicitAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual OptionalExplicit GetOptionalExplicitClient() => throw null;
     }

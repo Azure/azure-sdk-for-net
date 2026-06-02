@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> An audio content part for a request. This is supported only by realtime models (e.g., gpt-realtime). For text-based models, use `input_text` instead. </summary>
-    public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<RequestAudioContentPart>
+    public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRequestAudioContentPart(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.RequestAudioContentPart.DeserializeRequestAudioContentPart(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestAudioContentPart)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.RequestAudioContentPart)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RequestAudioContentPart)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.RequestAudioContentPart)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RequestAudioContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequestAudioContentPart IPersistableModel<RequestAudioContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestAudioContentPart)PersistableModelCreateCore(data, options);
+        RequestAudioContentPart IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RequestAudioContentPart)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RequestAudioContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RequestAudioContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,15 +68,15 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RequestAudioContentPart)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.RequestAudioContentPart)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("audio"u8);
             writer.WriteStringValue(Audio);
-            if (Optional.IsDefined(Transcript))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Transcript))
             {
                 writer.WritePropertyName("transcript"u8);
                 writer.WriteStringValue(Transcript);
@@ -85,31 +85,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequestAudioContentPart IJsonModel<RequestAudioContentPart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequestAudioContentPart)JsonModelCreateCore(ref reader, options);
+        RequestAudioContentPart IJsonModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RequestAudioContentPart)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.RequestAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RequestAudioContentPart)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.RequestAudioContentPart)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequestAudioContentPart(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.RequestAudioContentPart.DeserializeRequestAudioContentPart(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RequestAudioContentPart DeserializeRequestAudioContentPart(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContentPartType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string audio = default;
             string transcript = default;
             foreach (var prop in element.EnumerateObject())
@@ -129,9 +129,9 @@ namespace Azure.AI.VoiceLive
                     transcript = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RequestAudioContentPart(@type, additionalBinaryDataProperties, audio, transcript);

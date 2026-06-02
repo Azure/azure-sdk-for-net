@@ -10,29 +10,29 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesInlineSkillParam. </summary>
     public partial class ResponsesInlineSkillParam : ContainerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesInlineSkillParam"/>. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="source"/> is null. </exception>
-        public ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base(ContainerSkillType.Inline)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="source"/> is null. </exception>
+        public ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base(global::Azure.AI.Extensions.OpenAI.ContainerSkillType.Inline)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(source, nameof(source));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(source, nameof(source));
 
             Name = name;
             Description = description;
             Source = source;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesInlineSkillParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        internal ResponsesInlineSkillParam(ContainerSkillType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesInlineSkillSourceParam source) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesInlineSkillParam(ContainerSkillType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesInlineSkillSourceParam source) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

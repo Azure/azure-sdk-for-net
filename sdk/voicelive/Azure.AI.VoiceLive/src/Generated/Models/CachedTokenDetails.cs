@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class CachedTokenDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CachedTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.CachedTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of cached text tokens. </param>
         /// <param name="audioTokens"> Number of cached audio tokens. </param>
         /// <param name="imageTokens"> Number of cached image tokens. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.VoiceLive
             ImageTokens = imageTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CachedTokenDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.CachedTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of cached text tokens. </param>
         /// <param name="audioTokens"> Number of cached audio tokens. </param>
         /// <param name="imageTokens"> Number of cached image tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CachedTokenDetails(int textTokens, int audioTokens, int imageTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CachedTokenDetails(int textTokens, int audioTokens, int imageTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TextTokens = textTokens;
             AudioTokens = audioTokens;

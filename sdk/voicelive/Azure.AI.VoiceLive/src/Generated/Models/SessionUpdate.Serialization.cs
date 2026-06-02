@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateError"/>, <see cref="ServerEventWarning"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateAvatarConnecting"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="SessionUpdateResponseAnimationVisemeDone"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="SessionUpdateMcpListToolsInProgress"/>, <see cref="SessionUpdateMcpListToolsCompleted"/>, <see cref="SessionUpdateMcpListToolsFailed"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="SessionUpdateResponseMcpCallInProgress"/>, <see cref="SessionUpdateResponseMcpCallCompleted"/>, and <see cref="SessionUpdateResponseMcpCallFailed"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.SessionUpdateError"/>, <see cref="Azure.AI.VoiceLive.ServerEventWarning"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateSessionCreated"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseCreated"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="Azure.AI.VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, and <see cref="Azure.AI.VoiceLive.SessionUpdateResponseMcpCallFailed"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownSessionUpdate))]
-    public abstract partial class SessionUpdate : IJsonModel<SessionUpdate>
+    [PersistableModelProxyAttribute(typeof(UnknownSessionUpdate))]
+    public abstract partial class SessionUpdate : IJsonModel<global::Azure.AI.VoiceLive.SessionUpdate>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdate"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdate"/> for deserialization. </summary>
         internal SessionUpdate()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdate(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdate.DeserializeSessionUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdate IPersistableModel<SessionUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SessionUpdate IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,19 +76,19 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdate)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(EventId))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(EventId))
             {
                 writer.WritePropertyName("event_id"u8);
                 writer.WriteStringValue(EventId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -96,9 +96,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -107,26 +107,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdate IJsonModel<SessionUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SessionUpdate IJsonModel<global::Azure.AI.VoiceLive.SessionUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdate)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdate(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdate.DeserializeSessionUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdate DeserializeSessionUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -135,96 +135,96 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "error":
-                        return SessionUpdateError.DeserializeSessionUpdateError(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateError.DeserializeSessionUpdateError(element, options);
                     case "warning":
-                        return ServerEventWarning.DeserializeServerEventWarning(element, options);
+                        return global::Azure.AI.VoiceLive.ServerEventWarning.DeserializeServerEventWarning(element, options);
                     case "session.created":
-                        return SessionUpdateSessionCreated.DeserializeSessionUpdateSessionCreated(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateSessionCreated.DeserializeSessionUpdateSessionCreated(element, options);
                     case "session.updated":
-                        return SessionUpdateSessionUpdated.DeserializeSessionUpdateSessionUpdated(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateSessionUpdated.DeserializeSessionUpdateSessionUpdated(element, options);
                     case "session.avatar.connecting":
-                        return SessionUpdateAvatarConnecting.DeserializeSessionUpdateAvatarConnecting(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateAvatarConnecting.DeserializeSessionUpdateAvatarConnecting(element, options);
                     case "input_audio_buffer.committed":
-                        return SessionUpdateInputAudioBufferCommitted.DeserializeSessionUpdateInputAudioBufferCommitted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCommitted.DeserializeSessionUpdateInputAudioBufferCommitted(element, options);
                     case "input_audio_buffer.cleared":
-                        return SessionUpdateInputAudioBufferCleared.DeserializeSessionUpdateInputAudioBufferCleared(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferCleared.DeserializeSessionUpdateInputAudioBufferCleared(element, options);
                     case "input_audio_buffer.speech_started":
-                        return SessionUpdateInputAudioBufferSpeechStarted.DeserializeSessionUpdateInputAudioBufferSpeechStarted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStarted.DeserializeSessionUpdateInputAudioBufferSpeechStarted(element, options);
                     case "input_audio_buffer.speech_stopped":
-                        return SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(element, options);
                     case "conversation.item.created":
-                        return SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
                     case "conversation.item.input_audio_transcription.completed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
                     case "conversation.item.input_audio_transcription.failed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
                     case "conversation.item.truncated":
-                        return SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
                     case "conversation.item.deleted":
-                        return SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
                     case "response.created":
-                        return SessionUpdateResponseCreated.DeserializeSessionUpdateResponseCreated(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseCreated.DeserializeSessionUpdateResponseCreated(element, options);
                     case "response.done":
-                        return SessionUpdateResponseDone.DeserializeSessionUpdateResponseDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseDone.DeserializeSessionUpdateResponseDone(element, options);
                     case "response.output_item.added":
-                        return SessionUpdateResponseOutputItemAdded.DeserializeSessionUpdateResponseOutputItemAdded(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseOutputItemAdded.DeserializeSessionUpdateResponseOutputItemAdded(element, options);
                     case "response.output_item.done":
-                        return SessionUpdateResponseOutputItemDone.DeserializeSessionUpdateResponseOutputItemDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseOutputItemDone.DeserializeSessionUpdateResponseOutputItemDone(element, options);
                     case "response.content_part.added":
-                        return SessionUpdateResponseContentPartAdded.DeserializeSessionUpdateResponseContentPartAdded(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseContentPartAdded.DeserializeSessionUpdateResponseContentPartAdded(element, options);
                     case "response.content_part.done":
-                        return SessionUpdateResponseContentPartDone.DeserializeSessionUpdateResponseContentPartDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseContentPartDone.DeserializeSessionUpdateResponseContentPartDone(element, options);
                     case "response.text.delta":
-                        return SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
                     case "response.text.done":
-                        return SessionUpdateResponseTextDone.DeserializeSessionUpdateResponseTextDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseTextDone.DeserializeSessionUpdateResponseTextDone(element, options);
                     case "response.audio_transcript.delta":
-                        return SessionUpdateResponseAudioTranscriptDelta.DeserializeSessionUpdateResponseAudioTranscriptDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDelta.DeserializeSessionUpdateResponseAudioTranscriptDelta(element, options);
                     case "response.audio_transcript.done":
-                        return SessionUpdateResponseAudioTranscriptDone.DeserializeSessionUpdateResponseAudioTranscriptDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDone.DeserializeSessionUpdateResponseAudioTranscriptDone(element, options);
                     case "response.audio.delta":
-                        return SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
                     case "response.audio.done":
-                        return SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(element, options);
                     case "response.animation_blendshapes.delta":
-                        return SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(element, options);
                     case "response.animation_blendshapes.done":
-                        return SessionUpdateResponseAnimationBlendshapeDone.DeserializeSessionUpdateResponseAnimationBlendshapeDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDone.DeserializeSessionUpdateResponseAnimationBlendshapeDone(element, options);
                     case "response.audio_timestamp.delta":
-                        return SessionUpdateResponseAudioTimestampDelta.DeserializeSessionUpdateResponseAudioTimestampDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta.DeserializeSessionUpdateResponseAudioTimestampDelta(element, options);
                     case "response.audio_timestamp.done":
-                        return SessionUpdateResponseAudioTimestampDone.DeserializeSessionUpdateResponseAudioTimestampDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDone.DeserializeSessionUpdateResponseAudioTimestampDone(element, options);
                     case "response.animation_viseme.delta":
-                        return SessionUpdateResponseAnimationVisemeDelta.DeserializeSessionUpdateResponseAnimationVisemeDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDelta.DeserializeSessionUpdateResponseAnimationVisemeDelta(element, options);
                     case "response.animation_viseme.done":
-                        return SessionUpdateResponseAnimationVisemeDone.DeserializeSessionUpdateResponseAnimationVisemeDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone.DeserializeSessionUpdateResponseAnimationVisemeDone(element, options);
                     case "conversation.item.input_audio_transcription.delta":
-                        return SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
                     case "conversation.item.retrieved":
-                        return SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
                     case "response.function_call_arguments.delta":
-                        return SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
                     case "response.function_call_arguments.done":
-                        return SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
                     case "mcp_list_tools.in_progress":
-                        return SessionUpdateMcpListToolsInProgress.DeserializeSessionUpdateMcpListToolsInProgress(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsInProgress.DeserializeSessionUpdateMcpListToolsInProgress(element, options);
                     case "mcp_list_tools.completed":
-                        return SessionUpdateMcpListToolsCompleted.DeserializeSessionUpdateMcpListToolsCompleted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsCompleted.DeserializeSessionUpdateMcpListToolsCompleted(element, options);
                     case "mcp_list_tools.failed":
-                        return SessionUpdateMcpListToolsFailed.DeserializeSessionUpdateMcpListToolsFailed(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsFailed.DeserializeSessionUpdateMcpListToolsFailed(element, options);
                     case "response.mcp_call_arguments.delta":
-                        return SessionUpdateResponseMcpCallArgumentsDelta.DeserializeSessionUpdateResponseMcpCallArgumentsDelta(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta.DeserializeSessionUpdateResponseMcpCallArgumentsDelta(element, options);
                     case "response.mcp_call_arguments.done":
-                        return SessionUpdateResponseMcpCallArgumentsDone.DeserializeSessionUpdateResponseMcpCallArgumentsDone(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDone.DeserializeSessionUpdateResponseMcpCallArgumentsDone(element, options);
                     case "response.mcp_call.in_progress":
-                        return SessionUpdateResponseMcpCallInProgress.DeserializeSessionUpdateResponseMcpCallInProgress(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallInProgress.DeserializeSessionUpdateResponseMcpCallInProgress(element, options);
                     case "response.mcp_call.completed":
-                        return SessionUpdateResponseMcpCallCompleted.DeserializeSessionUpdateResponseMcpCallCompleted(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallCompleted.DeserializeSessionUpdateResponseMcpCallCompleted(element, options);
                     case "response.mcp_call.failed":
-                        return SessionUpdateResponseMcpCallFailed.DeserializeSessionUpdateResponseMcpCallFailed(element, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallFailed.DeserializeSessionUpdateResponseMcpCallFailed(element, options);
                 }
             }
-            return UnknownSessionUpdate.DeserializeUnknownSessionUpdate(element, options);
+            return global::Azure.AI.VoiceLive.UnknownSessionUpdate.DeserializeUnknownSessionUpdate(element, options);
         }
     }
 }

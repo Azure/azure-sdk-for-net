@@ -18,20 +18,20 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasStruct
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasStruct"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasStruct"/>. </summary>
         public AtlasStruct()
         {
-            Attributes = new ChangeTrackingDictionary<string, BinaryData>();
+            Attributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasStruct"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasStruct"/>. </summary>
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasStruct(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasStruct(IDictionary<string, global::System.BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -41,8 +41,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The attributes of the struct.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Attributes { get; }
+        public IDictionary<string, global::System.BinaryData> Attributes { get; }
 
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Page
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PageClientHostExtensions
     {
         public static IClientBuilder AddPageClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddPageClient(this IHostApplicationBuilder host, string sectionName, Action<PageClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddPageClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Page.PageClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedPageClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedPageClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PageClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedPageClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Page.PageClientSettings> configureSettings) => throw null;
     }
 }

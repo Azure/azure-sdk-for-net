@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Test kind. </summary>
-    public readonly partial struct LoadTestKind : IEquatable<LoadTestKind>
+    public readonly partial struct LoadTestKind : IEquatable<global::Azure.Developer.LoadTesting.LoadTestKind>
     {
         private readonly string _value;
         /// <summary> URL Test. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Locust Test. </summary>
         private const string LocustValue = "Locust";
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadTestKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Locust Test. </summary>
         public static LoadTestKind Locust { get; } = new LoadTestKind(LocustValue);
 
-        /// <summary> Determines if two <see cref="LoadTestKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.LoadTestKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadTestKind left, LoadTestKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LoadTestKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.LoadTestKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadTestKind left, LoadTestKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LoadTestKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.LoadTestKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LoadTestKind(string value) => new LoadTestKind(value);
 
-        /// <summary> Converts a string to a <see cref="LoadTestKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.LoadTestKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestKind?(string value) => value == null ? null : new LoadTestKind(value);
+        public static implicit operator LoadTestKind?(string value) => (value == null) ? null : new LoadTestKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LoadTestKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LoadTestKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LoadTestKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LoadTestKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

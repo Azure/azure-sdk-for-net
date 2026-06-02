@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ExhaustiveKnnParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ExhaustiveKnnParameters"/>. </summary>
         public ExhaustiveKnnParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ExhaustiveKnnParameters"/>. </summary>
         /// <param name="metric"> The similarity metric to use for vector comparisons. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metric = metric;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

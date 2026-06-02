@@ -13,27 +13,27 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a MCP tool which defines a MCP server endpoint. </summary>
     public partial class MCPToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="MCPToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolDefinition"/>. </summary>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="serverUrl"> The endpoint for the MCP server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
         public MCPToolDefinition(string serverLabel, string serverUrl) : base("mcp")
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(serverUrl, nameof(serverUrl));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(serverUrl, nameof(serverUrl));
 
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
             AllowedTools = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="serverUrl"> The endpoint for the MCP server. </param>
         /// <param name="allowedTools"> List of allowed tools for MCP server. </param>
-        internal MCPToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, IList<string> allowedTools) : base(@type, additionalBinaryDataProperties)
+        internal MCPToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, IList<string> allowedTools) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;

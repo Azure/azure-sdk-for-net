@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalMessageTextDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMessageTextDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalMessageTextDetails"/>. </summary>
         /// <param name="text"> The text data. </param>
         /// <param name="annotations"> A list of annotations associated with this text. </param>
-        internal InternalMessageTextDetails(string text, IEnumerable<MessageTextAnnotation> annotations)
+        internal InternalMessageTextDetails(string text, IEnumerable<global::Azure.AI.Agents.Persistent.MessageTextAnnotation> annotations)
         {
             Text = text;
             Annotations = annotations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMessageTextDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalMessageTextDetails"/>. </summary>
         /// <param name="text"> The text data. </param>
         /// <param name="annotations"> A list of annotations associated with this text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMessageTextDetails(string text, IList<MessageTextAnnotation> annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMessageTextDetails(string text, IList<global::Azure.AI.Agents.Persistent.MessageTextAnnotation> annotations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -40,6 +40,6 @@ namespace Azure.AI.Agents.Persistent
         public string Text { get; }
 
         /// <summary> A list of annotations associated with this text. </summary>
-        public IList<MessageTextAnnotation> Annotations { get; }
+        public IList<global::Azure.AI.Agents.Persistent.MessageTextAnnotation> Annotations { get; }
     }
 }

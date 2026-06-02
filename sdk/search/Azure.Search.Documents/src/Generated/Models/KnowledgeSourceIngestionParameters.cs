@@ -16,15 +16,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeSourceIngestionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/>. </summary>
         public KnowledgeSourceIngestionParameters()
         {
-            IngestionPermissionOptions = new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
+            IngestionPermissionOptions = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/>. </summary>
         /// <param name="identity"> An explicit identity to use for this knowledge source. </param>
         /// <param name="embeddingModel"> Optional vectorizer configuration for vectorizing content. </param>
         /// <param name="chatCompletionModel"> Optional chat completion model for image verbalization or context extraction. </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="assetStore"> Optional asset store configuration for storing extracted assets such as images. </param>
         /// <param name="freshnessPolicy"> Optional freshness policy for biasing retrieval toward newer documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore, FreshnessPolicy freshnessPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore, FreshnessPolicy freshnessPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             EmbeddingModel = embeddingModel;
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public IndexingSchedule IngestionSchedule { get; set; }
 
         /// <summary> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </summary>
-        public IList<KnowledgeSourceIngestionPermissionOption> IngestionPermissionOptions { get; set; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceIngestionPermissionOption> IngestionPermissionOptions { get; set; }
 
         /// <summary> Optional content extraction mode. Default is 'minimal'. </summary>
         public KnowledgeSourceContentExtractionMode? ContentExtractionMode { get; set; }

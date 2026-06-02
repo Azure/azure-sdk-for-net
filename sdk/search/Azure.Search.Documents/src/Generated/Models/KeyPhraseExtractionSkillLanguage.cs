@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by KeyPhraseExtractionSkill. </summary>
-    public readonly partial struct KeyPhraseExtractionSkillLanguage : IEquatable<KeyPhraseExtractionSkillLanguage>
+    public readonly partial struct KeyPhraseExtractionSkillLanguage : IEquatable<global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage>
     {
         private readonly string _value;
         /// <summary> Danish. </summary>
@@ -48,12 +48,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Swedish. </summary>
         private const string SvValue = "sv";
 
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionSkillLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyPhraseExtractionSkillLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -106,34 +106,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Swedish. </summary>
         public static KeyPhraseExtractionSkillLanguage Sv { get; } = new KeyPhraseExtractionSkillLanguage(SvValue);
 
-        /// <summary> Determines if two <see cref="KeyPhraseExtractionSkillLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyPhraseExtractionSkillLanguage left, KeyPhraseExtractionSkillLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KeyPhraseExtractionSkillLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyPhraseExtractionSkillLanguage left, KeyPhraseExtractionSkillLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KeyPhraseExtractionSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator KeyPhraseExtractionSkillLanguage(string value) => new KeyPhraseExtractionSkillLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="KeyPhraseExtractionSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyPhraseExtractionSkillLanguage?(string value) => value == null ? null : new KeyPhraseExtractionSkillLanguage(value);
+        public static implicit operator KeyPhraseExtractionSkillLanguage?(string value) => (value == null) ? null : new KeyPhraseExtractionSkillLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KeyPhraseExtractionSkillLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is KeyPhraseExtractionSkillLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(KeyPhraseExtractionSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyPhraseExtractionSkillLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -13,17 +13,17 @@ namespace Azure.AI.VoiceLive
     /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
     public partial class AzureSemanticEouDetectionMultilingual : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetectionMultilingual"/>. </summary>
-        public AzureSemanticEouDetectionMultilingual() : base(EouDetectionModel.SemanticDetectionV1Multilingual)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticEouDetectionMultilingual"/>. </summary>
+        public AzureSemanticEouDetectionMultilingual() : base(global::Azure.AI.VoiceLive.EouDetectionModel.SemanticDetectionV1Multilingual)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetectionMultilingual"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticEouDetectionMultilingual"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
-        internal AzureSemanticEouDetectionMultilingual(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticEouDetectionMultilingual(EouDetectionModel model, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             ThresholdLevel = thresholdLevel;
             TimeoutMs = timeoutMs;

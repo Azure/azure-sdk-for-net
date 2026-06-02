@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchJobReleaseTaskState enums. </summary>
-    public readonly partial struct BatchJobReleaseTaskState : IEquatable<BatchJobReleaseTaskState>
+    public readonly partial struct BatchJobReleaseTaskState : IEquatable<global::Azure.Compute.Batch.BatchJobReleaseTaskState>
     {
         private readonly string _value;
         /// <summary> The Task is currently running (including retrying). </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> The Task has exited with exit code 0, or the Task has exhausted its retry limit, or the Batch service was unable to start the Task due to Task preparation errors (such as resource file download failures). </summary>
         private const string CompletedValue = "completed";
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobReleaseTaskState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobReleaseTaskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobReleaseTaskState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> The Task has exited with exit code 0, or the Task has exhausted its retry limit, or the Batch service was unable to start the Task due to Task preparation errors (such as resource file download failures). </summary>
         public static BatchJobReleaseTaskState Completed { get; } = new BatchJobReleaseTaskState(CompletedValue);
 
-        /// <summary> Determines if two <see cref="BatchJobReleaseTaskState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobReleaseTaskState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobReleaseTaskState left, BatchJobReleaseTaskState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchJobReleaseTaskState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobReleaseTaskState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobReleaseTaskState left, BatchJobReleaseTaskState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchJobReleaseTaskState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobReleaseTaskState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchJobReleaseTaskState(string value) => new BatchJobReleaseTaskState(value);
 
-        /// <summary> Converts a string to a <see cref="BatchJobReleaseTaskState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobReleaseTaskState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobReleaseTaskState?(string value) => value == null ? null : new BatchJobReleaseTaskState(value);
+        public static implicit operator BatchJobReleaseTaskState?(string value) => (value == null) ? null : new BatchJobReleaseTaskState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchJobReleaseTaskState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchJobReleaseTaskState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchJobReleaseTaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchJobReleaseTaskState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

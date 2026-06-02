@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> The entity recognition analyze text input task request. </summary>
     public partial class TextEntityRecognitionInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextEntityRecognitionInput"/>. </summary>
-        public TextEntityRecognitionInput() : base(AnalyzeTextInputKind.EntityRecognition)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextEntityRecognitionInput"/>. </summary>
+        public TextEntityRecognitionInput() : base(global::Azure.AI.Language.Text.AnalyzeTextInputKind.EntityRecognition)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextEntityRecognitionInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextEntityRecognitionInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> The input to be analyzed. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal TextEntityRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntitiesActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextEntityRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntitiesActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;

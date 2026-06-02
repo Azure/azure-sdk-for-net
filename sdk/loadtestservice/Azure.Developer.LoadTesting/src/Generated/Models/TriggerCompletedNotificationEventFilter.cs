@@ -13,15 +13,15 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
     public partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter
     {
-        /// <summary> Initializes a new instance of <see cref="TriggerCompletedNotificationEventFilter"/>. </summary>
-        public TriggerCompletedNotificationEventFilter() : base(NotificationEventType.TriggerCompleted)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter"/>. </summary>
+        public TriggerCompletedNotificationEventFilter() : base(global::Azure.Developer.LoadTesting.NotificationEventType.TriggerCompleted)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerCompletedNotificationEventFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerCompletedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal TriggerCompletedNotificationEventFilter(NotificationEventType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

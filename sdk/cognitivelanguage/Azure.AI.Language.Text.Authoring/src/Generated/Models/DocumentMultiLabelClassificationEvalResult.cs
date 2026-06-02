@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentMultiLabelClassificationEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentMultiLabelClassificationEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult"/>. </summary>
         /// <param name="expectedClasses"> Represents the document's expected classes. </param>
         /// <param name="predictedClasses"> Represents the document's predicted classes. </param>
         internal DocumentMultiLabelClassificationEvalResult(IEnumerable<string> expectedClasses, IEnumerable<string> predictedClasses)
@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Text.Authoring
             PredictedClasses = predictedClasses.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentMultiLabelClassificationEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult"/>. </summary>
         /// <param name="expectedClasses"> Represents the document's expected classes. </param>
         /// <param name="predictedClasses"> Represents the document's predicted classes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentMultiLabelClassificationEvalResult(IList<string> expectedClasses, IList<string> predictedClasses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentMultiLabelClassificationEvalResult(IList<string> expectedClasses, IList<string> predictedClasses, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedClasses = expectedClasses;
             PredictedClasses = predictedClasses;

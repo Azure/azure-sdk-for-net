@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool, IJsonModel<ResponsesCaptureStructuredOutputsTool>
+    public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool"/> for deserialization. </summary>
         internal ResponsesCaptureStructuredOutputsTool()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesCaptureStructuredOutputsTool(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool.DeserializeResponsesCaptureStructuredOutputsTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesCaptureStructuredOutputsTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesCaptureStructuredOutputsTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesCaptureStructuredOutputsTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesCaptureStructuredOutputsTool IPersistableModel<ResponsesCaptureStructuredOutputsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesCaptureStructuredOutputsTool)PersistableModelCreateCore(data, options);
+        ResponsesCaptureStructuredOutputsTool IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesCaptureStructuredOutputsTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesCaptureStructuredOutputsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesCaptureStructuredOutputsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,67 +70,67 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesCaptureStructuredOutputsTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue<ResponsesStructuredOutputDefinition>(Outputs, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesCaptureStructuredOutputsTool IJsonModel<ResponsesCaptureStructuredOutputsTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesCaptureStructuredOutputsTool)JsonModelCreateCore(ref reader, options);
+        ResponsesCaptureStructuredOutputsTool IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesCaptureStructuredOutputsTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesCaptureStructuredOutputsTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesCaptureStructuredOutputsTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool.DeserializeResponsesCaptureStructuredOutputsTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesCaptureStructuredOutputsTool DeserializeResponsesCaptureStructuredOutputsTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = default;
             ResponsesStructuredOutputDefinition outputs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,26 +151,26 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Extensions.OpenAI.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
+                    outputs = global::Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesCaptureStructuredOutputsTool(
@@ -178,7 +178,7 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>()),
                 outputs);
         }
     }

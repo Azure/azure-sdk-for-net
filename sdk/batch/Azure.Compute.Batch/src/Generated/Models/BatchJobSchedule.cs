@@ -18,20 +18,20 @@ namespace Azure.Compute.Batch
     public partial class BatchJobSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSchedule"/>. </summary>
         /// <param name="jobSpecification"> The details of the Jobs to be created on this schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobSpecification"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobSpecification"/> is null. </exception>
         public BatchJobSchedule(BatchJobSpecification jobSpecification)
         {
-            Argument.AssertNotNull(jobSpecification, nameof(jobSpecification));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(jobSpecification, nameof(jobSpecification));
 
             JobSpecification = jobSpecification;
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSchedule"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. </param>
         /// <param name="displayName"> The display name for the schedule. </param>
         /// <param name="uri"> The URL of the Job Schedule. </param>
@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch
         /// <param name="metadata"> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="jobScheduleStatistics"> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedule(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobScheduleState state, DateTimeOffset stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<BatchMetadataItem> metadata, BatchJobScheduleStatistics jobScheduleStatistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobSchedule(string id, string displayName, global::System.Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobScheduleState state, DateTimeOffset stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, BatchJobScheduleStatistics jobScheduleStatistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -75,7 +75,7 @@ namespace Azure.Compute.Batch
         public string DisplayName { get; }
 
         /// <summary> The URL of the Job Schedule. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The ETag of the Job Schedule. This is an opaque string. You can use it to detect whether the Job Schedule has changed between requests. In particular, you can be pass the ETag with an Update Job Schedule request to specify that your changes should take effect only if nobody else has modified the schedule in the meantime. </summary>
         public ETag ETag { get; }
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
         public BatchJobScheduleExecutionInfo ExecutionInfo { get; }
 
         /// <summary> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
         public BatchJobScheduleStatistics JobScheduleStatistics { get; }

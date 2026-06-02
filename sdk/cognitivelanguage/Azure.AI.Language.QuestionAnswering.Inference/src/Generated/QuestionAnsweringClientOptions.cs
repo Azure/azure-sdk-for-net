@@ -12,48 +12,48 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    /// <summary> Client options for <see cref="QuestionAnsweringClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient"/>. </summary>
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
+        private const global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion.V2025_05_15_Preview;
 
         /// <summary> Initializes a new instance of QuestionAnsweringClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public QuestionAnsweringClientOptions(ServiceVersion version = LatestVersion)
+        public QuestionAnsweringClientOptions(global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_04_01 => "2023-04-01",
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion.V2023_04_01 => "2023-04-01",
+                global::Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal QuestionAnsweringClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-05-15-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
             string defaultLanguage = section["DefaultLanguage"];
             if (!string.IsNullOrEmpty(defaultLanguage))
             {
-                DefaultLanguage = defaultLanguage;
+                this.DefaultLanguage = defaultLanguage;
             }
-            if (section["Audience"] is string audience)
+            if ((section["Audience"] is string audience))
             {
-                Audience = new QuestionAnsweringAudience(audience);
+                this.Audience = new QuestionAnsweringAudience(audience);
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

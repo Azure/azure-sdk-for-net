@@ -12,17 +12,17 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventInputAudioBufferAppend : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioBufferAppend"/>. </summary>
         /// <param name="audio">
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        public ClientEventInputAudioBufferAppend(string audio) : base(ClientEventType.InputAudioBufferAppend)
+        public ClientEventInputAudioBufferAppend(string audio) : base(global::Azure.AI.VoiceLive.ClientEventType.InputAudioBufferAppend)
         {
             Audio = audio;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioBufferAppend"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        internal ClientEventInputAudioBufferAppend(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioBufferAppend(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string audio) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Audio = audio;
         }

@@ -13,18 +13,18 @@ namespace Azure.AI.VoiceLive
     /// <summary> Details for a cancelled response. </summary>
     public partial class ResponseCancelledDetails : ResponseStatusDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseCancelledDetails"/>. </summary>
         /// <param name="reason"></param>
-        internal ResponseCancelledDetails(ResponseCancelledDetailsReason reason) : base(SessionResponseStatus.Cancelled)
+        internal ResponseCancelledDetails(ResponseCancelledDetailsReason reason) : base(global::Azure.AI.VoiceLive.SessionResponseStatus.Cancelled)
         {
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseCancelledDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reason"></param>
-        internal ResponseCancelledDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCancelledDetailsReason reason) : base(@type, additionalBinaryDataProperties)
+        internal ResponseCancelledDetails(SessionResponseStatus @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseCancelledDetailsReason reason) : base(@type, additionalBinaryDataProperties)
         {
             Reason = reason;
         }

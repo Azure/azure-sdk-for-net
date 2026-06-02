@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Describes the relationship between the days and the expiration of this vector store. </summary>
-    public readonly partial struct VectorStoreExpirationPolicyAnchor : IEquatable<VectorStoreExpirationPolicyAnchor>
+    public readonly partial struct VectorStoreExpirationPolicyAnchor : IEquatable<global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor>
     {
         private readonly string _value;
         /// <summary> The expiration policy is based on the last time the vector store was active. </summary>
         private const string LastActiveAtValue = "last_active_at";
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreExpirationPolicyAnchor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorStoreExpirationPolicyAnchor(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The expiration policy is based on the last time the vector store was active. </summary>
         public static VectorStoreExpirationPolicyAnchor LastActiveAt { get; } = new VectorStoreExpirationPolicyAnchor(LastActiveAtValue);
 
-        /// <summary> Determines if two <see cref="VectorStoreExpirationPolicyAnchor"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorStoreExpirationPolicyAnchor left, VectorStoreExpirationPolicyAnchor right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorStoreExpirationPolicyAnchor"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorStoreExpirationPolicyAnchor left, VectorStoreExpirationPolicyAnchor right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreExpirationPolicyAnchor"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorStoreExpirationPolicyAnchor(string value) => new VectorStoreExpirationPolicyAnchor(value);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreExpirationPolicyAnchor"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicyAnchor"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreExpirationPolicyAnchor?(string value) => value == null ? null : new VectorStoreExpirationPolicyAnchor(value);
+        public static implicit operator VectorStoreExpirationPolicyAnchor?(string value) => (value == null) ? null : new VectorStoreExpirationPolicyAnchor(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorStoreExpirationPolicyAnchor other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorStoreExpirationPolicyAnchor other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorStoreExpirationPolicyAnchor other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorStoreExpirationPolicyAnchor other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

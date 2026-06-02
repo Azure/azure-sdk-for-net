@@ -9,10 +9,10 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class UnknownFunctionShellToolParamEnvironment : ResponsesFunctionShellToolParamEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellToolParamEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.UnknownFunctionShellToolParamEnvironment"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

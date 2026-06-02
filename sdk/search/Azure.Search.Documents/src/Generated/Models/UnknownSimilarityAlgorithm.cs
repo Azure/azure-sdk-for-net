@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownSimilarityAlgorithm : SimilarityAlgorithm
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSimilarityAlgorithm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownSimilarityAlgorithm"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSimilarityAlgorithm(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownSimilarityAlgorithm(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((odataType ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

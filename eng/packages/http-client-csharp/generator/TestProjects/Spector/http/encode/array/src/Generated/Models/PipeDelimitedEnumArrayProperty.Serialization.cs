@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode._Array
 {
-    public partial class PipeDelimitedEnumArrayProperty : IJsonModel<PipeDelimitedEnumArrayProperty>
+    public partial class PipeDelimitedEnumArrayProperty : IJsonModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>
     {
         internal PipeDelimitedEnumArrayProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode._Array
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<PipeDelimitedEnumArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        PipeDelimitedEnumArrayProperty IPersistableModel<PipeDelimitedEnumArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        PipeDelimitedEnumArrayProperty IPersistableModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<PipeDelimitedEnumArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="pipeDelimitedEnumArrayProperty"> The <see cref="PipeDelimitedEnumArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="pipeDelimitedEnumArrayProperty"> The <see cref="global::Encode._Array.PipeDelimitedEnumArrayProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(PipeDelimitedEnumArrayProperty pipeDelimitedEnumArrayProperty) => throw null;
 
         public static explicit operator PipeDelimitedEnumArrayProperty(Response response) => throw null;
 
-        void IJsonModel<PipeDelimitedEnumArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        PipeDelimitedEnumArrayProperty IJsonModel<PipeDelimitedEnumArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        PipeDelimitedEnumArrayProperty IJsonModel<global::Encode._Array.PipeDelimitedEnumArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual PipeDelimitedEnumArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

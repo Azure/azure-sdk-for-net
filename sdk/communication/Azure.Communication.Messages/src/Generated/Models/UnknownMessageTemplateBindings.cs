@@ -12,10 +12,10 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownMessageTemplateBindings : MessageTemplateBindings
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageTemplateBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownMessageTemplateBindings"/>. </summary>
         /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

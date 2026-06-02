@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferAccepted event. </summary>
     public partial class AcsRouterWorkerOfferAcceptedEventData : AcsRouterWorkerEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
         internal AcsRouterWorkerOfferAcceptedEventData()
         {
             WorkerLabels = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             JobTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
-        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
+        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;

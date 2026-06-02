@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Tool search tool. </summary>
-    public partial class ResponsesToolSearchToolParam : ResponsesTool, IJsonModel<ResponsesToolSearchToolParam>
+    public partial class ResponsesToolSearchToolParam : ResponsesTool, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesToolSearchToolParam(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam.DeserializeResponsesToolSearchToolParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesToolSearchToolParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesToolSearchToolParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesToolSearchToolParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesToolSearchToolParam IPersistableModel<ResponsesToolSearchToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesToolSearchToolParam)PersistableModelCreateCore(data, options);
+        ResponsesToolSearchToolParam IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesToolSearchToolParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesToolSearchToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesToolSearchToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,56 +65,56 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesToolSearchToolParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Execution))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Execution))
             {
                 writer.WritePropertyName("execution"u8);
                 writer.WriteStringValue(Execution.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Parameters))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue<ResponsesEmptyModelParam>(Parameters, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesToolSearchToolParam IJsonModel<ResponsesToolSearchToolParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesToolSearchToolParam)JsonModelCreateCore(ref reader, options);
+        ResponsesToolSearchToolParam IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesToolSearchToolParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesToolSearchToolParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesToolSearchToolParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam.DeserializeResponsesToolSearchToolParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesToolSearchToolParam DeserializeResponsesToolSearchToolParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ResponsesToolSearchExecutionType? execution = default;
             string description = default;
             ResponsesEmptyModelParam parameters = default;
@@ -127,7 +127,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("execution"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -136,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("description"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         description = null;
                         continue;
@@ -146,17 +146,17 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         parameters = null;
                         continue;
                     }
-                    parameters = ResponsesEmptyModelParam.DeserializeResponsesEmptyModelParam(prop.Value, options);
+                    parameters = global::Azure.AI.Extensions.OpenAI.ResponsesEmptyModelParam.DeserializeResponsesEmptyModelParam(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesToolSearchToolParam(@type, additionalBinaryDataProperties, execution, description, parameters);

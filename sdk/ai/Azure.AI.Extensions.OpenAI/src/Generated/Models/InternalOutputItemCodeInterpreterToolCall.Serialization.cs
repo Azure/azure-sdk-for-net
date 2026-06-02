@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalOutputItemCodeInterpreterToolCall : AgentResponseItem, IJsonModel<InternalOutputItemCodeInterpreterToolCall>
+    internal partial class InternalOutputItemCodeInterpreterToolCall : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemCodeInterpreterToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall"/> for deserialization. </summary>
         internal InternalOutputItemCodeInterpreterToolCall()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalOutputItemCodeInterpreterToolCall(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall.DeserializeInternalOutputItemCodeInterpreterToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemCodeInterpreterToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemCodeInterpreterToolCall IPersistableModel<InternalOutputItemCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemCodeInterpreterToolCall)PersistableModelCreateCore(data, options);
+        InternalOutputItemCodeInterpreterToolCall IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalOutputItemCodeInterpreterToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalOutputItemCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,17 +69,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemCodeInterpreterToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("container_id"u8);
             writer.WriteStringValue(ContainerId);
-            if (Optional.IsDefined(Code))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -88,13 +88,13 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 writer.WriteNull("code"u8);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (BinaryData item in Outputs)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -102,9 +102,9 @@ namespace Azure.AI.Extensions.OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,26 +118,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemCodeInterpreterToolCall IJsonModel<InternalOutputItemCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalOutputItemCodeInterpreterToolCall)JsonModelCreateCore(ref reader, options);
+        InternalOutputItemCodeInterpreterToolCall IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalOutputItemCodeInterpreterToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemCodeInterpreterToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalOutputItemCodeInterpreterToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall.DeserializeInternalOutputItemCodeInterpreterToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalOutputItemCodeInterpreterToolCall DeserializeInternalOutputItemCodeInterpreterToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -145,11 +145,11 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InputItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
-            IList<BinaryData> outputs = default;
+            IList<global::System.BinaryData> outputs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -164,11 +164,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -188,7 +188,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("code"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         code = null;
                         continue;
@@ -198,29 +198,29 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
-                        outputs = new ChangeTrackingList<BinaryData>();
+                        outputs = new ChangeTrackingList<global::System.BinaryData>();
                         continue;
                     }
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<global::System.BinaryData> array = new List<global::System.BinaryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(global::System.BinaryData.FromString(item.GetRawText()));
                         }
                     }
                     outputs = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalOutputItemCodeInterpreterToolCall(

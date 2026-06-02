@@ -18,11 +18,11 @@ namespace Azure.AI.Projects.Agents
     {
         private readonly MultipartFormDataContent _multipartContent;
         private static readonly Random _random = new Random();
-        private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        private static readonly Char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
         public MultiPartFormDataBinaryContent()
         {
-            _multipartContent = new MultipartFormDataContent(CreateBoundary());
+            _multipartContent = new MultipartFormDataContent(global::Azure.AI.Projects.Agents.MultiPartFormDataBinaryContent.CreateBoundary());
         }
 
         /// <summary> Gets the ContentType. </summary>
@@ -40,13 +40,13 @@ namespace Azure.AI.Projects.Agents
         private static string CreateBoundary()
         {
             Span<char> chars = new char[70];
-            byte[] random = new byte[70];
+            Byte[] random = new byte[70];
             _random.NextBytes(random);
-            int mask = 255 >> 2;
+            int mask = (255 >> 2);
             int i = 0;
-            for (; i < 70; i++)
+            for (; (i < 70); i++)
             {
-                chars[i] = _boundaryValues[random[i] & mask];
+                chars[i] = _boundaryValues[(random[i] & mask)];
             }
             return chars.ToString();
         }
@@ -57,10 +57,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(string content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Add(new StringContent(content), name, filename, contentType);
+            this.Add(new StringContent(content), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -69,11 +69,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(int content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            string value = content.ToString("G", CultureInfo.InvariantCulture);
-            Add(new StringContent(value), name, filename, contentType);
+            string value = content.ToString("G", global::System.Globalization.CultureInfo.InvariantCulture);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -82,11 +82,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(long content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            string value = content.ToString("G", CultureInfo.InvariantCulture);
-            Add(new StringContent(value), name, filename, contentType);
+            string value = content.ToString("G", global::System.Globalization.CultureInfo.InvariantCulture);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -95,11 +95,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(float content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            string value = content.ToString("G", CultureInfo.InvariantCulture);
-            Add(new StringContent(value), name, filename, contentType);
+            string value = content.ToString("G", global::System.Globalization.CultureInfo.InvariantCulture);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -108,11 +108,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(double content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            string value = content.ToString("G", CultureInfo.InvariantCulture);
-            Add(new StringContent(value), name, filename, contentType);
+            string value = content.ToString("G", global::System.Globalization.CultureInfo.InvariantCulture);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -121,11 +121,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(decimal content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            string value = content.ToString("G", CultureInfo.InvariantCulture);
-            Add(new StringContent(value), name, filename, contentType);
+            string value = content.ToString("G", global::System.Globalization.CultureInfo.InvariantCulture);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -134,11 +134,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(bool content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             string value = content ? "true" : "false";
-            Add(new StringContent(value), name, filename, contentType);
+            this.Add(new StringContent(value), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -147,22 +147,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(Stream content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Add(new StreamContent(content), name, filename, contentType);
+            this.Add(new StreamContent(content), name, filename, contentType);
         }
 
         /// <param name="content"></param>
         /// <param name="name"></param>
         /// <param name="filename"></param>
         /// <param name="contentType"></param>
-        public void Add(byte[] content, string name, string filename = default, string contentType = default)
+        public void Add(Byte[] content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Add(new ByteArrayContent(content), name, filename, contentType);
+            this.Add(new ByteArrayContent(content), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -171,10 +171,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         public void Add(BinaryData content, string name, string filename = default, string contentType = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Add(new ByteArrayContent(content.ToArray()), name, filename, contentType);
+            this.Add(new ByteArrayContent(content.ToArray()), name, filename, contentType);
         }
 
         /// <param name="content"></param>
@@ -183,14 +183,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"></param>
         private void Add(HttpContent content, string name, string filename, string contentType)
         {
-            if (contentType != null)
+            if ((contentType != null))
             {
-                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
-                AddContentTypeHeader(content, contentType);
+                global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+                global::Azure.AI.Projects.Agents.MultiPartFormDataBinaryContent.AddContentTypeHeader(content, contentType);
             }
-            if (filename != null)
+            if ((filename != null))
             {
-                Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+                global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(filename, nameof(filename));
                 _multipartContent.Add(content, name, filename);
             }
             else
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
-            if (_multipartContent.Headers.ContentLength is long contentLength)
+            if ((_multipartContent.Headers.ContentLength is long contentLength))
             {
                 length = contentLength;
                 return true;

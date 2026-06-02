@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchStartTaskInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchStartTaskInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchStartTaskInfo"/>. </summary>
         /// <param name="state"> The state of the StartTask on the Compute Node. </param>
         /// <param name="startTime"> The time at which the StartTask started running. This value is reset every time the Task is restarted or retried (that is, this is the most recent time at which the StartTask started running). </param>
         /// <param name="retryCount"> The number of times the Task has been retried by the Batch service. Task application failures (non-zero exit code) are retried, pre-processing errors (the Task could not be run) and file upload errors are not retried. The Batch service will retry the Task up to the limit specified by the constraints. </param>
@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch
             RetryCount = retryCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchStartTaskInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchStartTaskInfo"/>. </summary>
         /// <param name="state"> The state of the StartTask on the Compute Node. </param>
         /// <param name="startTime"> The time at which the StartTask started running. This value is reset every time the Task is restarted or retried (that is, this is the most recent time at which the StartTask started running). </param>
         /// <param name="endTime"> The time at which the StartTask stopped running. This is the end time of the most recent run of the StartTask, if that run has completed (even if that run failed and a retry is pending). This element is not present if the StartTask is currently running. </param>
@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastRetryTime"> The most recent time at which a retry of the Task started running. This element is present only if the Task was retried (i.e. retryCount is nonzero). If present, this is typically the same as startTime, but may be different if the Task has been restarted for reasons other than retry; for example, if the Compute Node was rebooted during a retry, then the startTime is updated but the lastRetryTime is not. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchStartTaskInfo(BatchStartTaskState state, DateTimeOffset startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, int retryCount, DateTimeOffset? lastRetryTime, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchStartTaskInfo(BatchStartTaskState state, DateTimeOffset startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, int retryCount, DateTimeOffset? lastRetryTime, BatchTaskExecutionResult? result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StartTime = startTime;

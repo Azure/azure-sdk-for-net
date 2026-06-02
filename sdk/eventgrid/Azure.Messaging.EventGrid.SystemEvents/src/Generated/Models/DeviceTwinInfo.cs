@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceTwinInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo"/>. </summary>
         /// <param name="authenticationType"> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </param>
         /// <param name="connectionState"> Whether the device is connected or disconnected. </param>
         /// <param name="deviceId"> The unique identifier of the device twin. </param>
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             X509Thumbprint = x509Thumbprint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo"/>. </summary>
         /// <param name="authenticationType"> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </param>
         /// <param name="cloudToDeviceMessageCount"> Count of cloud to device messages sent to this device. </param>
         /// <param name="connectionState"> Whether the device is connected or disconnected. </param>
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> An integer that is incremented by one each time the device twin is updated. </param>
         /// <param name="x509Thumbprint"> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTwinInfo(string authenticationType, float? cloudToDeviceMessageCount, string connectionState, string deviceId, string etag, string lastActivityTime, DeviceTwinInfoProperties properties, string status, string statusUpdateTime, float? version, DeviceTwinInfoX509Thumbprint x509Thumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTwinInfo(string authenticationType, float? cloudToDeviceMessageCount, string connectionState, string deviceId, string etag, string lastActivityTime, DeviceTwinInfoProperties properties, string status, string statusUpdateTime, float? version, DeviceTwinInfoX509Thumbprint x509Thumbprint, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             CloudToDeviceMessageCount = cloudToDeviceMessageCount;

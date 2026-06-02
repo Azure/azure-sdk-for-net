@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Client options for <see cref="BatchClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Compute.Batch.BatchClient"/>. </summary>
     public partial class BatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01;
+        private const global::Azure.Compute.Batch.BatchClientOptions.ServiceVersion LatestVersion = global::Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2025_06_01;
 
         /// <summary> Initializes a new instance of BatchClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public BatchClientOptions(ServiceVersion version = LatestVersion)
+        public BatchClientOptions(global::Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2025_06_01 => "2025-06-01",
+                global::Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2025_06_01 => "2025-06-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of BatchClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal BatchClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-06-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

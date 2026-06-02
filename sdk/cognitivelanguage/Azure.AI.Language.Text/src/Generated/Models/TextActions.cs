@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class TextActions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextActions"/>. </summary>
         /// <param name="completed"> Count of completed tasks. </param>
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
@@ -27,17 +27,17 @@ namespace Azure.AI.Language.Text
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeTextOperationResult>();
+            Items = new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextActions"/>. </summary>
         /// <param name="completed"> Count of completed tasks. </param>
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze text job results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextActions(int completed, int failed, int inProgress, int total, IList<AnalyzeTextOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextActions(int completed, int failed, int inProgress, int total, IList<global::Azure.AI.Language.Text.AnalyzeTextOperationResult> items, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Text
         public int Total { get; }
 
         /// <summary> Enumerable of Analyze text job results. </summary>
-        public IList<AnalyzeTextOperationResult> Items { get; }
+        public IList<global::Azure.AI.Language.Text.AnalyzeTextOperationResult> Items { get; }
     }
 }

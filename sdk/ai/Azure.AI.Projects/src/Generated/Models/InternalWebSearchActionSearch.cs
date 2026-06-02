@@ -11,24 +11,24 @@ namespace OpenAI
     internal partial class InternalWebSearchActionSearch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchActionSearch"/>. </summary>
         /// <param name="query"> [DEPRECATED] The search query. </param>
         public InternalWebSearchActionSearch(string query)
         {
             Query = query;
             Queries = new ChangeTrackingList<string>();
-            Sources = new ChangeTrackingList<WebSearchActionSearchSources>();
+            Sources = new ChangeTrackingList<global::Azure.AI.Projects.WebSearchActionSearchSources>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchActionSearch"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="query"> [DEPRECATED] The search query. </param>
         /// <param name="queries"> The search queries. </param>
         /// <param name="sources"> The sources used in the search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalWebSearchActionSearch(string @type, string query, IList<string> queries, IList<WebSearchActionSearchSources> sources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalWebSearchActionSearch(string @type, string query, IList<string> queries, IList<global::Azure.AI.Projects.WebSearchActionSearchSources> sources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Query = query;
@@ -47,6 +47,6 @@ namespace OpenAI
         public IList<string> Queries { get; }
 
         /// <summary> The sources used in the search. </summary>
-        public IList<WebSearchActionSearchSources> Sources { get; }
+        public IList<global::Azure.AI.Projects.WebSearchActionSearchSources> Sources { get; }
     }
 }

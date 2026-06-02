@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> Represents the orchestration options for a Conversational project target. </summary>
     public partial class ExportedConversationOrchestrationDetails : ExportedOrchestrationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestrationDetails"/>. </summary>
         /// <param name="conversationOrchestration"> The Conversational project target details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationOrchestration"/> is null. </exception>
-        public ExportedConversationOrchestrationDetails(ExportedConversationOrchestration conversationOrchestration) : base(OrchestrationTargetProjectKind.Conversation)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationOrchestration"/> is null. </exception>
+        public ExportedConversationOrchestrationDetails(ExportedConversationOrchestration conversationOrchestration) : base(global::Azure.AI.Language.Conversations.Authoring.OrchestrationTargetProjectKind.Conversation)
         {
-            Argument.AssertNotNull(conversationOrchestration, nameof(conversationOrchestration));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(conversationOrchestration, nameof(conversationOrchestration));
 
             ConversationOrchestration = conversationOrchestration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedConversationOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestrationDetails"/>. </summary>
         /// <param name="targetProjectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conversationOrchestration"> The Conversational project target details. </param>
-        internal ExportedConversationOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportedConversationOrchestration conversationOrchestration) : base(targetProjectKind, additionalBinaryDataProperties)
+        internal ExportedConversationOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ExportedConversationOrchestration conversationOrchestration) : base(targetProjectKind, additionalBinaryDataProperties)
         {
             ConversationOrchestration = conversationOrchestration;
         }

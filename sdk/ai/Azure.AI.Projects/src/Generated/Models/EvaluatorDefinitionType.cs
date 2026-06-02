@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The type of evaluator definition. </summary>
-    public readonly partial struct EvaluatorDefinitionType : IEquatable<EvaluatorDefinitionType>
+    public readonly partial struct EvaluatorDefinitionType : IEquatable<global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType>
     {
         private readonly string _value;
         /// <summary> Prompt-based definition. </summary>
@@ -25,12 +25,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
         private const string RubricValue = "rubric";
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorDefinitionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EvaluatorDefinitionType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -53,34 +53,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
         public static EvaluatorDefinitionType Rubric { get; } = new EvaluatorDefinitionType(RubricValue);
 
-        /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EvaluatorDefinitionType left, EvaluatorDefinitionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EvaluatorDefinitionType left, EvaluatorDefinitionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorDefinitionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EvaluatorDefinitionType(string value) => new EvaluatorDefinitionType(value);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorDefinitionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorDefinitionType?(string value) => value == null ? null : new EvaluatorDefinitionType(value);
+        public static implicit operator EvaluatorDefinitionType?(string value) => (value == null) ? null : new EvaluatorDefinitionType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EvaluatorDefinitionType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EvaluatorDefinitionType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EvaluatorDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EvaluatorDefinitionType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

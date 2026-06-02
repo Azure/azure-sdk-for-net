@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct ConversationAuthoringProjectKind : IEquatable<ConversationAuthoringProjectKind>
+    public readonly partial struct ConversationAuthoringProjectKind : IEquatable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind>
     {
         private readonly string _value;
         /// <summary> A project to build natural language into apps, bots, and IoT devices. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> A project to build conversation summarization models which are able to summarize long conversations. </summary>
         private const string CustomConversationSummarizationValue = "CustomConversationSummarization";
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationAuthoringProjectKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> A project to build conversation summarization models which are able to summarize long conversations. </summary>
         public static ConversationAuthoringProjectKind CustomConversationSummarization { get; } = new ConversationAuthoringProjectKind(CustomConversationSummarizationValue);
 
-        /// <summary> Determines if two <see cref="ConversationAuthoringProjectKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationAuthoringProjectKind left, ConversationAuthoringProjectKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConversationAuthoringProjectKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationAuthoringProjectKind left, ConversationAuthoringProjectKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConversationAuthoringProjectKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConversationAuthoringProjectKind(string value) => new ConversationAuthoringProjectKind(value);
 
-        /// <summary> Converts a string to a <see cref="ConversationAuthoringProjectKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationAuthoringProjectKind?(string value) => value == null ? null : new ConversationAuthoringProjectKind(value);
+        public static implicit operator ConversationAuthoringProjectKind?(string value) => (value == null) ? null : new ConversationAuthoringProjectKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConversationAuthoringProjectKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConversationAuthoringProjectKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConversationAuthoringProjectKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConversationAuthoringProjectKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

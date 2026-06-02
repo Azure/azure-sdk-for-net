@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The language of the query. </summary>
-    public readonly partial struct QueryLanguage : IEquatable<QueryLanguage>
+    public readonly partial struct QueryLanguage : IEquatable<global::Azure.Search.Documents.Models.QueryLanguage>
     {
         private readonly string _value;
         /// <summary> Query language not specified. </summary>
@@ -160,12 +160,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Query language value for Urdu (Pakistan). </summary>
         private const string UrPkValue = "ur-pk";
 
-        /// <summary> Initializes a new instance of <see cref="QueryLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -386,34 +386,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> Query language value for Urdu (Pakistan). </summary>
         public static QueryLanguage UrPk { get; } = new QueryLanguage(UrPkValue);
 
-        /// <summary> Determines if two <see cref="QueryLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QueryLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryLanguage left, QueryLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="QueryLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QueryLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryLanguage left, QueryLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="QueryLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QueryLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator QueryLanguage(string value) => new QueryLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="QueryLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QueryLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryLanguage?(string value) => value == null ? null : new QueryLanguage(value);
+        public static implicit operator QueryLanguage?(string value) => (value == null) ? null : new QueryLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QueryLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is QueryLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(QueryLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueryLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

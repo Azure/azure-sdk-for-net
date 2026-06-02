@@ -9,35 +9,35 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Client options for <see cref="InternalProjectsClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Projects.Agents.InternalProjectsClient"/>. </summary>
     public partial class AgentAdministrationClientOptions : ClientPipelineOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const global::Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of InternalProjectsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AgentAdministrationClientOptions(ServiceVersion version = LatestVersion)
+        public AgentAdministrationClientOptions(global::Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V1 => "v1",
+                global::Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
         }
 
         /// <summary> Initializes a new instance of InternalProjectsClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal AgentAdministrationClientOptions(IConfigurationSection section) : base(section)
         {
             Version = "v1";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
         }
 

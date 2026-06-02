@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public readonly partial struct AudioInputTranscriptionOptionsModel : IEquatable<AudioInputTranscriptionOptionsModel>
+    public readonly partial struct AudioInputTranscriptionOptionsModel : IEquatable<global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel>
     {
         private readonly string _value;
         private const string Whisper1Value = "whisper-1";
@@ -19,12 +19,12 @@ namespace Azure.AI.VoiceLive
         private const string Gpt4oMiniTranscribeValue = "gpt-4o-mini-transcribe";
         private const string AzureSpeechValue = "azure-speech";
 
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptionsModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AudioInputTranscriptionOptionsModel(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the AzureSpeech. </summary>
         public static AudioInputTranscriptionOptionsModel AzureSpeech { get; } = new AudioInputTranscriptionOptionsModel(AzureSpeechValue);
 
-        /// <summary> Determines if two <see cref="AudioInputTranscriptionOptionsModel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AudioInputTranscriptionOptionsModel left, AudioInputTranscriptionOptionsModel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AudioInputTranscriptionOptionsModel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AudioInputTranscriptionOptionsModel left, AudioInputTranscriptionOptionsModel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AudioInputTranscriptionOptionsModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AudioInputTranscriptionOptionsModel(string value) => new AudioInputTranscriptionOptionsModel(value);
 
-        /// <summary> Converts a string to a <see cref="AudioInputTranscriptionOptionsModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AudioInputTranscriptionOptionsModel?(string value) => value == null ? null : new AudioInputTranscriptionOptionsModel(value);
+        public static implicit operator AudioInputTranscriptionOptionsModel?(string value) => (value == null) ? null : new AudioInputTranscriptionOptionsModel(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AudioInputTranscriptionOptionsModel other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AudioInputTranscriptionOptionsModel other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AudioInputTranscriptionOptionsModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AudioInputTranscriptionOptionsModel other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

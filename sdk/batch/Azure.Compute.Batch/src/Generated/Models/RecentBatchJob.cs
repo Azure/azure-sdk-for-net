@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class RecentBatchJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecentBatchJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.RecentBatchJob"/>. </summary>
         internal RecentBatchJob()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecentBatchJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.RecentBatchJob"/>. </summary>
         /// <param name="id"> The ID of the Job. </param>
         /// <param name="uri"> The URL of the Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecentBatchJob(string id, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecentBatchJob(string id, global::System.Uri uri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
@@ -36,6 +36,6 @@ namespace Azure.Compute.Batch
         public string Id { get; }
 
         /// <summary> The URL of the Job. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
     }
 }

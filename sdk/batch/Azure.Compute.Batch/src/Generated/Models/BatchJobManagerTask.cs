@@ -38,26 +38,26 @@ namespace Azure.Compute.Batch
     public partial class BatchJobManagerTask
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobManagerTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </param>
         /// <param name="commandLine"> The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
         public BatchJobManagerTask(string id, string commandLine)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(commandLine, nameof(commandLine));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(commandLine, nameof(commandLine));
 
             Id = id;
             CommandLine = commandLine;
-            ResourceFiles = new ChangeTrackingList<ResourceFile>();
-            OutputFiles = new ChangeTrackingList<OutputFile>();
-            EnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
+            ResourceFiles = new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>();
+            OutputFiles = new ChangeTrackingList<global::Azure.Compute.Batch.OutputFile>();
+            EnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobManagerTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </param>
         /// <param name="displayName"> The display name of the Job Manager Task. It need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="commandLine"> The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
@@ -82,7 +82,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="allowLowPriorityNode"> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<BatchApplicationPackageReference> applicationPackageReferences, bool? allowLowPriorityNode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<global::Azure.Compute.Batch.ResourceFile> resourceFiles, IList<global::Azure.Compute.Batch.OutputFile> outputFiles, IList<global::Azure.Compute.Batch.EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, bool? allowLowPriorityNode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -114,13 +114,13 @@ namespace Azure.Compute.Batch
         public BatchTaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary> A list of files that the Batch service will download to the Compute Node before running the command line. Files listed under this element are located in the Task's working directory. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
-        public IList<ResourceFile> ResourceFiles { get; }
+        public IList<global::Azure.Compute.Batch.ResourceFile> ResourceFiles { get; }
 
         /// <summary> A list of files that the Batch service will upload from the Compute Node after running the command line. For multi-instance Tasks, the files will only be uploaded from the Compute Node on which the primary Task is executed. </summary>
-        public IList<OutputFile> OutputFiles { get; }
+        public IList<global::Azure.Compute.Batch.OutputFile> OutputFiles { get; }
 
         /// <summary> A list of environment variable settings for the Job Manager Task. </summary>
-        public IList<EnvironmentSetting> EnvironmentSettings { get; }
+        public IList<global::Azure.Compute.Batch.EnvironmentSetting> EnvironmentSettings { get; }
 
         /// <summary> Constraints that apply to the Job Manager Task. </summary>
         public BatchTaskConstraints Constraints { get; set; }
@@ -147,7 +147,7 @@ namespace Azure.Compute.Batch
         /// Package cannot be installed, for example because the package has been deleted
         /// or because download failed, the Task fails.
         /// </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </summary>
         public bool? AllowLowPriorityNode { get; set; }

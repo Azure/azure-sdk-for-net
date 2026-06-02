@@ -16,57 +16,57 @@ namespace Azure.Communication.JobRouter
     /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
     /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
     /// SuspendMode: Used when matching workers to a job needs to be suspended.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/>, and <see cref="SuspendMode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.JobRouter.ScheduleAndSuspendMode"/>, <see cref="Azure.Communication.JobRouter.QueueAndMatchMode"/>, and <see cref="Azure.Communication.JobRouter.SuspendMode"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownJobMatchingMode))]
-    public abstract partial class JobMatchingMode : IJsonModel<JobMatchingMode>
+    [PersistableModelProxyAttribute(typeof(UnknownJobMatchingMode))]
+    public abstract partial class JobMatchingMode : IJsonModel<global::Azure.Communication.JobRouter.JobMatchingMode>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JobMatchingMode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJobMatchingMode(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.JobMatchingMode.DeserializeJobMatchingMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.JobMatchingMode)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.JobMatchingMode)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobMatchingMode>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobMatchingMode IPersistableModel<JobMatchingMode>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        JobMatchingMode IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JobMatchingMode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JobMatchingMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.JobMatchingMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,14 +74,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.JobMatchingMode)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -89,9 +89,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -100,26 +100,26 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobMatchingMode IJsonModel<JobMatchingMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        JobMatchingMode IJsonModel<global::Azure.Communication.JobRouter.JobMatchingMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JobMatchingMode JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.JobMatchingMode)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobMatchingMode(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.JobMatchingMode.DeserializeJobMatchingMode(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -128,14 +128,14 @@ namespace Azure.Communication.JobRouter
                 switch (discriminator.GetString())
                 {
                     case "scheduleAndSuspend":
-                        return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
+                        return global::Azure.Communication.JobRouter.ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "queueAndMatch":
-                        return QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
+                        return global::Azure.Communication.JobRouter.QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
                     case "suspend":
-                        return SuspendMode.DeserializeSuspendMode(element, options);
+                        return global::Azure.Communication.JobRouter.SuspendMode.DeserializeSuspendMode(element, options);
                 }
             }
-            return UnknownJobMatchingMode.DeserializeUnknownJobMatchingMode(element, options);
+            return global::Azure.Communication.JobRouter.UnknownJobMatchingMode.DeserializeUnknownJobMatchingMode(element, options);
         }
     }
 }

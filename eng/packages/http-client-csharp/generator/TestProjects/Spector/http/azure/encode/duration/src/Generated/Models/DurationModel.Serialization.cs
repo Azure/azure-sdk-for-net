@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Encode.Duration
 {
-    public partial class DurationModel : IJsonModel<DurationModel>
+    public partial class DurationModel : IJsonModel<global::Specs.Azure.Encode.Duration.DurationModel>
     {
         internal DurationModel() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.Encode.Duration
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<DurationModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Encode.Duration.DurationModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        DurationModel IPersistableModel<DurationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DurationModel IPersistableModel<global::Specs.Azure.Encode.Duration.DurationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<DurationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Encode.Duration.DurationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="durationModel"> The <see cref="DurationModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="durationModel"> The <see cref="global::Specs.Azure.Encode.Duration.DurationModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DurationModel durationModel) => throw null;
 
-        void IJsonModel<DurationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Encode.Duration.DurationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        DurationModel IJsonModel<DurationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        DurationModel IJsonModel<global::Specs.Azure.Encode.Duration.DurationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual DurationModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

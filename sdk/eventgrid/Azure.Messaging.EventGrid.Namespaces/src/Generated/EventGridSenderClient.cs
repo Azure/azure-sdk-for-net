@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> The EventGridSenderClient. </summary>
     public partial class EventGridSenderClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of EventGridSenderClient for mocking. </summary>
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Send(string topicName, RequestContent content, RequestContext context = null)
         {
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendRequest(topicName, content, context);
+                using HttpMessage message = this.CreateSendRequest(topicName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -75,15 +75,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SendAsync(string topicName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> SendAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.Send");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendRequest(topicName, content, context);
+                using HttpMessage message = this.CreateSendRequest(topicName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -97,22 +97,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="event"> Single Cloud Event being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
-            Response result = Send(topicName, @event, cancellationToken.ToRequestContext());
-            return Response.FromValue((PublishResult)result, result);
+            Response result = this.Send(topicName, @event, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PublishResult)result), result);
         }
 
         /// <summary> Publish a single Cloud Event to a namespace topic. </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="event"> Single Cloud Event being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
-            Response result = await SendAsync(topicName, @event, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PublishResult)result, result);
+            Response result = await this.SendAsync(topicName, @event, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PublishResult)result), result);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SendEvents(string topicName, RequestContent content, RequestContext context = null)
         {
@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
+                using HttpMessage message = this.CreateSendEventsRequest(topicName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -155,15 +155,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SendEventsAsync(string topicName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> SendEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.SendEvents");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
+                using HttpMessage message = this.CreateSendEventsRequest(topicName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -177,24 +177,24 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="events"> Array of Cloud Events being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.PublishResult> SendEvents(string topicName, IEnumerable<global::Azure.Messaging.EventGrid.Namespaces.CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = SendEvents(topicName, content, cancellationToken.ToRequestContext());
-            return Response.FromValue((PublishResult)result, result);
+            using RequestContent content = global::Azure.Messaging.EventGrid.Namespaces.BinaryContentHelper.FromEnumerable(events);
+            Response result = this.SendEvents(topicName, content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PublishResult)result), result);
         }
 
         /// <summary> Publish a batch of Cloud Events to a namespace topic. </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="events"> Array of Cloud Events being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.PublishResult>> SendEventsAsync(string topicName, IEnumerable<global::Azure.Messaging.EventGrid.Namespaces.CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = await SendEventsAsync(topicName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PublishResult)result, result);
+            using RequestContent content = global::Azure.Messaging.EventGrid.Namespaces.BinaryContentHelper.FromEnumerable(events);
+            Response result = await this.SendEventsAsync(topicName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PublishResult)result), result);
         }
     }
 }

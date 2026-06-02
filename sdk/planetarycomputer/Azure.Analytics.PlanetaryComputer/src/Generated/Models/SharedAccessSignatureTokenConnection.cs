@@ -14,24 +14,24 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class SharedAccessSignatureTokenConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureTokenConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
-        public SharedAccessSignatureTokenConnection(Uri containerUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public SharedAccessSignatureTokenConnection(global::System.Uri containerUri)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(containerUri, nameof(containerUri));
 
             ContainerUri = containerUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureTokenConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="sharedAccessSignatureToken"> SAS token. </param>
         /// <param name="expiration"> Azure Blob Storage SAS token expiration in UTC format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessSignatureTokenConnection(Uri containerUri, string sharedAccessSignatureToken, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedAccessSignatureTokenConnection(global::System.Uri containerUri, string sharedAccessSignatureToken, DateTimeOffset? expiration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             SharedAccessSignatureToken = sharedAccessSignatureToken;
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUri { get; set; }
+        public global::System.Uri ContainerUri { get; set; }
 
         /// <summary> SAS token. </summary>
         public string SharedAccessSignatureToken { get; set; }

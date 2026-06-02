@@ -9,41 +9,41 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Client options for <see cref="AIProjectClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Projects.AIProjectClient"/>. </summary>
     public partial class AIProjectClientOptions : ClientPipelineOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const global::Azure.AI.Projects.AIProjectClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of AIProjectClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AIProjectClientOptions(ServiceVersion version = LatestVersion)
+        public AIProjectClientOptions(global::Azure.AI.Projects.AIProjectClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2025_05_01 => "2025-05-01",
-                ServiceVersion.V1 => "v1",
+                global::Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V2025_05_01 => "2025-05-01",
+                global::Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
         }
 
         /// <summary> Initializes a new instance of AIProjectClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal AIProjectClientOptions(IConfigurationSection section) : base(section)
         {
             Version = "v1";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
             string userAgentApplicationId = section["UserAgentApplicationId"];
             if (!string.IsNullOrEmpty(userAgentApplicationId))
             {
-                UserAgentApplicationId = userAgentApplicationId;
+                this.UserAgentApplicationId = userAgentApplicationId;
             }
         }
 

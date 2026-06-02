@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureMachineLearningParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scoringUri"/> is null. </exception>
-        public AzureMachineLearningParameters(Uri scoringUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="scoringUri"/> is null. </exception>
+        public AzureMachineLearningParameters(global::System.Uri scoringUri)
         {
-            Argument.AssertNotNull(scoringUri, nameof(scoringUri));
+            global::Azure.Search.Documents.Argument.AssertNotNull(scoringUri, nameof(scoringUri));
 
             ScoringUri = scoringUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
         /// <param name="authenticationKey"> (Required for key authentication) The key for the AML service. </param>
         /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="modelName"> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMachineLearningParameters(global::System.Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </summary>
-        public Uri ScoringUri { get; set; }
+        public global::System.Uri ScoringUri { get; set; }
 
         /// <summary> (Required for key authentication) The key for the AML service. </summary>
         public string AuthenticationKey { get; set; }

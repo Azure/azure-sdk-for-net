@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class IndividuallyParentClientHostExtensions
     {
         public static IClientBuilder AddIndividuallyParentClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddIndividuallyParentClient(this IHostApplicationBuilder host, string sectionName, Action<IndividuallyParentClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddIndividuallyParentClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.IndividuallyParentClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedIndividuallyParentClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedIndividuallyParentClient(this IHostApplicationBuilder host, string key, string sectionName, Action<IndividuallyParentClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedIndividuallyParentClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.IndividuallyParentClientSettings> configureSettings) => throw null;
     }
 }

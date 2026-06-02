@@ -20,9 +20,9 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary> The KnowledgeBaseRetrievalClient. </summary>
     public partial class KnowledgeBaseRetrievalClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
         private readonly string _knowledgeBaseName;
 
@@ -35,9 +35,9 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(global::System.Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
         {
         }
 
@@ -45,20 +45,9 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential, SearchClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, knowledgeBaseName, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(global::System.Uri endpoint, string knowledgeBaseName, TokenCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
         {
         }
 
@@ -67,9 +56,20 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(global::System.Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential, SearchClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(global::System.Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
         {
         }
 
@@ -90,8 +90,8 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
         {
@@ -99,9 +99,9 @@ namespace Azure.Search.Documents.KnowledgeBases
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
+                using HttpMessage message = this.CreateRetrieveRequest(content, querySourceAuthorization, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -122,18 +122,18 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
+                using HttpMessage message = this.CreateRetrieveRequest(content, querySourceAuthorization, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -147,38 +147,38 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
+            global::Azure.Search.Documents.Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = Retrieve(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
+            Response result = this.Retrieve(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeBaseRetrievalResponse)result), result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
+            global::Azure.Search.Documents.Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
+            Response result = await this.RetrieveAsync(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeBaseRetrievalResponse)result), result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
         {
-            return Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+            return this.Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
@@ -186,10 +186,10 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<global::Azure.Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
         {
-            return RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+            return this.RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }

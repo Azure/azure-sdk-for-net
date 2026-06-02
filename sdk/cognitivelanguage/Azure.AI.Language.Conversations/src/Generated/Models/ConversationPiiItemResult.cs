@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationPiiItemResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiItemResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiItemResult"/>. </summary>
         /// <param name="id"> Id of the result. </param>
         /// <param name="redactedContent"> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </param>
         /// <param name="entities"> Array of Entities. </param>
-        internal ConversationPiiItemResult(string id, RedactedTranscriptContent redactedContent, IEnumerable<NamedEntity> entities)
+        internal ConversationPiiItemResult(string id, RedactedTranscriptContent redactedContent, IEnumerable<global::Azure.AI.Language.Conversations.Models.NamedEntity> entities)
         {
             Id = id;
             RedactedContent = redactedContent;
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiItemResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiItemResult"/>. </summary>
         /// <param name="id"> Id of the result. </param>
         /// <param name="redactedContent"> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </param>
         /// <param name="entities"> Array of Entities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiItemResult(string id, RedactedTranscriptContent redactedContent, IList<NamedEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationPiiItemResult(string id, RedactedTranscriptContent redactedContent, IList<global::Azure.AI.Language.Conversations.Models.NamedEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             RedactedContent = redactedContent;
@@ -48,6 +48,6 @@ namespace Azure.AI.Language.Conversations.Models
         public RedactedTranscriptContent RedactedContent { get; }
 
         /// <summary> Array of Entities. </summary>
-        public IList<NamedEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.NamedEntity> Entities { get; }
     }
 }

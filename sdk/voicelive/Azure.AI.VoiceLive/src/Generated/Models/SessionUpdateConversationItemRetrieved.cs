@@ -13,17 +13,17 @@ namespace Azure.AI.VoiceLive
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
     public partial class SessionUpdateConversationItemRetrieved : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemRetrieved"/>. </summary>
-        internal SessionUpdateConversationItemRetrieved() : base(ServerEventType.ConversationItemRetrieved)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemRetrieved"/>. </summary>
+        internal SessionUpdateConversationItemRetrieved() : base(global::Azure.AI.VoiceLive.ServerEventType.ConversationItemRetrieved)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemRetrieved"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemRetrieved"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="item"></param>
         /// <param name="eventId"></param>
-        internal SessionUpdateConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SessionResponseItem item, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemRetrieved(ServerEventType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SessionResponseItem item, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Item = item;
         }

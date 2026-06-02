@@ -14,14 +14,14 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationJobCustomizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationJobCustomizationOptions"/>. </summary>
         public DeidentificationJobCustomizationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationJobCustomizationOptions"/>. </summary>
         /// <param name="redactionFormat">
         /// Format of the redacted output. Only valid when Operation is Redact. 
         /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
@@ -29,7 +29,7 @@ namespace Azure.Health.Deidentification
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, string inputLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, string inputLocale, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RedactionFormat = redactionFormat;
             SurrogateLocale = surrogateLocale;

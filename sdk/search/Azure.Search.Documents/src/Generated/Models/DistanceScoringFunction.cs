@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a function that boosts scores based on distance from a geographic location. </summary>
     public partial class DistanceScoringFunction : ScoringFunction
     {
-        /// <summary> Initializes a new instance of <see cref="DistanceScoringFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DistanceScoringFunction"/>. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="type"> Type of ScoringFunction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameter values for the distance scoring function. </param>
-        internal DistanceScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DistanceScoringParameters parameters) : base(fieldName, boost, interpolation, @type, additionalBinaryDataProperties)
+        internal DistanceScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DistanceScoringParameters parameters) : base(fieldName, boost, interpolation, @type, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

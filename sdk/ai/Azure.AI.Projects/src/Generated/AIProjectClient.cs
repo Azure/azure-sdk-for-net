@@ -14,14 +14,14 @@ namespace Azure.AI.Projects
     /// <summary> The AIProjectClient. </summary>
     public partial class AIProjectClient : ClientConnectionProvider
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+                { global::System.ClientModel.Primitives.GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { global::System.ClientModel.Primitives.GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
         private readonly string _apiVersion;
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
-            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
+            return (global::System.Threading.Volatile.Read(ref _cachedAIProjectMemoryStores) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores));
         }
     }
 }

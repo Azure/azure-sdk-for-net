@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringSubTrainingState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringSubTrainingState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         internal TextAuthoringSubTrainingState(int percentComplete, TextAuthoringOperationStatus status)
@@ -25,13 +25,13 @@ namespace Azure.AI.Language.Text.Authoring
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringSubTrainingState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="startedOn"> Represents the start date time. </param>
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringSubTrainingState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, TextAuthoringOperationStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringSubTrainingState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, TextAuthoringOperationStatus status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PercentComplete = percentComplete;
             StartedOn = startedOn;

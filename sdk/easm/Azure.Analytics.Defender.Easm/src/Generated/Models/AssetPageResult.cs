@@ -14,21 +14,21 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AssetPageResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetPageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetPageResult"/>. </summary>
         internal AssetPageResult()
         {
-            Value = new ChangeTrackingList<AssetResource>();
+            Value = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetPageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetPageResult"/>. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="mark"> The cursor mark to be used on the next request.  Not set if using paging. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetPageResult(long? totalElements, string mark, string nextLink, IList<AssetResource> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetPageResult(long? totalElements, string mark, string nextLink, IList<global::Azure.Analytics.Defender.Easm.AssetResource> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TotalElements = totalElements;
             Mark = mark;
@@ -47,6 +47,6 @@ namespace Azure.Analytics.Defender.Easm
         public string NextLink { get; }
 
         /// <summary> The items in the current page of results. </summary>
-        public IList<AssetResource> Value { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AssetResource> Value { get; }
     }
 }

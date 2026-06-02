@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode.Duration._Property
 {
-    public partial class FloatSecondsLargerUnitDurationProperty : IJsonModel<FloatSecondsLargerUnitDurationProperty>
+    public partial class FloatSecondsLargerUnitDurationProperty : IJsonModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>
     {
         internal FloatSecondsLargerUnitDurationProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode.Duration._Property
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<FloatSecondsLargerUnitDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        FloatSecondsLargerUnitDurationProperty IPersistableModel<FloatSecondsLargerUnitDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        FloatSecondsLargerUnitDurationProperty IPersistableModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<FloatSecondsLargerUnitDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="floatSecondsLargerUnitDurationProperty"> The <see cref="FloatSecondsLargerUnitDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="floatSecondsLargerUnitDurationProperty"> The <see cref="global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatSecondsLargerUnitDurationProperty floatSecondsLargerUnitDurationProperty) => throw null;
 
         public static explicit operator FloatSecondsLargerUnitDurationProperty(Response response) => throw null;
 
-        void IJsonModel<FloatSecondsLargerUnitDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        FloatSecondsLargerUnitDurationProperty IJsonModel<FloatSecondsLargerUnitDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        FloatSecondsLargerUnitDurationProperty IJsonModel<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual FloatSecondsLargerUnitDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

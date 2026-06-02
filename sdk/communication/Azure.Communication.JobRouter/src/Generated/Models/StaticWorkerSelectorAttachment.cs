@@ -13,11 +13,11 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a worker selector that will be attached to a job. </summary>
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="StaticWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.StaticWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerSelector"> The worker selector to attach. </param>
-        internal StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouterWorkerSelector workerSelector) : base(kind, additionalBinaryDataProperties)
+        internal StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RouterWorkerSelector workerSelector) : base(kind, additionalBinaryDataProperties)
         {
             WorkerSelector = workerSelector;
         }

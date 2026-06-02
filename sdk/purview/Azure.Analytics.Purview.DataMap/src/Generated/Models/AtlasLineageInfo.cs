@@ -15,18 +15,18 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasLineageInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasLineageInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo"/>. </summary>
         internal AtlasLineageInfo()
         {
-            GuidEntityMap = new ChangeTrackingDictionary<string, AtlasEntityHeader>();
-            WidthCounts = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
-            ParentRelations = new ChangeTrackingList<ParentRelation>();
-            Relations = new ChangeTrackingList<LineageRelation>();
+            GuidEntityMap = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
+            WidthCounts = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            ParentRelations = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ParentRelation>();
+            Relations = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.LineageRelation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasLineageInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo"/>. </summary>
         /// <param name="baseEntityGuid"> The GUID of the base entity. </param>
         /// <param name="guidEntityMap"> The GUID entity map. </param>
         /// <param name="widthCounts"> The entity count in specific direction. </param>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="parentRelations"> An array of parentRelations relations. </param>
         /// <param name="relations"> An array of lineage relations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasLineageInfo(string baseEntityGuid, IDictionary<string, AtlasEntityHeader> guidEntityMap, IDictionary<string, IDictionary<string, BinaryData>> widthCounts, int? lineageDepth, int? lineageWidth, int? childrenCount, LineageDirection? lineageDirection, IList<ParentRelation> parentRelations, IList<LineageRelation> relations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasLineageInfo(string baseEntityGuid, IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> guidEntityMap, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> widthCounts, int? lineageDepth, int? lineageWidth, int? childrenCount, LineageDirection? lineageDirection, IList<global::Azure.Analytics.Purview.DataMap.ParentRelation> parentRelations, IList<global::Azure.Analytics.Purview.DataMap.LineageRelation> relations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BaseEntityGuid = baseEntityGuid;
             GuidEntityMap = guidEntityMap;
@@ -55,12 +55,12 @@ namespace Azure.Analytics.Purview.DataMap
         public string BaseEntityGuid { get; }
 
         /// <summary> The GUID entity map. </summary>
-        public IDictionary<string, AtlasEntityHeader> GuidEntityMap { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GuidEntityMap { get; }
 
         /// <summary>
         /// The entity count in specific direction.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, IDictionary<string, BinaryData>> WidthCounts { get; }
+        public IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> WidthCounts { get; }
 
         /// <summary> The depth of lineage. </summary>
         public int? LineageDepth { get; }
@@ -98,9 +98,9 @@ namespace Azure.Analytics.Purview.DataMap
         public LineageDirection? LineageDirection { get; }
 
         /// <summary> An array of parentRelations relations. </summary>
-        public IList<ParentRelation> ParentRelations { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.ParentRelation> ParentRelations { get; }
 
         /// <summary> An array of lineage relations. </summary>
-        public IList<LineageRelation> Relations { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.LineageRelation> Relations { get; }
     }
 }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Parameters.CollectionFormat
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class CollectionFormatClientHostExtensions
     {
         public static IClientBuilder AddCollectionFormatClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddCollectionFormatClient(this IHostApplicationBuilder host, string sectionName, Action<CollectionFormatClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddCollectionFormatClient(this IHostApplicationBuilder host, string sectionName, Action<global::Parameters.CollectionFormat.CollectionFormatClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedCollectionFormatClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedCollectionFormatClient(this IHostApplicationBuilder host, string key, string sectionName, Action<CollectionFormatClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedCollectionFormatClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Parameters.CollectionFormat.CollectionFormatClientSettings> configureSettings) => throw null;
     }
 }

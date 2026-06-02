@@ -15,24 +15,24 @@ namespace Azure.AI.VoiceLive
     public partial class IceServer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IceServer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.IceServer"/>. </summary>
         /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uris"/> is null. </exception>
-        public IceServer(IEnumerable<Uri> uris)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="uris"/> is null. </exception>
+        public IceServer(IEnumerable<global::System.Uri> uris)
         {
-            Argument.AssertNotNull(uris, nameof(uris));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(uris, nameof(uris));
 
             Uris = uris.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IceServer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.IceServer"/>. </summary>
         /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
         /// <param name="username"> Optional username used for authentication with the ICE server. </param>
         /// <param name="credential"> Optional credential (e.g., password or token) used for authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IceServer(IList<Uri> uris, string username, string credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IceServer(IList<global::System.Uri> uris, string username, string credential, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uris = uris;
             Username = username;
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> List of ICE server URLs (e.g., TURN or STUN endpoints). </summary>
-        public IList<Uri> Uris { get; }
+        public IList<global::System.Uri> Uris { get; }
 
         /// <summary> Optional username used for authentication with the ICE server. </summary>
         public string Username { get; set; }

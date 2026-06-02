@@ -15,28 +15,28 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseImageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseImageContent"/>. </summary>
         /// <param name="url"> The url of the image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public KnowledgeBaseImageContent(Uri url)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public KnowledgeBaseImageContent(global::System.Uri url)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            global::Azure.Search.Documents.Argument.AssertNotNull(url, nameof(url));
 
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseImageContent"/>. </summary>
         /// <param name="url"> The url of the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseImageContent(Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseImageContent(global::System.Uri url, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Url = url;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The url of the image. </summary>
-        public Uri Url { get; set; }
+        public global::System.Uri Url { get; set; }
     }
 }

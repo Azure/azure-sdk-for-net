@@ -16,14 +16,14 @@ namespace Payload.Pageable
 {
     public partial class PageableClient
     {
-        public PageableClient() : this(new Uri("http://localhost:3000"), new PageableClientOptions()) => throw null;
+        public PageableClient() : this(new global::System.Uri("http://localhost:3000"), new PageableClientOptions()) => throw null;
 
-        internal PageableClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageableClientOptions options) => throw null;
+        internal PageableClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PageableClientOptions options) => throw null;
 
-        public PageableClient(Uri endpoint, PageableClientOptions options) : this(null, endpoint, options) => throw null;
+        public PageableClient(global::System.Uri endpoint, PageableClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public PageableClient(PageableClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public PageableClient(PageableClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

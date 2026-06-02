@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Pass : IJsonModel<Pass>
+    public partial class Pass : IJsonModel<global::SpecialWords._Models.Pass>
     {
         internal Pass() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Pass>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Pass>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Pass IPersistableModel<Pass>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Pass IPersistableModel<global::SpecialWords._Models.Pass>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Pass>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Pass>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="pass"> The <see cref="Pass"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="pass"> The <see cref="global::SpecialWords._Models.Pass"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Pass pass) => throw null;
 
-        void IJsonModel<Pass>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Pass>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Pass IJsonModel<Pass>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Pass IJsonModel<global::SpecialWords._Models.Pass>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Pass JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

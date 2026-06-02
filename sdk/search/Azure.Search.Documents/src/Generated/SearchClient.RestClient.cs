@@ -31,15 +31,15 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/$count", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
@@ -53,151 +53,151 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (searchText != null)
+            if ((searchText != null))
             {
                 uri.AppendQuery("search", searchText, true);
             }
-            if (includeTotalResultCount != null)
+            if ((includeTotalResultCount != null))
             {
-                uri.AppendQuery("$count", TypeFormatters.ConvertToString(includeTotalResultCount), true);
+                uri.AppendQuery("$count", global::Azure.Search.Documents.TypeFormatters.ConvertToString(includeTotalResultCount), true);
             }
-            if (facets != null && !(facets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((facets != null) && !((facets is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 foreach (var @param in facets)
                 {
                     uri.AppendQuery("facet", @param, true);
                 }
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (highlightFields != null && !(highlightFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((highlightFields != null) && !((highlightFields is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("highlight", highlightFields, ",", escape: true);
             }
-            if (highlightPostTag != null)
+            if ((highlightPostTag != null))
             {
                 uri.AppendQuery("highlightPostTag", highlightPostTag, true);
             }
-            if (highlightPreTag != null)
+            if ((highlightPreTag != null))
             {
                 uri.AppendQuery("highlightPreTag", highlightPreTag, true);
             }
-            if (minimumCoverage != null)
+            if ((minimumCoverage != null))
             {
-                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
             }
-            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((orderBy != null) && !((orderBy is ChangeTrackingList<string> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$orderby", orderBy, ",", escape: true);
             }
-            if (queryType != null)
+            if ((queryType != null))
             {
                 uri.AppendQuery("queryType", queryType, true);
             }
-            if (scoringParameters != null && !(scoringParameters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            if (((scoringParameters != null) && !((scoringParameters is ChangeTrackingList<string> changeTrackingList2) && changeTrackingList2.IsUndefined)))
             {
                 foreach (var @param in scoringParameters)
                 {
                     uri.AppendQuery("scoringParameter", @param, true);
                 }
             }
-            if (scoringProfile != null)
+            if ((scoringProfile != null))
             {
                 uri.AppendQuery("scoringProfile", scoringProfile, true);
             }
-            if (searchFields != null && !(searchFields is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            if (((searchFields != null) && !((searchFields is ChangeTrackingList<string> changeTrackingList3) && changeTrackingList3.IsUndefined)))
             {
                 uri.AppendQueryDelimited("searchFields", searchFields, ",", escape: true);
             }
-            if (searchMode != null)
+            if ((searchMode != null))
             {
                 uri.AppendQuery("searchMode", searchMode, true);
             }
-            if (scoringStatistics != null)
+            if ((scoringStatistics != null))
             {
                 uri.AppendQuery("scoringStatistics", scoringStatistics, true);
             }
-            if (sessionId != null)
+            if ((sessionId != null))
             {
                 uri.AppendQuery("sessionId", sessionId, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList4) && changeTrackingList4.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("$skip", global::Azure.Search.Documents.TypeFormatters.ConvertToString(skip), true);
             }
-            if (top != null)
+            if ((top != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
             }
-            if (semanticConfiguration != null)
+            if ((semanticConfiguration != null))
             {
                 uri.AppendQuery("semanticConfiguration", semanticConfiguration, true);
             }
-            if (semanticErrorHandling != null)
+            if ((semanticErrorHandling != null))
             {
                 uri.AppendQuery("semanticErrorHandling", semanticErrorHandling, true);
             }
-            if (semanticMaxWaitInMilliseconds != null)
+            if ((semanticMaxWaitInMilliseconds != null))
             {
-                uri.AppendQuery("semanticMaxWaitInMilliseconds", TypeFormatters.ConvertToString(semanticMaxWaitInMilliseconds), true);
+                uri.AppendQuery("semanticMaxWaitInMilliseconds", global::Azure.Search.Documents.TypeFormatters.ConvertToString(semanticMaxWaitInMilliseconds), true);
             }
-            if (answers != null)
+            if ((answers != null))
             {
                 uri.AppendQuery("answers", answers, true);
             }
-            if (captions != null)
+            if ((captions != null))
             {
                 uri.AppendQuery("captions", captions, true);
             }
-            if (semanticQuery != null)
+            if ((semanticQuery != null))
             {
                 uri.AppendQuery("semanticQuery", semanticQuery, true);
             }
-            if (queryRewrites != null)
+            if ((queryRewrites != null))
             {
                 uri.AppendQuery("queryRewrites", queryRewrites, true);
             }
-            if (debug != null)
+            if ((debug != null))
             {
                 uri.AppendQuery("debug", debug, true);
             }
-            if (queryLanguage != null)
+            if ((queryLanguage != null))
             {
                 uri.AppendQuery("queryLanguage", queryLanguage, true);
             }
-            if (speller != null)
+            if ((speller != null))
             {
                 uri.AppendQuery("speller", speller, true);
             }
-            if (semanticFields != null && !(semanticFields is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
+            if (((semanticFields != null) && !((semanticFields is ChangeTrackingList<string> changeTrackingList5) && changeTrackingList5.IsUndefined)))
             {
                 uri.AppendQueryDelimited("semanticFields", semanticFields, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
-            if (querySourceAuthorization != null)
+            if ((querySourceAuthorization != null))
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }
-            if (enableElevatedRead != null)
+            if ((enableElevatedRead != null))
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
             }
             return message;
         }
@@ -209,25 +209,25 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.search", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
-            if (querySourceAuthorization != null)
+            if ((querySourceAuthorization != null))
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }
-            if (enableElevatedRead != null)
+            if ((enableElevatedRead != null))
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
             }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
@@ -243,29 +243,29 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/docs('", false);
             uri.AppendPath(key, true);
             uri.AppendPath("')", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (selectedFields != null && !(selectedFields is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((selectedFields != null) && !((selectedFields is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
-            if (querySourceAuthorization != null)
+            if ((querySourceAuthorization != null))
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }
-            if (enableElevatedRead != null)
+            if ((enableElevatedRead != null))
             {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
+                request.Headers.SetValue("x-ms-enable-elevated-read", global::Azure.Search.Documents.TypeFormatters.ConvertToString(enableElevatedRead));
             }
             return message;
         }
@@ -277,53 +277,53 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.suggest", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("search", searchText, true);
             uri.AppendQuery("suggesterName", suggesterName, true);
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (useFuzzyMatching != null)
+            if ((useFuzzyMatching != null))
             {
-                uri.AppendQuery("fuzzy", TypeFormatters.ConvertToString(useFuzzyMatching), true);
+                uri.AppendQuery("fuzzy", global::Azure.Search.Documents.TypeFormatters.ConvertToString(useFuzzyMatching), true);
             }
-            if (highlightPostTag != null)
+            if ((highlightPostTag != null))
             {
                 uri.AppendQuery("highlightPostTag", highlightPostTag, true);
             }
-            if (highlightPreTag != null)
+            if ((highlightPreTag != null))
             {
                 uri.AppendQuery("highlightPreTag", highlightPreTag, true);
             }
-            if (minimumCoverage != null)
+            if ((minimumCoverage != null))
             {
-                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
             }
-            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((orderBy != null) && !((orderBy is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$orderby", orderBy, ",", escape: true);
             }
-            if (searchFields != null && !(searchFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((searchFields != null) && !((searchFields is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("searchFields", searchFields, ",", escape: true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (top != null)
+            if ((top != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
@@ -337,15 +337,15 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.suggest", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
@@ -361,15 +361,15 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.index", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200207);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
@@ -385,49 +385,49 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.autocomplete", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("search", searchText, true);
             uri.AppendQuery("suggesterName", suggesterName, true);
-            if (autocompleteMode != null)
+            if ((autocompleteMode != null))
             {
                 uri.AppendQuery("autocompleteMode", autocompleteMode, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (useFuzzyMatching != null)
+            if ((useFuzzyMatching != null))
             {
-                uri.AppendQuery("fuzzy", TypeFormatters.ConvertToString(useFuzzyMatching), true);
+                uri.AppendQuery("fuzzy", global::Azure.Search.Documents.TypeFormatters.ConvertToString(useFuzzyMatching), true);
             }
-            if (highlightPostTag != null)
+            if ((highlightPostTag != null))
             {
                 uri.AppendQuery("highlightPostTag", highlightPostTag, true);
             }
-            if (highlightPreTag != null)
+            if ((highlightPreTag != null))
             {
                 uri.AppendQuery("highlightPreTag", highlightPreTag, true);
             }
-            if (minimumCoverage != null)
+            if ((minimumCoverage != null))
             {
-                uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
+                uri.AppendQuery("minimumCoverage", global::Azure.Search.Documents.TypeFormatters.ConvertToString(minimumCoverage), true);
             }
-            if (searchFields != null && !(searchFields is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((searchFields != null) && !((searchFields is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("searchFields", searchFields, ",", escape: true);
             }
-            if (top != null)
+            if ((top != null))
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", global::Azure.Search.Documents.TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
@@ -441,15 +441,15 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(_indexName, true);
             uri.AppendPath("')/docs/search.post.autocomplete", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json;odata.metadata=none" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json;odata.metadata=none" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Property.Optional
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class OptionalClientHostExtensions
     {
         public static IClientBuilder AddOptionalClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddOptionalClient(this IHostApplicationBuilder host, string sectionName, Action<OptionalClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddOptionalClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Property.Optional.OptionalClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedOptionalClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedOptionalClient(this IHostApplicationBuilder host, string key, string sectionName, Action<OptionalClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedOptionalClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Property.Optional.OptionalClientSettings> configureSettings) => throw null;
     }
 }

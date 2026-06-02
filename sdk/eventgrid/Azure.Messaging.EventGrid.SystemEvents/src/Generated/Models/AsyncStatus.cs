@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Asynchronous operation status of the operation on the app service plan. </summary>
-    public readonly partial struct AsyncStatus : IEquatable<AsyncStatus>
+    public readonly partial struct AsyncStatus : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus>
     {
         private readonly string _value;
         /// <summary> Async operation has started. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Async operation failed to complete. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="AsyncStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AsyncStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Async operation failed to complete. </summary>
         public static AsyncStatus Failed { get; } = new AsyncStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="AsyncStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AsyncStatus left, AsyncStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AsyncStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AsyncStatus left, AsyncStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AsyncStatus(string value) => new AsyncStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AsyncStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AsyncStatus?(string value) => value == null ? null : new AsyncStatus(value);
+        public static implicit operator AsyncStatus?(string value) => (value == null) ? null : new AsyncStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AsyncStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AsyncStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AsyncStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AsyncStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

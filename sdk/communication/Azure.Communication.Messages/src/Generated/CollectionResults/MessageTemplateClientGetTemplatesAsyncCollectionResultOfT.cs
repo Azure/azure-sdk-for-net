@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateClientGetTemplatesAsyncCollectionResultOfT : AsyncPageable<MessageTemplateItem>
+    internal partial class MessageTemplateClientGetTemplatesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Communication.Messages.MessageTemplateItem>
     {
         private readonly MessageTemplateClient _client;
         private readonly Guid _channelId;
@@ -28,7 +28,7 @@ namespace Azure.Communication.Messages
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(MessageTemplateClient client, Guid channelId, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(MessageTemplateClient client, Guid channelId, int? maxpagesize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _channelId = channelId;
@@ -41,20 +41,20 @@ namespace Azure.Communication.Messages
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MessageTemplateClientGetTemplatesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MessageTemplateItem>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Communication.Messages.MessageTemplateItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedMessageTemplateItem result = (PagedMessageTemplateItem)response;
-                yield return Page<MessageTemplateItem>.FromValues((IReadOnlyList<MessageTemplateItem>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedMessageTemplateItem result = ((PagedMessageTemplateItem)response);
+                yield return global::Azure.Page<MessageTemplateItem>.FromValues(((IReadOnlyList<global::Azure.Communication.Messages.MessageTemplateItem>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -64,9 +64,9 @@ namespace Azure.Communication.Messages
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTemplatesRequest(nextLink, _channelId, _maxpagesize, _context) : _client.CreateGetTemplatesRequest(_channelId, _maxpagesize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetTemplatesRequest(nextLink, _channelId, _maxpagesize, _context) : _client.CreateGetTemplatesRequest(_channelId, _maxpagesize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

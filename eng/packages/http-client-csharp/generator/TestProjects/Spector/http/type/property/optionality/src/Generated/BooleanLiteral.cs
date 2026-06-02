@@ -18,40 +18,40 @@ namespace _Type.Property.Optional
     {
         protected BooleanLiteral() => throw null;
 
-        internal BooleanLiteral(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal BooleanLiteral(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<BooleanLiteralProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.BooleanLiteralProperty> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BooleanLiteralProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.BooleanLiteralProperty>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetDefault(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetDefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetDefaultAsync(RequestContext context) => throw null;
 
-        public virtual Response<BooleanLiteralProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Optional.BooleanLiteralProperty> GetDefault(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BooleanLiteralProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Optional.BooleanLiteralProperty>> GetDefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutAll(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutAll(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAllAsync(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAllAsync(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutDefault(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutDefault(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutDefaultAsync(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutDefaultAsync(BooleanLiteralProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

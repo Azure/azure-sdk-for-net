@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Text
     public partial class EntityLinkingActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingActionContent"/>. </summary>
         public EntityLinkingActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityLinkingActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"> Optional parameter to provide the string index type used to interpret string offsets. Defaults to TextElements (Graphemes). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityLinkingActionContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityLinkingActionContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

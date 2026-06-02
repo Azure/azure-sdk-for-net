@@ -15,9 +15,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxActionDelayResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus)
@@ -26,13 +26,13 @@ namespace Azure.Developer.DevCenter.Models
             DelayStatus = delayStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus, DevBoxAction action, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus, DevBoxAction action, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             DelayStatus = delayStatus;

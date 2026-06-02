@@ -16,9 +16,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
-    public partial class SearchIndexerDataSourceConnection : IJsonModel<SearchIndexerDataSourceConnection>
+    public partial class SearchIndexerDataSourceConnection : IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection"/> for deserialization. </summary>
         internal SearchIndexerDataSourceConnection()
         {
         }
@@ -27,65 +27,65 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerDataSourceConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchIndexerDataSourceConnection(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexerDataSourceConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerDataSourceConnection IPersistableModel<SearchIndexerDataSourceConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchIndexerDataSourceConnection IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexerDataSourceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="searchIndexerDataSourceConnection"> The <see cref="SearchIndexerDataSourceConnection"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="searchIndexerDataSourceConnection"> The <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SearchIndexerDataSourceConnection searchIndexerDataSourceConnection)
         {
-            if (searchIndexerDataSourceConnection == null)
+            if ((searchIndexerDataSourceConnection == null))
             {
                 return null;
             }
-            return RequestContent.Create(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(searchIndexerDataSourceConnection, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerDataSourceConnection"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection"/> from. </param>
         public static explicit operator SearchIndexerDataSourceConnection(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexerDataSourceConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchIndexerDataSourceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -93,35 +93,35 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && Optional.IsDefined(SubType))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(SubType)))
             {
                 writer.WritePropertyName("subType"u8);
                 writer.WriteStringValue(SubType);
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(CredentialsInternal, options);
+            writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue(Container, options);
-            if (Optional.IsDefined(Identity))
+            writer.WriteObjectValue<SearchIndexerDataContainer>(Container, options);
+            if (global::Azure.Search.Documents.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity, options);
             }
-            if (Optional.IsCollectionDefined(IndexerPermissionOptions))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(IndexerPermissionOptions))
             {
                 writer.WritePropertyName("indexerPermissionOptions"u8);
                 writer.WriteStartArray();
@@ -131,27 +131,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataChangeDetectionPolicy))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                writer.WriteObjectValue(DataChangeDetectionPolicy, options);
+                writer.WriteObjectValue<DataChangeDetectionPolicy>(DataChangeDetectionPolicy, options);
             }
-            if (Optional.IsDefined(DataDeletionDetectionPolicy))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DataDeletionDetectionPolicy))
             {
                 writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                writer.WriteObjectValue(DataDeletionDetectionPolicy, options);
+                writer.WriteObjectValue<DataDeletionDetectionPolicy>(DataDeletionDetectionPolicy, options);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (global::Azure.Search.Documents.Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey, options);
             }
-            if (Optional.IsDefined(_etag))
+            if (global::Azure.Search.Documents.Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -159,9 +159,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -170,26 +170,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerDataSourceConnection IJsonModel<SearchIndexerDataSourceConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchIndexerDataSourceConnection IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerDataSourceConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchIndexerDataSourceConnection(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchIndexerDataSourceConnection DeserializeSearchIndexerDataSourceConnection(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -200,12 +200,12 @@ namespace Azure.Search.Documents.Indexes.Models
             DataSourceCredentials credentialsInternal = default;
             SearchIndexerDataContainer container = default;
             SearchIndexerDataIdentity identity = default;
-            IList<IndexerPermissionOption> indexerPermissionOptions = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption> indexerPermissionOptions = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string etag = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -230,31 +230,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("credentials"u8))
                 {
-                    credentialsInternal = DataSourceCredentials.DeserializeDataSourceCredentials(prop.Value, options);
+                    credentialsInternal = global::Azure.Search.Documents.Indexes.Models.DataSourceCredentials.DeserializeDataSourceCredentials(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("container"u8))
                 {
-                    container = SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(prop.Value, options);
+                    container = global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         identity = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    identity = global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("indexerPermissionOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();
+                    List<global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption> array = new List<global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IndexerPermissionOption(item.GetString()));
@@ -264,32 +264,32 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dataChangeDetectionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         dataChangeDetectionPolicy = null;
                         continue;
                     }
-                    dataChangeDetectionPolicy = DataChangeDetectionPolicy.DeserializeDataChangeDetectionPolicy(prop.Value, options);
+                    dataChangeDetectionPolicy = global::Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy.DeserializeDataChangeDetectionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDeletionDetectionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         dataDeletionDetectionPolicy = null;
                         continue;
                     }
-                    dataDeletionDetectionPolicy = DataDeletionDetectionPolicy.DeserializeDataDeletionDetectionPolicy(prop.Value, options);
+                    dataDeletionDetectionPolicy = global::Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy.DeserializeDataDeletionDetectionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    encryptionKey = global::Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -297,9 +297,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     etag = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SearchIndexerDataSourceConnection(
@@ -310,7 +310,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 credentialsInternal,
                 container,
                 identity,
-                indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
+                (indexerPermissionOptions ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption>()),
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 encryptionKey,

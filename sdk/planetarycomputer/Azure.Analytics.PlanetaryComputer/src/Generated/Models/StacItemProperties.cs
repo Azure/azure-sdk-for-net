@@ -17,22 +17,22 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemProperties"/>. </summary>
         /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
         public StacItemProperties(string datetime)
         {
-            Argument.AssertNotNull(datetime, nameof(datetime));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(datetime, nameof(datetime));
 
             Instruments = new ChangeTrackingList<string>();
-            Providers = new ChangeTrackingList<StacProvider>();
+            Providers = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacProvider>();
             Datetime = datetime;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemProperties"/>. </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
         /// <param name="instruments"> Instruments that acquired the data. </param>
         /// <param name="constellation"> Constellation of satellites that acquired the data. </param>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="startDatetime"> Start time of the item observation period. </param>
         /// <param name="endDatetime"> End time of the item observation period. </param>
         /// <param name="additionalProperties"></param>
-        internal StacItemProperties(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string datetime, DateTimeOffset? startDatetime, DateTimeOffset? endDatetime, IDictionary<string, BinaryData> additionalProperties)
+        internal StacItemProperties(string platform, IList<string> instruments, string constellation, string mission, IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string datetime, DateTimeOffset? startDatetime, DateTimeOffset? endDatetime, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Platform = platform;
             Instruments = instruments;
@@ -78,7 +78,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Mission { get; set; }
 
         /// <summary> Organizations or individuals who provide the data. </summary>
-        public IList<StacProvider> Providers { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> Providers { get; }
 
         /// <summary> Ground sample distance in meters. </summary>
         public float? Gsd { get; set; }
@@ -105,6 +105,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public DateTimeOffset? EndDatetime { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

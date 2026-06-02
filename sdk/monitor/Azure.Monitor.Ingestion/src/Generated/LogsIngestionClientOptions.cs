@@ -12,42 +12,42 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.Ingestion
 {
-    /// <summary> Client options for <see cref="LogsIngestionClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/>. </summary>
     public partial class LogsIngestionClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_01_01;
+        private const global::Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion LatestVersion = global::Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01;
 
         /// <summary> Initializes a new instance of LogsIngestionClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public LogsIngestionClientOptions(ServiceVersion version = LatestVersion)
+        public LogsIngestionClientOptions(global::Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_01_01 => "2023-01-01",
+                global::Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01 => "2023-01-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of LogsIngestionClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal LogsIngestionClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2023-01-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            if (section["Audience"] is string audience)
+            if ((section["Audience"] is string audience))
             {
-                Audience = new LogsIngestionAudience(audience);
+                this.Audience = new LogsIngestionAudience(audience);
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

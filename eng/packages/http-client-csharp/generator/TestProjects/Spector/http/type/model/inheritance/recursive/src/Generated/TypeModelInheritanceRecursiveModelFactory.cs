@@ -11,8 +11,8 @@ namespace _Type.Model.Inheritance.Recursive
 {
     public static partial class TypeModelInheritanceRecursiveModelFactory
     {
-        public static Extension Extension(IEnumerable<Extension> extension = default, sbyte level = default) => throw null;
+        public static Extension Extension(IEnumerable<global::_Type.Model.Inheritance.Recursive.Extension> extension = default, sbyte level = default) => throw null;
 
-        public static Element Element(IEnumerable<Extension> extension = default) => throw null;
+        public static Element Element(IEnumerable<global::_Type.Model.Inheritance.Recursive.Extension> extension = default) => throw null;
     }
 }

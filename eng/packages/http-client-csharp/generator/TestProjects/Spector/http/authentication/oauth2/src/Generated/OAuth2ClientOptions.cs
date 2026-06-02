@@ -15,7 +15,7 @@ namespace Authentication.OAuth2
     {
         public OAuth2ClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal OAuth2ClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

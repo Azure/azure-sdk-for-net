@@ -7,13 +7,13 @@ using System.ComponentModel;
 
 namespace OpenAI
 {
-    internal readonly partial struct ImageGenToolModeration : IEquatable<ImageGenToolModeration>
+    internal readonly partial struct ImageGenToolModeration : IEquatable<global::OpenAI.ImageGenToolModeration>
     {
         private readonly string _value;
         private const string AutoValue = "auto";
         private const string LowValue = "low";
 
-        /// <summary> Initializes a new instance of <see cref="ImageGenToolModeration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.ImageGenToolModeration"/>. </summary>
         /// <param name="value"> The value. </param>
         public ImageGenToolModeration(string value)
         {
@@ -26,34 +26,34 @@ namespace OpenAI
         /// <summary> Gets the Low. </summary>
         public static ImageGenToolModeration Low { get; } = new ImageGenToolModeration(LowValue);
 
-        /// <summary> Determines if two <see cref="ImageGenToolModeration"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolModeration"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageGenToolModeration left, ImageGenToolModeration right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImageGenToolModeration"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolModeration"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageGenToolModeration left, ImageGenToolModeration right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolModeration"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolModeration"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImageGenToolModeration(string value) => new ImageGenToolModeration(value);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolModeration"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolModeration"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageGenToolModeration?(string value) => value == null ? null : new ImageGenToolModeration(value);
+        public static implicit operator ImageGenToolModeration?(string value) => (value == null) ? null : new ImageGenToolModeration(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImageGenToolModeration other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImageGenToolModeration other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImageGenToolModeration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImageGenToolModeration other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -15,9 +15,9 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslationFileFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document
             FormatVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="formatVersions"> Supported Version. </param>
         /// <param name="type"> Supported Type for this format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions, FileFormatType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions, FileFormatType? @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             FileExtensions = fileExtensions;

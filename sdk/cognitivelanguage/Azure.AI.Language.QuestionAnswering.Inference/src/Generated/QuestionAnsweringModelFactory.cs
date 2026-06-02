@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
         /// <param name="queryPreferences"> To fine tune query results. </param>
-        /// <returns> A new <see cref="Inference.AnswersOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions"/> instance for mocking. </returns>
         public static AnswersOptions AnswersOptions(int? qnaId = default, string question = default, int? size = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerOptions shortAnswerOptions = default, bool? includeUnstructuredSources = default, QueryPreferences queryPreferences = default)
         {
             return new AnswersOptions(
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Context object with previous QnA's information. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
         /// <param name="previousQuestion"> Previous user query. </param>
-        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = default)
         {
             return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties: null);
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// knowledge base.
         /// </param>
         /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
-        /// <returns> A new <see cref="Inference.QueryFilters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryFilters"/> instance for mocking. </returns>
         public static QueryFilters QueryFilters(MetadataFilter metadataFilter = default, IEnumerable<string> sourceFilter = default, LogicalOperationKind? logicalOperation = default)
         {
             sourceFilter ??= new ChangeTrackingList<string>();
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
         /// <param name="metadata"> Dictionary of string. </param>
         /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
-        /// <returns> A new <see cref="Inference.MetadataFilter"/> instance for mocking. </returns>
-        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter"/> instance for mocking. </returns>
+        public static MetadataFilter MetadataFilter(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
         {
-            metadata ??= new ChangeTrackingList<MetadataRecord>();
+            metadata ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord>();
 
             return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
         }
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Object to provide the key value pair for each metadata. </summary>
         /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
         /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
-        /// <returns> A new <see cref="Inference.MetadataRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord"/> instance for mocking. </returns>
         public static MetadataRecord MetadataRecord(string key = default, string value = default)
         {
             return new MetadataRecord(key, value, additionalBinaryDataProperties: null);
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// to 1.
         /// </param>
         /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
-        /// <returns> A new <see cref="Inference.ShortAnswerOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions"/> instance for mocking. </returns>
         public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = default, int? size = default)
         {
             return new ShortAnswerOptions(enable, confidenceThreshold, size, additionalBinaryDataProperties: null);
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Additional properties to fine tune query results. </summary>
         /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
         /// <param name="matchingPolicy"> Policy for controling exact query match behavior. </param>
-        /// <returns> A new <see cref="Inference.QueryPreferences"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences"/> instance for mocking. </returns>
         public static QueryPreferences QueryPreferences(Scorer? scorer = default, MatchingPolicy matchingPolicy = default)
         {
             return new QueryPreferences(scorer, matchingPolicy, additionalBinaryDataProperties: null);
@@ -114,10 +114,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary>
         /// Specify parameters for query matching
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Inference.PrebuiltQueryMatchingPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/>.
         /// </summary>
         /// <param name="kind"> Kind of matching policy to be applied. </param>
-        /// <returns> A new <see cref="Inference.MatchingPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy"/> instance for mocking. </returns>
         public static MatchingPolicy MatchingPolicy(string kind = default)
         {
             return new UnknownMatchingPolicy(new MatchingPolicyKind(kind), additionalBinaryDataProperties: null);
@@ -126,20 +126,20 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>
         /// <param name="fields"> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </param>
         /// <param name="disableFullMatch"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
-        /// <returns> A new <see cref="Inference.PrebuiltQueryMatchingPolicy"/> instance for mocking. </returns>
-        public static PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(IEnumerable<MatchingPolicyFieldsType> fields = default, bool? disableFullMatch = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/> instance for mocking. </returns>
+        public static PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType> fields = default, bool? disableFullMatch = default)
         {
-            fields ??= new ChangeTrackingList<MatchingPolicyFieldsType>();
+            fields ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType>();
 
-            return new PrebuiltQueryMatchingPolicy(MatchingPolicyKind.Prebuilt, additionalBinaryDataProperties: null, fields.ToList(), disableFullMatch);
+            return new PrebuiltQueryMatchingPolicy(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyKind.Prebuilt, additionalBinaryDataProperties: null, fields.ToList(), disableFullMatch);
         }
 
         /// <summary> Represents List of Question Answers. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="Inference.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersResult"/> instance for mocking. </returns>
+        public static AnswersResult AnswersResult(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer> answers = default)
         {
-            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
+            answers ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer>();
 
             return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
         }
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
-        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
         {
             questions ??= new ChangeTrackingList<string>();
@@ -181,10 +181,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// otherwise, if false, ignores context and includes this QnA in search result.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt> prompts = default)
         {
-            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
+            prompts ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt>();
 
             return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
         }
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
         {
             return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
@@ -204,7 +204,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
-        /// <returns> A new <see cref="Inference.AnswerSpan"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan"/> instance for mocking. </returns>
         public static AnswerSpan AnswerSpan(string text = default, double? confidence = default, int? offset = default, int? length = default)
         {
             return new AnswerSpan(text, confidence, offset, length, additionalBinaryDataProperties: null);
@@ -223,10 +223,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// Elements (Graphemes) according to Unicode v8.0.0. For additional information
         /// see https://aka.ms/text-analytics-offsets.
         /// </param>
-        /// <returns> A new <see cref="Inference.AnswersFromTextOptions"/> instance for mocking. </returns>
-        public static AnswersFromTextOptions AnswersFromTextOptions(string question = default, IEnumerable<TextDocument> textDocuments = default, string language = default, StringIndexType? stringIndexType = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions"/> instance for mocking. </returns>
+        public static AnswersFromTextOptions AnswersFromTextOptions(string question = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument> textDocuments = default, string language = default, StringIndexType? stringIndexType = default)
         {
-            textDocuments ??= new ChangeTrackingList<TextDocument>();
+            textDocuments ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument>();
 
             return new AnswersFromTextOptions(question, textDocuments.ToList(), language, stringIndexType, additionalBinaryDataProperties: null);
         }
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Represent input text record to be queried. </summary>
         /// <param name="id"> Unique identifier for the text record. </param>
         /// <param name="text"> Text contents of the record. </param>
-        /// <returns> A new <see cref="Inference.TextDocument"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument"/> instance for mocking. </returns>
         public static TextDocument TextDocument(string id = default, string text = default)
         {
             return new TextDocument(id, text, additionalBinaryDataProperties: null);
@@ -242,10 +242,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Represents the answer results. </summary>
         /// <param name="answers"> Represents the answer results. </param>
-        /// <returns> A new <see cref="Inference.AnswersFromTextResult"/> instance for mocking. </returns>
-        public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult"/> instance for mocking. </returns>
+        public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer> answers = default)
         {
-            answers ??= new ChangeTrackingList<TextAnswer>();
+            answers ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer>();
 
             return new AnswersFromTextResult(answers.ToList(), additionalBinaryDataProperties: null);
         }
@@ -257,7 +257,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="shortAnswer"> Answer span object with respect to user's question. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
-        /// <returns> A new <see cref="Inference.TextAnswer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer"/> instance for mocking. </returns>
         public static TextAnswer TextAnswer(string answer = default, double? confidence = default, string id = default, AnswerSpan shortAnswer = default, int? offset = default, int? length = default)
         {
             return new TextAnswer(

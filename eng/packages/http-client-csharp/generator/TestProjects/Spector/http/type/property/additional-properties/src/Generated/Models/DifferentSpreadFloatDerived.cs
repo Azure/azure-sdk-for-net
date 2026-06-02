@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public DifferentSpreadFloatDerived(string name, float derivedProp) : base(name) => throw null;
 
-        internal DifferentSpreadFloatDerived(string name, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, float derivedProp) : base(name, additionalProperties, additionalBinaryDataProperties) => throw null;
+        internal DifferentSpreadFloatDerived(string name, IDictionary<string, float> additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, float derivedProp) : base(name, additionalProperties, additionalBinaryDataProperties) => throw null;
 
         public float DerivedProp
         {

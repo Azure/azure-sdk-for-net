@@ -14,17 +14,17 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoveryRunResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryRunResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryRunResult"/>. </summary>
         internal DiscoveryRunResult()
         {
-            Seeds = new ChangeTrackingList<DiscoverySource>();
-            Excludes = new ChangeTrackingList<DiscoverySource>();
+            Seeds = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
+            Excludes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             Names = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryRunResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryRunResult"/>. </summary>
         /// <param name="submittedDate"> The date for when the disco run was created in the system. </param>
         /// <param name="startedDate"> The date for when the disco run was actually started by the system. </param>
         /// <param name="completedDate"> The date for when the disco run was completed by the system. </param>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="excludes"> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="names"> The list of names used for the disco run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryRunResult(DateTimeOffset? submittedDate, DateTimeOffset? startedDate, DateTimeOffset? completedDate, string tier, DiscoRunState? state, long? totalAssetsFoundCount, IList<DiscoverySource> seeds, IList<DiscoverySource> excludes, IList<string> names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryRunResult(DateTimeOffset? submittedDate, DateTimeOffset? startedDate, DateTimeOffset? completedDate, string tier, DiscoRunState? state, long? totalAssetsFoundCount, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes, IList<string> names, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SubmittedDate = submittedDate;
             StartedDate = startedDate;
@@ -68,10 +68,10 @@ namespace Azure.Analytics.Defender.Easm
         public long? TotalAssetsFoundCount { get; }
 
         /// <summary> The list of seeds used for the disco run. </summary>
-        public IList<DiscoverySource> Seeds { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get; }
 
         /// <summary> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </summary>
-        public IList<DiscoverySource> Excludes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Excludes { get; }
 
         /// <summary> The list of names used for the disco run. </summary>
         public IList<string> Names { get; }

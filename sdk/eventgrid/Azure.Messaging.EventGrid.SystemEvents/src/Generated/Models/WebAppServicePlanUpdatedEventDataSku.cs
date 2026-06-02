@@ -14,21 +14,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class WebAppServicePlanUpdatedEventDataSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventDataSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventDataSku"/>. </summary>
         internal WebAppServicePlanUpdatedEventDataSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventDataSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventDataSku"/>. </summary>
         /// <param name="name"> name of app service plan sku. </param>
         /// <param name="tier"> tier of app service plan sku. </param>
         /// <param name="size"> size of app service plan sku. </param>
         /// <param name="family"> family of app service plan sku. </param>
         /// <param name="capacity"> capacity of app service plan sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppServicePlanUpdatedEventDataSku(string name, string tier, string size, string family, string capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppServicePlanUpdatedEventDataSku(string name, string tier, string size, string family, string capacity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;

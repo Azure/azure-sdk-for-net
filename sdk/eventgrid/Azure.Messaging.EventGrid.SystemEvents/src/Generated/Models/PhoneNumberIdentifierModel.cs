@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class PhoneNumberIdentifierModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
         internal PhoneNumberIdentifierModel(string value)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhoneNumberIdentifierModel(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhoneNumberIdentifierModel(string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

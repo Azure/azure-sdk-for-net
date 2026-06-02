@@ -14,21 +14,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DataBoxCopyCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxCopyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         internal DataBoxCopyCompletedEventData(string serialNumber)
         {
             SerialNumber = serialNumber;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxCopyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxCopyCompletedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxCopyCompletedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
             StageName = stageName;

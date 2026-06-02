@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceTelemetryEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTelemetryEventProperties"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         internal DeviceTelemetryEventProperties(object body)
         {
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTelemetryEventProperties"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Body = body;
             Properties = properties;

@@ -14,16 +14,16 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DependentResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DependentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DependentResource"/>. </summary>
         internal DependentResource()
         {
             ResponseBodyMinhash = new ChangeTrackingList<int>();
-            SriChecks = new ChangeTrackingList<SubResourceIntegrityCheck>();
+            SriChecks = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DependentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DependentResource"/>. </summary>
         /// <param name="md5"></param>
         /// <param name="responseBodySize"></param>
         /// <param name="firstSeen"></param>
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastObservedActualSriHash"></param>
         /// <param name="lastObservedExpectedSriHash"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, Uri url, bool? cached, IList<SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, global::System.Uri url, bool? cached, IList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Md5 = md5;
             ResponseBodySize = responseBodySize;
@@ -127,13 +127,13 @@ namespace Azure.Analytics.Defender.Easm
         public string Sha512 { get; }
 
         /// <summary> Gets the Url. </summary>
-        public Uri Url { get; }
+        public global::System.Uri Url { get; }
 
         /// <summary> Gets the Cached. </summary>
         public bool? Cached { get; }
 
         /// <summary> Gets the SriChecks. </summary>
-        public IList<SubResourceIntegrityCheck> SriChecks { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> SriChecks { get; }
 
         /// <summary> Gets the Host. </summary>
         public string Host { get; }

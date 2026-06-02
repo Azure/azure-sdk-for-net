@@ -14,21 +14,21 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CreateSnapshotRequestContentType value) => value switch
         {
-            CreateSnapshotRequestContentType.ApplicationVndMicrosoftAppconfigSnapshotJson => "application/vnd.microsoft.appconfig.snapshot+json",
-            CreateSnapshotRequestContentType.ApplicationJson => "application/json",
+            global::Azure.Data.AppConfiguration.CreateSnapshotRequestContentType.ApplicationVndMicrosoftAppconfigSnapshotJson => "application/vnd.microsoft.appconfig.snapshot+json",
+            global::Azure.Data.AppConfiguration.CreateSnapshotRequestContentType.ApplicationJson => "application/json",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateSnapshotRequestContentType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static CreateSnapshotRequestContentType ToCreateSnapshotRequestContentType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/vnd.microsoft.appconfig.snapshot+json"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "application/vnd.microsoft.appconfig.snapshot+json"))
             {
-                return CreateSnapshotRequestContentType.ApplicationVndMicrosoftAppconfigSnapshotJson;
+                return global::Azure.Data.AppConfiguration.CreateSnapshotRequestContentType.ApplicationVndMicrosoftAppconfigSnapshotJson;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/json"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "application/json"))
             {
-                return CreateSnapshotRequestContentType.ApplicationJson;
+                return global::Azure.Data.AppConfiguration.CreateSnapshotRequestContentType.ApplicationJson;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateSnapshotRequestContentType value.");
         }

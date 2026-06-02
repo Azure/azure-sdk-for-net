@@ -14,19 +14,19 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestRun"/>. </summary>
         public LoadTestRun()
         {
-            Secrets = new ChangeTrackingDictionary<string, TestSecret>();
+            Secrets = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestSecret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            ErrorDetails = new ChangeTrackingList<ErrorDetails>();
-            TestRunStatistics = new ChangeTrackingDictionary<string, TestRunStatistics>();
-            RegionalStatistics = new ChangeTrackingDictionary<string, TestRunStatistics>();
+            ErrorDetails = new ChangeTrackingList<global::Azure.Developer.LoadTesting.ErrorDetails>();
+            TestRunStatistics = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
+            RegionalStatistics = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestRun"/>. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
         /// <param name="autoStopCriteria"> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </param>
@@ -79,7 +79,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? executionStartDateTime, DateTimeOffset? executionEndDateTime, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<global::Azure.Developer.LoadTesting.ErrorDetails> errorDetails, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, global::System.Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, global::System.Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? executionStartDateTime, DateTimeOffset? executionEndDateTime, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -137,7 +137,7 @@ namespace Azure.Developer.LoadTesting
         /// elsewhere, the secret value should be provided directly and the type should be
         /// SECRET_VALUE.
         /// </summary>
-        public IDictionary<string, TestSecret> Secrets { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> Secrets { get; }
 
         /// <summary> Certificates metadata. </summary>
         public TestCertificate Certificate { get; set; }
@@ -146,21 +146,21 @@ namespace Azure.Developer.LoadTesting
         public IDictionary<string, string> EnvironmentVariables { get; }
 
         /// <summary> Error details if there is any failure in load test run. </summary>
-        public IReadOnlyList<ErrorDetails> ErrorDetails { get; }
+        public IReadOnlyList<global::Azure.Developer.LoadTesting.ErrorDetails> ErrorDetails { get; }
 
         /// <summary>
         /// Test run statistics. Key is the sampler name and value is the set of statistics for performance metrics like response time, throughput, etc. from the load test run.
         /// The sampler name is the same as the name mentioned in the test script.
         /// Sampler name "Total" represents the aggregated statistics of all the samplers.
         /// </summary>
-        public IReadOnlyDictionary<string, TestRunStatistics> TestRunStatistics { get; }
+        public IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> TestRunStatistics { get; }
 
         /// <summary>
         /// Regional statistics. Key is the Azure region name and value is the test run statistics.
         /// The region name should of format accepted by ARM, and should be a region supported by Azure Load Testing. For example, East US should be passed as "eastus".
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </summary>
-        public IReadOnlyDictionary<string, TestRunStatistics> RegionalStatistics { get; }
+        public IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> RegionalStatistics { get; }
 
         /// <summary> The load test configuration. </summary>
         public LoadTestConfiguration LoadTestConfiguration { get; }
@@ -196,7 +196,7 @@ namespace Azure.Developer.LoadTesting
         public DateTimeOffset? ExecutedDateTime { get; }
 
         /// <summary> Portal url. </summary>
-        public Uri PortalUri { get; }
+        public global::System.Uri PortalUri { get; }
 
         /// <summary> Test run duration in milliseconds. </summary>
         public long? Duration { get; }
@@ -223,7 +223,7 @@ namespace Azure.Developer.LoadTesting
         public CreatedByType? CreatedByType { get; set; }
 
         /// <summary> The URI pointing to the entity that created the test run. </summary>
-        public Uri CreatedByUri { get; }
+        public global::System.Uri CreatedByUri { get; }
 
         /// <summary> Estimated virtual user hours for the test run. </summary>
         public double? EstimatedVirtualUserHours { get; }

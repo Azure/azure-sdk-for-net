@@ -18,32 +18,32 @@ namespace _Type._Enum.Fixed
     {
         protected String() => throw null;
 
-        internal String(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal String(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetKnownValue(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetKnownValueAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetKnownValueAsync(RequestContext context) => throw null;
 
-        public virtual Response<DaysOfWeekEnum> GetKnownValue(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type._Enum.Fixed.DaysOfWeekEnum> GetKnownValue(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DaysOfWeekEnum>> GetKnownValueAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type._Enum.Fixed.DaysOfWeekEnum>> GetKnownValueAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutKnownValue(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutKnownValueAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutKnownValueAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutKnownValue(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutKnownValueAsync(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutKnownValueAsync(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutUnknownValue(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutUnknownValueAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutUnknownValueAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutUnknownValue(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutUnknownValueAsync(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutUnknownValueAsync(DaysOfWeekEnum body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -13,18 +13,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeleted event. </summary>
     public partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerDeletedEventData"/>. </summary>
         internal AcsRouterWorkerDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerDeletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
-        internal AcsRouterWorkerDeletedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
+        internal AcsRouterWorkerDeletedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
         }
     }

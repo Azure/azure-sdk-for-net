@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The Type (or category) of the connection. </summary>
-    public readonly partial struct ConnectionType : IEquatable<ConnectionType>
+    public readonly partial struct ConnectionType : IEquatable<global::Azure.AI.Projects.ConnectionType>
     {
         private readonly string _value;
         /// <summary> Azure OpenAI Service. </summary>
@@ -32,12 +32,12 @@ namespace Azure.AI.Projects
         /// <summary> Remote tool. </summary>
         private const string RemoteToolValue = "RemoteTool_Preview";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -72,34 +72,34 @@ namespace Azure.AI.Projects
         /// <summary> Remote tool. </summary>
         public static ConnectionType RemoteTool { get; } = new ConnectionType(RemoteToolValue);
 
-        /// <summary> Determines if two <see cref="ConnectionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.ConnectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionType left, ConnectionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.ConnectionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionType left, ConnectionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConnectionType(string value) => new ConnectionType(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionType?(string value) => value == null ? null : new ConnectionType(value);
+        public static implicit operator ConnectionType?(string value) => (value == null) ? null : new ConnectionType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConnectionType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConnectionType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

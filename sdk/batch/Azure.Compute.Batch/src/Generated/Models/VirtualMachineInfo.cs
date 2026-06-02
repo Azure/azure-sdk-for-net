@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class VirtualMachineInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VirtualMachineInfo"/>. </summary>
         internal VirtualMachineInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VirtualMachineInfo"/>. </summary>
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="scaleSetVmResourceId"> The resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInfo(BatchVmImageReference imageReference, string scaleSetVmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInfo(BatchVmImageReference imageReference, string scaleSetVmResourceId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             ScaleSetVmResourceId = scaleSetVmResourceId;

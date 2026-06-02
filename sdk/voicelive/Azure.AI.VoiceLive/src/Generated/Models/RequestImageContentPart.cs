@@ -13,17 +13,17 @@ namespace Azure.AI.VoiceLive
     /// <summary> Input image content part. </summary>
     public partial class RequestImageContentPart : VoiceLiveContentPart
     {
-        /// <summary> Initializes a new instance of <see cref="RequestImageContentPart"/>. </summary>
-        public RequestImageContentPart() : base(ContentPartType.InputImage)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.RequestImageContentPart"/>. </summary>
+        public RequestImageContentPart() : base(global::Azure.AI.VoiceLive.ContentPartType.InputImage)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestImageContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.RequestImageContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"></param>
         /// <param name="detail"></param>
-        internal RequestImageContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string url, RequestImageContentPartDetail? detail) : base(@type, additionalBinaryDataProperties)
+        internal RequestImageContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string url, RequestImageContentPartDetail? detail) : base(@type, additionalBinaryDataProperties)
         {
             Url = url;
             Detail = detail;

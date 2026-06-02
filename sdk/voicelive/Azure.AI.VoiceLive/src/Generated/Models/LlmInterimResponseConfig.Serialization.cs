@@ -16,54 +16,54 @@ namespace Azure.AI.VoiceLive
     /// Configuration for LLM-based interim response generation.
     /// Uses LLM to generate context-aware interim responses when any trigger condition is met.
     /// </summary>
-    public partial class LlmInterimResponseConfig : InterimResponseConfigBase, IJsonModel<LlmInterimResponseConfig>
+    public partial class LlmInterimResponseConfig : InterimResponseConfigBase, IJsonModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InterimResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLlmInterimResponseConfig(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.LlmInterimResponseConfig.DeserializeLlmInterimResponseConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LlmInterimResponseConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.LlmInterimResponseConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LlmInterimResponseConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.LlmInterimResponseConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LlmInterimResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LlmInterimResponseConfig IPersistableModel<LlmInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (LlmInterimResponseConfig)PersistableModelCreateCore(data, options);
+        LlmInterimResponseConfig IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => ((LlmInterimResponseConfig)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LlmInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LlmInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,23 +71,23 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LlmInterimResponseConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.LlmInterimResponseConfig)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(Instructions))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
-            if (Optional.IsDefined(MaxCompletionTokens))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(MaxCompletionTokens))
             {
                 writer.WritePropertyName("max_completion_tokens"u8);
                 writer.WriteNumberValue(MaxCompletionTokens.Value);
@@ -96,33 +96,33 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LlmInterimResponseConfig IJsonModel<LlmInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LlmInterimResponseConfig)JsonModelCreateCore(ref reader, options);
+        LlmInterimResponseConfig IJsonModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((LlmInterimResponseConfig)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InterimResponseConfigBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.LlmInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LlmInterimResponseConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.LlmInterimResponseConfig)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLlmInterimResponseConfig(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.LlmInterimResponseConfig.DeserializeLlmInterimResponseConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LlmInterimResponseConfig DeserializeLlmInterimResponseConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             InterimResponseConfigType @type = default;
-            IList<InterimResponseTrigger> triggers = default;
+            IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> triggers = default;
             int? latencyThresholdMs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string model = default;
             string instructions = default;
             int? maxCompletionTokens = default;
@@ -135,11 +135,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("triggers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<InterimResponseTrigger> array = new List<InterimResponseTrigger>();
+                    List<global::Azure.AI.VoiceLive.InterimResponseTrigger> array = new List<global::Azure.AI.VoiceLive.InterimResponseTrigger>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new InterimResponseTrigger(item.GetString()));
@@ -149,7 +149,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("latency_threshold_ms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -168,21 +168,21 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("max_completion_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     maxCompletionTokens = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LlmInterimResponseConfig(
                 @type,
-                triggers ?? new ChangeTrackingList<InterimResponseTrigger>(),
+                (triggers ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.InterimResponseTrigger>()),
                 latencyThresholdMs,
                 additionalBinaryDataProperties,
                 model,

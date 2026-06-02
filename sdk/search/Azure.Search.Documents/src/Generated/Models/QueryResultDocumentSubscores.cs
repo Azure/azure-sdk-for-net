@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Models
     public partial class QueryResultDocumentSubscores
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSubscores"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentSubscores"/>. </summary>
         internal QueryResultDocumentSubscores()
         {
-            Vectors = new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>();
+            Vectors = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSubscores"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentSubscores"/>. </summary>
         /// <param name="text"> The BM25 or Classic score for the text portion of the query. </param>
         /// <param name="vectors"> The vector similarity and. </param>
         /// <param name="documentBoost"> The BM25 or Classic score for the text portion of the query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, double? documentBoost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>> vectors, double? documentBoost, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Vectors = vectors;
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
         public TextResult Text { get; }
 
         /// <summary> The vector similarity and. </summary>
-        public IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> Vectors { get; }
+        public IReadOnlyList<global::System.Collections.Generic.IDictionary<string, global::Azure.Search.Documents.Models.SingleVectorFieldResult>> Vectors { get; }
 
         /// <summary> The BM25 or Classic score for the text portion of the query. </summary>
         public double? DocumentBoost { get; }

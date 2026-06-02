@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureOpenAIVectorizerParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters"/>. </summary>
         public AzureOpenAIVectorizerParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters"/>. </summary>
         /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
         /// <param name="authenticationIdentity"> The user-assigned managed identity used for outbound connections. </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureOpenAIVectorizerParameters(Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureOpenAIVectorizerParameters(global::System.Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceUri = resourceUri;
             DeploymentName = deploymentName;
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
-        public Uri ResourceUri { get; set; }
+        public global::System.Uri ResourceUri { get; set; }
 
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
         public string DeploymentName { get; set; }

@@ -10,9 +10,9 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPListToolsTool : IJsonModel<InternalMCPListToolsTool>
+    internal partial class InternalMCPListToolsTool : IJsonModel<global::OpenAI.InternalMCPListToolsTool>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPListToolsTool"/> for deserialization. </summary>
         internal InternalMCPListToolsTool()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMCPListToolsTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalMCPListToolsTool(document.RootElement, options);
+                        return global::OpenAI.InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalMCPListToolsTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPListToolsTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalMCPListToolsTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPListToolsTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMCPListToolsTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalMCPListToolsTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPListToolsTool IPersistableModel<InternalMCPListToolsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalMCPListToolsTool IPersistableModel<global::OpenAI.InternalMCPListToolsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMCPListToolsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalMCPListToolsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalMCPListToolsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalMCPListToolsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,26 +70,26 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMCPListToolsTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPListToolsTool)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("input_schema"u8);
-            writer.WriteObjectValue(InputSchema, options);
-            if (Optional.IsDefined(Annotations))
+            writer.WriteObjectValue<MCPListToolsToolInputSchema>(InputSchema, options);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
-                writer.WriteObjectValue(Annotations, options);
+                writer.WriteObjectValue<MCPListToolsToolAnnotations>(Annotations, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -97,9 +97,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -108,26 +108,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPListToolsTool IJsonModel<InternalMCPListToolsTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalMCPListToolsTool IJsonModel<global::OpenAI.InternalMCPListToolsTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMCPListToolsTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMCPListToolsTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPListToolsTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalMCPListToolsTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalMCPListToolsTool DeserializeInternalMCPListToolsTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -135,7 +135,7 @@ namespace OpenAI
             string description = default;
             MCPListToolsToolInputSchema inputSchema = default;
             MCPListToolsToolAnnotations annotations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -145,7 +145,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("description"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         description = null;
                         continue;
@@ -155,22 +155,22 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("input_schema"u8))
                 {
-                    inputSchema = MCPListToolsToolInputSchema.DeserializeMCPListToolsToolInputSchema(prop.Value, options);
+                    inputSchema = global::Azure.AI.Extensions.OpenAI.MCPListToolsToolInputSchema.DeserializeMCPListToolsToolInputSchema(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         annotations = null;
                         continue;
                     }
-                    annotations = MCPListToolsToolAnnotations.DeserializeMCPListToolsToolAnnotations(prop.Value, options);
+                    annotations = global::Azure.AI.Extensions.OpenAI.MCPListToolsToolAnnotations.DeserializeMCPListToolsToolAnnotations(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalMCPListToolsTool(name, description, inputSchema, annotations, additionalBinaryDataProperties);

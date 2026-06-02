@@ -15,15 +15,15 @@ namespace Azure.Monitor.Query.Metrics.Models
     public partial class MetricResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricResult"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="type"> The resource type of the metric resource. </param>
         /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string @type, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string @type, LocalizableString localizedName, MetricUnit unit, IEnumerable<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> timeSeries)
         {
             Id = id;
             Type = @type;
@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query.Metrics.Models
             TimeSeries = timeSeries.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricResult"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="type"> The resource type of the metric resource. </param>
         /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricResult(string id, string @type, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IList<MetricTimeSeriesElement> timeSeries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricResult(string id, string @type, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IList<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> timeSeries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
@@ -68,6 +68,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         public MetricUnit Unit { get; }
 
         /// <summary> The time series returned when a data query is performed. </summary>
-        public IList<MetricTimeSeriesElement> TimeSeries { get; }
+        public IList<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> TimeSeries { get; }
     }
 }

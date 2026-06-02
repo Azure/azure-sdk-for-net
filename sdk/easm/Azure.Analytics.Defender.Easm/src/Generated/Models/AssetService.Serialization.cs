@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The AssetService. </summary>
-    public partial class AssetService : IJsonModel<AssetService>
+    public partial class AssetService : IJsonModel<global::Azure.Analytics.Defender.Easm.AssetService>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetService PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetService(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.AssetService.DeserializeAssetService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetService)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetService)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetService)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetService)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetService>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetService IPersistableModel<AssetService>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AssetService IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.AssetService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,92 +68,92 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetService>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetService)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Scheme))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme);
             }
-            if (Optional.IsDefined(Port))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsCollectionDefined(WebComponents))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(WebComponents))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
                 foreach (WebComponent item in WebComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WebComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslCerts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SslCerts))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
                 foreach (SslCertAsset item in SslCerts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SslCertAsset>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Exceptions))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Exceptions))
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in Exceptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (SourceDetails item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsCollectionDefined(PortStates))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(PortStates))
             {
                 writer.WritePropertyName("portStates"u8);
                 writer.WriteStartArray();
                 foreach (ObservedPortState item in PortStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedPortState>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -161,9 +161,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -172,41 +172,41 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetService IJsonModel<AssetService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AssetService IJsonModel<global::Azure.Analytics.Defender.Easm.AssetService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetService JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetService>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetService>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetService)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetService)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetService(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.AssetService.DeserializeAssetService(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AssetService DeserializeAssetService(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string scheme = default;
             int? port = default;
-            IList<WebComponent> webComponents = default;
-            IList<SslCertAsset> sslCerts = default;
-            IList<ObservedString> exceptions = default;
-            IList<SourceDetails> sources = default;
+            IList<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default;
+            IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> exceptions = default;
+            IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
             bool? recent = default;
-            IList<ObservedPortState> portStates = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Defender.Easm.ObservedPortState> portStates = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("scheme"u8))
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("port"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -225,63 +225,63 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("webComponents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WebComponent> array = new List<WebComponent>();
+                    List<global::Azure.Analytics.Defender.Easm.WebComponent> array = new List<global::Azure.Analytics.Defender.Easm.WebComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebComponent.DeserializeWebComponent(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.WebComponent.DeserializeWebComponent(item, options));
                     }
                     webComponents = array;
                     continue;
                 }
                 if (prop.NameEquals("sslCerts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SslCertAsset> array = new List<SslCertAsset>();
+                    List<global::Azure.Analytics.Defender.Easm.SslCertAsset> array = new List<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SslCertAsset.DeserializeSslCertAsset(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SslCertAsset.DeserializeSslCertAsset(item, options));
                     }
                     sslCerts = array;
                     continue;
                 }
                 if (prop.NameEquals("exceptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     exceptions = array;
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.SourceDetails> array = new List<global::Azure.Analytics.Defender.Easm.SourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -299,7 +299,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -308,7 +308,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("recent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -317,35 +317,35 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("portStates"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedPortState> array = new List<ObservedPortState>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedPortState> array = new List<global::Azure.Analytics.Defender.Easm.ObservedPortState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedPortState.DeserializeObservedPortState(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedPortState.DeserializeObservedPortState(item, options));
                     }
                     portStates = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AssetService(
                 scheme,
                 port,
-                webComponents ?? new ChangeTrackingList<WebComponent>(),
-                sslCerts ?? new ChangeTrackingList<SslCertAsset>(),
-                exceptions ?? new ChangeTrackingList<ObservedString>(),
-                sources ?? new ChangeTrackingList<SourceDetails>(),
+                (webComponents ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>()),
+                (sslCerts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>()),
+                (exceptions ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (sources ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>()),
                 firstSeen,
                 lastSeen,
                 count,
                 recent,
-                portStates ?? new ChangeTrackingList<ObservedPortState>(),
+                (portStates ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedPortState>()),
                 additionalBinaryDataProperties);
         }
     }

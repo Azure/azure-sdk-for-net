@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeReimageOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeReimageOptions"/>. </summary>
         public BatchNodeReimageOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeReimageOptions"/>. </summary>
         /// <param name="nodeReimageOption"> When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeReimageOptions(BatchNodeReimageOption? nodeReimageOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeReimageOptions(BatchNodeReimageOption? nodeReimageOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NodeReimageOption = nodeReimageOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
-    public partial class ScoringRuleOptions : IJsonModel<ScoringRuleOptions>
+    public partial class ScoringRuleOptions : IJsonModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ScoringRuleOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScoringRuleOptions(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScoringRuleOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ScoringRuleOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScoringRuleOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ScoringRuleOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScoringRuleOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScoringRuleOptions IPersistableModel<ScoringRuleOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScoringRuleOptions IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScoringRuleOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScoringRuleOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,17 +68,17 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ScoringRuleOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ScoringRuleOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BatchSize))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsCollectionDefined(ScoringParameters))
+            if (global::Azure.Communication.JobRouter.Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
@@ -88,17 +88,17 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsBatchScoringEnabled))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(IsBatchScoringEnabled))
             {
                 writer.WritePropertyName("isBatchScoringEnabled"u8);
                 writer.WriteBooleanValue(IsBatchScoringEnabled.Value);
             }
-            if (Optional.IsDefined(DescendingOrder))
+            if (global::Azure.Communication.JobRouter.Optional.IsDefined(DescendingOrder))
             {
                 writer.WritePropertyName("descendingOrder"u8);
                 writer.WriteBooleanValue(DescendingOrder.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,39 +117,39 @@ namespace Azure.Communication.JobRouter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScoringRuleOptions IJsonModel<ScoringRuleOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScoringRuleOptions IJsonModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ScoringRuleOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ScoringRuleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ScoringRuleOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ScoringRuleOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScoringRuleOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ScoringRuleOptions DeserializeScoringRuleOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int? batchSize = default;
-            IList<ScoringRuleParameterSelector> scoringParameters = default;
+            IList<global::Azure.Communication.JobRouter.ScoringRuleParameterSelector> scoringParameters = default;
             bool? isBatchScoringEnabled = default;
             bool? descendingOrder = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("batchSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -158,11 +158,11 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("scoringParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ScoringRuleParameterSelector> array = new List<ScoringRuleParameterSelector>();
+                    List<global::Azure.Communication.JobRouter.ScoringRuleParameterSelector> array = new List<global::Azure.Communication.JobRouter.ScoringRuleParameterSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ScoringRuleParameterSelector(item.GetString()));
@@ -172,7 +172,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("isBatchScoringEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -181,19 +181,19 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("descendingOrder"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     descendingOrder = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScoringRuleOptions(batchSize, scoringParameters ?? new ChangeTrackingList<ScoringRuleParameterSelector>(), isBatchScoringEnabled, descendingOrder, additionalBinaryDataProperties);
+            return new ScoringRuleOptions(batchSize, (scoringParameters ?? new ChangeTrackingList<global::Azure.Communication.JobRouter.ScoringRuleParameterSelector>()), isBatchScoringEnabled, descendingOrder, additionalBinaryDataProperties);
         }
     }
 }

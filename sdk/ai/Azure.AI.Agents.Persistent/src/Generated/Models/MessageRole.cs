@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The possible values for roles attributed to messages in a thread. </summary>
-    public readonly partial struct MessageRole : IEquatable<MessageRole>
+    public readonly partial struct MessageRole : IEquatable<global::Azure.AI.Agents.Persistent.MessageRole>
     {
         private readonly string _value;
         /// <summary> The role representing the end-user. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The role representing the agent. </summary>
         private const string AgentValue = "assistant";
 
-        /// <summary> Initializes a new instance of <see cref="MessageRole"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MessageRole(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The role representing the agent. </summary>
         public static MessageRole Agent { get; } = new MessageRole(AgentValue);
 
-        /// <summary> Determines if two <see cref="MessageRole"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.MessageRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MessageRole left, MessageRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MessageRole"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.MessageRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MessageRole left, MessageRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.MessageRole"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MessageRole(string value) => new MessageRole(value);
 
-        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.MessageRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageRole?(string value) => value == null ? null : new MessageRole(value);
+        public static implicit operator MessageRole?(string value) => (value == null) ? null : new MessageRole(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MessageRole other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MessageRole other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MessageRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MessageRole other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

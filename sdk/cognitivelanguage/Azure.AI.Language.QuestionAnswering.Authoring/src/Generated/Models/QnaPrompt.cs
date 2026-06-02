@@ -14,20 +14,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QnaPrompt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt"/>. </summary>
         public QnaPrompt()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt. It is used for ordering of the prompts. </param>
         /// <param name="qnaId"> ID of the QnA corresponding to the prompt. </param>
         /// <param name="qna"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qna, string displayText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qna, string displayText, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;

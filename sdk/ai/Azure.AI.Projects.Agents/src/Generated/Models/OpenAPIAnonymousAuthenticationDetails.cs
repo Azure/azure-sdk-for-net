@@ -10,15 +10,15 @@ namespace Azure.AI.Projects.Agents
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
     public partial class OpenAPIAnonymousAuthenticationDetails : OpenApiAuthenticationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="OpenAPIAnonymousAuthenticationDetails"/>. </summary>
-        public OpenAPIAnonymousAuthenticationDetails() : base(OpenApiAuthType.Anonymous)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails"/>. </summary>
+        public OpenAPIAnonymousAuthenticationDetails() : base(global::Azure.AI.Projects.Agents.OpenApiAuthType.Anonymous)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAPIAnonymousAuthenticationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAPIAnonymousAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal OpenAPIAnonymousAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

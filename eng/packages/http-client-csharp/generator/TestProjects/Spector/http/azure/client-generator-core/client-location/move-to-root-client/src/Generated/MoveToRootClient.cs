@@ -16,24 +16,24 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
 {
     public partial class MoveToRootClient
     {
-        public MoveToRootClient() : this(new Uri("http://localhost:3000"), new MoveToRootClientOptions()) => throw null;
+        public MoveToRootClient() : this(new global::System.Uri("http://localhost:3000"), new MoveToRootClientOptions()) => throw null;
 
-        internal MoveToRootClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MoveToRootClientOptions options) => throw null;
+        internal MoveToRootClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MoveToRootClientOptions options) => throw null;
 
-        public MoveToRootClient(Uri endpoint, MoveToRootClientOptions options) : this(null, endpoint, options) => throw null;
+        public MoveToRootClient(global::System.Uri endpoint, MoveToRootClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MoveToRootClient(MoveToRootClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MoveToRootClient(MoveToRootClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetHealthStatus(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetHealthStatusAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetHealthStatusAsync(RequestContext context) => throw null;
 
         public virtual Response GetHealthStatus(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetHealthStatusAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetHealthStatusAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual ResourceOperations GetResourceOperationsClient() => throw null;
     }

@@ -10,16 +10,16 @@ namespace Azure.AI.Projects
     /// <summary> Shared Access Signature (SAS) credential definition. </summary>
     public partial class AIProjectConnectionSasCredential : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionSasCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionSasCredential"/>. </summary>
         internal AIProjectConnectionSasCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionSasCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionSasCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasToken"> SAS token. </param>
-        internal AIProjectConnectionSasCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(@type, additionalBinaryDataProperties)
+        internal AIProjectConnectionSasCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string sasToken) : base(@type, additionalBinaryDataProperties)
         {
             SasToken = sasToken;
         }

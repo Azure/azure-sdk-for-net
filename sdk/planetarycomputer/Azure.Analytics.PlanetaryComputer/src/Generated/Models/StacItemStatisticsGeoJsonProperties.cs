@@ -15,29 +15,29 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemStatisticsGeoJsonProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJsonProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/>. </summary>
         /// <param name="statistics"> Statistical information for each band in the asset. </param>
-        internal StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics)
+        internal StacItemStatisticsGeoJsonProperties(IDictionary<string, global::Azure.Analytics.PlanetaryComputer.BandStatistics> statistics)
         {
             Statistics = statistics;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJsonProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/>. </summary>
         /// <param name="statistics"> Statistical information for each band in the asset. </param>
         /// <param name="additionalProperties"></param>
-        internal StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal StacItemStatisticsGeoJsonProperties(IDictionary<string, global::Azure.Analytics.PlanetaryComputer.BandStatistics> statistics, IReadOnlyDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Statistics = statistics;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>(additionalProperties);
         }
 
         /// <summary> Statistical information for each band in the asset. </summary>
-        public IDictionary<string, BandStatistics> Statistics { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.BandStatistics> Statistics { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IReadOnlyDictionary<string, global::System.BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, global::System.BinaryData>(_additionalBinaryDataProperties);
     }
 }

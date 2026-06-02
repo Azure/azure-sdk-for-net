@@ -14,15 +14,15 @@ namespace Azure.Compute.Batch
     public partial class BatchJobUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobUpdateOptions"/>. </summary>
         public BatchJobUpdateOptions()
         {
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobUpdateOptions"/>. </summary>
         /// <param name="priority"> The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, the priority of the Job is left unchanged. </param>
         /// <param name="allowTaskPreemption"> Whether Tasks in this job can be preempted by other high priority jobs. (This property is not available by default. Please contact support for more information) If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </param>
         /// <param name="maxParallelTasks"> The maximum number of tasks that can be executed in parallel for the job. (This property is not available by default. Please contact support for more information) The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </param>
@@ -32,7 +32,7 @@ namespace Azure.Compute.Batch
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. If omitted, the existing Job metadata is left unchanged. </param>
         /// <param name="networkConfiguration"> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobUpdateOptions(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, IList<BatchMetadataItem> metadata, BatchJobNetworkConfiguration networkConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobUpdateOptions(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, BatchJobNetworkConfiguration networkConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             AllowTaskPreemption = allowTaskPreemption;
@@ -64,7 +64,7 @@ namespace Azure.Compute.Batch
         public BatchAllTasksCompleteMode? AllTasksCompleteMode { get; set; }
 
         /// <summary> A list of name-value pairs associated with the Job as metadata. If omitted, the existing Job metadata is left unchanged. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </summary>
         public BatchJobNetworkConfiguration NetworkConfiguration { get; set; }

@@ -18,16 +18,16 @@ namespace Client.Structure.Service._Baz
     {
         protected BazFoo() => throw null;
 
-        internal BazFoo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal BazFoo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Seven(RequestContext context) => throw null;
 
-        public virtual Task<Response> SevenAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SevenAsync(RequestContext context) => throw null;
 
         public virtual Response Seven(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SevenAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SevenAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

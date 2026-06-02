@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Discriminators for supported queue selector attachment types. </summary>
-    public readonly partial struct QueueSelectorAttachmentKind : IEquatable<QueueSelectorAttachmentKind>
+    public readonly partial struct QueueSelectorAttachmentKind : IEquatable<global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind>
     {
         private readonly string _value;
         /// <summary> Discriminator value for ConditionalQueueSelectorAttachment. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for WeightedAllocationQueueSelectorAttachment. </summary>
         private const string WeightedAllocationValue = "weightedAllocation";
 
-        /// <summary> Initializes a new instance of <see cref="QueueSelectorAttachmentKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueueSelectorAttachmentKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for WeightedAllocationQueueSelectorAttachment. </summary>
         public static QueueSelectorAttachmentKind WeightedAllocation { get; } = new QueueSelectorAttachmentKind(WeightedAllocationValue);
 
-        /// <summary> Determines if two <see cref="QueueSelectorAttachmentKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueueSelectorAttachmentKind left, QueueSelectorAttachmentKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="QueueSelectorAttachmentKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueueSelectorAttachmentKind left, QueueSelectorAttachmentKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="QueueSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator QueueSelectorAttachmentKind(string value) => new QueueSelectorAttachmentKind(value);
 
-        /// <summary> Converts a string to a <see cref="QueueSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueueSelectorAttachmentKind?(string value) => value == null ? null : new QueueSelectorAttachmentKind(value);
+        public static implicit operator QueueSelectorAttachmentKind?(string value) => (value == null) ? null : new QueueSelectorAttachmentKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QueueSelectorAttachmentKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is QueueSelectorAttachmentKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(QueueSelectorAttachmentKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueueSelectorAttachmentKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

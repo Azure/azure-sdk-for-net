@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class ResponsesAzureAISearchTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
-        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
+        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(global::Azure.AI.Extensions.OpenAI.ToolType.AzureAiSearch)
         {
-            Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             AzureAISearch = azureAISearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
         public ResponsesAzureAISearchToolResource AzureAISearch { get; set; }

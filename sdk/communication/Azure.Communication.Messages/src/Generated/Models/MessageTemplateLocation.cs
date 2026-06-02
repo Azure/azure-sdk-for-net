@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's location value information. </summary>
     public partial class MessageTemplateLocation : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateLocation"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -21,7 +21,7 @@ namespace Azure.Communication.Messages
         /// <param name="address"> The [Optional] address of the location. </param>
         /// <param name="latitudeInternal"> The latitude of the location. </param>
         /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, additionalBinaryDataProperties)
+        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, additionalBinaryDataProperties)
         {
             LocationName = locationName;
             Address = address;

@@ -12,14 +12,14 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of an external platform contact.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommunicationContact"/>, <see cref="BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.CommunicationContact"/>, <see cref="Azure.Communication.Messages.BotContact"/>, and <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppContact"/>.
     /// </summary>
     public abstract partial class ConversationContact
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         private protected ConversationContact(string id, MessagePlatformKind kind)
@@ -28,11 +28,11 @@ namespace Azure.Communication.Messages
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationContact(string id, MessagePlatformKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationContact(string id, MessagePlatformKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;

@@ -16,29 +16,29 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SynonymMap
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SynonymMap"/>. </summary>
         /// <param name="name"> The name of the synonym map. </param>
         /// <param name="synonymsList"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="synonymsList"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="synonymsList"/> is null. </exception>
         public SynonymMap(string name, IEnumerable<string> synonymsList)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(synonymsList, nameof(synonymsList));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(synonymsList, nameof(synonymsList));
 
             Name = name;
             SynonymsList = synonymsList.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SynonymMap"/>. </summary>
         /// <param name="name"> The name of the synonym map. </param>
         /// <param name="format"> The format of the synonym map. Only the 'solr' format is currently supported. </param>
         /// <param name="synonymsList"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="etag"> The ETag of the synonym map. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynonymMap(string name, string format, IList<string> synonymsList, SearchResourceEncryptionKey encryptionKey, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynonymMap(string name, string format, IList<string> synonymsList, SearchResourceEncryptionKey encryptionKey, string etag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Format = format;

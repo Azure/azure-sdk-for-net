@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringEntityEvaluationSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringEntityEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model F1 score. </param>
         /// <param name="precision"> Represents the model precision. </param>
         /// <param name="recall"> Represents the model precision. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             FalseNegativeCount = falseNegativeCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringEntityEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model F1 score. </param>
         /// <param name="precision"> Represents the model precision. </param>
         /// <param name="recall"> Represents the model precision. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringEntityEvaluationSummary(double f1, double precision, double recall, int truePositiveCount, int trueNegativeCount, int falsePositiveCount, int falseNegativeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringEntityEvaluationSummary(double f1, double precision, double recall, int truePositiveCount, int trueNegativeCount, int falsePositiveCount, int falseNegativeCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             F1 = f1;
             Precision = precision;

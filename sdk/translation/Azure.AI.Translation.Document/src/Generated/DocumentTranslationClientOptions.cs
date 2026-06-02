@@ -14,27 +14,27 @@ namespace Azure.AI.Translation.Document
     /// <summary> Client options for clients in this library. </summary>
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_01_Preview;
+        private const global::Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2024_11_01_Preview;
 
         /// <summary> Initializes a new instance of DocumentTranslationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal DocumentTranslationClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-11-01-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            if (section["Audience"] is string audience)
+            if ((section["Audience"] is string audience))
             {
-                Audience = new DocumentTranslationAudience(audience);
+                this.Audience = new DocumentTranslationAudience(audience);
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

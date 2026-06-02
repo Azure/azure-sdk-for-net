@@ -18,25 +18,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class TagsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TagsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
-        internal TagsResult(IEnumerable<DetectedTag> values)
+        internal TagsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> values)
         {
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TagsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagsResult(IReadOnlyList<DetectedTag> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TagsResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of tags. </summary>
-        public IReadOnlyList<DetectedTag> Values { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> Values { get; }
     }
 }

@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemComputerToolCallStatus value) => value switch
         {
-            InputItemComputerToolCallStatus.InProgress => "in_progress",
-            InputItemComputerToolCallStatus.Completed => "completed",
-            InputItemComputerToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Projects.InputItemComputerToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemComputerToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemComputerToolCallStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemComputerToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemComputerToolCallStatus ToInputItemComputerToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemComputerToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemComputerToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemComputerToolCallStatus.Completed;
+                return global::Azure.AI.Projects.InputItemComputerToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemComputerToolCallStatus.Incomplete;
+                return global::Azure.AI.Projects.InputItemComputerToolCallStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemComputerToolCallStatus value.");
         }

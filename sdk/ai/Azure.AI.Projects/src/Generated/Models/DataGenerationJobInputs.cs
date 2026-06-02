@@ -12,19 +12,19 @@ namespace Azure.AI.Projects
     public partial class DataGenerationJobInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="options"> The options for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sources"/> or <paramref name="options"/> is null. </exception>
-        public DataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="sources"/> or <paramref name="options"/> is null. </exception>
+        public DataGenerationJobInputs(string name, IEnumerable<global::Azure.AI.Projects.DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sources, nameof(sources));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.Projects.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(sources, nameof(sources));
+            global::Azure.AI.Projects.Argument.AssertNotNull(options, nameof(options));
 
             Name = name;
             Sources = sources.ToList();
@@ -32,14 +32,14 @@ namespace Azure.AI.Projects
             Scenario = scenario;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="options"> The options for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario, DataGenerationJobOutputOptions outputOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobInputs(string name, IList<global::Azure.AI.Projects.DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario, DataGenerationJobOutputOptions outputOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Sources = sources;
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
         public string Name { get; set; }
 
         /// <summary> The sources used for the data generation job. </summary>
-        public IList<DataGenerationJobSource> Sources { get; }
+        public IList<global::Azure.AI.Projects.DataGenerationJobSource> Sources { get; }
 
         /// <summary> The options for the data generation job. </summary>
         public DataGenerationJobOptions Options { get; set; }

@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The ProjectAgentSkills sub-client. </summary>
     public partial class ProjectAgentSkills
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ProjectAgentSkills for mocking. </summary>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectAgentSkills(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectAgentSkills(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -45,16 +45,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSkillRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -67,44 +67,44 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSkillAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSkillRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieves a skill. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> GetSkill(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.AgentsSkill> GetSkill(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetSkill(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
+            ClientResult result = this.GetSkill(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((AgentsSkill)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieves a skill. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> GetSkillAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.AgentsSkill>> GetSkillAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
+            ClientResult result = await this.GetSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((AgentsSkill)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -118,17 +118,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateSkill(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateSkillRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -142,51 +142,51 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateSkillAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateSkillAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateSkillRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Update a skill. </summary>
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> UpdateSkill(string name, string defaultVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.AgentsSkill> UpdateSkill(string name, string defaultVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
-            ClientResult result = UpdateSkill(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
+            ClientResult result = this.UpdateSkill(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((AgentsSkill)result), result.GetRawResponse());
         }
 
         /// <summary> Update a skill. </summary>
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> UpdateSkillAsync(string name, string defaultVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.AgentsSkill>> UpdateSkillAsync(string name, string defaultVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
-            ClientResult result = await UpdateSkillAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
+            ClientResult result = await this.UpdateSkillAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((AgentsSkill)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -199,16 +199,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteSkillRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -221,44 +221,44 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteSkillAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteSkillRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Deletes a skill. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteSkillResponse> DeleteSkill(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.DeleteSkillResponse> DeleteSkill(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = DeleteSkill(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
+            ClientResult result = this.DeleteSkill(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteSkillResponse)result), result.GetRawResponse());
         }
 
         /// <summary> Deletes a skill. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteSkillResponse>> DeleteSkillAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.DeleteSkillResponse>> DeleteSkillAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await DeleteSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
+            ClientResult result = await this.DeleteSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteSkillResponse)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -272,17 +272,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkillVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateSkillVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -296,17 +296,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateSkillVersionAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateSkillVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateSkillVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
@@ -314,16 +314,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
         /// <param name="default"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, @default, default);
-            ClientResult result = CreateSkillVersion(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
+            ClientResult result = this.CreateSkillVersion(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((SkillVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
@@ -331,16 +331,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
         /// <param name="default"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, @default, default);
-            ClientResult result = await CreateSkillVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
+            ClientResult result = await this.CreateSkillVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((SkillVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -355,17 +355,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkillVersionFromFiles(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -380,17 +380,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateSkillVersionFromFilesAsync(string name, BinaryContent content, string contentType, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateSkillVersionFromFilesAsync(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -421,13 +421,13 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetSkillVersions(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectAgentSkillsGetSkillVersionsCollectionResult(
                 this,
@@ -467,13 +467,13 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetSkillVersionsAsync(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectAgentSkillsGetSkillVersionsAsyncCollectionResult(
                 this,
@@ -506,12 +506,12 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<SkillVersion> GetSkillVersions(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Agents.SkillVersion> GetSkillVersions(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectAgentSkillsGetSkillVersionsCollectionResultOfT(
                 this,
@@ -544,12 +544,12 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<SkillVersion> GetSkillVersionsAsync(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Agents.SkillVersion> GetSkillVersionsAsync(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new ProjectAgentSkillsGetSkillVersionsAsyncCollectionResultOfT(
                 this,
@@ -572,17 +572,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetSkillVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetSkillVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSkillVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -596,49 +596,49 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSkillVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetSkillVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetSkillVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSkillVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieve a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillVersion> GetSkillVersion(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.SkillVersion> GetSkillVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetSkillVersion(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
+            ClientResult result = this.GetSkillVersion(name, version, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((SkillVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieve a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillVersion>> GetSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.SkillVersion>> GetSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetSkillVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
+            ClientResult result = await this.GetSkillVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((SkillVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -651,16 +651,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetSkillContent(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillContentRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSkillContentRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -673,44 +673,44 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSkillContentAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetSkillContentAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillContentRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSkillContentRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Download the zip content for the default version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> GetSkillContent(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::System.BinaryData> GetSkillContent(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetSkillContent(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = this.GetSkillContent(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary> Download the zip content for the default version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> GetSkillContentAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::System.BinaryData>> GetSkillContentAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetSkillContentAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = await this.GetSkillContentAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
@@ -724,17 +724,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetSkillVersionContent(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetSkillVersionContentRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSkillVersionContentRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -748,49 +748,49 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSkillVersionContentAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetSkillVersionContentAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetSkillVersionContentRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSkillVersionContentRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Download the zip content for a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> GetSkillVersionContent(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::System.BinaryData> GetSkillVersionContent(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetSkillVersionContent(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = this.GetSkillVersionContent(name, version, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary> Download the zip content for a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> GetSkillVersionContentAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::System.BinaryData>> GetSkillVersionContentAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetSkillVersionContentAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = await this.GetSkillVersionContentAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
@@ -804,17 +804,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteSkillVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteSkillVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteSkillVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -828,49 +828,49 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteSkillVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteSkillVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteSkillVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteSkillVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteSkillVersionResponse> DeleteSkillVersion(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.DeleteSkillVersionResponse> DeleteSkillVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = DeleteSkillVersion(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteSkillVersionResponse)result, result.GetRawResponse());
+            ClientResult result = this.DeleteSkillVersion(name, version, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteSkillVersionResponse)result), result.GetRawResponse());
         }
 
         /// <summary> Delete a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteSkillVersionResponse>> DeleteSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.DeleteSkillVersionResponse>> DeleteSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await DeleteSkillVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteSkillVersionResponse)result, result.GetRawResponse());
+            ClientResult result = await this.DeleteSkillVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteSkillVersionResponse)result), result.GetRawResponse());
         }
     }
 }

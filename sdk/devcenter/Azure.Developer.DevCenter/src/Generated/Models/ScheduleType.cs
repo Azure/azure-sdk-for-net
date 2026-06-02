@@ -12,18 +12,18 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The supported types for a scheduled task. </summary>
-    public readonly partial struct ScheduleType : IEquatable<ScheduleType>
+    public readonly partial struct ScheduleType : IEquatable<global::Azure.Developer.DevCenter.Models.ScheduleType>
     {
         private readonly string _value;
         /// <summary> The scheduled task will stop impacted Dev Boxes. </summary>
         private const string StopDevBoxValue = "StopDevBox";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.ScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduleType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -31,34 +31,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The scheduled task will stop impacted Dev Boxes. </summary>
         public static ScheduleType StopDevBox { get; } = new ScheduleType(StopDevBoxValue);
 
-        /// <summary> Determines if two <see cref="ScheduleType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.ScheduleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduleType left, ScheduleType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScheduleType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.ScheduleType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduleType left, ScheduleType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScheduleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.ScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ScheduleType(string value) => new ScheduleType(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.ScheduleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleType?(string value) => value == null ? null : new ScheduleType(value);
+        public static implicit operator ScheduleType?(string value) => (value == null) ? null : new ScheduleType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScheduleType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ScheduleType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ScheduleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScheduleType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

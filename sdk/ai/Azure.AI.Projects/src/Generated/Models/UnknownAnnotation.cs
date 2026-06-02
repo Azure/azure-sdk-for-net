@@ -10,10 +10,10 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownAnnotation : InternalAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownAnnotation"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnnotation(AnnotationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnnotation(AnnotationType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

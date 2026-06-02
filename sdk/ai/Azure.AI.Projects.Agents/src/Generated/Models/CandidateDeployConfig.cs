@@ -12,23 +12,23 @@ namespace Azure.AI.Projects.Agents
     public partial class CandidateDeployConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CandidateDeployConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateDeployConfig"/>. </summary>
         internal CandidateDeployConfig()
         {
-            Skills = new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            Tools = new ChangeTrackingList<IDictionary<string, BinaryData>>();
+            Skills = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            Tools = new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CandidateDeployConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateDeployConfig"/>. </summary>
         /// <param name="instructions"> System prompt / instructions. </param>
         /// <param name="model"> Foundry deployment name. </param>
         /// <param name="temperature"> Optional sampling temperature. </param>
         /// <param name="skills"> Optional skill overrides. </param>
         /// <param name="tools"> Optional tool overrides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CandidateDeployConfig(string instructions, string model, float? temperature, IList<IDictionary<string, BinaryData>> skills, IList<IDictionary<string, BinaryData>> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CandidateDeployConfig(string instructions, string model, float? temperature, IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> skills, IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> tools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Instructions = instructions;
             Model = model;
@@ -49,8 +49,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Optional skill overrides.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -73,12 +73,12 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IDictionary<string, BinaryData>> Skills { get; }
+        public IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Skills { get; }
 
         /// <summary>
         /// Optional tool overrides.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -101,6 +101,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IDictionary<string, BinaryData>> Tools { get; }
+        public IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Tools { get; }
     }
 }

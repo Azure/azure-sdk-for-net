@@ -17,31 +17,31 @@ namespace _Type.Model.Inheritance.Recursive
 {
     public partial class RecursiveClient
     {
-        public RecursiveClient() : this(new Uri("http://localhost:3000"), new RecursiveClientOptions()) => throw null;
+        public RecursiveClient() : this(new global::System.Uri("http://localhost:3000"), new RecursiveClientOptions()) => throw null;
 
-        internal RecursiveClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RecursiveClientOptions options) => throw null;
+        internal RecursiveClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, RecursiveClientOptions options) => throw null;
 
-        public RecursiveClient(Uri endpoint, RecursiveClientOptions options) : this(null, endpoint, options) => throw null;
+        public RecursiveClient(global::System.Uri endpoint, RecursiveClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public RecursiveClient(RecursiveClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public RecursiveClient(RecursiveClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(Extension input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(Extension input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(Extension input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<Extension> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.Recursive.Extension> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Extension>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.Recursive.Extension>> GetAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

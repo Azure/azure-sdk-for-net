@@ -13,21 +13,21 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a Sum metric definition. Calculates the sum of a specified event property. Experiment analysis accounts for unequal traffic allocation. </summary>
     public partial class SumMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="SumMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition"/>. </summary>
         /// <param name="value"> The value to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SumMetricDefinition(AggregatedValue value) : base(ExperimentMetricType.Sum)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SumMetricDefinition(AggregatedValue value) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.Sum)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SumMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value to aggregate. </param>
-        internal SumMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AggregatedValue value) : base(@type, additionalBinaryDataProperties)
+        internal SumMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AggregatedValue value) : base(@type, additionalBinaryDataProperties)
         {
             Value = value;
         }

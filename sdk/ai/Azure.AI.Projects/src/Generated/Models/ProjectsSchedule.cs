@@ -12,17 +12,17 @@ namespace Azure.AI.Projects.Evaluation
     public partial class ProjectsSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ProjectsSchedule"/>. </summary>
         /// <param name="enabled"> Enabled status of the schedule. </param>
         /// <param name="trigger"> Trigger for the schedule. </param>
         /// <param name="task"> Task for the schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/> or <paramref name="task"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="trigger"/> or <paramref name="task"/> is null. </exception>
         public ProjectsSchedule(bool enabled, ScheduleTrigger trigger, ProjectsScheduleTask task)
         {
-            Argument.AssertNotNull(trigger, nameof(trigger));
-            Argument.AssertNotNull(task, nameof(task));
+            global::Azure.AI.Projects.Argument.AssertNotNull(trigger, nameof(trigger));
+            global::Azure.AI.Projects.Argument.AssertNotNull(task, nameof(task));
 
             Enabled = enabled;
             Trigger = trigger;
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Evaluation
             SystemData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ProjectsSchedule"/>. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="displayName"> Name of the schedule. </param>
         /// <param name="description"> Description of the schedule. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="properties"> Schedule's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="systemData"> System metadata for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsSchedule(string id, string displayName, string description, bool enabled, ScheduleProvisioningStatus? provisioningStatus, ScheduleTrigger trigger, ProjectsScheduleTask task, IDictionary<string, string> tags, IDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsSchedule(string id, string displayName, string description, bool enabled, ScheduleProvisioningStatus? provisioningStatus, ScheduleTrigger trigger, ProjectsScheduleTask task, IDictionary<string, string> tags, IDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemData, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;

@@ -12,24 +12,24 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any message content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/>, <see cref="InputAudioContentPart"/>, and <see cref="OutputTextContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.InputTextContentPart"/>, <see cref="Azure.AI.VoiceLive.InputAudioContentPart"/>, and <see cref="Azure.AI.VoiceLive.OutputTextContentPart"/>.
     /// </summary>
     public abstract partial class MessageContentPart
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MessageContentPart"/>. </summary>
         /// <param name="type"> The type of the content part. </param>
         private protected MessageContentPart(ContentPartType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MessageContentPart"/>. </summary>
         /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class BuildDocumentModelOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
         /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentModelOptions(string modelId, string description, DocumentBuildMode buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, string> tags, float? maxTrainingHours, bool? allowOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BuildDocumentModelOptions(string modelId, string description, DocumentBuildMode buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, string> tags, float? maxTrainingHours, bool? allowOverwrite, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;

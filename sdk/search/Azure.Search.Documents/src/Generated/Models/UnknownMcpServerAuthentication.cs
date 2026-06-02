@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownMcpServerAuthentication : McpServerAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMcpServerAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownMcpServerAuthentication"/>. </summary>
         /// <param name="kind"> The kind of authentication to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMcpServerAuthentication(McpServerAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMcpServerAuthentication(McpServerAuthenticationKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

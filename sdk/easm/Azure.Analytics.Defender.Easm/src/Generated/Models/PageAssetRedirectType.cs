@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The redirect type of a page. </summary>
-    public readonly partial struct PageAssetRedirectType : IEquatable<PageAssetRedirectType>
+    public readonly partial struct PageAssetRedirectType : IEquatable<global::Azure.Analytics.Defender.Easm.PageAssetRedirectType>
     {
         private readonly string _value;
         private const string HttpHeaderValue = "httpHeader";
@@ -19,12 +19,12 @@ namespace Azure.Analytics.Defender.Easm
         private const string JavascriptValue = "javascript";
         private const string FinalValue = "final";
 
-        /// <summary> Initializes a new instance of <see cref="PageAssetRedirectType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PageAssetRedirectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PageAssetRedirectType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Final. </summary>
         public static PageAssetRedirectType Final { get; } = new PageAssetRedirectType(FinalValue);
 
-        /// <summary> Determines if two <see cref="PageAssetRedirectType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.PageAssetRedirectType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PageAssetRedirectType left, PageAssetRedirectType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PageAssetRedirectType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.PageAssetRedirectType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PageAssetRedirectType left, PageAssetRedirectType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.PageAssetRedirectType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PageAssetRedirectType(string value) => new PageAssetRedirectType(value);
 
-        /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.PageAssetRedirectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PageAssetRedirectType?(string value) => value == null ? null : new PageAssetRedirectType(value);
+        public static implicit operator PageAssetRedirectType?(string value) => (value == null) ? null : new PageAssetRedirectType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PageAssetRedirectType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PageAssetRedirectType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PageAssetRedirectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PageAssetRedirectType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -21,15 +21,15 @@ namespace Azure.Search.Documents.Indexes
     /// <summary> The SearchIndexerClient. </summary>
     public partial class SearchIndexerClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of SearchIndexerClient from a <see cref="SearchIndexerClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SearchIndexerClient. </param>
-        [Experimental("SCME0002")]
-        public SearchIndexerClient(SearchIndexerClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public SearchIndexerClient(SearchIndexerClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, RequestContext context = null)
         {
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
+                using HttpMessage message = this.CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -83,15 +83,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateDataSourceConnection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
+                using HttpMessage message = this.CreateCreateOrUpdateDataSourceConnectionRequest(dataSourceConnectionName, content, matchConditions, skipIndexerResetRequirementForCache, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -107,11 +107,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateDataSourceConnection(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = this.CreateOrUpdateDataSourceConnection(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
@@ -120,11 +120,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(string dataSourceConnectionName, SearchIndexerDataSourceConnection dataSource, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = await this.CreateOrUpdateDataSourceConnectionAsync(dataSourceConnectionName, dataSource, matchConditions, skipIndexerResetRequirementForCache, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDataSourceConnection(string dataSourceConnectionName, MatchConditions matchConditions, RequestContext context)
         {
@@ -148,9 +148,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-                using HttpMessage message = CreateDeleteDataSourceConnectionRequest(dataSourceConnectionName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteDataSourceConnectionRequest(dataSourceConnectionName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -171,19 +171,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.DeleteDataSourceConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-                using HttpMessage message = CreateDeleteDataSourceConnectionRequest(dataSourceConnectionName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteDataSourceConnectionRequest(dataSourceConnectionName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -197,28 +197,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteDataSourceConnection(string dataSourceConnectionName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-            return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteDataSourceConnection(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a datasource. </summary>
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-            return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,9 +231,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDataSourceConnection(string dataSourceConnectionName, RequestContext context)
         {
@@ -241,9 +241,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-                using HttpMessage message = CreateGetDataSourceConnectionRequest(dataSourceConnectionName, context);
+                using HttpMessage message = this.CreateGetDataSourceConnectionRequest(dataSourceConnectionName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -263,19 +263,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDataSourceConnectionAsync(string dataSourceConnectionName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDataSourceConnectionAsync(string dataSourceConnectionName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-                using HttpMessage message = CreateGetDataSourceConnectionRequest(dataSourceConnectionName, context);
+                using HttpMessage message = this.CreateGetDataSourceConnectionRequest(dataSourceConnectionName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -288,29 +288,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexerDataSourceConnection> GetDataSourceConnection(string dataSourceConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> GetDataSourceConnection(string dataSourceConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-            Response result = GetDataSourceConnection(dataSourceConnectionName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = this.GetDataSourceConnection(dataSourceConnectionName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> GetDataSourceConnectionAsync(string dataSourceConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> GetDataSourceConnectionAsync(string dataSourceConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
 
-            Response result = await GetDataSourceConnectionAsync(dataSourceConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = await this.GetDataSourceConnectionAsync(dataSourceConnectionName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetDataSourceConnections(IEnumerable<string> @select, RequestContext context)
         {
@@ -331,7 +331,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
+                using HttpMessage message = this.CreateGetDataSourceConnectionsRequest(@select, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -351,15 +351,15 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetDataSourceConnectionsAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetDataSourceConnectionsAsync(IEnumerable<string> @select, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnections");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
+                using HttpMessage message = this.CreateGetDataSourceConnectionsRequest(@select, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -372,21 +372,21 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListDataSourcesResult> GetDataSourceConnections(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.ListDataSourcesResult> GetDataSourceConnections(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetDataSourceConnections(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListDataSourcesResult)result, result);
+            Response result = this.GetDataSourceConnections(@select, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ListDataSourcesResult)result), result);
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListDataSourcesResult>> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.ListDataSourcesResult>> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetDataSourceConnectionsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListDataSourcesResult)result, result);
+            Response result = await this.GetDataSourceConnectionsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ListDataSourcesResult)result), result);
         }
 
         /// <summary>
@@ -399,8 +399,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateDataSourceConnection(RequestContent content, RequestContext context = null)
         {
@@ -408,9 +408,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDataSourceConnectionRequest(content, context);
+                using HttpMessage message = this.CreateCreateDataSourceConnectionRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -430,18 +430,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateDataSourceConnectionAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateDataSourceConnectionAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateDataSourceConnection");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDataSourceConnectionRequest(content, context);
+                using HttpMessage message = this.CreateCreateDataSourceConnectionRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -454,27 +454,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSourceConnection"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnection"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexerDataSourceConnection> CreateDataSourceConnection(SearchIndexerDataSourceConnection dataSourceConnection, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnection"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateDataSourceConnection(SearchIndexerDataSourceConnection dataSourceConnection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            global::Azure.Search.Documents.Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 
-            Response result = CreateDataSourceConnection(dataSourceConnection, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = this.CreateDataSourceConnection(dataSourceConnection, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSourceConnection"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnection"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateDataSourceConnectionAsync(SearchIndexerDataSourceConnection dataSourceConnection, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSourceConnection"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateDataSourceConnectionAsync(SearchIndexerDataSourceConnection dataSourceConnection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            global::Azure.Search.Documents.Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 
-            Response result = await CreateDataSourceConnectionAsync(dataSourceConnection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerDataSourceConnection)result, result);
+            Response result = await this.CreateDataSourceConnectionAsync(dataSourceConnection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerDataSourceConnection)result), result);
         }
 
         /// <summary>
@@ -487,9 +487,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ResetIndexer(string indexerName, RequestContext context)
         {
@@ -497,9 +497,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateResetIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateResetIndexerRequest(indexerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -519,19 +519,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResetIndexerAsync(string indexerName, RequestContext context)
+        public virtual async Task<global::Azure.Response> ResetIndexerAsync(string indexerName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetIndexer");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateResetIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateResetIndexerRequest(indexerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -544,27 +544,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ResetIndexer(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return ResetIndexer(indexerName, cancellationToken.ToRequestContext());
+            return this.ResetIndexer(indexerName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ResetIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return await ResetIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ResetIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -578,9 +578,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Resync(string indexerName, RequestContent content, RequestContext context = null)
         {
@@ -588,10 +588,10 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateResyncRequest(indexerName, content, context);
+                using HttpMessage message = this.CreateResyncRequest(indexerName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -612,20 +612,20 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResyncAsync(string indexerName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ResyncAsync(string indexerName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.Resync");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateResyncRequest(indexerName, content, context);
+                using HttpMessage message = this.CreateResyncRequest(indexerName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -639,30 +639,30 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="indexerResync"> The definition of the indexer resync options. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Resync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-            Argument.AssertNotNull(indexerResync, nameof(indexerResync));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(indexerResync, nameof(indexerResync));
 
-            return Resync(indexerName, indexerResync, cancellationToken.ToRequestContext());
+            return this.Resync(indexerName, indexerResync, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resync selective options from the datasource to be re-ingested by the indexer.". </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="indexerResync"> The definition of the indexer resync options. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-            Argument.AssertNotNull(indexerResync, nameof(indexerResync));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(indexerResync, nameof(indexerResync));
 
-            return await ResyncAsync(indexerName, indexerResync, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ResyncAsync(indexerName, indexerResync, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -677,9 +677,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ResetDocuments(string indexerName, RequestContent content, bool? overwrite = default, RequestContext context = null)
         {
@@ -687,9 +687,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateResetDocumentsRequest(indexerName, content, overwrite, context);
+                using HttpMessage message = this.CreateResetDocumentsRequest(indexerName, content, overwrite, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -711,19 +711,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResetDocumentsAsync(string indexerName, RequestContent content, bool? overwrite = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ResetDocumentsAsync(string indexerName, RequestContent content, bool? overwrite = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetDocuments");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateResetDocumentsRequest(indexerName, content, overwrite, context);
+                using HttpMessage message = this.CreateResetDocumentsRequest(indexerName, content, overwrite, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -738,14 +738,14 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="keysOrIds"> The keys or ids of the documents to be re-ingested. If keys are provided, the document key field must be specified in the indexer configuration. If ids are provided, the document key field is ignored. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ResetDocuments(string indexerName, ResetDocumentOptions keysOrIds = default, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return ResetDocuments(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext());
+            return this.ResetDocuments(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
@@ -753,14 +753,14 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="keysOrIds"> The keys or ids of the documents to be re-ingested. If keys are provided, the document key field must be specified in the indexer configuration. If ids are provided, the document key field is ignored. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetDocumentsAsync(string indexerName, ResetDocumentOptions keysOrIds = default, bool? overwrite = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ResetDocumentsAsync(string indexerName, ResetDocumentOptions keysOrIds = default, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return await ResetDocumentsAsync(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ResetDocumentsAsync(indexerName, keysOrIds, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -773,9 +773,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RunIndexer(string indexerName, RequestContext context)
         {
@@ -783,9 +783,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateRunIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateRunIndexerRequest(indexerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -805,19 +805,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RunIndexerAsync(string indexerName, RequestContext context)
+        public virtual async Task<global::Azure.Response> RunIndexerAsync(string indexerName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.RunIndexer");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateRunIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateRunIndexerRequest(indexerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -830,27 +830,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RunIndexer(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return RunIndexer(indexerName, cancellationToken.ToRequestContext());
+            return this.RunIndexer(indexerName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RunIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RunIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return await RunIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RunIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -867,7 +867,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateIndexer(string indexerName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
         {
@@ -875,7 +875,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = this.CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -899,15 +899,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateIndexerAsync(string indexerName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateIndexerAsync(string indexerName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateIndexer");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = this.CreateCreateOrUpdateIndexerRequest(indexerName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -924,11 +924,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexer> CreateOrUpdateIndexer(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateOrUpdateIndexer(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateIndexer(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = this.CreateOrUpdateIndexer(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
@@ -938,11 +938,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateOrUpdateIndexerAsync(string indexerName, SearchIndexer indexer, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateIndexerAsync(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = await this.CreateOrUpdateIndexerAsync(indexerName, indexer, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary>
@@ -956,9 +956,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteIndexer(string indexerName, MatchConditions matchConditions, RequestContext context)
         {
@@ -966,9 +966,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateDeleteIndexerRequest(indexerName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteIndexerRequest(indexerName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -989,19 +989,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.DeleteIndexer");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateDeleteIndexerRequest(indexerName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteIndexerRequest(indexerName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1015,28 +1015,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteIndexer(string indexerName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return DeleteIndexer(indexerName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteIndexer(indexerName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            return await DeleteIndexerAsync(indexerName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteIndexerAsync(indexerName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1049,9 +1049,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIndexer(string indexerName, RequestContext context)
         {
@@ -1059,9 +1059,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateGetIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateGetIndexerRequest(indexerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1081,19 +1081,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetIndexerAsync(string indexerName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetIndexerAsync(string indexerName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexer");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateGetIndexerRequest(indexerName, context);
+                using HttpMessage message = this.CreateGetIndexerRequest(indexerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1106,29 +1106,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexer> GetIndexer(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer> GetIndexer(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            Response result = GetIndexer(indexerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = this.GetIndexer(indexerName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexer>> GetIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer>> GetIndexerAsync(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            Response result = await GetIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = await this.GetIndexerAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary>
@@ -1141,7 +1141,7 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetIndexers(IEnumerable<string> @select, RequestContext context)
         {
@@ -1149,7 +1149,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
+                using HttpMessage message = this.CreateGetIndexersRequest(@select, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1169,15 +1169,15 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetIndexersAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetIndexersAsync(IEnumerable<string> @select, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
+                using HttpMessage message = this.CreateGetIndexersRequest(@select, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1190,21 +1190,21 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListIndexersResult> GetIndexers(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.ListIndexersResult> GetIndexers(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetIndexers(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListIndexersResult)result, result);
+            Response result = this.GetIndexers(@select, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ListIndexersResult)result), result);
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListIndexersResult>> GetIndexersAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.ListIndexersResult>> GetIndexersAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetIndexersAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListIndexersResult)result, result);
+            Response result = await this.GetIndexersAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ListIndexersResult)result), result);
         }
 
         /// <summary>
@@ -1217,8 +1217,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateIndexer(RequestContent content, RequestContext context = null)
         {
@@ -1226,9 +1226,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateIndexerRequest(content, context);
+                using HttpMessage message = this.CreateCreateIndexerRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1248,18 +1248,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateIndexerAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateIndexerAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateIndexer");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateIndexerRequest(content, context);
+                using HttpMessage message = this.CreateCreateIndexerRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1272,27 +1272,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new indexer. </summary>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexer> CreateIndexer(SearchIndexer indexer, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateIndexer(SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            global::Azure.Search.Documents.Argument.AssertNotNull(indexer, nameof(indexer));
 
-            Response result = CreateIndexer(indexer, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = this.CreateIndexer(indexer, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary> Creates a new indexer. </summary>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexer>> CreateIndexerAsync(SearchIndexer indexer, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateIndexerAsync(SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            global::Azure.Search.Documents.Argument.AssertNotNull(indexer, nameof(indexer));
 
-            Response result = await CreateIndexerAsync(indexer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexer)result, result);
+            Response result = await this.CreateIndexerAsync(indexer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexer)result), result);
         }
 
         /// <summary>
@@ -1305,9 +1305,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIndexerStatus(string indexerName, RequestContext context)
         {
@@ -1315,9 +1315,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateGetIndexerStatusRequest(indexerName, context);
+                using HttpMessage message = this.CreateGetIndexerStatusRequest(indexerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1337,19 +1337,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetIndexerStatusAsync(string indexerName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetIndexerStatusAsync(string indexerName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexerStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-                using HttpMessage message = CreateGetIndexerStatusRequest(indexerName, context);
+                using HttpMessage message = this.CreateGetIndexerStatusRequest(indexerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1362,29 +1362,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexerStatus> GetIndexerStatus(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus> GetIndexerStatus(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            Response result = GetIndexerStatus(indexerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerStatus)result, result);
+            Response result = this.GetIndexerStatus(indexerName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerStatus)result), result);
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexerStatus>> GetIndexerStatusAsync(string indexerName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>> GetIndexerStatusAsync(string indexerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
 
-            Response result = await GetIndexerStatusAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerStatus)result, result);
+            Response result = await this.GetIndexerStatusAsync(indexerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerStatus)result), result);
         }
 
         /// <summary>
@@ -1401,7 +1401,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateSkillset(string skillsetName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
         {
@@ -1409,7 +1409,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = this.CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1433,15 +1433,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateSkillsetAsync(string skillsetName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateSkillsetAsync(string skillsetName, RequestContent content, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateOrUpdateSkillset");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
+                using HttpMessage message = this.CreateCreateOrUpdateSkillsetRequest(skillsetName, content, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1458,11 +1458,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateOrUpdateSkillset(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateSkillset(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = this.CreateOrUpdateSkillset(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
@@ -1472,11 +1472,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(string skillsetName, SearchIndexerSkillset skillset, MatchConditions matchConditions = default, bool? skipIndexerResetRequirementForCache = default, bool? disableCacheReprocessingChangeDetection = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateSkillsetAsync(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = await this.CreateOrUpdateSkillsetAsync(skillsetName, skillset, matchConditions, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary>
@@ -1490,9 +1490,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSkillset(string skillsetName, MatchConditions matchConditions, RequestContext context)
         {
@@ -1500,9 +1500,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-                using HttpMessage message = CreateDeleteSkillsetRequest(skillsetName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteSkillsetRequest(skillsetName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1523,19 +1523,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.DeleteSkillset");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-                using HttpMessage message = CreateDeleteSkillsetRequest(skillsetName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteSkillsetRequest(skillsetName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1549,28 +1549,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteSkillset(string skillsetName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-            return DeleteSkillset(skillsetName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteSkillset(skillsetName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-            return await DeleteSkillsetAsync(skillsetName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteSkillsetAsync(skillsetName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1583,9 +1583,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSkillset(string skillsetName, RequestContext context)
         {
@@ -1593,9 +1593,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-                using HttpMessage message = CreateGetSkillsetRequest(skillsetName, context);
+                using HttpMessage message = this.CreateGetSkillsetRequest(skillsetName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1615,19 +1615,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSkillsetAsync(string skillsetName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetSkillsetAsync(string skillsetName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillset");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-                using HttpMessage message = CreateGetSkillsetRequest(skillsetName, context);
+                using HttpMessage message = this.CreateGetSkillsetRequest(skillsetName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1640,29 +1640,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexerSkillset> GetSkillset(string skillsetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> GetSkillset(string skillsetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-            Response result = GetSkillset(skillsetName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = this.GetSkillset(skillsetName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> GetSkillsetAsync(string skillsetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> GetSkillsetAsync(string skillsetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
 
-            Response result = await GetSkillsetAsync(skillsetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = await this.GetSkillsetAsync(skillsetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary>
@@ -1675,7 +1675,7 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSkillsets(IEnumerable<string> @select, RequestContext context)
         {
@@ -1683,7 +1683,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
+                using HttpMessage message = this.CreateGetSkillsetsRequest(@select, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1703,15 +1703,15 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSkillsetsAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetSkillsetsAsync(IEnumerable<string> @select, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillsets");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
+                using HttpMessage message = this.CreateGetSkillsetsRequest(@select, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1724,21 +1724,21 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListSkillsetsResult> GetSkillsets(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.ListSkillsetsResult> GetSkillsets(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSkillsets(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListSkillsetsResult)result, result);
+            Response result = this.GetSkillsets(@select, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ListSkillsetsResult)result), result);
         }
 
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListSkillsetsResult>> GetSkillsetsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.ListSkillsetsResult>> GetSkillsetsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSkillsetsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListSkillsetsResult)result, result);
+            Response result = await this.GetSkillsetsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ListSkillsetsResult)result), result);
         }
 
         /// <summary>
@@ -1751,8 +1751,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateSkillset(RequestContent content, RequestContext context = null)
         {
@@ -1760,9 +1760,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateSkillsetRequest(content, context);
+                using HttpMessage message = this.CreateCreateSkillsetRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1782,18 +1782,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateSkillsetAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateSkillsetAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.CreateSkillset");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateSkillsetRequest(content, context);
+                using HttpMessage message = this.CreateCreateSkillsetRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1806,27 +1806,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexerSkillset> CreateSkillset(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateSkillset(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            global::Azure.Search.Documents.Argument.AssertNotNull(skillset, nameof(skillset));
 
-            Response result = CreateSkillset(skillset, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = this.CreateSkillset(skillset, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> CreateSkillsetAsync(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateSkillsetAsync(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            global::Azure.Search.Documents.Argument.AssertNotNull(skillset, nameof(skillset));
 
-            Response result = await CreateSkillsetAsync(skillset, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexerSkillset)result, result);
+            Response result = await this.CreateSkillsetAsync(skillset, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexerSkillset)result), result);
         }
 
         /// <summary>
@@ -1840,9 +1840,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ResetSkills(string skillsetName, RequestContent content, RequestContext context = null)
         {
@@ -1850,10 +1850,10 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateResetSkillsRequest(skillsetName, content, context);
+                using HttpMessage message = this.CreateResetSkillsRequest(skillsetName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1874,20 +1874,20 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResetSkillsAsync(string skillsetName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ResetSkillsAsync(string skillsetName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.ResetSkills");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateResetSkillsRequest(skillsetName, content, context);
+                using HttpMessage message = this.CreateResetSkillsRequest(skillsetName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1901,30 +1901,30 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="skillNames"> The names of the skills to reset. If not specified, all skills in the skillset will be reset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ResetSkills(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-            Argument.AssertNotNull(skillNames, nameof(skillNames));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(skillNames, nameof(skillNames));
 
-            return ResetSkills(skillsetName, skillNames, cancellationToken.ToRequestContext());
+            return this.ResetSkills(skillsetName, skillNames, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset. </param>
         /// <param name="skillNames"> The names of the skills to reset. If not specified, all skills in the skillset will be reset. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-            Argument.AssertNotNull(skillNames, nameof(skillNames));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(skillNames, nameof(skillNames));
 
-            return await ResetSkillsAsync(skillsetName, skillNames, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ResetSkillsAsync(skillsetName, skillNames, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

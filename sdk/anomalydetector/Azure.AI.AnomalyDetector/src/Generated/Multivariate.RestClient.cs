@@ -38,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -53,7 +53,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -67,23 +67,23 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendPath("/anomalydetector/", false);
             uri.AppendPath(_apiVersion, true);
             uri.AppendPath("/multivariate/models", false);
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.AnomalyDetector.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.AnomalyDetector.TypeFormatters.ConvertToString(maxCount), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetMultivariateModelsRequest(Uri nextPage, int? skip, int? maxCount, RequestContext context)
+        internal HttpMessage CreateNextGetMultivariateModelsRequest(global::System.Uri nextPage, int? skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -92,12 +92,12 @@ namespace Azure.AI.AnomalyDetector
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -113,7 +113,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -128,7 +128,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -145,7 +145,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -164,7 +164,7 @@ namespace Azure.AI.AnomalyDetector
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

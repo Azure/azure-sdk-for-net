@@ -11,19 +11,19 @@ namespace Azure.AI.Projects
     public partial class DispatchRoutineResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DispatchRoutineResponse"/>. </summary>
         internal DispatchRoutineResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DispatchRoutineResponse"/>. </summary>
         /// <param name="dispatchId"> The dispatch identifier created for the routine dispatch. </param>
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DispatchRoutineResponse(string dispatchId, string actionCorrelationId, string taskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DispatchRoutineResponse(string dispatchId, string actionCorrelationId, string taskId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DispatchId = dispatchId;
             ActionCorrelationId = actionCorrelationId;

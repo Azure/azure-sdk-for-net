@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Specifies how the tool choice will be used. </summary>
-    public readonly partial struct PersistentAgentsToolChoiceOptionMode : IEquatable<PersistentAgentsToolChoiceOptionMode>
+    public readonly partial struct PersistentAgentsToolChoiceOptionMode : IEquatable<global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode>
     {
         private readonly string _value;
         /// <summary> The model will not call a function and instead generates a message. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The model can pick between generating a message or calling a function. </summary>
         private const string AutoValue = "auto";
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsToolChoiceOptionMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersistentAgentsToolChoiceOptionMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The model can pick between generating a message or calling a function. </summary>
         public static PersistentAgentsToolChoiceOptionMode Auto { get; } = new PersistentAgentsToolChoiceOptionMode(AutoValue);
 
-        /// <summary> Determines if two <see cref="PersistentAgentsToolChoiceOptionMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersistentAgentsToolChoiceOptionMode left, PersistentAgentsToolChoiceOptionMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PersistentAgentsToolChoiceOptionMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersistentAgentsToolChoiceOptionMode left, PersistentAgentsToolChoiceOptionMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PersistentAgentsToolChoiceOptionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PersistentAgentsToolChoiceOptionMode(string value) => new PersistentAgentsToolChoiceOptionMode(value);
 
-        /// <summary> Converts a string to a <see cref="PersistentAgentsToolChoiceOptionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentAgentsToolChoiceOptionMode?(string value) => value == null ? null : new PersistentAgentsToolChoiceOptionMode(value);
+        public static implicit operator PersistentAgentsToolChoiceOptionMode?(string value) => (value == null) ? null : new PersistentAgentsToolChoiceOptionMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PersistentAgentsToolChoiceOptionMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PersistentAgentsToolChoiceOptionMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PersistentAgentsToolChoiceOptionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PersistentAgentsToolChoiceOptionMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

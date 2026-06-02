@@ -14,20 +14,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MetricsData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="MetricsData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="metrics">
         /// List of metrics. Only one metric in the list is currently supported by
         /// Application Insights storage. If multiple data points were sent only the first
         /// one will be used.
         /// </param>
-        public MetricsData(int version, IEnumerable<MetricDataPoint> metrics) : base(version)
+        public MetricsData(int version, IEnumerable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> metrics) : base(version)
         {
             Metrics = metrics.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// one will be used.
         /// </param>
         /// <param name="properties"> Collection of custom properties. </param>
-        internal MetricsData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, IList<MetricDataPoint> metrics, IDictionary<string, string> properties) : base(version, kind, additionalProperties)
+        internal MetricsData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> metrics, IDictionary<string, string> properties) : base(version, kind, additionalProperties)
         {
             Metrics = metrics;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// Application Insights storage. If multiple data points were sent only the first
         /// one will be used.
         /// </summary>
-        public IList<MetricDataPoint> Metrics { get; }
+        public IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> Metrics { get; }
 
         /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }

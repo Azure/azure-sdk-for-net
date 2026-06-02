@@ -14,12 +14,12 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the message to send.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="VideoNotificationContent"/>, <see cref="AudioNotificationContent"/>, <see cref="ReactionNotificationContent"/>, <see cref="StickerNotificationContent"/>, <see cref="InteractiveNotificationContent"/>, and <see cref="TemplateNotificationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.TextNotificationContent"/>, <see cref="Azure.Communication.Messages.MediaNotificationContent"/>, <see cref="Azure.Communication.Messages.ImageNotificationContent"/>, <see cref="Azure.Communication.Messages.DocumentNotificationContent"/>, <see cref="Azure.Communication.Messages.VideoNotificationContent"/>, <see cref="Azure.Communication.Messages.AudioNotificationContent"/>, <see cref="Azure.Communication.Messages.ReactionNotificationContent"/>, <see cref="Azure.Communication.Messages.StickerNotificationContent"/>, <see cref="Azure.Communication.Messages.InteractiveNotificationContent"/>, and <see cref="Azure.Communication.Messages.TemplateNotificationContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownNotificationContent))]
-    public abstract partial class NotificationContent : IJsonModel<NotificationContent>
+    [PersistableModelProxyAttribute(typeof(UnknownNotificationContent))]
+    public abstract partial class NotificationContent : IJsonModel<global::Azure.Communication.Messages.NotificationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="NotificationContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.NotificationContent"/> for deserialization. </summary>
         internal NotificationContent()
         {
         }
@@ -28,58 +28,58 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NotificationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNotificationContent(document.RootElement, options);
+                        return global::Azure.Communication.Messages.NotificationContent.DeserializeNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.NotificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.NotificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.NotificationContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationContent IPersistableModel<NotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NotificationContent IPersistableModel<global::Azure.Communication.Messages.NotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.NotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="notificationContent"> The <see cref="NotificationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="notificationContent"> The <see cref="global::Azure.Communication.Messages.NotificationContent"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(NotificationContent notificationContent)
         {
-            if (notificationContent == null)
+            if ((notificationContent == null))
             {
                 return null;
             }
-            return RequestContent.Create(notificationContent, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(notificationContent, global::Azure.Communication.Messages.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -87,10 +87,10 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.NotificationContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
@@ -98,7 +98,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (string item in To)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.Communication.Messages
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.Communication.Messages
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,19 +127,19 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationContent IJsonModel<NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NotificationContent IJsonModel<global::Azure.Communication.Messages.NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NotificationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.NotificationContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNotificationContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.NotificationContent.DeserializeNotificationContent(document.RootElement, options);
         }
     }
 }

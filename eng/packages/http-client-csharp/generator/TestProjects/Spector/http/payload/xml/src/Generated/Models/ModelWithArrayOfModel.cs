@@ -11,8 +11,8 @@ namespace Payload.Xml
 {
     public partial class ModelWithArrayOfModel
     {
-        public ModelWithArrayOfModel(IEnumerable<SimpleModel> items) => throw null;
+        public ModelWithArrayOfModel(IEnumerable<global::Payload.Xml.SimpleModel> items) => throw null;
 
-        public IList<SimpleModel> Items => throw null;
+        public IList<global::Payload.Xml.SimpleModel> Items => throw null;
     }
 }

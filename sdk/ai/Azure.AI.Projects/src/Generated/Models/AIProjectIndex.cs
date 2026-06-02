@@ -9,14 +9,14 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Index resource Definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.AzureAISearchIndex"/>, <see cref="Azure.AI.Projects.ManagedAzureAISearchIndex"/>, and <see cref="Azure.AI.Projects.AIProjectCosmosDBIndex"/>.
     /// </summary>
     public abstract partial class AIProjectIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         private protected AIProjectIndex(IndexType @type)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;

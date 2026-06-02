@@ -11,6 +11,6 @@ namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class ListWidgetsResponse
     {
-        public IList<Widget> Widgets => throw null;
+        public IList<global::Specs.Azure.Versioning.PreviewVersion.Widget> Widgets => throw null;
     }
 }

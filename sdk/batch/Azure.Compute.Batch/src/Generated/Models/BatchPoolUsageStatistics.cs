@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolUsageStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUsageStatistics"/>. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="dedicatedCoreTime"> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. The time duration is specified in ISO 8601 format. </param>
@@ -27,12 +27,12 @@ namespace Azure.Compute.Batch
             DedicatedCoreTime = dedicatedCoreTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUsageStatistics"/>. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="dedicatedCoreTime"> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. The time duration is specified in ISO 8601 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUsageStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan dedicatedCoreTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolUsageStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan dedicatedCoreTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;

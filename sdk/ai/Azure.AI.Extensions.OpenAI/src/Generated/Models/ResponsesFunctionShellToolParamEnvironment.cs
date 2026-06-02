@@ -9,24 +9,24 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The ResponsesFunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ResponsesContainerAutoParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam"/>.
     /// </summary>
     public abstract partial class ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment"/>. </summary>
         /// <param name="type"></param>
         private protected ResponsesFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

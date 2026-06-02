@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedCustomSingleLabelClassificationDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument"/>. </summary>
         public ExportedCustomSingleLabelClassificationDocument()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument"/>. </summary>
         /// <param name="class"> The class of the documents. </param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCustomSingleLabelClassificationDocument(ExportedDocumentClass @class, string location, string language, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedCustomSingleLabelClassificationDocument(ExportedDocumentClass @class, string location, string language, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Class = @class;
             Location = location;

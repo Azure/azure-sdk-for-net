@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store configurations. </summary>
-    public partial class MemoryStoreDefaultOptions : IJsonModel<MemoryStoreDefaultOptions>
+    public partial class MemoryStoreDefaultOptions : IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions"/> for deserialization. </summary>
         internal MemoryStoreDefaultOptions()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryStoreDefaultOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryStoreDefaultOptions(document.RootElement, options);
+                        return global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions.DeserializeMemoryStoreDefaultOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryStoreDefaultOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreDefaultOptions IPersistableModel<MemoryStoreDefaultOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MemoryStoreDefaultOptions IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryStoreDefaultOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryStoreDefaultOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,31 +71,31 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("user_profile_enabled"u8);
             writer.WriteBooleanValue(IsUserProfileEnabled);
-            if (Optional.IsDefined(UserProfileDetails))
+            if (global::Azure.AI.Projects.Optional.IsDefined(UserProfileDetails))
             {
                 writer.WritePropertyName("user_profile_details"u8);
                 writer.WriteStringValue(UserProfileDetails);
             }
             writer.WritePropertyName("chat_summary_enabled"u8);
             writer.WriteBooleanValue(IsChatSummaryEnabled);
-            if (Optional.IsDefined(ProceduralMemoryEnabled))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ProceduralMemoryEnabled))
             {
                 writer.WritePropertyName("procedural_memory_enabled"u8);
                 writer.WriteBooleanValue(ProceduralMemoryEnabled.Value);
             }
-            if (Optional.IsDefined(DefaultTtlSeconds))
+            if (global::Azure.AI.Projects.Optional.IsDefined(DefaultTtlSeconds))
             {
                 writer.WritePropertyName("default_ttl_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DefaultTtlSeconds.Value.TotalSeconds)));
+                writer.WriteNumberValue(global::System.Convert.ToInt32(global::System.Math.Round(DefaultTtlSeconds.Value.TotalSeconds)));
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -103,9 +103,9 @@ namespace Azure.AI.Projects.Memory
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -114,26 +114,26 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreDefaultOptions IJsonModel<MemoryStoreDefaultOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MemoryStoreDefaultOptions IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MemoryStoreDefaultOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryStoreDefaultOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions.DeserializeMemoryStoreDefaultOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MemoryStoreDefaultOptions DeserializeMemoryStoreDefaultOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Memory
             bool isChatSummaryEnabled = default;
             bool? proceduralMemoryEnabled = default;
             TimeSpan? defaultTtlSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("user_profile_enabled"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("procedural_memory_enabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -171,16 +171,16 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("default_ttl_seconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    defaultTtlSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    defaultTtlSeconds = global::System.TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MemoryStoreDefaultOptions(

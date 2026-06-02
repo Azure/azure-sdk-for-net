@@ -16,11 +16,11 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier _pipelineMessageClassifier200201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateGetRequest(string name, RequestOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -44,15 +44,15 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationtaxonomies", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (inputName != null)
+            if ((inputName != null))
             {
                 uri.AppendQuery("inputName", inputName, true);
             }
-            if (inputType != null)
+            if ((inputType != null))
             {
                 uri.AppendQuery("inputType", inputType, true);
             }
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string inputName, string inputType, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(global::System.Uri nextPage, string inputName, string inputType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -72,9 +72,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
     {
         public MoveToNewSubClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MoveToNewSubClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ItemFieldFunctionToolCallOutputStatus value) => value switch
         {
-            ItemFieldFunctionToolCallOutputStatus.InProgress => "in_progress",
-            ItemFieldFunctionToolCallOutputStatus.Completed => "completed",
-            ItemFieldFunctionToolCallOutputStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ItemFieldFunctionToolCallOutputStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ItemFieldFunctionToolCallOutputStatus ToItemFieldFunctionToolCallOutputStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return ItemFieldFunctionToolCallOutputStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return ItemFieldFunctionToolCallOutputStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return ItemFieldFunctionToolCallOutputStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ItemFieldFunctionToolCallOutputStatus value.");
         }

@@ -14,23 +14,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QnaSourceRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord"/>. </summary>
         /// <param name="source">
         /// Unique source identifier. Name of the file if it's a 'file' source; otherwise,
         /// the complete URL if it's a 'url' source.
         /// </param>
         /// <param name="sourceUri"> URI location for the file or url. </param>
         /// <param name="sourceKind"> Supported source types. </param>
-        internal QnaSourceRecord(string source, Uri sourceUri, SourceKind sourceKind)
+        internal QnaSourceRecord(string source, global::System.Uri sourceUri, SourceKind sourceKind)
         {
             Source = source;
             SourceUri = sourceUri;
             SourceKind = sourceKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord"/>. </summary>
         /// <param name="displayName"> Friendly name of the Source. </param>
         /// <param name="source">
         /// Unique source identifier. Name of the file if it's a 'file' source; otherwise,
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentStructureKind"> Content structure type for sources. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, SourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QnaSourceRecord(string displayName, string source, global::System.Uri sourceUri, SourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Source = source;
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public string Source { get; }
 
         /// <summary> URI location for the file or url. </summary>
-        public Uri SourceUri { get; }
+        public global::System.Uri SourceUri { get; }
 
         /// <summary> Supported source types. </summary>
         public SourceKind SourceKind { get; }

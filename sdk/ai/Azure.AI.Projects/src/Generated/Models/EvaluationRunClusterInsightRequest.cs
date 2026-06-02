@@ -12,26 +12,26 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Insights on set of Evaluation Results. </summary>
     public partial class EvaluationRunClusterInsightRequest : InsightRequest
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightRequest"/>. </summary>
         /// <param name="evalId"> Evaluation Id for the insights. </param>
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evalId"/> or <paramref name="runIds"/> is null. </exception>
-        public EvaluationRunClusterInsightRequest(string evalId, IEnumerable<string> runIds) : base(InsightType.EvaluationRunClusterInsight)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="evalId"/> or <paramref name="runIds"/> is null. </exception>
+        public EvaluationRunClusterInsightRequest(string evalId, IEnumerable<string> runIds) : base(global::Azure.AI.Projects.Evaluation.InsightType.EvaluationRunClusterInsight)
         {
-            Argument.AssertNotNull(evalId, nameof(evalId));
-            Argument.AssertNotNull(runIds, nameof(runIds));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evalId, nameof(evalId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(runIds, nameof(runIds));
 
             EvalId = evalId;
             RunIds = runIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Evaluation Id for the insights. </param>
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
-        internal EvaluationRunClusterInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, IList<string> runIds, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal EvaluationRunClusterInsightRequest(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string evalId, IList<string> runIds, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             RunIds = runIds;

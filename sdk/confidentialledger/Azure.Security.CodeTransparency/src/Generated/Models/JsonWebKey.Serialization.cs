@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
-    public partial class JsonWebKey : IJsonModel<JsonWebKey>
+    public partial class JsonWebKey : IJsonModel<global::Azure.Security.CodeTransparency.JsonWebKey>
     {
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.CodeTransparency.JsonWebKey"/> for deserialization. </summary>
         internal JsonWebKey()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Security.CodeTransparency
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JsonWebKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Security.CodeTransparency.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJsonWebKey(document.RootElement, options);
+                        return global::Azure.Security.CodeTransparency.JsonWebKey.DeserializeJsonWebKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.CodeTransparency.JsonWebKey)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityCodeTransparencyContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.CodeTransparency.JsonWebKey)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JsonWebKey IPersistableModel<JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        JsonWebKey IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Security.CodeTransparency.JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,90 +73,90 @@ namespace Azure.Security.CodeTransparency
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.CodeTransparency.JsonWebKey)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Alg))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Alg))
             {
                 writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
-            if (Optional.IsDefined(Crv))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Crv))
             {
                 writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
-            if (Optional.IsDefined(D))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(D))
             {
                 writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
-            if (Optional.IsDefined(Dp))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Dp))
             {
                 writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
-            if (Optional.IsDefined(Dq))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Dq))
             {
                 writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
-            if (Optional.IsDefined(E))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(E))
             {
                 writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
-            if (Optional.IsDefined(K))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(K))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
-            if (Optional.IsDefined(Kid))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Kid))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
             writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
-            if (Optional.IsDefined(N))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(N))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
-            if (Optional.IsDefined(P))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(P))
             {
                 writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
-            if (Optional.IsDefined(Q))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Q))
             {
                 writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
-            if (Optional.IsDefined(Qi))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Qi))
             {
                 writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
-            if (Optional.IsDefined(Use))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Use))
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (Optional.IsDefined(X))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(X))
             {
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (Optional.IsCollectionDefined(X5c))
+            if (global::Azure.Security.CodeTransparency.Optional.IsCollectionDefined(X5c))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
                 foreach (string item in X5c)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -165,12 +165,12 @@ namespace Azure.Security.CodeTransparency
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Y))
+            if (global::Azure.Security.CodeTransparency.Optional.IsDefined(Y))
             {
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -178,9 +178,9 @@ namespace Azure.Security.CodeTransparency
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -189,26 +189,26 @@ namespace Azure.Security.CodeTransparency
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JsonWebKey IJsonModel<JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        JsonWebKey IJsonModel<global::Azure.Security.CodeTransparency.JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JsonWebKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.CodeTransparency.JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.CodeTransparency.JsonWebKey)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJsonWebKey(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Security.CodeTransparency.JsonWebKey.DeserializeJsonWebKey(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -229,7 +229,7 @@ namespace Azure.Security.CodeTransparency
             string x = default;
             IList<string> x5c = default;
             string y = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("alg"u8))
@@ -309,14 +309,14 @@ namespace Azure.Security.CodeTransparency
                 }
                 if (prop.NameEquals("x5c"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -333,9 +333,9 @@ namespace Azure.Security.CodeTransparency
                     y = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new JsonWebKey(
@@ -354,7 +354,7 @@ namespace Azure.Security.CodeTransparency
                 qi,
                 use,
                 x,
-                x5c ?? new ChangeTrackingList<string>(),
+                (x5c ?? new ChangeTrackingList<string>()),
                 y,
                 additionalBinaryDataProperties);
         }

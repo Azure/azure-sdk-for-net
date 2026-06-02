@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringProjectMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
         /// <param name="projectKind"> Represents the project kind. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
         /// <param name="lastTrainedOn"> Represents the project last trained datetime. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, DateTimeOffset? lastTrainedOn, DateTimeOffset? lastDeployedOn, ConversationAuthoringProjectKind projectKind, ConversationAuthoringProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, DateTimeOffset? lastTrainedOn, DateTimeOffset? lastDeployedOn, ConversationAuthoringProjectKind projectKind, ConversationAuthoringProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;

@@ -14,18 +14,18 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoverySource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoverySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoverySource"/>. </summary>
         public DiscoverySource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoverySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoverySource"/>. </summary>
         /// <param name="kind"> The kind of disco source. </param>
         /// <param name="name"> The name for the disco source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoverySource(DiscoverySourceKind? kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoverySource(DiscoverySourceKind? kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;

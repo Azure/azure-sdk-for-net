@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class BatchUefiSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchUefiSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchUefiSettings"/>. </summary>
         public BatchUefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchUefiSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchUefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. </param>
         /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchUefiSettings(bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchUefiSettings(bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SecureBootEnabled = secureBootEnabled;
             VTpmEnabled = vTpmEnabled;

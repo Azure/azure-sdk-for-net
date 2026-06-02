@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Type.Model.Usage
 {
-    public partial class OutputRecord : IJsonModel<OutputRecord>
+    public partial class OutputRecord : IJsonModel<global::_Type.Model.Usage.OutputRecord>
     {
         internal OutputRecord() => throw null;
 
@@ -20,19 +20,19 @@ namespace _Type.Model.Usage
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<OutputRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Usage.OutputRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        OutputRecord IPersistableModel<OutputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        OutputRecord IPersistableModel<global::_Type.Model.Usage.OutputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<OutputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Usage.OutputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator OutputRecord(Response response) => throw null;
 
-        void IJsonModel<OutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Usage.OutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        OutputRecord IJsonModel<OutputRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        OutputRecord IJsonModel<global::_Type.Model.Usage.OutputRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual OutputRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

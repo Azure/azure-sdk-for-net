@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Triggers that can activate interim response generation. </summary>
-    public readonly partial struct InterimResponseTrigger : IEquatable<InterimResponseTrigger>
+    public readonly partial struct InterimResponseTrigger : IEquatable<global::Azure.AI.VoiceLive.InterimResponseTrigger>
     {
         private readonly string _value;
         /// <summary> Trigger interim response when response latency exceeds threshold. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Trigger interim response when a tool call is being executed. </summary>
         private const string ToolValue = "tool";
 
-        /// <summary> Initializes a new instance of <see cref="InterimResponseTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InterimResponseTrigger"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InterimResponseTrigger(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Trigger interim response when a tool call is being executed. </summary>
         public static InterimResponseTrigger Tool { get; } = new InterimResponseTrigger(ToolValue);
 
-        /// <summary> Determines if two <see cref="InterimResponseTrigger"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InterimResponseTrigger"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InterimResponseTrigger left, InterimResponseTrigger right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InterimResponseTrigger"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InterimResponseTrigger"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InterimResponseTrigger left, InterimResponseTrigger right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InterimResponseTrigger"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InterimResponseTrigger"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InterimResponseTrigger(string value) => new InterimResponseTrigger(value);
 
-        /// <summary> Converts a string to a <see cref="InterimResponseTrigger"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InterimResponseTrigger"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InterimResponseTrigger?(string value) => value == null ? null : new InterimResponseTrigger(value);
+        public static implicit operator InterimResponseTrigger?(string value) => (value == null) ? null : new InterimResponseTrigger(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InterimResponseTrigger other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InterimResponseTrigger other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InterimResponseTrigger other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InterimResponseTrigger other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

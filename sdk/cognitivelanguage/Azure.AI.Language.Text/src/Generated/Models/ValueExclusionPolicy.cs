@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Text
     public partial class ValueExclusionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ValueExclusionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ValueExclusionPolicy"/>. </summary>
         /// <param name="caseSensitive"> Option to make the values excluded values case sensitive. </param>
         /// <param name="excludedValues"> List of words and terms that should be excluded from detection by the PII detection service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="excludedValues"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="excludedValues"/> is null. </exception>
         public ValueExclusionPolicy(bool caseSensitive, IEnumerable<string> excludedValues)
         {
-            Argument.AssertNotNull(excludedValues, nameof(excludedValues));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(excludedValues, nameof(excludedValues));
 
             CaseSensitive = caseSensitive;
             ExcludedValues = excludedValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ValueExclusionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ValueExclusionPolicy"/>. </summary>
         /// <param name="caseSensitive"> Option to make the values excluded values case sensitive. </param>
         /// <param name="excludedValues"> List of words and terms that should be excluded from detection by the PII detection service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValueExclusionPolicy(bool caseSensitive, IList<string> excludedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValueExclusionPolicy(bool caseSensitive, IList<string> excludedValues, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CaseSensitive = caseSensitive;
             ExcludedValues = excludedValues;

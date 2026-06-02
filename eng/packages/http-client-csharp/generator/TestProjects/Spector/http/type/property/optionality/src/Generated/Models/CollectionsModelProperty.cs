@@ -13,6 +13,6 @@ namespace _Type.Property.Optional
     {
         public CollectionsModelProperty() => throw null;
 
-        public IList<StringProperty> Property => throw null;
+        public IList<global::_Type.Property.Optional.StringProperty> Property => throw null;
     }
 }

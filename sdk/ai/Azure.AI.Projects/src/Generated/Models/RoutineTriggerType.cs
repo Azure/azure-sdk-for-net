@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for routine triggers. </summary>
-    public readonly partial struct RoutineTriggerType : IEquatable<RoutineTriggerType>
+    public readonly partial struct RoutineTriggerType : IEquatable<global::Azure.AI.Projects.RoutineTriggerType>
     {
         private readonly string _value;
         /// <summary> A custom event trigger. </summary>
@@ -20,12 +20,12 @@ namespace Azure.AI.Projects
         /// <summary> A one-shot timer trigger. </summary>
         private const string TimerValue = "timer";
 
-        /// <summary> Initializes a new instance of <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RoutineTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutineTriggerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -42,34 +42,34 @@ namespace Azure.AI.Projects
         /// <summary> A one-shot timer trigger. </summary>
         public static RoutineTriggerType Timer { get; } = new RoutineTriggerType(TimerValue);
 
-        /// <summary> Determines if two <see cref="RoutineTriggerType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.RoutineTriggerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutineTriggerType left, RoutineTriggerType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RoutineTriggerType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.RoutineTriggerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutineTriggerType left, RoutineTriggerType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.RoutineTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RoutineTriggerType(string value) => new RoutineTriggerType(value);
 
-        /// <summary> Converts a string to a <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.RoutineTriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineTriggerType?(string value) => value == null ? null : new RoutineTriggerType(value);
+        public static implicit operator RoutineTriggerType?(string value) => (value == null) ? null : new RoutineTriggerType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RoutineTriggerType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RoutineTriggerType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RoutineTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RoutineTriggerType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

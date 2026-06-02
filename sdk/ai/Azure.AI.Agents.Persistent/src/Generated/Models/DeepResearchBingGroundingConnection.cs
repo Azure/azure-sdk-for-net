@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class DeepResearchBingGroundingConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeepResearchBingGroundingConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection"/>. </summary>
         /// <param name="connectionId"> The connection ID for the Bing grounding connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         public DeepResearchBingGroundingConnection(string connectionId)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(connectionId, nameof(connectionId));
 
             ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeepResearchBingGroundingConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection"/>. </summary>
         /// <param name="connectionId"> The connection ID for the Bing grounding connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeepResearchBingGroundingConnection(string connectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeepResearchBingGroundingConnection(string connectionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

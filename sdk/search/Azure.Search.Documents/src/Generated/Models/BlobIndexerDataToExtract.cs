@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when "imageAction" is set to a value other than "none".  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </summary>
-    public readonly partial struct BlobIndexerDataToExtract : IEquatable<BlobIndexerDataToExtract>
+    public readonly partial struct BlobIndexerDataToExtract : IEquatable<global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract>
     {
         private readonly string _value;
         /// <summary> Indexes just the standard blob properties and user-specified metadata. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Extracts all metadata and textual content from each blob. </summary>
         private const string ContentAndMetadataValue = "contentAndMetadata";
 
-        /// <summary> Initializes a new instance of <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerDataToExtract(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Extracts all metadata and textual content from each blob. </summary>
         public static BlobIndexerDataToExtract ContentAndMetadata { get; } = new BlobIndexerDataToExtract(ContentAndMetadataValue);
 
-        /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerDataToExtract(string value) => new BlobIndexerDataToExtract(value);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerDataToExtract?(string value) => value == null ? null : new BlobIndexerDataToExtract(value);
+        public static implicit operator BlobIndexerDataToExtract?(string value) => (value == null) ? null : new BlobIndexerDataToExtract(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BlobIndexerDataToExtract other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BlobIndexerDataToExtract other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BlobIndexerDataToExtract other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BlobIndexerDataToExtract other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

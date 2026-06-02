@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    internal partial class LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT : AsyncPageable<TestProfile>
+    internal partial class LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Developer.LoadTesting.TestProfile>
     {
         private readonly LoadTestAdministrationClient _client;
         private readonly int? _maxpagesize;
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxpagesize = maxpagesize;
@@ -50,20 +50,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TestProfile>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Developer.LoadTesting.TestProfile>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedTestProfile result = (PagedTestProfile)response;
-                yield return Page<TestProfile>.FromValues((IReadOnlyList<TestProfile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedTestProfile result = ((PagedTestProfile)response);
+                yield return global::Azure.Page<TestProfile>.FromValues(((IReadOnlyList<global::Azure.Developer.LoadTesting.TestProfile>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,9 +73,9 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

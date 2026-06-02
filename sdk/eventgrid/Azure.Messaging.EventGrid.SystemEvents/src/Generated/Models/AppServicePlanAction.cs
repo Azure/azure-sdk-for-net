@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action on the app service plan. </summary>
-    public readonly partial struct AppServicePlanAction : IEquatable<AppServicePlanAction>
+    public readonly partial struct AppServicePlanAction : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction>
     {
         private readonly string _value;
         /// <summary> App Service plan is being updated. </summary>
         private const string UpdatedValue = "Updated";
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppServicePlanAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> App Service plan is being updated. </summary>
         public static AppServicePlanAction Updated { get; } = new AppServicePlanAction(UpdatedValue);
 
-        /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServicePlanAction left, AppServicePlanAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServicePlanAction left, AppServicePlanAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AppServicePlanAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AppServicePlanAction(string value) => new AppServicePlanAction(value);
 
-        /// <summary> Converts a string to a <see cref="AppServicePlanAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppServicePlanAction?(string value) => value == null ? null : new AppServicePlanAction(value);
+        public static implicit operator AppServicePlanAction?(string value) => (value == null) ? null : new AppServicePlanAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AppServicePlanAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AppServicePlanAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AppServicePlanAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppServicePlanAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

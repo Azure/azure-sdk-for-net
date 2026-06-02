@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The AgentStructuredOutputsResponseItem. </summary>
     public partial class AgentStructuredOutputsResponseItem : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The structured output captured during the response. </param>
-        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Output = output;
         }
 
         /// <summary>
         /// The structured output captured during the response.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

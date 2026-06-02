@@ -15,9 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerCoreModelsResponsesPoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerCoreModelsResponsesPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint"/>. </summary>
         /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
         /// <param name="values"> Array of pixel values at the queried point for each band. </param>
         /// <param name="bandNames"> Names of each band in the raster data. </param>
@@ -28,12 +28,12 @@ namespace Azure.Analytics.PlanetaryComputer
             BandNames = bandNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerCoreModelsResponsesPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint"/>. </summary>
         /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
         /// <param name="values"> Array of pixel values at the queried point for each band. </param>
         /// <param name="bandNames"> Names of each band in the raster data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerCoreModelsResponsesPoint(IList<float> coordinates, IList<float> values, IList<string> bandNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerCoreModelsResponsesPoint(IList<float> coordinates, IList<float> values, IList<string> bandNames, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
             Values = values;

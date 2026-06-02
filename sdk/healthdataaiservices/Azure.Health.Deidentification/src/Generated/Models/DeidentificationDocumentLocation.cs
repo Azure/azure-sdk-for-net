@@ -15,20 +15,20 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationDocumentLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentLocation"/>. </summary>
         /// <param name="location"> Location of document in storage. </param>
-        internal DeidentificationDocumentLocation(Uri location)
+        internal DeidentificationDocumentLocation(global::System.Uri location)
         {
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentLocation"/>. </summary>
         /// <param name="location"> Location of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationDocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationDocumentLocation(global::System.Uri location, ETag etag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Etag = etag;
@@ -36,7 +36,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Location of document in storage. </summary>
-        public Uri Location { get; }
+        public global::System.Uri Location { get; }
 
         /// <summary> The entity tag for this resource. </summary>
         public ETag Etag { get; }

@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Types of certificates supported. </summary>
-    public readonly partial struct CertificateType : IEquatable<CertificateType>
+    public readonly partial struct CertificateType : IEquatable<global::Azure.Developer.LoadTesting.CertificateType>
     {
         private readonly string _value;
         /// <summary> If the certificate is stored in an Azure Key Vault. </summary>
         private const string KeyVaultCertificateUriValue = "AKV_CERT_URI";
 
-        /// <summary> Initializes a new instance of <see cref="CertificateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.CertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> If the certificate is stored in an Azure Key Vault. </summary>
         public static CertificateType KeyVaultCertificateUri { get; } = new CertificateType(KeyVaultCertificateUriValue);
 
-        /// <summary> Determines if two <see cref="CertificateType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.CertificateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateType left, CertificateType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CertificateType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.CertificateType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateType left, CertificateType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CertificateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.CertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CertificateType(string value) => new CertificateType(value);
 
-        /// <summary> Converts a string to a <see cref="CertificateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.CertificateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CertificateType?(string value) => value == null ? null : new CertificateType(value);
+        public static implicit operator CertificateType?(string value) => (value == null) ? null : new CertificateType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CertificateType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CertificateType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CertificateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CertificateType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

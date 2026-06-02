@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to do query planning. </summary>
-    public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel, IJsonModel<KnowledgeBaseAzureOpenAIModel>
+    public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel, IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel"/> for deserialization. </summary>
         internal KnowledgeBaseAzureOpenAIModel()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseAzureOpenAIModel(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel.DeserializeKnowledgeBaseAzureOpenAIModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseAzureOpenAIModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseAzureOpenAIModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseAzureOpenAIModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseAzureOpenAIModel IPersistableModel<KnowledgeBaseAzureOpenAIModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseAzureOpenAIModel)PersistableModelCreateCore(data, options);
+        KnowledgeBaseAzureOpenAIModel IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>.Create(BinaryData data, ModelReaderWriterOptions options) => ((KnowledgeBaseAzureOpenAIModel)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseAzureOpenAIModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseAzureOpenAIModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,43 +74,43 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseAzureOpenAIModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azureOpenAIParameters"u8);
-            writer.WriteObjectValue(AzureOpenAIParameters, options);
+            writer.WriteObjectValue<AzureOpenAIVectorizerParameters>(AzureOpenAIParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseAzureOpenAIModel IJsonModel<KnowledgeBaseAzureOpenAIModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseAzureOpenAIModel)JsonModelCreateCore(ref reader, options);
+        KnowledgeBaseAzureOpenAIModel IJsonModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((KnowledgeBaseAzureOpenAIModel)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseAzureOpenAIModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseAzureOpenAIModel(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel.DeserializeKnowledgeBaseAzureOpenAIModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeBaseAzureOpenAIModel DeserializeKnowledgeBaseAzureOpenAIModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             KnowledgeBaseModelKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AzureOpenAIVectorizerParameters azureOpenAIParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,12 +121,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("azureOpenAIParameters"u8))
                 {
-                    azureOpenAIParameters = AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(prop.Value, options);
+                    azureOpenAIParameters = global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeBaseAzureOpenAIModel(kind, additionalBinaryDataProperties, azureOpenAIParameters);

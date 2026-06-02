@@ -15,7 +15,7 @@ namespace Encode.Bytes
     {
         public BytesClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal BytesClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

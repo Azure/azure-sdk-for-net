@@ -19,23 +19,23 @@ namespace Versioning.MadeOptional
     {
         protected MadeOptionalClient() => throw null;
 
-        public MadeOptionalClient(Uri endpoint) : this(endpoint, new MadeOptionalClientOptions()) => throw null;
+        public MadeOptionalClient(global::System.Uri endpoint) : this(endpoint, new MadeOptionalClientOptions()) => throw null;
 
-        internal MadeOptionalClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MadeOptionalClientOptions options) => throw null;
+        internal MadeOptionalClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MadeOptionalClientOptions options) => throw null;
 
-        public MadeOptionalClient(Uri endpoint, MadeOptionalClientOptions options) : this(null, endpoint, options) => throw null;
+        public MadeOptionalClient(global::System.Uri endpoint, MadeOptionalClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MadeOptionalClient(MadeOptionalClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MadeOptionalClient(MadeOptionalClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Test(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> TestAsync(string @param, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> TestAsync(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<TestModel> Test(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.MadeOptional.TestModel> Test(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<TestModel>> TestAsync(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.MadeOptional.TestModel>> TestAsync(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

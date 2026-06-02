@@ -13,9 +13,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class MetricDataPoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="value">
         /// Single value for measurement. Sum of individual measurements for the
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint"/>. </summary>
         /// <param name="namespace"> Namespace of the metric. </param>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="dataPointType"> Metric type. Single measurement or the aggregated value. </param>
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// measurement.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Namespace = @namespace;
             Name = name;

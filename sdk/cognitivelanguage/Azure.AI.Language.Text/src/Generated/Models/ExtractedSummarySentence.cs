@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class ExtractedSummarySentence
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractedSummarySentence"/>. </summary>
         /// <param name="text"> The extracted sentence text. </param>
         /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
@@ -29,13 +29,13 @@ namespace Azure.AI.Language.Text
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractedSummarySentence"/>. </summary>
         /// <param name="text"> The extracted sentence text. </param>
         /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
         /// <param name="length"> The length of the sentence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtractedSummarySentence(string text, double rankScore, int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtractedSummarySentence(string text, double rankScore, int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             RankScore = rankScore;

@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationTaskResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationTaskResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationTaskResult"/>. </summary>
         /// <param name="taskName"> Task name (from the dataset). </param>
         /// <param name="scores"> Per-evaluator scores keyed by evaluator name. </param>
         /// <param name="compositeScore"> Composite score combining all evaluator scores. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
             Rationales = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationTaskResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationTaskResult"/>. </summary>
         /// <param name="taskName"> Task name (from the dataset). </param>
         /// <param name="query"> The user query / input for the task. </param>
         /// <param name="scores"> Per-evaluator scores keyed by evaluator name. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="response"> Raw agent response text. </param>
         /// <param name="runId"> Identifier of the agent run that produced this result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationTaskResult(string taskName, string query, IDictionary<string, double> scores, double compositeScore, long tokens, TimeSpan durationSeconds, bool passed, string errorMessage, IDictionary<string, string> rationales, string response, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationTaskResult(string taskName, string query, IDictionary<string, double> scores, double compositeScore, long tokens, TimeSpan durationSeconds, bool passed, string errorMessage, IDictionary<string, string> rationales, string response, string runId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TaskName = taskName;
             Query = query;

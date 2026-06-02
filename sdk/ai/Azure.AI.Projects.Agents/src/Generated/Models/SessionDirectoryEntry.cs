@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class SessionDirectoryEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SessionDirectoryEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SessionDirectoryEntry"/>. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects.Agents
             ModifiedTime = modifiedTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionDirectoryEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SessionDirectoryEntry"/>. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
         /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionDirectoryEntry(string name, long size, bool isDirectory, DateTimeOffset modifiedTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionDirectoryEntry(string name, long size, bool isDirectory, DateTimeOffset modifiedTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Size = size;

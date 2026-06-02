@@ -17,10 +17,10 @@ namespace Azure.Monitor.Query.Metrics.Models
     {
         /// <summary> The metrics result for a resource. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        /// <returns> A new <see cref="Models.MetricsQueryResourcesResult"/> instance for mocking. </returns>
-        public static MetricsQueryResourcesResult MetricsQueryResourcesResult(IEnumerable<MetricsQueryResult> values = default)
+        /// <returns> A new <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult"/> instance for mocking. </returns>
+        public static MetricsQueryResourcesResult MetricsQueryResourcesResult(IEnumerable<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> values = default)
         {
-            values ??= new ChangeTrackingList<MetricsQueryResult>();
+            values ??= new ChangeTrackingList<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult>();
 
             return new MetricsQueryResourcesResult(values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -39,10 +39,10 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="metrics"> The value of the collection. </param>
-        /// <returns> A new <see cref="Models.MetricsQueryResult"/> instance for mocking. </returns>
-        public static MetricsQueryResult MetricsQueryResult(string startTime = default, string endTime = default, string granularity = default, string @namespace = default, string resourceRegion = default, string resourceId = default, IEnumerable<MetricResult> metrics = default)
+        /// <returns> A new <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResult"/> instance for mocking. </returns>
+        public static MetricsQueryResult MetricsQueryResult(string startTime = default, string endTime = default, string granularity = default, string @namespace = default, string resourceRegion = default, string resourceId = default, IEnumerable<global::Azure.Monitor.Query.Metrics.Models.MetricResult> metrics = default)
         {
-            metrics ??= new ChangeTrackingList<MetricResult>();
+            metrics ??= new ChangeTrackingList<global::Azure.Monitor.Query.Metrics.Models.MetricResult>();
 
             return new MetricsQueryResult(
                 startTime,
@@ -65,7 +65,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// The number of samples in the time range. Can be used to determine the number of
         /// values that contributed to the average value.
         /// </param>
-        /// <returns> A new <see cref="Models.MetricValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricValue"/> instance for mocking. </returns>
         public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = default, double? minimum = default, double? maximum = default, double? total = default, double? count = default)
         {
             return new MetricValue(

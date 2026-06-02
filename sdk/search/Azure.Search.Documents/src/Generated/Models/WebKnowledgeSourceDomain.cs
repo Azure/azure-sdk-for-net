@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebKnowledgeSourceDomain
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain"/>. </summary>
         /// <param name="address"> The address of the domain. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public WebKnowledgeSourceDomain(string address)
         {
-            Argument.AssertNotNull(address, nameof(address));
+            global::Azure.Search.Documents.Argument.AssertNotNull(address, nameof(address));
 
             Address = address;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceDomain"/>. </summary>
         /// <param name="address"> The address of the domain. </param>
         /// <param name="includeSubpages"> Whether or not to include subpages from this domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebKnowledgeSourceDomain(string address, bool? includeSubpages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebKnowledgeSourceDomain(string address, bool? includeSubpages, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
             IncludeSubpages = includeSubpages;

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    internal partial class UnknownBird : Bird, IJsonModel<Bird>
+    internal partial class UnknownBird : Bird, IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>
     {
         internal UnknownBird() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Bird>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Bird IPersistableModel<Bird>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Bird IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Bird>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Bird>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Bird IJsonModel<Bird>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Bird IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

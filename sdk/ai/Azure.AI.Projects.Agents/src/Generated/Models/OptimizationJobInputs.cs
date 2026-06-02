@@ -11,30 +11,30 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationJobInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobInputs"/>. </summary>
         /// <param name="agent"> The agent (and pinned version) being optimized. </param>
         /// <param name="trainDatasetReference"> Reference to a registered training dataset (required). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agent"/> or <paramref name="trainDatasetReference"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agent"/> or <paramref name="trainDatasetReference"/> is null. </exception>
         public OptimizationJobInputs(AgentIdentifier agent, DatasetRef trainDatasetReference)
         {
-            Argument.AssertNotNull(agent, nameof(agent));
-            Argument.AssertNotNull(trainDatasetReference, nameof(trainDatasetReference));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agent, nameof(agent));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(trainDatasetReference, nameof(trainDatasetReference));
 
             Agent = agent;
             TrainDatasetReference = trainDatasetReference;
             Evaluators = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobInputs"/>. </summary>
         /// <param name="agent"> The agent (and pinned version) being optimized. </param>
         /// <param name="trainDatasetReference"> Reference to a registered training dataset (required). </param>
         /// <param name="validationDatasetReference"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
         /// <param name="evaluators"> Job-level evaluators (referenced by name). Per-task criteria may override. Default: ['task_adherence']. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobInputs(AgentIdentifier agent, DatasetRef trainDatasetReference, DatasetRef validationDatasetReference, IList<string> evaluators, OptimizationOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobInputs(AgentIdentifier agent, DatasetRef trainDatasetReference, DatasetRef validationDatasetReference, IList<string> evaluators, OptimizationOptions options, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Agent = agent;
             TrainDatasetReference = trainDatasetReference;

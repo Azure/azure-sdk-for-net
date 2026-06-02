@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class FileSearchToolCallContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolCallContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolCallContent"/>. </summary>
         /// <param name="text"> The text content of the file. </param>
         internal FileSearchToolCallContent(string text)
         {
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolCallContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolCallContent"/>. </summary>
         /// <param name="type"> The type of the content. </param>
         /// <param name="text"> The text content of the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolCallContent(FileSearchToolCallContentType @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolCallContent(FileSearchToolCallContentType @type, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;

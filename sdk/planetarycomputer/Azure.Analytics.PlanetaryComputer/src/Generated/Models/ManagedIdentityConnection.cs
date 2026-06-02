@@ -14,25 +14,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ManagedIdentityConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="objectId"> Azure Managed Identity configured in the Geo-Catalog with access to the container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
-        public ManagedIdentityConnection(Uri containerUri, Guid objectId)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public ManagedIdentityConnection(global::System.Uri containerUri, Guid objectId)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(containerUri, nameof(containerUri));
 
             ContainerUri = containerUri;
             ObjectId = objectId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="objectId"> Azure Managed Identity configured in the Geo-Catalog with access to the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentityConnection(Uri containerUri, Guid objectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedIdentityConnection(global::System.Uri containerUri, Guid objectId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             ObjectId = objectId;
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUri { get; set; }
+        public global::System.Uri ContainerUri { get; set; }
 
         /// <summary> Azure Managed Identity configured in the Geo-Catalog with access to the container. </summary>
         public Guid ObjectId { get; set; }

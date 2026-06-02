@@ -12,11 +12,11 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownLexicalAnalyzer : LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownLexicalAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownLexicalAnalyzer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownLexicalAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", name, additionalBinaryDataProperties)
+        internal UnknownLexicalAnalyzer(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((odataType ?? "unknown"), name, additionalBinaryDataProperties)
         {
         }
     }

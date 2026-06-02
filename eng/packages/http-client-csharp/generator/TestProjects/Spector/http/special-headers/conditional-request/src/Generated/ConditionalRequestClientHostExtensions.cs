@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace SpecialHeaders.ConditionalRequest
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ConditionalRequestClientHostExtensions
     {
         public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName, Action<ConditionalRequestClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName, Action<global::SpecialHeaders.ConditionalRequest.ConditionalRequestClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ConditionalRequestClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::SpecialHeaders.ConditionalRequest.ConditionalRequestClientSettings> configureSettings) => throw null;
     }
 }

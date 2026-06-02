@@ -9,24 +9,24 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The input format for the custom tool. Default is unconstrained text.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesCustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Extensions.OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam"/>.
     /// </summary>
     public abstract partial class ResponsesCustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParamFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>
         private protected ResponsesCustomToolParamFormat(CustomToolParamFormatType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParamFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesCustomToolParamFormat(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesCustomToolParamFormat(CustomToolParamFormatType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

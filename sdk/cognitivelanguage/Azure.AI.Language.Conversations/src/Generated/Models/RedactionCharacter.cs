@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </summary>
-    public readonly partial struct RedactionCharacter : IEquatable<RedactionCharacter>
+    public readonly partial struct RedactionCharacter : IEquatable<global::Azure.AI.Language.Conversations.Models.RedactionCharacter>
     {
         private readonly string _value;
         /// <summary> Exclamation point character. </summary>
@@ -44,12 +44,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Tilde character. </summary>
         private const string TildeValue = "~";
 
-        /// <summary> Initializes a new instance of <see cref="RedactionCharacter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.RedactionCharacter"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedactionCharacter(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -93,34 +93,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Tilde character. </summary>
         public static RedactionCharacter Tilde { get; } = new RedactionCharacter(TildeValue);
 
-        /// <summary> Determines if two <see cref="RedactionCharacter"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.RedactionCharacter"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedactionCharacter left, RedactionCharacter right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RedactionCharacter"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.RedactionCharacter"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedactionCharacter left, RedactionCharacter right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RedactionCharacter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.RedactionCharacter"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RedactionCharacter(string value) => new RedactionCharacter(value);
 
-        /// <summary> Converts a string to a <see cref="RedactionCharacter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.RedactionCharacter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedactionCharacter?(string value) => value == null ? null : new RedactionCharacter(value);
+        public static implicit operator RedactionCharacter?(string value) => (value == null) ? null : new RedactionCharacter(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RedactionCharacter other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RedactionCharacter other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RedactionCharacter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RedactionCharacter other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Represents the evaluation result of a document.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntityRecognitionDocumentEvalResult"/>, <see cref="CustomHealthcareDocumentEvalResult"/>, <see cref="CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="CustomTextSentimentDocumentEvalResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult"/>.
     /// </summary>
     public abstract partial class TextAuthoringDocumentEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringDocumentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         private protected TextAuthoringDocumentEvalResult(string location, string language)
@@ -28,12 +28,12 @@ namespace Azure.AI.Language.Text.Authoring
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringDocumentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringDocumentEvalResult(TextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringDocumentEvalResult(TextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             Location = location;

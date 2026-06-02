@@ -15,22 +15,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class WordAlterations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alterations"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="alterations"/> is null. </exception>
         public WordAlterations(IEnumerable<string> alterations)
         {
-            Argument.AssertNotNull(alterations, nameof(alterations));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(alterations, nameof(alterations));
 
             Alterations = alterations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WordAlterations(IList<string> alterations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WordAlterations(IList<string> alterations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Alterations = alterations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

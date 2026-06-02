@@ -14,46 +14,46 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> Extension methods to add <see cref="PlanetaryComputerProClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
-    [Experimental("SCME0002")]
+    /// <summary> Extension methods to add <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient"/> to an <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>. </summary>
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PlanetaryComputerProClientHostExtensions
     {
-        /// <summary> Adds a singleton <see cref="PlanetaryComputerProClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <summary> Adds a singleton <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddPlanetaryComputerProClient(this IHostApplicationBuilder host, string sectionName)
         {
             return host.AddAzureClient<PlanetaryComputerProClient, PlanetaryComputerProClientSettings>(sectionName);
         }
 
-        /// <summary> Adds a singleton <see cref="PlanetaryComputerProClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="PlanetaryComputerProClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddPlanetaryComputerProClient(this IHostApplicationBuilder host, string sectionName, Action<PlanetaryComputerProClientSettings> configureSettings)
+        /// <summary> Adds a singleton <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddPlanetaryComputerProClient(this IHostApplicationBuilder host, string sectionName, Action<global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings)
         {
             return host.AddAzureClient<PlanetaryComputerProClient, PlanetaryComputerProClientSettings>(sectionName, configureSettings);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="PlanetaryComputerProClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddKeyedPlanetaryComputerProClient(this IHostApplicationBuilder host, string key, string sectionName)
         {
             return host.AddKeyedAzureClient<PlanetaryComputerProClient, PlanetaryComputerProClientSettings>(key, sectionName);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="PlanetaryComputerProClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="PlanetaryComputerProClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedPlanetaryComputerProClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PlanetaryComputerProClientSettings> configureSettings)
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedPlanetaryComputerProClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings)
         {
             return host.AddKeyedAzureClient<PlanetaryComputerProClient, PlanetaryComputerProClientSettings>(key, sectionName, configureSettings);
         }

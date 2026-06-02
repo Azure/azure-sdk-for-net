@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the document evaluation result for a custom entity recognition project. </summary>
     public partial class CustomHealthcareDocumentEvalResult : TextAuthoringDocumentEvalResult
     {
-        /// <summary> Initializes a new instance of <see cref="CustomHealthcareDocumentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
@@ -22,13 +22,13 @@ namespace Azure.AI.Language.Text.Authoring
             CustomHealthcareResult = customHealthcareResult;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomHealthcareDocumentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
-        internal CustomHealthcareDocumentEvalResult(TextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties, DocumentHealthcareEvalResult customHealthcareResult) : base(projectKind, location, language, additionalBinaryDataProperties)
+        internal CustomHealthcareDocumentEvalResult(TextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DocumentHealthcareEvalResult customHealthcareResult) : base(projectKind, location, language, additionalBinaryDataProperties)
         {
             CustomHealthcareResult = customHealthcareResult;
         }

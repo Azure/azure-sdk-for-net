@@ -17,9 +17,9 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationLanguage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -31,13 +31,13 @@ namespace Azure.AI.Translation.Text
             Models = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="models"> LLM models supported for translation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IReadOnlyList<string> models, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NativeName = nativeName;

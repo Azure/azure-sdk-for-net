@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageTextUriCitationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextUriCitationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextUriCitationDetails"/>. </summary>
         /// <param name="uri"> The URL associated with this citation. </param>
         internal MessageTextUriCitationDetails(string uri)
         {
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextUriCitationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextUriCitationDetails"/>. </summary>
         /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTextUriCitationDetails(string uri, string title, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageTextUriCitationDetails(string uri, string title, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Title = title;

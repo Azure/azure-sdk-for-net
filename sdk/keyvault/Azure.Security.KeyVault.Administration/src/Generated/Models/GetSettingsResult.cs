@@ -14,24 +14,24 @@ namespace Azure.Security.KeyVault.Administration
     public partial class GetSettingsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.GetSettingsResult"/>. </summary>
         internal GetSettingsResult()
         {
-            Settings = new ChangeTrackingList<KeyVaultSetting>();
+            Settings = new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultSetting>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.GetSettingsResult"/>. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSettingsResult(IReadOnlyList<global::Azure.Security.KeyVault.Administration.KeyVaultSetting> settings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Settings = settings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A response message containing a list of account settings with their associated value. </summary>
-        public IReadOnlyList<KeyVaultSetting> Settings { get; }
+        public IReadOnlyList<global::Azure.Security.KeyVault.Administration.KeyVaultSetting> Settings { get; }
     }
 }

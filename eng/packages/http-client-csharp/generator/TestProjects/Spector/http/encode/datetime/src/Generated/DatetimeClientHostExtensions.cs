@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Encode.Datetime
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class DatetimeClientHostExtensions
     {
         public static IClientBuilder AddDatetimeClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddDatetimeClient(this IHostApplicationBuilder host, string sectionName, Action<DatetimeClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddDatetimeClient(this IHostApplicationBuilder host, string sectionName, Action<global::Encode.Datetime.DatetimeClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedDatetimeClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedDatetimeClient(this IHostApplicationBuilder host, string key, string sectionName, Action<DatetimeClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedDatetimeClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Encode.Datetime.DatetimeClientSettings> configureSettings) => throw null;
     }
 }

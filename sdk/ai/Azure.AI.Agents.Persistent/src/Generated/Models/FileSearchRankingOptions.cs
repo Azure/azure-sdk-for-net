@@ -14,25 +14,25 @@ namespace Azure.AI.Agents.Persistent
     public partial class FileSearchRankingOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchRankingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchRankingOptions"/>. </summary>
         /// <param name="ranker"> File search ranker. </param>
         /// <param name="scoreThreshold"> Ranker search threshold. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ranker"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="ranker"/> is null. </exception>
         public FileSearchRankingOptions(string ranker, float scoreThreshold)
         {
-            Argument.AssertNotNull(ranker, nameof(ranker));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(ranker, nameof(ranker));
 
             Ranker = ranker;
             ScoreThreshold = scoreThreshold;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchRankingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchRankingOptions"/>. </summary>
         /// <param name="ranker"> File search ranker. </param>
         /// <param name="scoreThreshold"> Ranker search threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchRankingOptions(string ranker, float scoreThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchRankingOptions(string ranker, float scoreThreshold, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Ranker = ranker;
             ScoreThreshold = scoreThreshold;

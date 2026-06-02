@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepSharepointToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepSharepointToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="sharePoint"> SharePoint tool input and output. </param>
         internal RunStepSharepointToolCall(string id, IDictionary<string, string> sharePoint) : base("sharepoint_grounding", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             SharePoint = sharePoint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepSharepointToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sharePoint"> SharePoint tool input and output. </param>
-        internal RunStepSharepointToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> sharePoint) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepSharepointToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, string> sharePoint) : base(@type, id, additionalBinaryDataProperties)
         {
             SharePoint = sharePoint;
         }

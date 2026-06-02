@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Break : IJsonModel<Break>
+    public partial class Break : IJsonModel<global::SpecialWords._Models.Break>
     {
         internal Break() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Break>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Break>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Break IPersistableModel<Break>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Break IPersistableModel<global::SpecialWords._Models.Break>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Break>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Break>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="break"> The <see cref="Break"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="break"> The <see cref="global::SpecialWords._Models.Break"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Break @break) => throw null;
 
-        void IJsonModel<Break>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Break>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Break IJsonModel<Break>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Break IJsonModel<global::SpecialWords._Models.Break>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Break JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

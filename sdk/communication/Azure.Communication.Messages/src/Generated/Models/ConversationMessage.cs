@@ -14,22 +14,22 @@ namespace Azure.Communication.Messages
     public partial class ConversationMessage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessage"/>. </summary>
         /// <param name="content"> Content of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public ConversationMessage(string content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessage"/>. </summary>
         /// <param name="content"> Content of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationMessage(string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationMessage(string content, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

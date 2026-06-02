@@ -15,21 +15,21 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentTable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
-        internal DocumentTable(int rowCount, int columnCount, IEnumerable<DocumentTableCell> cells)
+        internal DocumentTable(int rowCount, int columnCount, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentTableCell> cells)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
             Cells = cells.ToList();
-            Footnotes = new ChangeTrackingList<DocumentFootnote>();
+            Footnotes = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="footnotes"> List of table footnotes. </param>
         /// <param name="role"> Semantic role of the table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTable(int rowCount, int columnCount, IList<DocumentTableCell> cells, string source, ContentSpan span, DocumentCaption caption, IList<DocumentFootnote> footnotes, SemanticRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTable(int rowCount, int columnCount, IList<global::Azure.AI.ContentUnderstanding.DocumentTableCell> cells, string source, ContentSpan span, DocumentCaption caption, IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes, SemanticRole? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
@@ -59,7 +59,7 @@ namespace Azure.AI.ContentUnderstanding
         public int ColumnCount { get; }
 
         /// <summary> Cells contained within the table. </summary>
-        public IList<DocumentTableCell> Cells { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentTableCell> Cells { get; }
 
         /// <summary> Encoded source that identifies the position of the table in the content. </summary>
         public string Source { get; }
@@ -71,7 +71,7 @@ namespace Azure.AI.ContentUnderstanding
         public DocumentCaption Caption { get; }
 
         /// <summary> List of table footnotes. </summary>
-        public IList<DocumentFootnote> Footnotes { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> Footnotes { get; }
 
         /// <summary> Semantic role of the table. </summary>
         public SemanticRole? Role { get; }

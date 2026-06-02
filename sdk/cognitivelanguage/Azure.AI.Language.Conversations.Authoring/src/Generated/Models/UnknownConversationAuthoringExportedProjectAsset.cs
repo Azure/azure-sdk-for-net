@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     internal partial class UnknownConversationAuthoringExportedProjectAsset : ConversationAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.UnknownConversationAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationAuthoringExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(projectKind != default ? projectKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownConversationAuthoringExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((projectKind != default) ? projectKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

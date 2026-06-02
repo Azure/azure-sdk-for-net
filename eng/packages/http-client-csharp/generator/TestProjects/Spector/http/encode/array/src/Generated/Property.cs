@@ -19,104 +19,104 @@ namespace Encode._Array._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response CommaDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> CommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> CommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<CommaDelimitedArrayProperty> CommaDelimited(CommaDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.CommaDelimitedArrayProperty> CommaDelimited(CommaDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<CommaDelimitedArrayProperty>> CommaDelimitedAsync(CommaDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.CommaDelimitedArrayProperty>> CommaDelimitedAsync(CommaDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpaceDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<SpaceDelimitedArrayProperty> SpaceDelimited(SpaceDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.SpaceDelimitedArrayProperty> SpaceDelimited(SpaceDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SpaceDelimitedArrayProperty>> SpaceDelimitedAsync(SpaceDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.SpaceDelimitedArrayProperty>> SpaceDelimitedAsync(SpaceDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PipeDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<PipeDelimitedArrayProperty> PipeDelimited(PipeDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.PipeDelimitedArrayProperty> PipeDelimited(PipeDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<PipeDelimitedArrayProperty>> PipeDelimitedAsync(PipeDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.PipeDelimitedArrayProperty>> PipeDelimitedAsync(PipeDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response NewlineDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> NewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> NewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<NewlineDelimitedArrayProperty> NewlineDelimited(NewlineDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.NewlineDelimitedArrayProperty> NewlineDelimited(NewlineDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<NewlineDelimitedArrayProperty>> NewlineDelimitedAsync(NewlineDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.NewlineDelimitedArrayProperty>> NewlineDelimitedAsync(NewlineDelimitedArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response EnumCommaDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> EnumCommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> EnumCommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<CommaDelimitedEnumArrayProperty> EnumCommaDelimited(CommaDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.CommaDelimitedEnumArrayProperty> EnumCommaDelimited(CommaDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<CommaDelimitedEnumArrayProperty>> EnumCommaDelimitedAsync(CommaDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.CommaDelimitedEnumArrayProperty>> EnumCommaDelimitedAsync(CommaDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response EnumSpaceDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> EnumSpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> EnumSpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<SpaceDelimitedEnumArrayProperty> EnumSpaceDelimited(SpaceDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.SpaceDelimitedEnumArrayProperty> EnumSpaceDelimited(SpaceDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SpaceDelimitedEnumArrayProperty>> EnumSpaceDelimitedAsync(SpaceDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.SpaceDelimitedEnumArrayProperty>> EnumSpaceDelimitedAsync(SpaceDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response EnumPipeDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> EnumPipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> EnumPipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<PipeDelimitedEnumArrayProperty> EnumPipeDelimited(PipeDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.PipeDelimitedEnumArrayProperty> EnumPipeDelimited(PipeDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<PipeDelimitedEnumArrayProperty>> EnumPipeDelimitedAsync(PipeDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.PipeDelimitedEnumArrayProperty>> EnumPipeDelimitedAsync(PipeDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response EnumNewlineDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> EnumNewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> EnumNewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<NewlineDelimitedEnumArrayProperty> EnumNewlineDelimited(NewlineDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.NewlineDelimitedEnumArrayProperty> EnumNewlineDelimited(NewlineDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<NewlineDelimitedEnumArrayProperty>> EnumNewlineDelimitedAsync(NewlineDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.NewlineDelimitedEnumArrayProperty>> EnumNewlineDelimitedAsync(NewlineDelimitedEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ExtensibleEnumCommaDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ExtensibleEnumCommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ExtensibleEnumCommaDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<CommaDelimitedExtensibleEnumArrayProperty> ExtensibleEnumCommaDelimited(CommaDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.CommaDelimitedExtensibleEnumArrayProperty> ExtensibleEnumCommaDelimited(CommaDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<CommaDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumCommaDelimitedAsync(CommaDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.CommaDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumCommaDelimitedAsync(CommaDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ExtensibleEnumSpaceDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ExtensibleEnumSpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ExtensibleEnumSpaceDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<SpaceDelimitedExtensibleEnumArrayProperty> ExtensibleEnumSpaceDelimited(SpaceDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.SpaceDelimitedExtensibleEnumArrayProperty> ExtensibleEnumSpaceDelimited(SpaceDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SpaceDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumSpaceDelimitedAsync(SpaceDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.SpaceDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumSpaceDelimitedAsync(SpaceDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ExtensibleEnumPipeDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ExtensibleEnumPipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ExtensibleEnumPipeDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<PipeDelimitedExtensibleEnumArrayProperty> ExtensibleEnumPipeDelimited(PipeDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.PipeDelimitedExtensibleEnumArrayProperty> ExtensibleEnumPipeDelimited(PipeDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<PipeDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumPipeDelimitedAsync(PipeDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.PipeDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumPipeDelimitedAsync(PipeDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ExtensibleEnumNewlineDelimited(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ExtensibleEnumNewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ExtensibleEnumNewlineDelimitedAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<NewlineDelimitedExtensibleEnumArrayProperty> ExtensibleEnumNewlineDelimited(NewlineDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode._Array.NewlineDelimitedExtensibleEnumArrayProperty> ExtensibleEnumNewlineDelimited(NewlineDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<NewlineDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumNewlineDelimitedAsync(NewlineDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode._Array.NewlineDelimitedExtensibleEnumArrayProperty>> ExtensibleEnumNewlineDelimitedAsync(NewlineDelimitedExtensibleEnumArrayProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

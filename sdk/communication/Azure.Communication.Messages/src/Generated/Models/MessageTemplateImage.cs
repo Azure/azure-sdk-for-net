@@ -13,26 +13,26 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's image value information. </summary>
     public partial class MessageTemplateImage : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateImage"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
-        public MessageTemplateImage(string name, Uri uri) : base(name, MessageTemplateValueKind.Image)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
+        public MessageTemplateImage(string name, global::System.Uri uri) : base(name, global::Azure.Communication.Messages.MessageTemplateValueKind.Image)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(uri, nameof(uri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateImage"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateImage(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, string caption, string fileName) : base(name, kind, additionalBinaryDataProperties)
+        internal MessageTemplateImage(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri uri, string caption, string fileName) : base(name, kind, additionalBinaryDataProperties)
         {
             Uri = uri;
             Caption = caption;
@@ -40,7 +40,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The (public) URL of the media. </summary>
-        public Uri Uri { get; set; }
+        public global::System.Uri Uri { get; set; }
 
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }

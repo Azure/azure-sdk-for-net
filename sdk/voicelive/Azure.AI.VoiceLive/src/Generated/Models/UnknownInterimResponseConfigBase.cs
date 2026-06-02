@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownInterimResponseConfigBase : InterimResponseConfigBase
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInterimResponseConfigBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownInterimResponseConfigBase"/>. </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         /// <param name="triggers">
         /// List of triggers that can fire the interim response. Any trigger can activate it (OR logic).
@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInterimResponseConfigBase(InterimResponseConfigType @type, IList<InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal UnknownInterimResponseConfigBase(InterimResponseConfigType @type, IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
         }
     }

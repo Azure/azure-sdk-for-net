@@ -11,19 +11,19 @@ namespace Azure.AI.Projects
     public partial class DataGenerationTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationTokenUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationTokenUsage"/>. </summary>
         internal DataGenerationTokenUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationTokenUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationTokenUsage"/>. </summary>
         /// <param name="promptTokens"> The number of prompt tokens used. </param>
         /// <param name="completionTokens"> The number of completion tokens generated. </param>
         /// <param name="totalTokens"> Total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationTokenUsage(long promptTokens, long completionTokens, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationTokenUsage(long promptTokens, long completionTokens, long totalTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PromptTokens = promptTokens;
             CompletionTokens = completionTokens;

@@ -12,19 +12,19 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventConversationItemDelete : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemDelete"/>. </summary>
         /// <param name="itemId"> The ID of the item to delete. </param>
-        public ClientEventConversationItemDelete(string itemId) : base(ClientEventType.ConversationItemDelete)
+        public ClientEventConversationItemDelete(string itemId) : base(global::Azure.AI.VoiceLive.ClientEventType.ConversationItemDelete)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemDelete"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item to delete. </param>
-        internal ClientEventConversationItemDelete(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventConversationItemDelete(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }

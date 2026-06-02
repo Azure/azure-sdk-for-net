@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The OutputItemToolSearchOutput. </summary>
-    public partial class OutputItemToolSearchOutput : AgentResponseItem, IJsonModel<OutputItemToolSearchOutput>
+    public partial class OutputItemToolSearchOutput : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchOutput"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput"/> for deserialization. </summary>
         internal OutputItemToolSearchOutput()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOutputItemToolSearchOutput(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput.DeserializeOutputItemToolSearchOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutputItemToolSearchOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OutputItemToolSearchOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OutputItemToolSearchOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputItemToolSearchOutput IPersistableModel<OutputItemToolSearchOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (OutputItemToolSearchOutput)PersistableModelCreateCore(data, options);
+        OutputItemToolSearchOutput IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => ((OutputItemToolSearchOutput)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OutputItemToolSearchOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OutputItemToolSearchOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,13 +70,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputItemToolSearchOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(CallId))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(CallId))
             {
                 writer.WritePropertyName("call_id"u8);
                 writer.WriteStringValue(CallId);
@@ -91,12 +91,12 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStartArray();
             foreach (ResponsesTool item in Tools)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ResponsesTool>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            if (Optional.IsDefined(CreatedBy))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
                 writer.WriteStringValue(CreatedBy);
@@ -105,26 +105,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputItemToolSearchOutput IJsonModel<OutputItemToolSearchOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OutputItemToolSearchOutput)JsonModelCreateCore(ref reader, options);
+        OutputItemToolSearchOutput IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((OutputItemToolSearchOutput)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputItemToolSearchOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOutputItemToolSearchOutput(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput.DeserializeOutputItemToolSearchOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OutputItemToolSearchOutput DeserializeOutputItemToolSearchOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -132,10 +132,10 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string callId = default;
             ResponsesToolSearchExecutionType execution = default;
-            IList<ResponsesTool> tools = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> tools = default;
             ResponsesFunctionCallOutputStatus status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -166,7 +166,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("call_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         callId = null;
                         continue;
@@ -181,10 +181,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ResponsesTool> array = new List<ResponsesTool>();
+                    List<global::Azure.AI.Extensions.OpenAI.ResponsesTool> array = new List<global::Azure.AI.Extensions.OpenAI.ResponsesTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesTool.DeserializeResponsesTool(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(item, options));
                     }
                     tools = array;
                     continue;
@@ -199,9 +199,9 @@ namespace Azure.AI.Extensions.OpenAI
                     createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OutputItemToolSearchOutput(

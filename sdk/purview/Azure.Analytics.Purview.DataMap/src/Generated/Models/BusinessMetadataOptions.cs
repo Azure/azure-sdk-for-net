@@ -15,22 +15,22 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class BusinessMetadataOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public BusinessMetadataOptions(BinaryData @file)
         {
-            Argument.AssertNotNull(@file, nameof(@file));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(@file, nameof(@file));
 
             File = @file;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BusinessMetadataOptions(BinaryData @file, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BusinessMetadataOptions(BinaryData @file, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             File = @file;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,8 +38,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// InputStream of file
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

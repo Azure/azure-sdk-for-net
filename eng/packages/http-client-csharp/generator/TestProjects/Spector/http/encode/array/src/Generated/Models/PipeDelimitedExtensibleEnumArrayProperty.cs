@@ -11,8 +11,8 @@ namespace Encode._Array
 {
     public partial class PipeDelimitedExtensibleEnumArrayProperty
     {
-        public PipeDelimitedExtensibleEnumArrayProperty(IEnumerable<ColorsExtensibleEnum> value) => throw null;
+        public PipeDelimitedExtensibleEnumArrayProperty(IEnumerable<global::Encode._Array.ColorsExtensibleEnum> value) => throw null;
 
-        public IList<ColorsExtensibleEnum> Value => throw null;
+        public IList<global::Encode._Array.ColorsExtensibleEnum> Value => throw null;
     }
 }

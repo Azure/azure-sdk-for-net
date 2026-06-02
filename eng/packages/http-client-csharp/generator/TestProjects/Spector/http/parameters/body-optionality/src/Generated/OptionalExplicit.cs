@@ -19,24 +19,24 @@ namespace Parameters.BodyOptionality._OptionalExplicit
     {
         protected OptionalExplicit() => throw null;
 
-        internal OptionalExplicit(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal OptionalExplicit(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Set(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SetAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SetAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Set(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SetAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SetAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Omit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> OmitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> OmitAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Omit(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OmitAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> OmitAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

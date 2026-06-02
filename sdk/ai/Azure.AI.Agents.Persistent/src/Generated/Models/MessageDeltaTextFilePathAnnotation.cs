@@ -13,13 +13,13 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a streamed file path annotation applied to a streaming text content part. </summary>
     public partial class MessageDeltaTextFilePathAnnotation : MessageDeltaTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFilePathAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         internal MessageDeltaTextFilePathAnnotation(int index) : base(index, "file_path")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFilePathAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
-        internal MessageDeltaTextFilePathAnnotation(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageDeltaTextFilePathAnnotationObject filePath, int? startIndex, int? endIndex, string text) : base(index, @type, additionalBinaryDataProperties)
+        internal MessageDeltaTextFilePathAnnotation(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageDeltaTextFilePathAnnotationObject filePath, int? startIndex, int? endIndex, string text) : base(index, @type, additionalBinaryDataProperties)
         {
             FilePath = filePath;
             StartIndex = startIndex;

@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// Represents a single run step detail item in a streaming run step's delta payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaToolCallObject"/>, <see cref="RunStepDeltaMCPObject"/>, and <see cref="RunStepDeltaOpenAPIObject"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/>.
     /// </summary>
     public abstract partial class RunStepDeltaDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaDetail"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         private protected RunStepDeltaDetail(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaDetail"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaDetail(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaDetail(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,18 +14,18 @@ namespace Azure.AI.VoiceLive
     /// <summary> Base type for message item within a conversation. </summary>
     public partial class SessionResponseMessageItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMessageItem"/>. </summary>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal SessionResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(ItemType.Message)
+        internal SessionResponseMessageItem(ResponseMessageRole role, IEnumerable<global::Azure.AI.VoiceLive.VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(global::Azure.AI.VoiceLive.ItemType.Message)
         {
             Role = role;
             Content = content.ToList();
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal SessionResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<global::Azure.AI.VoiceLive.VoiceLiveContentPart> content, SessionResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
         public ResponseMessageRole Role { get; }
 
         /// <summary> Gets the Content. </summary>
-        public IList<VoiceLiveContentPart> Content { get; }
+        public IList<global::Azure.AI.VoiceLive.VoiceLiveContentPart> Content { get; }
 
         /// <summary> Gets the Status. </summary>
         public SessionResponseItemStatus Status { get; }

@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseTruncation value) => value switch
         {
-            ResponseTruncation.Auto => "auto",
-            ResponseTruncation.Disabled => "disabled",
+            global::Azure.AI.Extensions.OpenAI.ResponseTruncation.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ResponseTruncation.Disabled => "disabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseTruncation value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseTruncation ToResponseTruncation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ResponseTruncation.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ResponseTruncation.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "disabled"))
             {
-                return ResponseTruncation.Disabled;
+                return global::Azure.AI.Extensions.OpenAI.ResponseTruncation.Disabled;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseTruncation value.");
         }

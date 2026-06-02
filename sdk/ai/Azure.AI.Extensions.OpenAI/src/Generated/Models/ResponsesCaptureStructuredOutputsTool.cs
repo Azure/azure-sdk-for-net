@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A tool for capturing structured outputs. </summary>
     public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
+        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(global::Azure.AI.Extensions.OpenAI.ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(outputs, nameof(outputs));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             Outputs = outputs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
         public ResponsesStructuredOutputDefinition Outputs { get; set; }

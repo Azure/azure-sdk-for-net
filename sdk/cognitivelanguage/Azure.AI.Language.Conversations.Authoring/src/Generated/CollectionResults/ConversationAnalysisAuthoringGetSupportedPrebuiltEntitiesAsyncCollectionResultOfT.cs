@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    internal partial class ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT : AsyncPageable<ConversationAuthoringPrebuiltEntity>
+    internal partial class ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT : AsyncPageable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringPrebuiltEntity>
     {
         private readonly ConversationAnalysisAuthoring _client;
         private readonly int? _maxCount;
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(ConversationAnalysisAuthoring client, int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(ConversationAnalysisAuthoring client, int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxCount = maxCount;
@@ -50,20 +50,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConversationAuthoringPrebuiltEntity>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringPrebuiltEntity>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedAnalyzeConversationAuthoringPrebuiltEntity result = (PagedAnalyzeConversationAuthoringPrebuiltEntity)response;
-                yield return Page<ConversationAuthoringPrebuiltEntity>.FromValues((IReadOnlyList<ConversationAuthoringPrebuiltEntity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedAnalyzeConversationAuthoringPrebuiltEntity result = ((PagedAnalyzeConversationAuthoringPrebuiltEntity)response);
+                yield return global::Azure.Page<ConversationAuthoringPrebuiltEntity>.FromValues(((IReadOnlyList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringPrebuiltEntity>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedPrebuiltEntitiesRequest(nextLink, pageSize, _context) : _client.CreateGetSupportedPrebuiltEntitiesRequest(_maxCount, _skip, pageSize, _language, _multilingual, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetSupportedPrebuiltEntitiesRequest(nextLink, pageSize, _context) : _client.CreateGetSupportedPrebuiltEntitiesRequest(_maxCount, _skip, pageSize, _language, _multilingual, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

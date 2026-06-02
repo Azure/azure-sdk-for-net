@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringSubTrainingState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringSubTrainingState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         internal ConversationAuthoringSubTrainingState(int percentComplete, ConversationAuthoringOperationStatus status)
@@ -25,13 +25,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringSubTrainingState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="startedOn"> Represents the start date time. </param>
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringSubTrainingState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ConversationAuthoringOperationStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringSubTrainingState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ConversationAuthoringOperationStatus status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PercentComplete = percentComplete;
             StartedOn = startedOn;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> StorageAccountType enums. </summary>
-    public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>
+    public readonly partial struct StorageAccountType : IEquatable<global::Azure.Compute.Batch.StorageAccountType>
     {
         private readonly string _value;
         /// <summary> The data disk should use standard locally redundant storage. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
         private const string StandardSSDLRSValue = "standardssd_lrs";
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.StorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAccountType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
         public static StorageAccountType StandardSSDLRS { get; } = new StorageAccountType(StandardSSDLRSValue);
 
-        /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.StorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.StorageAccountType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountType left, StorageAccountType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.StorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountType(string value) => new StorageAccountType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.StorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountType?(string value) => value == null ? null : new StorageAccountType(value);
+        public static implicit operator StorageAccountType?(string value) => (value == null) ? null : new StorageAccountType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageAccountType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StorageAccountType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageAccountType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

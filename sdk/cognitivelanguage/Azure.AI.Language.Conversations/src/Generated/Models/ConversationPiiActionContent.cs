@@ -15,16 +15,16 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationPiiActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent"/>. </summary>
         public ConversationPiiActionContent()
         {
-            PiiCategories = new ChangeTrackingList<ConversationPiiCategories>();
-            ExcludePiiCategories = new ChangeTrackingList<ConversationPiiCategoryExclusions>();
+            PiiCategories = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories>();
+            ExcludePiiCategories = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="piiCategories"> Array of ConversationPIICategories. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
         /// <param name="redactionPolicy"> Optional parameter determine what type of redaction to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Models
         public string ModelVersion { get; set; }
 
         /// <summary> Array of ConversationPIICategories. </summary>
-        public IList<ConversationPiiCategories> PiiCategories { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategories> PiiCategories { get; }
 
         /// <summary> Flag to indicate if response should include audio stream offset and duration for any detected entities to be redacted. By default, audio timing of redacted entities are not included. </summary>
         public bool? RedactAudioTiming { get; set; }
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Models
         public RedactionCharacter? RedactionCharacter { get; set; }
 
         /// <summary> List of categories that need to be excluded instead of included. </summary>
-        public IList<ConversationPiiCategoryExclusions> ExcludePiiCategories { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions> ExcludePiiCategories { get; }
 
         /// <summary> Optional parameter determine what type of redaction to use. </summary>
         public BaseRedactionPolicy RedactionPolicy { get; set; }

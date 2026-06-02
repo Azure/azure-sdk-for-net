@@ -6,15 +6,15 @@ using System;
 
 namespace Microsoft.TypeSpec.Generator.Customizations
 {
-    [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
+    [AttributeUsageAttribute(((global::System.AttributeTargets.Class | global::System.AttributeTargets.Enum) | global::System.AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute
     {
         /// <param name="member"> The member to suppress. </param>
         /// <param name="parameters"> The types of the parameters of the member. </param>
         public CodeGenSuppressAttribute(string member, params Type[] parameters)
         {
-            Member = member;
-            Parameters = parameters;
+            this.Member = member;
+            this.Parameters = parameters;
         }
 
         /// <summary> Gets the Member. </summary>

@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextSentimentEvalSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextSentimentEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary"/>. </summary>
         /// <param name="spanSentimentsEvaluation"> Represents evaluation of span level sentiments. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring
             MacroRecall = macroRecall;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextSentimentEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary"/>. </summary>
         /// <param name="spanSentimentsEvaluation"> Represents evaluation of span level sentiments. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextSentimentEvalSummary(SpanSentimentEvalSummary spanSentimentsEvaluation, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextSentimentEvalSummary(SpanSentimentEvalSummary spanSentimentsEvaluation, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SpanSentimentsEvaluation = spanSentimentsEvaluation;
             MicroF1 = microF1;

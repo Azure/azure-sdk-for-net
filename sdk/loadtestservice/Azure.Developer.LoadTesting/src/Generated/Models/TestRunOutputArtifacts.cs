@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunOutputArtifacts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunOutputArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunOutputArtifacts"/>. </summary>
         internal TestRunOutputArtifacts()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunOutputArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunOutputArtifacts"/>. </summary>
         /// <param name="resultFileInfo"> The test run results file. </param>
         /// <param name="logsFileInfo"> The test run report with metrics. </param>
         /// <param name="artifactsContainerInfo"> The container for test run artifacts. </param>
         /// <param name="reportFileInfo"> The report file for the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunOutputArtifacts(TestRunFileInfo resultFileInfo, TestRunFileInfo logsFileInfo, ArtifactsContainerInfo artifactsContainerInfo, TestRunFileInfo reportFileInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunOutputArtifacts(TestRunFileInfo resultFileInfo, TestRunFileInfo logsFileInfo, ArtifactsContainerInfo artifactsContainerInfo, TestRunFileInfo reportFileInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResultFileInfo = resultFileInfo;
             LogsFileInfo = logsFileInfo;

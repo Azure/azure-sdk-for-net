@@ -14,14 +14,14 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevCenterProject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterProject"/>. </summary>
         internal DevCenterProject()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterProject"/>. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
@@ -29,7 +29,7 @@ namespace Azure.Developer.DevCenter.Models
         /// create across all pools in the project.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProject(string name, string description, int? maxDevBoxesPerUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterProject(string name, string description, int? maxDevBoxesPerUser, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

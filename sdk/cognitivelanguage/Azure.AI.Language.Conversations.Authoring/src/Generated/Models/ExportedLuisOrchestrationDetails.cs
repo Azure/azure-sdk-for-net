@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> Represents the orchestration options for a LUIS application target. </summary>
     public partial class ExportedLuisOrchestrationDetails : ExportedOrchestrationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestrationDetails"/>. </summary>
         /// <param name="luisOrchestration"> The LUIS application target details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="luisOrchestration"/> is null. </exception>
-        public ExportedLuisOrchestrationDetails(ExportedLuisOrchestration luisOrchestration) : base(OrchestrationTargetProjectKind.Luis)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="luisOrchestration"/> is null. </exception>
+        public ExportedLuisOrchestrationDetails(ExportedLuisOrchestration luisOrchestration) : base(global::Azure.AI.Language.Conversations.Authoring.OrchestrationTargetProjectKind.Luis)
         {
-            Argument.AssertNotNull(luisOrchestration, nameof(luisOrchestration));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(luisOrchestration, nameof(luisOrchestration));
 
             LuisOrchestration = luisOrchestration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestrationDetails"/>. </summary>
         /// <param name="targetProjectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="luisOrchestration"> The LUIS application target details. </param>
-        internal ExportedLuisOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportedLuisOrchestration luisOrchestration) : base(targetProjectKind, additionalBinaryDataProperties)
+        internal ExportedLuisOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ExportedLuisOrchestration luisOrchestration) : base(targetProjectKind, additionalBinaryDataProperties)
         {
             LuisOrchestration = luisOrchestration;
         }

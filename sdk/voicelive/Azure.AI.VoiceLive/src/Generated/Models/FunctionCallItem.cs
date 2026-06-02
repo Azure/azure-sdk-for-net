@@ -13,23 +13,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> A function call item within a conversation. </summary>
     public partial class FunctionCallItem : ConversationRequestItem
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionCallItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.FunctionCallItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="callId"/> or <paramref name="arguments"/> is null. </exception>
-        public FunctionCallItem(string name, string callId, string arguments) : base(ItemType.FunctionCall)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="callId"/> or <paramref name="arguments"/> is null. </exception>
+        public FunctionCallItem(string name, string callId, string arguments) : base(global::Azure.AI.VoiceLive.ItemType.FunctionCall)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(callId, nameof(callId));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(arguments, nameof(arguments));
 
             Name = name;
             CallId = callId;
             Arguments = arguments;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionCallItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.FunctionCallItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal FunctionCallItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
+        internal FunctionCallItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Name = name;
             CallId = callId;

@@ -11,31 +11,31 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ImageDetail value) => value switch
         {
-            ImageDetail.Low => "low",
-            ImageDetail.High => "high",
-            ImageDetail.Auto => "auto",
-            ImageDetail.Original => "original",
+            global::Azure.AI.Extensions.OpenAI.ImageDetail.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.ImageDetail.High => "high",
+            global::Azure.AI.Extensions.OpenAI.ImageDetail.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ImageDetail.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetail value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ImageDetail ToImageDetail(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return ImageDetail.Low;
+                return global::Azure.AI.Extensions.OpenAI.ImageDetail.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return ImageDetail.High;
+                return global::Azure.AI.Extensions.OpenAI.ImageDetail.High;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ImageDetail.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ImageDetail.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
             {
-                return ImageDetail.Original;
+                return global::Azure.AI.Extensions.OpenAI.ImageDetail.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetail value.");
         }

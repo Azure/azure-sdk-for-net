@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
     public partial class SentimentAnalysisOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisOperationAction"/>. </summary>
-        public SentimentAnalysisOperationAction() : base(AnalyzeTextOperationActionKind.SentimentAnalysis)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentAnalysisOperationAction"/>. </summary>
+        public SentimentAnalysisOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.SentimentAnalysis)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentAnalysisOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameters for the Sentiment Analysis task. </param>
-        internal SentimentAnalysisOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentAnalysisActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal SentimentAnalysisOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SentimentAnalysisActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

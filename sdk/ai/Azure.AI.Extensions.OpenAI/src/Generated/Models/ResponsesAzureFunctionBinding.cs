@@ -11,23 +11,23 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAzureFunctionBinding
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionBinding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding"/>. </summary>
         /// <param name="storageQueue"> Storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
         public ResponsesAzureFunctionBinding(ResponsesAzureFunctionStorageQueue storageQueue)
         {
-            Argument.AssertNotNull(storageQueue, nameof(storageQueue));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(storageQueue, nameof(storageQueue));
 
             StorageQueue = storageQueue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionBinding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding"/>. </summary>
         /// <param name="kind"> The type of binding, which is always 'storage_queue'. </param>
         /// <param name="storageQueue"> Storage queue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureFunctionBinding(string kind, ResponsesAzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAzureFunctionBinding(string kind, ResponsesAzureFunctionStorageQueue storageQueue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             StorageQueue = storageQueue;

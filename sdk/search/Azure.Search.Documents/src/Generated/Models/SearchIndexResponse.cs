@@ -16,24 +16,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         internal SearchIndexResponse(string name)
         {
             Name = name;
-            Fields = new ChangeTrackingList<SearchField>();
-            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
-            Suggesters = new ChangeTrackingList<SearchSuggester>();
-            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
-            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
-            TokenFilters = new ChangeTrackingList<TokenFilter>();
-            CharFilters = new ChangeTrackingList<CharFilter>();
-            Normalizers = new ChangeTrackingList<LexicalNormalizer>();
+            Fields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchField>();
+            ScoringProfiles = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.ScoringProfile>();
+            Suggesters = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchSuggester>();
+            Analyzers = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer>();
+            Tokenizers = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizer>();
+            TokenFilters = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.TokenFilter>();
+            CharFilters = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.CharFilter>();
+            Normalizers = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="description"> The description of the index. </param>
         /// <param name="fields"> The fields of the index. </param>
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
         /// <param name="eTag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexResponse(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexResponse(string name, string description, IList<global::Azure.Search.Documents.Indexes.Models.SearchField> fields, IList<global::Azure.Search.Documents.Indexes.Models.ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<global::Azure.Search.Documents.Indexes.Models.SearchSuggester> suggesters, IList<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> analyzers, IList<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizer> tokenizers, IList<global::Azure.Search.Documents.Indexes.Models.TokenFilter> tokenFilters, IList<global::Azure.Search.Documents.Indexes.Models.CharFilter> charFilters, IList<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, ETag? eTag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -85,10 +85,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; }
 
         /// <summary> The fields of the index. </summary>
-        public IList<SearchField> Fields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchField> Fields { get; }
 
         /// <summary> The scoring profiles for the index. </summary>
-        public IList<ScoringProfile> ScoringProfiles { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.ScoringProfile> ScoringProfiles { get; }
 
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>
         public string DefaultScoringProfile { get; }
@@ -97,22 +97,22 @@ namespace Azure.Search.Documents.Indexes.Models
         public CorsOptions CorsOptions { get; }
 
         /// <summary> The suggesters for the index. </summary>
-        public IList<SearchSuggester> Suggesters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchSuggester> Suggesters { get; }
 
         /// <summary> The analyzers for the index. </summary>
-        public IList<LexicalAnalyzer> Analyzers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> Analyzers { get; }
 
         /// <summary> The tokenizers for the index. </summary>
-        public IList<LexicalTokenizer> Tokenizers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizer> Tokenizers { get; }
 
         /// <summary> The token filters for the index. </summary>
-        public IList<TokenFilter> TokenFilters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.TokenFilter> TokenFilters { get; }
 
         /// <summary> The character filters for the index. </summary>
-        public IList<CharFilter> CharFilters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.CharFilter> CharFilters { get; }
 
         /// <summary> The normalizers for the index. </summary>
-        public IList<LexicalNormalizer> Normalizers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizer> Normalizers { get; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; }

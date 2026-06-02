@@ -11,36 +11,36 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemCodeInterpreterToolCallStatus value) => value switch
         {
-            InputItemCodeInterpreterToolCallStatus.InProgress => "in_progress",
-            InputItemCodeInterpreterToolCallStatus.Completed => "completed",
-            InputItemCodeInterpreterToolCallStatus.Incomplete => "incomplete",
-            InputItemCodeInterpreterToolCallStatus.Interpreting => "interpreting",
-            InputItemCodeInterpreterToolCallStatus.Failed => "failed",
+            global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Interpreting => "interpreting",
+            global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemCodeInterpreterToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemCodeInterpreterToolCallStatus ToInputItemCodeInterpreterToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemCodeInterpreterToolCallStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemCodeInterpreterToolCallStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemCodeInterpreterToolCallStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Incomplete;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "interpreting"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "interpreting"))
             {
-                return InputItemCodeInterpreterToolCallStatus.Interpreting;
+                return global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Interpreting;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return InputItemCodeInterpreterToolCallStatus.Failed;
+                return global::Azure.AI.Extensions.OpenAI.InputItemCodeInterpreterToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemCodeInterpreterToolCallStatus value.");
         }

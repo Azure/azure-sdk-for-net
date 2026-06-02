@@ -15,27 +15,27 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslationInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentTranslationInput"/>. </summary>
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="targets"/> is null. </exception>
-        public DocumentTranslationInput(TranslationSource source, IEnumerable<TranslationTarget> targets)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="source"/> or <paramref name="targets"/> is null. </exception>
+        public DocumentTranslationInput(TranslationSource source, IEnumerable<global::Azure.AI.Translation.Document.TranslationTarget> targets)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(targets, nameof(targets));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(source, nameof(source));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(targets, nameof(targets));
 
             Source = source;
             Targets = targets.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentTranslationInput"/>. </summary>
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
         /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTranslationInput(TranslationSource source, IList<TranslationTarget> targets, StorageInputUriKind? storageUriKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTranslationInput(TranslationSource source, IList<global::Azure.AI.Translation.Document.TranslationTarget> targets, StorageInputUriKind? storageUriKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Targets = targets;
@@ -47,6 +47,6 @@ namespace Azure.AI.Translation.Document
         public TranslationSource Source { get; }
 
         /// <summary> Location of the destination for the output. </summary>
-        public IList<TranslationTarget> Targets { get; }
+        public IList<global::Azure.AI.Translation.Document.TranslationTarget> Targets { get; }
     }
 }

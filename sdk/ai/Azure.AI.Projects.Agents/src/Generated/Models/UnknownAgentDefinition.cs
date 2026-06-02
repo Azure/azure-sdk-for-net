@@ -9,11 +9,11 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownAgentDefinition : ProjectsAgentDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", contentFilterConfiguration, additionalBinaryDataProperties)
+        internal UnknownAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", contentFilterConfiguration, additionalBinaryDataProperties)
         {
         }
     }

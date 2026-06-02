@@ -14,14 +14,14 @@ namespace Azure.AI.VoiceLive
     /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
     public partial class SessionUpdateResponseAnimationBlendshapeDelta : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal SessionUpdateResponseAnimationBlendshapeDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(ServerEventType.ResponseAnimationBlendshapesDelta)
+        internal SessionUpdateResponseAnimationBlendshapeDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAnimationBlendshapesDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
             FrameIndex = frameIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal SessionUpdateResponseAnimationBlendshapeDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAnimationBlendshapeDelta(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -65,14 +65,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Gets the Frames.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <c>IList{float}</c>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <c>IList{float}</c>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="string"/>. </description>

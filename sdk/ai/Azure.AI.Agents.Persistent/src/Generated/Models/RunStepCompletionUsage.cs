@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepCompletionUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCompletionUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run step. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run step. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Agents.Persistent
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCompletionUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run step. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run step. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepCompletionUsage(long completionTokens, long promptTokens, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepCompletionUsage(long completionTokens, long promptTokens, long totalTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;

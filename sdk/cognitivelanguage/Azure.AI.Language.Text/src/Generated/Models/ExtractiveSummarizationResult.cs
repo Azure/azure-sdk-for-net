@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Text
     public partial class ExtractiveSummarizationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal ExtractiveSummarizationResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<ExtractedSummaryActionResult> documents)
+        internal ExtractiveSummarizationResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors, string modelVersion, IEnumerable<global::Azure.AI.Language.Text.ExtractedSummaryActionResult> documents)
         {
             Errors = errors.ToList();
             ModelVersion = modelVersion;
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtractiveSummarizationResult(IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<ExtractedSummaryActionResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtractiveSummarizationResult(IList<global::Azure.AI.Language.Text.DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<global::Azure.AI.Language.Text.ExtractedSummaryActionResult> documents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
@@ -53,6 +53,6 @@ namespace Azure.AI.Language.Text
         public string ModelVersion { get; }
 
         /// <summary> Response by document. </summary>
-        public IList<ExtractedSummaryActionResult> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.ExtractedSummaryActionResult> Documents { get; }
     }
 }

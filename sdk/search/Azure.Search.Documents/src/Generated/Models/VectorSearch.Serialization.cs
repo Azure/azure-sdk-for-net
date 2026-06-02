@@ -14,54 +14,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains configuration options related to vector search. </summary>
-    public partial class VectorSearch : IJsonModel<VectorSearch>
+    public partial class VectorSearch : IJsonModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VectorSearch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVectorSearch(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.VectorSearch.DeserializeVectorSearch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VectorSearch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.VectorSearch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VectorSearch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.VectorSearch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VectorSearch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VectorSearch IPersistableModel<VectorSearch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VectorSearch IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VectorSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VectorSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,52 +69,52 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VectorSearch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.VectorSearch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Profiles))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
                 foreach (VectorSearchProfile item in Profiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VectorSearchProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Algorithms))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Algorithms))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
                 foreach (VectorSearchAlgorithmConfiguration item in Algorithms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VectorSearchAlgorithmConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Vectorizers))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Vectorizers))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();
                 foreach (VectorSearchVectorizer item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VectorSearchVectorizer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Compressions))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(Compressions))
             {
                 writer.WritePropertyName("compressions"u8);
                 writer.WriteStartArray();
                 foreach (VectorSearchCompression item in Compressions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VectorSearchCompression>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -122,9 +122,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -133,98 +133,98 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VectorSearch IJsonModel<VectorSearch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VectorSearch IJsonModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VectorSearch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VectorSearch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.VectorSearch)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorSearch(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.VectorSearch.DeserializeVectorSearch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VectorSearch DeserializeVectorSearch(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<VectorSearchProfile> profiles = default;
-            IList<VectorSearchAlgorithmConfiguration> algorithms = default;
-            IList<VectorSearchVectorizer> vectorizers = default;
-            IList<VectorSearchCompression> compressions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile> profiles = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration> algorithms = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer> vectorizers = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression> compressions = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("profiles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VectorSearchProfile> array = new List<VectorSearchProfile>();
+                    List<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile> array = new List<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile.DeserializeVectorSearchProfile(item, options));
                     }
                     profiles = array;
                     continue;
                 }
                 if (prop.NameEquals("algorithms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VectorSearchAlgorithmConfiguration> array = new List<VectorSearchAlgorithmConfiguration>();
+                    List<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration> array = new List<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item, options));
                     }
                     algorithms = array;
                     continue;
                 }
                 if (prop.NameEquals("vectorizers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VectorSearchVectorizer> array = new List<VectorSearchVectorizer>();
+                    List<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer> array = new List<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item, options));
                     }
                     vectorizers = array;
                     continue;
                 }
                 if (prop.NameEquals("compressions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VectorSearchCompression> array = new List<VectorSearchCompression>();
+                    List<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression> array = new List<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchCompression.DeserializeVectorSearchCompression(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression.DeserializeVectorSearchCompression(item, options));
                     }
                     compressions = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>(), additionalBinaryDataProperties);
+            return new VectorSearch((profiles ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile>()), (algorithms ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration>()), (vectorizers ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer>()), (compressions ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression>()), additionalBinaryDataProperties);
         }
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreFileError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileError"/>. </summary>
         /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
         /// <param name="message"> A human-readable description of the error. </param>
         internal VectorStoreFileError(VectorStoreFileErrorCode code, string message)
@@ -25,11 +25,11 @@ namespace Azure.AI.Agents.Persistent
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileError"/>. </summary>
         /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
         /// <param name="message"> A human-readable description of the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

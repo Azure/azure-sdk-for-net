@@ -12,9 +12,9 @@ namespace OpenAI
     internal partial class InternalComparisonFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
@@ -28,7 +28,7 @@ namespace OpenAI
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
@@ -36,7 +36,7 @@ namespace OpenAI
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Key = key;
@@ -55,8 +55,8 @@ namespace OpenAI
 
         /// <summary>
         /// The value to compare against the attribute key; supports string, number, or boolean types.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -71,7 +71,7 @@ namespace OpenAI
         /// <description> <see cref="bool"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="BinaryData"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="global::System.BinaryData"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

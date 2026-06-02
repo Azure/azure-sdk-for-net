@@ -13,13 +13,13 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translation.Document
 {
-    internal partial class DocumentTranslationClientGetTranslationsStatusCollectionResultOfT : Pageable<TranslationStatusResult>
+    internal partial class DocumentTranslationClientGetTranslationsStatusCollectionResultOfT : Pageable<global::Azure.AI.Translation.Document.TranslationStatusResult>
     {
         private readonly DocumentTranslationClient _client;
         private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
-        private readonly IEnumerable<Guid> _translationIds;
+        private readonly IEnumerable<global::System.Guid> _translationIds;
         private readonly IEnumerable<string> _statuses;
         private readonly DateTimeOffset? _createdDateTimeUtcStart;
         private readonly DateTimeOffset? _createdDateTimeUtcEnd;
@@ -69,7 +69,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DocumentTranslationClientGetTranslationsStatusCollectionResultOfT(DocumentTranslationClient client, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DocumentTranslationClientGetTranslationsStatusCollectionResultOfT(DocumentTranslationClient client, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxCount = maxCount;
@@ -88,33 +88,33 @@ namespace Azure.AI.Translation.Document
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DocumentTranslationClientGetTranslationsStatusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<TranslationStatusResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.AI.Translation.Document.TranslationStatusResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                TranslationsStatus result = (TranslationsStatus)response;
-                yield return Page<TranslationStatusResult>.FromValues((IReadOnlyList<TranslationStatusResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                TranslationsStatus result = ((TranslationsStatus)response);
+                yield return global::Azure.Page<TranslationStatusResult>.FromValues(((IReadOnlyList<global::Azure.AI.Translation.Document.TranslationStatusResult>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
             }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTranslationsStatusRequest(nextLink, _maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context) : _client.CreateGetTranslationsStatusRequest(_maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetTranslationsStatusRequest(nextLink, _maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context) : _client.CreateGetTranslationsStatusRequest(_maxCount, _skip, _maxpagesize, _translationIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderBy, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

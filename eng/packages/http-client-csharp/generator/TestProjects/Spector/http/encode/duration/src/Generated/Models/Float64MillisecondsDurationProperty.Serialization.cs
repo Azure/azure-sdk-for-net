@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode.Duration._Property
 {
-    public partial class Float64MillisecondsDurationProperty : IJsonModel<Float64MillisecondsDurationProperty>
+    public partial class Float64MillisecondsDurationProperty : IJsonModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>
     {
         internal Float64MillisecondsDurationProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode.Duration._Property
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Float64MillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Float64MillisecondsDurationProperty IPersistableModel<Float64MillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Float64MillisecondsDurationProperty IPersistableModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Float64MillisecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="float64MillisecondsDurationProperty"> The <see cref="Float64MillisecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="float64MillisecondsDurationProperty"> The <see cref="global::Encode.Duration._Property.Float64MillisecondsDurationProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Float64MillisecondsDurationProperty float64MillisecondsDurationProperty) => throw null;
 
         public static explicit operator Float64MillisecondsDurationProperty(Response response) => throw null;
 
-        void IJsonModel<Float64MillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Float64MillisecondsDurationProperty IJsonModel<Float64MillisecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Float64MillisecondsDurationProperty IJsonModel<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Float64MillisecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

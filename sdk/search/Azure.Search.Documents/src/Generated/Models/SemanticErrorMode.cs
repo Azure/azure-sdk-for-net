@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Allows the user to choose whether a semantic call should fail completely, or to return partial results. </summary>
-    public readonly partial struct SemanticErrorMode : IEquatable<SemanticErrorMode>
+    public readonly partial struct SemanticErrorMode : IEquatable<global::Azure.Search.Documents.Models.SemanticErrorMode>
     {
         private readonly string _value;
         /// <summary> If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error. </summary>
         private const string FailValue = "fail";
 
-        /// <summary> Initializes a new instance of <see cref="SemanticErrorMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SemanticErrorMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticErrorMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error. </summary>
         public static SemanticErrorMode Fail { get; } = new SemanticErrorMode(FailValue);
 
-        /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticErrorMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticErrorMode left, SemanticErrorMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticErrorMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticErrorMode left, SemanticErrorMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticErrorMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SemanticErrorMode(string value) => new SemanticErrorMode(value);
 
-        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticErrorMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticErrorMode?(string value) => value == null ? null : new SemanticErrorMode(value);
+        public static implicit operator SemanticErrorMode?(string value) => (value == null) ? null : new SemanticErrorMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SemanticErrorMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SemanticErrorMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SemanticErrorMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SemanticErrorMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

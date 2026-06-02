@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseErrorDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail"/>. </summary>
         internal KnowledgeBaseErrorDetail()
         {
-            Details = new ChangeTrackingList<KnowledgeBaseErrorDetail>();
-            AdditionalInfo = new ChangeTrackingList<KnowledgeBaseErrorAdditionalInfo>();
+            Details = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail>();
+            AdditionalInfo = new ChangeTrackingList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseErrorDetail(string code, string message, string target, IReadOnlyList<KnowledgeBaseErrorDetail> details, IReadOnlyList<KnowledgeBaseErrorAdditionalInfo> additionalInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseErrorDetail(string code, string message, string target, IReadOnlyList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail> details, IReadOnlyList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo> additionalInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -51,9 +51,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Target { get; }
 
         /// <summary> The error details. </summary>
-        public IReadOnlyList<KnowledgeBaseErrorDetail> Details { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail> Details { get; }
 
         /// <summary> The error additional info. </summary>
-        public IReadOnlyList<KnowledgeBaseErrorAdditionalInfo> AdditionalInfo { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

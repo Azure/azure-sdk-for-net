@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The detailed information associated with a run step calling tools. </summary>
     public partial class RunStepToolCallDetails : RunStepDetails
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCallDetails"/>. </summary>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls) : base(RunStepType.ToolCalls)
+        internal RunStepToolCallDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepToolCall> toolCalls) : base(global::Azure.AI.Agents.Persistent.RunStepType.ToolCalls)
         {
             ToolCalls = toolCalls.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCallDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        internal RunStepToolCallDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<RunStepToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepToolCallDetails(RunStepType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }
 
         /// <summary> A list of tool call details for this run step. </summary>
-        public IReadOnlyList<RunStepToolCall> ToolCalls { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepToolCall> ToolCalls { get; }
     }
 }

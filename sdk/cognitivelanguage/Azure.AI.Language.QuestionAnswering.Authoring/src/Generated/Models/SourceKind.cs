@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Supported source types. </summary>
-    public readonly partial struct SourceKind : IEquatable<SourceKind>
+    public readonly partial struct SourceKind : IEquatable<global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind>
     {
         private readonly string _value;
         /// <summary> File Source. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> URI Source. </summary>
         private const string UrlValue = "url";
 
-        /// <summary> Initializes a new instance of <see cref="SourceKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> URI Source. </summary>
         public static SourceKind Url { get; } = new SourceKind(UrlValue);
 
-        /// <summary> Determines if two <see cref="SourceKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceKind left, SourceKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SourceKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceKind left, SourceKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SourceKind(string value) => new SourceKind(value);
 
-        /// <summary> Converts a string to a <see cref="SourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceKind?(string value) => value == null ? null : new SourceKind(value);
+        public static implicit operator SourceKind?(string value) => (value == null) ? null : new SourceKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SourceKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SourceKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SourceKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Truncates the terms to a specific length. This token filter is implemented using Apache Lucene. </summary>
     public partial class TruncateTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="TruncateTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TruncateTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TruncateTokenFilter(string name) : base("#Microsoft.Azure.Search.TruncateTokenFilter", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="TruncateTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TruncateTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="length"> The length at which terms will be truncated. Default and maximum is 300. </param>
-        internal TruncateTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? length) : base(odataType, name, additionalBinaryDataProperties)
+        internal TruncateTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? length) : base(odataType, name, additionalBinaryDataProperties)
         {
             Length = length;
         }

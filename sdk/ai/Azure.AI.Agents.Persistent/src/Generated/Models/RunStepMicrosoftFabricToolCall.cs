@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepMicrosoftFabricToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepMicrosoftFabricToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
         internal RunStepMicrosoftFabricToolCall(string id, IDictionary<string, string> microsoftFabric) : base("fabric_dataagent", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             MicrosoftFabric = microsoftFabric;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepMicrosoftFabricToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
-        internal RunStepMicrosoftFabricToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> microsoftFabric) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepMicrosoftFabricToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, string> microsoftFabric) : base(@type, id, additionalBinaryDataProperties)
         {
             MicrosoftFabric = microsoftFabric;
         }

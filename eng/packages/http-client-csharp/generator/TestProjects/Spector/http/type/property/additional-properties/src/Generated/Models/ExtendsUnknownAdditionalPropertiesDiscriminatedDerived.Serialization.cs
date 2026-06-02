@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class ExtendsUnknownAdditionalPropertiesDiscriminatedDerived : ExtendsUnknownAdditionalPropertiesDiscriminated, IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>
+    public partial class ExtendsUnknownAdditionalPropertiesDiscriminatedDerived : ExtendsUnknownAdditionalPropertiesDiscriminated, IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>
     {
         internal ExtendsUnknownAdditionalPropertiesDiscriminatedDerived() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Property.AdditionalProperties
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ExtendsUnknownAdditionalPropertiesDiscriminatedDerived IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ExtendsUnknownAdditionalPropertiesDiscriminatedDerived IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ExtendsUnknownAdditionalPropertiesDiscriminatedDerived IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ExtendsUnknownAdditionalPropertiesDiscriminatedDerived IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override ExtendsUnknownAdditionalPropertiesDiscriminated JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

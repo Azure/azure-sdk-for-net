@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class ResponseTokenStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseTokenStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseTokenStatistics"/>. </summary>
         /// <param name="totalTokens"> Total number of tokens (input + output). </param>
         /// <param name="inputTokens"> Number of input tokens. </param>
         /// <param name="outputTokens"> Number of output tokens. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.VoiceLive
             OutputTokenDetails = outputTokenDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseTokenStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseTokenStatistics"/>. </summary>
         /// <param name="totalTokens"> Total number of tokens (input + output). </param>
         /// <param name="inputTokens"> Number of input tokens. </param>
         /// <param name="outputTokens"> Number of output tokens. </param>
         /// <param name="inputTokenDetails"> Detailed breakdown of input tokens. </param>
         /// <param name="outputTokenDetails"> Detailed breakdown of output tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseTokenStatistics(int totalTokens, int inputTokens, int outputTokens, InputTokenDetails inputTokenDetails, OutputTokenDetails outputTokenDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseTokenStatistics(int totalTokens, int inputTokens, int outputTokens, InputTokenDetails inputTokenDetails, OutputTokenDetails outputTokenDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TotalTokens = totalTokens;
             InputTokens = inputTokens;

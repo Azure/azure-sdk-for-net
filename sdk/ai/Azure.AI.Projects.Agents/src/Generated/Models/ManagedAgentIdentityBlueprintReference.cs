@@ -10,21 +10,21 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The ManagedAgentIdentityBlueprintReference. </summary>
     public partial class ManagedAgentIdentityBlueprintReference : AgentBlueprintReference
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedAgentIdentityBlueprintReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference"/>. </summary>
         /// <param name="blueprintId"> The ID of the managed blueprint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blueprintId"/> is null. </exception>
-        public ManagedAgentIdentityBlueprintReference(string blueprintId) : base(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="blueprintId"/> is null. </exception>
+        public ManagedAgentIdentityBlueprintReference(string blueprintId) : base(global::Azure.AI.Projects.Agents.AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint)
         {
-            Argument.AssertNotNull(blueprintId, nameof(blueprintId));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(blueprintId, nameof(blueprintId));
 
             BlueprintId = blueprintId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedAgentIdentityBlueprintReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blueprintId"> The ID of the managed blueprint. </param>
-        internal ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string blueprintId) : base(@type, additionalBinaryDataProperties)
+        internal ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string blueprintId) : base(@type, additionalBinaryDataProperties)
         {
             BlueprintId = blueprintId;
         }

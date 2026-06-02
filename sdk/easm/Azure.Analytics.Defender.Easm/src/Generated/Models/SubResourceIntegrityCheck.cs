@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SubResourceIntegrityCheck
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubResourceIntegrityCheck"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck"/>. </summary>
         internal SubResourceIntegrityCheck()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubResourceIntegrityCheck"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck"/>. </summary>
         /// <param name="violation"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="resourceGuid"></param>
         /// <param name="expectedHash"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResourceIntegrityCheck(bool? violation, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string causePageUrl, string crawlGuid, string pageGuid, string resourceGuid, string expectedHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResourceIntegrityCheck(bool? violation, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string causePageUrl, string crawlGuid, string pageGuid, string resourceGuid, string expectedHash, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Violation = violation;
             FirstSeen = firstSeen;

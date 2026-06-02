@@ -13,14 +13,14 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the message to send.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="VideoNotificationContent"/>, <see cref="AudioNotificationContent"/>, <see cref="ReactionNotificationContent"/>, <see cref="StickerNotificationContent"/>, <see cref="InteractiveNotificationContent"/>, and <see cref="TemplateNotificationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.TextNotificationContent"/>, <see cref="Azure.Communication.Messages.MediaNotificationContent"/>, <see cref="Azure.Communication.Messages.ImageNotificationContent"/>, <see cref="Azure.Communication.Messages.DocumentNotificationContent"/>, <see cref="Azure.Communication.Messages.VideoNotificationContent"/>, <see cref="Azure.Communication.Messages.AudioNotificationContent"/>, <see cref="Azure.Communication.Messages.ReactionNotificationContent"/>, <see cref="Azure.Communication.Messages.StickerNotificationContent"/>, <see cref="Azure.Communication.Messages.InteractiveNotificationContent"/>, and <see cref="Azure.Communication.Messages.TemplateNotificationContent"/>.
     /// </summary>
     public abstract partial class NotificationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
@@ -31,12 +31,12 @@ namespace Azure.Communication.Messages
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ChannelRegistrationId = channelRegistrationId;
             To = to;

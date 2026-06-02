@@ -15,22 +15,22 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaDateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaDateResult"/>. </summary>
         /// <param name="date"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
-        internal DeltaDateResult(DateTimeOffset date, IEnumerable<DailyDeltaTypeResult> deltas)
+        internal DeltaDateResult(DateTimeOffset date, IEnumerable<global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult> deltas)
         {
             Date = date;
             Deltas = deltas.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaDateResult"/>. </summary>
         /// <param name="date"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaDateResult(DateTimeOffset date, IList<DailyDeltaTypeResult> deltas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaDateResult(DateTimeOffset date, IList<global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult> deltas, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Date = date;
             Deltas = deltas;
@@ -41,6 +41,6 @@ namespace Azure.Analytics.Defender.Easm
         public DateTimeOffset Date { get; }
 
         /// <summary> A list of summary counts per day. </summary>
-        public IList<DailyDeltaTypeResult> Deltas { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult> Deltas { get; }
     }
 }

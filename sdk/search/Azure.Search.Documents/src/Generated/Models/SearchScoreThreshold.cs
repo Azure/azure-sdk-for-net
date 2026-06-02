@@ -13,18 +13,18 @@ namespace Azure.Search.Documents.Models
     /// <summary> The results of the vector query will filter based on the '. </summary>
     public partial class SearchScoreThreshold : VectorThreshold
     {
-        /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SearchScoreThreshold"/>. </summary>
         /// <param name="value"> The threshold will filter based on the '. </param>
-        public SearchScoreThreshold(double value) : base(VectorThresholdKind.SearchScore)
+        public SearchScoreThreshold(double value) : base(global::Azure.Search.Documents.Models.VectorThresholdKind.SearchScore)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SearchScoreThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The threshold will filter based on the '. </param>
-        internal SearchScoreThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value) : base(kind, additionalBinaryDataProperties)
+        internal SearchScoreThreshold(VectorThresholdKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value) : base(kind, additionalBinaryDataProperties)
         {
             Value = value;
         }

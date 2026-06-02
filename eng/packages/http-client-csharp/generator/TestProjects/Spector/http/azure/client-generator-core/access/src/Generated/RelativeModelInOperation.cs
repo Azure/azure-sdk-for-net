@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         protected RelativeModelInOperation() => throw null;
 
-        internal RelativeModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal RelativeModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
     }

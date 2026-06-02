@@ -17,39 +17,39 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class NotDiscriminatedClient
     {
-        public NotDiscriminatedClient() : this(new Uri("http://localhost:3000"), new NotDiscriminatedClientOptions()) => throw null;
+        public NotDiscriminatedClient() : this(new global::System.Uri("http://localhost:3000"), new NotDiscriminatedClientOptions()) => throw null;
 
-        internal NotDiscriminatedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NotDiscriminatedClientOptions options) => throw null;
+        internal NotDiscriminatedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NotDiscriminatedClientOptions options) => throw null;
 
-        public NotDiscriminatedClient(Uri endpoint, NotDiscriminatedClientOptions options) : this(null, endpoint, options) => throw null;
+        public NotDiscriminatedClient(global::System.Uri endpoint, NotDiscriminatedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NotDiscriminatedClient(NotDiscriminatedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NotDiscriminatedClient(NotDiscriminatedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PostValid(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PostValidAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PostValidAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PostValid(Siamese input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostValidAsync(Siamese input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostValidAsync(Siamese input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetValid(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetValidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetValidAsync(RequestContext context) => throw null;
 
-        public virtual Response<Siamese> GetValid(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NotDiscriminated.Siamese> GetValid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Siamese>> GetValidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>> GetValidAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutValid(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutValidAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutValidAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Siamese> PutValid(Siamese input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.NotDiscriminated.Siamese> PutValid(Siamese input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Siamese>> PutValidAsync(Siamese input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.NotDiscriminated.Siamese>> PutValidAsync(Siamese input, CancellationToken cancellationToken = default) => throw null;
     }
 }

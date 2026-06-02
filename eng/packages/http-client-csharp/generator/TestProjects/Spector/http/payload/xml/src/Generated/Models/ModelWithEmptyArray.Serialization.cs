@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithEmptyArray : IPersistableModel<ModelWithEmptyArray>, IXmlSerializable
+    public partial class ModelWithEmptyArray : IPersistableModel<global::Payload.Xml.ModelWithEmptyArray>, IXmlSerializable
     {
         internal ModelWithEmptyArray() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithEmptyArray>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithEmptyArray>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithEmptyArray IPersistableModel<ModelWithEmptyArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithEmptyArray IPersistableModel<global::Payload.Xml.ModelWithEmptyArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithEmptyArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithEmptyArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithEmptyArray"> The <see cref="ModelWithEmptyArray"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithEmptyArray"> The <see cref="global::Payload.Xml.ModelWithEmptyArray"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithEmptyArray modelWithEmptyArray) => throw null;
 
         public static explicit operator ModelWithEmptyArray(Response response) => throw null;

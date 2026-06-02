@@ -11,14 +11,14 @@ namespace OpenAI
     internal partial class InternalLogProb
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalLogProb"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLogProb"/>. </summary>
         /// <param name="token"></param>
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
         /// <param name="topLogprobs"></param>
-        public InternalLogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<InternalTopLogProb> topLogprobs)
+        public InternalLogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<global::OpenAI.InternalTopLogProb> topLogprobs)
         {
             Token = token;
             Logprob = logprob;
@@ -26,13 +26,13 @@ namespace OpenAI
             TopLogprobs = topLogprobs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalLogProb"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLogProb"/>. </summary>
         /// <param name="token"></param>
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
         /// <param name="topLogprobs"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalLogProb(string token, double logprob, IList<long> bytes, IList<InternalTopLogProb> topLogprobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalLogProb(string token, double logprob, IList<long> bytes, IList<global::OpenAI.InternalTopLogProb> topLogprobs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             Logprob = logprob;
@@ -51,6 +51,6 @@ namespace OpenAI
         public IList<long> Bytes { get; }
 
         /// <summary> Gets the TopLogprobs. </summary>
-        public IList<InternalTopLogProb> TopLogprobs { get; }
+        public IList<global::OpenAI.InternalTopLogProb> TopLogprobs { get; }
     }
 }

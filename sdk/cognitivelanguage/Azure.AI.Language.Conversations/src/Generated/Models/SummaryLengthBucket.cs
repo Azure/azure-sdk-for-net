@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Enum that defines the length of the output summaries. </summary>
-    public readonly partial struct SummaryLengthBucket : IEquatable<SummaryLengthBucket>
+    public readonly partial struct SummaryLengthBucket : IEquatable<global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket>
     {
         private readonly string _value;
         /// <summary> Instructs model to generate shorter length summaries. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Instructs model to generate longer length summaries. </summary>
         private const string LongValue = "long";
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SummaryLengthBucket(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Instructs model to generate longer length summaries. </summary>
         public static SummaryLengthBucket Long { get; } = new SummaryLengthBucket(LongValue);
 
-        /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SummaryLengthBucket left, SummaryLengthBucket right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SummaryLengthBucket left, SummaryLengthBucket right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SummaryLengthBucket(string value) => new SummaryLengthBucket(value);
 
-        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.SummaryLengthBucket"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryLengthBucket?(string value) => value == null ? null : new SummaryLengthBucket(value);
+        public static implicit operator SummaryLengthBucket?(string value) => (value == null) ? null : new SummaryLengthBucket(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SummaryLengthBucket other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SummaryLengthBucket other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SummaryLengthBucket other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SummaryLengthBucket other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

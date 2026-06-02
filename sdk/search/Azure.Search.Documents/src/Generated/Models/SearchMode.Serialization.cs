@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchMode value) => value switch
         {
-            SearchMode.Any => "any",
-            SearchMode.All => "all",
+            global::Azure.Search.Documents.Models.SearchMode.Any => "any",
+            global::Azure.Search.Documents.Models.SearchMode.All => "all",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SearchMode ToSearchMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "any"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "any"))
             {
-                return SearchMode.Any;
+                return global::Azure.Search.Documents.Models.SearchMode.Any;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "all"))
             {
-                return SearchMode.All;
+                return global::Azure.Search.Documents.Models.SearchMode.All;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.");
         }

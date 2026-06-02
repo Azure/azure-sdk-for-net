@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class DifferentSpreadModelArrayRecord : IJsonModel<DifferentSpreadModelArrayRecord>
+    public partial class DifferentSpreadModelArrayRecord : IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>
     {
         internal DifferentSpreadModelArrayRecord() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<DifferentSpreadModelArrayRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadModelArrayRecord IPersistableModel<DifferentSpreadModelArrayRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadModelArrayRecord IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<DifferentSpreadModelArrayRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="differentSpreadModelArrayRecord"> The <see cref="DifferentSpreadModelArrayRecord"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="differentSpreadModelArrayRecord"> The <see cref="global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadModelArrayRecord differentSpreadModelArrayRecord) => throw null;
 
         public static explicit operator DifferentSpreadModelArrayRecord(Response response) => throw null;
 
-        void IJsonModel<DifferentSpreadModelArrayRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadModelArrayRecord IJsonModel<DifferentSpreadModelArrayRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadModelArrayRecord IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadModelArrayRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual DifferentSpreadModelArrayRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

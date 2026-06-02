@@ -15,9 +15,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentLanguage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentLanguage"/>. </summary>
         /// <param name="locale">
         /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
         /// or BCP 47 language tag (ex. "zh-Hans").
@@ -27,14 +27,14 @@ namespace Azure.AI.DocumentIntelligence
         /// to.
         /// </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
-        internal DocumentLanguage(string locale, IEnumerable<DocumentSpan> spans, float confidence)
+        internal DocumentLanguage(string locale, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float confidence)
         {
             Locale = locale;
             Spans = spans.ToList();
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentLanguage"/>. </summary>
         /// <param name="locale">
         /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
         /// or BCP 47 language tag (ex. "zh-Hans").
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLanguage(string locale, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentLanguage(string locale, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Locale = locale;
             Spans = spans;
@@ -63,7 +63,7 @@ namespace Azure.AI.DocumentIntelligence
         /// Location of the text elements in the concatenated content the language applies
         /// to.
         /// </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Confidence of correctly identifying the language. </summary>
         public float Confidence { get; }

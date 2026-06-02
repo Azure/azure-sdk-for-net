@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Data schema of the input data source. The default is OneTable. </summary>
-    public readonly partial struct DataSchema : IEquatable<DataSchema>
+    public readonly partial struct DataSchema : IEquatable<global::Azure.AI.AnomalyDetector.DataSchema>
     {
         private readonly string _value;
         /// <summary> OneTable means that your input data is in one CSV file, which contains one time stamp column and several variable columns. The default DataSchema value is OneTable. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> MultiTable means that your input data is separated in multiple CSV files. Each file contains one time stamp column and one variable column, and the CSV file name should indicate the name of the variable. The default DataSchema value is OneTable. </summary>
         private const string MultiTableValue = "MultiTable";
 
-        /// <summary> Initializes a new instance of <see cref="DataSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.DataSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataSchema(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> MultiTable means that your input data is separated in multiple CSV files. Each file contains one time stamp column and one variable column, and the CSV file name should indicate the name of the variable. The default DataSchema value is OneTable. </summary>
         public static DataSchema MultiTable { get; } = new DataSchema(MultiTableValue);
 
-        /// <summary> Determines if two <see cref="DataSchema"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.AnomalyDetector.DataSchema"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataSchema left, DataSchema right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DataSchema"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.AnomalyDetector.DataSchema"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataSchema left, DataSchema right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DataSchema"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.AnomalyDetector.DataSchema"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DataSchema(string value) => new DataSchema(value);
 
-        /// <summary> Converts a string to a <see cref="DataSchema"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.AnomalyDetector.DataSchema"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataSchema?(string value) => value == null ? null : new DataSchema(value);
+        public static implicit operator DataSchema?(string value) => (value == null) ? null : new DataSchema(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataSchema other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DataSchema other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DataSchema other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataSchema other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

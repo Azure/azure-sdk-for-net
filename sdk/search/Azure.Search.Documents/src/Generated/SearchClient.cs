@@ -21,16 +21,16 @@ namespace Azure.Search.Documents
     /// <summary> The SearchClient. </summary>
     public partial class SearchClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
         private readonly string _indexName;
 
         /// <summary> Initializes a new instance of SearchClient from a <see cref="SearchClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SearchClient. </param>
-        [Experimental("SCME0002")]
-        public SearchClient(SearchClientSettings settings) : this(null, settings?.Endpoint, settings?.IndexName, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public SearchClient(SearchClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.IndexName, settings?.Options)
         {
         }
 
@@ -42,20 +42,20 @@ namespace Azure.Search.Documents
 
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<long> GetDocumentCount(CancellationToken cancellationToken = default)
         {
-            Response result = GetDocumentCount(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            Response result = this.GetDocumentCount(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<long>> GetDocumentCountAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<long>> GetDocumentCountAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetDocumentCountAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            Response result = await this.GetDocumentCountAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents
         /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SearchGet(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
         {
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
+                using HttpMessage message = this.CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -158,15 +158,15 @@ namespace Azure.Search.Documents
         /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SearchGetAsync(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
+        internal virtual async Task<global::Azure.Response> SearchGetAsync(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
+                using HttpMessage message = this.CreateSearchGetRequest(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType, scoringParameters, scoringProfile, searchFields, searchMode, scoringStatistics, sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling, semanticMaxWaitInMilliseconds, answers, captions, semanticQuery, queryRewrites, debug, queryLanguage, speller, semanticFields, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -210,11 +210,11 @@ namespace Azure.Search.Documents
         /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchGet(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Models.SearchDocumentsResult> SearchGet(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
         {
-            Response result = SearchGet(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchDocumentsResult)result, result);
+            Response result = this.SearchGet(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchDocumentsResult)result), result);
         }
 
         /// <summary> Searches for documents in the index. </summary>
@@ -251,11 +251,11 @@ namespace Azure.Search.Documents
         /// <param name="speller"> Improve search recall by spell-correcting individual search query terms. </param>
         /// <param name="semanticFields"> The list of field names used for semantic ranking. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchGetAsync(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Models.SearchDocumentsResult>> SearchGetAsync(string querySourceAuthorization = default, bool? enableElevatedRead = default, string searchText = default, bool? includeTotalResultCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfiguration = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, string semanticQuery = default, QueryRewritesType? queryRewrites = default, QueryDebugMode? debug = default, QueryLanguage? queryLanguage = default, QuerySpellerType? speller = default, IEnumerable<string> semanticFields = default, CancellationToken cancellationToken = default)
         {
-            Response result = await SearchGetAsync(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchDocumentsResult)result, result);
+            Response result = await this.SearchGetAsync(querySourceAuthorization, enableElevatedRead, searchText, includeTotalResultCount, facets, filter, highlightFields, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, queryType?.ToSerialString(), scoringParameters, scoringProfile, searchFields, searchMode?.ToSerialString(), scoringStatistics?.ToSerialString(), sessionId, @select, skip, top, semanticConfiguration, semanticErrorHandling?.ToString(), semanticMaxWaitInMilliseconds, answers?.ToString(), captions?.ToString(), semanticQuery, queryRewrites?.ToString(), debug?.ToString(), queryLanguage?.ToString(), speller?.ToString(), semanticFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchDocumentsResult)result), result);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SearchPost(RequestContent content, string querySourceAuthorization = default, bool? enableElevatedRead = default, RequestContext context = null)
         {
@@ -278,7 +278,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
+                using HttpMessage message = this.CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -300,15 +300,15 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SearchPostAsync(RequestContent content, string querySourceAuthorization = default, bool? enableElevatedRead = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> SearchPostAsync(RequestContent content, string querySourceAuthorization = default, bool? enableElevatedRead = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SearchPost");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
+                using HttpMessage message = this.CreateSearchPostRequest(content, querySourceAuthorization, enableElevatedRead, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -355,30 +355,30 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Models.SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<global::Azure.Search.Documents.Models.VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
-                facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 filter,
-                highlightFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (highlightFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 queryType,
                 scoringStatistics,
                 sessionId,
-                scoringParameters?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (scoringParameters?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 scoringProfile,
                 debug,
                 searchText,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 searchMode,
                 queryLanguage,
                 querySpeller,
-                @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (@select?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 skip,
                 top,
                 semanticConfigurationName,
@@ -388,13 +388,13 @@ namespace Azure.Search.Documents
                 answers,
                 captions,
                 queryRewrites,
-                semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                vectorQueries?.ToList() as IList<VectorQuery> ?? new ChangeTrackingList<VectorQuery>(),
+                (semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (vectorQueries?.ToList() as IList<global::Azure.Search.Documents.Models.VectorQuery> ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.VectorQuery>()),
                 vectorFilterMode,
                 hybridSearch,
                 default);
-            Response result = SearchPost(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchDocumentsResult)result, result);
+            Response result = this.SearchPost(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchDocumentsResult)result), result);
         }
 
         /// <summary> Searches for documents in the index. </summary>
@@ -434,30 +434,30 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Models.SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<global::Azure.Search.Documents.Models.VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
             SearchPostRequest spreadModel = new SearchPostRequest(
                 includeTotalCount,
-                facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 filter,
-                highlightFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (highlightFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
-                orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (orderBy?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 queryType,
                 scoringStatistics,
                 sessionId,
-                scoringParameters?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (scoringParameters?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 scoringProfile,
                 debug,
                 searchText,
-                searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (searchFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 searchMode,
                 queryLanguage,
                 querySpeller,
-                @select?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                (@select?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
                 skip,
                 top,
                 semanticConfigurationName,
@@ -467,13 +467,13 @@ namespace Azure.Search.Documents
                 answers,
                 captions,
                 queryRewrites,
-                semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                vectorQueries?.ToList() as IList<VectorQuery> ?? new ChangeTrackingList<VectorQuery>(),
+                (semanticFields?.ToList() as IList<string> ?? new ChangeTrackingList<string>()),
+                (vectorQueries?.ToList() as IList<global::Azure.Search.Documents.Models.VectorQuery> ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.VectorQuery>()),
                 vectorFilterMode,
                 hybridSearch,
                 default);
-            Response result = await SearchPostAsync(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchDocumentsResult)result, result);
+            Response result = await this.SearchPostAsync(spreadModel, querySourceAuthorization, enableElevatedRead, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchDocumentsResult)result), result);
         }
 
         /// <summary>
@@ -489,9 +489,9 @@ namespace Azure.Search.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
@@ -499,9 +499,9 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-                using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
+                using HttpMessage message = this.CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -524,19 +524,19 @@ namespace Azure.Search.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-                using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
+                using HttpMessage message = this.CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -566,7 +566,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> The list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
         /// <param name="top"> The number of suggestions to retrieve. The value must be a number between 1 and 100. The default is 5. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SuggestGet(string searchText, string suggesterName, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, IEnumerable<string> searchFields, IEnumerable<string> @select, int? top, RequestContext context)
         {
@@ -574,7 +574,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestGetRequest(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, context);
+                using HttpMessage message = this.CreateSuggestGetRequest(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -604,15 +604,15 @@ namespace Azure.Search.Documents
         /// <param name="select"> The list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
         /// <param name="top"> The number of suggestions to retrieve. The value must be a number between 1 and 100. The default is 5. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SuggestGetAsync(string searchText, string suggesterName, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, IEnumerable<string> searchFields, IEnumerable<string> @select, int? top, RequestContext context)
+        internal virtual async Task<global::Azure.Response> SuggestGetAsync(string searchText, string suggesterName, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, IEnumerable<string> searchFields, IEnumerable<string> @select, int? top, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SuggestGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestGetRequest(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, context);
+                using HttpMessage message = this.CreateSuggestGetRequest(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -635,11 +635,11 @@ namespace Azure.Search.Documents
         /// <param name="select"> The list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
         /// <param name="top"> The number of suggestions to retrieve. The value must be a number between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SuggestDocumentsResult> SuggestGet(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Models.SuggestDocumentsResult> SuggestGet(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Response result = SuggestGet(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, cancellationToken.ToRequestContext());
-            return Response.FromValue((SuggestDocumentsResult)result, result);
+            Response result = this.SuggestGet(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SuggestDocumentsResult)result), result);
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
@@ -655,11 +655,11 @@ namespace Azure.Search.Documents
         /// <param name="select"> The list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
         /// <param name="top"> The number of suggestions to retrieve. The value must be a number between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SuggestDocumentsResult>> SuggestGetAsync(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Models.SuggestDocumentsResult>> SuggestGetAsync(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Response result = await SuggestGetAsync(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SuggestDocumentsResult)result, result);
+            Response result = await this.SuggestGetAsync(searchText, suggesterName, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, orderBy, searchFields, @select, top, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SuggestDocumentsResult)result), result);
         }
 
         /// <summary>
@@ -672,7 +672,7 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SuggestPost(RequestContent content, RequestContext context = null)
         {
@@ -680,7 +680,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestPostRequest(content, context);
+                using HttpMessage message = this.CreateSuggestPostRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -700,15 +700,15 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SuggestPostAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> SuggestPostAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.SuggestPost");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSuggestPostRequest(content, context);
+                using HttpMessage message = this.CreateSuggestPostRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -728,7 +728,7 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Index(RequestContent content, RequestContext context = null)
         {
@@ -736,7 +736,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateIndexRequest(content, context);
+                using HttpMessage message = this.CreateIndexRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -756,15 +756,15 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> IndexAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> IndexAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.Index");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateIndexRequest(content, context);
+                using HttpMessage message = this.CreateIndexRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -777,21 +777,21 @@ namespace Azure.Search.Documents
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<IndexDocumentsResult> Index(IndexBatch batch, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Models.IndexDocumentsResult> Index(IndexBatch batch, CancellationToken cancellationToken = default)
         {
-            Response result = Index(batch, cancellationToken.ToRequestContext());
-            return Response.FromValue((IndexDocumentsResult)result, result);
+            Response result = this.Index(batch, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((IndexDocumentsResult)result), result);
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Models.IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
         {
-            Response result = await IndexAsync(batch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((IndexDocumentsResult)result, result);
+            Response result = await this.IndexAsync(batch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((IndexDocumentsResult)result), result);
         }
 
         /// <summary>
@@ -813,7 +813,7 @@ namespace Azure.Search.Documents
         /// <param name="searchFields"> The list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AutocompleteGet(string searchText, string suggesterName, string autocompleteMode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> searchFields, int? top, RequestContext context)
         {
@@ -821,7 +821,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutocompleteGetRequest(searchText, suggesterName, autocompleteMode, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, context);
+                using HttpMessage message = this.CreateAutocompleteGetRequest(searchText, suggesterName, autocompleteMode, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -850,15 +850,15 @@ namespace Azure.Search.Documents
         /// <param name="searchFields"> The list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AutocompleteGetAsync(string searchText, string suggesterName, string autocompleteMode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> searchFields, int? top, RequestContext context)
+        internal virtual async Task<global::Azure.Response> AutocompleteGetAsync(string searchText, string suggesterName, string autocompleteMode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> searchFields, int? top, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.AutocompleteGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutocompleteGetRequest(searchText, suggesterName, autocompleteMode, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, context);
+                using HttpMessage message = this.CreateAutocompleteGetRequest(searchText, suggesterName, autocompleteMode, filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -880,11 +880,11 @@ namespace Azure.Search.Documents
         /// <param name="searchFields"> The list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<AutocompleteResults> AutocompleteGet(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Models.AutocompleteResults> AutocompleteGet(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Response result = AutocompleteGet(searchText, suggesterName, autocompleteMode?.ToSerialString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext());
-            return Response.FromValue((AutocompleteResults)result, result);
+            Response result = this.AutocompleteGet(searchText, suggesterName, autocompleteMode?.ToSerialString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AutocompleteResults)result), result);
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
@@ -899,11 +899,11 @@ namespace Azure.Search.Documents
         /// <param name="searchFields"> The list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
         /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<AutocompleteResults>> AutocompleteGetAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Models.AutocompleteResults>> AutocompleteGetAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AutocompleteGetAsync(searchText, suggesterName, autocompleteMode?.ToSerialString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AutocompleteResults)result, result);
+            Response result = await this.AutocompleteGetAsync(searchText, suggesterName, autocompleteMode?.ToSerialString(), filter, useFuzzyMatching, highlightPostTag, highlightPreTag, minimumCoverage, searchFields, top, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AutocompleteResults)result), result);
         }
 
         /// <summary>
@@ -916,7 +916,7 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AutocompletePost(RequestContent content, RequestContext context = null)
         {
@@ -924,7 +924,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutocompletePostRequest(content, context);
+                using HttpMessage message = this.CreateAutocompletePostRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -944,15 +944,15 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AutocompletePostAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> AutocompletePostAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.AutocompletePost");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAutocompletePostRequest(content, context);
+                using HttpMessage message = this.CreateAutocompletePostRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

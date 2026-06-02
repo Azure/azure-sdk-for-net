@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnding event. </summary>
-    [JsonConverter(typeof(ContainerServiceClusterSupportEndingEventDataConverter))]
-    public partial class ContainerServiceClusterSupportEndingEventData : ContainerServiceClusterSupportEventData, IJsonModel<ContainerServiceClusterSupportEndingEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData.ContainerServiceClusterSupportEndingEventDataConverter))]
+    public partial class ContainerServiceClusterSupportEndingEventData : ContainerServiceClusterSupportEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData"/> for deserialization. </summary>
         internal ContainerServiceClusterSupportEndingEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerServiceClusterSupportEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData.DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceClusterSupportEndingEventData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceClusterSupportEndingEventData)PersistableModelCreateCore(data, options);
+        ContainerServiceClusterSupportEndingEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ContainerServiceClusterSupportEndingEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerServiceClusterSupportEndingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerServiceClusterSupportEndingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,41 +75,41 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceClusterSupportEndingEventData IJsonModel<ContainerServiceClusterSupportEndingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceClusterSupportEndingEventData)JsonModelCreateCore(ref reader, options);
+        ContainerServiceClusterSupportEndingEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ContainerServiceClusterSupportEndingEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerServiceClusterSupportEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData.DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContainerServiceClusterSupportEndingEventData DeserializeContainerServiceClusterSupportEndingEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string kubernetesVersion = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kubernetesVersion"u8))
@@ -117,15 +117,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     kubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion, additionalBinaryDataProperties);
         }
 
-        internal partial class ContainerServiceClusterSupportEndingEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndingEventData>
+        internal partial class ContainerServiceClusterSupportEndingEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ContainerServiceClusterSupportEndingEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ContainerServiceClusterSupportEndingEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -142,8 +142,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override ContainerServiceClusterSupportEndingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

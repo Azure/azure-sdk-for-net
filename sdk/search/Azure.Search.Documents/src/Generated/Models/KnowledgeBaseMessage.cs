@@ -16,23 +16,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseMessage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage"/>. </summary>
         /// <param name="content"> The content of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public KnowledgeBaseMessage(IEnumerable<KnowledgeBaseMessageContent> content)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public KnowledgeBaseMessage(IEnumerable<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContent> content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
             Content = content.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage"/>. </summary>
         /// <param name="role"> The role of the tool response. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseMessage(string role, IList<KnowledgeBaseMessageContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseMessage(string role, IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContent> content, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -43,6 +43,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Role { get; set; }
 
         /// <summary> The content of the message. </summary>
-        public IList<KnowledgeBaseMessageContent> Content { get; }
+        public IList<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContent> Content { get; }
     }
 }

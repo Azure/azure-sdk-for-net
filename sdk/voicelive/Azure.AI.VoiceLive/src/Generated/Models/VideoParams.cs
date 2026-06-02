@@ -14,14 +14,14 @@ namespace Azure.AI.VoiceLive
     public partial class VideoParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VideoParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoParams"/>. </summary>
         public VideoParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoParams"/>. </summary>
         /// <param name="bitrate"> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </param>
         /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
         /// <param name="crop"> Optional cropping settings for the video stream. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
         /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Bitrate = bitrate;
             Codec = codec;

@@ -12,14 +12,14 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The message template as returned from the service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem"/>.
     /// </summary>
     public abstract partial class MessageTemplateItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateItem"/>. </summary>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
@@ -30,13 +30,13 @@ namespace Azure.Communication.Messages
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Language = language;

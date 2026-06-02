@@ -14,9 +14,9 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SASTokenParameter : IJsonModel<SASTokenParameter>
+    internal partial class SASTokenParameter : IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>
     {
-        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter"/> for deserialization. </summary>
         internal SASTokenParameter()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SASTokenParameter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSASTokenParameter(document.RootElement, options);
+                        return global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter.DeserializeSASTokenParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SASTokenParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Security.KeyVault.Administration.AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SASTokenParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SASTokenParameter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SASTokenParameter IPersistableModel<SASTokenParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SASTokenParameter IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SASTokenParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sasTokenParameter"> The <see cref="SASTokenParameter"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="sasTokenParameter"> The <see cref="global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SASTokenParameter sasTokenParameter)
         {
-            if (sasTokenParameter == null)
+            if ((sasTokenParameter == null))
             {
                 return null;
             }
-            return RequestContent.Create(sasTokenParameter, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(sasTokenParameter, global::Azure.Security.KeyVault.Administration.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SASTokenParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,24 +84,24 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SASTokenParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("storageResourceUri"u8);
             writer.WriteStringValue(StorageResourceUri);
-            if (Optional.IsDefined(Token))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Optional.IsDefined(UseManagedIdentity))
+            if (global::Azure.Security.KeyVault.Administration.Optional.IsDefined(UseManagedIdentity))
             {
                 writer.WritePropertyName("useManagedIdentity"u8);
                 writer.WriteBooleanValue(UseManagedIdentity.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.Security.KeyVault.Administration.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,33 +120,33 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SASTokenParameter IJsonModel<SASTokenParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SASTokenParameter IJsonModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SASTokenParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SASTokenParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSASTokenParameter(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Security.KeyVault.Administration.Models.SASTokenParameter.DeserializeSASTokenParameter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SASTokenParameter DeserializeSASTokenParameter(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string storageResourceUri = default;
             string token = default;
             bool? useManagedIdentity = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("storageResourceUri"u8))
@@ -161,16 +161,16 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("useManagedIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     useManagedIdentity = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SASTokenParameter(storageResourceUri, token, useManagedIdentity, additionalBinaryDataProperties);

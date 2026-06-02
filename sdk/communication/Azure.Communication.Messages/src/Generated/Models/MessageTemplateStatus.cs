@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The aggregated template status. </summary>
-    public readonly partial struct MessageTemplateStatus : IEquatable<MessageTemplateStatus>
+    public readonly partial struct MessageTemplateStatus : IEquatable<global::Azure.Communication.Messages.MessageTemplateStatus>
     {
         private readonly string _value;
         /// <summary> Message template is approved. </summary>
@@ -23,12 +23,12 @@ namespace Azure.Communication.Messages
         /// <summary> Message template is paused. </summary>
         private const string PausedValue = "paused";
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MessageTemplateStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.Communication.Messages
         /// <summary> Message template is paused. </summary>
         public static MessageTemplateStatus Paused { get; } = new MessageTemplateStatus(PausedValue);
 
-        /// <summary> Determines if two <see cref="MessageTemplateStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.Messages.MessageTemplateStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MessageTemplateStatus left, MessageTemplateStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MessageTemplateStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.Messages.MessageTemplateStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MessageTemplateStatus left, MessageTemplateStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MessageTemplateStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.Messages.MessageTemplateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MessageTemplateStatus(string value) => new MessageTemplateStatus(value);
 
-        /// <summary> Converts a string to a <see cref="MessageTemplateStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.Messages.MessageTemplateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MessageTemplateStatus?(string value) => value == null ? null : new MessageTemplateStatus(value);
+        public static implicit operator MessageTemplateStatus?(string value) => (value == null) ? null : new MessageTemplateStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MessageTemplateStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MessageTemplateStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MessageTemplateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MessageTemplateStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

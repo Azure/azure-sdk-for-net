@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NestedWithHeaderClientHostExtensions
     {
         public static IClientBuilder AddNestedWithHeaderClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNestedWithHeaderClient(this IHostApplicationBuilder host, string sectionName, Action<NestedWithHeaderClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNestedWithHeaderClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithHeaderClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNestedWithHeaderClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNestedWithHeaderClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NestedWithHeaderClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNestedWithHeaderClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithHeaderClientSettings> configureSettings) => throw null;
     }
 }

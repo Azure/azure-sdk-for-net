@@ -14,21 +14,21 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a set of worker selectors that will be attached if the given condition resolves to true. </summary>
     public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<RouterWorkerSelector> workerSelectors) : base(WorkerSelectorAttachmentKind.Conditional)
+        internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<global::Azure.Communication.JobRouter.RouterWorkerSelector> workerSelectors) : base(global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind.Conditional)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind, additionalBinaryDataProperties)
+        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RouterRule condition, IList<global::Azure.Communication.JobRouter.RouterWorkerSelector> workerSelectors) : base(kind, additionalBinaryDataProperties)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors;

@@ -10,23 +10,23 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The hosted agent definition. </summary>
     public partial class HostedAgentDefinition : ProjectsAgentDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.HostedAgentDefinition"/>. </summary>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
-        public HostedAgentDefinition(string cpu, string memory) : base(ProjectsAgentKind.Hosted)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
+        public HostedAgentDefinition(string cpu, string memory) : base(global::Azure.AI.Projects.Agents.ProjectsAgentKind.Hosted)
         {
-            Argument.AssertNotNull(cpu, nameof(cpu));
-            Argument.AssertNotNull(memory, nameof(memory));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(cpu, nameof(cpu));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(memory, nameof(memory));
 
-            Tools = new ChangeTrackingList<ProjectsAgentTool>();
+            Tools = new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProjectsAgentTool>();
             Cpu = cpu;
             Memory = memory;
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Versions = new ChangeTrackingList<ProtocolVersionRecord>();
+            Versions = new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProtocolVersionRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.HostedAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<global::Azure.AI.Projects.Agents.ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             Cpu = cpu;
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Agents
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </summary>
-        public IList<ProjectsAgentTool> Tools { get; }
+        public IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> Tools { get; }
 
         /// <summary> The CPU configuration for the hosted agent. </summary>
         public string Cpu { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects.Agents
         public ContainerConfiguration ContainerConfiguration { get; set; }
 
         /// <summary> The protocols that the agent supports for ingress communication. </summary>
-        public IList<ProtocolVersionRecord> Versions { get; }
+        public IList<global::Azure.AI.Projects.Agents.ProtocolVersionRecord> Versions { get; }
 
         /// <summary> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </summary>
         public CodeConfiguration CodeConfiguration { get; set; }

@@ -11,17 +11,17 @@ namespace Azure.AI.Projects
     public partial class ProjectsRoutine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ProjectsRoutine"/>. </summary>
         /// <param name="enabled"> Whether the routine is enabled. </param>
         internal ProjectsRoutine(bool enabled)
         {
             Enabled = enabled;
-            Triggers = new ChangeTrackingDictionary<string, RoutineTrigger>();
+            Triggers = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.RoutineTrigger>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ProjectsRoutine"/>. </summary>
         /// <param name="name"> The routine name. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="createdAt"> The time when the routine was created. </param>
         /// <param name="updatedAt"> The time when the routine was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsRoutine(string name, string description, bool enabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsRoutine(string name, string description, bool enabled, IDictionary<string, global::Azure.AI.Projects.RoutineTrigger> triggers, RoutineAction action, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         public bool Enabled { get; }
 
         /// <summary> The triggers configured for the routine. </summary>
-        public IDictionary<string, RoutineTrigger> Triggers { get; }
+        public IDictionary<string, global::Azure.AI.Projects.RoutineTrigger> Triggers { get; }
 
         /// <summary> The action executed when the routine fires. </summary>
         public RoutineAction Action { get; }

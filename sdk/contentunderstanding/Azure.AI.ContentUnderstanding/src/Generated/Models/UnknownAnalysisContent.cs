@@ -12,7 +12,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     internal partial class UnknownAnalysisContent : AnalysisContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalysisContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.UnknownAnalysisContent"/>. </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="analyzerId"> The analyzer that generated this content. </param>
@@ -21,7 +21,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal UnknownAnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
         {
         }
     }

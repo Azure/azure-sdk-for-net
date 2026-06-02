@@ -13,14 +13,14 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
 {
     public partial class MoveToNewSubClient
     {
-        public MoveToNewSubClient() : this(new Uri("http://localhost:3000"), new MoveToNewSubClientOptions()) => throw null;
+        public MoveToNewSubClient() : this(new global::System.Uri("http://localhost:3000"), new MoveToNewSubClientOptions()) => throw null;
 
-        internal MoveToNewSubClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MoveToNewSubClientOptions options) => throw null;
+        internal MoveToNewSubClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MoveToNewSubClientOptions options) => throw null;
 
-        public MoveToNewSubClient(Uri endpoint, MoveToNewSubClientOptions options) : this(null, endpoint, options) => throw null;
+        public MoveToNewSubClient(global::System.Uri endpoint, MoveToNewSubClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MoveToNewSubClient(MoveToNewSubClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MoveToNewSubClient(MoveToNewSubClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

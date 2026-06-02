@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         private protected AbstractModel(string kind, string name) => throw null;
 
-        internal AbstractModel(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+        internal AbstractModel(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) => throw null;
 
         internal string Kind
         {

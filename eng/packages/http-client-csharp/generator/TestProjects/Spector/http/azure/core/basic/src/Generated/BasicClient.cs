@@ -18,67 +18,67 @@ namespace Specs.Azure.Core.Basic
 {
     public partial class BasicClient
     {
-        public BasicClient() : this(new Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
+        public BasicClient() : this(new global::System.Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
 
-        internal BasicClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicClientOptions options) => throw null;
+        internal BasicClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, BasicClientOptions options) => throw null;
 
-        public BasicClient(Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
+        public BasicClient(global::System.Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public BasicClient(BasicClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public BasicClient(BasicClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response CreateOrUpdate(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> CreateOrUpdateAsync(int id, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> CreateOrUpdateAsync(int id, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response CreateOrReplace(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> CreateOrReplaceAsync(int id, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> CreateOrReplaceAsync(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<User> CreateOrReplace(int id, User resource, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Basic.User> CreateOrReplace(int id, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<User>> CreateOrReplaceAsync(int id, User resource, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Basic.User>> CreateOrReplaceAsync(int id, User resource, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Get(int id, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(int id, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(int id, RequestContext context) => throw null;
 
-        public virtual Response<User> Get(int id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Basic.User> Get(int id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<User>> GetAsync(int id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Basic.User>> GetAsync(int id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetAll(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetAll(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetAllAsync(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetAllAsync(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
 
-        public virtual Pageable<User> GetAll(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Basic.User> GetAll(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetAllAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Basic.User> GetAllAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Delete(int id, RequestContext context) => throw null;
 
-        public virtual Task<Response> DeleteAsync(int id, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DeleteAsync(int id, RequestContext context) => throw null;
 
         public virtual Response Delete(int id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DeleteAsync(int id, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Export(int id, string format, RequestContext context) => throw null;
 
-        public virtual Task<Response> ExportAsync(int id, string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ExportAsync(int id, string format, RequestContext context) => throw null;
 
-        public virtual Response<User> Export(int id, string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Basic.User> Export(int id, string format, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<User>> ExportAsync(int id, string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Basic.User>> ExportAsync(int id, string format, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ExportAllUsers(string format, RequestContext context) => throw null;
 
-        public virtual Task<Response> ExportAllUsersAsync(string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ExportAllUsersAsync(string format, RequestContext context) => throw null;
 
-        public virtual Response<UserList> ExportAllUsers(string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Basic.UserList> ExportAllUsers(string format, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UserList>> ExportAllUsersAsync(string format, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Basic.UserList>> ExportAllUsersAsync(string format, CancellationToken cancellationToken = default) => throw null;
     }
 }

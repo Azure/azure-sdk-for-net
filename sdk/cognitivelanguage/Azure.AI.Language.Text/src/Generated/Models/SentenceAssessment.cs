@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class SentenceAssessment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentenceAssessment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceAssessment"/>. </summary>
         /// <param name="sentiment"> The sentiment of the sentence. </param>
         /// <param name="confidenceScores"> Represents the confidence scores across all sentiment classes: positive and negative. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
             IsNegated = isNegated;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentenceAssessment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceAssessment"/>. </summary>
         /// <param name="sentiment"> The sentiment of the sentence. </param>
         /// <param name="confidenceScores"> Represents the confidence scores across all sentiment classes: positive and negative. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         /// <param name="text"> The target text detected. </param>
         /// <param name="isNegated"> The indicator representing if the assessment is negated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentenceAssessment(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentenceAssessment(TokenSentiment sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;

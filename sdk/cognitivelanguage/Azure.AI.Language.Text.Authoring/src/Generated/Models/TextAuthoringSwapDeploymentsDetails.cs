@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringSwapDeploymentsDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringSwapDeploymentsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails"/>. </summary>
         /// <param name="firstDeploymentName"> Represents the first deployment name. </param>
         /// <param name="secondDeploymentName"> Represents the second deployment name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firstDeploymentName"/> or <paramref name="secondDeploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="firstDeploymentName"/> or <paramref name="secondDeploymentName"/> is null. </exception>
         public TextAuthoringSwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName)
         {
-            Argument.AssertNotNull(firstDeploymentName, nameof(firstDeploymentName));
-            Argument.AssertNotNull(secondDeploymentName, nameof(secondDeploymentName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(firstDeploymentName, nameof(firstDeploymentName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(secondDeploymentName, nameof(secondDeploymentName));
 
             FirstDeploymentName = firstDeploymentName;
             SecondDeploymentName = secondDeploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringSwapDeploymentsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails"/>. </summary>
         /// <param name="firstDeploymentName"> Represents the first deployment name. </param>
         /// <param name="secondDeploymentName"> Represents the second deployment name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringSwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringSwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FirstDeploymentName = firstDeploymentName;
             SecondDeploymentName = secondDeploymentName;

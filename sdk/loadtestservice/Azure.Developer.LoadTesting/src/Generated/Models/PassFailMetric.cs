@@ -14,14 +14,14 @@ namespace Azure.Developer.LoadTesting
     public partial class PassFailMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PassFailMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailMetric"/>. </summary>
         public PassFailMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PassFailMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailMetric"/>. </summary>
         /// <param name="clientMetric"> The client metric on which the criteria should be applied. </param>
         /// <param name="aggregate">
         /// The aggregation function to be applied on the client metric. Allowed functions
@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailMetric(PfMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PassFailMetric(PfMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClientMetric = clientMetric;
             Aggregate = aggregate;

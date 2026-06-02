@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The Relationship sub-client. </summary>
     public partial class Relationship
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
 
         /// <summary> Initializes a new instance of Relationship for mocking. </summary>
         protected Relationship()
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -51,8 +51,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
@@ -60,9 +60,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = this.CreateCreateRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -82,18 +82,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Create");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = this.CreateCreateRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -106,27 +106,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Create a new relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Create(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasRelationship)result, result);
+            Response result = this.Create(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasRelationship)result), result);
         }
 
         /// <summary> Create a new relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasRelationship)result, result);
+            Response result = await this.CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasRelationship)result), result);
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Update(RequestContent content, RequestContext context = null)
         {
@@ -148,9 +148,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateRequest(content, context);
+                using HttpMessage message = this.CreateUpdateRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -170,18 +170,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Update");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateRequest(content, context);
+                using HttpMessage message = this.CreateUpdateRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -194,27 +194,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Update an existing relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Update(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasRelationship)result, result);
+            Response result = this.Update(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasRelationship)result), result);
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasRelationship)result, result);
+            Response result = await this.UpdateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasRelationship)result), result);
         }
 
         /// <summary>
@@ -228,9 +228,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
@@ -238,9 +238,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
+                using HttpMessage message = this.CreateGetRelationshipRequest(guid, extendedInfo, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -261,19 +261,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
+                using HttpMessage message = this.CreateGetRelationshipRequest(guid, extendedInfo, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -287,30 +287,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetRelationship(guid, extendedInfo, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
+            Response result = this.GetRelationship(guid, extendedInfo, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasRelationshipWithExtInfo)result), result);
         }
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetRelationshipAsync(guid, extendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
+            Response result = await this.GetRelationshipAsync(guid, extendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasRelationshipWithExtInfo)result), result);
         }
 
         /// <summary>
@@ -323,9 +323,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string guid, RequestContext context)
         {
@@ -333,9 +333,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateDeleteRequest(guid, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -355,19 +355,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteAsync(string guid, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Delete");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateDeleteRequest(guid, context);
+                using HttpMessage message = this.CreateDeleteRequest(guid, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -380,27 +380,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Delete(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            return Delete(guid, cancellationToken.ToRequestContext());
+            return this.Delete(guid, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            return await DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

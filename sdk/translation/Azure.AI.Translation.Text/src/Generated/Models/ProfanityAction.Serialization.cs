@@ -14,26 +14,26 @@ namespace Azure.AI.Translation.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProfanityAction value) => value switch
         {
-            ProfanityAction.NoAction => "NoAction",
-            ProfanityAction.Marked => "Marked",
-            ProfanityAction.Deleted => "Deleted",
+            global::Azure.AI.Translation.Text.ProfanityAction.NoAction => "NoAction",
+            global::Azure.AI.Translation.Text.ProfanityAction.Marked => "Marked",
+            global::Azure.AI.Translation.Text.ProfanityAction.Deleted => "Deleted",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityAction value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ProfanityAction ToProfanityAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction"))
             {
-                return ProfanityAction.NoAction;
+                return global::Azure.AI.Translation.Text.ProfanityAction.NoAction;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Marked"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Marked"))
             {
-                return ProfanityAction.Marked;
+                return global::Azure.AI.Translation.Text.ProfanityAction.Marked;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
             {
-                return ProfanityAction.Deleted;
+                return global::Azure.AI.Translation.Text.ProfanityAction.Deleted;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityAction value.");
         }

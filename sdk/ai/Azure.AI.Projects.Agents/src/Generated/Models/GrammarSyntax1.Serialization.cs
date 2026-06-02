@@ -11,21 +11,21 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this GrammarSyntax1 value) => value switch
         {
-            GrammarSyntax1.Lark => "lark",
-            GrammarSyntax1.Regex => "regex",
+            global::OpenAI.GrammarSyntax1.Lark => "lark",
+            global::OpenAI.GrammarSyntax1.Regex => "regex",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GrammarSyntax1 value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static GrammarSyntax1 ToGrammarSyntax1(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lark"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lark"))
             {
-                return GrammarSyntax1.Lark;
+                return global::OpenAI.GrammarSyntax1.Lark;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "regex"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "regex"))
             {
-                return GrammarSyntax1.Regex;
+                return global::OpenAI.GrammarSyntax1.Regex;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GrammarSyntax1 value.");
         }

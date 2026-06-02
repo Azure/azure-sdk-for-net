@@ -13,25 +13,25 @@ namespace Azure.AI.VoiceLive
     /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
     public partial class SessionUpdateResponseAnimationBlendshapeDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal SessionUpdateResponseAnimationBlendshapeDone(string responseId, string itemId, int outputIndex) : base(ServerEventType.ResponseAnimationBlendshapesDone)
+        internal SessionUpdateResponseAnimationBlendshapeDone(string responseId, string itemId, int outputIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAnimationBlendshapesDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal SessionUpdateResponseAnimationBlendshapeDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAnimationBlendshapeDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

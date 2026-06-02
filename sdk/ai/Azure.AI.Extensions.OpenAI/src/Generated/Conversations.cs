@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class Conversations
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
 
         /// <summary> Initializes a new instance of Conversations for mocking. </summary>
         protected Conversations()
@@ -24,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of Conversations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Conversations(ClientPipeline pipeline, Uri endpoint)
+        internal Conversations(ClientPipeline pipeline, global::System.Uri endpoint)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -44,12 +44,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateConversation(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateConversationRequest(content, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateConversationAsync(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateConversationRequest(content, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a conversation. </summary>
@@ -76,12 +76,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="items"></param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Extensions.OpenAI.ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<global::Azure.AI.Extensions.OpenAI.InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = CreateConversation(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, (items?.ToList() as IList<global::Azure.AI.Extensions.OpenAI.InputItem> ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.InputItem>()), default);
+            ClientResult result = this.CreateConversation(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectConversation)result), result.GetRawResponse());
         }
 
         /// <summary> Create a conversation. </summary>
@@ -89,12 +89,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="items"></param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Extensions.OpenAI.ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<global::Azure.AI.Extensions.OpenAI.InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = await CreateConversationAsync(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, (items?.ToList() as IList<global::Azure.AI.Extensions.OpenAI.InputItem> ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.InputItem>()), default);
+            ClientResult result = await this.CreateConversationAsync(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectConversation)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -109,12 +109,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -129,12 +129,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Update a conversation. </summary>
@@ -145,12 +145,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Extensions.OpenAI.ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = UpdateConversation(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            ClientResult result = this.UpdateConversation(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectConversation)result), result.GetRawResponse());
         }
 
         /// <summary> Update a conversation. </summary>
@@ -161,12 +161,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Extensions.OpenAI.ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            ClientResult result = await this.UpdateConversationAsync(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectConversation)result), result.GetRawResponse());
         }
     }
 }

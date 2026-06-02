@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Models
     public partial class SingleVectorFieldResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SingleVectorFieldResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SingleVectorFieldResult"/>. </summary>
         internal SingleVectorFieldResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SingleVectorFieldResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SingleVectorFieldResult"/>. </summary>
         /// <param name="searchScore"> The. </param>
         /// <param name="vectorSimilarity"> The vector similarity score for this document. Note this is the canonical definition of similarity metric, not the 'distance' version. For example, cosine similarity instead of cosine distance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SingleVectorFieldResult(double? searchScore, double? vectorSimilarity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SingleVectorFieldResult(double? searchScore, double? vectorSimilarity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchScore = searchScore;
             VectorSimilarity = vectorSimilarity;

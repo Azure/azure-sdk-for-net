@@ -17,71 +17,71 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class SingleDiscriminatorClient
     {
-        public SingleDiscriminatorClient() : this(new Uri("http://localhost:3000"), new SingleDiscriminatorClientOptions()) => throw null;
+        public SingleDiscriminatorClient() : this(new global::System.Uri("http://localhost:3000"), new SingleDiscriminatorClientOptions()) => throw null;
 
-        internal SingleDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
+        internal SingleDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
 
-        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
+        public SingleDiscriminatorClient(global::System.Uri endpoint, SingleDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public SingleDiscriminatorClient(SingleDiscriminatorClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public SingleDiscriminatorClient(SingleDiscriminatorClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Bird> GetModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> GetModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Bird>> GetModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>> GetModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutModel(Bird input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutModelAsync(Bird input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(Bird input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetRecursiveModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetRecursiveModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetRecursiveModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Bird> GetRecursiveModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> GetRecursiveModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Bird>> GetRecursiveModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>> GetRecursiveModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutRecursiveModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutRecursiveModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutRecursiveModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutRecursiveModel(Bird input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutRecursiveModelAsync(Bird input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutRecursiveModelAsync(Bird input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetMissingDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetMissingDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetMissingDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Bird> GetMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> GetMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Bird>> GetMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>> GetMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetWrongDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetWrongDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetWrongDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Bird> GetWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> GetWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Bird>> GetWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.SingleDiscriminator.Bird>> GetWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetLegacyModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetLegacyModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetLegacyModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Dinosaur> GetLegacyModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.SingleDiscriminator.Dinosaur> GetLegacyModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Dinosaur>> GetLegacyModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.SingleDiscriminator.Dinosaur>> GetLegacyModelAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

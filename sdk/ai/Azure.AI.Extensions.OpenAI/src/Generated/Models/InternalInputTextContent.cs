@@ -10,20 +10,20 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalInputTextContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
         internal InternalInputTextContent(string text)
         {
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputTextContent"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_text`. </param>
         /// <param name="text"> The text input to the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputTextContent(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputTextContent(string @type, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;

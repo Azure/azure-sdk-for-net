@@ -14,12 +14,12 @@ namespace Azure.AI.Projects.Agents
     /// </summary>
     public partial class ExternalAgentDefinition : ProjectsAgentDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalAgentDefinition"/>. </summary>
-        public ExternalAgentDefinition() : base(ProjectsAgentKind.External)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ExternalAgentDefinition"/>. </summary>
+        public ExternalAgentDefinition() : base(global::Azure.AI.Projects.Agents.ProjectsAgentKind.External)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ExternalAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// where the running external agent already emits a stable id that differs from the Foundry agent name.
         /// The resolved value is always echoed on read.
         /// </param>
-        internal ExternalAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string otelAgentId) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal ExternalAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string otelAgentId) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             OtelAgentId = otelAgentId;
         }

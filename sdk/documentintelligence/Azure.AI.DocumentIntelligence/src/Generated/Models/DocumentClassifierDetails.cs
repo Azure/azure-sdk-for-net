@@ -14,23 +14,23 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentClassifierDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             CreatedOn = createdOn;
             ApiVersion = apiVersion;
             DocumentTypes = documentTypes;
-            Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
+            Warnings = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, string baseClassifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, string baseClassifierId, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClassifierId = classifierId;
             Description = description;
@@ -77,9 +77,9 @@ namespace Azure.AI.DocumentIntelligence
         public string BaseClassifierId { get; }
 
         /// <summary> List of document types to classify against. </summary>
-        public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocumentTypes { get; }
+        public IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> DocumentTypes { get; }
 
         /// <summary> List of warnings encountered while building the classifier. </summary>
-        public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get; }
     }
 }

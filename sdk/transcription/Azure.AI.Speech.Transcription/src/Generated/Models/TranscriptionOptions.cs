@@ -11,9 +11,9 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionOptions"/>. </summary>
         /// <param name="audioUri"> The URL of the audio to be transcribed. The audio must be shorter than 2 hours in audio duration and smaller than 250 MB in size. If both Audio and AudioUrl are provided, Audio is used. </param>
         /// <param name="locales"> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </param>
         /// <param name="models"> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="enhancedMode"> Enhanced mode properties. </param>
         /// <param name="phraseList"> Phrase list properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionOptions(Uri audioUri, IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationOptions, IList<int> activeChannels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionOptions(global::System.Uri audioUri, IList<string> locales, IDictionary<string, global::System.Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationOptions, IList<int> activeChannels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AudioUri = audioUri;
             Locales = locales;
@@ -40,7 +40,7 @@ namespace Azure.AI.Speech.Transcription
         public IList<string> Locales { get; }
 
         /// <summary> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </summary>
-        public IDictionary<string, Uri> Models { get; }
+        public IDictionary<string, global::System.Uri> Models { get; }
 
         /// <summary> Mode of profanity filtering. </summary>
         public ProfanityFilterMode? ProfanityFilterMode { get; set; }

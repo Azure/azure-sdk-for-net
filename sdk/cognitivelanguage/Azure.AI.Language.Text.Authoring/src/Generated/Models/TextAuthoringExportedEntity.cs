@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity"/>. </summary>
         public TextAuthoringExportedEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity"/>. </summary>
         /// <param name="category"> The entity category. </param>
         /// <param name="description"> Short description for entity category. Required when enabling synthetic data generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedEntity(string category, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedEntity(string category, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Description = description;

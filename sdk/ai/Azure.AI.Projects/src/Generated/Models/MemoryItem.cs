@@ -9,14 +9,14 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Memory.UserProfileMemoryItem"/>, <see cref="Azure.AI.Projects.Memory.ChatSummaryMemoryItem"/>, and <see cref="Azure.AI.Projects.ProceduralMemoryItem"/>.
     /// </summary>
     public abstract partial class MemoryItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.Projects.Memory
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MemoryId = memoryId;
             UpdatedAt = updatedAt;

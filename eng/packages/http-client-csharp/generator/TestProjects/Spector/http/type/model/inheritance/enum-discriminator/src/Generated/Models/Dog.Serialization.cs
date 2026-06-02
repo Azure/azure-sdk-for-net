@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    [PersistableModelProxy(typeof(UnknownDog))]
-    public abstract partial class Dog : IJsonModel<Dog>
+    [PersistableModelProxyAttribute(typeof(UnknownDog))]
+    public abstract partial class Dog : IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>
     {
         internal Dog() => throw null;
 
@@ -22,22 +22,22 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Dog>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Dog IPersistableModel<Dog>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Dog IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Dog>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="dog"> The <see cref="Dog"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="dog"> The <see cref="global::_Type.Model.Inheritance.EnumDiscriminator.Dog"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Dog dog) => throw null;
 
         public static explicit operator Dog(Response response) => throw null;
 
-        void IJsonModel<Dog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Dog IJsonModel<Dog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Dog IJsonModel<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Dog JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The value item of the search suggest. </summary>
-    public partial class SuggestResultValue : IJsonModel<SuggestResultValue>
+    public partial class SuggestResultValue : IJsonModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SuggestResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSuggestResultValue(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.SuggestResultValue.DeserializeSuggestResultValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuggestResultValue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.SuggestResultValue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SuggestResultValue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.SuggestResultValue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SuggestResultValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SuggestResultValue IPersistableModel<SuggestResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SuggestResultValue IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SuggestResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SuggestResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,68 +68,68 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SuggestResultValue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.SuggestResultValue)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SearchScore))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(SearchScore))
             {
                 writer.WritePropertyName("@search.score"u8);
                 writer.WriteNumberValue(SearchScore.Value);
             }
-            if (Optional.IsDefined(SearchText))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(SearchText))
             {
                 writer.WritePropertyName("@search.text"u8);
                 writer.WriteStringValue(SearchText);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Optional.IsDefined(CreateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CreateTime))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteNumberValue(CreateTime.Value);
             }
-            if (Optional.IsDefined(UpdateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(UpdateTime))
             {
                 writer.WritePropertyName("updateTime"u8);
                 writer.WriteNumberValue(UpdateTime.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(QualifiedName))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(QualifiedName))
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
             }
-            if (Optional.IsDefined(EntityType))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Endorsement))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Endorsement))
             {
                 writer.WritePropertyName("endorsement"u8);
                 writer.WriteStartArray();
                 foreach (string item in Endorsement)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -138,18 +138,18 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Owner))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsCollectionDefined(Classification))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStartArray();
                 foreach (string item in Classification)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -158,13 +158,13 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Label))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStartArray();
                 foreach (string item in Label)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -173,33 +173,33 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Term))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStartArray();
                 foreach (TermSearchResultValue item in Term)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TermSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Contact))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteStartArray();
                 foreach (ContactSearchResultValue item in Contact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContactSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AssetType))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(AssetType))
             {
                 writer.WritePropertyName("assetType"u8);
                 writer.WriteStartArray();
                 foreach (string item in AssetType)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -208,28 +208,28 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GlossaryType))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(GlossaryType))
             {
                 writer.WritePropertyName("glossaryType"u8);
                 writer.WriteStringValue(GlossaryType);
             }
-            if (Optional.IsDefined(Glossary))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Glossary))
             {
                 writer.WritePropertyName("glossary"u8);
                 writer.WriteStringValue(Glossary);
             }
-            if (Optional.IsDefined(TermStatus))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TermStatus))
             {
                 writer.WritePropertyName("termStatus"u8);
                 writer.WriteStringValue(TermStatus);
             }
-            if (Optional.IsCollectionDefined(TermTemplate))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(TermTemplate))
             {
                 writer.WritePropertyName("termTemplate"u8);
                 writer.WriteStartArray();
                 foreach (string item in TermTemplate)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -238,12 +238,12 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LongDescription))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LongDescription))
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -251,9 +251,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -262,26 +262,26 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SuggestResultValue IJsonModel<SuggestResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SuggestResultValue IJsonModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SuggestResultValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SuggestResultValue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.SuggestResultValue)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSuggestResultValue(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.SuggestResultValue.DeserializeSuggestResultValue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SuggestResultValue DeserializeSuggestResultValue(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -299,20 +299,20 @@ namespace Azure.Analytics.Purview.DataMap
             string owner = default;
             IList<string> classification = default;
             IList<string> label = default;
-            IList<TermSearchResultValue> term = default;
-            IList<ContactSearchResultValue> contact = default;
+            IList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = default;
+            IList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = default;
             IList<string> assetType = default;
             string glossaryType = default;
             string glossary = default;
             string termStatus = default;
             IList<string> termTemplate = default;
             string longDescription = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@search.score"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -331,7 +331,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("createTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("updateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -374,14 +374,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("endorsement"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -400,14 +400,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("classification"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -421,14 +421,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("label"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -442,42 +442,42 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("term"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TermSearchResultValue> array = new List<TermSearchResultValue>();
+                    List<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> array = new List<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TermSearchResultValue.DeserializeTermSearchResultValue(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.TermSearchResultValue.DeserializeTermSearchResultValue(item, options));
                     }
                     term = array;
                     continue;
                 }
                 if (prop.NameEquals("contact"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContactSearchResultValue> array = new List<ContactSearchResultValue>();
+                    List<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> array = new List<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContactSearchResultValue.DeserializeContactSearchResultValue(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue.DeserializeContactSearchResultValue(item, options));
                     }
                     contact = array;
                     continue;
                 }
                 if (prop.NameEquals("assetType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -506,14 +506,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("termTemplate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -530,9 +530,9 @@ namespace Azure.Analytics.Purview.DataMap
                     longDescription = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SuggestResultValue(
@@ -546,17 +546,17 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement ?? new ChangeTrackingList<string>(),
+                (endorsement ?? new ChangeTrackingList<string>()),
                 owner,
-                classification ?? new ChangeTrackingList<string>(),
-                label ?? new ChangeTrackingList<string>(),
-                term ?? new ChangeTrackingList<TermSearchResultValue>(),
-                contact ?? new ChangeTrackingList<ContactSearchResultValue>(),
-                assetType ?? new ChangeTrackingList<string>(),
+                (classification ?? new ChangeTrackingList<string>()),
+                (label ?? new ChangeTrackingList<string>()),
+                (term ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue>()),
+                (contact ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue>()),
+                (assetType ?? new ChangeTrackingList<string>()),
                 glossaryType,
                 glossary,
                 termStatus,
-                termTemplate ?? new ChangeTrackingList<string>(),
+                (termTemplate ?? new ChangeTrackingList<string>()),
                 longDescription,
                 additionalBinaryDataProperties);
         }

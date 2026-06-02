@@ -14,9 +14,9 @@ namespace Azure.AI.Translation.Text
     public partial class TransliteratedText
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TransliteratedText"/>. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
         internal TransliteratedText(string text, string script)
@@ -25,11 +25,11 @@ namespace Azure.AI.Translation.Text
             Script = script;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TransliteratedText"/>. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransliteratedText(string text, string script, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransliteratedText(string text, string script, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Script = script;

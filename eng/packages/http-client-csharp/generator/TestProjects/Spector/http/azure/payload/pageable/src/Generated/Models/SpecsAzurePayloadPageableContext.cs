@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Payload.Pageable
 {
-    [ModelReaderWriterBuildable(typeof(User))]
+    [ModelReaderWriterBuildableAttribute(typeof(User))]
     public partial class SpecsAzurePayloadPageableContext : ModelReaderWriterContext
     {
     }

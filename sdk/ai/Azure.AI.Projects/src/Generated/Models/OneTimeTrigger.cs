@@ -10,19 +10,19 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> One-time trigger. </summary>
     public partial class OneTimeTrigger : ScheduleTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.OneTimeTrigger"/>. </summary>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
-        public OneTimeTrigger(DateTimeOffset triggerAt) : base(TriggerType.OneTime)
+        public OneTimeTrigger(DateTimeOffset triggerAt) : base(global::Azure.AI.Projects.Evaluation.TriggerType.OneTime)
         {
             TriggerAt = triggerAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.OneTimeTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
         /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
-        internal OneTimeTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset triggerAt, string timeZone) : base(@type, additionalBinaryDataProperties)
+        internal OneTimeTrigger(TriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset triggerAt, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             TriggerAt = triggerAt;
             TimeZone = timeZone;

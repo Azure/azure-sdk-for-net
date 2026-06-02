@@ -13,13 +13,13 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a streamed file citation applied to a streaming text content part. </summary>
     public partial class MessageDeltaTextFileCitationAnnotation : MessageDeltaTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFileCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         internal MessageDeltaTextFileCitationAnnotation(int index) : base(index, "file_citation")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFileCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
-        internal MessageDeltaTextFileCitationAnnotation(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageDeltaTextFileCitationAnnotationObject fileCitation, string text, int? startIndex, int? endIndex) : base(index, @type, additionalBinaryDataProperties)
+        internal MessageDeltaTextFileCitationAnnotation(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageDeltaTextFileCitationAnnotationObject fileCitation, string text, int? startIndex, int? endIndex) : base(index, @type, additionalBinaryDataProperties)
         {
             FileCitation = fileCitation;
             Text = text;

@@ -14,14 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRecordingChunkInfoProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties"/>. </summary>
         internal AcsRecordingChunkInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties"/>. </summary>
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <param name="deleteLocation"> The location to delete all chunk storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DocumentId = documentId;
             Index = index;

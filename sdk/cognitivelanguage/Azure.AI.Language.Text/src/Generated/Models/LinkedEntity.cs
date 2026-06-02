@@ -15,15 +15,15 @@ namespace Azure.AI.Language.Text
     public partial class LinkedEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
-        internal LinkedEntity(string name, IEnumerable<EntityLinkingMatch> matches, string language, string url, string dataSource)
+        internal LinkedEntity(string name, IEnumerable<global::Azure.AI.Language.Text.EntityLinkingMatch> matches, string language, string url, string dataSource)
         {
             Name = name;
             Matches = matches.ToList();
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
             DataSource = dataSource;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
         /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedEntity(string name, IList<EntityLinkingMatch> matches, string language, string id, string url, string dataSource, string bingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinkedEntity(string name, IList<global::Azure.AI.Language.Text.EntityLinkingMatch> matches, string language, string id, string url, string dataSource, string bingId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Matches = matches;
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text
         public string Name { get; }
 
         /// <summary> List of instances this entity appears in the text. </summary>
-        public IList<EntityLinkingMatch> Matches { get; }
+        public IList<global::Azure.AI.Language.Text.EntityLinkingMatch> Matches { get; }
 
         /// <summary> Language used in the data source. </summary>
         public string Language { get; }

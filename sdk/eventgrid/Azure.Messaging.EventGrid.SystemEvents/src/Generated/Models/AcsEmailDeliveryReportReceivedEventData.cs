@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailDeliveryReportReceivedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
         /// <param name="internetMessageId"> The Internet Message Id of the email that has been sent. </param>
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DeliveryStatusDetails = deliveryStatusDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
         /// <param name="internetMessageId"> The Internet Message Id of the email that has been sent. </param>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
         /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, string messageId, AcsEmailDeliveryReportStatus? status, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails, DateTimeOffset? deliveryAttemptTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, string messageId, AcsEmailDeliveryReportStatus? status, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails, DateTimeOffset? deliveryAttemptTimestamp, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sender = sender;
             Recipient = recipient;

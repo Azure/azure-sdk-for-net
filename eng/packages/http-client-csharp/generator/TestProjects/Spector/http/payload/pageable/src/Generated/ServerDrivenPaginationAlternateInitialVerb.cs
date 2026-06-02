@@ -18,16 +18,16 @@ namespace Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb
     {
         protected ServerDrivenPaginationAlternateInitialVerb() => throw null;
 
-        internal ServerDrivenPaginationAlternateInitialVerb(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ServerDrivenPaginationAlternateInitialVerb(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> Post(RequestContent content, RequestContext context = null) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> Post(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual AsyncPageable<BinaryData> PostAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> PostAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Pageable<Pet> Post(Filter body, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> Post(Filter body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> PostAsync(Filter body, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> PostAsync(Filter body, CancellationToken cancellationToken = default) => throw null;
     }
 }

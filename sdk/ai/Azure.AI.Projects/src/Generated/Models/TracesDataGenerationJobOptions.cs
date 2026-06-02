@@ -10,19 +10,19 @@ namespace Azure.AI.Projects
     /// <summary> The options for a data generation job with Traces type. </summary>
     public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
     {
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TracesDataGenerationJobOptions"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
-        public TracesDataGenerationJobOptions(int maxSamples) : base(DataGenerationJobKind.Traces, maxSamples)
+        public TracesDataGenerationJobOptions(int maxSamples) : base(global::Azure.AI.Projects.DataGenerationJobKind.Traces, maxSamples)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TracesDataGenerationJobOptions"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TracesDataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
         }
     }

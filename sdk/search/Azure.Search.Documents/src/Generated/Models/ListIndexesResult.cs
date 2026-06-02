@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class ListIndexesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListIndexesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListIndexesResult"/>. </summary>
         internal ListIndexesResult()
         {
-            Indexes = new ChangeTrackingList<SearchIndex>();
+            Indexes = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndex>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListIndexesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListIndexesResult"/>. </summary>
         /// <param name="count"> The total count of indexes in the service, or null if the count was not requested. </param>
         /// <param name="indexes"> The indexes in the Search service. </param>
         /// <param name="nextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexesResult(long? count, IReadOnlyList<SearchIndex> indexes, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListIndexesResult(long? count, IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndex> indexes, string nextLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Indexes = indexes;
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public long? Count { get; }
 
         /// <summary> The indexes in the Search service. </summary>
-        public IReadOnlyList<SearchIndex> Indexes { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndex> Indexes { get; }
 
         /// <summary> The URL that can be used to fetch the next set of results. </summary>
         public string NextLink { get; }

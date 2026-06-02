@@ -14,12 +14,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.WebKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.WorkIQKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.McpServerKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FileKnowledgeSourceParams"/>, and <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
-    public abstract partial class KnowledgeSourceParams : IJsonModel<KnowledgeSourceParams>
+    [PersistableModelProxyAttribute(typeof(UnknownKnowledgeSourceParams))]
+    public abstract partial class KnowledgeSourceParams : IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams"/> for deserialization. </summary>
         internal KnowledgeSourceParams()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeSourceParams(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams.DeserializeKnowledgeSourceParams(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeSourceParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceParams IPersistableModel<KnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceParams IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeSourceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeSourceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,51 +77,51 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("knowledgeSourceName"u8);
             writer.WriteStringValue(KnowledgeSourceName);
-            if (Optional.IsDefined(IncludeReferences))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IncludeReferences))
             {
                 writer.WritePropertyName("includeReferences"u8);
                 writer.WriteBooleanValue(IncludeReferences.Value);
             }
-            if (Optional.IsDefined(IncludeReferenceSourceData))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IncludeReferenceSourceData))
             {
                 writer.WritePropertyName("includeReferenceSourceData"u8);
                 writer.WriteBooleanValue(IncludeReferenceSourceData.Value);
             }
-            if (Optional.IsDefined(AlwaysQuerySource))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AlwaysQuerySource))
             {
                 writer.WritePropertyName("alwaysQuerySource"u8);
                 writer.WriteBooleanValue(AlwaysQuerySource.Value);
             }
-            if (Optional.IsDefined(FailOnError))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FailOnError))
             {
                 writer.WritePropertyName("failOnError"u8);
                 writer.WriteBooleanValue(FailOnError.Value);
             }
-            if (Optional.IsDefined(RerankerThreshold))
+            if (global::Azure.Search.Documents.Optional.IsDefined(RerankerThreshold))
             {
                 writer.WritePropertyName("rerankerThreshold"u8);
                 writer.WriteNumberValue(RerankerThreshold.Value);
             }
-            if (Optional.IsDefined(MaxOutputDocuments))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MaxOutputDocuments))
             {
                 writer.WritePropertyName("maxOutputDocuments"u8);
                 writer.WriteNumberValue(MaxOutputDocuments.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(EnableImageServing))
+            if (global::Azure.Search.Documents.Optional.IsDefined(EnableImageServing))
             {
                 writer.WritePropertyName("enableImageServing"u8);
                 writer.WriteBooleanValue(EnableImageServing.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -129,9 +129,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -140,26 +140,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceParams IJsonModel<KnowledgeSourceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceParams IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeSourceParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeSourceParams(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams.DeserializeKnowledgeSourceParams(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeSourceParams DeserializeKnowledgeSourceParams(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -168,32 +168,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 switch (discriminator.GetString())
                 {
                     case "searchIndex":
-                        return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
                     case "azureBlob":
-                        return AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
                     case "indexedSharePoint":
-                        return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
                     case "indexedOneLake":
-                        return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
                     case "web":
-                        return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
                     case "remoteSharePoint":
-                        return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
                     case "workIQ":
-                        return WorkIQKnowledgeSourceParams.DeserializeWorkIQKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQKnowledgeSourceParams.DeserializeWorkIQKnowledgeSourceParams(element, options);
                     case "fabricDataAgent":
-                        return FabricDataAgentKnowledgeSourceParams.DeserializeFabricDataAgentKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams.DeserializeFabricDataAgentKnowledgeSourceParams(element, options);
                     case "fabricOntology":
-                        return FabricOntologyKnowledgeSourceParams.DeserializeFabricOntologyKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams.DeserializeFabricOntologyKnowledgeSourceParams(element, options);
                     case "mcpServer":
-                        return McpServerKnowledgeSourceParams.DeserializeMcpServerKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.McpServerKnowledgeSourceParams.DeserializeMcpServerKnowledgeSourceParams(element, options);
                     case "file":
-                        return FileKnowledgeSourceParams.DeserializeFileKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.FileKnowledgeSourceParams.DeserializeFileKnowledgeSourceParams(element, options);
                     case "indexedSql":
-                        return IndexedSqlKnowledgeSourceParams.DeserializeIndexedSqlKnowledgeSourceParams(element, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams.DeserializeIndexedSqlKnowledgeSourceParams(element, options);
                 }
             }
-            return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);
         }
     }
 }

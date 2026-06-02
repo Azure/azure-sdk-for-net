@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithEnum : IPersistableModel<ModelWithEnum>, IXmlSerializable
+    public partial class ModelWithEnum : IPersistableModel<global::Payload.Xml.ModelWithEnum>, IXmlSerializable
     {
         internal ModelWithEnum() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithEnum>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithEnum>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithEnum IPersistableModel<ModelWithEnum>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithEnum IPersistableModel<global::Payload.Xml.ModelWithEnum>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithEnum>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithEnum>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithEnum"> The <see cref="ModelWithEnum"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithEnum"> The <see cref="global::Payload.Xml.ModelWithEnum"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithEnum modelWithEnum) => throw null;
 
         public static explicit operator ModelWithEnum(Response response) => throw null;

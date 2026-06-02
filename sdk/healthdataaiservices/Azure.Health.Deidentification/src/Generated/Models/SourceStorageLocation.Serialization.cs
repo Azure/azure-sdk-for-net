@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Storage location. </summary>
-    public partial class SourceStorageLocation : IJsonModel<SourceStorageLocation>
+    public partial class SourceStorageLocation : IJsonModel<global::Azure.Health.Deidentification.SourceStorageLocation>
     {
-        /// <summary> Initializes a new instance of <see cref="SourceStorageLocation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.SourceStorageLocation"/> for deserialization. </summary>
         internal SourceStorageLocation()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SourceStorageLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Health.Deidentification.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSourceStorageLocation(document.RootElement, options);
+                        return global::Azure.Health.Deidentification.SourceStorageLocation.DeserializeSourceStorageLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceStorageLocation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.SourceStorageLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Health.Deidentification.AzureHealthDeidentificationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SourceStorageLocation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.SourceStorageLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SourceStorageLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SourceStorageLocation IPersistableModel<SourceStorageLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SourceStorageLocation IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SourceStorageLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SourceStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Health.Deidentification.SourceStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,22 +73,22 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SourceStorageLocation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.SourceStorageLocation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location.AbsoluteUri);
             writer.WritePropertyName("prefix"u8);
             writer.WriteStringValue(Prefix);
-            if (Optional.IsCollectionDefined(Extensions))
+            if (global::Azure.Health.Deidentification.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (string item in Extensions)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -97,7 +97,7 @@ namespace Azure.Health.Deidentification
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -105,9 +105,9 @@ namespace Azure.Health.Deidentification
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -116,38 +116,38 @@ namespace Azure.Health.Deidentification
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SourceStorageLocation IJsonModel<SourceStorageLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SourceStorageLocation IJsonModel<global::Azure.Health.Deidentification.SourceStorageLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SourceStorageLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.SourceStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SourceStorageLocation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.SourceStorageLocation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSourceStorageLocation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Health.Deidentification.SourceStorageLocation.DeserializeSourceStorageLocation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SourceStorageLocation DeserializeSourceStorageLocation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            Uri location = default;
+            global::System.Uri location = default;
             string prefix = default;
             IList<string> extensions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    location = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))
@@ -157,14 +157,14 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("extensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -176,12 +176,12 @@ namespace Azure.Health.Deidentification
                     extensions = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SourceStorageLocation(location, prefix, extensions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new SourceStorageLocation(location, prefix, (extensions ?? new ChangeTrackingList<string>()), additionalBinaryDataProperties);
         }
     }
 }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The SslCertAsset. </summary>
-    public partial class SslCertAsset : InventoryAsset, IJsonModel<SslCertAsset>
+    public partial class SslCertAsset : InventoryAsset, IJsonModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSslCertAsset(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.SslCertAsset.DeserializeSslCertAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SslCertAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.SslCertAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SslCertAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.SslCertAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SslCertAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SslCertAsset IPersistableModel<SslCertAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (SslCertAsset)PersistableModelCreateCore(data, options);
+        SslCertAsset IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SslCertAsset)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SslCertAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SslCertAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,24 +68,24 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SslCertAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.SslCertAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sha1))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Sha1))
             {
                 writer.WritePropertyName("sha1"u8);
                 writer.WriteStringValue(Sha1);
             }
-            if (Optional.IsCollectionDefined(SubjectCommonNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectCommonNames))
             {
                 writer.WritePropertyName("subjectCommonNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectCommonNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -94,13 +94,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Organizations))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Organizations))
             {
                 writer.WritePropertyName("organizations"u8);
                 writer.WriteStartArray();
                 foreach (string item in Organizations)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -109,13 +109,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OrganizationalUnits))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(OrganizationalUnits))
             {
                 writer.WritePropertyName("organizationalUnits"u8);
                 writer.WriteStartArray();
                 foreach (string item in OrganizationalUnits)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -124,13 +124,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerCommonNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerCommonNames))
             {
                 writer.WritePropertyName("issuerCommonNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerCommonNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -139,28 +139,28 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SigAlgName))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SigAlgName))
             {
                 writer.WritePropertyName("sigAlgName"u8);
                 writer.WriteStringValue(SigAlgName);
             }
-            if (Optional.IsDefined(InvalidAfter))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(InvalidAfter))
             {
                 writer.WritePropertyName("invalidAfter"u8);
                 writer.WriteStringValue(InvalidAfter.Value, "O");
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectAlternativeNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -169,13 +169,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerAlternativeNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerAlternativeNames))
             {
                 writer.WritePropertyName("issuerAlternativeNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerAlternativeNames)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -184,53 +184,53 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (SourceDetails item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(InvalidBefore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(InvalidBefore))
             {
                 writer.WritePropertyName("invalidBefore"u8);
                 writer.WriteStringValue(InvalidBefore.Value, "O");
             }
-            if (Optional.IsDefined(KeySize))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(KeySize))
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Optional.IsDefined(KeyAlgorithm))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(KeyAlgorithm))
             {
                 writer.WritePropertyName("keyAlgorithm"u8);
                 writer.WriteStringValue(KeyAlgorithm);
             }
-            if (Optional.IsCollectionDefined(SubjectLocality))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectLocality))
             {
                 writer.WritePropertyName("subjectLocality"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectLocality)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -239,13 +239,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectState))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectState))
             {
                 writer.WritePropertyName("subjectState"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectState)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -254,13 +254,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectCountry))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectCountry))
             {
                 writer.WritePropertyName("subjectCountry"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectCountry)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -269,13 +269,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerLocality))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerLocality))
             {
                 writer.WritePropertyName("issuerLocality"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerLocality)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -284,13 +284,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerState))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerState))
             {
                 writer.WritePropertyName("issuerState"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerState)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -299,13 +299,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerCountry))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerCountry))
             {
                 writer.WritePropertyName("issuerCountry"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerCountry)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -314,13 +314,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectOrganizations))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectOrganizations))
             {
                 writer.WritePropertyName("subjectOrganizations"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectOrganizations)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -329,13 +329,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectOrganizationalUnits))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SubjectOrganizationalUnits))
             {
                 writer.WritePropertyName("subjectOrganizationalUnits"u8);
                 writer.WriteStartArray();
                 foreach (string item in SubjectOrganizationalUnits)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -344,13 +344,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerOrganizations))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerOrganizations))
             {
                 writer.WritePropertyName("issuerOrganizations"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerOrganizations)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -359,13 +359,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerOrganizationalUnits))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IssuerOrganizationalUnits))
             {
                 writer.WritePropertyName("issuerOrganizationalUnits"u8);
                 writer.WriteStartArray();
                 foreach (string item in IssuerOrganizationalUnits)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -374,32 +374,32 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Version))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(CertificateAuthority))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteBooleanValue(CertificateAuthority.Value);
             }
-            if (Optional.IsDefined(SelfSigned))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SelfSigned))
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteBooleanValue(SelfSigned.Value);
             }
-            if (Optional.IsDefined(SigAlgOid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SigAlgOid))
             {
                 writer.WritePropertyName("sigAlgOid"u8);
                 writer.WriteStringValue(SigAlgOid);
             }
-            if (Optional.IsDefined(Recent))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsDefined(ValidationType))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ValidationType))
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
@@ -408,30 +408,30 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SslCertAsset IJsonModel<SslCertAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SslCertAsset)JsonModelCreateCore(ref reader, options);
+        SslCertAsset IJsonModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SslCertAsset)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SslCertAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.SslCertAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSslCertAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.SslCertAsset.DeserializeSslCertAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SslCertAsset DeserializeSslCertAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string sha1 = default;
             IList<string> subjectCommonNames = default;
             IList<string> organizations = default;
@@ -442,7 +442,7 @@ namespace Azure.Analytics.Defender.Easm
             string serialNumber = default;
             IList<string> subjectAlternativeNames = default;
             IList<string> issuerAlternativeNames = default;
-            IList<SourceDetails> sources = default;
+            IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
@@ -474,14 +474,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectCommonNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -495,14 +495,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("organizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -516,14 +516,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("organizationalUnits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -537,14 +537,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerCommonNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -563,7 +563,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("invalidAfter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -577,14 +577,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectAlternativeNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -598,14 +598,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerAlternativeNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -619,21 +619,21 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("sources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.SourceDetails> array = new List<global::Azure.Analytics.Defender.Easm.SourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -651,7 +651,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -660,7 +660,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("invalidBefore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -669,7 +669,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("keySize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -683,14 +683,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectLocality"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -704,14 +704,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -725,14 +725,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectCountry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -746,14 +746,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerLocality"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -767,14 +767,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -788,14 +788,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerCountry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -809,14 +809,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectOrganizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -830,14 +830,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("subjectOrganizationalUnits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -851,14 +851,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerOrganizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -872,14 +872,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("issuerOrganizationalUnits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -893,7 +893,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -902,7 +902,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("certificateAuthority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -911,7 +911,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("selfSigned"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -925,7 +925,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("recent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -934,47 +934,47 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("validationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     validationType = new SslCertAssetValidationType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SslCertAsset(
                 additionalBinaryDataProperties,
                 sha1,
-                subjectCommonNames ?? new ChangeTrackingList<string>(),
-                organizations ?? new ChangeTrackingList<string>(),
-                organizationalUnits ?? new ChangeTrackingList<string>(),
-                issuerCommonNames ?? new ChangeTrackingList<string>(),
+                (subjectCommonNames ?? new ChangeTrackingList<string>()),
+                (organizations ?? new ChangeTrackingList<string>()),
+                (organizationalUnits ?? new ChangeTrackingList<string>()),
+                (issuerCommonNames ?? new ChangeTrackingList<string>()),
                 sigAlgName,
                 invalidAfter,
                 serialNumber,
-                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
-                issuerAlternativeNames ?? new ChangeTrackingList<string>(),
-                sources ?? new ChangeTrackingList<SourceDetails>(),
+                (subjectAlternativeNames ?? new ChangeTrackingList<string>()),
+                (issuerAlternativeNames ?? new ChangeTrackingList<string>()),
+                (sources ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>()),
                 firstSeen,
                 lastSeen,
                 count,
                 invalidBefore,
                 keySize,
                 keyAlgorithm,
-                subjectLocality ?? new ChangeTrackingList<string>(),
-                subjectState ?? new ChangeTrackingList<string>(),
-                subjectCountry ?? new ChangeTrackingList<string>(),
-                issuerLocality ?? new ChangeTrackingList<string>(),
-                issuerState ?? new ChangeTrackingList<string>(),
-                issuerCountry ?? new ChangeTrackingList<string>(),
-                subjectOrganizations ?? new ChangeTrackingList<string>(),
-                subjectOrganizationalUnits ?? new ChangeTrackingList<string>(),
-                issuerOrganizations ?? new ChangeTrackingList<string>(),
-                issuerOrganizationalUnits ?? new ChangeTrackingList<string>(),
+                (subjectLocality ?? new ChangeTrackingList<string>()),
+                (subjectState ?? new ChangeTrackingList<string>()),
+                (subjectCountry ?? new ChangeTrackingList<string>()),
+                (issuerLocality ?? new ChangeTrackingList<string>()),
+                (issuerState ?? new ChangeTrackingList<string>()),
+                (issuerCountry ?? new ChangeTrackingList<string>()),
+                (subjectOrganizations ?? new ChangeTrackingList<string>()),
+                (subjectOrganizationalUnits ?? new ChangeTrackingList<string>()),
+                (issuerOrganizations ?? new ChangeTrackingList<string>()),
+                (issuerOrganizationalUnits ?? new ChangeTrackingList<string>()),
                 version,
                 certificateAuthority,
                 selfSigned,

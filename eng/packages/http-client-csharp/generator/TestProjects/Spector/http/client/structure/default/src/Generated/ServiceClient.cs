@@ -20,32 +20,32 @@ namespace Client.Structure.Service
     {
         protected ServiceClient() => throw null;
 
-        public ServiceClient(Uri endpoint, ClientType client) : this(endpoint, client, new ServiceClientOptions()) => throw null;
+        public ServiceClient(global::System.Uri endpoint, ClientType client) : this(endpoint, client, new ServiceClientOptions()) => throw null;
 
-        internal ServiceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, ServiceClientOptions options) => throw null;
+        internal ServiceClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientType client, ServiceClientOptions options) => throw null;
 
-        public ServiceClient(Uri endpoint, ClientType client, ServiceClientOptions options) : this(null, endpoint, client, options) => throw null;
+        public ServiceClient(global::System.Uri endpoint, ClientType client, ServiceClientOptions options) : this(null, endpoint, client, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ServiceClient(ServiceClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ServiceClient(ServiceClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, (settings?.Client ?? default), settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response One(RequestContext context) => throw null;
 
-        public virtual Task<Response> OneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OneAsync(RequestContext context) => throw null;
 
         public virtual Response One(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> OneAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Two(RequestContext context) => throw null;
 
-        public virtual Task<Response> TwoAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> TwoAsync(RequestContext context) => throw null;
 
         public virtual Response Two(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> TwoAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> TwoAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Baz GetBazClient() => throw null;
 

@@ -10,17 +10,17 @@ namespace Azure.AI.Projects
     /// <summary> A GitHub issue routine trigger. </summary>
     public partial class GitHubIssueRoutineTrigger : RoutineTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.GitHubIssueRoutineTrigger"/>. </summary>
         /// <param name="connectionId"> The workspace connection identifier that resolves the GitHub configuration for the trigger. </param>
         /// <param name="owner"> The GitHub owner or organization that scopes which issues can fire the trigger. </param>
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/>, <paramref name="owner"/> or <paramref name="repository"/> is null. </exception>
-        public GitHubIssueRoutineTrigger(string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(RoutineTriggerType.GithubIssue)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionId"/>, <paramref name="owner"/> or <paramref name="repository"/> is null. </exception>
+        public GitHubIssueRoutineTrigger(string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(global::Azure.AI.Projects.RoutineTriggerType.GithubIssue)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
-            Argument.AssertNotNull(owner, nameof(owner));
-            Argument.AssertNotNull(repository, nameof(repository));
+            global::Azure.AI.Projects.Argument.AssertNotNull(connectionId, nameof(connectionId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(owner, nameof(owner));
+            global::Azure.AI.Projects.Argument.AssertNotNull(repository, nameof(repository));
 
             ConnectionId = connectionId;
             Owner = owner;
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects
             IssueEvent = issueEvent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.GitHubIssueRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionId"> The workspace connection identifier that resolves the GitHub configuration for the trigger. </param>
         /// <param name="owner"> The GitHub owner or organization that scopes which issues can fire the trigger. </param>
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
-        internal GitHubIssueRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(@type, additionalBinaryDataProperties)
+        internal GitHubIssueRoutineTrigger(RoutineTriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(@type, additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             Owner = owner;

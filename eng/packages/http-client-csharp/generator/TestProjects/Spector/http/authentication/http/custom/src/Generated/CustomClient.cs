@@ -22,33 +22,33 @@ namespace Authentication.Http.Custom
 
         protected CustomClient() => throw null;
 
-        public CustomClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new CustomClientOptions()) => throw null;
+        public CustomClient(AzureKeyCredential credential) : this(new global::System.Uri("http://localhost:3000"), credential, new CustomClientOptions()) => throw null;
 
-        public CustomClient(AzureKeyCredential credential, CustomClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+        public CustomClient(AzureKeyCredential credential, CustomClientOptions options) : this(new global::System.Uri("http://localhost:3000"), credential, options) => throw null;
 
-        internal CustomClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CustomClientOptions options) => throw null;
+        internal CustomClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CustomClientOptions options) => throw null;
 
-        public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix), endpoint, options) => throw null;
+        public CustomClient(global::System.Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix), endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public CustomClient(CustomClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public CustomClient(CustomClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", global::System.StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 
-        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(RequestContext context) => throw null;
 
         public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Invalid(RequestContext context) => throw null;
 
-        public virtual Task<Response> InvalidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> InvalidAsync(RequestContext context) => throw null;
 
         public virtual Response Invalid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

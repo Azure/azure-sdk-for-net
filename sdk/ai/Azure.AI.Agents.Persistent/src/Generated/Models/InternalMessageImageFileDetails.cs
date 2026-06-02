@@ -13,19 +13,19 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalMessageImageFileDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         internal InternalMessageImageFileDetails(string internalDetails)
         {
             InternalDetails = internalDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMessageImageFileDetails(string internalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMessageImageFileDetails(string internalDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InternalDetails = internalDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

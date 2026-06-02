@@ -14,24 +14,24 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentFieldSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldSchema"/>. </summary>
         /// <param name="fieldType"> Semantic data type of the field value. </param>
         public DocumentFieldSchema(DocumentFieldType fieldType)
         {
             FieldType = fieldType;
-            Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
+            Properties = new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldSchema"/>. </summary>
         /// <param name="fieldType"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
         /// <param name="example"> Example field content. </param>
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFieldSchema(DocumentFieldType fieldType, string description, string example, DocumentFieldSchema items, IDictionary<string, DocumentFieldSchema> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFieldSchema(DocumentFieldType fieldType, string description, string example, DocumentFieldSchema items, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FieldType = fieldType;
             Description = description;
@@ -54,6 +54,6 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentFieldSchema Items { get; set; }
 
         /// <summary> Named sub-fields of the object field. </summary>
-        public IDictionary<string, DocumentFieldSchema> Properties { get; }
+        public IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> Properties { get; }
     }
 }

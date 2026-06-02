@@ -11,41 +11,41 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseReasoningEffort value) => value switch
         {
-            ResponseReasoningEffort.None => "none",
-            ResponseReasoningEffort.Minimal => "minimal",
-            ResponseReasoningEffort.Low => "low",
-            ResponseReasoningEffort.Medium => "medium",
-            ResponseReasoningEffort.High => "high",
-            ResponseReasoningEffort.Xhigh => "xhigh",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.None => "none",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Minimal => "minimal",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Medium => "medium",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.High => "high",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Xhigh => "xhigh",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningEffort value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseReasoningEffort ToResponseReasoningEffort(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "none"))
             {
-                return ResponseReasoningEffort.None;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.None;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimal"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimal"))
             {
-                return ResponseReasoningEffort.Minimal;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Minimal;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return ResponseReasoningEffort.Low;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return ResponseReasoningEffort.Medium;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return ResponseReasoningEffort.High;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.High;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "xhigh"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "xhigh"))
             {
-                return ResponseReasoningEffort.Xhigh;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningEffort.Xhigh;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningEffort value.");
         }

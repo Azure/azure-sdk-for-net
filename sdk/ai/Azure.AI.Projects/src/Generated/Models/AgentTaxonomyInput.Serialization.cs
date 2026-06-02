@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
-    public partial class AgentTaxonomyInput : EvaluationTaxonomyInput, IJsonModel<AgentTaxonomyInput>
+    public partial class AgentTaxonomyInput : EvaluationTaxonomyInput, IJsonModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput"/> for deserialization. </summary>
         internal AgentTaxonomyInput()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTaxonomyInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentTaxonomyInput(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput.DeserializeAgentTaxonomyInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentTaxonomyInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentTaxonomyInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentTaxonomyInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentTaxonomyInput IPersistableModel<AgentTaxonomyInput>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgentTaxonomyInput)PersistableModelCreateCore(data, options);
+        AgentTaxonomyInput IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AgentTaxonomyInput)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentTaxonomyInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentTaxonomyInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,14 +71,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentTaxonomyInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target, options);
+            writer.WriteObjectValue<EvaluationTarget>(Target, options);
             writer.WritePropertyName("riskCategories"u8);
             writer.WriteStartArray();
             foreach (RiskCategory item in RiskCategories)
@@ -90,33 +90,33 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentTaxonomyInput IJsonModel<AgentTaxonomyInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentTaxonomyInput)JsonModelCreateCore(ref reader, options);
+        AgentTaxonomyInput IJsonModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AgentTaxonomyInput)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTaxonomyInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentTaxonomyInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentTaxonomyInput(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput.DeserializeAgentTaxonomyInput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AgentTaxonomyInput DeserializeAgentTaxonomyInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             EvaluationTaxonomyInputType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             EvaluationTarget target = default;
-            IList<RiskCategory> riskCategories = default;
+            IList<global::Azure.AI.Projects.Evaluation.RiskCategory> riskCategories = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -126,12 +126,12 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("target"u8))
                 {
-                    target = EvaluationTarget.DeserializeEvaluationTarget(prop.Value, options);
+                    target = global::Azure.AI.Projects.Evaluation.EvaluationTarget.DeserializeEvaluationTarget(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("riskCategories"u8))
                 {
-                    List<RiskCategory> array = new List<RiskCategory>();
+                    List<global::Azure.AI.Projects.Evaluation.RiskCategory> array = new List<global::Azure.AI.Projects.Evaluation.RiskCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new RiskCategory(item.GetString()));
@@ -139,9 +139,9 @@ namespace Azure.AI.Projects.Evaluation
                     riskCategories = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AgentTaxonomyInput(@type, additionalBinaryDataProperties, target, riskCategories);

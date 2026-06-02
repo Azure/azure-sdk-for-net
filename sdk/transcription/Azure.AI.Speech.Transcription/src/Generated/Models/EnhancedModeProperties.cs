@@ -11,21 +11,21 @@ namespace Azure.AI.Speech.Transcription
     public partial class EnhancedModeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnhancedModeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.EnhancedModeProperties"/>. </summary>
         public EnhancedModeProperties()
         {
             Prompt = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnhancedModeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.EnhancedModeProperties"/>. </summary>
         /// <param name="enabled"> Enable enhanced mode for transcription. This is automatically set to true when task, targetLanguage, or prompt are specified. </param>
         /// <param name="task"> Task type for enhanced mode. </param>
         /// <param name="targetLanguage"> Target language for enhanced mode. </param>
         /// <param name="prompt"> A list of user prompts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnhancedModeProperties(bool? enabled, string task, string targetLanguage, IList<string> prompt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnhancedModeProperties(bool? enabled, string task, string targetLanguage, IList<string> prompt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Task = task;

@@ -10,14 +10,14 @@ namespace Azure.AI.Projects
     /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
     public partial class TracesDataGenerationJobSource : DataGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TracesDataGenerationJobSource"/>. </summary>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        public TracesDataGenerationJobSource(DateTimeOffset startTime) : base(DataGenerationJobSourceType.Traces)
+        public TracesDataGenerationJobSource(DateTimeOffset startTime) : base(global::Azure.AI.Projects.DataGenerationJobSourceType.Traces)
         {
             StartTime = startTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TracesDataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startTime, DateTimeOffset? endTime) : base(@type, description, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startTime, DateTimeOffset? endTime) : base(@type, description, additionalBinaryDataProperties)
         {
             AgentId = agentId;
             AgentName = agentName;

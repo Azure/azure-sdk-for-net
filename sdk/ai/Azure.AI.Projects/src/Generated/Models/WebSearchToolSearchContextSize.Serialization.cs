@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebSearchToolSearchContextSize value) => value switch
         {
-            WebSearchToolSearchContextSize.Low => "low",
-            WebSearchToolSearchContextSize.Medium => "medium",
-            WebSearchToolSearchContextSize.High => "high",
+            global::Azure.AI.Projects.WebSearchToolSearchContextSize.Low => "low",
+            global::Azure.AI.Projects.WebSearchToolSearchContextSize.Medium => "medium",
+            global::Azure.AI.Projects.WebSearchToolSearchContextSize.High => "high",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSearchToolSearchContextSize value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static WebSearchToolSearchContextSize ToWebSearchToolSearchContextSize(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return WebSearchToolSearchContextSize.Low;
+                return global::Azure.AI.Projects.WebSearchToolSearchContextSize.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return WebSearchToolSearchContextSize.Medium;
+                return global::Azure.AI.Projects.WebSearchToolSearchContextSize.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return WebSearchToolSearchContextSize.High;
+                return global::Azure.AI.Projects.WebSearchToolSearchContextSize.High;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSearchToolSearchContextSize value.");
         }

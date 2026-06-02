@@ -11,18 +11,18 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class WebSearchToolFilters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebSearchToolFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.WebSearchToolFilters"/>. </summary>
         public WebSearchToolFilters()
         {
             AllowedDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebSearchToolFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.WebSearchToolFilters"/>. </summary>
         /// <param name="allowedDomains"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSearchToolFilters(IList<string> allowedDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSearchToolFilters(IList<string> allowedDomains, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AllowedDomains = allowedDomains;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

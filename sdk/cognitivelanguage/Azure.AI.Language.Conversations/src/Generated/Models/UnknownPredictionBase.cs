@@ -12,11 +12,11 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownPredictionBase : PredictionBase
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownPredictionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownPredictionBase"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPredictionBase(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(projectKind != default ? projectKind : "unknown", topIntent, additionalBinaryDataProperties)
+        internal UnknownPredictionBase(ProjectKind projectKind, string topIntent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((projectKind != default) ? projectKind : "unknown", topIntent, additionalBinaryDataProperties)
         {
         }
     }

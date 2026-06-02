@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class ModelState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ModelState"/>. </summary>
         internal ModelState()
         {
             EpochIds = new ChangeTrackingList<int>();
@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector
             LatenciesInSeconds = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ModelState"/>. </summary>
         /// <param name="epochIds">
         /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
@@ -40,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EpochIds = epochIds;
             TrainLosses = trainLosses;

@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
     public partial class MicrosoftFabricPreviewTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
-        public MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions) : base(ToolType.FabricDataagentPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions) : base(global::OpenAI.ToolType.FabricDataagentPreview)
         {
-            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(toolOptions, nameof(toolOptions));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
             ToolOptions = toolOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, FabricDataAgentToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
+        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, FabricDataAgentToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The fabric data agent tool parameters. </summary>
         public FabricDataAgentToolOptions ToolOptions { get; set; }

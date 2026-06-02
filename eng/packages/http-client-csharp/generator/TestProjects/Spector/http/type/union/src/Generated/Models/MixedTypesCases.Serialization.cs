@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Union
 {
-    public partial class MixedTypesCases : IJsonModel<MixedTypesCases>
+    public partial class MixedTypesCases : IJsonModel<global::_Type.Union.MixedTypesCases>
     {
         internal MixedTypesCases() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Union
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<MixedTypesCases>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Union.MixedTypesCases>.Write(ModelReaderWriterOptions options) => throw null;
 
-        MixedTypesCases IPersistableModel<MixedTypesCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        MixedTypesCases IPersistableModel<global::_Type.Union.MixedTypesCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<MixedTypesCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Union.MixedTypesCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<MixedTypesCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Union.MixedTypesCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        MixedTypesCases IJsonModel<MixedTypesCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        MixedTypesCases IJsonModel<global::_Type.Union.MixedTypesCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual MixedTypesCases JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

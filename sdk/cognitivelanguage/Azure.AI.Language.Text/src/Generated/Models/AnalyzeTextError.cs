@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Text
     public partial class AnalyzeTextError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         internal AnalyzeTextError(AnalyzeTextErrorCode code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<AnalyzeTextError>();
+            Details = new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextError(AnalyzeTextErrorCode code, string message, string target, IList<AnalyzeTextError> details, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextError(AnalyzeTextErrorCode code, string message, string target, IList<global::Azure.AI.Language.Text.AnalyzeTextError> details, InnerErrorModel innererror, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text
         public string Target { get; }
 
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IList<AnalyzeTextError> Details { get; }
+        public IList<global::Azure.AI.Language.Text.AnalyzeTextError> Details { get; }
 
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; }

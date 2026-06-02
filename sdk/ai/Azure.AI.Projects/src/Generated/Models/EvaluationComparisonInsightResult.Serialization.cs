@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the evaluation comparison. </summary>
-    public partial class EvaluationComparisonInsightResult : InsightResult, IJsonModel<EvaluationComparisonInsightResult>
+    public partial class EvaluationComparisonInsightResult : InsightResult, IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult"/> for deserialization. </summary>
         internal EvaluationComparisonInsightResult()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InsightResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvaluationComparisonInsightResult(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult.DeserializeEvaluationComparisonInsightResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationComparisonInsightResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationComparisonInsightResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationComparisonInsightResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationComparisonInsightResult IPersistableModel<EvaluationComparisonInsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationComparisonInsightResult)PersistableModelCreateCore(data, options);
+        EvaluationComparisonInsightResult IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>.Create(BinaryData data, ModelReaderWriterOptions options) => ((EvaluationComparisonInsightResult)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationComparisonInsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvaluationComparisonInsightResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,17 +71,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluationComparisonInsightResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("comparisons"u8);
             writer.WriteStartArray();
             foreach (EvalRunResultComparison item in Comparisons)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<EvalRunResultComparison>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("method"u8);
@@ -90,32 +90,32 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationComparisonInsightResult IJsonModel<EvaluationComparisonInsightResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EvaluationComparisonInsightResult)JsonModelCreateCore(ref reader, options);
+        EvaluationComparisonInsightResult IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((EvaluationComparisonInsightResult)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InsightResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluationComparisonInsightResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluationComparisonInsightResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult.DeserializeEvaluationComparisonInsightResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EvaluationComparisonInsightResult DeserializeEvaluationComparisonInsightResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             InsightType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<EvalRunResultComparison> comparisons = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison> comparisons = default;
             string @method = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -126,10 +126,10 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("comparisons"u8))
                 {
-                    List<EvalRunResultComparison> array = new List<EvalRunResultComparison>();
+                    List<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison> array = new List<global::Azure.AI.Projects.Evaluation.EvalRunResultComparison>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EvalRunResultComparison.DeserializeEvalRunResultComparison(item, options));
+                        array.Add(global::Azure.AI.Projects.Evaluation.EvalRunResultComparison.DeserializeEvalRunResultComparison(item, options));
                     }
                     comparisons = array;
                     continue;
@@ -139,9 +139,9 @@ namespace Azure.AI.Projects.Evaluation
                     @method = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EvaluationComparisonInsightResult(@type, additionalBinaryDataProperties, comparisons, @method);

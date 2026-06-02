@@ -13,12 +13,12 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Configurations of a target resource. This varies with the kind of resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionFlexConsumptionTargetResourceConfigurations"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownTargetResourceConfigurations))]
-    public abstract partial class TargetResourceConfigurations : IJsonModel<TargetResourceConfigurations>
+    [PersistableModelProxyAttribute(typeof(UnknownTargetResourceConfigurations))]
+    public abstract partial class TargetResourceConfigurations : IJsonModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>
     {
-        /// <summary> Initializes a new instance of <see cref="TargetResourceConfigurations"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TargetResourceConfigurations"/> for deserialization. </summary>
         internal TargetResourceConfigurations()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TargetResourceConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTargetResourceConfigurations(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.TargetResourceConfigurations.DeserializeTargetResourceConfigurations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetResourceConfigurations)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TargetResourceConfigurations)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TargetResourceConfigurations)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TargetResourceConfigurations)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TargetResourceConfigurations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetResourceConfigurations IPersistableModel<TargetResourceConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TargetResourceConfigurations IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TargetResourceConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TargetResourceConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TargetResourceConfigurations)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TargetResourceConfigurations)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetResourceConfigurations IJsonModel<TargetResourceConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TargetResourceConfigurations IJsonModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TargetResourceConfigurations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TargetResourceConfigurations)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TargetResourceConfigurations)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetResourceConfigurations(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.TargetResourceConfigurations.DeserializeTargetResourceConfigurations(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TargetResourceConfigurations DeserializeTargetResourceConfigurations(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,10 +130,10 @@ namespace Azure.Developer.LoadTesting
                 switch (discriminator.GetString())
                 {
                     case "FunctionsFlexConsumption":
-                        return FunctionFlexConsumptionTargetResourceConfigurations.DeserializeFunctionFlexConsumptionTargetResourceConfigurations(element, options);
+                        return global::Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations.DeserializeFunctionFlexConsumptionTargetResourceConfigurations(element, options);
                 }
             }
-            return UnknownTargetResourceConfigurations.DeserializeUnknownTargetResourceConfigurations(element, options);
+            return global::Azure.Developer.LoadTesting.UnknownTargetResourceConfigurations.DeserializeUnknownTargetResourceConfigurations(element, options);
         }
     }
 }

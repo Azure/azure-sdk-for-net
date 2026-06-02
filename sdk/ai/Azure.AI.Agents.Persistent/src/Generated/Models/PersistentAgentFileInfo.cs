@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentFileInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
         /// <param name="filename"> The name of the file. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
             Purpose = purpose;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/>. </summary>
         /// <param name="object"> The object type, which is always 'file'. </param>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
@@ -41,9 +41,9 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
         /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentFileInfo(string @object, string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgentFileInfo(string @object, string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             Id = id;
             Size = size;
             Filename = filename;

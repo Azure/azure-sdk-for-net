@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterChannelConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration"/>. </summary>
         internal AcsRouterChannelConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration"/>. </summary>
         /// <param name="channelId"> Channel ID for Router Job. </param>
         /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
         /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;

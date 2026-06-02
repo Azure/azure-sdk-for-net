@@ -27,51 +27,51 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/assets", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (@orderby != null)
+            if ((@orderby != null))
             {
                 uri.AppendQuery("orderby", @orderby, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (mark != null)
+            if ((mark != null))
             {
                 uri.AppendQuery("mark", mark, true);
             }
-            if (responseType != null)
+            if ((responseType != null))
             {
                 uri.AppendQuery("responseType", responseType, true);
             }
-            if (responseIncludes != null && !(responseIncludes is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((responseIncludes != null) && !((responseIncludes is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("responseIncludes", responseIncludes, ",", escape: true);
             }
-            if (recentOnly != null)
+            if ((recentOnly != null))
             {
-                uri.AppendQuery("recentOnly", TypeFormatters.ConvertToString(recentOnly), true);
+                uri.AppendQuery("recentOnly", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(recentOnly), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAssetResourcesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetAssetResourcesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -80,20 +80,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/assets", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Defender.Easm
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -124,14 +124,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -141,22 +141,22 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/assets:export", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (@orderby != null)
+            if ((@orderby != null))
             {
                 uri.AppendQuery("orderby", @orderby, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -170,30 +170,30 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
             uri.AppendPath(":getObservations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (@orderby != null)
+            if ((@orderby != null))
             {
                 uri.AppendQuery("orderby", @orderby, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -203,29 +203,29 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/assets:getDeltaDetails", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeltaDetailsRequest(Uri nextPage, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDeltaDetailsRequest(global::System.Uri nextPage, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -234,16 +234,16 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             return message;
@@ -254,14 +254,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/assets:getDeltaSummary", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -273,27 +273,27 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dataConnections", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataConnectionsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDataConnectionsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -302,20 +302,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -325,14 +325,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dataConnections:validate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -345,14 +345,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/dataConnections/", false);
             uri.AppendPath(dataConnectionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -363,14 +363,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/dataConnections/", false);
             uri.AppendPath(dataConnectionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -383,14 +383,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/dataConnections/", false);
             uri.AppendPath(dataConnectionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -399,31 +399,31 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryGroupsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryGroupsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -432,20 +432,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -455,14 +455,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups:validate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -475,14 +475,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups/", false);
             uri.AppendPath(groupName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -493,14 +493,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups/", false);
             uri.AppendPath(groupName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -510,14 +510,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups/", false);
             uri.AppendPath(groupName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -531,14 +531,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/discoGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath(":run", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
 
@@ -549,31 +549,31 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/discoGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryGroupRunsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryGroupRunsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -582,20 +582,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -605,14 +605,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups:getAssetChainSummary", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -624,14 +624,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/discoGroups:dismissAssetChain", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -643,31 +643,31 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/discoTemplates", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryTemplatesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryTemplatesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -676,20 +676,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -700,14 +700,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/discoTemplates/", false);
             uri.AppendPath(templateId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -717,14 +717,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/reports/assets:getBillable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -734,14 +734,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/reports/assets:getSnapshot", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -753,14 +753,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/reports/assets:getSummary", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -772,14 +772,14 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/reports/assets:getSnapshotExport", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -791,31 +791,31 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/savedFilters", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSavedFiltersRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetSavedFiltersRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -824,20 +824,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -848,14 +848,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/savedFilters/", false);
             uri.AppendPath(filterName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -866,14 +866,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/savedFilters/", false);
             uri.AppendPath(filterName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -886,14 +886,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/savedFilters/", false);
             uri.AppendPath(filterName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -902,35 +902,35 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/tasks", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (@orderby != null)
+            if ((@orderby != null))
             {
                 uri.AppendQuery("orderby", @orderby, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -939,20 +939,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -963,14 +963,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -982,14 +982,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath(":cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1001,14 +1001,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath(":run", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1020,14 +1020,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath(":download", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1037,19 +1037,19 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/cisaCves", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetCisaCvesRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetCisaCvesRequest(global::System.Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1058,16 +1058,16 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1078,14 +1078,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/cisaCves/", false);
             uri.AppendPath(cveId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1095,31 +1095,31 @@ namespace Azure.Analytics.Defender.Easm
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/policies", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoliciesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPoliciesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1128,20 +1128,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Analytics.Defender.Easm.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1152,14 +1152,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/policies/", false);
             uri.AppendPath(policyName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -1170,14 +1170,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/policies/", false);
             uri.AppendPath(policyName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -1187,14 +1187,14 @@ namespace Azure.Analytics.Defender.Easm
             uri.Reset(_endpoint);
             uri.AppendPath("/policies/", false);
             uri.AppendPath(policyName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

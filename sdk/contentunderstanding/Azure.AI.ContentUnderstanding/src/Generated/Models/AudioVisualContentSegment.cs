@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class AudioVisualContentSegment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AudioVisualContentSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AudioVisualContentSegment"/>. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.ContentUnderstanding
             EndTimeMsValue = endTimeMsValue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioVisualContentSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AudioVisualContentSegment"/>. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMsValue, long endTimeMsValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMsValue, long endTimeMsValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SegmentId = segmentId;
             Category = category;

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Yield : IJsonModel<Yield>
+    public partial class Yield : IJsonModel<global::SpecialWords._Models.Yield>
     {
         internal Yield() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Yield>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Yield>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Yield IPersistableModel<Yield>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Yield IPersistableModel<global::SpecialWords._Models.Yield>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Yield>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Yield>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="yield"> The <see cref="Yield"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="yield"> The <see cref="global::SpecialWords._Models.Yield"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Yield @yield) => throw null;
 
-        void IJsonModel<Yield>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Yield>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Yield IJsonModel<Yield>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Yield IJsonModel<global::SpecialWords._Models.Yield>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Yield JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

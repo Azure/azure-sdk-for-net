@@ -13,14 +13,14 @@ namespace _Type.Property.ValueTypes
 {
     public partial class ValueTypesClient
     {
-        public ValueTypesClient() : this(new Uri("http://localhost:3000"), new ValueTypesClientOptions()) => throw null;
+        public ValueTypesClient() : this(new global::System.Uri("http://localhost:3000"), new ValueTypesClientOptions()) => throw null;
 
-        internal ValueTypesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ValueTypesClientOptions options) => throw null;
+        internal ValueTypesClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ValueTypesClientOptions options) => throw null;
 
-        public ValueTypesClient(Uri endpoint, ValueTypesClientOptions options) : this(null, endpoint, options) => throw null;
+        public ValueTypesClient(global::System.Uri endpoint, ValueTypesClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ValueTypesClient(ValueTypesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ValueTypesClient(ValueTypesClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

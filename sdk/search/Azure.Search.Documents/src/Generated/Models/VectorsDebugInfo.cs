@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Models
     public partial class VectorsDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorsDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorsDebugInfo"/>. </summary>
         internal VectorsDebugInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorsDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorsDebugInfo"/>. </summary>
         /// <param name="subscores"> The breakdown of subscores of the document prior to the chosen result set fusion/combination method such as RRF. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorsDebugInfo(QueryResultDocumentSubscores subscores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorsDebugInfo(QueryResultDocumentSubscores subscores, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Subscores = subscores;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> PII domains. </summary>
-    public readonly partial struct PiiDomain : IEquatable<PiiDomain>
+    public readonly partial struct PiiDomain : IEquatable<global::Azure.AI.Language.Text.PiiDomain>
     {
         private readonly string _value;
         /// <summary> Indicates that entities in the Personal Health Information domain should be redacted. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Indicates that no domain is specified. </summary>
         private const string NoneValue = "none";
 
-        /// <summary> Initializes a new instance of <see cref="PiiDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PiiDomain(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Indicates that no domain is specified. </summary>
         public static PiiDomain None { get; } = new PiiDomain(NoneValue);
 
-        /// <summary> Determines if two <see cref="PiiDomain"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.PiiDomain"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PiiDomain left, PiiDomain right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PiiDomain"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.PiiDomain"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PiiDomain left, PiiDomain right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PiiDomain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.PiiDomain"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PiiDomain(string value) => new PiiDomain(value);
 
-        /// <summary> Converts a string to a <see cref="PiiDomain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.PiiDomain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiDomain?(string value) => value == null ? null : new PiiDomain(value);
+        public static implicit operator PiiDomain?(string value) => (value == null) ? null : new PiiDomain(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PiiDomain other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PiiDomain other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PiiDomain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PiiDomain other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

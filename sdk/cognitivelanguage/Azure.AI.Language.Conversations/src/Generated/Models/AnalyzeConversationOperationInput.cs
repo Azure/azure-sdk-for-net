@@ -16,28 +16,28 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AnalyzeConversationOperationInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput"/>. </summary>
         /// <param name="conversationInput"> Analysis Input. </param>
         /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
-        public AnalyzeConversationOperationInput(MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
+        public AnalyzeConversationOperationInput(MultiLanguageConversationInput conversationInput, IEnumerable<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actions, nameof(actions));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(conversationInput, nameof(conversationInput));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(actions, nameof(actions));
 
             ConversationInput = conversationInput;
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput"/>. </summary>
         /// <param name="displayName"> Display name for the analysis job. </param>
         /// <param name="conversationInput"> Analysis Input. </param>
         /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<AnalyzeConversationOperationAction> actions, float? cancelAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, float? cancelAfter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ConversationInput = conversationInput;
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Conversations.Models
         public MultiLanguageConversationInput ConversationInput { get; }
 
         /// <summary> Set of tasks to execute on the input conversation. </summary>
-        public IList<AnalyzeConversationOperationAction> Actions { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> Actions { get; }
 
         /// <summary> Optional duration in seconds after which the job will be canceled if not completed. </summary>
         public float? CancelAfter { get; set; }

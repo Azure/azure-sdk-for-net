@@ -15,15 +15,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus"/>. </summary>
         internal SearchIndexerStatus()
         {
-            ExecutionHistory = new ChangeTrackingList<IndexerExecutionResult>();
+            ExecutionHistory = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="runtime"> Snapshot of the indexer's cumulative runtime consumption for the service over the current UTC period. </param>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexerExecutionResult LastResult { get; }
 
         /// <summary> History of the recent indexer executions, sorted in reverse chronological order. </summary>
-        public IReadOnlyList<IndexerExecutionResult> ExecutionHistory { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> ExecutionHistory { get; }
 
         /// <summary> The execution limits for the indexer. </summary>
         public SearchIndexerLimits Limits { get; }

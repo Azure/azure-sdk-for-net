@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
     public partial class AzureFunctionTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
-        public AzureFunctionTool(AzureFunctionDefinition azureFunction) : base(ToolType.AzureFunction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
+        public AzureFunctionTool(AzureFunctionDefinition azureFunction) : base(global::OpenAI.ToolType.AzureFunction)
         {
-            Argument.AssertNotNull(azureFunction, nameof(azureFunction));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
             AzureFunction = azureFunction;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal AzureFunctionTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureFunctionDefinition azureFunction, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             AzureFunction = azureFunction;
             ToolConfigs = toolConfigs;
@@ -45,6 +45,6 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

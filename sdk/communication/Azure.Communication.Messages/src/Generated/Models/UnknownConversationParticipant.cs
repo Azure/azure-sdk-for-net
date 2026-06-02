@@ -12,12 +12,12 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownConversationParticipant : ConversationParticipant
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, displayName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, displayName, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

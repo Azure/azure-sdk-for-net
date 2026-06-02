@@ -13,20 +13,20 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a function tool call within a streaming run step's tool call details. </summary>
     public partial class RunStepDeltaFunctionToolCall : RunStepDeltaToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaFunctionToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         internal RunStepDeltaFunctionToolCall(int index, string id) : base(index, id, "function")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaFunctionToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="function"> The function data for the tool call. </param>
-        internal RunStepDeltaFunctionToolCall(int index, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepDeltaFunction function) : base(index, id, @type, additionalBinaryDataProperties)
+        internal RunStepDeltaFunctionToolCall(int index, string id, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepDeltaFunction function) : base(index, id, @type, additionalBinaryDataProperties)
         {
             Function = function;
         }

@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryAnswerResult"/>. </summary>
         public QueryAnswerResult()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryAnswerResult"/>. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>

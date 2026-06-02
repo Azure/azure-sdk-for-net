@@ -18,33 +18,33 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithParamAliasClient() => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
+        public IndividuallyNestedWithParamAliasClient(string blobName) : this(new global::System.Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public IndividuallyNestedWithParamAliasClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new global::System.Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
+        internal IndividuallyNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithParamAliasClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public IndividuallyNestedWithParamAliasClient(global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public IndividuallyNestedWithParamAliasClient(IndividuallyNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public IndividuallyNestedWithParamAliasClient(IndividuallyNestedWithParamAliasClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithAliasedName(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithAliasedNameAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithAliasedNameAsync(RequestContext context) => throw null;
 
         public virtual Response WithAliasedName(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAliasedNameAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithAliasedNameAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithOriginalName(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithOriginalNameAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithOriginalNameAsync(RequestContext context) => throw null;
 
         public virtual Response WithOriginalName(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithOriginalNameAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithOriginalNameAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

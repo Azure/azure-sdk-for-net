@@ -15,7 +15,7 @@ namespace Payload.MultiPart
     {
         public MultiPartClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MultiPartClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

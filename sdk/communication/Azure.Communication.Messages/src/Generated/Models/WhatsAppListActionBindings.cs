@@ -14,21 +14,21 @@ namespace Azure.Communication.Messages.Models.Channels
     /// <summary> WhatsApp List Binding actions to the interactive message. </summary>
     public partial class WhatsAppListActionBindings : ActionBindings
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppListActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings"/>. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public WhatsAppListActionBindings(ActionGroupContent content) : base(MessageActionBindingKind.WhatsAppListAction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public WhatsAppListActionBindings(ActionGroupContent content) : base(global::Azure.Communication.Messages.MessageActionBindingKind.WhatsAppListAction)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppListActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings"/>. </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Action content of Interactive message. </param>
-        internal WhatsAppListActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ActionGroupContent content) : base(kind, additionalBinaryDataProperties)
+        internal WhatsAppListActionBindings(MessageActionBindingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ActionGroupContent content) : base(kind, additionalBinaryDataProperties)
         {
             Content = content;
         }

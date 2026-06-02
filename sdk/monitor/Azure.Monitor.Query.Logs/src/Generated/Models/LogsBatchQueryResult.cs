@@ -15,16 +15,16 @@ namespace Azure.Monitor.Query.Logs.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsBatchQueryResult
     {
-        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The results of the query in tabular format. </param>
-        internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
+        internal LogsBatchQueryResult(IEnumerable<global::Azure.Monitor.Query.Logs.Models.LogsTable> allTables) : base(allTables)
         {
-            Tables = new ChangeTrackingList<LogsTable>();
-            Statistics = new ChangeTrackingDictionary<string, BinaryData>();
-            Render = new ChangeTrackingDictionary<string, BinaryData>();
+            Tables = new ChangeTrackingList<global::Azure.Monitor.Query.Logs.Models.LogsTable>();
+            Statistics = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Render = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The results of the query in tabular format. </param>
         /// <param name="error"> The code and message for an error. </param>
         /// <param name="statistics"> Statistics represented in JSON format. </param>
@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="tables"> The results of the query in tabular format. </param>
         /// <param name="statistics0"> Statistics represented in JSON format. </param>
         /// <param name="render"> Visualization data in JSON format. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement error, JsonElement statistics, JsonElement visualization, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<LogsTable> tables, IDictionary<string, BinaryData> statistics0, IDictionary<string, BinaryData> render) : base(allTables, error, statistics, visualization, additionalBinaryDataProperties)
+        internal LogsBatchQueryResult(IReadOnlyList<global::Azure.Monitor.Query.Logs.Models.LogsTable> allTables, JsonElement error, JsonElement statistics, JsonElement visualization, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Monitor.Query.Logs.Models.LogsTable> tables, IDictionary<string, global::System.BinaryData> statistics0, IDictionary<string, global::System.BinaryData> render) : base(allTables, error, statistics, visualization, additionalBinaryDataProperties)
         {
             Tables = tables;
             Statistics = statistics0;

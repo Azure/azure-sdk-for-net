@@ -19,9 +19,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerStacSearchDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerStacSearchDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerStacSearchDefinition"/>. </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>
         /// <param name="where"> SQL WHERE clause representing the search filters. </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="lastUsed"> Timestamp when the search was last accessed. </param>
         /// <param name="useCount"> Number of times the search has been accessed. </param>
         /// <param name="metadata"> Additional metadata associated with the search. </param>
-        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata)
+        internal TilerStacSearchDefinition(string hash, IDictionary<string, global::System.BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata)
         {
             Hash = hash;
             Search = search;
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerStacSearchDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerStacSearchDefinition"/>. </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>
         /// <param name="where"> SQL WHERE clause representing the search filters. </param>
@@ -49,7 +49,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="useCount"> Number of times the search has been accessed. </param>
         /// <param name="metadata"> Additional metadata associated with the search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerStacSearchDefinition(string hash, IDictionary<string, global::System.BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Hash = hash;
             Search = search;
@@ -66,8 +66,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Search
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -90,7 +90,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Search { get; }
+        public IDictionary<string, global::System.BinaryData> Search { get; }
 
         /// <summary> SQL WHERE clause representing the search filters. </summary>
         public string Where { get; }

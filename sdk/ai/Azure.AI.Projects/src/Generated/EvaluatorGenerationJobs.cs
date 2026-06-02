@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// <summary> The EvaluatorGenerationJobs sub-client. </summary>
     public partial class EvaluatorGenerationJobs
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of EvaluatorGenerationJobs for mocking. </summary>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal EvaluatorGenerationJobs(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal EvaluatorGenerationJobs(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -48,12 +48,12 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateRequest(content, foundryFeatures, operationId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -69,12 +69,12 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateRequest(content, foundryFeatures, operationId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -85,11 +85,11 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Create(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = this.Create(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -100,11 +100,11 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = await this.CreateAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -118,12 +118,12 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Get(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -137,34 +137,34 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> GetAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<EvaluatorGenerationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Get(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = this.Get(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<EvaluatorGenerationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = await this.GetAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -178,12 +178,12 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Cancel(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCancelRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -197,34 +197,34 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CancelAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> CancelAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCancelRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Cancels an evaluator generation job by its ID. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<EvaluatorGenerationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Cancel(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = this.Cancel(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary> Cancels an evaluator generation job by its ID. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<EvaluatorGenerationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.EvaluatorGenerationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CancelAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            ClientResult result = await this.CancelAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluatorGenerationJob)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -239,12 +239,12 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Delete(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -259,12 +259,12 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteRequest(jobId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -274,10 +274,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return Delete(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return this.Delete(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -287,10 +287,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

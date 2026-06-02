@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Structure.AnotherClientOperationGroup
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class SubNamespaceSecondClientHostExtensions
     {
         public static IClientBuilder AddSubNamespaceSecondClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddSubNamespaceSecondClient(this IHostApplicationBuilder host, string sectionName, Action<SubNamespaceSecondClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddSubNamespaceSecondClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Structure.AnotherClientOperationGroup.SubNamespaceSecondClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedSubNamespaceSecondClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedSubNamespaceSecondClient(this IHostApplicationBuilder host, string key, string sectionName, Action<SubNamespaceSecondClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedSubNamespaceSecondClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Structure.AnotherClientOperationGroup.SubNamespaceSecondClientSettings> configureSettings) => throw null;
     }
 }

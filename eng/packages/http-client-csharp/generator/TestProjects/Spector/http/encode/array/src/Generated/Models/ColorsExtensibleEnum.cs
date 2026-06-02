@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Encode._Array
 {
-    public readonly partial struct ColorsExtensibleEnum : IEquatable<ColorsExtensibleEnum>
+    public readonly partial struct ColorsExtensibleEnum : IEquatable<global::Encode._Array.ColorsExtensibleEnum>
     {
         public ColorsExtensibleEnum(string value) => throw null;
 
@@ -24,20 +24,20 @@ namespace Encode._Array
 
         public static bool operator !=(ColorsExtensibleEnum left, ColorsExtensibleEnum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ColorsExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Encode._Array.ColorsExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ColorsExtensibleEnum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ColorsExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Encode._Array.ColorsExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ColorsExtensibleEnum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(ColorsExtensibleEnum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

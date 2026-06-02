@@ -12,24 +12,24 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary>
     /// Specify parameters for query matching
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PrebuiltQueryMatchingPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/>.
     /// </summary>
     public abstract partial class MatchingPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MatchingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy"/>. </summary>
         /// <param name="kind"> Kind of matching policy to be applied. </param>
         private protected MatchingPolicy(MatchingPolicyKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MatchingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy"/>. </summary>
         /// <param name="kind"> Kind of matching policy to be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MatchingPolicy(MatchingPolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MatchingPolicy(MatchingPolicyKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,9 +12,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule model. </summary>
-    public partial class ProjectsSchedule : IJsonModel<ProjectsSchedule>
+    public partial class ProjectsSchedule : IJsonModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>
     {
-        /// <summary> Initializes a new instance of <see cref="ProjectsSchedule"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ProjectsSchedule"/> for deserialization. </summary>
         internal ProjectsSchedule()
         {
         }
@@ -23,66 +23,66 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectsSchedule(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.ProjectsSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.ProjectsSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectsSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsSchedule IPersistableModel<ProjectsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProjectsSchedule IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectsSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectsSchedule"> The <see cref="ProjectsSchedule"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="projectsSchedule"> The <see cref="global::Azure.AI.Projects.Evaluation.ProjectsSchedule"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(ProjectsSchedule projectsSchedule)
         {
-            if (projectsSchedule == null)
+            if ((projectsSchedule == null))
             {
                 return null;
             }
-            return BinaryContent.Create(projectsSchedule, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(projectsSchedule, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectsSchedule"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.Evaluation.ProjectsSchedule"/> from. </param>
         public static explicit operator ProjectsSchedule(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectsSchedule(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.Evaluation.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectsSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -90,45 +90,45 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.ProjectsSchedule)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.AI.Projects.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(ProvisioningStatus)))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
+            writer.WriteObjectValue<ScheduleTrigger>(Trigger, options);
             writer.WritePropertyName("task"u8);
-            writer.WriteObjectValue(Task, options);
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WriteObjectValue<ProjectsScheduleTask>(Task, options);
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -137,14 +137,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -153,14 +153,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteStartObject();
                 foreach (var item in SystemData)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -177,9 +177,9 @@ namespace Azure.AI.Projects.Evaluation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -188,26 +188,26 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsSchedule IJsonModel<ProjectsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProjectsSchedule IJsonModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsSchedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.ProjectsSchedule)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectsSchedule(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ProjectsSchedule DeserializeProjectsSchedule(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -221,7 +221,7 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -246,7 +246,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("provisioningStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -255,24 +255,24 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("trigger"u8))
                 {
-                    trigger = ScheduleTrigger.DeserializeScheduleTrigger(prop.Value, options);
+                    trigger = global::Azure.AI.Projects.Evaluation.ScheduleTrigger.DeserializeScheduleTrigger(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("task"u8))
                 {
-                    task = ProjectsScheduleTask.DeserializeProjectsScheduleTask(prop.Value, options);
+                    task = global::Azure.AI.Projects.ProjectsScheduleTask.DeserializeProjectsScheduleTask(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -286,14 +286,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -310,7 +310,7 @@ namespace Azure.AI.Projects.Evaluation
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -322,9 +322,9 @@ namespace Azure.AI.Projects.Evaluation
                     systemData = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ProjectsSchedule(
@@ -335,8 +335,8 @@ namespace Azure.AI.Projects.Evaluation
                 provisioningStatus,
                 trigger,
                 task,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                (tags ?? new ChangeTrackingDictionary<string, string>()),
+                (properties ?? new ChangeTrackingDictionary<string, string>()),
                 systemData,
                 additionalBinaryDataProperties);
         }

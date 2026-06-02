@@ -15,7 +15,7 @@ namespace Specs.Azure.Payload.Pageable
     {
         public PageableClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal PageableClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

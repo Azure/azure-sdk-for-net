@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedCustomMultiLabelClassificationDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomMultiLabelClassificationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument"/>. </summary>
         public ExportedCustomMultiLabelClassificationDocument()
         {
-            Classes = new ChangeTrackingList<ExportedDocumentClass>();
+            Classes = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomMultiLabelClassificationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument"/>. </summary>
         /// <param name="classes"> The document classes. </param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCustomMultiLabelClassificationDocument(IList<ExportedDocumentClass> classes, string location, string language, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedCustomMultiLabelClassificationDocument(IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass> classes, string location, string language, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Classes = classes;
             Location = location;
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> The document classes. </summary>
-        public IList<ExportedDocumentClass> Classes { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass> Classes { get; }
 
         /// <summary> The location of the document in the storage. </summary>
         public string Location { get; set; }

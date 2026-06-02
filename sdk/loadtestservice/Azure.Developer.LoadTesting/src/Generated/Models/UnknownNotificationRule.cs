@@ -12,7 +12,7 @@ namespace Azure.Developer.LoadTesting
 {
     internal partial class UnknownNotificationRule : NotificationRule
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownNotificationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.UnknownNotificationRule"/>. </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
@@ -22,7 +22,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(notificationRuleId, displayName, actionGroupIds, scope != default ? scope : "unknown", createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
+        internal UnknownNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(notificationRuleId, displayName, actionGroupIds, (scope != default) ? scope : "unknown", createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
         }
     }

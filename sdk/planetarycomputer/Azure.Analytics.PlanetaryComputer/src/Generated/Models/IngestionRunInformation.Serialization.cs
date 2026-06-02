@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion run operation. </summary>
-    public partial class IngestionRunInformation : IJsonModel<IngestionRunInformation>
+    public partial class IngestionRunInformation : IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>
     {
-        /// <summary> Initializes a new instance of <see cref="IngestionRunInformation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation"/> for deserialization. </summary>
         internal IngestionRunInformation()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IngestionRunInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIngestionRunInformation(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation.DeserializeIngestionRunInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionRunInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionRunInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionRunInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionRunInformation IPersistableModel<IngestionRunInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionRunInformation IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionRunInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IngestionRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IngestionRunInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -88,15 +88,15 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteStartArray();
             foreach (OperationStatusHistoryItem item in StatusHistory)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<OperationStatusHistoryItem>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartTime))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (Optional.IsDefined(FinishTime))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(FinishTime))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishTime.Value, "O");
@@ -109,7 +109,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteNumberValue(TotalSuccessfulItems);
             writer.WritePropertyName("totalFailedItems"u8);
             writer.WriteNumberValue(TotalFailedItems);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -117,9 +117,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -128,40 +128,40 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionRunInformation IJsonModel<IngestionRunInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionRunInformation IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IngestionRunInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IngestionRunInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngestionRunInformation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation.DeserializeIngestionRunInformation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IngestionRunInformation DeserializeIngestionRunInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             Guid id = default;
             OperationStatus status = default;
             DateTimeOffset creationTime = default;
-            IList<OperationStatusHistoryItem> statusHistory = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? finishTime = default;
             int totalItems = default;
             int totalPendingItems = default;
             int totalSuccessfulItems = default;
             int totalFailedItems = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -181,17 +181,17 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("statusHistory"u8))
                 {
-                    List<OperationStatusHistoryItem> array = new List<OperationStatusHistoryItem>();
+                    List<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> array = new List<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationStatusHistoryItem.DeserializeOperationStatusHistoryItem(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem.DeserializeOperationStatusHistoryItem(item, options));
                     }
                     statusHistory = array;
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -200,7 +200,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("finishTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -227,9 +227,9 @@ namespace Azure.Analytics.PlanetaryComputer
                     totalFailedItems = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new IngestionRunInformation(

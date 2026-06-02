@@ -14,26 +14,26 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class TextDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument"/>. </summary>
         /// <param name="id"> Unique identifier for the text record. </param>
         /// <param name="text"> Text contents of the record. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="text"/> is null. </exception>
         public TextDocument(string id, string text)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(text, nameof(text));
 
             Id = id;
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument"/>. </summary>
         /// <param name="id"> Unique identifier for the text record. </param>
         /// <param name="text"> Text contents of the record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextDocument(string id, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextDocument(string id, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Text = text;

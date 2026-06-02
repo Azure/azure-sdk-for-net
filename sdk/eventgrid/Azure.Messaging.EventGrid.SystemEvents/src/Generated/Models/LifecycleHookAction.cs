@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The action that will be applied to a target resource in the Virtual Machine Scale Set Lifecycle Hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </summary>
-    public readonly partial struct LifecycleHookAction : IEquatable<LifecycleHookAction>
+    public readonly partial struct LifecycleHookAction : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction>
     {
         private readonly string _value;
         /// <summary> The Lifecycle Hook of a target resource in a Lifecycle Hook event will be approved. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Lifecycle Hook of a target resource in a Lifecycle Hook event will be rejected. </summary>
         private const string RejectValue = "Reject";
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleHookAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LifecycleHookAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Lifecycle Hook of a target resource in a Lifecycle Hook event will be rejected. </summary>
         public static LifecycleHookAction Reject { get; } = new LifecycleHookAction(RejectValue);
 
-        /// <summary> Determines if two <see cref="LifecycleHookAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LifecycleHookAction left, LifecycleHookAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LifecycleHookAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LifecycleHookAction left, LifecycleHookAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LifecycleHookAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LifecycleHookAction(string value) => new LifecycleHookAction(value);
 
-        /// <summary> Converts a string to a <see cref="LifecycleHookAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleHookAction?(string value) => value == null ? null : new LifecycleHookAction(value);
+        public static implicit operator LifecycleHookAction?(string value) => (value == null) ? null : new LifecycleHookAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LifecycleHookAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LifecycleHookAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LifecycleHookAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LifecycleHookAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

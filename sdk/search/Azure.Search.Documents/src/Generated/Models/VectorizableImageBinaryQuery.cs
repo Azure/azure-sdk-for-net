@@ -13,12 +13,12 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
     public partial class VectorizableImageBinaryQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of <see cref="VectorizableImageBinaryQuery"/>. </summary>
-        public VectorizableImageBinaryQuery() : base(VectorQueryKind.ImageBinary)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableImageBinaryQuery"/>. </summary>
+        public VectorizableImageBinaryQuery() : base(global::Azure.Search.Documents.Models.VectorQueryKind.ImageBinary)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorizableImageBinaryQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableImageBinaryQuery"/>. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="base64Image"> The base 64 encoded binary of an image to be vectorized to perform a vector search query. </param>
-        internal VectorizableImageBinaryQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string base64Image) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
+        internal VectorizableImageBinaryQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string base64Image) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
         {
             Base64Image = base64Image;
         }

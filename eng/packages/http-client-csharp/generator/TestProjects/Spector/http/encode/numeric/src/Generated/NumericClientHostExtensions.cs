@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Encode.Numeric
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NumericClientHostExtensions
     {
         public static IClientBuilder AddNumericClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNumericClient(this IHostApplicationBuilder host, string sectionName, Action<NumericClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNumericClient(this IHostApplicationBuilder host, string sectionName, Action<global::Encode.Numeric.NumericClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNumericClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNumericClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NumericClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNumericClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Encode.Numeric.NumericClientSettings> configureSettings) => throw null;
     }
 }

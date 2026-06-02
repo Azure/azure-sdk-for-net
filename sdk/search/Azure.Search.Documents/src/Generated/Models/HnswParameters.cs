@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class HnswParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.HnswParameters"/>. </summary>
         public HnswParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.HnswParameters"/>. </summary>
         /// <param name="m"> The number of bi-directional links created for every new element during construction. Increasing this parameter value may improve recall and reduce retrieval times for datasets with high intrinsic dimensionality at the expense of increased memory consumption and longer indexing time. </param>
         /// <param name="efConstruction"> The size of the dynamic list containing the nearest neighbors, which is used during index time. Increasing this parameter may improve index quality, at the expense of increased indexing time. At a certain point, increasing this parameter leads to diminishing returns. </param>
         /// <param name="efSearch"> The size of the dynamic list containing the nearest neighbors, which is used during search time. Increasing this parameter may improve search results, at the expense of slower search. At a certain point, increasing this parameter leads to diminishing returns. </param>
         /// <param name="metric"> The similarity metric to use for vector comparisons. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HnswParameters(int? m, int? efConstruction, int? efSearch, VectorSearchAlgorithmMetric? metric, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HnswParameters(int? m, int? efConstruction, int? efSearch, VectorSearchAlgorithmMetric? metric, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             M = m;
             EfConstruction = efConstruction;

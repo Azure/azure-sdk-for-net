@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class InternalMemoryUpdateOptions : IJsonModel<InternalMemoryUpdateOptions>
+    internal partial class InternalMemoryUpdateOptions : IJsonModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalMemoryUpdateOptions"/> for deserialization. </summary>
         internal InternalMemoryUpdateOptions()
         {
         }
@@ -21,58 +21,58 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMemoryUpdateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalMemoryUpdateOptions(document.RootElement, options);
+                        return global::Azure.AI.Projects.InternalMemoryUpdateOptions.DeserializeInternalMemoryUpdateOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalMemoryUpdateOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalMemoryUpdateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMemoryUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemoryUpdateOptions IPersistableModel<InternalMemoryUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalMemoryUpdateOptions IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMemoryUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="internalMemoryUpdateOptions"> The <see cref="InternalMemoryUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="internalMemoryUpdateOptions"> The <see cref="global::Azure.AI.Projects.InternalMemoryUpdateOptions"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(InternalMemoryUpdateOptions internalMemoryUpdateOptions)
         {
-            if (internalMemoryUpdateOptions == null)
+            if ((internalMemoryUpdateOptions == null))
             {
                 return null;
             }
-            return BinaryContent.Create(internalMemoryUpdateOptions, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(internalMemoryUpdateOptions, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalMemoryUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -80,34 +80,34 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalMemoryUpdateOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
-            if (Optional.IsCollectionDefined(Items))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
                 foreach (InputItem item in Items)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<InputItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PreviousUpdateId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(PreviousUpdateId))
             {
                 writer.WritePropertyName("previous_update_id"u8);
                 writer.WriteStringValue(PreviousUpdateId);
             }
-            if (Optional.IsDefined(UpdateDelay))
+            if (global::Azure.AI.Projects.Optional.IsDefined(UpdateDelay))
             {
                 writer.WritePropertyName("update_delay"u8);
                 writer.WriteNumberValue(UpdateDelay.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -115,9 +115,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -126,34 +126,34 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemoryUpdateOptions IJsonModel<InternalMemoryUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalMemoryUpdateOptions IJsonModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMemoryUpdateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalMemoryUpdateOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalMemoryUpdateOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.InternalMemoryUpdateOptions.DeserializeInternalMemoryUpdateOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalMemoryUpdateOptions DeserializeInternalMemoryUpdateOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string scope = default;
-            IList<InputItem> items = default;
+            IList<global::Azure.AI.Projects.InputItem> items = default;
             string previousUpdateId = default;
             int? updateDelay = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("scope"u8))
@@ -163,14 +163,14 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("items"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<InputItem> array = new List<InputItem>();
+                    List<global::Azure.AI.Projects.InputItem> array = new List<global::Azure.AI.Projects.InputItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputItem.DeserializeInputItem(item, options));
+                        array.Add(global::Azure.AI.Projects.InputItem.DeserializeInputItem(item, options));
                     }
                     items = array;
                     continue;
@@ -182,19 +182,19 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("update_delay"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     updateDelay = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMemoryUpdateOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousUpdateId, updateDelay, additionalBinaryDataProperties);
+            return new InternalMemoryUpdateOptions(scope, (items ?? new ChangeTrackingList<global::Azure.AI.Projects.InputItem>()), previousUpdateId, updateDelay, additionalBinaryDataProperties);
         }
     }
 }

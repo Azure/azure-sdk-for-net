@@ -18,23 +18,23 @@ namespace AzureExampleBasicClient
 {
     public partial class AzureExampleClient
     {
-        public AzureExampleClient() : this(new Uri("http://localhost:3000"), new AzureExampleClientOptions()) => throw null;
+        public AzureExampleClient() : this(new global::System.Uri("http://localhost:3000"), new AzureExampleClientOptions()) => throw null;
 
-        internal AzureExampleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AzureExampleClientOptions options) => throw null;
+        internal AzureExampleClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, AzureExampleClientOptions options) => throw null;
 
-        public AzureExampleClient(Uri endpoint, AzureExampleClientOptions options) : this(null, endpoint, options) => throw null;
+        public AzureExampleClient(global::System.Uri endpoint, AzureExampleClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public AzureExampleClient(AzureExampleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public AzureExampleClient(AzureExampleClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response BasicAction(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> BasicActionAsync(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> BasicActionAsync(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ActionResponse> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Example.Basic.ActionResponse> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ActionResponse>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Example.Basic.ActionResponse>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
     }
 }

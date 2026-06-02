@@ -12,11 +12,11 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownVectorSearchVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownVectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(vectorizerName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownVectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(vectorizerName, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -12,13 +12,13 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownAnalyzeConversationOperationResult : AnalyzeConversationOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownAnalyzeConversationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, name, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

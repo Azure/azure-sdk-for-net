@@ -15,9 +15,9 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationDocumentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentDetails"/>. </summary>
         /// <param name="inputLocation"> Location for the input. </param>
         /// <param name="status"> Status of the document. </param>
         internal DeidentificationDocumentDetails(DeidentificationDocumentLocation inputLocation, OperationStatus status)
@@ -26,14 +26,14 @@ namespace Azure.Health.Deidentification
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationDocumentDetails"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="inputLocation"> Location for the input. </param>
         /// <param name="outputLocation"> Location for the output. </param>
         /// <param name="status"> Status of the document. </param>
         /// <param name="error"> Error when document fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationDocumentDetails(string id, DeidentificationDocumentLocation inputLocation, DeidentificationDocumentLocation outputLocation, OperationStatus status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationDocumentDetails(string id, DeidentificationDocumentLocation inputLocation, DeidentificationDocumentLocation outputLocation, OperationStatus status, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             InputLocation = inputLocation;

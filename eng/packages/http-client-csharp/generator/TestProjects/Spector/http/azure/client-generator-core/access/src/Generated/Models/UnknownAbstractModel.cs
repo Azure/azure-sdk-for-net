@@ -12,6 +12,6 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
     internal partial class UnknownAbstractModel : AbstractModel
     {
-        internal UnknownAbstractModel(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", name, additionalBinaryDataProperties) => throw null;
+        internal UnknownAbstractModel(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind ?? "unknown"), name, additionalBinaryDataProperties) => throw null;
     }
 }

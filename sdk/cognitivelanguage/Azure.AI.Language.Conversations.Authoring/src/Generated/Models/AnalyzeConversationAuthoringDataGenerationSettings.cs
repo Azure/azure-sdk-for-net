@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringDataGenerationSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringDataGenerationSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings"/>. </summary>
         /// <param name="enableDataGeneration"> Must be explicitly set to True to enable data generation to augment training data. </param>
         /// <param name="dataGenerationConnectionInfo"> Must be filled out to enable data generation to augment training data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataGenerationConnectionInfo"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataGenerationConnectionInfo"/> is null. </exception>
         public AnalyzeConversationAuthoringDataGenerationSettings(bool enableDataGeneration, AnalyzeConversationAuthoringDataGenerationConnectionInfo dataGenerationConnectionInfo)
         {
-            Argument.AssertNotNull(dataGenerationConnectionInfo, nameof(dataGenerationConnectionInfo));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(dataGenerationConnectionInfo, nameof(dataGenerationConnectionInfo));
 
             EnableDataGeneration = enableDataGeneration;
             DataGenerationConnectionInfo = dataGenerationConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringDataGenerationSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings"/>. </summary>
         /// <param name="enableDataGeneration"> Must be explicitly set to True to enable data generation to augment training data. </param>
         /// <param name="dataGenerationConnectionInfo"> Must be filled out to enable data generation to augment training data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringDataGenerationSettings(bool enableDataGeneration, AnalyzeConversationAuthoringDataGenerationConnectionInfo dataGenerationConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringDataGenerationSettings(bool enableDataGeneration, AnalyzeConversationAuthoringDataGenerationConnectionInfo dataGenerationConnectionInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EnableDataGeneration = enableDataGeneration;
             DataGenerationConnectionInfo = dataGenerationConnectionInfo;

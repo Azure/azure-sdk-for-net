@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesBingCustomSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
         public ResponsesBingCustomSearchConfiguration(string projectConnectionId, string instanceName)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-            Argument.AssertNotNull(instanceName, nameof(instanceName));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(instanceName, nameof(instanceName));
 
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <param name="market"> The market where the results come from. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesBingCustomSearchConfiguration(string projectConnectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesBingCustomSearchConfiguration(string projectConnectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;

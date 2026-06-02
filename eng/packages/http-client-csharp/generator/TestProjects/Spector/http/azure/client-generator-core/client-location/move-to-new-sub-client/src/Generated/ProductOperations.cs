@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
     {
         protected ProductOperations() => throw null;
 
-        internal ProductOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ProductOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetProducts(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetProductsAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetProductsAsync(RequestContext context) => throw null;
 
         public virtual Response GetProducts(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetProductsAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetProductsAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

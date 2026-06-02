@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class WidgetData1 : IJsonModel<WidgetData1>
+    public partial class WidgetData1 : IJsonModel<global::_Type.Property.AdditionalProperties.WidgetData1>
     {
         internal WidgetData1() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<WidgetData1>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.WidgetData1>.Write(ModelReaderWriterOptions options) => throw null;
 
-        WidgetData1 IPersistableModel<WidgetData1>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        WidgetData1 IPersistableModel<global::_Type.Property.AdditionalProperties.WidgetData1>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<WidgetData1>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.WidgetData1>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<WidgetData1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.WidgetData1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        WidgetData1 IJsonModel<WidgetData1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        WidgetData1 IJsonModel<global::_Type.Property.AdditionalProperties.WidgetData1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual WidgetData1 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

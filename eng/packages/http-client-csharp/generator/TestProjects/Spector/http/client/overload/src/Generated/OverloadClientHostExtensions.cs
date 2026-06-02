@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Overload
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class OverloadClientHostExtensions
     {
         public static IClientBuilder AddOverloadClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddOverloadClient(this IHostApplicationBuilder host, string sectionName, Action<OverloadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddOverloadClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Overload.OverloadClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedOverloadClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedOverloadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<OverloadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedOverloadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Overload.OverloadClientSettings> configureSettings) => throw null;
     }
 }

@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Treat the output as a single block without any parsing. </summary>
     public partial class McpServerNoneOutputParsing : McpServerOutputParsing
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerNoneOutputParsing"/>. </summary>
-        public McpServerNoneOutputParsing() : base(McpServerOutputParsingKind.None)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerNoneOutputParsing"/>. </summary>
+        public McpServerNoneOutputParsing() : base(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingKind.None)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerNoneOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerNoneOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerNoneOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal McpServerNoneOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

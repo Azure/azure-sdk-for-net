@@ -17,16 +17,16 @@ namespace Service.MultiService.ServiceA
     {
         protected Foo() => throw null;
 
-        internal Foo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal Foo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Test(RequestContext context) => throw null;
 
-        public virtual Task<Response> TestAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> TestAsync(RequestContext context) => throw null;
 
         public virtual Response Test(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> TestAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> TestAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

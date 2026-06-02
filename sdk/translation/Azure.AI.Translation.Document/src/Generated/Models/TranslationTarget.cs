@@ -14,30 +14,30 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="languageCode"> Target Language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
-        public TranslationTarget(Uri targetUri, string languageCode)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
+        public TranslationTarget(global::System.Uri targetUri, string languageCode)
         {
-            Argument.AssertNotNull(targetUri, nameof(targetUri));
-            Argument.AssertNotNull(languageCode, nameof(languageCode));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(targetUri, nameof(targetUri));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(languageCode, nameof(languageCode));
 
             TargetUri = targetUri;
             LanguageCode = languageCode;
-            Glossaries = new ChangeTrackingList<TranslationGlossary>();
+            Glossaries = new ChangeTrackingList<global::Azure.AI.Translation.Document.TranslationGlossary>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="categoryId"> Category / custom system for translation request. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationTarget(global::System.Uri targetUri, string categoryId, string languageCode, IList<global::Azure.AI.Translation.Document.TranslationGlossary> glossaries, TranslationStorageSource? storageSource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetUri = targetUri;
             CategoryId = categoryId;
@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> List of Glossary. </summary>
-        public IList<TranslationGlossary> Glossaries { get; }
+        public IList<global::Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get; }
 
         /// <summary> Storage Source. </summary>
         public TranslationStorageSource? StorageSource { get; set; }

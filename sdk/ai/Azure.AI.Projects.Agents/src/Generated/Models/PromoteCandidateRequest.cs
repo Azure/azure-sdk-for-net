@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Agents
     public partial class PromoteCandidateRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PromoteCandidateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.PromoteCandidateRequest"/>. </summary>
         /// <param name="agentName"> Name of the Foundry agent to promote to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent to promote to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
         public PromoteCandidateRequest(string agentName, string agentVersion)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
-            Argument.AssertNotNull(agentVersion, nameof(agentVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agentName, nameof(agentName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agentVersion, nameof(agentVersion));
 
             AgentName = agentName;
             AgentVersion = agentVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PromoteCandidateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.PromoteCandidateRequest"/>. </summary>
         /// <param name="agentName"> Name of the Foundry agent to promote to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent to promote to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PromoteCandidateRequest(string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PromoteCandidateRequest(string agentName, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;

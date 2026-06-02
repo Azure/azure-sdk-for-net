@@ -13,22 +13,22 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for a custom text sentiment project. </summary>
     public partial class CustomTextSentimentProjectAssets : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="CustomTextSentimentProjectAssets"/>. </summary>
-        public CustomTextSentimentProjectAssets() : base(TextAuthoringProjectKind.CustomTextSentiment)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets"/>. </summary>
+        public CustomTextSentimentProjectAssets() : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomTextSentiment)
         {
-            Documents = new ChangeTrackingList<ExportedCustomTextSentimentDocument>();
+            Documents = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomTextSentimentProjectAssets"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        internal CustomTextSentimentProjectAssets(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ExportedCustomTextSentimentDocument> documents) : base(projectKind, additionalBinaryDataProperties)
+        internal CustomTextSentimentProjectAssets(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument> documents) : base(projectKind, additionalBinaryDataProperties)
         {
             Documents = documents;
         }
 
         /// <summary> The list of documents belonging to the project. </summary>
-        public IList<ExportedCustomTextSentimentDocument> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument> Documents { get; }
     }
 }

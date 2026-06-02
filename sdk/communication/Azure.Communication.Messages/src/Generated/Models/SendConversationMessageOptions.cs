@@ -14,26 +14,26 @@ namespace Azure.Communication.Messages
     public partial class SendConversationMessageOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SendConversationMessageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.SendConversationMessageOptions"/>. </summary>
         /// <param name="request"> Details of a send conversation message request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public SendConversationMessageOptions(ConversationMessageContent request)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(request, nameof(request));
 
             Request = request;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendConversationMessageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.SendConversationMessageOptions"/>. </summary>
         /// <param name="request"> Details of a send conversation message request. </param>
         /// <param name="outboundDeliveryStrategy">
         /// The options of the outbound delivery strategy for messages sent by participants in a conversation.
         /// Supports internalOnly, allChannels.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SendConversationMessageOptions(ConversationMessageContent request, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SendConversationMessageOptions(ConversationMessageContent request, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Request = request;
             OutboundDeliveryStrategy = outboundDeliveryStrategy;

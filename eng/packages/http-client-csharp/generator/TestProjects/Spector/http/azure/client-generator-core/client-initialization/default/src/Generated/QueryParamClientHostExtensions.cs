@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class QueryParamClientHostExtensions
     {
         public static IClientBuilder AddQueryParamClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddQueryParamClient(this IHostApplicationBuilder host, string sectionName, Action<QueryParamClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddQueryParamClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParamClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedQueryParamClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedQueryParamClient(this IHostApplicationBuilder host, string key, string sectionName, Action<QueryParamClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedQueryParamClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParamClientSettings> configureSettings) => throw null;
     }
 }

@@ -11,29 +11,29 @@ namespace Azure.AI.Projects
     /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
     public partial class InvokeAgentInvocationsApiDispatchPayload : RoutineDispatchPayload
     {
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentInvocationsApiDispatchPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InvokeAgentInvocationsApiDispatchPayload"/>. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public InvokeAgentInvocationsApiDispatchPayload(BinaryData input) : base(RoutineDispatchPayloadType.InvokeAgentInvocationsApi)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public InvokeAgentInvocationsApiDispatchPayload(BinaryData input) : base(global::Azure.AI.Projects.RoutineDispatchPayloadType.InvokeAgentInvocationsApi)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            global::Azure.AI.Projects.Argument.AssertNotNull(input, nameof(input));
 
             Input = input;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentInvocationsApiDispatchPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InvokeAgentInvocationsApiDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
-        internal InvokeAgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
+        internal InvokeAgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
         {
             Input = input;
         }
 
         /// <summary>
         /// The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

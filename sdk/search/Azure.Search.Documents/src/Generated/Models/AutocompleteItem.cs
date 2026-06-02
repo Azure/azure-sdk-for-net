@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Models
     public partial class AutocompleteItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.AutocompleteItem"/>. </summary>
         internal AutocompleteItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.AutocompleteItem"/>. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutocompleteItem(string text, string queryPlusText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutocompleteItem(string text, string queryPlusText, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             QueryPlusText = queryPlusText;

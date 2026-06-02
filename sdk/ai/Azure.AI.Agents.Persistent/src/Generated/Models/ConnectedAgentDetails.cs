@@ -14,30 +14,30 @@ namespace Azure.AI.Agents.Persistent
     public partial class ConnectedAgentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedAgentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentDetails"/>. </summary>
         /// <param name="id"> The identifier of the child agent. </param>
         /// <param name="name"> The name of the agent to be called. </param>
         /// <param name="description"> A description of what the agent does, used by the model to choose when and how to call the agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="description"/> is null. </exception>
         public ConnectedAgentDetails(string id, string name, string description)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(description, nameof(description));
 
             Id = id;
             Name = name;
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedAgentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentDetails"/>. </summary>
         /// <param name="id"> The identifier of the child agent. </param>
         /// <param name="name"> The name of the agent to be called. </param>
         /// <param name="description"> A description of what the agent does, used by the model to choose when and how to call the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedAgentDetails(string id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedAgentDetails(string id, string name, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

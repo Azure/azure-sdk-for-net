@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A click action. </summary>
     public partial class ClickAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="ClickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
         /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
@@ -24,13 +24,13 @@ namespace Azure.AI.Agents.Persistent
             Button = button;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClickAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ClickAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
         /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
-        internal ClickAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int x, int y, MouseButton button) : base(@type, additionalBinaryDataProperties)
+        internal ClickAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int x, int y, MouseButton button) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

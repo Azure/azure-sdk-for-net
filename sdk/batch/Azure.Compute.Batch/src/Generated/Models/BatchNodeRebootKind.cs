@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodeRebootKind enums. </summary>
-    public readonly partial struct BatchNodeRebootKind : IEquatable<BatchNodeRebootKind>
+    public readonly partial struct BatchNodeRebootKind : IEquatable<global::Azure.Compute.Batch.BatchNodeRebootKind>
     {
         private readonly string _value;
         /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks will run again when a Compute Node is available. Restart the Compute Node as soon as Tasks have been terminated. </summary>
@@ -23,12 +23,12 @@ namespace Azure.Compute.Batch
         /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
         private const string RetainedDataValue = "retaineddata";
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRebootKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeRebootKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeRebootKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.Compute.Batch
         /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
         public static BatchNodeRebootKind RetainedData { get; } = new BatchNodeRebootKind(RetainedDataValue);
 
-        /// <summary> Determines if two <see cref="BatchNodeRebootKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeRebootKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeRebootKind left, BatchNodeRebootKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchNodeRebootKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodeRebootKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeRebootKind left, BatchNodeRebootKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeRebootKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeRebootKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeRebootKind(string value) => new BatchNodeRebootKind(value);
 
-        /// <summary> Converts a string to a <see cref="BatchNodeRebootKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodeRebootKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodeRebootKind?(string value) => value == null ? null : new BatchNodeRebootKind(value);
+        public static implicit operator BatchNodeRebootKind?(string value) => (value == null) ? null : new BatchNodeRebootKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchNodeRebootKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchNodeRebootKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchNodeRebootKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchNodeRebootKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

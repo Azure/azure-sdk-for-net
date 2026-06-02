@@ -20,21 +20,21 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacLink
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacLink"/>. </summary>
         /// <param name="href"> The URL of the link. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="href"/> is null. </exception>
         public StacLink(string href)
         {
-            Argument.AssertNotNull(href, nameof(href));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(href, nameof(href));
 
             Href = href;
             Headers = new ChangeTrackingDictionary<string, string>();
-            Body = new ChangeTrackingDictionary<string, BinaryData>();
+            Body = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacLink"/>. </summary>
         /// <param name="rel"> The relationship type of the link. </param>
         /// <param name="title"> The title of the link. </param>
         /// <param name="type"> The MIME type of the linked resource. </param>
@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Default: false.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacLink(string rel, string title, StacLinkType? @type, string href, string hreflang, int? length, StacLinkMethod? @method, IDictionary<string, string> headers, IDictionary<string, BinaryData> body, bool? merge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacLink(string rel, string title, StacLinkType? @type, string href, string hreflang, int? length, StacLinkMethod? @method, IDictionary<string, string> headers, IDictionary<string, global::System.BinaryData> body, bool? merge, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Rel = rel;
             Title = title;
@@ -103,8 +103,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// For POST requests, the resource can specify the HTTP body as a JSON object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -127,7 +127,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Body { get; }
+        public IDictionary<string, global::System.BinaryData> Body { get; }
 
         /// <summary>
         /// Indicates whether the client is expected to merge the body value into the current request body before following the link.

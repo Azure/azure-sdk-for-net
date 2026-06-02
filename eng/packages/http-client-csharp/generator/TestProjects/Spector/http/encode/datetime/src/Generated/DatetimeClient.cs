@@ -17,14 +17,14 @@ namespace Encode.Datetime
 {
     public partial class DatetimeClient
     {
-        public DatetimeClient() : this(new Uri("http://localhost:3000"), new DatetimeClientOptions()) => throw null;
+        public DatetimeClient() : this(new global::System.Uri("http://localhost:3000"), new DatetimeClientOptions()) => throw null;
 
-        internal DatetimeClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DatetimeClientOptions options) => throw null;
+        internal DatetimeClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DatetimeClientOptions options) => throw null;
 
-        public DatetimeClient(Uri endpoint, DatetimeClientOptions options) : this(null, endpoint, options) => throw null;
+        public DatetimeClient(global::System.Uri endpoint, DatetimeClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public DatetimeClient(DatetimeClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public DatetimeClient(DatetimeClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

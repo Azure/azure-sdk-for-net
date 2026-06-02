@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesBrowserAutomationToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connection"/> is null. </exception>
         public ResponsesBrowserAutomationToolParameters(ResponsesBrowserAutomationToolConnectionParameters connection)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(connection, nameof(connection));
 
             Connection = connection;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesBrowserAutomationToolParameters(ResponsesBrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesBrowserAutomationToolParameters(ResponsesBrowserAutomationToolConnectionParameters connection, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Connection = connection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

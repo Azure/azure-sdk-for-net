@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ResourceNotificationsResourceDeletedDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedDetails"/>. </summary>
         /// <param name="resource"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
@@ -31,12 +31,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedDetails"/>. </summary>
         /// <param name="resource"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Name = name;

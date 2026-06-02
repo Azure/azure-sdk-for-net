@@ -29,8 +29,8 @@ namespace Azure.Monitor.Query.Logs
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (prefer != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((prefer != null))
             {
                 request.Headers.SetValue("Prefer", prefer);
             }
@@ -52,8 +52,8 @@ namespace Azure.Monitor.Query.Logs
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (prefer != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((prefer != null))
             {
                 request.Headers.SetValue("Prefer", prefer);
             }
@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query.Logs
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

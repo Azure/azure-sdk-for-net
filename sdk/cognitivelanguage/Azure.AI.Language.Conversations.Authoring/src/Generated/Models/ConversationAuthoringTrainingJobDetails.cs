@@ -14,28 +14,28 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringTrainingJobDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelLabel"/> is null. </exception>
         public ConversationAuthoringTrainingJobDetails(string modelLabel, ConversationAuthoringTrainingMode trainingMode)
         {
-            Argument.AssertNotNull(modelLabel, nameof(modelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(modelLabel, nameof(modelLabel));
 
             ModelLabel = modelLabel;
             TrainingMode = trainingMode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> For customers to populate if they wish to use data generation for their model training job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode trainingMode, ConversationAuthoringEvaluationDetails evaluationOptions, AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode trainingMode, ConversationAuthoringEvaluationDetails evaluationOptions, AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;

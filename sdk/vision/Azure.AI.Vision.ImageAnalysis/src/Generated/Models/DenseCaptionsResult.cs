@@ -18,25 +18,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DenseCaptionsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DenseCaptionsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
-        internal DenseCaptionsResult(IEnumerable<DenseCaption> values)
+        internal DenseCaptionsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DenseCaption> values)
         {
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DenseCaptionsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DenseCaptionsResult(IReadOnlyList<DenseCaption> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DenseCaptionsResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DenseCaption> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of image captions. </summary>
-        public IReadOnlyList<DenseCaption> Values { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DenseCaption> Values { get; }
     }
 }

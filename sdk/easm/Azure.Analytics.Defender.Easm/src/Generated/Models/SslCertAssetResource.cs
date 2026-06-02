@@ -13,14 +13,14 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The SslCertAssetResource. </summary>
     public partial class SslCertAssetResource : AssetResource
     {
-        /// <summary> Initializes a new instance of <see cref="SslCertAssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslCertAssetResource"/>. </summary>
         /// <param name="asset"> asset. </param>
         internal SslCertAssetResource(SslCertAsset asset) : base("sslCert")
         {
             Asset = asset;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SslCertAssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslCertAssetResource"/>. </summary>
         /// <param name="kind"> Discriminator property for AssetResource. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="asset"> asset. </param>
-        internal SslCertAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, SslCertAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
+        internal SslCertAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail, string reason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SslCertAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
         {
             Asset = asset;
         }

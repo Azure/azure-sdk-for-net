@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.Example.Basic
 {
-    public partial class ActionResponse : IJsonModel<ActionResponse>
+    public partial class ActionResponse : IJsonModel<global::Specs.Azure.Example.Basic.ActionResponse>
     {
         internal ActionResponse() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.Example.Basic
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ActionResponse>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Example.Basic.ActionResponse>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ActionResponse IPersistableModel<ActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ActionResponse IPersistableModel<global::Specs.Azure.Example.Basic.ActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Example.Basic.ActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator ActionResponse(Response response) => throw null;
 
-        void IJsonModel<ActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Example.Basic.ActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ActionResponse IJsonModel<ActionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ActionResponse IJsonModel<global::Specs.Azure.Example.Basic.ActionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ActionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

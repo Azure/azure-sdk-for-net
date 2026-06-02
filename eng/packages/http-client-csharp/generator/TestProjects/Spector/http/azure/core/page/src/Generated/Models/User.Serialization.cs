@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.Core.Page
 {
-    public partial class User : IJsonModel<User>
+    public partial class User : IJsonModel<global::Specs.Azure.Core.Page.User>
     {
         internal User() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.Core.Page
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Page.User>.Write(ModelReaderWriterOptions options) => throw null;
 
-        User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        User IPersistableModel<global::Specs.Azure.Core.Page.User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Page.User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Page.User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        User IJsonModel<global::Specs.Azure.Core.Page.User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

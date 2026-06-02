@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithText : IPersistableModel<ModelWithText>, IXmlSerializable
+    public partial class ModelWithText : IPersistableModel<global::Payload.Xml.ModelWithText>, IXmlSerializable
     {
         internal ModelWithText() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithText>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithText>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithText IPersistableModel<ModelWithText>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithText IPersistableModel<global::Payload.Xml.ModelWithText>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithText>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithText>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithText"> The <see cref="ModelWithText"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithText"> The <see cref="global::Payload.Xml.ModelWithText"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithText modelWithText) => throw null;
 
         public static explicit operator ModelWithText(Response response) => throw null;

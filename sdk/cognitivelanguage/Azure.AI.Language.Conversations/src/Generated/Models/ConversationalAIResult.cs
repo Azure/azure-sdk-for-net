@@ -16,21 +16,21 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationalAIResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIResult"/>. </summary>
         /// <param name="conversations"> Multiple multi-turn conversations analyzed. </param>
-        internal ConversationalAIResult(IEnumerable<ConversationalAIAnalysis> conversations)
+        internal ConversationalAIResult(IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysis> conversations)
         {
             Conversations = conversations.ToList();
             Warnings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIResult"/>. </summary>
         /// <param name="conversations"> Multiple multi-turn conversations analyzed. </param>
         /// <param name="warnings"> Any warnings encountered during processing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIResult(IList<ConversationalAIAnalysis> conversations, IList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalAIResult(IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysis> conversations, IList<string> warnings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Warnings = warnings;
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> Multiple multi-turn conversations analyzed. </summary>
-        public IList<ConversationalAIAnalysis> Conversations { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysis> Conversations { get; }
 
         /// <summary> Any warnings encountered during processing. </summary>
         public IList<string> Warnings { get; }

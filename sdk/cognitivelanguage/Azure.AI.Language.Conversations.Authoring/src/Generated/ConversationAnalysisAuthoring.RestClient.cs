@@ -24,31 +24,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetProjectsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetProjectsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -57,20 +57,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -81,32 +81,32 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/languages", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             uri.AppendQuery("projectKind", projectKind, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedLanguagesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedLanguagesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -115,20 +115,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -139,31 +139,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/deployments/resources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAssignedResourceDeploymentsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetAssignedResourceDeploymentsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -172,20 +172,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -196,39 +196,39 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/prebuilt-entities", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (language != null)
+            if ((language != null))
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (multilingual != null)
+            if ((multilingual != null))
             {
                 uri.AppendQuery("multilingual", multilingual, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedPrebuiltEntitiesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedPrebuiltEntitiesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -237,20 +237,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -261,32 +261,32 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/training-config-versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             uri.AppendQuery("projectKind", projectKind, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainingConfigVersionsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainingConfigVersionsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -295,20 +295,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -321,31 +321,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainedModelsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainedModelsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -354,20 +354,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -380,31 +380,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/train/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainingJobsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainingJobsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -413,20 +413,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -439,31 +439,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentResourcesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentResourcesRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -472,20 +472,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -498,31 +498,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -531,20 +531,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -557,31 +557,31 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/exported-models", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetExportedModelsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetExportedModelsRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -590,20 +590,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.AI.Language.Conversations.Authoring.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

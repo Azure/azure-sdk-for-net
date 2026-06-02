@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventConversationItemTruncate : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="itemId">
         /// The ID of the assistant message item to truncate. Only assistant message
         /// items can be truncated.
@@ -23,14 +23,14 @@ namespace Azure.AI.VoiceLive
         /// the audio_end_ms is greater than the actual audio duration, the server
         /// will respond with an error.
         /// </param>
-        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs) : base(ClientEventType.ConversationItemTruncate)
+        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs) : base(global::Azure.AI.VoiceLive.ClientEventType.ConversationItemTruncate)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
         /// the audio_end_ms is greater than the actual audio duration, the server
         /// will respond with an error.
         /// </param>
-        internal ClientEventConversationItemTruncate(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventConversationItemTruncate(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;

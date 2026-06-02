@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Tests Notification rule model. </summary>
-    public partial class TestsNotificationRule : NotificationRule, IJsonModel<TestsNotificationRule>
+    public partial class TestsNotificationRule : NotificationRule, IJsonModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>
     {
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestsNotificationRule"/> for deserialization. </summary>
         internal TestsNotificationRule()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestsNotificationRule(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.TestsNotificationRule.DeserializeTestsNotificationRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestsNotificationRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestsNotificationRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestsNotificationRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestsNotificationRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestsNotificationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestsNotificationRule IPersistableModel<TestsNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestsNotificationRule)PersistableModelCreateCore(data, options);
+        TestsNotificationRule IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => ((TestsNotificationRule)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestsNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestsNotificationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,19 +73,19 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestsNotificationRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestsNotificationRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(TestIds))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(TestIds))
             {
                 writer.WritePropertyName("testIds"u8);
                 writer.WriteStartArray();
                 foreach (string item in TestIds)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -99,33 +99,33 @@ namespace Azure.Developer.LoadTesting
             foreach (var item in EventFilters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WriteObjectValue<TestsNotificationEventFilter>(item.Value, options);
             }
             writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestsNotificationRule IJsonModel<TestsNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TestsNotificationRule)JsonModelCreateCore(ref reader, options);
+        TestsNotificationRule IJsonModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((TestsNotificationRule)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestsNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestsNotificationRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestsNotificationRule)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestsNotificationRule(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.TestsNotificationRule.DeserializeTestsNotificationRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TestsNotificationRule DeserializeTestsNotificationRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -137,9 +137,9 @@ namespace Azure.Developer.LoadTesting
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
             string lastModifiedBy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IList<string> testIds = default;
-            IDictionary<string, TestsNotificationEventFilter> eventFilters = default;
+            IDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("notificationRuleId"u8))
@@ -157,7 +157,7 @@ namespace Azure.Developer.LoadTesting
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -176,7 +176,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -190,7 +190,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -204,14 +204,14 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("testIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -225,17 +225,17 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("eventFilters"u8))
                 {
-                    Dictionary<string, TestsNotificationEventFilter> dictionary = new Dictionary<string, TestsNotificationEventFilter>();
+                    Dictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> dictionary = new Dictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, TestsNotificationEventFilter.DeserializeTestsNotificationEventFilter(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter.DeserializeTestsNotificationEventFilter(prop0.Value, options));
                     }
                     eventFilters = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TestsNotificationRule(
@@ -248,7 +248,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedDateTime,
                 lastModifiedBy,
                 additionalBinaryDataProperties,
-                testIds ?? new ChangeTrackingList<string>(),
+                (testIds ?? new ChangeTrackingList<string>()),
                 eventFilters);
         }
     }

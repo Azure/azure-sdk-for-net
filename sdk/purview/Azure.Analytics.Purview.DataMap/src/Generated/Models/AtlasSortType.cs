@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Type for sorting. </summary>
-    public readonly partial struct AtlasSortType : IEquatable<AtlasSortType>
+    public readonly partial struct AtlasSortType : IEquatable<global::Azure.Analytics.Purview.DataMap.AtlasSortType>
     {
         private readonly string _value;
         /// <summary> No sorting order. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Use descending order for sorting. </summary>
         private const string DescendValue = "DESC";
 
-        /// <summary> Initializes a new instance of <see cref="AtlasSortType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasSortType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AtlasSortType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Use descending order for sorting. </summary>
         public static AtlasSortType Descend { get; } = new AtlasSortType(DescendValue);
 
-        /// <summary> Determines if two <see cref="AtlasSortType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.AtlasSortType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AtlasSortType left, AtlasSortType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AtlasSortType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.AtlasSortType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AtlasSortType left, AtlasSortType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AtlasSortType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.AtlasSortType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AtlasSortType(string value) => new AtlasSortType(value);
 
-        /// <summary> Converts a string to a <see cref="AtlasSortType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.AtlasSortType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AtlasSortType?(string value) => value == null ? null : new AtlasSortType(value);
+        public static implicit operator AtlasSortType?(string value) => (value == null) ? null : new AtlasSortType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AtlasSortType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AtlasSortType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AtlasSortType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AtlasSortType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

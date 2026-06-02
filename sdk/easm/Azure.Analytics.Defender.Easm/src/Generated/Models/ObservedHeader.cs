@@ -13,12 +13,12 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedHeader. </summary>
     public partial class ObservedHeader : ObservedValue
     {
-        /// <summary> Initializes a new instance of <see cref="ObservedHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedHeader"/>. </summary>
         internal ObservedHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservedHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedHeader"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="headerName"></param>
         /// <param name="headerValue"></param>
-        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
+        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;

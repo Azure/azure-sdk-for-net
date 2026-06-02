@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal readonly partial struct EvaluationTaxonomyInputType : IEquatable<EvaluationTaxonomyInputType>
+    internal readonly partial struct EvaluationTaxonomyInputType : IEquatable<global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType>
     {
         private readonly string _value;
         /// <summary> Agent. </summary>
@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Policy. </summary>
         private const string PolicyValue = "policy";
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomyInputType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType"/>. </summary>
         /// <param name="value"> The value. </param>
         public EvaluationTaxonomyInputType(string value)
         {
@@ -28,34 +28,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Policy. </summary>
         public static EvaluationTaxonomyInputType Policy { get; } = new EvaluationTaxonomyInputType(PolicyValue);
 
-        /// <summary> Determines if two <see cref="EvaluationTaxonomyInputType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EvaluationTaxonomyInputType left, EvaluationTaxonomyInputType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EvaluationTaxonomyInputType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EvaluationTaxonomyInputType left, EvaluationTaxonomyInputType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EvaluationTaxonomyInputType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EvaluationTaxonomyInputType(string value) => new EvaluationTaxonomyInputType(value);
 
-        /// <summary> Converts a string to a <see cref="EvaluationTaxonomyInputType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluationTaxonomyInputType?(string value) => value == null ? null : new EvaluationTaxonomyInputType(value);
+        public static implicit operator EvaluationTaxonomyInputType?(string value) => (value == null) ? null : new EvaluationTaxonomyInputType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EvaluationTaxonomyInputType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EvaluationTaxonomyInputType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EvaluationTaxonomyInputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EvaluationTaxonomyInputType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

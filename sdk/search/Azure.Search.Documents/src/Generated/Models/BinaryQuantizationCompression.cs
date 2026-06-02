@@ -14,22 +14,22 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the binary quantization compression method used during indexing and querying. </summary>
     public partial class BinaryQuantizationCompression : VectorSearchCompression
     {
-        /// <summary> Initializes a new instance of <see cref="BinaryQuantizationCompression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.BinaryQuantizationCompression"/>. </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compressionName"/> is null. </exception>
-        public BinaryQuantizationCompression(string compressionName) : base(compressionName, VectorSearchCompressionKind.BinaryQuantization)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="compressionName"/> is null. </exception>
+        public BinaryQuantizationCompression(string compressionName) : base(compressionName, global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionKind.BinaryQuantization)
         {
-            Argument.AssertNotNull(compressionName, nameof(compressionName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(compressionName, nameof(compressionName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="BinaryQuantizationCompression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.BinaryQuantizationCompression"/>. </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>
         /// <param name="rescoringOptions"> Contains the options for rescoring. </param>
         /// <param name="truncationDimension"> The number of dimensions to truncate the vectors to. Truncating the vectors reduces the size of the vectors and the amount of data that needs to be transferred during search. This can save storage cost and improve search performance at the expense of recall. It should be only used for embeddings trained with Matryoshka Representation Learning (MRL) such as OpenAI text-embedding-3-large (small). The default value is null, which means no truncation. </param>
         /// <param name="kind"> Type of VectorSearchCompression. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryQuantizationCompression(string compressionName, RescoringOptions rescoringOptions, int? truncationDimension, VectorSearchCompressionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(compressionName, rescoringOptions, truncationDimension, kind, additionalBinaryDataProperties)
+        internal BinaryQuantizationCompression(string compressionName, RescoringOptions rescoringOptions, int? truncationDimension, VectorSearchCompressionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(compressionName, rescoringOptions, truncationDimension, kind, additionalBinaryDataProperties)
         {
         }
     }

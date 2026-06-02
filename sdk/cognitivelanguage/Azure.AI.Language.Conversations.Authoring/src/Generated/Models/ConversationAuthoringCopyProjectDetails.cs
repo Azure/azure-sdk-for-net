@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringCopyProjectDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCopyProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCopyProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
         /// <param name="expiresAt"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetProjectName"/>, <paramref name="accessToken"/>, <paramref name="targetResourceId"/> or <paramref name="targetResourceRegion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetProjectName"/>, <paramref name="accessToken"/>, <paramref name="targetResourceId"/> or <paramref name="targetResourceRegion"/> is null. </exception>
         public ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
         {
-            Argument.AssertNotNull(targetProjectName, nameof(targetProjectName));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(targetProjectName, nameof(targetProjectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(accessToken, nameof(accessToken));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
 
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             TargetResourceRegion = targetResourceRegion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCopyProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCopyProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;

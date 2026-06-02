@@ -16,25 +16,25 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/>, <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public SearchIndexerSkill(string odataType, IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="odataType"/>, <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public SearchIndexerSkill(string odataType, IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs)
         {
-            Argument.AssertNotNull(odataType, nameof(odataType));
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(odataType, nameof(odataType));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
 
             OdataType = odataType;
             Inputs = inputs.ToList();
             Outputs = outputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OdataType = odataType;
             Name = name;
@@ -66,9 +66,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Context { get; set; }
 
         /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get; }
 
         /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
-        public IList<OutputFieldMappingEntry> Outputs { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> Outputs { get; }
     }
 }

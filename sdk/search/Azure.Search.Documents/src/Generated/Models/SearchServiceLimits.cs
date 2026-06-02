@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceLimits
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceLimits"/>. </summary>
         internal SearchServiceLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceLimits"/>. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
         /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
         /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
             MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;

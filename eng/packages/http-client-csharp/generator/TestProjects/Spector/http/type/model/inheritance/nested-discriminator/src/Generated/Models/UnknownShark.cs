@@ -12,6 +12,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     internal partial class UnknownShark : Shark
     {
-        internal UnknownShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind ?? "unknown", age, additionalBinaryDataProperties, sharktype ?? "unknown") => throw null;
+        internal UnknownShark(string kind, int age, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string sharktype) : base((kind ?? "unknown"), age, additionalBinaryDataProperties, (sharktype ?? "unknown")) => throw null;
     }
 }

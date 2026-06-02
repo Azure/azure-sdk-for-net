@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The request of the insights report.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationRunClusterInsightRequest"/>, <see cref="AgentClusterInsightRequest"/>, and <see cref="EvaluationComparisonInsightRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightRequest"/>, <see cref="Azure.AI.Projects.Evaluation.AgentClusterInsightRequest"/>, and <see cref="Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest"/>.
     /// </summary>
     public abstract partial class InsightRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         private protected InsightRequest(InsightType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightRequest(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

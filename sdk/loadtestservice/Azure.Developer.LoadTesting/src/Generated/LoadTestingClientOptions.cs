@@ -15,42 +15,42 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Client options for clients in this library. </summary>
     public partial class LoadTestingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
+        private const global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion LatestVersion = global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_11_01_Preview;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public LoadTestingClientOptions(ServiceVersion version = LatestVersion)
+        public LoadTestingClientOptions(global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2022_11_01 => "2022-11-01",
-                ServiceVersion.V2023_04_01_Preview => "2023-04-01-preview",
-                ServiceVersion.V2024_03_01_Preview => "2024-03-01-preview",
-                ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
-                ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
-                ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
-                ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
-                ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2022_11_01 => "2022-11-01",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2023_04_01_Preview => "2023-04-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2024_03_01_Preview => "2024-03-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
+                global::Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal LoadTestingClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-11-01-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

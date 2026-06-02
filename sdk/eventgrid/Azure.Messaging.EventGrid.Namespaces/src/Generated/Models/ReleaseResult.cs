@@ -14,20 +14,20 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class ReleaseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReleaseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReleaseResult"/>. </summary>
         internal ReleaseResult()
         {
-            FailedLockTokens = new ChangeTrackingList<FailedLockToken>();
+            FailedLockTokens = new ChangeTrackingList<global::Azure.Messaging.EventGrid.Namespaces.FailedLockToken>();
             SucceededLockTokens = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReleaseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReleaseResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully released cloud events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReleaseResult(IReadOnlyList<FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReleaseResult(IReadOnlyList<global::Azure.Messaging.EventGrid.Namespaces.FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FailedLockTokens = failedLockTokens;
             SucceededLockTokens = succeededLockTokens;
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </summary>
-        public IReadOnlyList<FailedLockToken> FailedLockTokens { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.Namespaces.FailedLockToken> FailedLockTokens { get; }
 
         /// <summary> Array of lock tokens for the successfully released cloud events. </summary>
         public IReadOnlyList<string> SucceededLockTokens { get; }

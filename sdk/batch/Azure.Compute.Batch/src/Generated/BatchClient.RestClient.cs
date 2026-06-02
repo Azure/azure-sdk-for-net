@@ -33,25 +33,25 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/applications", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
+        internal HttpMessage CreateNextGetApplicationsRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -68,16 +68,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -90,21 +90,21 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -117,37 +117,37 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/poolusagemetrics", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (starttime != null)
+            if ((starttime != null))
             {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(starttime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("startTime", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(starttime, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (endtime != null)
+            if ((endtime != null))
             {
-                uri.AppendQuery("endtime", TypeFormatters.ConvertToString(endtime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endtime", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(endtime, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -155,7 +155,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -164,16 +164,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -185,21 +185,21 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -213,37 +213,37 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -251,7 +251,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetPoolsRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -260,16 +260,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -282,23 +282,23 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -313,23 +313,23 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Head;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Head;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -344,31 +344,31 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -384,24 +384,24 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Patch;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -418,21 +418,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/disableautoscale", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -446,24 +446,24 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/enableautoscale", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -480,21 +480,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/evaluateautoscale", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -511,24 +511,24 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/resize", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -545,23 +545,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/stopresize", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -577,21 +577,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/updateproperties", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -607,24 +607,24 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/removenodes", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -639,29 +639,29 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/supportedimages", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -669,7 +669,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedImagesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedImagesRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -678,16 +678,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -699,29 +699,29 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/nodecounts", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -729,7 +729,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolNodeCountsRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -738,16 +738,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -760,27 +760,27 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(force), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -795,31 +795,31 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -835,24 +835,24 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Patch;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -868,24 +868,24 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Put;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -902,24 +902,24 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/disable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -936,23 +936,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/enable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -968,31 +968,31 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/terminate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(force), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (content != null)
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1007,21 +1007,21 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1035,37 +1035,37 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1073,7 +1073,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1082,16 +1082,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1105,37 +1105,37 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1143,7 +1143,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsFromScheduleRequest(global::System.Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1152,16 +1152,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1175,33 +1175,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/jobpreparationandreleasetaskstatus", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1209,7 +1209,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(global::System.Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1218,16 +1218,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1241,21 +1241,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/taskcounts", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1269,23 +1269,23 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Head;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Head;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1300,27 +1300,27 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(force), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1335,31 +1335,31 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1375,24 +1375,24 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Patch;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1408,24 +1408,24 @@ namespace Azure.Compute.Batch
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Put;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1442,23 +1442,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/disable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1474,23 +1474,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/enable", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1506,27 +1506,27 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/terminate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(force), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1540,21 +1540,21 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1568,37 +1568,37 @@ namespace Azure.Compute.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1606,7 +1606,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobSchedulesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobSchedulesRequest(global::System.Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1615,16 +1615,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1638,21 +1638,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1668,37 +1668,37 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1706,7 +1706,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(global::System.Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1715,16 +1715,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1738,21 +1738,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/addtaskcollection", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -1770,23 +1770,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1803,31 +1803,31 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
-            if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((expand != null) && !((expand is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$expand", expand, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1845,24 +1845,24 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Put;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1881,25 +1881,25 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/subtasksinfo", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1907,7 +1907,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSubTasksRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetSubTasksRequest(global::System.Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1916,16 +1916,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -1941,23 +1941,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/terminate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -1975,23 +1975,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/reactivate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -2010,25 +2010,25 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (recursive != null)
+            if ((recursive != null))
             {
-                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive), true);
+                uri.AppendQuery("recursive", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(recursive), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2045,27 +2045,27 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            if (ocpRange != null)
+            if ((ocpRange != null))
             {
                 request.Headers.SetValue("ocp-range", ocpRange);
             }
@@ -2085,23 +2085,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Head;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Head;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -2119,33 +2119,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (recursive != null)
+            if ((recursive != null))
             {
-                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive), true);
+                uri.AppendQuery("recursive", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(recursive), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2153,7 +2153,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetTaskFilesRequest(global::System.Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2162,16 +2162,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2187,21 +2187,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -2220,21 +2220,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2251,21 +2251,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Put;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -2282,25 +2282,25 @@ namespace Azure.Compute.Batch
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2317,23 +2317,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reboot", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (content != null)
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             }
@@ -2352,21 +2352,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/start", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2382,23 +2382,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reimage", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (content != null)
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             }
@@ -2417,23 +2417,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/deallocate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (content != null)
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             }
@@ -2452,23 +2452,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/disablescheduling", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (content != null)
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             }
@@ -2487,21 +2487,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/enablescheduling", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2517,21 +2517,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/remoteloginsettings", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2548,21 +2548,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/uploadbatchservicelogs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2579,33 +2579,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2613,7 +2613,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodesRequest(Uri nextPage, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodesRequest(global::System.Uri nextPage, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2622,16 +2622,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2648,25 +2648,25 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2683,29 +2683,29 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((@select != null) && !((@select is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2713,7 +2713,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodeExtensionsRequest(global::System.Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2722,16 +2722,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2748,25 +2748,25 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (recursive != null)
+            if ((recursive != null))
             {
-                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive), true);
+                uri.AppendQuery("recursive", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(recursive), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2783,27 +2783,27 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            if (ocpRange != null)
+            if ((ocpRange != null))
             {
                 request.Headers.SetValue("ocp-range", ocpRange);
             }
@@ -2823,23 +2823,23 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Head;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Head;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
-            if (requestConditions != null)
+            if ((requestConditions != null))
             {
                 request.Headers.Add(requestConditions, "R");
             }
@@ -2857,33 +2857,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timeout != null)
+            if ((timeout != null))
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("timeOut", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(timeout, global::Azure.Compute.Batch.SerializationFormat.Duration_Seconds), true);
             }
-            if (maxResults != null)
+            if ((maxResults != null))
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
+                uri.AppendQuery("maxresults", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(maxResults), true);
             }
-            if (filter != null)
+            if ((filter != null))
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (recursive != null)
+            if ((recursive != null))
             {
-                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive), true);
+                uri.AppendQuery("recursive", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(recursive), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (requestDate != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((requestDate != null))
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", global::Azure.Compute.Batch.TypeFormatters.ConvertToString(requestDate, global::Azure.Compute.Batch.SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2891,7 +2891,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetNodeFilesRequest(global::System.Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2900,16 +2900,16 @@ namespace Azure.Compute.Batch
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);

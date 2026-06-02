@@ -12,28 +12,28 @@ namespace Azure.AI.Projects.Agents
     public partial class TelemetryConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.TelemetryConfig"/>. </summary>
         /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoints"/> is null. </exception>
-        public TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoints"/> is null. </exception>
+        public TelemetryConfig(IEnumerable<global::Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints)
         {
-            Argument.AssertNotNull(endpoints, nameof(endpoints));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(endpoints, nameof(endpoints));
 
             Endpoints = endpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.TelemetryConfig"/>. </summary>
         /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryConfig(IList<TelemetryEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryConfig(IList<global::Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Endpoints = endpoints;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Customer-supplied telemetry export endpoint configurations. </summary>
-        public IList<TelemetryEndpoint> Endpoints { get; }
+        public IList<global::Azure.AI.Projects.Agents.TelemetryEndpoint> Endpoints { get; }
     }
 }

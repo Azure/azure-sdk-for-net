@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartDeleted event. </summary>
-    [JsonConverter(typeof(ContainerRegistryChartDeletedEventDataConverter))]
-    public partial class ContainerRegistryChartDeletedEventData : ContainerRegistryArtifactEventData, IJsonModel<ContainerRegistryChartDeletedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData.ContainerRegistryChartDeletedEventDataConverter))]
+    public partial class ContainerRegistryChartDeletedEventData : ContainerRegistryArtifactEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryChartDeletedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData"/> for deserialization. </summary>
         internal ContainerRegistryChartDeletedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerRegistryArtifactEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerRegistryChartDeletedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData.DeserializeContainerRegistryChartDeletedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryChartDeletedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryChartDeletedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryChartDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryChartDeletedEventData IPersistableModel<ContainerRegistryChartDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerRegistryChartDeletedEventData)PersistableModelCreateCore(data, options);
+        ContainerRegistryChartDeletedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ContainerRegistryChartDeletedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryChartDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerRegistryChartDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,36 +75,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryChartDeletedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryChartDeletedEventData IJsonModel<ContainerRegistryChartDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerRegistryChartDeletedEventData)JsonModelCreateCore(ref reader, options);
+        ContainerRegistryChartDeletedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ContainerRegistryChartDeletedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerRegistryArtifactEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryChartDeletedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryChartDeletedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData.DeserializeContainerRegistryChartDeletedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContainerRegistryChartDeletedEventData DeserializeContainerRegistryChartDeletedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string location = default;
             ContainerRegistryArtifactEventTarget target = default;
             ContainerRegistryEventConnectedRegistry connectedRegistry = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("timestamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -143,21 +143,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("target"u8))
                 {
-                    target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(prop.Value, options);
+                    target = global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectedRegistry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(prop.Value, options);
+                    connectedRegistry = global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ContainerRegistryChartDeletedEventData(
@@ -170,7 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties);
         }
 
-        internal partial class ContainerRegistryChartDeletedEventDataConverter : JsonConverter<ContainerRegistryChartDeletedEventData>
+        internal partial class ContainerRegistryChartDeletedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ContainerRegistryChartDeletedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ContainerRegistryChartDeletedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryChartDeletedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -187,8 +187,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override ContainerRegistryChartDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeContainerRegistryChartDeletedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerRegistryChartDeletedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

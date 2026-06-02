@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ScalarQuantizationParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScalarQuantizationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScalarQuantizationParameters"/>. </summary>
         public ScalarQuantizationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScalarQuantizationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScalarQuantizationParameters"/>. </summary>
         /// <param name="quantizedDataType"> The quantized data type of compressed vector values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalarQuantizationParameters(VectorSearchCompressionTarget? quantizedDataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScalarQuantizationParameters(VectorSearchCompressionTarget? quantizedDataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QuantizedDataType = quantizedDataType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

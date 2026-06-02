@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Empty
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class EmptyClientHostExtensions
     {
         public static IClientBuilder AddEmptyClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddEmptyClient(this IHostApplicationBuilder host, string sectionName, Action<EmptyClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddEmptyClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Empty.EmptyClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedEmptyClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedEmptyClient(this IHostApplicationBuilder host, string key, string sectionName, Action<EmptyClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedEmptyClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Empty.EmptyClientSettings> configureSettings) => throw null;
     }
 }

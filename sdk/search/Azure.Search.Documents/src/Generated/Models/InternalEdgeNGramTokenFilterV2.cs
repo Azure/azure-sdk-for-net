@@ -12,20 +12,20 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class InternalEdgeNGramTokenFilterV2 : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="InternalEdgeNGramTokenFilterV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.InternalEdgeNGramTokenFilterV2"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         public InternalEdgeNGramTokenFilterV2(string name) : base("#Microsoft.Azure.Search.EdgeNGramTokenFilterV2", name)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalEdgeNGramTokenFilterV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.InternalEdgeNGramTokenFilterV2"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
         /// <param name="side"> Specifies which side of the input the n-gram should be generated from. Default is "front". </param>
-        internal InternalEdgeNGramTokenFilterV2(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram, EdgeNGramTokenFilterSide? side) : base(odataType, name, additionalBinaryDataProperties)
+        internal InternalEdgeNGramTokenFilterV2(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram, EdgeNGramTokenFilterSide? side) : base(odataType, name, additionalBinaryDataProperties)
         {
             MinGram = minGram;
             MaxGram = maxGram;

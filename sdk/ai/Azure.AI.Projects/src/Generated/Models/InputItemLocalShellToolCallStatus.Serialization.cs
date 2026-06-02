@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemLocalShellToolCallStatus value) => value switch
         {
-            InputItemLocalShellToolCallStatus.InProgress => "in_progress",
-            InputItemLocalShellToolCallStatus.Completed => "completed",
-            InputItemLocalShellToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemLocalShellToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemLocalShellToolCallStatus ToInputItemLocalShellToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemLocalShellToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemLocalShellToolCallStatus.Completed;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemLocalShellToolCallStatus.Incomplete;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemLocalShellToolCallStatus value.");
         }

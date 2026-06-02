@@ -19,19 +19,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class SubscriptionValidationResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationResponse"/>. </summary>
         /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
         internal SubscriptionValidationResponse(string validationResponse)
         {
             ValidationResponse = validationResponse;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationResponse"/>. </summary>
         /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionValidationResponse(string validationResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionValidationResponse(string validationResponse, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ValidationResponse = validationResponse;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Service.MultiService.Combined
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class CombinedClientHostExtensions
     {
         public static IClientBuilder AddCombinedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddCombinedClient(this IHostApplicationBuilder host, string sectionName, Action<CombinedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddCombinedClient(this IHostApplicationBuilder host, string sectionName, Action<global::Service.MultiService.Combined.CombinedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedCombinedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedCombinedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<CombinedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedCombinedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Service.MultiService.Combined.CombinedClientSettings> configureSettings) => throw null;
     }
 }

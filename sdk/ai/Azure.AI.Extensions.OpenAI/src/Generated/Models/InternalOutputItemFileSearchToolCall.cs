@@ -10,20 +10,20 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemFileSearchToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall"/>. </summary>
         /// <param name="status">
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        public InternalOutputItemFileSearchToolCall(InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
+        public InternalOutputItemFileSearchToolCall(InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.FileSearchCall)
         {
             Status = status;
             Queries = queries.ToList();
-            Results = new ChangeTrackingList<FileSearchToolCallResults>();
+            Results = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InputItemFileSearchToolCallStatus status, IList<string> queries, IList<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;
@@ -52,6 +52,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<string> Queries { get; }
 
         /// <summary> Gets or sets the Results. </summary>
-        public IList<FileSearchToolCallResults> Results { get; set; }
+        public IList<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults> Results { get; set; }
     }
 }

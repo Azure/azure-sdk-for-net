@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The available sorting options when requesting a list of response objects. </summary>
-    public readonly partial struct ListSortOrder : IEquatable<ListSortOrder>
+    public readonly partial struct ListSortOrder : IEquatable<global::Azure.AI.Agents.Persistent.ListSortOrder>
     {
         private readonly string _value;
         /// <summary> Specifies an ascending sort order. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Specifies a descending sort order. </summary>
         private const string DescendingValue = "desc";
 
-        /// <summary> Initializes a new instance of <see cref="ListSortOrder"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ListSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ListSortOrder(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Specifies a descending sort order. </summary>
         public static ListSortOrder Descending { get; } = new ListSortOrder(DescendingValue);
 
-        /// <summary> Determines if two <see cref="ListSortOrder"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ListSortOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ListSortOrder left, ListSortOrder right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ListSortOrder"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ListSortOrder"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ListSortOrder left, ListSortOrder right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ListSortOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ListSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ListSortOrder(string value) => new ListSortOrder(value);
 
-        /// <summary> Converts a string to a <see cref="ListSortOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ListSortOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListSortOrder?(string value) => value == null ? null : new ListSortOrder(value);
+        public static implicit operator ListSortOrder?(string value) => (value == null) ? null : new ListSortOrder(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ListSortOrder other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ListSortOrder other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ListSortOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ListSortOrder other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

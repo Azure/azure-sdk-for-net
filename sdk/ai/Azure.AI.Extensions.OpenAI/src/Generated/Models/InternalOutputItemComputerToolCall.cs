@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemComputerToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemComputerToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemComputerToolCall"/>. </summary>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
         /// <param name="status">
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        public InternalOutputItemComputerToolCall(string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(AgentResponseItemKind.ComputerCall)
+        public InternalOutputItemComputerToolCall(string callId, IEnumerable<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.ComputerCall)
         {
             CallId = callId;
-            Actions = new ChangeTrackingList<InternalComputerAction>();
+            Actions = new ChangeTrackingList<global::OpenAI.InternalComputerAction>();
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemComputerToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemComputerToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemComputerToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<InternalComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemComputerToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<global::OpenAI.InternalComputerAction> actions, IList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Action = action;
@@ -56,10 +56,10 @@ namespace Azure.AI.Extensions.OpenAI
         public InternalComputerAction Action { get; set; }
 
         /// <summary> Gets the Actions. </summary>
-        public IList<InternalComputerAction> Actions { get; }
+        public IList<global::OpenAI.InternalComputerAction> Actions { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
-        public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or

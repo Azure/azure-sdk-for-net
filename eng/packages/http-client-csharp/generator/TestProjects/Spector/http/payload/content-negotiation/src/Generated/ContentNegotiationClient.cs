@@ -15,14 +15,14 @@ namespace Payload.ContentNegotiation
 {
     public partial class ContentNegotiationClient
     {
-        public ContentNegotiationClient() : this(new Uri("http://localhost:3000"), new ContentNegotiationClientOptions()) => throw null;
+        public ContentNegotiationClient() : this(new global::System.Uri("http://localhost:3000"), new ContentNegotiationClientOptions()) => throw null;
 
-        internal ContentNegotiationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ContentNegotiationClientOptions options) => throw null;
+        internal ContentNegotiationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ContentNegotiationClientOptions options) => throw null;
 
-        public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) : this(null, endpoint, options) => throw null;
+        public ContentNegotiationClient(global::System.Uri endpoint, ContentNegotiationClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ContentNegotiationClient(ContentNegotiationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ContentNegotiationClient(ContentNegotiationClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

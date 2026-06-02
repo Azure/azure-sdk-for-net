@@ -13,23 +13,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> An assistant message item within a conversation. </summary>
     public partial class AssistantMessageItem : MessageItem
     {
-        /// <summary> Initializes a new instance of <see cref="AssistantMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AssistantMessageItem"/>. </summary>
         /// <param name="content"> The content parts of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public AssistantMessageItem(IEnumerable<MessageContentPart> content) : base(ResponseMessageRole.Assistant, content)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public AssistantMessageItem(IEnumerable<global::Azure.AI.VoiceLive.MessageContentPart> content) : base(global::Azure.AI.VoiceLive.ResponseMessageRole.Assistant, content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(content, nameof(content));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssistantMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AssistantMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message origionator. </param>
         /// <param name="content"> The content parts of the message. </param>
         /// <param name="status"> Processing status of the message item. </param>
-        internal AssistantMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties, role, content, status)
+        internal AssistantMessageItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<global::Azure.AI.VoiceLive.MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties, role, content, status)
         {
         }
     }

@@ -13,12 +13,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary>
     /// Specify parameters for query matching
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PrebuiltQueryMatchingPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMatchingPolicy))]
-    public abstract partial class MatchingPolicy : IJsonModel<MatchingPolicy>
+    [PersistableModelProxyAttribute(typeof(UnknownMatchingPolicy))]
+    public abstract partial class MatchingPolicy : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="MatchingPolicy"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy"/> for deserialization. </summary>
         internal MatchingPolicy()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MatchingPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Inference.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMatchingPolicy(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy.DeserializeMatchingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MatchingPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringInferenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Inference.AzureAILanguageQuestionAnsweringInferenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MatchingPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MatchingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MatchingPolicy IPersistableModel<MatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MatchingPolicy IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MatchingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MatchingPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MatchingPolicy IJsonModel<MatchingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MatchingPolicy IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MatchingPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MatchingPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMatchingPolicy(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy.DeserializeMatchingPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MatchingPolicy DeserializeMatchingPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,10 +130,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 switch (discriminator.GetString())
                 {
                     case "Prebuilt":
-                        return PrebuiltQueryMatchingPolicy.DeserializePrebuiltQueryMatchingPolicy(element, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy.DeserializePrebuiltQueryMatchingPolicy(element, options);
                 }
             }
-            return UnknownMatchingPolicy.DeserializeUnknownMatchingPolicy(element, options);
+            return global::Azure.AI.Language.QuestionAnswering.Inference.UnknownMatchingPolicy.DeserializeUnknownMatchingPolicy(element, options);
         }
     }
 }

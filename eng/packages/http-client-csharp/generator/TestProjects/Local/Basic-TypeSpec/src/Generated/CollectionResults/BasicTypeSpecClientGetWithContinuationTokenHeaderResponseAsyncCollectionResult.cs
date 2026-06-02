@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult : AsyncPageable<global::System.BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
@@ -27,7 +27,7 @@ namespace BasicTypeSpec
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(BasicTypeSpecClient client, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(BasicTypeSpecClient client, string token, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _token = token;
@@ -39,24 +39,24 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = (continuationToken ?? _token);
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithContinuationTokenHeaderResponseResponse result = (ListWithContinuationTokenHeaderResponseResponse)response;
-                List<BinaryData> items = new List<BinaryData>();
+                ListWithContinuationTokenHeaderResponseResponse result = ((ListWithContinuationTokenHeaderResponseResponse)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage, response);
-                if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
+                yield return global::Azure.Page<BinaryData>.FromValues(items, nextPage, response);
+                if ((response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value)))
                 {
                     nextPage = value;
                 }
@@ -70,7 +70,7 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetWithContinuationTokenHeaderResponseRequest(continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);

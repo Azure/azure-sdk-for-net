@@ -11,17 +11,17 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the connection kind for Azure OpenAI deployment. </summary>
-    public readonly partial struct AnalyzeConversationAuthoringDataGenerationConnectionKind : IEquatable<AnalyzeConversationAuthoringDataGenerationConnectionKind>
+    public readonly partial struct AnalyzeConversationAuthoringDataGenerationConnectionKind : IEquatable<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind>
     {
         private readonly string _value;
         private const string AzureOpenAIValue = "AzureOpenAI";
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyzeConversationAuthoringDataGenerationConnectionKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -29,34 +29,34 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Gets the AzureOpenAI. </summary>
         public static AnalyzeConversationAuthoringDataGenerationConnectionKind AzureOpenAI { get; } = new AnalyzeConversationAuthoringDataGenerationConnectionKind(AzureOpenAIValue);
 
-        /// <summary> Determines if two <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyzeConversationAuthoringDataGenerationConnectionKind left, AnalyzeConversationAuthoringDataGenerationConnectionKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyzeConversationAuthoringDataGenerationConnectionKind left, AnalyzeConversationAuthoringDataGenerationConnectionKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AnalyzeConversationAuthoringDataGenerationConnectionKind(string value) => new AnalyzeConversationAuthoringDataGenerationConnectionKind(value);
 
-        /// <summary> Converts a string to a <see cref="AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnalyzeConversationAuthoringDataGenerationConnectionKind?(string value) => value == null ? null : new AnalyzeConversationAuthoringDataGenerationConnectionKind(value);
+        public static implicit operator AnalyzeConversationAuthoringDataGenerationConnectionKind?(string value) => (value == null) ? null : new AnalyzeConversationAuthoringDataGenerationConnectionKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AnalyzeConversationAuthoringDataGenerationConnectionKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AnalyzeConversationAuthoringDataGenerationConnectionKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AnalyzeConversationAuthoringDataGenerationConnectionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnalyzeConversationAuthoringDataGenerationConnectionKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

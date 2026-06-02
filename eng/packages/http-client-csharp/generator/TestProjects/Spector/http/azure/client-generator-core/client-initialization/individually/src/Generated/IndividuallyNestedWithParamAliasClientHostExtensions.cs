@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class IndividuallyNestedWithParamAliasClientHostExtensions
     {
         public static IClientBuilder AddIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<IndividuallyNestedWithParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.IndividuallyNestedWithParamAliasClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<IndividuallyNestedWithParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedIndividuallyNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.IndividuallyNestedWithParamAliasClientSettings> configureSettings) => throw null;
     }
 }

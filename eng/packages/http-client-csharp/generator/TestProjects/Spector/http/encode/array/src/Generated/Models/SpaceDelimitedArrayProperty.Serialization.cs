@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode._Array
 {
-    public partial class SpaceDelimitedArrayProperty : IJsonModel<SpaceDelimitedArrayProperty>
+    public partial class SpaceDelimitedArrayProperty : IJsonModel<global::Encode._Array.SpaceDelimitedArrayProperty>
     {
         internal SpaceDelimitedArrayProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode._Array
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SpaceDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode._Array.SpaceDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SpaceDelimitedArrayProperty IPersistableModel<SpaceDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SpaceDelimitedArrayProperty IPersistableModel<global::Encode._Array.SpaceDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SpaceDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode._Array.SpaceDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="spaceDelimitedArrayProperty"> The <see cref="SpaceDelimitedArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="spaceDelimitedArrayProperty"> The <see cref="global::Encode._Array.SpaceDelimitedArrayProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SpaceDelimitedArrayProperty spaceDelimitedArrayProperty) => throw null;
 
         public static explicit operator SpaceDelimitedArrayProperty(Response response) => throw null;
 
-        void IJsonModel<SpaceDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode._Array.SpaceDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SpaceDelimitedArrayProperty IJsonModel<SpaceDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SpaceDelimitedArrayProperty IJsonModel<global::Encode._Array.SpaceDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SpaceDelimitedArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

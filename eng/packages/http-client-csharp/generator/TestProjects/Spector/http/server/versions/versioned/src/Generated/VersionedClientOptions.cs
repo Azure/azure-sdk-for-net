@@ -13,11 +13,11 @@ namespace Server.Versions.Versioned
 {
     public partial class VersionedClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::Server.Versions.Versioned.VersionedClientOptions.ServiceVersion LatestVersion = global::Server.Versions.Versioned.VersionedClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public VersionedClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public VersionedClientOptions(global::Server.Versions.Versioned.VersionedClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal VersionedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

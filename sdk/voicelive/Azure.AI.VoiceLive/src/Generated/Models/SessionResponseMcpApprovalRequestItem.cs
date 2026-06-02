@@ -13,16 +13,16 @@ namespace Azure.AI.VoiceLive
     /// <summary> A response item that represents a request for approval to call an MCP tool. </summary>
     public partial class SessionResponseMcpApprovalRequestItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpApprovalRequestItem"/>. </summary>
         /// <param name="name"> The name of the tool to call. </param>
         /// <param name="serverLabel"> The label of the server that provides the tool. </param>
-        internal SessionResponseMcpApprovalRequestItem(string name, string serverLabel) : base(ItemType.McpApprovalRequest)
+        internal SessionResponseMcpApprovalRequestItem(string name, string serverLabel) : base(global::Azure.AI.VoiceLive.ItemType.McpApprovalRequest)
         {
             Name = name;
             ServerLabel = serverLabel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpApprovalRequestItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"> The arguments for the tool call. </param>
         /// <param name="name"> The name of the tool to call. </param>
         /// <param name="serverLabel"> The label of the server that provides the tool. </param>
-        internal SessionResponseMcpApprovalRequestItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string arguments, string name, string serverLabel) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMcpApprovalRequestItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string arguments, string name, string serverLabel) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Arguments = arguments;
             Name = name;

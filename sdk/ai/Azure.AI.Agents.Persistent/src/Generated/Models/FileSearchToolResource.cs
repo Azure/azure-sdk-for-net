@@ -14,16 +14,16 @@ namespace Azure.AI.Agents.Persistent
     public partial class FileSearchToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolResource"/>. </summary>
         public FileSearchToolResource()
         {
             VectorStoreIds = new ChangeTrackingList<string>();
-            VectorStores = new ChangeTrackingList<VectorStoreConfigurations>();
+            VectorStores = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreConfigurations>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolResource"/>. </summary>
         /// <param name="vectorStoreIds">
         /// The ID of the vector store attached to this agent. There can be a maximum of 1 vector
         /// store attached to the agent.
@@ -34,7 +34,7 @@ namespace Azure.AI.Agents.Persistent
         /// The only element of this list contains the list of azure asset IDs used by the search tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolResource(IList<string> vectorStoreIds, IList<VectorStoreConfigurations> vectorStores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolResource(IList<string> vectorStoreIds, IList<global::Azure.AI.Agents.Persistent.VectorStoreConfigurations> vectorStores, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             VectorStores = vectorStores;
@@ -52,6 +52,6 @@ namespace Azure.AI.Agents.Persistent
         /// This list is limited to one element.
         /// The only element of this list contains the list of azure asset IDs used by the search tool.
         /// </summary>
-        public IList<VectorStoreConfigurations> VectorStores { get; }
+        public IList<global::Azure.AI.Agents.Persistent.VectorStoreConfigurations> VectorStores { get; }
     }
 }

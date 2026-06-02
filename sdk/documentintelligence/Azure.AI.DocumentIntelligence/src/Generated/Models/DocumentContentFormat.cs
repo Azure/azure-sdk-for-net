@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Format of the content in analyzed result. </summary>
-    public readonly partial struct DocumentContentFormat : IEquatable<DocumentContentFormat>
+    public readonly partial struct DocumentContentFormat : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentContentFormat>
     {
         private readonly string _value;
         /// <summary> Plain text representation of the document content without any formatting. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentContentFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentContentFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         public static DocumentContentFormat Markdown { get; } = new DocumentContentFormat(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="DocumentContentFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentContentFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentContentFormat left, DocumentContentFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentContentFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentContentFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentContentFormat left, DocumentContentFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentContentFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentContentFormat(string value) => new DocumentContentFormat(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentContentFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentContentFormat?(string value) => value == null ? null : new DocumentContentFormat(value);
+        public static implicit operator DocumentContentFormat?(string value) => (value == null) ? null : new DocumentContentFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentContentFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentContentFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentContentFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentContentFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

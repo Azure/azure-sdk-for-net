@@ -19,24 +19,24 @@ namespace _Type._Array
     {
         protected ModelValue() => throw null;
 
-        internal ModelValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<InnerModel>> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::_Type._Array.InnerModel>> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<InnerModel>>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::_Type._Array.InnerModel>>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response Put(IEnumerable<InnerModel> body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Put(IEnumerable<global::_Type._Array.InnerModel> body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(IEnumerable<InnerModel> body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(IEnumerable<global::_Type._Array.InnerModel> body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class WindowsConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.WindowsConfiguration"/>. </summary>
         public WindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.WindowsConfiguration"/>. </summary>
         /// <param name="enableAutomaticUpdates"> Whether automatic updates are enabled on the virtual machine. If omitted, the default value is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsConfiguration(bool? enableAutomaticUpdates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsConfiguration(bool? enableAutomaticUpdates, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EnableAutomaticUpdates = enableAutomaticUpdates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

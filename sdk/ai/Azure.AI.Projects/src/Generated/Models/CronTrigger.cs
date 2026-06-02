@@ -11,24 +11,24 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Cron based trigger. </summary>
     public partial class CronTrigger : ScheduleTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.CronTrigger"/>. </summary>
         /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public CronTrigger(string expression) : base(TriggerType.Cron)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="expression"/> is null. </exception>
+        public CronTrigger(string expression) : base(global::Azure.AI.Projects.Evaluation.TriggerType.Cron)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
+            global::Azure.AI.Projects.Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.CronTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
         /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
         /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
         /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
-        internal CronTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string expression, string timeZone, DateTimeOffset? startTime, DateTimeOffset? endTime) : base(@type, additionalBinaryDataProperties)
+        internal CronTrigger(TriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string expression, string timeZone, DateTimeOffset? startTime, DateTimeOffset? endTime) : base(@type, additionalBinaryDataProperties)
         {
             Expression = expression;
             TimeZone = timeZone;

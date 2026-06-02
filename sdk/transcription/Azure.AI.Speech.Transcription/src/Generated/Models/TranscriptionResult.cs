@@ -12,25 +12,25 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionResult"/>. </summary>
         /// <param name="durationMilliseconds"> The duration of the audio in milliseconds. </param>
         /// <param name="combinedPhrases"> The full transcript for each channel. </param>
         /// <param name="phrases"> The transcription results segmented into phrases. </param>
-        internal TranscriptionResult(int durationMilliseconds, IEnumerable<ChannelCombinedPhrases> combinedPhrases, IEnumerable<TranscribedPhrase> phrases)
+        internal TranscriptionResult(int durationMilliseconds, IEnumerable<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases, IEnumerable<global::Azure.AI.Speech.Transcription.TranscribedPhrase> phrases)
         {
             DurationMilliseconds = durationMilliseconds;
             CombinedPhrases = combinedPhrases.ToList();
             Phrases = phrases.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionResult"/>. </summary>
         /// <param name="durationMilliseconds"> The duration of the audio in milliseconds. </param>
         /// <param name="combinedPhrases"> The full transcript for each channel. </param>
         /// <param name="phrases"> The transcription results segmented into phrases. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionResult(int durationMilliseconds, IList<ChannelCombinedPhrases> combinedPhrases, IList<TranscribedPhrase> phrases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionResult(int durationMilliseconds, IList<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases, IList<global::Azure.AI.Speech.Transcription.TranscribedPhrase> phrases, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DurationMilliseconds = durationMilliseconds;
             CombinedPhrases = combinedPhrases;
@@ -39,9 +39,9 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> The full transcript for each channel. </summary>
-        public IList<ChannelCombinedPhrases> CombinedPhrases { get; }
+        public IList<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases> CombinedPhrases { get; }
 
         /// <summary> The transcription results segmented into phrases. </summary>
-        public IList<TranscribedPhrase> Phrases { get; }
+        public IList<global::Azure.AI.Speech.Transcription.TranscribedPhrase> Phrases { get; }
     }
 }

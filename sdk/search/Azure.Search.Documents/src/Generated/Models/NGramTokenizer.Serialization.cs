@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizes the input into n-grams of the given size(s). This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class NGramTokenizer : LexicalTokenizer, IJsonModel<NGramTokenizer>
+    public partial class NGramTokenizer : LexicalTokenizer, IJsonModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="NGramTokenizer"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.NGramTokenizer"/> for deserialization. </summary>
         internal NGramTokenizer()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNGramTokenizer(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.NGramTokenizer.DeserializeNGramTokenizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NGramTokenizer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.NGramTokenizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NGramTokenizer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.NGramTokenizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NGramTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NGramTokenizer IPersistableModel<NGramTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (NGramTokenizer)PersistableModelCreateCore(data, options);
+        NGramTokenizer IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => ((NGramTokenizer)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NGramTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NGramTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,23 +74,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(NGramTokenizer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.NGramTokenizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MinGram))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MinGram))
             {
                 writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (Optional.IsDefined(MaxGram))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MaxGram))
             {
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (Optional.IsCollectionDefined(TokenChars))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(TokenChars))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();
@@ -104,35 +104,35 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NGramTokenizer IJsonModel<NGramTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NGramTokenizer)JsonModelCreateCore(ref reader, options);
+        NGramTokenizer IJsonModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((NGramTokenizer)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.NGramTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(NGramTokenizer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.NGramTokenizer)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNGramTokenizer(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.NGramTokenizer.DeserializeNGramTokenizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static NGramTokenizer DeserializeNGramTokenizer(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string odataType = "#Microsoft.Azure.Search.NGramTokenizer";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             int? minGram = default;
             int? maxGram = default;
-            IList<TokenCharacterKind> tokenChars = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind> tokenChars = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -147,7 +147,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("minGram"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -156,7 +156,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxGram"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -165,11 +165,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("tokenChars"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TokenCharacterKind> array = new List<TokenCharacterKind>();
+                    List<global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind> array = new List<global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToTokenCharacterKind());
@@ -177,9 +177,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     tokenChars = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new NGramTokenizer(
@@ -188,7 +188,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 minGram,
                 maxGram,
-                tokenChars ?? new ChangeTrackingList<TokenCharacterKind>());
+                (tokenChars ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.TokenCharacterKind>()));
         }
     }
 }

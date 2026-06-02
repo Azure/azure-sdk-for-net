@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class Responses
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
 
         /// <summary> Initializes a new instance of Responses for mocking. </summary>
         protected Responses()
@@ -22,7 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of Responses. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Responses(ClientPipeline pipeline, Uri endpoint)
+        internal Responses(ClientPipeline pipeline, global::System.Uri endpoint)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -41,12 +41,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CompactResponseConversation(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCompactResponseConversationRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CompactResponseConversationAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CompactResponseConversationAsync(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCompactResponseConversationRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Produces a compaction of a responses conversation. </summary>
@@ -74,8 +74,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CompactResource> CompactResponseConversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Extensions.OpenAI.CompactResource> CompactResponseConversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
                 model,
@@ -84,8 +84,8 @@ namespace Azure.AI.Extensions.OpenAI
                 instructions,
                 promptCacheKey,
                 default);
-            ClientResult result = CompactResponseConversation(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
+            ClientResult result = this.CompactResponseConversation(spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((CompactResource)result), result.GetRawResponse());
         }
 
         /// <summary> Produces a compaction of a responses conversation. </summary>
@@ -95,8 +95,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CompactResource>> CompactResponseConversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Extensions.OpenAI.CompactResource>> CompactResponseConversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
                 model,
@@ -105,8 +105,8 @@ namespace Azure.AI.Extensions.OpenAI
                 instructions,
                 promptCacheKey,
                 default);
-            ClientResult result = await CompactResponseConversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
+            ClientResult result = await this.CompactResponseConversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((CompactResource)result), result.GetRawResponse());
         }
     }
 }

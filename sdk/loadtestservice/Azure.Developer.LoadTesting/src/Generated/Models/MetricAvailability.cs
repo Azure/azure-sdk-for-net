@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricAvailability
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricAvailability"/>. </summary>
         internal MetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricAvailability"/>. </summary>
         /// <param name="timeGrain">
         /// The time grain specifies the aggregation interval for the metric. Expressed as
         /// a duration 'PT1M', 'PT1H', etc.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAvailability(TimeGrain? timeGrain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAvailability(TimeGrain? timeGrain, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TimeGrain = timeGrain;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

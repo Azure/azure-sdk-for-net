@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Automatically detect the output format and parse accordingly. </summary>
     public partial class McpServerAutoOutputParsing : McpServerOutputParsing
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerAutoOutputParsing"/>. </summary>
-        public McpServerAutoOutputParsing() : base(McpServerOutputParsingKind.Auto)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerAutoOutputParsing"/>. </summary>
+        public McpServerAutoOutputParsing() : base(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingKind.Auto)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerAutoOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerAutoOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerAutoOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal McpServerAutoOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

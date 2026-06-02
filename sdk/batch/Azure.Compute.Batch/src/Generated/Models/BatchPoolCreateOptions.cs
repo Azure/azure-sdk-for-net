@@ -14,26 +14,26 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolCreateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two Pool IDs within an Account that differ only by case). </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration), see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="vmSize"/> is null. </exception>
         public BatchPoolCreateOptions(string id, string vmSize)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(vmSize, nameof(vmSize));
 
             Id = id;
             VmSize = vmSize;
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
-            UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
-            MountConfiguration = new ChangeTrackingList<MountConfiguration>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
+            UserAccounts = new ChangeTrackingList<global::Azure.Compute.Batch.UserAccount>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
+            MountConfiguration = new ChangeTrackingList<global::Azure.Compute.Batch.MountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two Pool IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration), see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch
         /// <param name="mountConfiguration"> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolCreateOptions(string id, string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IList<UserAccount> userAccounts, IList<BatchMetadataItem> metadata, IList<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolCreateOptions(string id, string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IList<global::Azure.Compute.Batch.UserAccount> userAccounts, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IList<global::Azure.Compute.Batch.MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -120,7 +120,7 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; set; }
 
         /// <summary> The list of Packages to be installed on each Compute Node in the Pool. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </summary>
         public int? TaskSlotsPerNode { get; set; }
@@ -129,13 +129,13 @@ namespace Azure.Compute.Batch
         public BatchTaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
-        public IList<UserAccount> UserAccounts { get; }
+        public IList<global::Azure.Compute.Batch.UserAccount> UserAccounts { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system. </summary>
-        public IList<MountConfiguration> MountConfiguration { get; }
+        public IList<global::Azure.Compute.Batch.MountConfiguration> MountConfiguration { get; }
 
         /// <summary> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }

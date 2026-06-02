@@ -14,11 +14,11 @@ namespace Azure.AI.Projects.Agents
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
@@ -30,18 +30,18 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files/content", false);
             uri.AppendQuery("path", path, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
             request.Headers.Set("Content-Type", "application/octet-stream");
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -61,17 +61,17 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files/content", false);
             uri.AppendQuery("path", path, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -89,37 +89,37 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/endpoint/sessions/", false);
             uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files", false);
-            if (path != null)
+            if ((path != null))
             {
                 uri.AppendQuery("path", path, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -138,21 +138,21 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files", false);
             uri.AppendQuery("path", path, true);
-            if (recursive != null)
+            if ((recursive != null))
             {
-                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive), true);
+                uri.AppendQuery("recursive", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(recursive), true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }

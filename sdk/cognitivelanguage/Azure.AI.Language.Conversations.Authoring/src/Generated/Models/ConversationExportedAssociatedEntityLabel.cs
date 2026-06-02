@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationExportedAssociatedEntityLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedAssociatedEntityLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel"/>. </summary>
         /// <param name="category"> The category of the entity label. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public ConversationExportedAssociatedEntityLabel(string category)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedAssociatedEntityLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel"/>. </summary>
         /// <param name="category"> The category of the entity label. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedAssociatedEntityLabel(string category, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationExportedAssociatedEntityLabel(string category, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

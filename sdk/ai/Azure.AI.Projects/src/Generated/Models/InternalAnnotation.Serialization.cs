@@ -9,10 +9,10 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    [PersistableModelProxy(typeof(UnknownAnnotation))]
-    internal abstract partial class InternalAnnotation : IJsonModel<InternalAnnotation>
+    [PersistableModelProxyAttribute(typeof(UnknownAnnotation))]
+    internal abstract partial class InternalAnnotation : IJsonModel<global::OpenAI.InternalAnnotation>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAnnotation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAnnotation"/> for deserialization. </summary>
         internal InternalAnnotation()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalAnnotation(document.RootElement, options);
+                        return global::OpenAI.InternalAnnotation.DeserializeInternalAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalAnnotation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalAnnotation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalAnnotation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAnnotation IPersistableModel<InternalAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalAnnotation IPersistableModel<global::OpenAI.InternalAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAnnotation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAnnotation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -85,9 +85,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -96,26 +96,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAnnotation IJsonModel<InternalAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalAnnotation IJsonModel<global::OpenAI.InternalAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAnnotation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAnnotation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalAnnotation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalAnnotation.DeserializeInternalAnnotation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAnnotation DeserializeInternalAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -124,16 +124,16 @@ namespace OpenAI
                 switch (discriminator.GetString())
                 {
                     case "file_citation":
-                        return FileCitationBody.DeserializeFileCitationBody(element, options);
+                        return global::Azure.AI.Projects.FileCitationBody.DeserializeFileCitationBody(element, options);
                     case "url_citation":
-                        return UrlCitationBody.DeserializeUrlCitationBody(element, options);
+                        return global::Azure.AI.Projects.UrlCitationBody.DeserializeUrlCitationBody(element, options);
                     case "container_file_citation":
-                        return ContainerFileCitationBody.DeserializeContainerFileCitationBody(element, options);
+                        return global::Azure.AI.Projects.ContainerFileCitationBody.DeserializeContainerFileCitationBody(element, options);
                     case "file_path":
-                        return FilePath.DeserializeFilePath(element, options);
+                        return global::Azure.AI.Projects.FilePath.DeserializeFilePath(element, options);
                 }
             }
-            return UnknownAnnotation.DeserializeUnknownAnnotation(element, options);
+            return global::Azure.AI.Projects.UnknownAnnotation.DeserializeUnknownAnnotation(element, options);
         }
     }
 }

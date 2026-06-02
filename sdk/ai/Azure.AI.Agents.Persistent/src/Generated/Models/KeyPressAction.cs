@@ -14,18 +14,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A collection of keypresses the model would like to perform. </summary>
     public partial class KeyPressAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
         internal KeyPressAction(IEnumerable<string> keys) : base("keypress")
         {
             Keys = keys.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.KeyPressAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        internal KeyPressAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal KeyPressAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Keys = keys;
         }

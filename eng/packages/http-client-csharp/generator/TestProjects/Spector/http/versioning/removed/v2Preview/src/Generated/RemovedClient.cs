@@ -19,40 +19,40 @@ namespace Versioning.Removed
     {
         protected RemovedClient() => throw null;
 
-        public RemovedClient(Uri endpoint) : this(endpoint, new RemovedClientOptions()) => throw null;
+        public RemovedClient(global::System.Uri endpoint) : this(endpoint, new RemovedClientOptions()) => throw null;
 
-        internal RemovedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RemovedClientOptions options) => throw null;
+        internal RemovedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, RemovedClientOptions options) => throw null;
 
-        public RemovedClient(Uri endpoint, RemovedClientOptions options) : this(null, endpoint, options) => throw null;
+        public RemovedClient(global::System.Uri endpoint, RemovedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public RemovedClient(RemovedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public RemovedClient(RemovedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response V1(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> V1Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> V1Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelV1> V1(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.Removed.ModelV1> V1(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelV1>> V1Async(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.Removed.ModelV1>> V1Async(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response V2(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> V2Async(string @param, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> V2Async(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelV2> V2(string @param, ModelV2 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.Removed.ModelV2> V2(string @param, ModelV2 body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelV2>> V2Async(string @param, ModelV2 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.Removed.ModelV2>> V2Async(string @param, ModelV2 body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ModelV3(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ModelV3Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ModelV3Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelV3> ModelV3(ModelV3 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.Removed.ModelV3> ModelV3(ModelV3 body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelV3>> ModelV3Async(ModelV3 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.Removed.ModelV3>> ModelV3Async(ModelV3 body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual InterfaceV1 GetInterfaceV1Client() => throw null;
     }

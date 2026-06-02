@@ -10,54 +10,54 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalAutoCodeInterpreterToolParam : IJsonModel<InternalAutoCodeInterpreterToolParam>
+    internal partial class InternalAutoCodeInterpreterToolParam : IJsonModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAutoCodeInterpreterToolParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalAutoCodeInterpreterToolParam(document.RootElement, options);
+                        return global::OpenAI.InternalAutoCodeInterpreterToolParam.DeserializeInternalAutoCodeInterpreterToolParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalAutoCodeInterpreterToolParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAutoCodeInterpreterToolParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalAutoCodeInterpreterToolParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAutoCodeInterpreterToolParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalAutoCodeInterpreterToolParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAutoCodeInterpreterToolParam IPersistableModel<InternalAutoCodeInterpreterToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalAutoCodeInterpreterToolParam IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalAutoCodeInterpreterToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalAutoCodeInterpreterToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,20 +65,20 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAutoCodeInterpreterToolParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAutoCodeInterpreterToolParam)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsCollectionDefined(FileIds))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
                 foreach (string item in FileIds)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -87,17 +87,17 @@ namespace OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MemoryLimit))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(MemoryLimit))
             {
                 writer.WritePropertyName("memory_limit"u8);
                 writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkPolicy))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("network_policy"u8);
-                writer.WriteObjectValue(NetworkPolicy, options);
+                writer.WriteObjectValue<ContainerNetworkPolicyParam>(NetworkPolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -105,9 +105,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -116,26 +116,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAutoCodeInterpreterToolParam IJsonModel<InternalAutoCodeInterpreterToolParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalAutoCodeInterpreterToolParam IJsonModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAutoCodeInterpreterToolParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAutoCodeInterpreterToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAutoCodeInterpreterToolParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAutoCodeInterpreterToolParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalAutoCodeInterpreterToolParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalAutoCodeInterpreterToolParam.DeserializeInternalAutoCodeInterpreterToolParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAutoCodeInterpreterToolParam DeserializeInternalAutoCodeInterpreterToolParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -143,7 +143,7 @@ namespace OpenAI
             IList<string> fileIds = default;
             ContainerMemoryLimit? memoryLimit = default;
             ContainerNetworkPolicyParam networkPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -153,14 +153,14 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("file_ids"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -174,7 +174,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("memory_limit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         memoryLimit = null;
                         continue;
@@ -184,19 +184,19 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("network_policy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    networkPolicy = ContainerNetworkPolicyParam.DeserializeContainerNetworkPolicyParam(prop.Value, options);
+                    networkPolicy = global::OpenAI.ContainerNetworkPolicyParam.DeserializeContainerNetworkPolicyParam(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalAutoCodeInterpreterToolParam(@type, fileIds ?? new ChangeTrackingList<string>(), memoryLimit, networkPolicy, additionalBinaryDataProperties);
+            return new InternalAutoCodeInterpreterToolParam(@type, (fileIds ?? new ChangeTrackingList<string>()), memoryLimit, networkPolicy, additionalBinaryDataProperties);
         }
     }
 }

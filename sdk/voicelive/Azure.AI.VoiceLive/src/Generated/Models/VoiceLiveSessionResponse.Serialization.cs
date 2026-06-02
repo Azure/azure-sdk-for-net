@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base for session configuration in the response. </summary>
-    public partial class VoiceLiveSessionResponse : IJsonModel<VoiceLiveSessionResponse>
+    public partial class VoiceLiveSessionResponse : IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VoiceLiveSessionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceLiveSessionResponse(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.VoiceLiveSessionResponse.DeserializeVoiceLiveSessionResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveSessionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveSessionResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveSessionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveSessionResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceLiveSessionResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveSessionResponse IPersistableModel<VoiceLiveSessionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceLiveSessionResponse IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceLiveSessionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceLiveSessionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,17 +68,17 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveSessionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveSessionResponse)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsCollectionDefined(Modalities))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(Modalities))
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
@@ -88,57 +88,57 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Animation))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Animation))
             {
                 writer.WritePropertyName("animation"u8);
-                writer.WriteObjectValue(Animation, options);
+                writer.WriteObjectValue<AnimationOptions>(Animation, options);
             }
-            if (Optional.IsDefined(Voice))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Voice))
             {
                 writer.WritePropertyName("voice"u8);
-                writer.WriteObjectValue(Voice, options);
+                writer.WriteObjectValue<VoiceProvider>(Voice, options);
             }
-            if (Optional.IsDefined(Instructions))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
-            if (Optional.IsDefined(InputAudioSamplingRate))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InputAudioSamplingRate))
             {
                 writer.WritePropertyName("input_audio_sampling_rate"u8);
                 writer.WriteNumberValue(InputAudioSamplingRate.Value);
             }
-            if (Optional.IsDefined(InputAudioFormat))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InputAudioFormat))
             {
                 writer.WritePropertyName("input_audio_format"u8);
                 writer.WriteStringValue(InputAudioFormat.Value.ToString());
             }
-            if (Optional.IsDefined(OutputAudioFormat))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(OutputAudioFormat))
             {
                 writer.WritePropertyName("output_audio_format"u8);
                 writer.WriteStringValue(OutputAudioFormat.Value.ToString());
             }
-            if (Optional.IsDefined(InputAudioNoiseReduction))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InputAudioNoiseReduction))
             {
                 writer.WritePropertyName("input_audio_noise_reduction"u8);
-                writer.WriteObjectValue(InputAudioNoiseReduction, options);
+                writer.WriteObjectValue<AudioNoiseReduction>(InputAudioNoiseReduction, options);
             }
-            if (Optional.IsDefined(InputAudioEchoCancellation))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InputAudioEchoCancellation))
             {
                 writer.WritePropertyName("input_audio_echo_cancellation"u8);
-                writer.WriteObjectValue(InputAudioEchoCancellation, options);
+                writer.WriteObjectValue<AudioEchoCancellation>(InputAudioEchoCancellation, options);
             }
-            if (Optional.IsDefined(Avatar))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Avatar))
             {
                 writer.WritePropertyName("avatar"u8);
-                writer.WriteObjectValue(Avatar, options);
+                writer.WriteObjectValue<AvatarConfiguration>(Avatar, options);
             }
-            if (Optional.IsDefined(InputAudioTranscription))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InputAudioTranscription))
             {
                 writer.WritePropertyName("input_audio_transcription"u8);
-                writer.WriteObjectValue(InputAudioTranscription, options);
+                writer.WriteObjectValue<AudioInputTranscriptionOptions>(InputAudioTranscription, options);
             }
-            if (Optional.IsCollectionDefined(OutputAudioTimestampTypes))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(OutputAudioTimestampTypes))
             {
                 writer.WritePropertyName("output_audio_timestamp_types"u8);
                 writer.WriteStartArray();
@@ -148,71 +148,71 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (VoiceLiveToolDefinition item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VoiceLiveToolDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(ToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
-                writer.WriteObjectValue(ToolChoice, options);
+                writer.WriteObjectValue<ToolChoiceOption>(ToolChoice, options);
             }
-            if (Optional.IsDefined(Temperature))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(MaxResponseOutputTokens))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(MaxResponseOutputTokens))
             {
                 writer.WritePropertyName("max_response_output_tokens"u8);
-                writer.WriteObjectValue(MaxResponseOutputTokens, options);
+                writer.WriteObjectValue<MaxResponseOutputTokensOption>(MaxResponseOutputTokens, options);
             }
-            if (Optional.IsDefined(ReasoningEffort))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(ReasoningEffort))
             {
                 writer.WritePropertyName("reasoning_effort"u8);
                 writer.WriteStringValue(ReasoningEffort.Value.ToString());
             }
-            if (Optional.IsDefined(InterimResponse))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InterimResponse))
             {
                 writer.WritePropertyName("interim_response"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(InterimResponse);
 #else
-                using (JsonDocument document = JsonDocument.Parse(InterimResponse))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(InterimResponse))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsDefined(Agent))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Agent))
             {
                 writer.WritePropertyName("agent"u8);
-                writer.WriteObjectValue(Agent, options);
+                writer.WriteObjectValue<RespondingAgentOptions>(Agent, options);
             }
-            if (Optional.IsDefined(Id))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(_turnDetection))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(_turnDetection))
             {
                 writer.WritePropertyName("turn_detection"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(_turnDetection);
 #else
-                using (JsonDocument document = JsonDocument.Parse(_turnDetection))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(_turnDetection))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -220,9 +220,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -231,31 +231,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveSessionResponse IJsonModel<VoiceLiveSessionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceLiveSessionResponse IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VoiceLiveSessionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveSessionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveSessionResponse)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceLiveSessionResponse(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.VoiceLiveSessionResponse.DeserializeVoiceLiveSessionResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VoiceLiveSessionResponse DeserializeVoiceLiveSessionResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string model = default;
-            IList<InteractionModality> modalities = default;
+            IList<global::Azure.AI.VoiceLive.InteractionModality> modalities = default;
             AnimationOptions animation = default;
             VoiceProvider voice = default;
             string instructions = default;
@@ -266,8 +266,8 @@ namespace Azure.AI.VoiceLive
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
             AudioInputTranscriptionOptions inputAudioTranscription = default;
-            IList<AudioTimestampType> outputAudioTimestampTypes = default;
-            IList<VoiceLiveToolDefinition> tools = default;
+            IList<global::Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes = default;
+            IList<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
@@ -276,7 +276,7 @@ namespace Azure.AI.VoiceLive
             RespondingAgentOptions agent = default;
             string id = default;
             BinaryData turnDetection = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
@@ -286,11 +286,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("modalities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<InteractionModality> array = new List<InteractionModality>();
+                    List<global::Azure.AI.VoiceLive.InteractionModality> array = new List<global::Azure.AI.VoiceLive.InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new InteractionModality(item.GetString()));
@@ -300,20 +300,20 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("animation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
+                    animation = global::Azure.AI.VoiceLive.AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("voice"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    voice = VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
+                    voice = global::Azure.AI.VoiceLive.VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -323,7 +323,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("input_audio_sampling_rate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -332,7 +332,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("input_audio_format"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -341,7 +341,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("output_audio_format"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -350,47 +350,47 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("input_audio_noise_reduction"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    inputAudioNoiseReduction = AudioNoiseReduction.DeserializeAudioNoiseReduction(prop.Value, options);
+                    inputAudioNoiseReduction = global::Azure.AI.VoiceLive.AudioNoiseReduction.DeserializeAudioNoiseReduction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_echo_cancellation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    inputAudioEchoCancellation = AudioEchoCancellation.DeserializeAudioEchoCancellation(prop.Value, options);
+                    inputAudioEchoCancellation = global::Azure.AI.VoiceLive.AudioEchoCancellation.DeserializeAudioEchoCancellation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("avatar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    avatar = AvatarConfiguration.DeserializeAvatarConfiguration(prop.Value, options);
+                    avatar = global::Azure.AI.VoiceLive.AvatarConfiguration.DeserializeAvatarConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_transcription"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    inputAudioTranscription = AudioInputTranscriptionOptions.DeserializeAudioInputTranscriptionOptions(prop.Value, options);
+                    inputAudioTranscription = global::Azure.AI.VoiceLive.AudioInputTranscriptionOptions.DeserializeAudioInputTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_audio_timestamp_types"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AudioTimestampType> array = new List<AudioTimestampType>();
+                    List<global::Azure.AI.VoiceLive.AudioTimestampType> array = new List<global::Azure.AI.VoiceLive.AudioTimestampType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AudioTimestampType(item.GetString()));
@@ -400,30 +400,30 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VoiceLiveToolDefinition> array = new List<VoiceLiveToolDefinition>();
+                    List<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition> array = new List<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceLiveToolDefinition.DeserializeVoiceLiveToolDefinition(item, options));
+                        array.Add(global::Azure.AI.VoiceLive.VoiceLiveToolDefinition.DeserializeVoiceLiveToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
                 }
                 if (prop.NameEquals("tool_choice"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
+                    toolChoice = global::Azure.AI.VoiceLive.ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -432,16 +432,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("max_response_output_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
+                    maxResponseOutputTokens = global::Azure.AI.VoiceLive.MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reasoning_effort"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -450,20 +450,20 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("interim_response"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    interimResponse = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("agent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agent = RespondingAgentOptions.DeserializeRespondingAgentOptions(prop.Value, options);
+                    agent = global::Azure.AI.VoiceLive.RespondingAgentOptions.DeserializeRespondingAgentOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -473,21 +473,21 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("turn_detection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    turnDetection = BinaryData.FromString(prop.Value.GetRawText());
+                    turnDetection = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VoiceLiveSessionResponse(
                 model,
-                modalities ?? new ChangeTrackingList<InteractionModality>(),
+                (modalities ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.InteractionModality>()),
                 animation,
                 voice,
                 instructions,
@@ -498,8 +498,8 @@ namespace Azure.AI.VoiceLive
                 inputAudioEchoCancellation,
                 avatar,
                 inputAudioTranscription,
-                outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
-                tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
+                (outputAudioTimestampTypes ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.AudioTimestampType>()),
+                (tools ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition>()),
                 toolChoice,
                 temperature,
                 maxResponseOutputTokens,

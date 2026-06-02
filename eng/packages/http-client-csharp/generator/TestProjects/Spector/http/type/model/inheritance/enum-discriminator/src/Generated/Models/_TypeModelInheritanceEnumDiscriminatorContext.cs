@@ -9,12 +9,12 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    [ModelReaderWriterBuildable(typeof(Cobra))]
-    [ModelReaderWriterBuildable(typeof(Dog))]
-    [ModelReaderWriterBuildable(typeof(Golden))]
-    [ModelReaderWriterBuildable(typeof(Snake))]
-    [ModelReaderWriterBuildable(typeof(UnknownDog))]
-    [ModelReaderWriterBuildable(typeof(UnknownSnake))]
+    [ModelReaderWriterBuildableAttribute(typeof(Cobra))]
+    [ModelReaderWriterBuildableAttribute(typeof(Dog))]
+    [ModelReaderWriterBuildableAttribute(typeof(Golden))]
+    [ModelReaderWriterBuildableAttribute(typeof(Snake))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownDog))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownSnake))]
     public partial class _TypeModelInheritanceEnumDiscriminatorContext : ModelReaderWriterContext
     {
     }

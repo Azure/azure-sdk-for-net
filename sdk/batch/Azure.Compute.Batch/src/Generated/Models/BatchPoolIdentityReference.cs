@@ -15,17 +15,17 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolIdentityReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentityReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolIdentityReference"/>. </summary>
         public BatchPoolIdentityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentityReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolIdentityReference"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. This reference must be included in the pool identities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolIdentityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolIdentityReference(ResourceIdentifier resourceId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

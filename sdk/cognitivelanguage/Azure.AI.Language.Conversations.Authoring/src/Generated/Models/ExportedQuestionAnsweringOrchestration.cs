@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedQuestionAnsweringOrchestration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedQuestionAnsweringOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestration"/>. </summary>
         /// <param name="projectName"> The name of the target project. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public ExportedQuestionAnsweringOrchestration(string projectName)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(projectName, nameof(projectName));
 
             ProjectName = projectName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedQuestionAnsweringOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestration"/>. </summary>
         /// <param name="projectName"> The name of the target project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedQuestionAnsweringOrchestration(string projectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedQuestionAnsweringOrchestration(string projectName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

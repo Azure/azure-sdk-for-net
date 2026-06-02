@@ -13,14 +13,14 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class AdditionalPropertiesClient
     {
-        public AdditionalPropertiesClient() : this(new Uri("http://localhost:3000"), new AdditionalPropertiesClientOptions()) => throw null;
+        public AdditionalPropertiesClient() : this(new global::System.Uri("http://localhost:3000"), new AdditionalPropertiesClientOptions()) => throw null;
 
-        internal AdditionalPropertiesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
+        internal AdditionalPropertiesClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
 
-        public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options) : this(null, endpoint, options) => throw null;
+        public AdditionalPropertiesClient(global::System.Uri endpoint, AdditionalPropertiesClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public AdditionalPropertiesClient(AdditionalPropertiesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public AdditionalPropertiesClient(AdditionalPropertiesClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

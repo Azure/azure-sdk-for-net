@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.MediaType
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MediaTypeClientHostExtensions
     {
         public static IClientBuilder AddMediaTypeClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMediaTypeClient(this IHostApplicationBuilder host, string sectionName, Action<MediaTypeClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMediaTypeClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.MediaType.MediaTypeClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMediaTypeClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMediaTypeClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MediaTypeClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMediaTypeClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.MediaType.MediaTypeClientSettings> configureSettings) => throw null;
     }
 }

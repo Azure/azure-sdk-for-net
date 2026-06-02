@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class FileProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.FileProperties"/>. </summary>
         /// <param name="lastModified"> The time at which the file was last modified. </param>
         /// <param name="contentLength"> The length of the file. </param>
         internal FileProperties(DateTimeOffset lastModified, long contentLength)
@@ -25,14 +25,14 @@ namespace Azure.Compute.Batch
             ContentLength = contentLength;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.FileProperties"/>. </summary>
         /// <param name="creationTime"> The file creation time. The creation time is not returned for files on Linux Compute Nodes. </param>
         /// <param name="lastModified"> The time at which the file was last modified. </param>
         /// <param name="contentLength"> The length of the file. </param>
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, long contentLength, string contentType, string fileMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, long contentLength, string contentType, string fileMode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreationTime = creationTime;
             LastModified = lastModified;

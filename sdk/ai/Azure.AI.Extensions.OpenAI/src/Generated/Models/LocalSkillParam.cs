@@ -11,30 +11,30 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class LocalSkillParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LocalSkillParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.LocalSkillParam"/>. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="path"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="path"/> is null. </exception>
         public LocalSkillParam(string name, string description, string path)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(path, nameof(path));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(path, nameof(path));
 
             Name = name;
             Description = description;
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalSkillParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.LocalSkillParam"/>. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalSkillParam(string name, string description, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalSkillParam(string name, string description, string path, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

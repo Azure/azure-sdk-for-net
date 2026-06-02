@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata"/> instance for mocking. </returns>
         public static TextAuthoringProjectMetadata TextAuthoringProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = default, DateTimeOffset? lastDeployedOn = default, TextAuthoringProjectKind projectKind = default, string storageInputContainerName = default, TextAuthoringProjectSettings settings = default, string projectName = default, bool? multilingual = default, string description = default, string language = default)
         {
             return new TextAuthoringProjectMetadata(
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="isLabelingLocked"> Indicates whether the labeling experience can be modified or not. </param>
         /// <param name="runGptPredictions"> Indicates whether to run GPT predictions or not. </param>
         /// <param name="gptPredictiveLookahead"> The predictive lookahead for GPT predictions that is specified by the user. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectSettings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings"/> instance for mocking. </returns>
         public static TextAuthoringProjectSettings TextAuthoringProjectSettings(float? confidenceThreshold = default, string amlProjectPath = default, bool? isLabelingLocked = default, bool? runGptPredictions = default, int? gptPredictiveLookahead = default)
         {
             return new TextAuthoringProjectSettings(
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectDeployment"/> instance for mocking. </returns>
-        public static TextAuthoringProjectDeployment TextAuthoringProjectDeployment(string deploymentName = default, string modelId = default, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = default, IEnumerable<TextAuthoringDeploymentResource> assignedResources = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment"/> instance for mocking. </returns>
+        public static TextAuthoringProjectDeployment TextAuthoringProjectDeployment(string deploymentName = default, string modelId = default, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource> assignedResources = default)
         {
-            assignedResources ??= new ChangeTrackingList<TextAuthoringDeploymentResource>();
+            assignedResources ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource>();
 
             return new TextAuthoringProjectDeployment(
                 deploymentName,
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents an Azure resource assigned to a deployment. </summary>
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource"/> instance for mocking. </returns>
         public static TextAuthoringDeploymentResource TextAuthoringDeploymentResource(string resourceId = default, string region = default)
         {
             return new TextAuthoringDeploymentResource(resourceId, region, additionalBinaryDataProperties: null);
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
         /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedTrainedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel"/> instance for mocking. </returns>
         public static TextAuthoringExportedTrainedModel TextAuthoringExportedTrainedModel(string exportedModelName = default, string modelId = default, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = default)
         {
             return new TextAuthoringExportedTrainedModel(
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectTrainedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel"/> instance for mocking. </returns>
         public static TextAuthoringProjectTrainedModel TextAuthoringProjectTrainedModel(string label = default, string modelId = default, DateTimeOffset lastTrainedOn = default, int lastTrainingDurationInSeconds = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = default, bool hasSnapshot = default)
         {
             return new TextAuthoringProjectTrainedModel(
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the assigned deployment resource. </summary>
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringAssignedDeploymentResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource"/> instance for mocking. </returns>
         public static TextAuthoringAssignedDeploymentResource TextAuthoringAssignedDeploymentResource(string azureResourceId = default, AzureLocation region = default)
         {
             return new TextAuthoringAssignedDeploymentResource(azureResourceId, region, additionalBinaryDataProperties: null);
@@ -158,11 +158,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingState"/> instance for mocking. </returns>
-        public static TextAuthoringTrainingState TextAuthoringTrainingState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default, TextAuthoringTrainingJobResult result = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState"/> instance for mocking. </returns>
+        public static TextAuthoringTrainingState TextAuthoringTrainingState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default, TextAuthoringTrainingJobResult result = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringTrainingState(
                 jobId,
@@ -182,7 +182,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainingStatus"> Represents model train status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimate end date time for training and evaluation. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingJobResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult"/> instance for mocking. </returns>
         public static TextAuthoringTrainingJobResult TextAuthoringTrainingJobResult(string modelLabel = default, string trainingConfigVersion = default, TextAuthoringSubTrainingState trainingStatus = default, TextAuthoringSubTrainingState evaluationStatus = default, DateTimeOffset? estimatedEndOn = default)
         {
             return new TextAuthoringTrainingJobResult(
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="startedOn"> Represents the start date time. </param>
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringSubTrainingState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState"/> instance for mocking. </returns>
         public static TextAuthoringSubTrainingState TextAuthoringSubTrainingState(int percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, TextAuthoringOperationStatus status = default)
         {
             return new TextAuthoringSubTrainingState(percentComplete, startedOn, endedOn, status, additionalBinaryDataProperties: null);
@@ -208,10 +208,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the metadata for assigned deployments for a project. </summary>
         /// <param name="projectName"> Represents the project name. </param>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringAssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
-        public static TextAuthoringAssignedProjectDeploymentsMetadata TextAuthoringAssignedProjectDeploymentsMetadata(string projectName = default, IEnumerable<TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
+        public static TextAuthoringAssignedProjectDeploymentsMetadata TextAuthoringAssignedProjectDeploymentsMetadata(string projectName = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata = default)
         {
-            deploymentsMetadata ??= new ChangeTrackingList<TextAuthoringAssignedProjectDeploymentMetadata>();
+            deploymentsMetadata ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata>();
 
             return new TextAuthoringAssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata.ToList(), additionalBinaryDataProperties: null);
         }
@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringAssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
         public static TextAuthoringAssignedProjectDeploymentMetadata TextAuthoringAssignedProjectDeploymentMetadata(string deploymentName = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
         {
             return new TextAuthoringAssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, additionalBinaryDataProperties: null);
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents a supported language. </summary>
         /// <param name="languageName"> The language name. </param>
         /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringSupportedLanguage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage"/> instance for mocking. </returns>
         public static TextAuthoringSupportedLanguage TextAuthoringSupportedLanguage(string languageName = default, string languageCode = default)
         {
             return new TextAuthoringSupportedLanguage(languageName, languageCode, additionalBinaryDataProperties: null);
@@ -239,7 +239,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="category"> The prebuilt entity category. </param>
         /// <param name="description"> The description. </param>
         /// <param name="examples"> English examples for the entity. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringPrebuiltEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity"/> instance for mocking. </returns>
         public static TextAuthoringPrebuiltEntity TextAuthoringPrebuiltEntity(string category = default, string description = default, string examples = default)
         {
             return new TextAuthoringPrebuiltEntity(category, description, examples, additionalBinaryDataProperties: null);
@@ -248,7 +248,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents a training config version. </summary>
         /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
         /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingConfigVersion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion"/> instance for mocking. </returns>
         public static TextAuthoringTrainingConfigVersion TextAuthoringTrainingConfigVersion(string trainingConfigVersion = default, DateTimeOffset modelExpiredOn = default)
         {
             return new TextAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpiredOn, additionalBinaryDataProperties: null);
@@ -262,11 +262,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringImportProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringImportProjectState TextAuthoringImportProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringImportProjectState TextAuthoringImportProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringImportProjectState(
                 jobId,
@@ -288,11 +288,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringExportProjectState TextAuthoringExportProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default, string resultUrl = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringExportProjectState TextAuthoringExportProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default, string resultUrl = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringExportProjectState(
                 jobId,
@@ -314,7 +314,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCreateProjectDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails"/> instance for mocking. </returns>
         public static TextAuthoringCreateProjectDetails TextAuthoringCreateProjectDetails(TextAuthoringProjectKind projectKind = default, string storageInputContainerName = default, TextAuthoringProjectSettings settings = default, string projectName = default, bool? multilingual = default, string description = default, string language = default)
         {
             return new TextAuthoringCreateProjectDetails(
@@ -336,11 +336,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectDeletionState"/> instance for mocking. </returns>
-        public static TextAuthoringProjectDeletionState TextAuthoringProjectDeletionState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState"/> instance for mocking. </returns>
+        public static TextAuthoringProjectDeletionState TextAuthoringProjectDeletionState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringProjectDeletionState(
                 jobId,
@@ -360,7 +360,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="expiresAt"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCopyProjectDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails"/> instance for mocking. </returns>
         public static TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(TextAuthoringProjectKind projectKind = default, string targetProjectName = default, string accessToken = default, DateTimeOffset expiresAt = default, string targetResourceId = default, string targetResourceRegion = default)
         {
             return new TextAuthoringCopyProjectDetails(
@@ -381,11 +381,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCopyProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringCopyProjectState(
                 jobId,
@@ -403,7 +403,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets"> Represents the project assets. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedProject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject"/> instance for mocking. </returns>
         public static TextAuthoringExportedProject TextAuthoringExportedProject(string projectFileVersion = default, StringIndexType stringIndexType = default, TextAuthoringCreateProjectDetails metadata = default, TextAuthoringExportedProjectAsset assets = default)
         {
             return new TextAuthoringExportedProject(projectFileVersion, stringIndexType, metadata, assets, additionalBinaryDataProperties: null);
@@ -411,10 +411,10 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary>
         /// Represents the assets of an exported project.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="Authoring.ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="Authoring.ExportedCustomHealthcareProjectAsset"/>, <see cref="Authoring.ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/>, and <see cref="Authoring.CustomTextSentimentProjectAssets"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets"/>.
         /// </summary>
         /// <param name="projectKind"></param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedProjectAsset"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset"/> instance for mocking. </returns>
         public static TextAuthoringExportedProjectAsset TextAuthoringExportedProjectAsset(string projectKind = default)
         {
             return new UnknownTextAuthoringExportedProjectAsset(new TextAuthoringProjectKind(projectKind), additionalBinaryDataProperties: null);
@@ -422,12 +422,12 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the exported assets for an abstractive summarization project. </summary>
         /// <param name="documents"> The list of documents belonging to this project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/> instance for mocking. </returns>
-        public static ExportedCustomAbstractiveSummarizationProjectAsset ExportedCustomAbstractiveSummarizationProjectAsset(IEnumerable<ExportedCustomAbstractiveSummarizationDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/> instance for mocking. </returns>
+        public static ExportedCustomAbstractiveSummarizationProjectAsset ExportedCustomAbstractiveSummarizationProjectAsset(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument> documents = default)
         {
-            documents ??= new ChangeTrackingList<ExportedCustomAbstractiveSummarizationDocument>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument>();
 
-            return new ExportedCustomAbstractiveSummarizationProjectAsset(TextAuthoringProjectKind.CustomAbstractiveSummarization, additionalBinaryDataProperties: null, documents.ToList());
+            return new ExportedCustomAbstractiveSummarizationProjectAsset(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomAbstractiveSummarization, additionalBinaryDataProperties: null, documents.ToList());
         }
 
         /// <summary> Represents an exported document for a custom abstractive summarization project. </summary>
@@ -435,7 +435,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
         public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = default, string location = default, string language = default, string dataset = default)
         {
             return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, additionalBinaryDataProperties: null);
@@ -444,19 +444,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the exported assets for a entity recognition project. </summary>
         /// <param name="entities"> The list of entities belonging to the project. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomEntityRecognitionProjectAsset"/> instance for mocking. </returns>
-        public static ExportedCustomEntityRecognitionProjectAsset ExportedCustomEntityRecognitionProjectAsset(IEnumerable<TextAuthoringExportedEntity> entities = default, IEnumerable<ExportedCustomEntityRecognitionDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset"/> instance for mocking. </returns>
+        public static ExportedCustomEntityRecognitionProjectAsset ExportedCustomEntityRecognitionProjectAsset(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> entities = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> documents = default)
         {
-            entities ??= new ChangeTrackingList<TextAuthoringExportedEntity>();
-            documents ??= new ChangeTrackingList<ExportedCustomEntityRecognitionDocument>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>();
 
-            return new ExportedCustomEntityRecognitionProjectAsset(TextAuthoringProjectKind.CustomEntityRecognition, additionalBinaryDataProperties: null, entities.ToList(), documents.ToList());
+            return new ExportedCustomEntityRecognitionProjectAsset(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomEntityRecognition, additionalBinaryDataProperties: null, entities.ToList(), documents.ToList());
         }
 
         /// <summary> Represents an entity in an exported project. </summary>
         /// <param name="category"> The entity category. </param>
         /// <param name="description"> Short description for entity category. Required when enabling synthetic data generation. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity"/> instance for mocking. </returns>
         public static TextAuthoringExportedEntity TextAuthoringExportedEntity(string category = default, string description = default)
         {
             return new TextAuthoringExportedEntity(category, description, additionalBinaryDataProperties: null);
@@ -467,10 +467,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomEntityRecognitionDocument"/> instance for mocking. </returns>
-        public static ExportedCustomEntityRecognitionDocument ExportedCustomEntityRecognitionDocument(IEnumerable<ExportedDocumentEntityRegion> entities = default, string location = default, string language = default, string dataset = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument"/> instance for mocking. </returns>
+        public static ExportedCustomEntityRecognitionDocument ExportedCustomEntityRecognitionDocument(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> entities = default, string location = default, string language = default, string dataset = default)
         {
-            entities ??= new ChangeTrackingList<ExportedDocumentEntityRegion>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>();
 
             return new ExportedCustomEntityRecognitionDocument(entities.ToList(), location, language, dataset, additionalBinaryDataProperties: null);
         }
@@ -479,10 +479,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="regionOffset"> Start position for the region. </param>
         /// <param name="regionLength"> Length for the region text. </param>
         /// <param name="labels"> The list of entity labels belonging to this region. </param>
-        /// <returns> A new <see cref="Authoring.ExportedDocumentEntityRegion"/> instance for mocking. </returns>
-        public static ExportedDocumentEntityRegion ExportedDocumentEntityRegion(int? regionOffset = default, int? regionLength = default, IEnumerable<ExportedDocumentEntityLabel> labels = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion"/> instance for mocking. </returns>
+        public static ExportedDocumentEntityRegion ExportedDocumentEntityRegion(int? regionOffset = default, int? regionLength = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel> labels = default)
         {
-            labels ??= new ChangeTrackingList<ExportedDocumentEntityLabel>();
+            labels ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel>();
 
             return new ExportedDocumentEntityRegion(regionOffset, regionLength, labels.ToList(), additionalBinaryDataProperties: null);
         }
@@ -491,7 +491,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="category"> The entity category. </param>
         /// <param name="offset"> Start position for the entity text. </param>
         /// <param name="length"> Length for the entity text. </param>
-        /// <returns> A new <see cref="Authoring.ExportedDocumentEntityLabel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel"/> instance for mocking. </returns>
         public static ExportedDocumentEntityLabel ExportedDocumentEntityLabel(string category = default, int? offset = default, int? length = default)
         {
             return new ExportedDocumentEntityLabel(category, offset, length, additionalBinaryDataProperties: null);
@@ -500,13 +500,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the exported assets for a CustomHealthcare project. </summary>
         /// <param name="entities"> The list of entities belonging to the project. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomHealthcareProjectAsset"/> instance for mocking. </returns>
-        public static ExportedCustomHealthcareProjectAsset ExportedCustomHealthcareProjectAsset(IEnumerable<TextAuthoringExportedCompositeEntity> entities = default, IEnumerable<ExportedCustomHealthcareDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset"/> instance for mocking. </returns>
+        public static ExportedCustomHealthcareProjectAsset ExportedCustomHealthcareProjectAsset(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> entities = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> documents = default)
         {
-            entities ??= new ChangeTrackingList<TextAuthoringExportedCompositeEntity>();
-            documents ??= new ChangeTrackingList<ExportedCustomHealthcareDocument>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>();
 
-            return new ExportedCustomHealthcareProjectAsset(TextAuthoringProjectKind.CustomHealthcare, additionalBinaryDataProperties: null, entities.ToList(), documents.ToList());
+            return new ExportedCustomHealthcareProjectAsset(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomHealthcare, additionalBinaryDataProperties: null, entities.ToList(), documents.ToList());
         }
 
         /// <summary> Represents an entity in an exported project with composite entities enabled. </summary>
@@ -514,20 +514,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="list"> The list component of the entity. </param>
         /// <param name="prebuilts"> The prebuilt entities components. </param>
         /// <param name="category"> The entity category. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedCompositeEntity"/> instance for mocking. </returns>
-        public static TextAuthoringExportedCompositeEntity TextAuthoringExportedCompositeEntity(TextAuthoringCompositionMode? compositionSetting = default, TextAuthoringExportedEntityList list = default, IEnumerable<TextAuthoringExportedPrebuiltEntity> prebuilts = default, string category = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity"/> instance for mocking. </returns>
+        public static TextAuthoringExportedCompositeEntity TextAuthoringExportedCompositeEntity(TextAuthoringCompositionMode? compositionSetting = default, TextAuthoringExportedEntityList list = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> prebuilts = default, string category = default)
         {
-            prebuilts ??= new ChangeTrackingList<TextAuthoringExportedPrebuiltEntity>();
+            prebuilts ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>();
 
             return new TextAuthoringExportedCompositeEntity(compositionSetting, list, prebuilts.ToList(), category, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a list component of an entity. </summary>
         /// <param name="sublists"> The sub-lists of the list component. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedEntityList"/> instance for mocking. </returns>
-        public static TextAuthoringExportedEntityList TextAuthoringExportedEntityList(IEnumerable<TextAuthoringExportedEntitySublist> sublists = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList"/> instance for mocking. </returns>
+        public static TextAuthoringExportedEntityList TextAuthoringExportedEntityList(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist> sublists = default)
         {
-            sublists ??= new ChangeTrackingList<TextAuthoringExportedEntitySublist>();
+            sublists ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist>();
 
             return new TextAuthoringExportedEntityList(sublists.ToList(), additionalBinaryDataProperties: null);
         }
@@ -535,10 +535,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents a sub-list inside a list component. </summary>
         /// <param name="listKey"> The key of the sub-list. </param>
         /// <param name="synonyms"> The phrases of that correspond to the sub-list. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedEntitySublist"/> instance for mocking. </returns>
-        public static TextAuthoringExportedEntitySublist TextAuthoringExportedEntitySublist(string listKey = default, IEnumerable<TextAuthoringExportedEntityListSynonym> synonyms = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist"/> instance for mocking. </returns>
+        public static TextAuthoringExportedEntitySublist TextAuthoringExportedEntitySublist(string listKey = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym> synonyms = default)
         {
-            synonyms ??= new ChangeTrackingList<TextAuthoringExportedEntityListSynonym>();
+            synonyms ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym>();
 
             return new TextAuthoringExportedEntitySublist(listKey, synonyms.ToList(), additionalBinaryDataProperties: null);
         }
@@ -546,7 +546,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents a list of synonyms inside a list component. </summary>
         /// <param name="language"> Represents the language of the synonyms. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="values"> The list of synonyms. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedEntityListSynonym"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym"/> instance for mocking. </returns>
         public static TextAuthoringExportedEntityListSynonym TextAuthoringExportedEntityListSynonym(string language = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
@@ -556,7 +556,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents an exported prebuilt entity component. </summary>
         /// <param name="category"> The prebuilt entity category. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedPrebuiltEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity"/> instance for mocking. </returns>
         public static TextAuthoringExportedPrebuiltEntity TextAuthoringExportedPrebuiltEntity(string category = default)
         {
             return new TextAuthoringExportedPrebuiltEntity(category, additionalBinaryDataProperties: null);
@@ -567,10 +567,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomHealthcareDocument"/> instance for mocking. </returns>
-        public static ExportedCustomHealthcareDocument ExportedCustomHealthcareDocument(IEnumerable<ExportedDocumentEntityRegion> entities = default, string location = default, string language = default, string dataset = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument"/> instance for mocking. </returns>
+        public static ExportedCustomHealthcareDocument ExportedCustomHealthcareDocument(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> entities = default, string location = default, string language = default, string dataset = default)
         {
-            entities ??= new ChangeTrackingList<ExportedDocumentEntityRegion>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>();
 
             return new ExportedCustomHealthcareDocument(entities.ToList(), location, language, dataset, additionalBinaryDataProperties: null);
         }
@@ -578,18 +578,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the exported assets for a custom multi-label classification project. </summary>
         /// <param name="classes"> The list of classes in the project. </param>
         /// <param name="documents"> The list of documents in the project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomMultiLabelClassificationProjectAsset"/> instance for mocking. </returns>
-        public static ExportedCustomMultiLabelClassificationProjectAsset ExportedCustomMultiLabelClassificationProjectAsset(IEnumerable<TextAuthoringExportedClass> classes = default, IEnumerable<ExportedCustomMultiLabelClassificationDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset"/> instance for mocking. </returns>
+        public static ExportedCustomMultiLabelClassificationProjectAsset ExportedCustomMultiLabelClassificationProjectAsset(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> classes = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument> documents = default)
         {
-            classes ??= new ChangeTrackingList<TextAuthoringExportedClass>();
-            documents ??= new ChangeTrackingList<ExportedCustomMultiLabelClassificationDocument>();
+            classes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>();
 
-            return new ExportedCustomMultiLabelClassificationProjectAsset(TextAuthoringProjectKind.CustomMultiLabelClassification, additionalBinaryDataProperties: null, classes.ToList(), documents.ToList());
+            return new ExportedCustomMultiLabelClassificationProjectAsset(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomMultiLabelClassification, additionalBinaryDataProperties: null, classes.ToList(), documents.ToList());
         }
 
         /// <summary> Represents a class of an exported project. </summary>
         /// <param name="category"> The class category. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedClass"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass"/> instance for mocking. </returns>
         public static TextAuthoringExportedClass TextAuthoringExportedClass(string category = default)
         {
             return new TextAuthoringExportedClass(category, additionalBinaryDataProperties: null);
@@ -600,17 +600,17 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomMultiLabelClassificationDocument"/> instance for mocking. </returns>
-        public static ExportedCustomMultiLabelClassificationDocument ExportedCustomMultiLabelClassificationDocument(IEnumerable<ExportedDocumentClass> classes = default, string location = default, string language = default, string dataset = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument"/> instance for mocking. </returns>
+        public static ExportedCustomMultiLabelClassificationDocument ExportedCustomMultiLabelClassificationDocument(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass> classes = default, string location = default, string language = default, string dataset = default)
         {
-            classes ??= new ChangeTrackingList<ExportedDocumentClass>();
+            classes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass>();
 
             return new ExportedCustomMultiLabelClassificationDocument(classes.ToList(), location, language, dataset, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a classification label for a document. </summary>
         /// <param name="category"></param>
-        /// <returns> A new <see cref="Authoring.ExportedDocumentClass"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentClass"/> instance for mocking. </returns>
         public static ExportedDocumentClass ExportedDocumentClass(string category = default)
         {
             return new ExportedDocumentClass(category, additionalBinaryDataProperties: null);
@@ -619,13 +619,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the exported assets for a single-label classification project. </summary>
         /// <param name="classes"> The list of classes belonging to this project. </param>
         /// <param name="documents"> The list of documents belonging to this project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/> instance for mocking. </returns>
-        public static ExportedCustomSingleLabelClassificationProjectAsset ExportedCustomSingleLabelClassificationProjectAsset(IEnumerable<TextAuthoringExportedClass> classes = default, IEnumerable<ExportedCustomSingleLabelClassificationDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/> instance for mocking. </returns>
+        public static ExportedCustomSingleLabelClassificationProjectAsset ExportedCustomSingleLabelClassificationProjectAsset(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> classes = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument> documents = default)
         {
-            classes ??= new ChangeTrackingList<TextAuthoringExportedClass>();
-            documents ??= new ChangeTrackingList<ExportedCustomSingleLabelClassificationDocument>();
+            classes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument>();
 
-            return new ExportedCustomSingleLabelClassificationProjectAsset(TextAuthoringProjectKind.CustomSingleLabelClassification, additionalBinaryDataProperties: null, classes.ToList(), documents.ToList());
+            return new ExportedCustomSingleLabelClassificationProjectAsset(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomSingleLabelClassification, additionalBinaryDataProperties: null, classes.ToList(), documents.ToList());
         }
 
         /// <summary> Represents an exported document for a custom single-label classification project. </summary>
@@ -633,7 +633,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomSingleLabelClassificationDocument"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument"/> instance for mocking. </returns>
         public static ExportedCustomSingleLabelClassificationDocument ExportedCustomSingleLabelClassificationDocument(ExportedDocumentClass @class = default, string location = default, string language = default, string dataset = default)
         {
             return new ExportedCustomSingleLabelClassificationDocument(@class, location, language, dataset, additionalBinaryDataProperties: null);
@@ -641,12 +641,12 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the exported assets for a custom text sentiment project. </summary>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        /// <returns> A new <see cref="Authoring.CustomTextSentimentProjectAssets"/> instance for mocking. </returns>
-        public static CustomTextSentimentProjectAssets CustomTextSentimentProjectAssets(IEnumerable<ExportedCustomTextSentimentDocument> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets"/> instance for mocking. </returns>
+        public static CustomTextSentimentProjectAssets CustomTextSentimentProjectAssets(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument> documents = default)
         {
-            documents ??= new ChangeTrackingList<ExportedCustomTextSentimentDocument>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument>();
 
-            return new CustomTextSentimentProjectAssets(TextAuthoringProjectKind.CustomTextSentiment, additionalBinaryDataProperties: null, documents.ToList());
+            return new CustomTextSentimentProjectAssets(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomTextSentiment, additionalBinaryDataProperties: null, documents.ToList());
         }
 
         /// <summary> Represents an exported document for a custom text sentiment project. </summary>
@@ -654,10 +654,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomTextSentimentDocument"/> instance for mocking. </returns>
-        public static ExportedCustomTextSentimentDocument ExportedCustomTextSentimentDocument(IEnumerable<ExportedDocumentSentimentLabel> sentimentSpans = default, string location = default, string language = default, string dataset = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument"/> instance for mocking. </returns>
+        public static ExportedCustomTextSentimentDocument ExportedCustomTextSentimentDocument(IEnumerable<global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel> sentimentSpans = default, string location = default, string language = default, string dataset = default)
         {
-            sentimentSpans ??= new ChangeTrackingList<ExportedDocumentSentimentLabel>();
+            sentimentSpans ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel>();
 
             return new ExportedCustomTextSentimentDocument(sentimentSpans.ToList(), location, language, dataset, additionalBinaryDataProperties: null);
         }
@@ -666,7 +666,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="category"> The sentiment category. </param>
         /// <param name="offset"> Start position for the sentiment text. </param>
         /// <param name="length"> Length for the sentiment text. </param>
-        /// <returns> A new <see cref="Authoring.ExportedDocumentSentimentLabel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel"/> instance for mocking. </returns>
         public static ExportedDocumentSentimentLabel ExportedDocumentSentimentLabel(TextAuthoringSentiment? category = default, int? offset = default, int? length = default)
         {
             return new ExportedDocumentSentimentLabel(category, offset, length, additionalBinaryDataProperties: null);
@@ -677,7 +677,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingJobDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails"/> instance for mocking. </returns>
         public static TextAuthoringTrainingJobDetails TextAuthoringTrainingJobDetails(string modelLabel = default, string trainingConfigVersion = default, TextAuthoringEvaluationDetails evaluationOptions = default, DataGenerationSetting dataGenerationSettings = default)
         {
             return new TextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, additionalBinaryDataProperties: null);
@@ -687,7 +687,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="kind"> Represents the evaluation kind. By default, the evaluation kind is set to percentage. </param>
         /// <param name="trainingSplitPercentage"> Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
         /// <param name="testingSplitPercentage"> Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringEvaluationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails"/> instance for mocking. </returns>
         public static TextAuthoringEvaluationDetails TextAuthoringEvaluationDetails(TextAuthoringEvaluationKind? kind = default, int? trainingSplitPercentage = default, int? testingSplitPercentage = default)
         {
             return new TextAuthoringEvaluationDetails(kind, trainingSplitPercentage, testingSplitPercentage, additionalBinaryDataProperties: null);
@@ -696,7 +696,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the settings for using data generation as part of training a custom model. </summary>
         /// <param name="enableDataGeneration"> If set to true, augment customer provided training data with synthetic data to improve model quality. </param>
         /// <param name="dataGenerationConnectionInfo"> Represents the connection info for the Azure resource to use during data generation as part of training a custom model. </param>
-        /// <returns> A new <see cref="Authoring.DataGenerationSetting"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationSetting"/> instance for mocking. </returns>
         public static DataGenerationSetting DataGenerationSetting(bool enableDataGeneration = default, DataGenerationConnectionInfo dataGenerationConnectionInfo = default)
         {
             return new DataGenerationSetting(enableDataGeneration, dataGenerationConnectionInfo, additionalBinaryDataProperties: null);
@@ -705,7 +705,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the connection info for the Azure resource to use during data generation as part of training a custom model. </summary>
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
         public static DataGenerationConnectionInfo DataGenerationConnectionInfo(string resourceId = default, string deploymentName = default)
         {
             return new DataGenerationConnectionInfo("AzureOpenAI", resourceId, deploymentName, additionalBinaryDataProperties: null);
@@ -713,7 +713,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the options to unassign Azure resources from a project. </summary>
         /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails"/> instance for mocking. </returns>
         public static TextAuthoringUnassignDeploymentResourcesDetails TextAuthoringUnassignDeploymentResourcesDetails(IEnumerable<string> assignedResourceIds = default)
         {
             assignedResourceIds ??= new ChangeTrackingList<string>();
@@ -729,11 +729,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentResourcesState"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentResourcesState TextAuthoringDeploymentResourcesState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState"/> instance for mocking. </returns>
+        public static TextAuthoringDeploymentResourcesState TextAuthoringDeploymentResourcesState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringDeploymentResourcesState(
                 jobId,
@@ -748,10 +748,10 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the options for assigning Azure resources to a project. </summary>
         /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringAssignDeploymentResourcesDetails"/> instance for mocking. </returns>
-        public static TextAuthoringAssignDeploymentResourcesDetails TextAuthoringAssignDeploymentResourcesDetails(IEnumerable<TextAuthoringResourceMetadata> resourcesMetadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails"/> instance for mocking. </returns>
+        public static TextAuthoringAssignDeploymentResourcesDetails TextAuthoringAssignDeploymentResourcesDetails(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> resourcesMetadata = default)
         {
-            resourcesMetadata ??= new ChangeTrackingList<TextAuthoringResourceMetadata>();
+            resourcesMetadata ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata>();
 
             return new TextAuthoringAssignDeploymentResourcesDetails(resourcesMetadata.ToList(), additionalBinaryDataProperties: null);
         }
@@ -760,7 +760,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="azureResourceId"> Represents the Azure resource ID. </param>
         /// <param name="customDomain"> Represents the Azure resource custom domain. </param>
         /// <param name="region"> Represents the Azure resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringResourceMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata"/> instance for mocking. </returns>
         public static TextAuthoringResourceMetadata TextAuthoringResourceMetadata(string azureResourceId = default, string customDomain = default, string region = default)
         {
             return new TextAuthoringResourceMetadata(azureResourceId, customDomain, region, additionalBinaryDataProperties: null);
@@ -769,7 +769,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the options for swapping two deployments together. </summary>
         /// <param name="firstDeploymentName"> Represents the first deployment name. </param>
         /// <param name="secondDeploymentName"> Represents the second deployment name. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringSwapDeploymentsDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails"/> instance for mocking. </returns>
         public static TextAuthoringSwapDeploymentsDetails TextAuthoringSwapDeploymentsDetails(string firstDeploymentName = default, string secondDeploymentName = default)
         {
             return new TextAuthoringSwapDeploymentsDetails(firstDeploymentName, secondDeploymentName, additionalBinaryDataProperties: null);
@@ -783,11 +783,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringSwapDeploymentsState"/> instance for mocking. </returns>
-        public static TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState"/> instance for mocking. </returns>
+        public static TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringSwapDeploymentsState(
                 jobId,
@@ -808,11 +808,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentState"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentState TextAuthoringDeploymentState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState"/> instance for mocking. </returns>
+        public static TextAuthoringDeploymentState TextAuthoringDeploymentState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringDeploymentState(
                 jobId,
@@ -827,7 +827,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the options for deleting a project deployment. </summary>
         /// <param name="assignedResourceIds"> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeleteDeploymentDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails"/> instance for mocking. </returns>
         public static TextAuthoringDeleteDeploymentDetails TextAuthoringDeleteDeploymentDetails(IEnumerable<string> assignedResourceIds = default)
         {
             assignedResourceIds ??= new ChangeTrackingList<string>();
@@ -843,11 +843,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentDeleteFromResourcesState TextAuthoringDeploymentDeleteFromResourcesState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
+        public static TextAuthoringDeploymentDeleteFromResourcesState TextAuthoringDeploymentDeleteFromResourcesState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringDeploymentDeleteFromResourcesState(
                 jobId,
@@ -863,7 +863,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the options for creating or updating a project deployment. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
         /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
         public static TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = default, IEnumerable<string> assignedResourceIds = default)
         {
             assignedResourceIds ??= new ChangeTrackingList<string>();
@@ -873,7 +873,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the options for creating or replacing an exported model. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails"/> instance for mocking. </returns>
         public static TextAuthoringExportedModelDetails TextAuthoringExportedModelDetails(string trainedModelLabel = default)
         {
             return new TextAuthoringExportedModelDetails(trainedModelLabel, additionalBinaryDataProperties: null);
@@ -887,11 +887,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
-        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
+        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringExportedModelState(
                 jobId,
@@ -906,10 +906,10 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the properties for the exported model manifest. </summary>
         /// <param name="modelFiles"> The model files belonging to this model. </param>
-        /// <returns> A new <see cref="Authoring.ExportedModelManifest"/> instance for mocking. </returns>
-        public static ExportedModelManifest ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.ExportedModelManifest"/> instance for mocking. </returns>
+        public static ExportedModelManifest ExportedModelManifest(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> modelFiles = default)
         {
-            modelFiles ??= new ChangeTrackingList<TextAuthoringModelFile>();
+            modelFiles ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile>();
 
             return new ExportedModelManifest(modelFiles.ToList(), additionalBinaryDataProperties: null);
         }
@@ -917,8 +917,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the properties for the model file. </summary>
         /// <param name="name"> The name of the file. </param>
         /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
-        public static TextAuthoringModelFile TextAuthoringModelFile(string name = default, Uri contentUri = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
+        public static TextAuthoringModelFile TextAuthoringModelFile(string name = default, global::System.Uri contentUri = default)
         {
             return new TextAuthoringModelFile(name, contentUri, additionalBinaryDataProperties: null);
         }
@@ -928,7 +928,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringEvaluationJobResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult"/> instance for mocking. </returns>
         public static TextAuthoringEvaluationJobResult TextAuthoringEvaluationJobResult(TextAuthoringEvaluationDetails evaluationOptions = default, string modelLabel = default, string trainingConfigVersion = default, int percentComplete = default)
         {
             return new TextAuthoringEvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, additionalBinaryDataProperties: null);
@@ -943,11 +943,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents evaluation task detailed result. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringEvaluationState"/> instance for mocking. </returns>
-        public static TextAuthoringEvaluationState TextAuthoringEvaluationState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default, TextAuthoringEvaluationJobResult result = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState"/> instance for mocking. </returns>
+        public static TextAuthoringEvaluationState TextAuthoringEvaluationState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default, TextAuthoringEvaluationJobResult result = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringEvaluationState(
                 jobId,
@@ -969,11 +969,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringLoadSnapshotState"/> instance for mocking. </returns>
-        public static TextAuthoringLoadSnapshotState TextAuthoringLoadSnapshotState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState"/> instance for mocking. </returns>
+        public static TextAuthoringLoadSnapshotState TextAuthoringLoadSnapshotState(string jobId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = default, TextAuthoringOperationStatus status = default, IEnumerable<global::Azure.ResponseError> warnings = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new TextAuthoringLoadSnapshotState(
                 jobId,
@@ -988,12 +988,12 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary>
         /// Represents the evaluation result of a document.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Authoring.CustomEntityRecognitionDocumentEvalResult"/>, <see cref="Authoring.CustomHealthcareDocumentEvalResult"/>, <see cref="Authoring.CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="Authoring.CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="Authoring.CustomTextSentimentDocumentEvalResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult"/>.
         /// </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult"/> instance for mocking. </returns>
         public static TextAuthoringDocumentEvalResult TextAuthoringDocumentEvalResult(string projectKind = default, string location = default, string language = default)
         {
             return new UnknownTextAuthoringDocumentEvalResult(new TextAuthoringProjectKind(projectKind), location, language, additionalBinaryDataProperties: null);
@@ -1003,18 +1003,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customEntityRecognitionResult"> Represents the evaluation prediction for entity recognition. </param>
-        /// <returns> A new <see cref="Authoring.CustomEntityRecognitionDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult"/> instance for mocking. </returns>
         public static CustomEntityRecognitionDocumentEvalResult CustomEntityRecognitionDocumentEvalResult(string location = default, string language = default, DocumentEntityRecognitionEvalResult customEntityRecognitionResult = default)
         {
-            return new CustomEntityRecognitionDocumentEvalResult(TextAuthoringProjectKind.CustomEntityRecognition, location, language, additionalBinaryDataProperties: null, customEntityRecognitionResult);
+            return new CustomEntityRecognitionDocumentEvalResult(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomEntityRecognition, location, language, additionalBinaryDataProperties: null, customEntityRecognitionResult);
         }
 
         /// <summary> Represents the entity recognition evaluation result for a document. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
-        /// <returns> A new <see cref="Authoring.DocumentEntityRecognitionEvalResult"/> instance for mocking. </returns>
-        public static DocumentEntityRecognitionEvalResult DocumentEntityRecognitionEvalResult(IEnumerable<DocumentEntityRegionEvalResult> entities = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult"/> instance for mocking. </returns>
+        public static DocumentEntityRecognitionEvalResult DocumentEntityRecognitionEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> entities = default)
         {
-            entities ??= new ChangeTrackingList<DocumentEntityRegionEvalResult>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>();
 
             return new DocumentEntityRecognitionEvalResult(entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1024,11 +1024,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="predictedEntities"> Represents the region's predicted entity labels. </param>
         /// <param name="regionOffset"> Represents the region offset. </param>
         /// <param name="regionLength"> Represents the region length. </param>
-        /// <returns> A new <see cref="Authoring.DocumentEntityRegionEvalResult"/> instance for mocking. </returns>
-        public static DocumentEntityRegionEvalResult DocumentEntityRegionEvalResult(IEnumerable<DocumentEntityLabelEvalResult> expectedEntities = default, IEnumerable<DocumentEntityLabelEvalResult> predictedEntities = default, int regionOffset = default, int regionLength = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult"/> instance for mocking. </returns>
+        public static DocumentEntityRegionEvalResult DocumentEntityRegionEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> expectedEntities = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> predictedEntities = default, int regionOffset = default, int regionLength = default)
         {
-            expectedEntities ??= new ChangeTrackingList<DocumentEntityLabelEvalResult>();
-            predictedEntities ??= new ChangeTrackingList<DocumentEntityLabelEvalResult>();
+            expectedEntities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>();
+            predictedEntities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>();
 
             return new DocumentEntityRegionEvalResult(expectedEntities.ToList(), predictedEntities.ToList(), regionOffset, regionLength, additionalBinaryDataProperties: null);
         }
@@ -1037,7 +1037,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
-        /// <returns> A new <see cref="Authoring.DocumentEntityLabelEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult"/> instance for mocking. </returns>
         public static DocumentEntityLabelEvalResult DocumentEntityLabelEvalResult(string category = default, int offset = default, int length = default)
         {
             return new DocumentEntityLabelEvalResult(category, offset, length, additionalBinaryDataProperties: null);
@@ -1047,18 +1047,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
-        /// <returns> A new <see cref="Authoring.CustomHealthcareDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult"/> instance for mocking. </returns>
         public static CustomHealthcareDocumentEvalResult CustomHealthcareDocumentEvalResult(string location = default, string language = default, DocumentHealthcareEvalResult customHealthcareResult = default)
         {
-            return new CustomHealthcareDocumentEvalResult(TextAuthoringProjectKind.CustomHealthcare, location, language, additionalBinaryDataProperties: null, customHealthcareResult);
+            return new CustomHealthcareDocumentEvalResult(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomHealthcare, location, language, additionalBinaryDataProperties: null, customHealthcareResult);
         }
 
         /// <summary> Represents the healthcare evaluation result for a document. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
-        /// <returns> A new <see cref="Authoring.DocumentHealthcareEvalResult"/> instance for mocking. </returns>
-        public static DocumentHealthcareEvalResult DocumentHealthcareEvalResult(IEnumerable<DocumentEntityRegionEvalResult> entities = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult"/> instance for mocking. </returns>
+        public static DocumentHealthcareEvalResult DocumentHealthcareEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> entities = default)
         {
-            entities ??= new ChangeTrackingList<DocumentEntityRegionEvalResult>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>();
 
             return new DocumentHealthcareEvalResult(entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1067,16 +1067,16 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customMultiLabelClassificationResult"> Represents the evaluation prediction for multi label classification. </param>
-        /// <returns> A new <see cref="Authoring.CustomMultiLabelClassificationDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationDocumentEvalResult CustomMultiLabelClassificationDocumentEvalResult(string location = default, string language = default, DocumentMultiLabelClassificationEvalResult customMultiLabelClassificationResult = default)
         {
-            return new CustomMultiLabelClassificationDocumentEvalResult(TextAuthoringProjectKind.CustomMultiLabelClassification, location, language, additionalBinaryDataProperties: null, customMultiLabelClassificationResult);
+            return new CustomMultiLabelClassificationDocumentEvalResult(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomMultiLabelClassification, location, language, additionalBinaryDataProperties: null, customMultiLabelClassificationResult);
         }
 
         /// <summary> Represents the comparison between the expected and predicted classes that are result from the evaluation operation. </summary>
         /// <param name="expectedClasses"> Represents the document's expected classes. </param>
         /// <param name="predictedClasses"> Represents the document's predicted classes. </param>
-        /// <returns> A new <see cref="Authoring.DocumentMultiLabelClassificationEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult"/> instance for mocking. </returns>
         public static DocumentMultiLabelClassificationEvalResult DocumentMultiLabelClassificationEvalResult(IEnumerable<string> expectedClasses = default, IEnumerable<string> predictedClasses = default)
         {
             expectedClasses ??= new ChangeTrackingList<string>();
@@ -1089,16 +1089,16 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customSingleLabelClassificationResult"> Represents the evaluation prediction for single label classification. </param>
-        /// <returns> A new <see cref="Authoring.CustomSingleLabelClassificationDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationDocumentEvalResult CustomSingleLabelClassificationDocumentEvalResult(string location = default, string language = default, DocumentSingleLabelClassificationEvalResult customSingleLabelClassificationResult = default)
         {
-            return new CustomSingleLabelClassificationDocumentEvalResult(TextAuthoringProjectKind.CustomSingleLabelClassification, location, language, additionalBinaryDataProperties: null, customSingleLabelClassificationResult);
+            return new CustomSingleLabelClassificationDocumentEvalResult(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomSingleLabelClassification, location, language, additionalBinaryDataProperties: null, customSingleLabelClassificationResult);
         }
 
         /// <summary> Represents the comparison between the expected and predicted class that result from an evaluation operation. </summary>
         /// <param name="expectedClass"> Represents the document's expected class. </param>
         /// <param name="predictedClass"> Represents the document's predicted class. </param>
-        /// <returns> A new <see cref="Authoring.DocumentSingleLabelClassificationEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult"/> instance for mocking. </returns>
         public static DocumentSingleLabelClassificationEvalResult DocumentSingleLabelClassificationEvalResult(string expectedClass = default, string predictedClass = default)
         {
             return new DocumentSingleLabelClassificationEvalResult(expectedClass, predictedClass, additionalBinaryDataProperties: null);
@@ -1108,20 +1108,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customTextSentimentResult"> Represents the evaluation prediction for text sentiment. </param>
-        /// <returns> A new <see cref="Authoring.CustomTextSentimentDocumentEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult"/> instance for mocking. </returns>
         public static CustomTextSentimentDocumentEvalResult CustomTextSentimentDocumentEvalResult(string location = default, string language = default, DocumentTextSentimentEvalResult customTextSentimentResult = default)
         {
-            return new CustomTextSentimentDocumentEvalResult(TextAuthoringProjectKind.CustomTextSentiment, location, language, additionalBinaryDataProperties: null, customTextSentimentResult);
+            return new CustomTextSentimentDocumentEvalResult(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomTextSentiment, location, language, additionalBinaryDataProperties: null, customTextSentimentResult);
         }
 
         /// <summary> Represents the comparison between the expected and predicted sentiment that result from an evaluation operation. </summary>
         /// <param name="expectedSentimentSpans"> Represents the document's expected sentiment labels. </param>
         /// <param name="predictedSentimentSpans"> Represents the document's predicted sentiment labels. </param>
-        /// <returns> A new <see cref="Authoring.DocumentTextSentimentEvalResult"/> instance for mocking. </returns>
-        public static DocumentTextSentimentEvalResult DocumentTextSentimentEvalResult(IEnumerable<DocumentSentimentLabelEvalResult> expectedSentimentSpans = default, IEnumerable<DocumentSentimentLabelEvalResult> predictedSentimentSpans = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult"/> instance for mocking. </returns>
+        public static DocumentTextSentimentEvalResult DocumentTextSentimentEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> expectedSentimentSpans = default, IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> predictedSentimentSpans = default)
         {
-            expectedSentimentSpans ??= new ChangeTrackingList<DocumentSentimentLabelEvalResult>();
-            predictedSentimentSpans ??= new ChangeTrackingList<DocumentSentimentLabelEvalResult>();
+            expectedSentimentSpans ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>();
+            predictedSentimentSpans ??= new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>();
 
             return new DocumentTextSentimentEvalResult(expectedSentimentSpans.ToList(), predictedSentimentSpans.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1130,7 +1130,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="category"> Represents the sentiment category. </param>
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
-        /// <returns> A new <see cref="Authoring.DocumentSentimentLabelEvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult"/> instance for mocking. </returns>
         public static DocumentSentimentLabelEvalResult DocumentSentimentLabelEvalResult(TextAuthoringSentiment category = default, int offset = default, int length = default)
         {
             return new DocumentSentimentLabelEvalResult(category, offset, length, additionalBinaryDataProperties: null);
@@ -1138,11 +1138,11 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary>
         /// Represents the summary for an evaluation operation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Authoring.CustomEntityRecognitionEvalSummary"/>, <see cref="Authoring.CustomHealthcareEvalSummary"/>, <see cref="Authoring.CustomMultiLabelClassificationEvalSummary"/>, <see cref="Authoring.CustomSingleLabelClassificationEvalSummary"/>, and <see cref="Authoring.CustomTextSentimentEvalSummary"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary"/>.
         /// </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary"/> instance for mocking. </returns>
         public static TextAuthoringEvalSummary TextAuthoringEvalSummary(string projectKind = default, TextAuthoringEvaluationDetails evaluationOptions = default)
         {
             return new UnknownTextAuthoringEvalSummary(new TextAuthoringProjectKind(projectKind), evaluationOptions, additionalBinaryDataProperties: null);
@@ -1151,10 +1151,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the evaluation summary for a custom entity recognition project. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customEntityRecognitionEvaluation"> Contains the data related to extraction evaluation. </param>
-        /// <returns> A new <see cref="Authoring.CustomEntityRecognitionEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary"/> instance for mocking. </returns>
         public static CustomEntityRecognitionEvalSummary CustomEntityRecognitionEvalSummary(TextAuthoringEvaluationDetails evaluationOptions = default, EntityRecognitionEvalSummary customEntityRecognitionEvaluation = default)
         {
-            return new CustomEntityRecognitionEvalSummary(TextAuthoringProjectKind.CustomEntityRecognition, evaluationOptions, additionalBinaryDataProperties: null, customEntityRecognitionEvaluation);
+            return new CustomEntityRecognitionEvalSummary(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomEntityRecognition, evaluationOptions, additionalBinaryDataProperties: null, customEntityRecognitionEvaluation);
         }
 
         /// <summary> Represents the evaluation summary for a custom entity recognition project. </summary>
@@ -1166,11 +1166,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Authoring.EntityRecognitionEvalSummary"/> instance for mocking. </returns>
-        public static EntityRecognitionEvalSummary EntityRecognitionEvalSummary(IDictionary<string, TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, TextAuthoringEntityEvalSummary> entities = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary"/> instance for mocking. </returns>
+        public static EntityRecognitionEvalSummary EntityRecognitionEvalSummary(IDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary> entities = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            confusionMatrix ??= new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>();
-            entities ??= new ChangeTrackingDictionary<string, TextAuthoringEntityEvalSummary>();
+            confusionMatrix ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>();
+            entities ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary>();
 
             return new EntityRecognitionEvalSummary(
                 confusionMatrix,
@@ -1186,10 +1186,10 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> The TextAuthoringConfusionMatrixRow. </summary>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringConfusionMatrixRow"/> instance for mocking. </returns>
-        public static TextAuthoringConfusionMatrixRow TextAuthoringConfusionMatrixRow(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow"/> instance for mocking. </returns>
+        public static TextAuthoringConfusionMatrixRow TextAuthoringConfusionMatrixRow(IReadOnlyDictionary<string, global::System.BinaryData> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new TextAuthoringConfusionMatrixRow(additionalProperties);
         }
@@ -1197,7 +1197,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents a cell in a confusion matrix. </summary>
         /// <param name="normalizedValue"> Represents normalized value in percentages. </param>
         /// <param name="rawValue"> Represents raw value. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringConfusionMatrixCell"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell"/> instance for mocking. </returns>
         public static TextAuthoringConfusionMatrixCell TextAuthoringConfusionMatrixCell(float normalizedValue = default, float rawValue = default)
         {
             return new TextAuthoringConfusionMatrixCell(normalizedValue, rawValue, additionalBinaryDataProperties: null);
@@ -1211,7 +1211,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringEntityEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary"/> instance for mocking. </returns>
         public static TextAuthoringEntityEvalSummary TextAuthoringEntityEvalSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
             return new TextAuthoringEntityEvalSummary(
@@ -1228,19 +1228,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the evaluation summary for a custom health care project. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
-        /// <returns> A new <see cref="Authoring.CustomHealthcareEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary"/> instance for mocking. </returns>
         public static CustomHealthcareEvalSummary CustomHealthcareEvalSummary(TextAuthoringEvaluationDetails evaluationOptions = default, EntityRecognitionEvalSummary customHealthcareEvaluation = default)
         {
-            return new CustomHealthcareEvalSummary(TextAuthoringProjectKind.CustomHealthcare, evaluationOptions, additionalBinaryDataProperties: null, customHealthcareEvaluation);
+            return new CustomHealthcareEvalSummary(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomHealthcare, evaluationOptions, additionalBinaryDataProperties: null, customHealthcareEvaluation);
         }
 
         /// <summary> Represents the evaluation summary for a custom multi-label classification project. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
-        /// <returns> A new <see cref="Authoring.CustomMultiLabelClassificationEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationEvalSummary CustomMultiLabelClassificationEvalSummary(TextAuthoringEvaluationDetails evaluationOptions = default, MultiLabelClassificationEvalSummary customMultiLabelClassificationEvaluation = default)
         {
-            return new CustomMultiLabelClassificationEvalSummary(TextAuthoringProjectKind.CustomMultiLabelClassification, evaluationOptions, additionalBinaryDataProperties: null, customMultiLabelClassificationEvaluation);
+            return new CustomMultiLabelClassificationEvalSummary(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomMultiLabelClassification, evaluationOptions, additionalBinaryDataProperties: null, customMultiLabelClassificationEvaluation);
         }
 
         /// <summary> Represents the evaluation summary for a multi-label classification project. </summary>
@@ -1251,10 +1251,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Authoring.MultiLabelClassificationEvalSummary"/> instance for mocking. </returns>
-        public static MultiLabelClassificationEvalSummary MultiLabelClassificationEvalSummary(IDictionary<string, MultiLabelClassEvalSummary> classes = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary"/> instance for mocking. </returns>
+        public static MultiLabelClassificationEvalSummary MultiLabelClassificationEvalSummary(IDictionary<string, global::Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary> classes = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            classes ??= new ChangeTrackingDictionary<string, MultiLabelClassEvalSummary>();
+            classes ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary>();
 
             return new MultiLabelClassificationEvalSummary(
                 classes,
@@ -1275,7 +1275,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Authoring.MultiLabelClassEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary"/> instance for mocking. </returns>
         public static MultiLabelClassEvalSummary MultiLabelClassEvalSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
             return new MultiLabelClassEvalSummary(
@@ -1292,10 +1292,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the evaluation summary for a custom single-label classification project. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customSingleLabelClassificationEvaluation"> Contains the data related to single label classification evaluation. </param>
-        /// <returns> A new <see cref="Authoring.CustomSingleLabelClassificationEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationEvalSummary CustomSingleLabelClassificationEvalSummary(TextAuthoringEvaluationDetails evaluationOptions = default, SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation = default)
         {
-            return new CustomSingleLabelClassificationEvalSummary(TextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions, additionalBinaryDataProperties: null, customSingleLabelClassificationEvaluation);
+            return new CustomSingleLabelClassificationEvalSummary(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions, additionalBinaryDataProperties: null, customSingleLabelClassificationEvaluation);
         }
 
         /// <summary> Represents the evaluation summary for a custom single-label classification project. </summary>
@@ -1307,11 +1307,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Authoring.SingleLabelClassificationEvalSummary"/> instance for mocking. </returns>
-        public static SingleLabelClassificationEvalSummary SingleLabelClassificationEvalSummary(IDictionary<string, TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, SingleLabelClassEvalSummary> classes = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary"/> instance for mocking. </returns>
+        public static SingleLabelClassificationEvalSummary SingleLabelClassificationEvalSummary(IDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary> classes = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            confusionMatrix ??= new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>();
-            classes ??= new ChangeTrackingDictionary<string, SingleLabelClassEvalSummary>();
+            confusionMatrix ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>();
+            classes ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>();
 
             return new SingleLabelClassificationEvalSummary(
                 confusionMatrix,
@@ -1333,7 +1333,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Authoring.SingleLabelClassEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary"/> instance for mocking. </returns>
         public static SingleLabelClassEvalSummary SingleLabelClassEvalSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
             return new SingleLabelClassEvalSummary(
@@ -1350,10 +1350,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Represents the evaluation summary for a custom text sentiment project. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        /// <returns> A new <see cref="Authoring.CustomTextSentimentEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary"/> instance for mocking. </returns>
         public static CustomTextSentimentEvalSummary CustomTextSentimentEvalSummary(TextAuthoringEvaluationDetails evaluationOptions = default, TextSentimentEvalSummary customTextSentimentEvaluation = default)
         {
-            return new CustomTextSentimentEvalSummary(TextAuthoringProjectKind.CustomTextSentiment, evaluationOptions, additionalBinaryDataProperties: null, customTextSentimentEvaluation);
+            return new CustomTextSentimentEvalSummary(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomTextSentiment, evaluationOptions, additionalBinaryDataProperties: null, customTextSentimentEvaluation);
         }
 
         /// <summary> Represents the evaluation summary for a custom text sentiment project. </summary>
@@ -1364,7 +1364,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Authoring.TextSentimentEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary"/> instance for mocking. </returns>
         public static TextSentimentEvalSummary TextSentimentEvalSummary(SpanSentimentEvalSummary spanSentimentsEvaluation = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
             return new TextSentimentEvalSummary(
@@ -1387,11 +1387,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Authoring.SpanSentimentEvalSummary"/> instance for mocking. </returns>
-        public static SpanSentimentEvalSummary SpanSentimentEvalSummary(IDictionary<string, TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, SentimentEvalSummary> sentiments = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary"/> instance for mocking. </returns>
+        public static SpanSentimentEvalSummary SpanSentimentEvalSummary(IDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = default, IDictionary<string, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary> sentiments = default, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            confusionMatrix ??= new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>();
-            sentiments ??= new ChangeTrackingDictionary<string, SentimentEvalSummary>();
+            confusionMatrix ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>();
+            sentiments ??= new ChangeTrackingDictionary<string, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary>();
 
             return new SpanSentimentEvalSummary(
                 confusionMatrix,
@@ -1413,7 +1413,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Authoring.SentimentEvalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary"/> instance for mocking. </returns>
         public static SentimentEvalSummary SentimentEvalSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
             return new SentimentEvalSummary(

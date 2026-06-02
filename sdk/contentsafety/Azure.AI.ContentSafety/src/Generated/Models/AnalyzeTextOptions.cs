@@ -14,28 +14,28 @@ namespace Azure.AI.ContentSafety
     public partial class AnalyzeTextOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Categories = new ChangeTrackingList<TextCategory>();
+            Categories = new ChangeTrackingList<global::Azure.AI.ContentSafety.TextCategory>();
             BlocklistNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="blocklistNames"> The names of blocklists. </param>
         /// <param name="haltOnBlocklistHit"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
         /// <param name="outputType"> This refers to the type of text analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOptions(string text, IList<TextCategory> categories, IList<string> blocklistNames, bool? haltOnBlocklistHit, AnalyzeTextOutputType? outputType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextOptions(string text, IList<global::Azure.AI.ContentSafety.TextCategory> categories, IList<string> blocklistNames, bool? haltOnBlocklistHit, AnalyzeTextOutputType? outputType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Categories = categories;
@@ -49,7 +49,7 @@ namespace Azure.AI.ContentSafety
         public string Text { get; }
 
         /// <summary> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </summary>
-        public IList<TextCategory> Categories { get; }
+        public IList<global::Azure.AI.ContentSafety.TextCategory> Categories { get; }
 
         /// <summary> The names of blocklists. </summary>
         public IList<string> BlocklistNames { get; }

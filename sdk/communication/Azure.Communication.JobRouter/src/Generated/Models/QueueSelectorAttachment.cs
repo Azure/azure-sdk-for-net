@@ -12,24 +12,24 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// An attachment of queue selectors to resolve a queue to a job from a classification policy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConditionalQueueSelectorAttachment"/>, <see cref="PassThroughQueueSelectorAttachment"/>, <see cref="RuleEngineQueueSelectorAttachment"/>, <see cref="StaticQueueSelectorAttachment"/>, and <see cref="WeightedAllocationQueueSelectorAttachment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment"/>, <see cref="Azure.Communication.JobRouter.PassThroughQueueSelectorAttachment"/>, <see cref="Azure.Communication.JobRouter.RuleEngineQueueSelectorAttachment"/>, <see cref="Azure.Communication.JobRouter.StaticQueueSelectorAttachment"/>, and <see cref="Azure.Communication.JobRouter.WeightedAllocationQueueSelectorAttachment"/>.
     /// </summary>
     public abstract partial class QueueSelectorAttachment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueueSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         private protected QueueSelectorAttachment(QueueSelectorAttachmentKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueueSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.QueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

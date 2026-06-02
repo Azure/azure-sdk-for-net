@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class IngestionSourceSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSourceSummary"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Ingestion source type. </param>
         internal IngestionSourceSummary(Guid id, IngestionSourceType kind)
@@ -25,12 +25,12 @@ namespace Azure.Analytics.PlanetaryComputer
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSourceSummary"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Ingestion source type. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionSourceSummary(Guid id, IngestionSourceType kind, DateTimeOffset? created, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSourceSummary(Guid id, IngestionSourceType kind, DateTimeOffset? created, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;

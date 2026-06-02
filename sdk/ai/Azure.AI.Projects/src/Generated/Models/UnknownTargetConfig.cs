@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownTargetConfig : TargetConfig
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTargetConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownTargetConfig"/>. </summary>
         /// <param name="type"> Type of the model configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTargetConfig(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownTargetConfig(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

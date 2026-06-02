@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsNamedToolChoice
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsNamedToolChoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/>. </summary>
         /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
         public PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsNamedToolChoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/>. </summary>
         /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
         /// <param name="function"> The name of the function to call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type, PersistentAgentsFunctionName function, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type, PersistentAgentsFunctionName function, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Function = function;

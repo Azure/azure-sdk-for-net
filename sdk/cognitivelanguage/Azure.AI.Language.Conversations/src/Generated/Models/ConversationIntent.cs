@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationIntent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationIntent"/>. </summary>
         /// <param name="category"> A predicted class. </param>
         /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
         internal ConversationIntent(string category, float confidence)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Conversations.Models
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationIntent"/>. </summary>
         /// <param name="category"> A predicted class. </param>
         /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationIntent(string category, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationIntent(string category, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Confidence = confidence;

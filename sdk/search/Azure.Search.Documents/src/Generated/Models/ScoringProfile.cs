@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ScoringProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScoringProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScoringProfile"/>. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScoringProfile(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Functions = new ChangeTrackingList<ScoringFunction>();
+            Functions = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.ScoringFunction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScoringProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScoringProfile"/>. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
         /// <param name="textWeights"> Parameters that boost scoring based on text matches in certain index fields. </param>
         /// <param name="functions"> The collection of functions that influence the scoring of documents. </param>
         /// <param name="functionAggregation"> A value indicating how the results of individual scoring functions should be combined. Defaults to "Sum". Ignored if there are no scoring functions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScoringProfile(string name, TextWeights textWeights, IList<ScoringFunction> functions, ScoringFunctionAggregation? functionAggregation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScoringProfile(string name, TextWeights textWeights, IList<global::Azure.Search.Documents.Indexes.Models.ScoringFunction> functions, ScoringFunctionAggregation? functionAggregation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TextWeights = textWeights;
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public TextWeights TextWeights { get; set; }
 
         /// <summary> The collection of functions that influence the scoring of documents. </summary>
-        public IList<ScoringFunction> Functions { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.ScoringFunction> Functions { get; }
 
         /// <summary> A value indicating how the results of individual scoring functions should be combined. Defaults to "Sum". Ignored if there are no scoring functions. </summary>
         public ScoringFunctionAggregation? FunctionAggregation { get; set; }

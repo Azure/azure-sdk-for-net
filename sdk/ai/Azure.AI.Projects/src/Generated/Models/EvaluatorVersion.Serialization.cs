@@ -12,9 +12,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluator Definition. </summary>
-    public partial class EvaluatorVersion : IJsonModel<EvaluatorVersion>
+    public partial class EvaluatorVersion : IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluatorVersion"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorVersion"/> for deserialization. </summary>
         internal EvaluatorVersion()
         {
         }
@@ -23,66 +23,66 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvaluatorVersion(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.EvaluatorVersion.DeserializeEvaluatorVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluatorVersion)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluatorVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluatorVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorVersion IPersistableModel<EvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EvaluatorVersion IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="evaluatorVersion"> The <see cref="EvaluatorVersion"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="evaluatorVersion"> The <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorVersion"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(EvaluatorVersion evaluatorVersion)
         {
-            if (evaluatorVersion == null)
+            if ((evaluatorVersion == null))
             {
                 return null;
             }
-            return BinaryContent.Create(evaluatorVersion, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(evaluatorVersion, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorVersion"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorVersion"/> from. </param>
         public static explicit operator EvaluatorVersion(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEvaluatorVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.Evaluation.EvaluatorVersion.DeserializeEvaluatorVersion(document.RootElement, global::Azure.AI.Projects.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvaluatorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -90,24 +90,24 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluatorVersion)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.AI.Projects.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("display_name"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -126,55 +126,55 @@ namespace Azure.AI.Projects.Evaluation
             }
             writer.WriteEndArray();
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
-            if (options.Format != "W" && Optional.IsDefined(GenerationArtifacts))
+            writer.WriteObjectValue<EvaluatorDefinition>(Definition, options);
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(GenerationArtifacts)))
             {
                 writer.WritePropertyName("generation_artifacts"u8);
-                writer.WriteObjectValue(GenerationArtifacts, options);
+                writer.WriteObjectValue<EvaluatorGenerationArtifacts>(GenerationArtifacts, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("created_by"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteStringValue(CreatedAt);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("modified_at"u8);
                 writer.WriteStringValue(ModifiedAt);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (((options.Format != "W") && global::Azure.AI.Projects.Optional.IsDefined(Id)))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -183,7 +183,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -191,9 +191,9 @@ namespace Azure.AI.Projects.Evaluation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -202,33 +202,33 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorVersion IJsonModel<EvaluatorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EvaluatorVersion IJsonModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluatorVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.EvaluatorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EvaluatorVersion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.EvaluatorVersion)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluatorVersion(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.EvaluatorVersion.DeserializeEvaluatorVersion(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EvaluatorVersion DeserializeEvaluatorVersion(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string displayName = default;
             IDictionary<string, string> metadata = default;
             EvaluatorType evaluatorType = default;
-            IList<EvaluatorCategory> categories = default;
+            IList<global::Azure.AI.Projects.Evaluation.EvaluatorCategory> categories = default;
             EvaluatorDefinition definition = default;
             EvaluatorGenerationArtifacts generationArtifacts = default;
             string createdBy = default;
@@ -239,7 +239,7 @@ namespace Azure.AI.Projects.Evaluation
             string version = default;
             string description = default;
             IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("display_name"u8))
@@ -249,14 +249,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("categories"u8))
                 {
-                    List<EvaluatorCategory> array = new List<EvaluatorCategory>();
+                    List<global::Azure.AI.Projects.Evaluation.EvaluatorCategory> array = new List<global::Azure.AI.Projects.Evaluation.EvaluatorCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new EvaluatorCategory(item.GetString()));
@@ -285,16 +285,16 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("definition"u8))
                 {
-                    definition = EvaluatorDefinition.DeserializeEvaluatorDefinition(prop.Value, options);
+                    definition = global::Azure.AI.Projects.Evaluation.EvaluatorDefinition.DeserializeEvaluatorDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("generation_artifacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    generationArtifacts = EvaluatorGenerationArtifacts.DeserializeEvaluatorGenerationArtifacts(prop.Value, options);
+                    generationArtifacts = global::Azure.AI.Projects.EvaluatorGenerationArtifacts.DeserializeEvaluatorGenerationArtifacts(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -334,14 +334,14 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -353,14 +353,14 @@ namespace Azure.AI.Projects.Evaluation
                     tags = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EvaluatorVersion(
                 displayName,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 evaluatorType,
                 categories,
                 definition,
@@ -372,7 +372,7 @@ namespace Azure.AI.Projects.Evaluation
                 name,
                 version,
                 description,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (tags ?? new ChangeTrackingDictionary<string, string>()),
                 additionalBinaryDataProperties);
         }
     }

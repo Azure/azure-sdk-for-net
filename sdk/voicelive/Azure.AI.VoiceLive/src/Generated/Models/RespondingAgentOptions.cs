@@ -13,9 +13,9 @@ namespace Azure.AI.VoiceLive
     internal partial class RespondingAgentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.RespondingAgentOptions"/>. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="agentId"> The ID of the agent. </param>
         /// <param name="threadId"> The ID of the conversation thread. </param>
@@ -26,14 +26,14 @@ namespace Azure.AI.VoiceLive
             ThreadId = threadId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.RespondingAgentOptions"/>. </summary>
         /// <param name="type"> The type of agent to use. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="description"> Optional description of the agent. </param>
         /// <param name="agentId"> The ID of the agent. </param>
         /// <param name="threadId"> The ID of the conversation thread. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RespondingAgentOptions(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RespondingAgentOptions(string @type, string name, string description, string agentId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;

@@ -11,36 +11,36 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemFileSearchToolCallStatus value) => value switch
         {
-            InputItemFileSearchToolCallStatus.InProgress => "in_progress",
-            InputItemFileSearchToolCallStatus.Searching => "searching",
-            InputItemFileSearchToolCallStatus.Completed => "completed",
-            InputItemFileSearchToolCallStatus.Incomplete => "incomplete",
-            InputItemFileSearchToolCallStatus.Failed => "failed",
+            global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Searching => "searching",
+            global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemFileSearchToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemFileSearchToolCallStatus ToInputItemFileSearchToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemFileSearchToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "searching"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "searching"))
             {
-                return InputItemFileSearchToolCallStatus.Searching;
+                return global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Searching;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemFileSearchToolCallStatus.Completed;
+                return global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemFileSearchToolCallStatus.Incomplete;
+                return global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Incomplete;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return InputItemFileSearchToolCallStatus.Failed;
+                return global::Azure.AI.Projects.InputItemFileSearchToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemFileSearchToolCallStatus value.");
         }

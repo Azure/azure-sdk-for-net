@@ -36,7 +36,7 @@ namespace Payload.MultiPart
 
         public void Add(Stream content, string name, string filename = default, string contentType = default) => throw null;
 
-        public void Add(byte[] content, string name, string filename = default, string contentType = default) => throw null;
+        public void Add(Byte[] content, string name, string filename = default, string contentType = default) => throw null;
 
         public void Add(BinaryData content, string name, string filename = default, string contentType = default) => throw null;
 

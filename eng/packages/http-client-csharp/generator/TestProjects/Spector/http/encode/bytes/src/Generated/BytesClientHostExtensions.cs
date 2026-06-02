@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Encode.Bytes
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class BytesClientHostExtensions
     {
         public static IClientBuilder AddBytesClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddBytesClient(this IHostApplicationBuilder host, string sectionName, Action<BytesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddBytesClient(this IHostApplicationBuilder host, string sectionName, Action<global::Encode.Bytes.BytesClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedBytesClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedBytesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<BytesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedBytesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Encode.Bytes.BytesClientSettings> configureSettings) => throw null;
     }
 }

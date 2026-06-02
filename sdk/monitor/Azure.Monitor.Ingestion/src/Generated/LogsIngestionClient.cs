@@ -17,15 +17,15 @@ namespace Azure.Monitor.Ingestion
     /// <summary> Azure Monitor data collection client. </summary>
     public partial class LogsIngestionClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of LogsIngestionClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LogsIngestionClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LogsIngestionClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LogsIngestionClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LogsIngestionClientOptions())
         {
         }
 
@@ -33,20 +33,20 @@ namespace Azure.Monitor.Ingestion
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal LogsIngestionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LogsIngestionClientOptions options)
+        internal LogsIngestionClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, LogsIngestionClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Monitor.Ingestion.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new LogsIngestionClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -54,8 +54,8 @@ namespace Azure.Monitor.Ingestion
 
         /// <summary> Initializes a new instance of LogsIngestionClient from a <see cref="LogsIngestionClientSettings"/>. </summary>
         /// <param name="settings"> The settings for LogsIngestionClient. </param>
-        [Experimental("SCME0002")]
-        public LogsIngestionClient(LogsIngestionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public LogsIngestionClient(LogsIngestionClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -78,9 +78,9 @@ namespace Azure.Monitor.Ingestion
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentEncoding"> The content encoding of the request body which is always 'gzip'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = default, RequestContext context = null)
         {
@@ -88,11 +88,11 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-                Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
+                using HttpMessage message = this.CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -115,21 +115,21 @@ namespace Azure.Monitor.Ingestion
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentEncoding"> The content encoding of the request body which is always 'gzip'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-                Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+                global::Azure.Monitor.Ingestion.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
+                using HttpMessage message = this.CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

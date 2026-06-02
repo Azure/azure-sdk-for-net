@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class TestSecret
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestSecret"/>. </summary>
         public TestSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestSecret"/>. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
         /// <param name="secretKind"> Type of secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestSecret(string value, SecretType? secretKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestSecret(string value, SecretType? secretKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             SecretKind = secretKind;

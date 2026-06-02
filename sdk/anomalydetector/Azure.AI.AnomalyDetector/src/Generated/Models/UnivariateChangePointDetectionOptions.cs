@@ -15,24 +15,24 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateChangePointDetectionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.
         /// </param>
         /// <param name="granularity"> Granularity is used to verify whether the input series is valid. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
-        public UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="series"/> is null. </exception>
+        public UnivariateChangePointDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series, TimeGranularity granularity)
         {
-            Argument.AssertNotNull(series, nameof(series));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(series, nameof(series));
 
             Series = series.ToList();
             Granularity = granularity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.
@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector
         /// be accepted.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnivariateChangePointDetectionOptions(IList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Series = series;
             Granularity = granularity;
@@ -72,7 +72,7 @@ namespace Azure.AI.AnomalyDetector
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.
         /// </summary>
-        public IList<TimeSeriesPoint> Series { get; }
+        public IList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> Series { get; }
 
         /// <summary> Granularity is used to verify whether the input series is valid. </summary>
         public TimeGranularity Granularity { get; }

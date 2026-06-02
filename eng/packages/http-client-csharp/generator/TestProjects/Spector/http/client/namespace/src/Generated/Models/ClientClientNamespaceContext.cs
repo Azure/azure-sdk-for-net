@@ -11,8 +11,8 @@ using Client.Clientnamespace.Second;
 
 namespace Client.ClientNamespace
 {
-    [ModelReaderWriterBuildable(typeof(FirstClientResult))]
-    [ModelReaderWriterBuildable(typeof(SecondClientResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(FirstClientResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(SecondClientResult))]
     public partial class ClientClientNamespaceContext : ModelReaderWriterContext
     {
     }

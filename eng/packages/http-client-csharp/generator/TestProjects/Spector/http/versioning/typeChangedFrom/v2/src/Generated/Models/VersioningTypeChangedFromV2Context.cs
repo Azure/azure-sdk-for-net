@@ -10,7 +10,7 @@ using Versioning.TypeChangedFrom;
 
 namespace Versioning.TypeChangedFrom.V2
 {
-    [ModelReaderWriterBuildable(typeof(TestModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(TestModel))]
     public partial class VersioningTypeChangedFromV2Context : ModelReaderWriterContext
     {
     }

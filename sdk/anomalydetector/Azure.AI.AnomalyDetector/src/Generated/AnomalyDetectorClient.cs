@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class AnomalyDetectorClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly string _apiVersion;
         private Univariate _cachedUnivariate;
@@ -48,8 +48,8 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AnomalyDetectorClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AnomalyDetectorClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AnomalyDetectorClientOptions())
         {
         }
 
@@ -57,20 +57,20 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AnomalyDetectorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AnomalyDetectorClientOptions options)
+        internal AnomalyDetectorClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, AnomalyDetectorClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new AnomalyDetectorClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -80,15 +80,15 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AnomalyDetectorClient(global::System.Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient from a <see cref="AnomalyDetectorClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AnomalyDetectorClient. </param>
-        [Experimental("SCME0002")]
-        public AnomalyDetectorClient(AnomalyDetectorClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public AnomalyDetectorClient(AnomalyDetectorClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", global::System.StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
         {
         }
 
@@ -101,13 +101,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of Univariate. </summary>
         public virtual Univariate GetUnivariateClient()
         {
-            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
+            return (global::System.Threading.Volatile.Read(ref _cachedUnivariate) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedUnivariate));
         }
 
         /// <summary> Initializes a new instance of Multivariate. </summary>
         public virtual Multivariate GetMultivariateClient()
         {
-            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
+            return (global::System.Threading.Volatile.Read(ref _cachedMultivariate) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedMultivariate));
         }
     }
 }

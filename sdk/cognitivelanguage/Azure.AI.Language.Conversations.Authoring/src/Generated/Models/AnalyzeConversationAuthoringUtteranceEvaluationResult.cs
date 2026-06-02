@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringUtteranceEvaluationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
         /// <param name="language"> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
@@ -27,13 +27,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             IntentsResult = intentsResult;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
         /// <param name="text"> Represents the utterance text. </param>
         /// <param name="language"> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringUtteranceEvaluationResult(string text, string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringUtteranceEvaluationResult(string text, string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Language = language;

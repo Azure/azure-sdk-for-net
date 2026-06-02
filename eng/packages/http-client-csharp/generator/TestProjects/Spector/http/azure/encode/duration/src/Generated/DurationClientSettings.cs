@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.Encode.Duration
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class DurationClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

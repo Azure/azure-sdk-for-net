@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class McpServerTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerTool"/>. </summary>
         public McpServerTool()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerTool"/>. </summary>
         /// <param name="name"> The name of the MCP tool to invoke. </param>
         /// <param name="outputParsing"> Optional configuration for parsing the tool's output. </param>
         /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'reranked' when not specified. </param>
         /// <param name="maxOutputTokens"> Optional post-parsing token cap for this tool's output. Must be greater than 0 when specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerTool(string name, McpServerOutputParsing outputParsing, McpServerToolInclusionMode? inclusionMode, int? maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerTool(string name, McpServerOutputParsing outputParsing, McpServerToolInclusionMode? inclusionMode, int? maxOutputTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             OutputParsing = outputParsing;

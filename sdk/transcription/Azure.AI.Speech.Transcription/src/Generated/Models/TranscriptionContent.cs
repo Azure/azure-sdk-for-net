@@ -11,20 +11,20 @@ namespace Azure.AI.Speech.Transcription
     internal partial class TranscriptionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionContent"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         public TranscriptionContent(TranscriptionOptions options)
         {
             Options = options;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionContent"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionContent(TranscriptionOptions options, BinaryData audio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionContent(TranscriptionOptions options, BinaryData audio, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Options = options;
             Audio = audio;
@@ -36,8 +36,8 @@ namespace Azure.AI.Speech.Transcription
 
         /// <summary>
         /// The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

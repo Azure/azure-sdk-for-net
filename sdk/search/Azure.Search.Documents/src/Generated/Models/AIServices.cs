@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class AIServices
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIServices"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.AIServices"/>. </summary>
         /// <param name="uri"> The URI of the AI Services endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public AIServices(Uri uri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public AIServices(global::System.Uri uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            global::Azure.Search.Documents.Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIServices"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.AIServices"/>. </summary>
         /// <param name="uri"> The URI of the AI Services endpoint. </param>
         /// <param name="apiKey"> The API key for accessing AI Services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIServices(Uri uri, string apiKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIServices(global::System.Uri uri, string apiKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ApiKey = apiKey;
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The URI of the AI Services endpoint. </summary>
-        public Uri Uri { get; set; }
+        public global::System.Uri Uri { get; set; }
 
         /// <summary> The API key for accessing AI Services. </summary>
         public string ApiKey { get; set; }

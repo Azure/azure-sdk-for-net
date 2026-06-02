@@ -13,11 +13,11 @@ namespace Specs.Azure.Core.Scalar
 {
     public partial class ScalarClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::Specs.Azure.Core.Scalar.ScalarClientOptions.ServiceVersion LatestVersion = global::Specs.Azure.Core.Scalar.ScalarClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public ScalarClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ScalarClientOptions(global::Specs.Azure.Core.Scalar.ScalarClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ScalarClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

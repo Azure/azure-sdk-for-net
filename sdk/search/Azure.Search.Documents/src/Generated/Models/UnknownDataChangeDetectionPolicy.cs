@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataChangeDetectionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownDataChangeDetectionPolicy"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataChangeDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownDataChangeDetectionPolicy(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((odataType ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

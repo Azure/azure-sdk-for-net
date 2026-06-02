@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> The long running task to be performed by the service on the Healthcare input documents. </summary>
     public partial class HealthcareOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareOperationAction"/>. </summary>
-        public HealthcareOperationAction() : base(AnalyzeTextOperationActionKind.Healthcare)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareOperationAction"/>. </summary>
+        public HealthcareOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.Healthcare)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameters for the Healthcare task. </param>
-        internal HealthcareOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthcareTaskParameters parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal HealthcareOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, HealthcareTaskParameters parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

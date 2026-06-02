@@ -12,19 +12,19 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesStructuredOutputDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesStructuredOutputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition"/>. </summary>
         /// <param name="name"> The name of the structured output. </param>
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
-        public ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
+        public ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, global::System.BinaryData> schema, bool? isStrict)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(schema, nameof(schema));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(schema, nameof(schema));
 
             Name = name;
             Description = description;
@@ -32,13 +32,13 @@ namespace Azure.AI.Extensions.OpenAI
             IsStrict = isStrict;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesStructuredOutputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition"/>. </summary>
         /// <param name="name"> The name of the structured output. </param>
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, global::System.BinaryData> schema, bool? isStrict, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -55,8 +55,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The JSON schema for the structured output.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -79,7 +79,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Schema { get; }
+        public IDictionary<string, global::System.BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
         public bool? IsStrict { get; set; }

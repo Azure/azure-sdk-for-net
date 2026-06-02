@@ -12,24 +12,24 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Abstract base class for defining a trigger for exception rules.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.JobRouter.QueueLengthExceptionTrigger"/> and <see cref="Azure.Communication.JobRouter.WaitTimeExceptionTrigger"/>.
     /// </summary>
     public abstract partial class ExceptionTrigger
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         private protected ExceptionTrigger(ExceptionTriggerKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

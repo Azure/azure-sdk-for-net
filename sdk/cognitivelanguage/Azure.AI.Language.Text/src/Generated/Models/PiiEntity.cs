@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class PiiEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PiiEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -29,10 +29,10 @@ namespace Azure.AI.Language.Text
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Tags = new ChangeTrackingList<EntityTag>();
+            Tags = new ChangeTrackingList<global::Azure.AI.Language.Text.EntityTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Text
         /// <param name="maskOffset"> Start position of masked text in the redacted text when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="maskLength"> The length of the masked text. Will be present when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PiiEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string @type, IList<EntityTag> tags, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PiiEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string @type, IList<global::Azure.AI.Language.Text.EntityTag> tags, string mask, int? maskOffset, int? maskLength, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Category = category;
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Text
         public string Type { get; }
 
         /// <summary> List of entity tags. Tags are to express some similarities/affinity between entities. </summary>
-        public IList<EntityTag> Tags { get; }
+        public IList<global::Azure.AI.Language.Text.EntityTag> Tags { get; }
 
         /// <summary> Optional field which will be returned only when using the redaction policy kind “MaskWithEntityType”.  This field will contain the exact mask text used to mask the PII entity in the original text. </summary>
         public string Mask { get; }

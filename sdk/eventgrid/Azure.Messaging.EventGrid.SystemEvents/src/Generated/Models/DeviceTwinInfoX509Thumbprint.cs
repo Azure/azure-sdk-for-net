@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceTwinInfoX509Thumbprint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoX509Thumbprint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoX509Thumbprint"/>. </summary>
         /// <param name="primaryThumbprint"> Primary thumbprint for the x509 certificate. </param>
         /// <param name="secondaryThumbprint"> Secondary thumbprint for the x509 certificate. </param>
         internal DeviceTwinInfoX509Thumbprint(string primaryThumbprint, string secondaryThumbprint)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SecondaryThumbprint = secondaryThumbprint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoX509Thumbprint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoX509Thumbprint"/>. </summary>
         /// <param name="primaryThumbprint"> Primary thumbprint for the x509 certificate. </param>
         /// <param name="secondaryThumbprint"> Secondary thumbprint for the x509 certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTwinInfoX509Thumbprint(string primaryThumbprint, string secondaryThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTwinInfoX509Thumbprint(string primaryThumbprint, string secondaryThumbprint, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PrimaryThumbprint = primaryThumbprint;
             SecondaryThumbprint = secondaryThumbprint;

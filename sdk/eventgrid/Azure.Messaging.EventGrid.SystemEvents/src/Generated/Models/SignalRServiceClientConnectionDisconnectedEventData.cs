@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class SignalRServiceClientConnectionDisconnectedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         internal SignalRServiceClientConnectionDisconnectedEventData(string hubName, string connectionId)
@@ -25,14 +25,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <param name="errorMessage"> The message of error that cause the client connection disconnected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             HubName = hubName;

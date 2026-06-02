@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Status of a resource. </summary>
-    public readonly partial struct ContentAnalyzerStatus : IEquatable<ContentAnalyzerStatus>
+    public readonly partial struct ContentAnalyzerStatus : IEquatable<global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus>
     {
         private readonly string _value;
         /// <summary> The resource is being created. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> The resource failed during creation. </summary>
         private const string FailedValue = "failed";
 
-        /// <summary> Initializes a new instance of <see cref="ContentAnalyzerStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContentAnalyzerStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> The resource failed during creation. </summary>
         public static ContentAnalyzerStatus Failed { get; } = new ContentAnalyzerStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="ContentAnalyzerStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentAnalyzerStatus left, ContentAnalyzerStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContentAnalyzerStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentAnalyzerStatus left, ContentAnalyzerStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContentAnalyzerStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContentAnalyzerStatus(string value) => new ContentAnalyzerStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ContentAnalyzerStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentAnalyzerStatus?(string value) => value == null ? null : new ContentAnalyzerStatus(value);
+        public static implicit operator ContentAnalyzerStatus?(string value) => (value == null) ? null : new ContentAnalyzerStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContentAnalyzerStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ContentAnalyzerStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ContentAnalyzerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContentAnalyzerStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

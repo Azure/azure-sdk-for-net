@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class ModelProperty : IJsonModel<ModelProperty>
+    public partial class ModelProperty : IJsonModel<global::_Type.Property.ValueTypes.ModelProperty>
     {
         internal ModelProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.ModelProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelProperty IPersistableModel<ModelProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelProperty IPersistableModel<global::_Type.Property.ValueTypes.ModelProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.ModelProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelProperty"> The <see cref="ModelProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelProperty"> The <see cref="global::_Type.Property.ValueTypes.ModelProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelProperty modelProperty) => throw null;
 
         public static explicit operator ModelProperty(Response response) => throw null;
 
-        void IJsonModel<ModelProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.ModelProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ModelProperty IJsonModel<ModelProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ModelProperty IJsonModel<global::_Type.Property.ValueTypes.ModelProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

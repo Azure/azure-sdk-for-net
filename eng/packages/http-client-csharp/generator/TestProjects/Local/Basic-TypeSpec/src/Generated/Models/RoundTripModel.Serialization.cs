@@ -16,10 +16,10 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> this is a roundtrip model. </summary>
-    [JsonConverter(typeof(RoundTripModelConverter))]
-    public partial class RoundTripModel : IJsonModel<RoundTripModel>
+    [JsonConverter(typeof(global::BasicTypeSpec.RoundTripModel.RoundTripModelConverter))]
+    public partial class RoundTripModel : IJsonModel<global::BasicTypeSpec.RoundTripModel>
     {
-        /// <summary> Initializes a new instance of <see cref="RoundTripModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.RoundTripModel"/> for deserialization. </summary>
         internal RoundTripModel()
         {
         }
@@ -28,65 +28,65 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoundTripModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoundTripModel(document.RootElement, options);
+                        return global::BasicTypeSpec.RoundTripModel.DeserializeRoundTripModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoundTripModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.RoundTripModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoundTripModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.RoundTripModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoundTripModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.RoundTripModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoundTripModel IPersistableModel<RoundTripModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoundTripModel IPersistableModel<global::BasicTypeSpec.RoundTripModel>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoundTripModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::BasicTypeSpec.RoundTripModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="roundTripModel"> The <see cref="global::BasicTypeSpec.RoundTripModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(RoundTripModel roundTripModel)
         {
-            if (roundTripModel == null)
+            if ((roundTripModel == null))
             {
                 return null;
             }
-            return RequestContent.Create(roundTripModel, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(roundTripModel, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::BasicTypeSpec.RoundTripModel"/> from. </param>
         public static explicit operator RoundTripModel(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::BasicTypeSpec.RoundTripModel.DeserializeRoundTripModel(document.RootElement, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoundTripModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::BasicTypeSpec.RoundTripModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -94,10 +94,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoundTripModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.RoundTripModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("requiredString"u8);
             writer.WriteStringValue(RequiredString);
@@ -119,13 +119,13 @@ namespace BasicTypeSpec
             }
             writer.WriteEndObject();
             writer.WritePropertyName("requiredModel"u8);
-            writer.WriteObjectValue(RequiredModel, options);
-            if (Optional.IsDefined(IntExtensibleEnum))
+            writer.WriteObjectValue<ThingModel>(RequiredModel, options);
+            if (global::BasicTypeSpec.Optional.IsDefined(IntExtensibleEnum))
             {
                 writer.WritePropertyName("intExtensibleEnum"u8);
                 writer.WriteNumberValue(IntExtensibleEnum.Value.ToSerialInt32());
             }
-            if (Optional.IsCollectionDefined(IntExtensibleEnumCollection))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(IntExtensibleEnumCollection))
             {
                 writer.WritePropertyName("intExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
@@ -135,17 +135,17 @@ namespace BasicTypeSpec
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FloatExtensibleEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(FloatExtensibleEnum))
             {
                 writer.WritePropertyName("floatExtensibleEnum"u8);
                 writer.WriteNumberValue(FloatExtensibleEnum.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(FloatExtensibleEnumWithIntValue))
+            if (global::BasicTypeSpec.Optional.IsDefined(FloatExtensibleEnumWithIntValue))
             {
                 writer.WritePropertyName("floatExtensibleEnumWithIntValue"u8);
                 writer.WriteNumberValue(FloatExtensibleEnumWithIntValue.Value.ToSerialSingle());
             }
-            if (Optional.IsCollectionDefined(FloatExtensibleEnumCollection))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(FloatExtensibleEnumCollection))
             {
                 writer.WritePropertyName("floatExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
@@ -155,17 +155,17 @@ namespace BasicTypeSpec
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FloatFixedEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(FloatFixedEnum))
             {
                 writer.WritePropertyName("floatFixedEnum"u8);
                 writer.WriteNumberValue(FloatFixedEnum.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(FloatFixedEnumWithIntValue))
+            if (global::BasicTypeSpec.Optional.IsDefined(FloatFixedEnumWithIntValue))
             {
                 writer.WritePropertyName("floatFixedEnumWithIntValue"u8);
-                writer.WriteNumberValue((int)FloatFixedEnumWithIntValue.Value);
+                writer.WriteNumberValue(((int)FloatFixedEnumWithIntValue.Value));
             }
-            if (Optional.IsCollectionDefined(FloatFixedEnumCollection))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(FloatFixedEnumCollection))
             {
                 writer.WritePropertyName("floatFixedEnumCollection"u8);
                 writer.WriteStartArray();
@@ -175,22 +175,22 @@ namespace BasicTypeSpec
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IntFixedEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(IntFixedEnum))
             {
                 writer.WritePropertyName("intFixedEnum"u8);
-                writer.WriteNumberValue((int)IntFixedEnum.Value);
+                writer.WriteNumberValue(((int)IntFixedEnum.Value));
             }
-            if (Optional.IsCollectionDefined(IntFixedEnumCollection))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(IntFixedEnumCollection))
             {
                 writer.WritePropertyName("intFixedEnumCollection"u8);
                 writer.WriteStartArray();
                 foreach (IntFixedEnum item in IntFixedEnumCollection)
                 {
-                    writer.WriteNumberValue((int)item);
+                    writer.WriteNumberValue(((int)item));
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StringFixedEnum))
+            if (global::BasicTypeSpec.Optional.IsDefined(StringFixedEnum))
             {
                 writer.WritePropertyName("stringFixedEnum"u8);
                 writer.WriteStringValue(StringFixedEnum.Value.ToSerialString());
@@ -199,20 +199,20 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(RequiredUnknown);
 #else
-            using (JsonDocument document = JsonDocument.Parse(RequiredUnknown))
+            using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(RequiredUnknown))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsDefined(OptionalUnknown))
+            if (global::BasicTypeSpec.Optional.IsDefined(OptionalUnknown))
             {
                 writer.WritePropertyName("optionalUnknown"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(OptionalUnknown);
 #else
-                using (JsonDocument document = JsonDocument.Parse(OptionalUnknown))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(OptionalUnknown))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -221,7 +221,7 @@ namespace BasicTypeSpec
             foreach (var item in RequiredRecordUnknown)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -229,21 +229,21 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(OptionalRecordUnknown))
+            if (global::BasicTypeSpec.Optional.IsCollectionDefined(OptionalRecordUnknown))
             {
                 writer.WritePropertyName("optionalRecordUnknown"u8);
                 writer.WriteStartObject();
                 foreach (var item in OptionalRecordUnknown)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -251,22 +251,22 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("readOnlyRequiredRecordUnknown"u8);
                 writer.WriteStartObject();
                 foreach (var item in ReadOnlyRequiredRecordUnknown)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -274,22 +274,22 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadOnlyOptionalRecordUnknown))
+            if (((options.Format != "W") && global::BasicTypeSpec.Optional.IsCollectionDefined(ReadOnlyOptionalRecordUnknown)))
             {
                 writer.WritePropertyName("readOnlyOptionalRecordUnknown"u8);
                 writer.WriteStartObject();
                 foreach (var item in ReadOnlyOptionalRecordUnknown)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -297,19 +297,19 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("modelWithRequiredNullable"u8);
-            writer.WriteObjectValue(ModelWithRequiredNullable, options);
+            writer.WriteObjectValue<ModelWithRequiredNullableProperties>(ModelWithRequiredNullable, options);
             writer.WritePropertyName("requiredBytes"u8);
             writer.WriteBase64StringValue(RequiredBytes.ToArray(), "D");
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -317,9 +317,9 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -328,54 +328,54 @@ namespace BasicTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoundTripModel IJsonModel<RoundTripModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoundTripModel IJsonModel<global::BasicTypeSpec.RoundTripModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoundTripModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.RoundTripModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RoundTripModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.RoundTripModel)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoundTripModel(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::BasicTypeSpec.RoundTripModel.DeserializeRoundTripModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string requiredString = default;
             int requiredInt = default;
-            IList<StringFixedEnum> requiredCollection = default;
-            IDictionary<string, StringExtensibleEnum> requiredDictionary = default;
+            IList<global::BasicTypeSpec.StringFixedEnum> requiredCollection = default;
+            IDictionary<string, global::BasicTypeSpec.StringExtensibleEnum> requiredDictionary = default;
             ThingModel requiredModel = default;
             IntExtensibleEnum? intExtensibleEnum = default;
-            IList<IntExtensibleEnum> intExtensibleEnumCollection = default;
+            IList<global::BasicTypeSpec.IntExtensibleEnum> intExtensibleEnumCollection = default;
             FloatExtensibleEnum? floatExtensibleEnum = default;
             FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default;
-            IList<FloatExtensibleEnum> floatExtensibleEnumCollection = default;
+            IList<global::BasicTypeSpec.FloatExtensibleEnum> floatExtensibleEnumCollection = default;
             FloatFixedEnum? floatFixedEnum = default;
             FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default;
-            IList<FloatFixedEnum> floatFixedEnumCollection = default;
+            IList<global::BasicTypeSpec.FloatFixedEnum> floatFixedEnumCollection = default;
             IntFixedEnum? intFixedEnum = default;
-            IList<IntFixedEnum> intFixedEnumCollection = default;
+            IList<global::BasicTypeSpec.IntFixedEnum> intFixedEnumCollection = default;
             StringFixedEnum? stringFixedEnum = default;
             BinaryData requiredUnknown = default;
             BinaryData optionalUnknown = default;
-            IDictionary<string, BinaryData> requiredRecordUnknown = default;
-            IDictionary<string, BinaryData> optionalRecordUnknown = default;
-            IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default;
-            IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default;
+            IDictionary<string, global::System.BinaryData> requiredRecordUnknown = default;
+            IDictionary<string, global::System.BinaryData> optionalRecordUnknown = default;
+            IReadOnlyDictionary<string, global::System.BinaryData> readOnlyRequiredRecordUnknown = default;
+            IReadOnlyDictionary<string, global::System.BinaryData> readOnlyOptionalRecordUnknown = default;
             ModelWithRequiredNullableProperties modelWithRequiredNullable = default;
             BinaryData requiredBytes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("requiredString"u8))
@@ -390,7 +390,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredCollection"u8))
                 {
-                    List<StringFixedEnum> array = new List<StringFixedEnum>();
+                    List<global::BasicTypeSpec.StringFixedEnum> array = new List<global::BasicTypeSpec.StringFixedEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToStringFixedEnum());
@@ -400,7 +400,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredDictionary"u8))
                 {
-                    Dictionary<string, StringExtensibleEnum> dictionary = new Dictionary<string, StringExtensibleEnum>();
+                    Dictionary<string, global::BasicTypeSpec.StringExtensibleEnum> dictionary = new Dictionary<string, global::BasicTypeSpec.StringExtensibleEnum>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         dictionary.Add(prop0.Name, new StringExtensibleEnum(prop0.Value.GetString()));
@@ -410,12 +410,12 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredModel"u8))
                 {
-                    requiredModel = ThingModel.DeserializeThingModel(prop.Value, options);
+                    requiredModel = global::BasicTypeSpec.ThingModel.DeserializeThingModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intExtensibleEnum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -424,11 +424,11 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("intExtensibleEnumCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IntExtensibleEnum> array = new List<IntExtensibleEnum>();
+                    List<global::BasicTypeSpec.IntExtensibleEnum> array = new List<global::BasicTypeSpec.IntExtensibleEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IntExtensibleEnum(item.GetInt32()));
@@ -438,7 +438,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatExtensibleEnum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -447,7 +447,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatExtensibleEnumWithIntValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -456,11 +456,11 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatExtensibleEnumCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<FloatExtensibleEnum> array = new List<FloatExtensibleEnum>();
+                    List<global::BasicTypeSpec.FloatExtensibleEnum> array = new List<global::BasicTypeSpec.FloatExtensibleEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new FloatExtensibleEnum(item.GetSingle()));
@@ -470,7 +470,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatFixedEnum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -479,7 +479,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatFixedEnumWithIntValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -488,11 +488,11 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("floatFixedEnumCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<FloatFixedEnum> array = new List<FloatFixedEnum>();
+                    List<global::BasicTypeSpec.FloatFixedEnum> array = new List<global::BasicTypeSpec.FloatFixedEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetSingle().ToFloatFixedEnum());
@@ -502,7 +502,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("intFixedEnum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -511,11 +511,11 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("intFixedEnumCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IntFixedEnum> array = new List<IntFixedEnum>();
+                    List<global::BasicTypeSpec.IntFixedEnum> array = new List<global::BasicTypeSpec.IntFixedEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32().ToIntFixedEnum());
@@ -525,7 +525,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("stringFixedEnum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -534,30 +534,30 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredUnknown"u8))
                 {
-                    requiredUnknown = BinaryData.FromString(prop.Value.GetRawText());
+                    requiredUnknown = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("optionalUnknown"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    optionalUnknown = BinaryData.FromString(prop.Value.GetRawText());
+                    optionalUnknown = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("requiredRecordUnknown"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     requiredRecordUnknown = dictionary;
@@ -565,20 +565,20 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalRecordUnknown"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     optionalRecordUnknown = dictionary;
@@ -586,16 +586,16 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("readOnlyRequiredRecordUnknown"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     readOnlyRequiredRecordUnknown = dictionary;
@@ -603,20 +603,20 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("readOnlyOptionalRecordUnknown"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     readOnlyOptionalRecordUnknown = dictionary;
@@ -624,17 +624,17 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("modelWithRequiredNullable"u8))
                 {
-                    modelWithRequiredNullable = ModelWithRequiredNullableProperties.DeserializeModelWithRequiredNullableProperties(prop.Value, options);
+                    modelWithRequiredNullable = global::BasicTypeSpec.ModelWithRequiredNullableProperties.DeserializeModelWithRequiredNullableProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requiredBytes"u8))
                 {
-                    requiredBytes = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    requiredBytes = global::System.BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RoundTripModel(
@@ -644,28 +644,28 @@ namespace BasicTypeSpec
                 requiredDictionary,
                 requiredModel,
                 intExtensibleEnum,
-                intExtensibleEnumCollection ?? new ChangeTrackingList<IntExtensibleEnum>(),
+                (intExtensibleEnumCollection ?? new ChangeTrackingList<global::BasicTypeSpec.IntExtensibleEnum>()),
                 floatExtensibleEnum,
                 floatExtensibleEnumWithIntValue,
-                floatExtensibleEnumCollection ?? new ChangeTrackingList<FloatExtensibleEnum>(),
+                (floatExtensibleEnumCollection ?? new ChangeTrackingList<global::BasicTypeSpec.FloatExtensibleEnum>()),
                 floatFixedEnum,
                 floatFixedEnumWithIntValue,
-                floatFixedEnumCollection ?? new ChangeTrackingList<FloatFixedEnum>(),
+                (floatFixedEnumCollection ?? new ChangeTrackingList<global::BasicTypeSpec.FloatFixedEnum>()),
                 intFixedEnum,
-                intFixedEnumCollection ?? new ChangeTrackingList<IntFixedEnum>(),
+                (intFixedEnumCollection ?? new ChangeTrackingList<global::BasicTypeSpec.IntFixedEnum>()),
                 stringFixedEnum,
                 requiredUnknown,
                 optionalUnknown,
                 requiredRecordUnknown,
-                optionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (optionalRecordUnknown ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 readOnlyRequiredRecordUnknown,
-                readOnlyOptionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (readOnlyOptionalRecordUnknown ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 modelWithRequiredNullable,
                 requiredBytes,
                 additionalBinaryDataProperties);
         }
 
-        internal partial class RoundTripModelConverter : JsonConverter<RoundTripModel>
+        internal partial class RoundTripModelConverter : JsonConverter<global::BasicTypeSpec.RoundTripModel>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -673,7 +673,7 @@ namespace BasicTypeSpec
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, RoundTripModel model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<RoundTripModel>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::BasicTypeSpec.RoundTripModel>>(model, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -682,8 +682,8 @@ namespace BasicTypeSpec
             /// <param name="options"> The serialization options. </param>
             public override RoundTripModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeRoundTripModel(document.RootElement, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
             }
         }
     }

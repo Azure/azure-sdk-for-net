@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.Core.Page
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class PageClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

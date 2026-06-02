@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Text.Authoring
 {
     internal partial class UnknownTextAuthoringExportedProjectAsset : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTextAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.UnknownTextAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTextAuthoringExportedProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(projectKind != default ? projectKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownTextAuthoringExportedProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((projectKind != default) ? projectKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

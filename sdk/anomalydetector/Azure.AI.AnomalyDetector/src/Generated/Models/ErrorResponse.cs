@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class ErrorResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ErrorResponse"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
         internal ErrorResponse(string code, string message)
@@ -25,11 +25,11 @@ namespace Azure.AI.AnomalyDetector
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ErrorResponse"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorResponse(string code, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

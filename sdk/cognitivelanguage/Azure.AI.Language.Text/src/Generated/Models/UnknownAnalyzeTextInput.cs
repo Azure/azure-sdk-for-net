@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Text
 {
     internal partial class UnknownAnalyzeTextInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.UnknownAnalyzeTextInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeTextInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeTextInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

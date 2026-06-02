@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Parameters.BodyOptionality
 {
-    [ModelReaderWriterBuildable(typeof(BodyModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(BodyModel))]
     public partial class ParametersBodyOptionalityContext : ModelReaderWriterContext
     {
     }

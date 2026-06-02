@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class SignalRServiceClientConnectionConnectedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         internal SignalRServiceClientConnectionConnectedEventData(string hubName, string connectionId)
@@ -25,13 +25,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             HubName = hubName;

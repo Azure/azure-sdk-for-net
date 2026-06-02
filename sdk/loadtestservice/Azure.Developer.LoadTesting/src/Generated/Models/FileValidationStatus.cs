@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> File status. </summary>
-    public readonly partial struct FileValidationStatus : IEquatable<FileValidationStatus>
+    public readonly partial struct FileValidationStatus : IEquatable<global::Azure.Developer.LoadTesting.FileValidationStatus>
     {
         private readonly string _value;
         /// <summary> File is not validated. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Validation is not required. </summary>
         private const string ValidationNotRequiredValue = "VALIDATION_NOT_REQUIRED";
 
-        /// <summary> Initializes a new instance of <see cref="FileValidationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.FileValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FileValidationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Validation is not required. </summary>
         public static FileValidationStatus ValidationNotRequired { get; } = new FileValidationStatus(ValidationNotRequiredValue);
 
-        /// <summary> Determines if two <see cref="FileValidationStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.FileValidationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileValidationStatus left, FileValidationStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FileValidationStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.FileValidationStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileValidationStatus left, FileValidationStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FileValidationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.FileValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator FileValidationStatus(string value) => new FileValidationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="FileValidationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.FileValidationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileValidationStatus?(string value) => value == null ? null : new FileValidationStatus(value);
+        public static implicit operator FileValidationStatus?(string value) => (value == null) ? null : new FileValidationStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FileValidationStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is FileValidationStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(FileValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FileValidationStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

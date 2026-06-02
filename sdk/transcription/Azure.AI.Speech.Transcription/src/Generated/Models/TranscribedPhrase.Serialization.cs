@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> A transcribed phrase. </summary>
-    public partial class TranscribedPhrase : IJsonModel<TranscribedPhrase>
+    public partial class TranscribedPhrase : IJsonModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>
     {
-        /// <summary> Initializes a new instance of <see cref="TranscribedPhrase"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscribedPhrase"/> for deserialization. </summary>
         internal TranscribedPhrase()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscribedPhrase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTranscribedPhrase(document.RootElement, options);
+                        return global::Azure.AI.Speech.Transcription.TranscribedPhrase.DeserializeTranscribedPhrase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranscribedPhrase)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscribedPhrase)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TranscribedPhrase)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscribedPhrase)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscribedPhrase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscribedPhrase IPersistableModel<TranscribedPhrase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TranscribedPhrase IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscribedPhrase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TranscribedPhrase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,17 +70,17 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscribedPhrase)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscribedPhrase)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Channel))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
-            if (Optional.IsDefined(Speaker))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(Speaker))
             {
                 writer.WritePropertyName("speaker"u8);
                 writer.WriteNumberValue(Speaker.Value);
@@ -91,24 +91,24 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteNumberValue(DurationMilliseconds);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsCollectionDefined(Words))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsCollectionDefined(Words))
             {
                 writer.WritePropertyName("words"u8);
                 writer.WriteStartArray();
                 foreach (TranscribedWord item in Words)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TranscribedWord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Locale))
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,26 +127,26 @@ namespace Azure.AI.Speech.Transcription
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscribedPhrase IJsonModel<TranscribedPhrase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TranscribedPhrase IJsonModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscribedPhrase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscribedPhrase)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscribedPhrase)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranscribedPhrase(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Speech.Transcription.TranscribedPhrase.DeserializeTranscribedPhrase(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranscribedPhrase DeserializeTranscribedPhrase(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -155,15 +155,15 @@ namespace Azure.AI.Speech.Transcription
             int offsetMilliseconds = default;
             int durationMilliseconds = default;
             string text = default;
-            IList<TranscribedWord> words = default;
+            IList<global::Azure.AI.Speech.Transcription.TranscribedWord> words = default;
             string locale = default;
             float confidence = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("channel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -172,7 +172,7 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("speaker"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -196,14 +196,14 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (prop.NameEquals("words"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TranscribedWord> array = new List<TranscribedWord>();
+                    List<global::Azure.AI.Speech.Transcription.TranscribedWord> array = new List<global::Azure.AI.Speech.Transcription.TranscribedWord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TranscribedWord.DeserializeTranscribedWord(item, options));
+                        array.Add(global::Azure.AI.Speech.Transcription.TranscribedWord.DeserializeTranscribedWord(item, options));
                     }
                     words = array;
                     continue;
@@ -218,9 +218,9 @@ namespace Azure.AI.Speech.Transcription
                     confidence = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TranscribedPhrase(
@@ -229,7 +229,7 @@ namespace Azure.AI.Speech.Transcription
                 offsetMilliseconds,
                 durationMilliseconds,
                 text,
-                words ?? new ChangeTrackingList<TranscribedWord>(),
+                (words ?? new ChangeTrackingList<global::Azure.AI.Speech.Transcription.TranscribedWord>()),
                 locale,
                 confidence,
                 additionalBinaryDataProperties);

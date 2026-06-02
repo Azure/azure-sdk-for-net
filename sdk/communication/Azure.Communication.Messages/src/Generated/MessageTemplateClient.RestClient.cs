@@ -25,23 +25,23 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/channels/", false);
             uri.AppendPath(channelId.ToString(), true);
             uri.AppendPath("/templates", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxPageSize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxPageSize", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTemplatesRequest(Uri nextPage, Guid channelId, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTemplatesRequest(global::System.Uri nextPage, Guid channelId, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -50,16 +50,16 @@ namespace Azure.Communication.Messages
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

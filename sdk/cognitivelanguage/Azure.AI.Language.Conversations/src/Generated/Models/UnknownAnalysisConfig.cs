@@ -12,11 +12,11 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownAnalysisConfig : AnalysisConfig
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalysisConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownAnalysisConfig"/>. </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalysisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(targetProjectKind != default ? targetProjectKind : "unknown", apiVersion, additionalBinaryDataProperties)
+        internal UnknownAnalysisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((targetProjectKind != default) ? targetProjectKind : "unknown", apiVersion, additionalBinaryDataProperties)
         {
         }
     }

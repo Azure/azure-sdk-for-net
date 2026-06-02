@@ -11,14 +11,14 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ComputerScreenshotImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ComputerScreenshotImage"/>. </summary>
         public ComputerScreenshotImage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ComputerScreenshotImage"/>. </summary>
         /// <param name="type">
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
@@ -26,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="imageUri"> The URL of the screenshot image. </param>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerScreenshotImage(string @type, Uri imageUri, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerScreenshotImage(string @type, global::System.Uri imageUri, string fileId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUri = imageUri;
@@ -41,7 +41,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
-        public Uri ImageUri { get; set; }
+        public global::System.Uri ImageUri { get; set; }
 
         /// <summary> The identifier of an uploaded file that contains the screenshot. </summary>
         public string FileId { get; set; }

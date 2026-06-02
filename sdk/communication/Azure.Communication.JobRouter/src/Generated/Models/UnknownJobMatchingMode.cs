@@ -12,10 +12,10 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownJobMatchingMode : JobMatchingMode
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownJobMatchingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.UnknownJobMatchingMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownJobMatchingMode(JobMatchingModeKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownJobMatchingMode(JobMatchingModeKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

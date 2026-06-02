@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The status of the email. Any value other than Delivered is considered failed. </summary>
-    public readonly partial struct AcsEmailDeliveryReportStatus : IEquatable<AcsEmailDeliveryReportStatus>
+    public readonly partial struct AcsEmailDeliveryReportStatus : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus>
     {
         private readonly string _value;
         /// <summary> Hard bounce detected while sending the email. </summary>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The email was suppressed. </summary>
         private const string SuppressedValue = "Suppressed";
 
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsEmailDeliveryReportStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The email was suppressed. </summary>
         public static AcsEmailDeliveryReportStatus Suppressed { get; } = new AcsEmailDeliveryReportStatus(SuppressedValue);
 
-        /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsEmailDeliveryReportStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsEmailDeliveryReportStatus(string value) => new AcsEmailDeliveryReportStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AcsEmailDeliveryReportStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsEmailDeliveryReportStatus?(string value) => value == null ? null : new AcsEmailDeliveryReportStatus(value);
+        public static implicit operator AcsEmailDeliveryReportStatus?(string value) => (value == null) ? null : new AcsEmailDeliveryReportStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsEmailDeliveryReportStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsEmailDeliveryReportStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsEmailDeliveryReportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsEmailDeliveryReportStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -11,18 +11,18 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesMCPToolRequireApproval
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolRequireApproval"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMCPToolRequireApproval"/>. </summary>
         public ResponsesMCPToolRequireApproval()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolRequireApproval"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMCPToolRequireApproval"/>. </summary>
         /// <param name="always"></param>
         /// <param name="never"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesMCPToolRequireApproval(ResponsesMCPToolFilter always, ResponsesMCPToolFilter never, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesMCPToolRequireApproval(ResponsesMCPToolFilter always, ResponsesMCPToolFilter never, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Always = always;
             Never = never;

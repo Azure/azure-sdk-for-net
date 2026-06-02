@@ -10,7 +10,7 @@ using Documentation._Lists;
 
 namespace Documentation
 {
-    [ModelReaderWriterBuildable(typeof(BulletPointsModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(BulletPointsModel))]
     public partial class DocumentationContext : ModelReaderWriterContext
     {
     }

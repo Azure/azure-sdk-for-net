@@ -9,24 +9,24 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// DatasetVersion Definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.FileDataset"/> and <see cref="Azure.AI.Projects.FolderDataset"/>.
     /// </summary>
     public abstract partial class AIProjectDataset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectDataset"/>. </summary>
         /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
         /// <param name="type"> Dataset type. </param>
-        private protected AIProjectDataset(Uri dataUri, DatasetType @type)
+        private protected AIProjectDataset(global::System.Uri dataUri, DatasetType @type)
         {
             DataUri = dataUri;
             Type = @type;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectDataset"/>. </summary>
         /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectDataset(Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectDataset(global::System.Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataUri = dataUri;
             Type = @type;

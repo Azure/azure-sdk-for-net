@@ -19,23 +19,23 @@ namespace Versioning.ReturnTypeChangedFrom
     {
         protected ReturnTypeChangedFromClient() => throw null;
 
-        public ReturnTypeChangedFromClient(Uri endpoint) : this(endpoint, new ReturnTypeChangedFromClientOptions()) => throw null;
+        public ReturnTypeChangedFromClient(global::System.Uri endpoint) : this(endpoint, new ReturnTypeChangedFromClientOptions()) => throw null;
 
-        internal ReturnTypeChangedFromClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ReturnTypeChangedFromClientOptions options) => throw null;
+        internal ReturnTypeChangedFromClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ReturnTypeChangedFromClientOptions options) => throw null;
 
-        public ReturnTypeChangedFromClient(Uri endpoint, ReturnTypeChangedFromClientOptions options) : this(null, endpoint, options) => throw null;
+        public ReturnTypeChangedFromClient(global::System.Uri endpoint, ReturnTypeChangedFromClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ReturnTypeChangedFromClient(ReturnTypeChangedFromClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ReturnTypeChangedFromClient(ReturnTypeChangedFromClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Test(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> TestAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> TestAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response<string> Test(string body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<string>> TestAsync(string body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<string>> TestAsync(string body, CancellationToken cancellationToken = default) => throw null;
     }
 }

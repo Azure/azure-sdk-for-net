@@ -11,26 +11,26 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebSearchToolSearchContextSize value) => value switch
         {
-            WebSearchToolSearchContextSize.Low => "low",
-            WebSearchToolSearchContextSize.Medium => "medium",
-            WebSearchToolSearchContextSize.High => "high",
+            global::OpenAI.WebSearchToolSearchContextSize.Low => "low",
+            global::OpenAI.WebSearchToolSearchContextSize.Medium => "medium",
+            global::OpenAI.WebSearchToolSearchContextSize.High => "high",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSearchToolSearchContextSize value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static WebSearchToolSearchContextSize ToWebSearchToolSearchContextSize(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return WebSearchToolSearchContextSize.Low;
+                return global::OpenAI.WebSearchToolSearchContextSize.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return WebSearchToolSearchContextSize.Medium;
+                return global::OpenAI.WebSearchToolSearchContextSize.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return WebSearchToolSearchContextSize.High;
+                return global::OpenAI.WebSearchToolSearchContextSize.High;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSearchToolSearchContextSize value.");
         }

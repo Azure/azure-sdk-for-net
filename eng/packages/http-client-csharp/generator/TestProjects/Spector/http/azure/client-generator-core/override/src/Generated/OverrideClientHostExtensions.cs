@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.Override
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class OverrideClientHostExtensions
     {
         public static IClientBuilder AddOverrideClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddOverrideClient(this IHostApplicationBuilder host, string sectionName, Action<OverrideClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddOverrideClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.Override.OverrideClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedOverrideClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedOverrideClient(this IHostApplicationBuilder host, string key, string sectionName, Action<OverrideClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedOverrideClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.Override.OverrideClientSettings> configureSettings) => throw null;
     }
 }

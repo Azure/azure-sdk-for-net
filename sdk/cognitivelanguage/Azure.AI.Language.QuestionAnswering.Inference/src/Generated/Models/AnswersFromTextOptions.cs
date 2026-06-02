@@ -15,22 +15,22 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class AnswersFromTextOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnswersFromTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions"/>. </summary>
         /// <param name="question"> User question to query against the given text records. </param>
         /// <param name="textDocuments"> Text records to be searched for given question. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="question"/> or <paramref name="textDocuments"/> is null. </exception>
-        public AnswersFromTextOptions(string question, IEnumerable<TextDocument> textDocuments)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="question"/> or <paramref name="textDocuments"/> is null. </exception>
+        public AnswersFromTextOptions(string question, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument> textDocuments)
         {
-            Argument.AssertNotNull(question, nameof(question));
-            Argument.AssertNotNull(textDocuments, nameof(textDocuments));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(question, nameof(question));
+            global::Azure.AI.Language.QuestionAnswering.Inference.Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             Question = question;
             TextDocuments = textDocuments.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnswersFromTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions"/>. </summary>
         /// <param name="question"> User question to query against the given text records. </param>
         /// <param name="textDocuments"> Text records to be searched for given question. </param>
         /// <param name="language">
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// see https://aka.ms/text-analytics-offsets.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnswersFromTextOptions(string question, IList<TextDocument> textDocuments, string language, StringIndexType? stringIndexType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnswersFromTextOptions(string question, IList<global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument> textDocuments, string language, StringIndexType? stringIndexType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Question = question;
             TextDocuments = textDocuments;
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public string Question { get; }
 
         /// <summary> Text records to be searched for given question. </summary>
-        public IList<TextDocument> TextDocuments { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Inference.TextDocument> TextDocuments { get; }
 
         /// <summary>
         /// Language of the text records. This is BCP-47 representation of a language. For

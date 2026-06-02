@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Discriminators for supported matching mode types. </summary>
-    public readonly partial struct JobMatchingModeKind : IEquatable<JobMatchingModeKind>
+    public readonly partial struct JobMatchingModeKind : IEquatable<global::Azure.Communication.JobRouter.JobMatchingModeKind>
     {
         private readonly string _value;
         /// <summary> Discriminator value for QueueAndMatchMode. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for SuspendMode. </summary>
         private const string SuspendValue = "suspend";
 
-        /// <summary> Initializes a new instance of <see cref="JobMatchingModeKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.JobMatchingModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobMatchingModeKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for SuspendMode. </summary>
         public static JobMatchingModeKind Suspend { get; } = new JobMatchingModeKind(SuspendValue);
 
-        /// <summary> Determines if two <see cref="JobMatchingModeKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.JobMatchingModeKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobMatchingModeKind left, JobMatchingModeKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="JobMatchingModeKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.JobMatchingModeKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobMatchingModeKind left, JobMatchingModeKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="JobMatchingModeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.JobMatchingModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator JobMatchingModeKind(string value) => new JobMatchingModeKind(value);
 
-        /// <summary> Converts a string to a <see cref="JobMatchingModeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.JobMatchingModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobMatchingModeKind?(string value) => value == null ? null : new JobMatchingModeKind(value);
+        public static implicit operator JobMatchingModeKind?(string value) => (value == null) ? null : new JobMatchingModeKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobMatchingModeKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is JobMatchingModeKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(JobMatchingModeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(JobMatchingModeKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

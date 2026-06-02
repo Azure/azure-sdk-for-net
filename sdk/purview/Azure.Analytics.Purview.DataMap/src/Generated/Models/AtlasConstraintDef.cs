@@ -15,19 +15,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasConstraintDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasConstraintDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef"/>. </summary>
         public AtlasConstraintDef()
         {
-            Params = new ChangeTrackingDictionary<string, BinaryData>();
+            Params = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasConstraintDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasConstraintDef"/>. </summary>
         /// <param name="params"> The parameters of the constraint definition. </param>
         /// <param name="type"> The type of the constraint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasConstraintDef(IDictionary<string, BinaryData> @params, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasConstraintDef(IDictionary<string, global::System.BinaryData> @params, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Params = @params;
             Type = @type;
@@ -36,8 +36,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The parameters of the constraint definition.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Params { get; }
+        public IDictionary<string, global::System.BinaryData> Params { get; }
 
         /// <summary> The type of the constraint. </summary>
         public string Type { get; set; }

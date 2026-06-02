@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Type.Union
 {
-    public partial class GetResponse : IJsonModel<GetResponse>
+    public partial class GetResponse : IJsonModel<global::_Type.Union.GetResponse>
     {
         internal GetResponse() => throw null;
 
@@ -20,19 +20,19 @@ namespace _Type.Union
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<GetResponse>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Union.GetResponse>.Write(ModelReaderWriterOptions options) => throw null;
 
-        GetResponse IPersistableModel<GetResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        GetResponse IPersistableModel<global::_Type.Union.GetResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<GetResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Union.GetResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator GetResponse(Response response) => throw null;
 
-        void IJsonModel<GetResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Union.GetResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        GetResponse IJsonModel<GetResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        GetResponse IJsonModel<global::_Type.Union.GetResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual GetResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

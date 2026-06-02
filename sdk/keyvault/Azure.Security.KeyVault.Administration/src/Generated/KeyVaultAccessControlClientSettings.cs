@@ -13,11 +13,11 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Represents the settings used to configure a <see cref="KeyVaultAccessControlClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class KeyVaultAccessControlClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the VaultBaseUrl. </summary>
-        public Uri VaultBaseUrl { get; set; }
+        public global::System.Uri VaultBaseUrl { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public KeyVaultAdministrationClientOptions Options { get; set; }
@@ -26,14 +26,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            if (Uri.TryCreate(section["VaultBaseUrl"], UriKind.Absolute, out Uri vaultBaseUrl))
+            if (global::System.Uri.TryCreate(section["VaultBaseUrl"], global::System.UriKind.Absolute, out global::System.Uri vaultBaseUrl))
             {
-                VaultBaseUrl = vaultBaseUrl;
+                this.VaultBaseUrl = vaultBaseUrl;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new KeyVaultAdministrationClientOptions(optionsSection);
+                this.Options = new KeyVaultAdministrationClientOptions(optionsSection);
             }
         }
     }

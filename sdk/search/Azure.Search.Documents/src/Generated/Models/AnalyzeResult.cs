@@ -14,25 +14,25 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class AnalyzeResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeResult"/>. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
-        public AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens)
+        public AnalyzeResult(IEnumerable<global::Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo> tokens)
         {
             Tokens = tokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeResult"/>. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(IList<AnalyzedTokenInfo> tokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeResult(IList<global::Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo> tokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Tokens = tokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of tokens returned by the analyzer specified in the request. </summary>
-        public IList<AnalyzedTokenInfo> Tokens { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo> Tokens { get; }
     }
 }

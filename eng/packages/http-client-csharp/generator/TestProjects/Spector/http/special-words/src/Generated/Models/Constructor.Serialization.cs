@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Constructor : IJsonModel<Constructor>
+    public partial class Constructor : IJsonModel<global::SpecialWords._Models.Constructor>
     {
         internal Constructor() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Constructor>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Constructor>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Constructor IPersistableModel<Constructor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Constructor IPersistableModel<global::SpecialWords._Models.Constructor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Constructor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Constructor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="constructor"> The <see cref="Constructor"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="constructor"> The <see cref="global::SpecialWords._Models.Constructor"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Constructor constructor) => throw null;
 
-        void IJsonModel<Constructor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Constructor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Constructor IJsonModel<Constructor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Constructor IJsonModel<global::SpecialWords._Models.Constructor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Constructor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

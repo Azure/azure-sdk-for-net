@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> InboundEndpointProtocol enums. </summary>
-    public readonly partial struct InboundEndpointProtocol : IEquatable<InboundEndpointProtocol>
+    public readonly partial struct InboundEndpointProtocol : IEquatable<global::Azure.Compute.Batch.InboundEndpointProtocol>
     {
         private readonly string _value;
         /// <summary> Use TCP for the endpoint. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Use UDP for the endpoint. </summary>
         private const string UdpValue = "udp";
 
-        /// <summary> Initializes a new instance of <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.InboundEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InboundEndpointProtocol(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Use UDP for the endpoint. </summary>
         public static InboundEndpointProtocol Udp { get; } = new InboundEndpointProtocol(UdpValue);
 
-        /// <summary> Determines if two <see cref="InboundEndpointProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.InboundEndpointProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InboundEndpointProtocol left, InboundEndpointProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InboundEndpointProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.InboundEndpointProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InboundEndpointProtocol left, InboundEndpointProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.InboundEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InboundEndpointProtocol(string value) => new InboundEndpointProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.InboundEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InboundEndpointProtocol?(string value) => value == null ? null : new InboundEndpointProtocol(value);
+        public static implicit operator InboundEndpointProtocol?(string value) => (value == null) ? null : new InboundEndpointProtocol(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InboundEndpointProtocol other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InboundEndpointProtocol other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InboundEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InboundEndpointProtocol other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

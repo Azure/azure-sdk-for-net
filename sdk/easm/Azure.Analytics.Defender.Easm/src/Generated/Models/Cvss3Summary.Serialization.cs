@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The Cvss3Summary. </summary>
-    public partial class Cvss3Summary : IJsonModel<Cvss3Summary>
+    public partial class Cvss3Summary : IJsonModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Cvss3Summary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCvss3Summary(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.Cvss3Summary.DeserializeCvss3Summary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.Cvss3Summary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Cvss3Summary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.Cvss3Summary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Cvss3Summary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Cvss3Summary IPersistableModel<Cvss3Summary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        Cvss3Summary IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Cvss3Summary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Cvss3Summary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,97 +68,97 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.Cvss3Summary)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Version))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(VectorString))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(VectorString))
             {
                 writer.WritePropertyName("vectorString"u8);
                 writer.WriteStringValue(VectorString);
             }
-            if (Optional.IsDefined(AttackVector))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(AttackVector))
             {
                 writer.WritePropertyName("attackVector"u8);
                 writer.WriteStringValue(AttackVector);
             }
-            if (Optional.IsDefined(AttackComplexity))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(AttackComplexity))
             {
                 writer.WritePropertyName("attackComplexity"u8);
                 writer.WriteStringValue(AttackComplexity);
             }
-            if (Optional.IsDefined(PrivilegesRequired))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(PrivilegesRequired))
             {
                 writer.WritePropertyName("privilegesRequired"u8);
                 writer.WriteStringValue(PrivilegesRequired);
             }
-            if (Optional.IsDefined(UserInteraction))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(UserInteraction))
             {
                 writer.WritePropertyName("userInteraction"u8);
                 writer.WriteStringValue(UserInteraction);
             }
-            if (Optional.IsDefined(Scope))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ConfidentialityImpact))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ConfidentialityImpact))
             {
                 writer.WritePropertyName("confidentialityImpact"u8);
                 writer.WriteStringValue(ConfidentialityImpact);
             }
-            if (Optional.IsDefined(IntegrityImpact))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(IntegrityImpact))
             {
                 writer.WritePropertyName("integrityImpact"u8);
                 writer.WriteStringValue(IntegrityImpact);
             }
-            if (Optional.IsDefined(AvailabilityImpact))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(AvailabilityImpact))
             {
                 writer.WritePropertyName("availabilityImpact"u8);
                 writer.WriteStringValue(AvailabilityImpact);
             }
-            if (Optional.IsDefined(BaseScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BaseScore))
             {
                 writer.WritePropertyName("baseScore"u8);
                 writer.WriteNumberValue(BaseScore.Value);
             }
-            if (Optional.IsDefined(BaseSeverity))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BaseSeverity))
             {
                 writer.WritePropertyName("baseSeverity"u8);
                 writer.WriteStringValue(BaseSeverity);
             }
-            if (Optional.IsDefined(ExploitCodeMaturity))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ExploitCodeMaturity))
             {
                 writer.WritePropertyName("exploitCodeMaturity"u8);
                 writer.WriteStringValue(ExploitCodeMaturity);
             }
-            if (Optional.IsDefined(RemediationLevel))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(RemediationLevel))
             {
                 writer.WritePropertyName("remediationLevel"u8);
                 writer.WriteStringValue(RemediationLevel);
             }
-            if (Optional.IsDefined(ReportConfidence))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ReportConfidence))
             {
                 writer.WritePropertyName("reportConfidence"u8);
                 writer.WriteStringValue(ReportConfidence);
             }
-            if (Optional.IsDefined(ExploitabilityScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ExploitabilityScore))
             {
                 writer.WritePropertyName("exploitabilityScore"u8);
                 writer.WriteNumberValue(ExploitabilityScore.Value);
             }
-            if (Optional.IsDefined(ImpactScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ImpactScore))
             {
                 writer.WritePropertyName("impactScore"u8);
                 writer.WriteNumberValue(ImpactScore.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -166,9 +166,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -177,26 +177,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Cvss3Summary IJsonModel<Cvss3Summary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Cvss3Summary IJsonModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Cvss3Summary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.Cvss3Summary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(Cvss3Summary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.Cvss3Summary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCvss3Summary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.Cvss3Summary.DeserializeCvss3Summary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static Cvss3Summary DeserializeCvss3Summary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
             string reportConfidence = default;
             float? exploitabilityScore = default;
             float? impactScore = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("version"u8))
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("baseScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -301,7 +301,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("exploitabilityScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -310,16 +310,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("impactScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     impactScore = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new Cvss3Summary(

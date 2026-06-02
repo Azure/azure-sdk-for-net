@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class HealthcareFhirResourceDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData"/>. </summary>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         internal HealthcareFhirResourceDeletedEventData(string fhirServiceHostName, string fhirResourceId)
@@ -25,13 +25,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             FhirResourceId = fhirResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType, string fhirServiceHostName, string fhirResourceId, long? fhirResourceVersionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType, string fhirServiceHostName, string fhirResourceId, long? fhirResourceVersionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FhirResourceType = fhirResourceType;
             FhirServiceHostName = fhirServiceHostName;

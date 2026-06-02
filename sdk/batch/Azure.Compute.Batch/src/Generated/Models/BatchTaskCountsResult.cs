@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskCountsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCountsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCountsResult"/>. </summary>
         /// <param name="taskCounts"> The number of Tasks per state. </param>
         /// <param name="taskSlotCounts"> The number of TaskSlots required by Tasks per state. </param>
         internal BatchTaskCountsResult(BatchTaskCounts taskCounts, BatchTaskSlotCounts taskSlotCounts)
@@ -25,11 +25,11 @@ namespace Azure.Compute.Batch
             TaskSlotCounts = taskSlotCounts;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCountsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCountsResult"/>. </summary>
         /// <param name="taskCounts"> The number of Tasks per state. </param>
         /// <param name="taskSlotCounts"> The number of TaskSlots required by Tasks per state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskCountsResult(BatchTaskCounts taskCounts, BatchTaskSlotCounts taskSlotCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskCountsResult(BatchTaskCounts taskCounts, BatchTaskSlotCounts taskSlotCounts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TaskCounts = taskCounts;
             TaskSlotCounts = taskSlotCounts;

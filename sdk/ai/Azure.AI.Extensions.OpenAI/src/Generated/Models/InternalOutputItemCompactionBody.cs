@@ -9,14 +9,14 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemCompactionBody : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemCompactionBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemCompactionBody"/>. </summary>
         /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
-        public InternalOutputItemCompactionBody(string encryptedContent) : base(AgentResponseItemKind.Compaction)
+        public InternalOutputItemCompactionBody(string encryptedContent) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.Compaction)
         {
             EncryptedContent = encryptedContent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemCompactionBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemCompactionBody"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal InternalOutputItemCompactionBody(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemCompactionBody(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string encryptedContent, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             CreatedBy = createdBy;

@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT : Pageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT : Pageable<global::BasicTypeSpec.ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly int _numElements;
@@ -27,7 +27,7 @@ namespace BasicTypeSpec
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT(BasicTypeSpecClient client, int numElements, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT(BasicTypeSpecClient client, int numElements, string token, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _numElements = numElements;
@@ -40,18 +40,18 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::BasicTypeSpec.ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = (continuationToken ?? _token);
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithContinuationTokenWithMaxPageResponse result = (ListWithContinuationTokenWithMaxPageResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage, response);
+                ListWithContinuationTokenWithMaxPageResponse result = ((ListWithContinuationTokenWithMaxPageResponse)response);
+                yield return global::Azure.Page<ThingModel>.FromValues(((IReadOnlyList<global::BasicTypeSpec.ThingModel>)result.Things), nextPage, response);
                 nextPage = result.NextToken;
                 if (string.IsNullOrEmpty(nextPage))
                 {

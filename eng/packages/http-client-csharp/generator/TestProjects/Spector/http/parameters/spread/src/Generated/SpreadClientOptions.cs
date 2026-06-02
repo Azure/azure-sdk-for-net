@@ -15,7 +15,7 @@ namespace Parameters.Spread
     {
         public SpreadClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal SpreadClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

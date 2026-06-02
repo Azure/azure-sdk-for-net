@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseReasoningSummary value) => value switch
         {
-            ResponseReasoningSummary.Auto => "auto",
-            ResponseReasoningSummary.Concise => "concise",
-            ResponseReasoningSummary.Detailed => "detailed",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Concise => "concise",
+            global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Detailed => "detailed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningSummary value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseReasoningSummary ToResponseReasoningSummary(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ResponseReasoningSummary.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "concise"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "concise"))
             {
-                return ResponseReasoningSummary.Concise;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Concise;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "detailed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "detailed"))
             {
-                return ResponseReasoningSummary.Detailed;
+                return global::Azure.AI.Extensions.OpenAI.ResponseReasoningSummary.Detailed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseReasoningSummary value.");
         }

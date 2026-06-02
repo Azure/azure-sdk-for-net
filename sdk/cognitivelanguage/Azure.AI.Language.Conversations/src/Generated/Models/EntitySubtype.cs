@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The concrete entity Subtype model of extra information. </summary>
     public partial class EntitySubtype : ConversationEntityExtraInformation
     {
-        /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
-        internal EntitySubtype() : base(ExtraInformationKind.EntitySubtype)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.EntitySubtype"/>. </summary>
+        internal EntitySubtype() : base(global::Azure.AI.Language.Conversations.Models.ExtraInformationKind.EntitySubtype)
         {
-            Tags = new ChangeTrackingList<EntityTag>();
+            Tags = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.EntityTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.EntitySubtype"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The Subtype of an extracted entity type. </param>
         /// <param name="tags"> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </param>
-        internal EntitySubtype(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value, IList<EntityTag> tags) : base(extraInformationKind, additionalBinaryDataProperties)
+        internal EntitySubtype(ExtraInformationKind extraInformationKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string value, IList<global::Azure.AI.Language.Conversations.Models.EntityTag> tags) : base(extraInformationKind, additionalBinaryDataProperties)
         {
             Value = value;
             Tags = tags;
@@ -35,6 +35,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string Value { get; }
 
         /// <summary> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </summary>
-        public IList<EntityTag> Tags { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.EntityTag> Tags { get; }
     }
 }

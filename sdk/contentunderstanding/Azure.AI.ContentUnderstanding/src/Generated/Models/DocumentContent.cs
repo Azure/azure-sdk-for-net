@@ -13,25 +13,25 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
     public partial class DocumentContent : AnalysisContent
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentContent"/>. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the content. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the content. </param>
-        internal DocumentContent(string mimeType, int startPageNumber, int endPageNumber) : base(AnalysisContentKind.Document, mimeType)
+        internal DocumentContent(string mimeType, int startPageNumber, int endPageNumber) : base(global::Azure.AI.ContentUnderstanding.AnalysisContentKind.Document, mimeType)
         {
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;
-            Pages = new ChangeTrackingList<DocumentPage>();
-            Paragraphs = new ChangeTrackingList<DocumentParagraph>();
-            Sections = new ChangeTrackingList<DocumentSection>();
-            Tables = new ChangeTrackingList<DocumentTable>();
-            Figures = new ChangeTrackingList<DocumentFigure>();
-            Annotations = new ChangeTrackingList<DocumentAnnotation>();
-            Hyperlinks = new ChangeTrackingList<DocumentHyperlink>();
-            Segments = new ChangeTrackingList<DocumentContentSegment>();
+            Pages = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentPage>();
+            Paragraphs = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentParagraph>();
+            Sections = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentSection>();
+            Tables = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentTable>();
+            Figures = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFigure>();
+            Annotations = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>();
+            Hyperlinks = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentHyperlink>();
+            Segments = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentContentSegment>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentContent"/>. </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="analyzerId"> The analyzer that generated this content. </param>
@@ -54,7 +54,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
         /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        internal DocumentContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentSection> sections, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentAnnotation> annotations, IList<DocumentHyperlink> hyperlinks, IList<DocumentContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal DocumentContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<global::Azure.AI.ContentUnderstanding.DocumentPage> pages, IList<global::Azure.AI.ContentUnderstanding.DocumentParagraph> paragraphs, IList<global::Azure.AI.ContentUnderstanding.DocumentSection> sections, IList<global::Azure.AI.ContentUnderstanding.DocumentTable> tables, IList<global::Azure.AI.ContentUnderstanding.DocumentFigure> figures, IList<global::Azure.AI.ContentUnderstanding.DocumentAnnotation> annotations, IList<global::Azure.AI.ContentUnderstanding.DocumentHyperlink> hyperlinks, IList<global::Azure.AI.ContentUnderstanding.DocumentContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
         {
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;
@@ -82,27 +82,27 @@ namespace Azure.AI.ContentUnderstanding
         public LengthUnit? Unit { get; }
 
         /// <summary> List of pages in the document. </summary>
-        public IList<DocumentPage> Pages { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentPage> Pages { get; }
 
         /// <summary> List of paragraphs in the document.  Only if enableOcr and returnDetails are true. </summary>
-        public IList<DocumentParagraph> Paragraphs { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentParagraph> Paragraphs { get; }
 
         /// <summary> List of sections in the document.  Only if enableLayout and returnDetails are true. </summary>
-        public IList<DocumentSection> Sections { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentSection> Sections { get; }
 
         /// <summary> List of tables in the document.  Only if enableLayout and returnDetails are true. </summary>
-        public IList<DocumentTable> Tables { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentTable> Tables { get; }
 
         /// <summary> List of figures in the document.  Only if enableLayout and returnDetails are true. </summary>
-        public IList<DocumentFigure> Figures { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentFigure> Figures { get; }
 
         /// <summary> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </summary>
-        public IList<DocumentAnnotation> Annotations { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentAnnotation> Annotations { get; }
 
         /// <summary> List of hyperlinks in the document.  Only if returnDetails are true. </summary>
-        public IList<DocumentHyperlink> Hyperlinks { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentHyperlink> Hyperlinks { get; }
 
         /// <summary> List of detected content segments.  Only if enableSegment is true. </summary>
-        public IList<DocumentContentSegment> Segments { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentContentSegment> Segments { get; }
     }
 }

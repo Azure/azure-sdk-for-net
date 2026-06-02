@@ -14,24 +14,24 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationTarget"/>. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included 
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including 
         /// multiple string values in the targetsLanguage array.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="language"/> is null. </exception>
         public TranslationTarget(string language)
         {
-            Argument.AssertNotNull(language, nameof(language));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(language, nameof(language));
 
             Language = language;
-            ReferenceTextPairs = new ChangeTrackingList<ReferenceTextPair>();
+            ReferenceTextPairs = new ChangeTrackingList<global::Azure.AI.Translation.Text.ReferenceTextPair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationTarget"/>. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included 
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including 
@@ -71,7 +71,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, TranslationTone? tone, TranslationGender? gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, TranslationTone? tone, TranslationGender? gender, string adaptiveDatasetId, IList<global::Azure.AI.Translation.Text.ReferenceTextPair> referenceTextPairs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Script = script;
@@ -142,6 +142,6 @@ namespace Azure.AI.Translation.Text
         public string AdaptiveDatasetId { get; set; }
 
         /// <summary> Reference text pairs to generate adaptive customized translation. </summary>
-        public IList<ReferenceTextPair> ReferenceTextPairs { get; }
+        public IList<global::Azure.AI.Translation.Text.ReferenceTextPair> ReferenceTextPairs { get; }
     }
 }

@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareAssertionTemporality value) => value switch
         {
-            HealthcareAssertionTemporality.Current => "current",
-            HealthcareAssertionTemporality.Past => "past",
-            HealthcareAssertionTemporality.Future => "future",
+            global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Current => "current",
+            global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Past => "past",
+            global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Future => "future",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionTemporality value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static HealthcareAssertionTemporality ToHealthcareAssertionTemporality(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "current"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "current"))
             {
-                return HealthcareAssertionTemporality.Current;
+                return global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Current;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "past"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "past"))
             {
-                return HealthcareAssertionTemporality.Past;
+                return global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Past;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "future"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "future"))
             {
-                return HealthcareAssertionTemporality.Future;
+                return global::Azure.AI.Language.Text.HealthcareAssertionTemporality.Future;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionTemporality value.");
         }

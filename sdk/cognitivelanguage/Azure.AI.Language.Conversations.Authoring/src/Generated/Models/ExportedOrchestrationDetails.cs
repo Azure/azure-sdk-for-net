@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary>
     /// Represents the options used to define the orchestration behavior of an intent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportedConversationOrchestrationDetails"/>, <see cref="ExportedLuisOrchestrationDetails"/>, and <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestrationDetails"/>, <see cref="Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestrationDetails"/>, and <see cref="Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestrationDetails"/>.
     /// </summary>
     public abstract partial class ExportedOrchestrationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails"/>. </summary>
         /// <param name="targetProjectKind"></param>
         private protected ExportedOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind)
         {
             TargetProjectKind = targetProjectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails"/>. </summary>
         /// <param name="targetProjectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetProjectKind = targetProjectKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

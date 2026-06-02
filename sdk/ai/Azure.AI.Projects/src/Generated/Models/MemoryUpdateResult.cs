@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryUpdateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryUpdateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResult"/>. </summary>
         /// <param name="updateId"> The unique ID of this update request. Use this value as previous_update_id in subsequent requests to perform incremental updates. </param>
         /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
         internal MemoryUpdateResult(string updateId, MemoryStoreUpdateStatus status)
@@ -23,14 +23,14 @@ namespace Azure.AI.Projects.Memory
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryUpdateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryUpdateResult"/>. </summary>
         /// <param name="updateId"> The unique ID of this update request. Use this value as previous_update_id in subsequent requests to perform incremental updates. </param>
         /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
         /// <param name="supersededBy"> The update_id the operation was superseded by when status is "superseded". </param>
         /// <param name="details"> The result of memory store update operation when status is "completed". </param>
         /// <param name="internalError"> Error object that describes the error when status is "failed". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryUpdateResult(string updateId, MemoryStoreUpdateStatus status, string supersededBy, MemoryUpdateResultDetails details, FoundryOpenAIError internalError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryUpdateResult(string updateId, MemoryStoreUpdateStatus status, string supersededBy, MemoryUpdateResultDetails details, FoundryOpenAIError internalError, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UpdateId = updateId;
             Status = status;

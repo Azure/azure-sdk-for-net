@@ -9,22 +9,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Union
 {
-    [ModelReaderWriterBuildable(typeof(Cat))]
-    [ModelReaderWriterBuildable(typeof(Dog))]
-    [ModelReaderWriterBuildable(typeof(EnumsOnlyCases))]
-    [ModelReaderWriterBuildable(typeof(GetResponse))]
-    [ModelReaderWriterBuildable(typeof(GetResponse1))]
-    [ModelReaderWriterBuildable(typeof(GetResponse2))]
-    [ModelReaderWriterBuildable(typeof(GetResponse3))]
-    [ModelReaderWriterBuildable(typeof(GetResponse4))]
-    [ModelReaderWriterBuildable(typeof(GetResponse5))]
-    [ModelReaderWriterBuildable(typeof(GetResponse6))]
-    [ModelReaderWriterBuildable(typeof(GetResponse7))]
-    [ModelReaderWriterBuildable(typeof(GetResponse8))]
-    [ModelReaderWriterBuildable(typeof(GetResponse9))]
-    [ModelReaderWriterBuildable(typeof(MixedLiteralsCases))]
-    [ModelReaderWriterBuildable(typeof(MixedTypesCases))]
-    [ModelReaderWriterBuildable(typeof(StringAndArrayCases))]
+    [ModelReaderWriterBuildableAttribute(typeof(Cat))]
+    [ModelReaderWriterBuildableAttribute(typeof(Dog))]
+    [ModelReaderWriterBuildableAttribute(typeof(EnumsOnlyCases))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse1))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse2))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse3))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse4))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse5))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse6))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse7))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse8))]
+    [ModelReaderWriterBuildableAttribute(typeof(GetResponse9))]
+    [ModelReaderWriterBuildableAttribute(typeof(MixedLiteralsCases))]
+    [ModelReaderWriterBuildableAttribute(typeof(MixedTypesCases))]
+    [ModelReaderWriterBuildableAttribute(typeof(StringAndArrayCases))]
     public partial class _TypeUnionContext : ModelReaderWriterContext
     {
     }

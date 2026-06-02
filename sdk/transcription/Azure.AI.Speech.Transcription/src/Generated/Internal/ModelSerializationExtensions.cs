@@ -24,9 +24,9 @@ namespace Azure.AI.Speech.Transcription
         {
             switch (element.ValueKind)
             {
-                case JsonValueKind.String:
+                case global::System.Text.Json.JsonValueKind.String:
                     return element.GetString();
-                case JsonValueKind.Number:
+                case global::System.Text.Json.JsonValueKind.Number:
                     if (element.TryGetInt32(out int intValue))
                     {
                         return intValue;
@@ -36,21 +36,21 @@ namespace Azure.AI.Speech.Transcription
                         return longValue;
                     }
                     return element.GetDouble();
-                case JsonValueKind.True:
+                case global::System.Text.Json.JsonValueKind.True:
                     return true;
-                case JsonValueKind.False:
+                case global::System.Text.Json.JsonValueKind.False:
                     return false;
-                case JsonValueKind.Undefined:
-                case JsonValueKind.Null:
+                case global::System.Text.Json.JsonValueKind.Undefined:
+                case global::System.Text.Json.JsonValueKind.Null:
                     return null;
-                case JsonValueKind.Object:
+                case global::System.Text.Json.JsonValueKind.Object:
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var jsonProperty in element.EnumerateObject())
                     {
                         dictionary.Add(jsonProperty.Name, jsonProperty.Value.GetObject());
                     }
                     return dictionary;
-                case JsonValueKind.Array:
+                case global::System.Text.Json.JsonValueKind.Array:
                     List<object> list = new List<object>();
                     foreach (var item in element.EnumerateArray())
                     {
@@ -62,16 +62,16 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
-        public static byte[] GetBytesFromBase64(this JsonElement element, string format)
+        public static Byte[] GetBytesFromBase64(this JsonElement element, string format)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
 
             return format switch
             {
-                "U" => TypeFormatters.FromBase64UrlString(element.GetRequiredString()),
+                "U" => global::Azure.AI.Speech.Transcription.TypeFormatters.FromBase64UrlString(element.GetRequiredString()),
                 "D" => element.GetBytesFromBase64(),
                 _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
             };
@@ -79,18 +79,18 @@ namespace Azure.AI.Speech.Transcription
 
         public static DateTimeOffset GetDateTimeOffset(this JsonElement element, string format) => format switch
         {
-            "U" when element.ValueKind == JsonValueKind.Number => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
-            _ => TypeFormatters.ParseDateTimeOffset(element.GetString(), format)
+            "U" when (element.ValueKind == global::System.Text.Json.JsonValueKind.Number) => global::System.DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
+            _ => global::Azure.AI.Speech.Transcription.TypeFormatters.ParseDateTimeOffset(element.GetString(), format)
         };
 
-        public static TimeSpan GetTimeSpan(this JsonElement element, string format) => TypeFormatters.ParseTimeSpan(element.GetString(), format);
+        public static TimeSpan GetTimeSpan(this JsonElement element, string format) => global::Azure.AI.Speech.Transcription.TypeFormatters.ParseTimeSpan(element.GetString(), format);
 
         public static char GetChar(this JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.String)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.String))
             {
                 string text = element.GetString();
-                if (text == null || text.Length != 1)
+                if (((text == null) || (text.Length != 1)))
                 {
                     throw new NotSupportedException($"Cannot convert \"{text}\" to a char");
                 }
@@ -102,7 +102,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
-        [Conditional("DEBUG")]
+        [ConditionalAttribute("DEBUG")]
         public static void ThrowNonNullablePropertyIsNull(this JsonProperty @property)
         {
             throw new JsonException($"A property '{@property.Name}' defined as non-nullable but received as null from the service. This exception only happens in DEBUG builds of the library and would be ignored in the release build");
@@ -111,7 +111,7 @@ namespace Azure.AI.Speech.Transcription
         public static string GetRequiredString(this JsonElement element)
         {
             string value = element.GetString();
-            if (value == null)
+            if ((value == null))
             {
                 throw new InvalidOperationException($"The requested operation requires an element of type 'String', but the target element has type '{element.ValueKind}'.");
             }
@@ -120,27 +120,27 @@ namespace Azure.AI.Speech.Transcription
 
         public static void WriteStringValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
         {
-            writer.WriteStringValue(TypeFormatters.ToString(value, format));
+            writer.WriteStringValue(global::Azure.AI.Speech.Transcription.TypeFormatters.ToString(value, format));
         }
 
         public static void WriteStringValue(this Utf8JsonWriter writer, DateTime value, string format)
         {
-            writer.WriteStringValue(TypeFormatters.ToString(value, format));
+            writer.WriteStringValue(global::Azure.AI.Speech.Transcription.TypeFormatters.ToString(value, format));
         }
 
         public static void WriteStringValue(this Utf8JsonWriter writer, TimeSpan value, string format)
         {
-            writer.WriteStringValue(TypeFormatters.ToString(value, format));
+            writer.WriteStringValue(global::Azure.AI.Speech.Transcription.TypeFormatters.ToString(value, format));
         }
 
         public static void WriteStringValue(this Utf8JsonWriter writer, char value)
         {
-            writer.WriteStringValue(value.ToString(CultureInfo.InvariantCulture));
+            writer.WriteStringValue(value.ToString(global::System.Globalization.CultureInfo.InvariantCulture));
         }
 
-        public static void WriteBase64StringValue(this Utf8JsonWriter writer, byte[] value, string format)
+        public static void WriteBase64StringValue(this Utf8JsonWriter writer, Byte[] value, string format)
         {
-            if (value == null)
+            if ((value == null))
             {
                 writer.WriteNullValue();
                 return;
@@ -148,7 +148,7 @@ namespace Azure.AI.Speech.Transcription
             switch (format)
             {
                 case "U":
-                    writer.WriteStringValue(TypeFormatters.ToBase64UrlString(value));
+                    writer.WriteStringValue(global::Azure.AI.Speech.Transcription.TypeFormatters.ToBase64UrlString(value));
                     break;
                 case "D":
                     writer.WriteBase64StringValue(value);
@@ -160,14 +160,14 @@ namespace Azure.AI.Speech.Transcription
 
         public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
         {
-            if (format != "U")
+            if ((format != "U"))
             {
                 throw new ArgumentOutOfRangeException(nameof(format), "Only 'U' format is supported when writing a DateTimeOffset as a Number.");
             }
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = ((ModelReaderWriterOptions)null))
         {
             switch (value)
             {
@@ -175,9 +175,9 @@ namespace Azure.AI.Speech.Transcription
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? WireOptions);
+                    jsonModel.Write(writer, (options ?? global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions));
                     break;
-                case byte[] bytes:
+                case Byte[] bytes:
                     writer.WriteBase64StringValue(bytes);
                     break;
                 case BinaryData bytes0:
@@ -223,7 +223,7 @@ namespace Azure.AI.Speech.Transcription
                 case DateTime dateTime:
                     writer.WriteStringValue(dateTime, "O");
                     break;
-                case IEnumerable<KeyValuePair<string, object>> enumerable:
+                case IEnumerable<global::System.Collections.Generic.KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();
                     foreach (var pair in enumerable)
                     {
@@ -248,7 +248,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = ((ModelReaderWriterOptions)null))
         {
             writer.WriteObjectValue<object>(value, options);
         }
@@ -258,7 +258,7 @@ namespace Azure.AI.Speech.Transcription
 #if NET9_0_OR_GREATER
             return new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(element).ToArray());
 #else
-            return BinaryData.FromString(element.GetRawText());
+            return global::System.BinaryData.FromString(element.GetRawText());
 #endif
         }
     }

@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class EnvironmentSetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.EnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EnvironmentSetting(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.EnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentSetting(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentSetting(string name, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

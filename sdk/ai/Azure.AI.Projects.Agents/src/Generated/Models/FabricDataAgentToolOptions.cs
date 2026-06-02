@@ -11,21 +11,21 @@ namespace Azure.AI.Projects.Agents
     public partial class FabricDataAgentToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FabricDataAgentToolOptions"/>. </summary>
         public FabricDataAgentToolOptions()
         {
-            ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
+            ProjectConnections = new ChangeTrackingList<global::Azure.AI.Projects.Agents.ToolProjectConnection>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FabricDataAgentToolOptions"/>. </summary>
         /// <param name="projectConnections">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricDataAgentToolOptions(IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricDataAgentToolOptions(IList<global::Azure.AI.Projects.Agents.ToolProjectConnection> projectConnections, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnections = projectConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,6 +35,6 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<ToolProjectConnection> ProjectConnections { get; }
+        public IList<global::Azure.AI.Projects.Agents.ToolProjectConnection> ProjectConnections { get; }
     }
 }

@@ -13,20 +13,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterFailed event. </summary>
     public partial class AvsClusterFailedEventData : AvsClusterEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsClusterFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         internal AvsClusterFailedEventData(string operationId) : base(operationId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsClusterFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="failureMessage"> Failure reason of an event. </param>
-        internal AvsClusterFailedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, string failureMessage) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, additionalBinaryDataProperties)
+        internal AvsClusterFailedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string failureMessage) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, additionalBinaryDataProperties)
         {
             FailureMessage = failureMessage;
         }

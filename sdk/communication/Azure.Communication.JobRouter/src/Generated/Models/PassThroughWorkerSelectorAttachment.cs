@@ -13,22 +13,22 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches a worker selector where the value is passed through from a job's label with the same key. </summary>
     public partial class PassThroughWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="PassThroughWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.PassThroughWorkerSelectorAttachment"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        internal PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator) : base(WorkerSelectorAttachmentKind.PassThrough)
+        internal PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator) : base(global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind.PassThrough)
         {
             Key = key;
             LabelOperator = labelOperator;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PassThroughWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.PassThroughWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid in seconds. </param>
-        internal PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, LabelOperator labelOperator, TimeSpan? expiresAfter) : base(kind, additionalBinaryDataProperties)
+        internal PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string key, LabelOperator labelOperator, TimeSpan? expiresAfter) : base(kind, additionalBinaryDataProperties)
         {
             Key = key;
             LabelOperator = labelOperator;

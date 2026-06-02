@@ -14,9 +14,9 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the prediction section of a Conversation project. </summary>
-    public partial class ConversationPrediction : PredictionBase, IJsonModel<ConversationPrediction>
+    public partial class ConversationPrediction : PredictionBase, IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPrediction"/> for deserialization. </summary>
         internal ConversationPrediction()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PredictionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationPrediction(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.ConversationPrediction.DeserializeConversationPrediction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationPrediction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPrediction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationPrediction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPrediction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationPrediction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationPrediction IPersistableModel<ConversationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationPrediction)PersistableModelCreateCore(data, options);
+        ConversationPrediction IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ConversationPrediction)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationPrediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationPrediction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,58 +74,58 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationPrediction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPrediction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("intents"u8);
             writer.WriteStartArray();
             foreach (ConversationIntent item in Intents)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ConversationIntent>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (ConversationEntity item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ConversationEntity>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationPrediction IJsonModel<ConversationPrediction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConversationPrediction)JsonModelCreateCore(ref reader, options);
+        ConversationPrediction IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ConversationPrediction)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PredictionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationPrediction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationPrediction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationPrediction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.ConversationPrediction.DeserializeConversationPrediction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationPrediction DeserializeConversationPrediction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ProjectKind projectKind = default;
             string topIntent = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ConversationIntent> intents = default;
-            IList<ConversationEntity> entities = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Language.Conversations.Models.ConversationIntent> intents = default;
+            IList<global::Azure.AI.Language.Conversations.Models.ConversationEntity> entities = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("projectKind"u8))
@@ -140,27 +140,27 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("intents"u8))
                 {
-                    List<ConversationIntent> array = new List<ConversationIntent>();
+                    List<global::Azure.AI.Language.Conversations.Models.ConversationIntent> array = new List<global::Azure.AI.Language.Conversations.Models.ConversationIntent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationIntent.DeserializeConversationIntent(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Models.ConversationIntent.DeserializeConversationIntent(item, options));
                     }
                     intents = array;
                     continue;
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    List<ConversationEntity> array = new List<ConversationEntity>();
+                    List<global::Azure.AI.Language.Conversations.Models.ConversationEntity> array = new List<global::Azure.AI.Language.Conversations.Models.ConversationEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationEntity.DeserializeConversationEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Models.ConversationEntity.DeserializeConversationEntity(item, options));
                     }
                     entities = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConversationPrediction(projectKind, topIntent, additionalBinaryDataProperties, intents, entities);

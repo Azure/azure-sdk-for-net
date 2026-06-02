@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Details the status of an individual indexer execution. </summary>
-    public readonly partial struct IndexerExecutionStatusDetail : IEquatable<IndexerExecutionStatusDetail>
+    public readonly partial struct IndexerExecutionStatusDetail : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail>
     {
         private readonly string _value;
         /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
         private const string ResyncValue = "resync";
 
-        /// <summary> Initializes a new instance of <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerExecutionStatusDetail(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
         public static IndexerExecutionStatusDetail Resync { get; } = new IndexerExecutionStatusDetail(ResyncValue);
 
-        /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexerExecutionStatusDetail(string value) => new IndexerExecutionStatusDetail(value);
 
-        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerExecutionStatusDetail?(string value) => value == null ? null : new IndexerExecutionStatusDetail(value);
+        public static implicit operator IndexerExecutionStatusDetail?(string value) => (value == null) ? null : new IndexerExecutionStatusDetail(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexerExecutionStatusDetail other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexerExecutionStatusDetail other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexerExecutionStatusDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexerExecutionStatusDetail other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

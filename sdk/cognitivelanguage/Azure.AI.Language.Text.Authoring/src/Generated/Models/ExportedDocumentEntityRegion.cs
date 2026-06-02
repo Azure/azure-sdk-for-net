@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedDocumentEntityRegion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedDocumentEntityRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion"/>. </summary>
         public ExportedDocumentEntityRegion()
         {
-            Labels = new ChangeTrackingList<ExportedDocumentEntityLabel>();
+            Labels = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedDocumentEntityRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion"/>. </summary>
         /// <param name="regionOffset"> Start position for the region. </param>
         /// <param name="regionLength"> Length for the region text. </param>
         /// <param name="labels"> The list of entity labels belonging to this region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedDocumentEntityRegion(int? regionOffset, int? regionLength, IList<ExportedDocumentEntityLabel> labels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedDocumentEntityRegion(int? regionOffset, int? regionLength, IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel> labels, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RegionOffset = regionOffset;
             RegionLength = regionLength;
@@ -42,6 +42,6 @@ namespace Azure.AI.Language.Text.Authoring
         public int? RegionLength { get; set; }
 
         /// <summary> The list of entity labels belonging to this region. </summary>
-        public IList<ExportedDocumentEntityLabel> Labels { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel> Labels { get; }
     }
 }

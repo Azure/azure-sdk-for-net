@@ -10,22 +10,22 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalInputImageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         internal InternalInputImageContent(ImageDetail detail)
         {
             Detail = detail;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputImageContent"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_image`. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputImageContent(string @type, Uri imageUrl, string fileId, ImageDetail detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputImageContent(string @type, global::System.Uri imageUrl, string fileId, ImageDetail detail, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         internal string Type { get; } = "input_image";
 
         /// <summary> Gets the ImageUrl. </summary>
-        public Uri ImageUrl { get; }
+        public global::System.Uri ImageUrl { get; }
 
         /// <summary> Gets the FileId. </summary>
         public string FileId { get; }

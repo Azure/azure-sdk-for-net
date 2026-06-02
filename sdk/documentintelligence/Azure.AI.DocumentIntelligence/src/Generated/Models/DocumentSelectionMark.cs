@@ -17,9 +17,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentSelectionMark
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentSelectionMark"/>. </summary>
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentSelectionMark"/>. </summary>
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="polygon">
         /// Bounding polygon of the selection mark, with coordinates specified relative
@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSelectionMark(DocumentSelectionMarkState state, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSelectionMark(DocumentSelectionMarkState state, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Polygon = polygon;

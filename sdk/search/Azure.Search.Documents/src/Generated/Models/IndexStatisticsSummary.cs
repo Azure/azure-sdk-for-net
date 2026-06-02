@@ -14,22 +14,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexStatisticsSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexStatisticsSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         internal IndexStatisticsSummary(string name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexStatisticsSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexStatisticsSummary(string name, long documentCount, long storageSize, long vectorIndexSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexStatisticsSummary(string name, long documentCount, long storageSize, long vectorIndexSize, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DocumentCount = documentCount;

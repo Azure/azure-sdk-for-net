@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class FloatProperty : IJsonModel<FloatProperty>
+    public partial class FloatProperty : IJsonModel<global::_Type.Property.ValueTypes.FloatProperty>
     {
         internal FloatProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<FloatProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.FloatProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        FloatProperty IPersistableModel<FloatProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        FloatProperty IPersistableModel<global::_Type.Property.ValueTypes.FloatProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<FloatProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.FloatProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="floatProperty"> The <see cref="FloatProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="floatProperty"> The <see cref="global::_Type.Property.ValueTypes.FloatProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatProperty floatProperty) => throw null;
 
         public static explicit operator FloatProperty(Response response) => throw null;
 
-        void IJsonModel<FloatProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.FloatProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        FloatProperty IJsonModel<FloatProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        FloatProperty IJsonModel<global::_Type.Property.ValueTypes.FloatProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual FloatProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

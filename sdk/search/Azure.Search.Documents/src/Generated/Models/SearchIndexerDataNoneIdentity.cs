@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Clears the identity property of a datasource. </summary>
     public partial class SearchIndexerDataNoneIdentity : SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataNoneIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataNoneIdentity"/>. </summary>
         public SearchIndexerDataNoneIdentity() : base("#Microsoft.Azure.Search.DataNoneIdentity")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataNoneIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataNoneIdentity"/>. </summary>
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerDataNoneIdentity(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
+        internal SearchIndexerDataNoneIdentity(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
         {
         }
     }

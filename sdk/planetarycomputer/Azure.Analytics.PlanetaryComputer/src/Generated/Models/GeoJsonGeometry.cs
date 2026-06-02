@@ -15,14 +15,14 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Supported geometry types include:
     /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
     /// Used for spatial filtering in STAC.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.PlanetaryComputer.PointGeometry"/>, <see cref="Azure.Analytics.PlanetaryComputer.PolygonGeometry"/>, <see cref="Azure.Analytics.PlanetaryComputer.MultiPolygon"/>, <see cref="Azure.Analytics.PlanetaryComputer.MultiLineString"/>, <see cref="Azure.Analytics.PlanetaryComputer.LineString"/>, and <see cref="Azure.Analytics.PlanetaryComputer.MultiPoint"/>.
     /// </summary>
     public abstract partial class GeoJsonGeometry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         private protected GeoJsonGeometry(GeometryType @type)
         {
@@ -30,11 +30,11 @@ namespace Azure.Analytics.PlanetaryComputer
             BoundingBox = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.GeoJsonGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             BoundingBox = boundingBox;

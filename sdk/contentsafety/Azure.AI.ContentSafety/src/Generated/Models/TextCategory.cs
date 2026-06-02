@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The harm category supported in Text content analysis. </summary>
-    public readonly partial struct TextCategory : IEquatable<TextCategory>
+    public readonly partial struct TextCategory : IEquatable<global::Azure.AI.ContentSafety.TextCategory>
     {
         private readonly string _value;
         /// <summary> The harm category for Text - Hate. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.ContentSafety
         /// <summary> The harm category for Text - Violence. </summary>
         private const string ViolenceValue = "Violence";
 
-        /// <summary> Initializes a new instance of <see cref="TextCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.ContentSafety
         /// <summary> The harm category for Text - Violence. </summary>
         public static TextCategory Violence { get; } = new TextCategory(ViolenceValue);
 
-        /// <summary> Determines if two <see cref="TextCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentSafety.TextCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextCategory left, TextCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TextCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentSafety.TextCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextCategory left, TextCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TextCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentSafety.TextCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TextCategory(string value) => new TextCategory(value);
 
-        /// <summary> Converts a string to a <see cref="TextCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentSafety.TextCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextCategory?(string value) => value == null ? null : new TextCategory(value);
+        public static implicit operator TextCategory?(string value) => (value == null) ? null : new TextCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TextCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TextCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TextCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TextCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

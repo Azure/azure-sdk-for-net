@@ -20,6 +20,6 @@ namespace Encode.Datetime
 
         public static UnixTimestampDatetimeProperty UnixTimestampDatetimeProperty(DateTimeOffset value = default) => throw null;
 
-        public static UnixTimestampArrayDatetimeProperty UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value = default) => throw null;
+        public static UnixTimestampArrayDatetimeProperty UnixTimestampArrayDatetimeProperty(IEnumerable<global::System.DateTimeOffset> value = default) => throw null;
     }
 }

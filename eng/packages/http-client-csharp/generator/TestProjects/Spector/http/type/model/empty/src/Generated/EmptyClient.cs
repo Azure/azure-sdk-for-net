@@ -17,39 +17,39 @@ namespace _Type.Model.Empty
 {
     public partial class EmptyClient
     {
-        public EmptyClient() : this(new Uri("http://localhost:3000"), new EmptyClientOptions()) => throw null;
+        public EmptyClient() : this(new global::System.Uri("http://localhost:3000"), new EmptyClientOptions()) => throw null;
 
-        internal EmptyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EmptyClientOptions options) => throw null;
+        internal EmptyClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, EmptyClientOptions options) => throw null;
 
-        public EmptyClient(Uri endpoint, EmptyClientOptions options) : this(null, endpoint, options) => throw null;
+        public EmptyClient(global::System.Uri endpoint, EmptyClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public EmptyClient(EmptyClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public EmptyClient(EmptyClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PutEmpty(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutEmptyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutEmptyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutEmpty(EmptyInput input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutEmptyAsync(EmptyInput input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutEmptyAsync(EmptyInput input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetEmpty(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetEmptyAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetEmptyAsync(RequestContext context) => throw null;
 
-        public virtual Response<EmptyOutput> GetEmpty(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Empty.EmptyOutput> GetEmpty(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<EmptyOutput>> GetEmptyAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Empty.EmptyOutput>> GetEmptyAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PostRoundTripEmpty(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PostRoundTripEmptyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PostRoundTripEmptyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<EmptyInputOutput> PostRoundTripEmpty(EmptyInputOutput body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Empty.EmptyInputOutput> PostRoundTripEmpty(EmptyInputOutput body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<EmptyInputOutput>> PostRoundTripEmptyAsync(EmptyInputOutput body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Empty.EmptyInputOutput>> PostRoundTripEmptyAsync(EmptyInputOutput body, CancellationToken cancellationToken = default) => throw null;
     }
 }

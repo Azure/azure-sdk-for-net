@@ -12,10 +12,10 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownExceptionTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.UnknownExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

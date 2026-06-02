@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled. </summary>
-    public readonly partial struct StopOnDisconnectStatus : IEquatable<StopOnDisconnectStatus>
+    public readonly partial struct StopOnDisconnectStatus : IEquatable<global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus>
     {
         private readonly string _value;
         /// <summary> Stop on disconnect is enabled on the Dev Box. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Stop on disconnect is not enabled on the Dev Box. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StopOnDisconnectStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Stop on disconnect is not enabled on the Dev Box. </summary>
         public static StopOnDisconnectStatus Disabled { get; } = new StopOnDisconnectStatus(DisabledValue);
 
-        /// <summary> Determines if two <see cref="StopOnDisconnectStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StopOnDisconnectStatus left, StopOnDisconnectStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StopOnDisconnectStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StopOnDisconnectStatus left, StopOnDisconnectStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StopOnDisconnectStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StopOnDisconnectStatus(string value) => new StopOnDisconnectStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StopOnDisconnectStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StopOnDisconnectStatus?(string value) => value == null ? null : new StopOnDisconnectStatus(value);
+        public static implicit operator StopOnDisconnectStatus?(string value) => (value == null) ? null : new StopOnDisconnectStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StopOnDisconnectStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StopOnDisconnectStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StopOnDisconnectStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StopOnDisconnectStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -16,19 +16,19 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class ServerEventWarning : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="ServerEventWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerEventWarning"/>. </summary>
         /// <param name="warning"> Details of the warning. </param>
-        internal ServerEventWarning(ServerEventWarningDetails warning) : base(ServerEventType.Warning)
+        internal ServerEventWarning(ServerEventWarningDetails warning) : base(global::Azure.AI.VoiceLive.ServerEventType.Warning)
         {
             Warning = warning;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerEventWarning"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="warning"> Details of the warning. </param>
-        internal ServerEventWarning(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEventWarningDetails warning) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventWarning(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ServerEventWarningDetails warning) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Warning = warning;
         }

@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetDeltaDetailsAsyncCollectionResultOfT : AsyncPageable<DeltaResult>
+    internal partial class EasmClientGetDeltaDetailsAsyncCollectionResultOfT : AsyncPageable<global::Azure.Analytics.Defender.Easm.DeltaResult>
     {
         private readonly EasmClient _client;
         private readonly RequestContent _content;
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EasmClientGetDeltaDetailsAsyncCollectionResultOfT(EasmClient client, RequestContent content, int? skip, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EasmClientGetDeltaDetailsAsyncCollectionResultOfT(EasmClient client, RequestContent content, int? skip, int? maxpagesize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _content = content;
@@ -44,33 +44,33 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EasmClientGetDeltaDetailsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeltaResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Analytics.Defender.Easm.DeltaResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                DeltaPageResult result = (DeltaPageResult)response;
-                yield return Page<DeltaResult>.FromValues((IReadOnlyList<DeltaResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DeltaPageResult result = ((DeltaPageResult)response);
+                yield return global::Azure.Page<DeltaResult>.FromValues(((IReadOnlyList<global::Azure.Analytics.Defender.Easm.DeltaResult>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
             }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeltaDetailsRequest(nextLink, _content, _skip, _maxpagesize, _context) : _client.CreateGetDeltaDetailsRequest(_content, _skip, _maxpagesize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetDeltaDetailsRequest(nextLink, _content, _skip, _maxpagesize, _context) : _client.CreateGetDeltaDetailsRequest(_content, _skip, _maxpagesize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

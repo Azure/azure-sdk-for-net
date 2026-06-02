@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
-    public partial class RollingUpgradePolicy : IJsonModel<RollingUpgradePolicy>
+    public partial class RollingUpgradePolicy : IJsonModel<global::Azure.Compute.Batch.RollingUpgradePolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RollingUpgradePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRollingUpgradePolicy(document.RootElement, options);
+                        return global::Azure.Compute.Batch.RollingUpgradePolicy.DeserializeRollingUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RollingUpgradePolicy IPersistableModel<RollingUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RollingUpgradePolicy IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RollingUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RollingUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.RollingUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,47 +68,47 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.RollingUpgradePolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsCrossZoneUpgradeEnabled))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(IsCrossZoneUpgradeEnabled))
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(IsCrossZoneUpgradeEnabled.Value);
             }
-            if (Optional.IsDefined(MaxBatchInstancePercent))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(MaxBatchInstancePercent))
             {
                 writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(MaxUnhealthyInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (Optional.IsDefined(PauseTimeBetweenBatches))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(PauseTimeBetweenBatches))
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches.Value, "P");
             }
-            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(PrioritizeUnhealthyInstances))
             {
                 writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
             }
-            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
             {
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,26 +127,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RollingUpgradePolicy IJsonModel<RollingUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RollingUpgradePolicy IJsonModel<global::Azure.Compute.Batch.RollingUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RollingUpgradePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.RollingUpgradePolicy)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRollingUpgradePolicy(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.RollingUpgradePolicy.DeserializeRollingUpgradePolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -157,12 +157,12 @@ namespace Azure.Compute.Batch
             TimeSpan? pauseTimeBetweenBatches = default;
             bool? prioritizeUnhealthyInstances = default;
             bool? rollbackFailedInstancesOnPolicyBreach = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enableCrossZoneUpgrade"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -171,7 +171,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("maxBatchInstancePercent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -180,7 +180,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("maxUnhealthyInstancePercent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -189,7 +189,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("maxUnhealthyUpgradedInstancePercent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("pauseTimeBetweenBatches"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -207,7 +207,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("prioritizeUnhealthyInstances"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -216,16 +216,16 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("rollbackFailedInstancesOnPolicyBreach"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     rollbackFailedInstancesOnPolicyBreach = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RollingUpgradePolicy(

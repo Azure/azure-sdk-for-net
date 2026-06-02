@@ -14,16 +14,16 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunFileInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunFileInfo"/>. </summary>
         /// <param name="fileName"> Name of the file. </param>
         internal TestRunFileInfo(string fileName)
         {
             FileName = fileName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunFileInfo"/>. </summary>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
@@ -31,7 +31,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunFileInfo(string fileName, Uri uri, LoadTestingFileType? fileType, DateTimeOffset? expiresOn, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunFileInfo(string fileName, global::System.Uri uri, LoadTestingFileType? fileType, DateTimeOffset? expiresOn, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileName = fileName;
             Uri = uri;
@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
         public string FileName { get; }
 
         /// <summary> File URL. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> File type. </summary>
         public LoadTestingFileType? FileType { get; }

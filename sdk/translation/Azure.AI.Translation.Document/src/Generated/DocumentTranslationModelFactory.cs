@@ -18,10 +18,10 @@ namespace Azure.AI.Translation.Document
         /// <summary> Translation job submission batch request. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <param name="options"> The batch operation options. </param>
-        /// <returns> A new <see cref="Document.TranslationBatch"/> instance for mocking. </returns>
-        public static TranslationBatch TranslationBatch(IEnumerable<DocumentTranslationInput> inputs = default, BatchOptions options = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.TranslationBatch"/> instance for mocking. </returns>
+        public static TranslationBatch TranslationBatch(IEnumerable<global::Azure.AI.Translation.Document.DocumentTranslationInput> inputs = default, BatchOptions options = default)
         {
-            inputs ??= new ChangeTrackingList<DocumentTranslationInput>();
+            inputs ??= new ChangeTrackingList<global::Azure.AI.Translation.Document.DocumentTranslationInput>();
 
             return new TranslationBatch(inputs.ToList(), options, additionalBinaryDataProperties: null);
         }
@@ -30,10 +30,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
         /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
-        /// <returns> A new <see cref="Document.DocumentTranslationInput"/> instance for mocking. </returns>
-        public static DocumentTranslationInput DocumentTranslationInput(TranslationSource source = default, IEnumerable<TranslationTarget> targets = default, StorageInputUriKind? storageUriKind = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.DocumentTranslationInput"/> instance for mocking. </returns>
+        public static DocumentTranslationInput DocumentTranslationInput(TranslationSource source = default, IEnumerable<global::Azure.AI.Translation.Document.TranslationTarget> targets = default, StorageInputUriKind? storageUriKind = default)
         {
-            targets ??= new ChangeTrackingList<TranslationTarget>();
+            targets ??= new ChangeTrackingList<global::Azure.AI.Translation.Document.TranslationTarget>();
 
             return new DocumentTranslationInput(source, targets.ToList(), storageUriKind, additionalBinaryDataProperties: null);
         }
@@ -44,10 +44,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
-        /// <returns> A new <see cref="Document.TranslationTarget"/> instance for mocking. </returns>
-        public static TranslationTarget TranslationTarget(Uri targetUri = default, string categoryId = default, string languageCode = default, IEnumerable<TranslationGlossary> glossaries = default, TranslationStorageSource? storageSource = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.TranslationTarget"/> instance for mocking. </returns>
+        public static TranslationTarget TranslationTarget(global::System.Uri targetUri = default, string categoryId = default, string languageCode = default, IEnumerable<global::Azure.AI.Translation.Document.TranslationGlossary> glossaries = default, TranslationStorageSource? storageSource = default)
         {
-            glossaries ??= new ChangeTrackingList<TranslationGlossary>();
+            glossaries ??= new ChangeTrackingList<global::Azure.AI.Translation.Document.TranslationGlossary>();
 
             return new TranslationTarget(
                 targetUri,
@@ -69,15 +69,15 @@ namespace Azure.AI.Translation.Document
         /// <param name="format"> Format. </param>
         /// <param name="formatVersion"> Optional Version.  If not specified, default is used. </param>
         /// <param name="storageSource"> Storage Source. </param>
-        /// <returns> A new <see cref="Document.TranslationGlossary"/> instance for mocking. </returns>
-        public static TranslationGlossary TranslationGlossary(Uri glossaryUri = default, string format = default, string formatVersion = default, TranslationStorageSource? storageSource = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.TranslationGlossary"/> instance for mocking. </returns>
+        public static TranslationGlossary TranslationGlossary(global::System.Uri glossaryUri = default, string format = default, string formatVersion = default, TranslationStorageSource? storageSource = default)
         {
             return new TranslationGlossary(glossaryUri, format, formatVersion, storageSource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Translation batch request options. </summary>
         /// <param name="translateTextWithinImage"> Translation text within an image option. </param>
-        /// <returns> A new <see cref="Document.BatchOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.BatchOptions"/> instance for mocking. </returns>
         public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
         {
             return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
@@ -85,10 +85,10 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> List of supported file formats. </summary>
         /// <param name="value"> list of objects. </param>
-        /// <returns> A new <see cref="Document.SupportedFileFormats"/> instance for mocking. </returns>
-        public static SupportedFileFormats SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.SupportedFileFormats"/> instance for mocking. </returns>
+        public static SupportedFileFormats SupportedFileFormats(IEnumerable<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat> value = default)
         {
-            value ??= new ChangeTrackingList<DocumentTranslationFileFormat>();
+            value ??= new ChangeTrackingList<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>();
 
             return new SupportedFileFormats(value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -100,7 +100,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
         /// <param name="formatVersions"> Supported Version. </param>
         /// <param name="type"> Supported Type for this format. </param>
-        /// <returns> A new <see cref="Document.DocumentTranslationFileFormat"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Document.DocumentTranslationFileFormat"/> instance for mocking. </returns>
         public static DocumentTranslationFileFormat DocumentTranslationFileFormat(string format = default, IEnumerable<string> fileExtensions = default, IEnumerable<string> contentTypes = default, string defaultFormatVersion = default, IEnumerable<string> formatVersions = default, FileFormatType? @type = default)
         {
             fileExtensions ??= new ChangeTrackingList<string>();

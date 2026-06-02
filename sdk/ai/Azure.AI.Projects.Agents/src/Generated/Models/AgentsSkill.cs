@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentsSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentsSkill"/>. </summary>
         /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
             LatestVersion = latestVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentsSkill"/>. </summary>
         /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

@@ -13,14 +13,14 @@ namespace _Type.Property.Optional
 {
     public partial class OptionalClient
     {
-        public OptionalClient() : this(new Uri("http://localhost:3000"), new OptionalClientOptions()) => throw null;
+        public OptionalClient() : this(new global::System.Uri("http://localhost:3000"), new OptionalClientOptions()) => throw null;
 
-        internal OptionalClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OptionalClientOptions options) => throw null;
+        internal OptionalClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, OptionalClientOptions options) => throw null;
 
-        public OptionalClient(Uri endpoint, OptionalClientOptions options) : this(null, endpoint, options) => throw null;
+        public OptionalClient(global::System.Uri endpoint, OptionalClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public OptionalClient(OptionalClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public OptionalClient(OptionalClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

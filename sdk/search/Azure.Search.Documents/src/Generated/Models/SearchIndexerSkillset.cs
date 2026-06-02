@@ -17,22 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerSkillset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkillset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset"/>. </summary>
         /// <param name="name"> The name of the skillset. </param>
         /// <param name="skills"> A list of skills in the skillset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
-        public SearchIndexerSkillset(string name, IEnumerable<SearchIndexerSkill> skills)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
+        public SearchIndexerSkillset(string name, IEnumerable<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> skills)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(skills, nameof(skills));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(skills, nameof(skills));
 
             Name = name;
             Skills = skills.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkillset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset"/>. </summary>
         /// <param name="name"> The name of the skillset. </param>
         /// <param name="description"> The description of the skillset. </param>
         /// <param name="skills"> A list of skills in the skillset. </param>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="eTag"> The ETag of the skillset. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition. Once you have encrypted your skillset definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerSkillset(string name, string description, IList<SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerSkillset(string name, string description, IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
 
         /// <summary> A list of skills in the skillset. </summary>
-        public IList<SearchIndexerSkill> Skills { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> Skills { get; }
 
         /// <summary> Details about the Azure AI service to be used when running skills. </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }

@@ -15,15 +15,15 @@ namespace Azure.AI.Language.Text
     public partial class SentimentActionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentimentActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="sentences"> The document's sentences sentiment. </param>
-        internal SentimentActionResult(string id, IEnumerable<DocumentWarning> warnings, DocumentSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentiment> sentences)
+        internal SentimentActionResult(string id, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings, DocumentSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<global::Azure.AI.Language.Text.SentenceSentiment> sentences)
         {
             Id = id;
             Warnings = warnings.ToList();
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
             Sentences = sentences.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         /// <param name="sentences"> The document's sentences sentiment. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentimentActionResult(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, DocumentSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<SentenceSentiment> sentences, DetectedLanguage detectedLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentimentActionResult(string id, IList<global::Azure.AI.Language.Text.DocumentWarning> warnings, DocumentStatistics statistics, DocumentSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<global::Azure.AI.Language.Text.SentenceSentiment> sentences, DetectedLanguage detectedLanguage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text
         public string Id { get; }
 
         /// <summary> Warnings encountered while processing document. </summary>
-        public IList<DocumentWarning> Warnings { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentWarning> Warnings { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary> The document's sentences sentiment. </summary>
-        public IList<SentenceSentiment> Sentences { get; }
+        public IList<global::Azure.AI.Language.Text.SentenceSentiment> Sentences { get; }
 
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
         public DetectedLanguage DetectedLanguage { get; }

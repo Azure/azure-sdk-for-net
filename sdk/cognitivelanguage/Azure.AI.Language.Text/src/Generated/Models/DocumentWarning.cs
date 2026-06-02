@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class DocumentWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentWarning"/>. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         internal DocumentWarning(WarningCode code, string message)
@@ -25,12 +25,12 @@ namespace Azure.AI.Language.Text
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentWarning"/>. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentWarning(WarningCode code, string message, string targetRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentWarning(WarningCode code, string message, string targetRef, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

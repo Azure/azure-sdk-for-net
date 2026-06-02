@@ -14,21 +14,21 @@ namespace Azure.Compute.Batch
     public partial class BatchJobPreparationAndReleaseTaskStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
         internal BatchJobPreparationAndReleaseTaskStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
         /// <param name="poolId"> The ID of the Pool containing the Compute Node to which this entry refers. </param>
         /// <param name="nodeId"> The ID of the Compute Node to which this entry refers. </param>
         /// <param name="nodeUri"> The URL of the Compute Node to which this entry refers. </param>
         /// <param name="jobPreparationTaskExecutionInfo"> Information about the execution status of the Job Preparation Task on this Compute Node. </param>
         /// <param name="jobReleaseTaskExecutionInfo"> Information about the execution status of the Job Release Task on this Compute Node. This property is set only if the Job Release Task has run on the Compute Node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, Uri nodeUri, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, global::System.Uri nodeUri, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             NodeId = nodeId;
@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
         public string NodeId { get; }
 
         /// <summary> The URL of the Compute Node to which this entry refers. </summary>
-        public Uri NodeUri { get; }
+        public global::System.Uri NodeUri { get; }
 
         /// <summary> Information about the execution status of the Job Preparation Task on this Compute Node. </summary>
         public BatchJobPreparationTaskExecutionInfo JobPreparationTaskExecutionInfo { get; }

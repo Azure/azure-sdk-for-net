@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> The Multivariate sub-client. </summary>
     public partial class Multivariate
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Multivariate for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Multivariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Multivariate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -55,7 +55,7 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMultivariateBatchDetectionResult(Guid resultId, RequestContext context)
         {
@@ -63,7 +63,7 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMultivariateBatchDetectionResultRequest(resultId, context);
+                using HttpMessage message = this.CreateGetMultivariateBatchDetectionResultRequest(resultId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -84,15 +84,15 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMultivariateBatchDetectionResultAsync(Guid resultId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMultivariateBatchDetectionResultAsync(Guid resultId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.GetMultivariateBatchDetectionResult");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMultivariateBatchDetectionResultRequest(resultId, context);
+                using HttpMessage message = this.CreateGetMultivariateBatchDetectionResultRequest(resultId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -108,11 +108,11 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MultivariateDetectionResult> GetMultivariateBatchDetectionResult(Guid resultId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.MultivariateDetectionResult> GetMultivariateBatchDetectionResult(Guid resultId, CancellationToken cancellationToken = default)
         {
-            Response result = GetMultivariateBatchDetectionResult(resultId, cancellationToken.ToRequestContext());
-            return Response.FromValue((MultivariateDetectionResult)result, result);
+            Response result = this.GetMultivariateBatchDetectionResult(resultId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MultivariateDetectionResult)result), result);
         }
 
         /// <summary>
@@ -121,11 +121,11 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MultivariateDetectionResult>> GetMultivariateBatchDetectionResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.MultivariateDetectionResult>> GetMultivariateBatchDetectionResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetMultivariateBatchDetectionResultAsync(resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MultivariateDetectionResult)result, result);
+            Response result = await this.GetMultivariateBatchDetectionResultAsync(resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MultivariateDetectionResult)result), result);
         }
 
         /// <summary>
@@ -147,8 +147,8 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response TrainMultivariateModel(RequestContent content, RequestContext context = null)
         {
@@ -156,9 +156,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTrainMultivariateModelRequest(content, context);
+                using HttpMessage message = this.CreateTrainMultivariateModelRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -187,18 +187,18 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TrainMultivariateModelAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> TrainMultivariateModelAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.TrainMultivariateModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTrainMultivariateModelRequest(content, context);
+                using HttpMessage message = this.CreateTrainMultivariateModelRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -222,14 +222,14 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(modelInfo, nameof(modelInfo));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
-            Response result = TrainMultivariateModel(modelInfo, cancellationToken.ToRequestContext());
-            return Response.FromValue((AnomalyDetectionModel)result, result);
+            Response result = this.TrainMultivariateModel(modelInfo, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AnomalyDetectionModel)result), result);
         }
 
         /// <summary>
@@ -246,14 +246,14 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(modelInfo, nameof(modelInfo));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
-            Response result = await TrainMultivariateModelAsync(modelInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AnomalyDetectionModel)result, result);
+            Response result = await this.TrainMultivariateModelAsync(modelInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AnomalyDetectionModel)result), result);
         }
 
         /// <summary>
@@ -267,9 +267,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMultivariateModels(int? skip, int? maxCount, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetMultivariateModels(int? skip, int? maxCount, RequestContext context)
         {
             return new MultivariateGetMultivariateModelsCollectionResult(this, skip, maxCount, context, "Multivariate.GetMultivariateModels");
         }
@@ -285,9 +285,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip, int? maxCount, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetMultivariateModelsAsync(int? skip, int? maxCount, RequestContext context)
         {
             return new MultivariateGetMultivariateModelsAsyncCollectionResult(this, skip, maxCount, context, "Multivariate.GetMultivariateModels");
         }
@@ -296,8 +296,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModels(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel> GetMultivariateModels(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             return new MultivariateGetMultivariateModelsCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "Multivariate.GetMultivariateModels");
         }
@@ -306,8 +306,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             return new MultivariateGetMultivariateModelsAsyncCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "Multivariate.GetMultivariateModels");
         }
@@ -322,9 +322,9 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteMultivariateModel(string modelId, RequestContext context)
         {
@@ -332,9 +332,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateDeleteMultivariateModelRequest(modelId, context);
+                using HttpMessage message = this.CreateDeleteMultivariateModelRequest(modelId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -354,19 +354,19 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteMultivariateModelAsync(string modelId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteMultivariateModelAsync(string modelId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.DeleteMultivariateModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateDeleteMultivariateModelRequest(modelId, context);
+                using HttpMessage message = this.CreateDeleteMultivariateModelRequest(modelId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -379,27 +379,27 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Delete an existing multivariate model according to the modelId value. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteMultivariateModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return DeleteMultivariateModel(modelId, cancellationToken.ToRequestContext());
+            return this.DeleteMultivariateModel(modelId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an existing multivariate model according to the modelId value. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return await DeleteMultivariateModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteMultivariateModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -413,9 +413,9 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMultivariateModel(string modelId, RequestContext context)
         {
@@ -423,9 +423,9 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateGetMultivariateModelRequest(modelId, context);
+                using HttpMessage message = this.CreateGetMultivariateModelRequest(modelId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -446,19 +446,19 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMultivariateModelAsync(string modelId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMultivariateModelAsync(string modelId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.GetMultivariateModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateGetMultivariateModelRequest(modelId, context);
+                using HttpMessage message = this.CreateGetMultivariateModelRequest(modelId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -474,15 +474,15 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AnomalyDetectionModel> GetMultivariateModel(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel> GetMultivariateModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = GetMultivariateModel(modelId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AnomalyDetectionModel)result, result);
+            Response result = this.GetMultivariateModel(modelId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AnomalyDetectionModel)result), result);
         }
 
         /// <summary>
@@ -491,15 +491,15 @@ namespace Azure.AI.AnomalyDetector
         /// </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AnomalyDetectionModel>> GetMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.AnomalyDetectionModel>> GetMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = await GetMultivariateModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AnomalyDetectionModel)result, result);
+            Response result = await this.GetMultivariateModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AnomalyDetectionModel)result), result);
         }
 
         /// <summary>
@@ -518,9 +518,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectMultivariateBatchAnomaly(string modelId, RequestContent content, RequestContext context = null)
         {
@@ -528,10 +528,10 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectMultivariateBatchAnomalyRequest(modelId, content, context);
+                using HttpMessage message = this.CreateDetectMultivariateBatchAnomalyRequest(modelId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -557,20 +557,20 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectMultivariateBatchAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectMultivariateBatchAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.DetectMultivariateBatchAnomaly");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectMultivariateBatchAnomalyRequest(modelId, content, context);
+                using HttpMessage message = this.CreateDetectMultivariateBatchAnomalyRequest(modelId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -591,16 +591,16 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = DetectMultivariateBatchAnomaly(modelId, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((MultivariateDetectionResult)result, result);
+            Response result = this.DetectMultivariateBatchAnomaly(modelId, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MultivariateDetectionResult)result), result);
         }
 
         /// <summary>
@@ -614,16 +614,16 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await DetectMultivariateBatchAnomalyAsync(modelId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MultivariateDetectionResult)result, result);
+            Response result = await this.DetectMultivariateBatchAnomalyAsync(modelId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MultivariateDetectionResult)result), result);
         }
 
         /// <summary>
@@ -640,9 +640,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectMultivariateLastAnomaly(string modelId, RequestContent content, RequestContext context = null)
         {
@@ -650,10 +650,10 @@ namespace Azure.AI.AnomalyDetector
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectMultivariateLastAnomalyRequest(modelId, content, context);
+                using HttpMessage message = this.CreateDetectMultivariateLastAnomalyRequest(modelId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -677,20 +677,20 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectMultivariateLastAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectMultivariateLastAnomalyAsync(string modelId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Multivariate.DetectMultivariateLastAnomaly");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectMultivariateLastAnomalyRequest(modelId, content, context);
+                using HttpMessage message = this.CreateDetectMultivariateLastAnomalyRequest(modelId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -709,16 +709,16 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="options"> Request of the last detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MultivariateLastDetectionResult> DetectMultivariateLastAnomaly(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult> DetectMultivariateLastAnomaly(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = DetectMultivariateLastAnomaly(modelId, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((MultivariateLastDetectionResult)result, result);
+            Response result = this.DetectMultivariateLastAnomaly(modelId, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MultivariateLastDetectionResult)result), result);
         }
 
         /// <summary>
@@ -730,16 +730,16 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="options"> Request of the last detection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MultivariateLastDetectionResult>> DetectMultivariateLastAnomalyAsync(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>> DetectMultivariateLastAnomalyAsync(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await DetectMultivariateLastAnomalyAsync(modelId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MultivariateLastDetectionResult)result, result);
+            Response result = await this.DetectMultivariateLastAnomalyAsync(modelId, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MultivariateLastDetectionResult)result), result);
         }
     }
 }

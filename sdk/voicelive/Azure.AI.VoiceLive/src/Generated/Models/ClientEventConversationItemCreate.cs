@@ -12,12 +12,12 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventConversationItemCreate : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
-        public ClientEventConversationItemCreate() : base(ClientEventType.ConversationItemCreate)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemCreate"/>. </summary>
+        public ClientEventConversationItemCreate() : base(global::Azure.AI.VoiceLive.ClientEventType.ConversationItemCreate)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventConversationItemCreate"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventId"> Optional client-generated ID used to identify this event. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </param>
         /// <param name="item"></param>
-        internal ClientEventConversationItemCreate(ClientEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string previousItemId, ConversationRequestItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventConversationItemCreate(ClientEventType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string eventId, string previousItemId, ConversationRequestItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;

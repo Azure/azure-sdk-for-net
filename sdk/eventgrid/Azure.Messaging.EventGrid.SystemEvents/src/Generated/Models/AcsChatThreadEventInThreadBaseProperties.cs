@@ -13,19 +13,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all chat thread events. </summary>
     public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>
         internal AcsChatThreadEventInThreadBaseProperties(string threadId) : base(threadId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version) : base(transactionId, threadId, additionalBinaryDataProperties)
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version) : base(transactionId, threadId, additionalBinaryDataProperties)
         {
             CreateTime = createTime;
             Version = version;

@@ -14,20 +14,20 @@ namespace Azure.AI.AnomalyDetector
     public partial class TimeSeriesPoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.TimeSeriesPoint"/>. </summary>
         /// <param name="value"> Measurement of that point. </param>
         public TimeSeriesPoint(float value)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.TimeSeriesPoint"/>. </summary>
         /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimeSeriesPoint(DateTimeOffset? timestamp, float value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TimeSeriesPoint(DateTimeOffset? timestamp, float value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Value = value;

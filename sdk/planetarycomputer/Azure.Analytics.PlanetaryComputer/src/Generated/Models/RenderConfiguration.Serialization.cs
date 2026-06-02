@@ -15,9 +15,9 @@ using Azure.Core;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Defines visualization parameters for rendering data on a map. </summary>
-    public partial class RenderConfiguration : IJsonModel<RenderConfiguration>
+    public partial class RenderConfiguration : IJsonModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="RenderConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderConfiguration"/> for deserialization. </summary>
         internal RenderConfiguration()
         {
         }
@@ -26,65 +26,65 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RenderConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRenderConfiguration(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.RenderConfiguration.DeserializeRenderConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenderConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.RenderConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RenderConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.RenderConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RenderConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RenderConfiguration IPersistableModel<RenderConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RenderConfiguration IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RenderConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="renderConfiguration"> The <see cref="RenderConfiguration"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="renderConfiguration"> The <see cref="global::Azure.Analytics.PlanetaryComputer.RenderConfiguration"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(RenderConfiguration renderConfiguration)
         {
-            if (renderConfiguration == null)
+            if ((renderConfiguration == null))
             {
                 return null;
             }
-            return RequestContent.Create(renderConfiguration, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(renderConfiguration, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RenderConfiguration"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.RenderConfiguration"/> from. </param>
         public static explicit operator RenderConfiguration(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRenderConfiguration(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.RenderConfiguration.DeserializeRenderConfiguration(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RenderConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -92,56 +92,56 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RenderConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.RenderConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(Options))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);
             }
-            if (Optional.IsDefined(VectorOptions))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(VectorOptions))
             {
                 writer.WritePropertyName("vectorOptions"u8);
-                writer.WriteObjectValue(VectorOptions, options);
+                writer.WriteObjectValue<RenderOptionVectorOptions>(VectorOptions, options);
             }
-            if (Optional.IsDefined(MinZoom))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(MinZoom))
             {
                 writer.WritePropertyName("minZoom"u8);
                 writer.WriteNumberValue(MinZoom.Value);
             }
-            if (Optional.IsDefined(Legend))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Legend))
             {
                 writer.WritePropertyName("legend"u8);
-                writer.WriteObjectValue(Legend, options);
+                writer.WriteObjectValue<RenderOptionLegend>(Legend, options);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (RenderOptionCondition item in Conditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<RenderOptionCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -149,9 +149,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -160,26 +160,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RenderConfiguration IJsonModel<RenderConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RenderConfiguration IJsonModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RenderConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RenderConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.RenderConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRenderConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.RenderConfiguration.DeserializeRenderConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RenderConfiguration DeserializeRenderConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -191,8 +191,8 @@ namespace Azure.Analytics.PlanetaryComputer
             RenderOptionVectorOptions vectorOptions = default;
             int? minZoom = default;
             RenderOptionLegend legend = default;
-            IList<RenderOptionCondition> conditions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition> conditions = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -212,7 +212,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -226,16 +226,16 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("vectorOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    vectorOptions = RenderOptionVectorOptions.DeserializeRenderOptionVectorOptions(prop.Value, options);
+                    vectorOptions = global::Azure.Analytics.PlanetaryComputer.RenderOptionVectorOptions.DeserializeRenderOptionVectorOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("minZoom"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -244,30 +244,30 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("legend"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    legend = RenderOptionLegend.DeserializeRenderOptionLegend(prop.Value, options);
+                    legend = global::Azure.Analytics.PlanetaryComputer.RenderOptionLegend.DeserializeRenderOptionLegend(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("conditions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<RenderOptionCondition> array = new List<RenderOptionCondition>();
+                    List<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition> array = new List<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RenderOptionCondition.DeserializeRenderOptionCondition(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition.DeserializeRenderOptionCondition(item, options));
                     }
                     conditions = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RenderConfiguration(
@@ -279,7 +279,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 vectorOptions,
                 minZoom,
                 legend,
-                conditions ?? new ChangeTrackingList<RenderOptionCondition>(),
+                (conditions ?? new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition>()),
                 additionalBinaryDataProperties);
         }
     }

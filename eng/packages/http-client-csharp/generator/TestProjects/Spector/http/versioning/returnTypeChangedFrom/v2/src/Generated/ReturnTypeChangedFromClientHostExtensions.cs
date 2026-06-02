@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.ReturnTypeChangedFrom
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ReturnTypeChangedFromClientHostExtensions
     {
         public static IClientBuilder AddReturnTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddReturnTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName, Action<ReturnTypeChangedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddReturnTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.ReturnTypeChangedFrom.ReturnTypeChangedFromClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedReturnTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedReturnTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ReturnTypeChangedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedReturnTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.ReturnTypeChangedFrom.ReturnTypeChangedFromClientSettings> configureSettings) => throw null;
     }
 }

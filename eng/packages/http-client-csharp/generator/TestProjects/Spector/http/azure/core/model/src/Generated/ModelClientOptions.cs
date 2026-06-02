@@ -13,11 +13,11 @@ namespace Specs.Azure.Core.Model
 {
     public partial class ModelClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const global::Specs.Azure.Core.Model.ModelClientOptions.ServiceVersion LatestVersion = global::Specs.Azure.Core.Model.ModelClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public ModelClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ModelClientOptions(global::Specs.Azure.Core.Model.ModelClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ModelClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

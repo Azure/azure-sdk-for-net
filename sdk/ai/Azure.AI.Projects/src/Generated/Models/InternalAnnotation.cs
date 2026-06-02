@@ -11,19 +11,19 @@ namespace OpenAI
     internal abstract partial class InternalAnnotation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAnnotation"/>. </summary>
         /// <param name="type"></param>
         private protected InternalAnnotation(AnnotationType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAnnotation"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAnnotation(AnnotationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAnnotation(AnnotationType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

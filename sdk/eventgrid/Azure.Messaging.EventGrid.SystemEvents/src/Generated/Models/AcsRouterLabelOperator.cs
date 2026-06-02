@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Job Worker Selector Label Operator. </summary>
-    public readonly partial struct AcsRouterLabelOperator : IEquatable<AcsRouterLabelOperator>
+    public readonly partial struct AcsRouterLabelOperator : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator>
     {
         private readonly string _value;
         /// <summary> Router Label Operator Equal. </summary>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Label Operator Less than or equal. </summary>
         private const string LessThanOrEqualValue = "LessThanOrEqual";
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterLabelOperator(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Label Operator Less than or equal. </summary>
         public static AcsRouterLabelOperator LessThanOrEqual { get; } = new AcsRouterLabelOperator(LessThanOrEqualValue);
 
-        /// <summary> Determines if two <see cref="AcsRouterLabelOperator"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsRouterLabelOperator"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterLabelOperator(string value) => new AcsRouterLabelOperator(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterLabelOperator?(string value) => value == null ? null : new AcsRouterLabelOperator(value);
+        public static implicit operator AcsRouterLabelOperator?(string value) => (value == null) ? null : new AcsRouterLabelOperator(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsRouterLabelOperator other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsRouterLabelOperator other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsRouterLabelOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsRouterLabelOperator other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

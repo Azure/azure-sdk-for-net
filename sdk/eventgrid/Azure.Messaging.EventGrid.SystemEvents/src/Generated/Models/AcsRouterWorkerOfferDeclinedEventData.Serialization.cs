@@ -14,55 +14,55 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferDeclined event. </summary>
-    [JsonConverter(typeof(AcsRouterWorkerOfferDeclinedEventDataConverter))]
-    public partial class AcsRouterWorkerOfferDeclinedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerOfferDeclinedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData.AcsRouterWorkerOfferDeclinedEventDataConverter))]
+    public partial class AcsRouterWorkerOfferDeclinedEventData : AcsRouterWorkerEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsRouterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData.DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterWorkerOfferDeclinedEventData IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterWorkerOfferDeclinedEventData)PersistableModelCreateCore(data, options);
+        AcsRouterWorkerOfferDeclinedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsRouterWorkerOfferDeclinedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsRouterWorkerOfferDeclinedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,18 +70,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(QueueId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Optional.IsDefined(OfferId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
@@ -90,33 +90,33 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterWorkerOfferDeclinedEventData IJsonModel<AcsRouterWorkerOfferDeclinedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsRouterWorkerOfferDeclinedEventData)JsonModelCreateCore(ref reader, options);
+        AcsRouterWorkerOfferDeclinedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsRouterWorkerOfferDeclinedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsRouterEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRouterWorkerOfferDeclinedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData.DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsRouterWorkerOfferDeclinedEventData DeserializeAcsRouterWorkerOfferDeclinedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string jobId = default;
             string channelReference = default;
             string channelId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string workerId = default;
             string queueId = default;
             string offerId = default;
@@ -152,9 +152,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     offerId = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsRouterWorkerOfferDeclinedEventData(
@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 offerId);
         }
 
-        internal partial class AcsRouterWorkerOfferDeclinedEventDataConverter : JsonConverter<AcsRouterWorkerOfferDeclinedEventData>
+        internal partial class AcsRouterWorkerOfferDeclinedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferDeclinedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsRouterWorkerOfferDeclinedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerOfferDeclinedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -184,8 +184,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsRouterWorkerOfferDeclinedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterWorkerOfferDeclinedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

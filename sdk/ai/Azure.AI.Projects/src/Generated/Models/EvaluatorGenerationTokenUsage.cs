@@ -11,9 +11,9 @@ namespace Azure.AI.Projects
     public partial class EvaluatorGenerationTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationTokenUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationTokenUsage"/>. </summary>
         /// <param name="inputTokens"> Number of input (prompt) tokens consumed. </param>
         /// <param name="outputTokens"> Number of output (completion) tokens generated. </param>
         /// <param name="totalTokens"> Total tokens consumed (input + output). </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationTokenUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationTokenUsage"/>. </summary>
         /// <param name="inputTokens"> Number of input (prompt) tokens consumed. </param>
         /// <param name="outputTokens"> Number of output (completion) tokens generated. </param>
         /// <param name="totalTokens"> Total tokens consumed (input + output). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationTokenUsage(long inputTokens, long outputTokens, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationTokenUsage(long inputTokens, long outputTokens, long totalTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;

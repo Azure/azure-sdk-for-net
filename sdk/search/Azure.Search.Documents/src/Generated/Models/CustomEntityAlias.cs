@@ -15,25 +15,25 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CustomEntityAlias
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public CustomEntityAlias(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Search.Documents.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
         /// <param name="caseSensitive"> Determine if the alias is case sensitive. </param>
         /// <param name="accentSensitive"> Determine if the alias is accent sensitive. </param>
         /// <param name="fuzzyEditDistance"> Determine the fuzzy edit distance of the alias. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             CaseSensitive = caseSensitive;

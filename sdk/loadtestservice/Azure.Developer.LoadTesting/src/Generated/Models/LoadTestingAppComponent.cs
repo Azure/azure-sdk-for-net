@@ -15,22 +15,22 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestingAppComponent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
         /// <param name="resourceType"> Azure resource type, required while creating the app component. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
         public LoadTestingAppComponent(string resourceName, string resourceType)
         {
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(resourceName, nameof(resourceName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             ResourceName = resourceName;
             ResourceType = resourceType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceId"> fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </param>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
         /// <param name="resourceType"> Azure resource type, required while creating the app component. </param>
@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingAppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestingAppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceName = resourceName;

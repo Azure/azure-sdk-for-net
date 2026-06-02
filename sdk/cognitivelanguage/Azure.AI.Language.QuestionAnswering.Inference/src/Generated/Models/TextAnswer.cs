@@ -14,14 +14,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class TextAnswer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer"/>. </summary>
         internal TextAnswer()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer"/>. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAnswer(string answer, double? confidence, string id, AnswerSpan shortAnswer, int? offset, int? length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAnswer(string answer, double? confidence, string id, AnswerSpan shortAnswer, int? offset, int? length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Answer = answer;
             Confidence = confidence;

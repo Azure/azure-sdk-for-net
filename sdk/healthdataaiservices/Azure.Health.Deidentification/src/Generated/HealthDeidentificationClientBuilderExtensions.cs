@@ -12,27 +12,27 @@ using Azure.Health.Deidentification;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class HealthDeidentificationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="DeidentificationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DeidentificationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<DeidentificationClient, DeidentificationClientOptions> AddDeidentificationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<global::Azure.Health.Deidentification.DeidentificationClient, global::Azure.Health.Deidentification.DeidentificationClientOptions> AddDeidentificationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<DeidentificationClient, DeidentificationClientOptions>((options, credential) => new DeidentificationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DeidentificationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DeidentificationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<DeidentificationClient, DeidentificationClientOptions> AddDeidentificationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Health.Deidentification.DeidentificationClient, global::Azure.Health.Deidentification.DeidentificationClientOptions> AddDeidentificationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DeidentificationClient, DeidentificationClientOptions>(configuration);

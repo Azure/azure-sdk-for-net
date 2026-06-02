@@ -27,14 +27,14 @@ namespace Azure.AI.Language.Conversations
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -48,18 +48,18 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (showStatistics != null)
+            if ((showStatistics != null))
             {
-                uri.AppendQuery("showStats", TypeFormatters.ConvertToString(showStatistics), true);
+                uri.AppendQuery("showStats", global::Azure.AI.Language.Conversations.TypeFormatters.ConvertToString(showStatistics), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -70,14 +70,14 @@ namespace Azure.AI.Language.Conversations
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-conversations/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -91,14 +91,14 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
             uri.AppendPath(":cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
     }

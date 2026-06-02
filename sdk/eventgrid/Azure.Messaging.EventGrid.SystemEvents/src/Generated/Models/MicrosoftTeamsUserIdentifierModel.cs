@@ -14,21 +14,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MicrosoftTeamsUserIdentifierModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
             UserId = userId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UserId = userId;
             IsAnonymous = isAnonymous;

@@ -12,7 +12,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     internal partial class UnknownDocumentFigure : DocumentFigure
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDocumentFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.UnknownDocumentFigure"/>. </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> Description of the figure. </param>
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDocumentFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
+        internal UnknownDocumentFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
         {
         }
     }

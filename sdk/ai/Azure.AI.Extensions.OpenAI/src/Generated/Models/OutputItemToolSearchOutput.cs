@@ -11,15 +11,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The OutputItemToolSearchOutput. </summary>
     public partial class OutputItemToolSearchOutput : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public OutputItemToolSearchOutput(string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status) : base(AgentResponseItemKind.ToolSearchOutput)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tools"/> is null. </exception>
+        public OutputItemToolSearchOutput(string callId, ResponsesToolSearchExecutionType execution, IEnumerable<global::Azure.AI.Extensions.OpenAI.ResponsesTool> tools, ResponsesFunctionCallOutputStatus status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.ToolSearchOutput)
         {
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(tools, nameof(tools));
 
             CallId = callId;
             Execution = execution;
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, IList<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Execution = execution;
@@ -54,7 +54,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ResponsesToolSearchExecutionType Execution { get; set; }
 
         /// <summary> The loaded tool definitions returned by tool search. </summary>
-        public IList<ResponsesTool> Tools { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> Tools { get; }
 
         /// <summary> The status of the tool search output item that was recorded. </summary>
         public ResponsesFunctionCallOutputStatus Status { get; set; }

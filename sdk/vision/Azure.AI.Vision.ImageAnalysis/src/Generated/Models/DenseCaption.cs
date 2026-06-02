@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DenseCaption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DenseCaption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaption"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             BoundingBox = boundingBox;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DenseCaption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DenseCaption"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -38,7 +38,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The image region of which this caption applies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DenseCaption(float confidence, string text, ImageBoundingBox boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DenseCaption(float confidence, string text, ImageBoundingBox boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Confidence = confidence;
             Text = text;

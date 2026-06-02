@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepMcpToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepMcpToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMcpToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="arguments"> Arguments to the MCP tool call, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         /// <param name="name"> Name of the function used on the MCP server. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.Agents.Persistent
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepMcpToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMcpToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="name"> Name of the function used on the MCP server. </param>
         /// <param name="output"> Output of the MCP tool call. </param>
         /// <param name="serverLabel"> The label for the MCP server. </param>
-        internal RunStepMcpToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string arguments, string name, string output, string serverLabel) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepMcpToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string arguments, string name, string output, string serverLabel) : base(@type, id, additionalBinaryDataProperties)
         {
             Arguments = arguments;
             Name = name;

@@ -14,18 +14,18 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class SearchFacetItemValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchFacetItemValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue"/>. </summary>
         internal SearchFacetItemValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchFacetItemValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue"/>. </summary>
         /// <param name="count"> The count of the facet item. </param>
         /// <param name="value"> The name of the facet item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchFacetItemValue(int? count, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchFacetItemValue(int? count, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Value = value;

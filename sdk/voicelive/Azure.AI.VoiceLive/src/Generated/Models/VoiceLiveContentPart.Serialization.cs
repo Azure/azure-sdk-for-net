@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestImageContentPart"/>, <see cref="RequestTextContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="ResponseTextContentPart"/>, and <see cref="ResponseAudioContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.RequestImageContentPart"/>, <see cref="Azure.AI.VoiceLive.RequestTextContentPart"/>, <see cref="Azure.AI.VoiceLive.RequestAudioContentPart"/>, <see cref="Azure.AI.VoiceLive.ResponseTextContentPart"/>, and <see cref="Azure.AI.VoiceLive.ResponseAudioContentPart"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownVoiceLiveContentPart))]
-    public abstract partial class VoiceLiveContentPart : IJsonModel<VoiceLiveContentPart>
+    [PersistableModelProxyAttribute(typeof(UnknownVoiceLiveContentPart))]
+    public abstract partial class VoiceLiveContentPart : IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveContentPart"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveContentPart"/> for deserialization. </summary>
         internal VoiceLiveContentPart()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceLiveContentPart(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.VoiceLiveContentPart.DeserializeVoiceLiveContentPart(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveContentPart)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveContentPart)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveContentPart)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveContentPart)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceLiveContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveContentPart IPersistableModel<VoiceLiveContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceLiveContentPart IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceLiveContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceLiveContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveContentPart)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveContentPart)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveContentPart IJsonModel<VoiceLiveContentPart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceLiveContentPart IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VoiceLiveContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveContentPart)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveContentPart)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceLiveContentPart(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.VoiceLiveContentPart.DeserializeVoiceLiveContentPart(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VoiceLiveContentPart DeserializeVoiceLiveContentPart(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,18 +130,18 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "input_image":
-                        return RequestImageContentPart.DeserializeRequestImageContentPart(element, options);
+                        return global::Azure.AI.VoiceLive.RequestImageContentPart.DeserializeRequestImageContentPart(element, options);
                     case "input_text":
-                        return RequestTextContentPart.DeserializeRequestTextContentPart(element, options);
+                        return global::Azure.AI.VoiceLive.RequestTextContentPart.DeserializeRequestTextContentPart(element, options);
                     case "input_audio":
-                        return RequestAudioContentPart.DeserializeRequestAudioContentPart(element, options);
+                        return global::Azure.AI.VoiceLive.RequestAudioContentPart.DeserializeRequestAudioContentPart(element, options);
                     case "text":
-                        return ResponseTextContentPart.DeserializeResponseTextContentPart(element, options);
+                        return global::Azure.AI.VoiceLive.ResponseTextContentPart.DeserializeResponseTextContentPart(element, options);
                     case "audio":
-                        return ResponseAudioContentPart.DeserializeResponseAudioContentPart(element, options);
+                        return global::Azure.AI.VoiceLive.ResponseAudioContentPart.DeserializeResponseAudioContentPart(element, options);
                 }
             }
-            return UnknownVoiceLiveContentPart.DeserializeUnknownVoiceLiveContentPart(element, options);
+            return global::Azure.AI.VoiceLive.UnknownVoiceLiveContentPart.DeserializeUnknownVoiceLiveContentPart(element, options);
         }
     }
 }

@@ -13,17 +13,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudFailed event. </summary>
     public partial class AvsPrivateCloudFailedEventData : AvsPrivateCloudEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         internal AvsPrivateCloudFailedEventData(string operationId) : base(operationId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="failureMessage"> Failure reason of an event. </param>
-        internal AvsPrivateCloudFailedEventData(string operationId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string failureMessage) : base(operationId, additionalBinaryDataProperties)
+        internal AvsPrivateCloudFailedEventData(string operationId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string failureMessage) : base(operationId, additionalBinaryDataProperties)
         {
             FailureMessage = failureMessage;
         }

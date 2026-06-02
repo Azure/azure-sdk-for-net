@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Possible error code values attributable to a failed run step. </summary>
-    public readonly partial struct RunStepErrorCode : IEquatable<RunStepErrorCode>
+    public readonly partial struct RunStepErrorCode : IEquatable<global::Azure.AI.Agents.Persistent.RunStepErrorCode>
     {
         private readonly string _value;
         /// <summary> Represents a server error. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents an error indicating configured rate limits were exceeded. </summary>
         private const string RateLimitExceededValue = "rate_limit_exceeded";
 
-        /// <summary> Initializes a new instance of <see cref="RunStepErrorCode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunStepErrorCode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents an error indicating configured rate limits were exceeded. </summary>
         public static RunStepErrorCode RateLimitExceeded { get; } = new RunStepErrorCode(RateLimitExceededValue);
 
-        /// <summary> Determines if two <see cref="RunStepErrorCode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunStepErrorCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunStepErrorCode left, RunStepErrorCode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RunStepErrorCode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.RunStepErrorCode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunStepErrorCode left, RunStepErrorCode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RunStepErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunStepErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RunStepErrorCode(string value) => new RunStepErrorCode(value);
 
-        /// <summary> Converts a string to a <see cref="RunStepErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.RunStepErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RunStepErrorCode?(string value) => value == null ? null : new RunStepErrorCode(value);
+        public static implicit operator RunStepErrorCode?(string value) => (value == null) ? null : new RunStepErrorCode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RunStepErrorCode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RunStepErrorCode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RunStepErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RunStepErrorCode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

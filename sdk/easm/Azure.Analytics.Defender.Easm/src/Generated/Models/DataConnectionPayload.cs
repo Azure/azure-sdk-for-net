@@ -12,28 +12,28 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The DataConnectionPayload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnectionPayload"/> and <see cref="AzureDataExplorerDataConnectionPayload"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload"/> and <see cref="Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload"/>.
     /// </summary>
     public abstract partial class DataConnectionPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionPayload"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         private protected DataConnectionPayload(string kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionPayload"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;

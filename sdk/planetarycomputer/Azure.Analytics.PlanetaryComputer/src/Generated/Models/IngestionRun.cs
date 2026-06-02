@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class IngestionRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionRun"/>. </summary>
         /// <param name="id"> Run id. </param>
         /// <param name="operation"> Operation. </param>
         /// <param name="creationTime"> Creation time. </param>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.PlanetaryComputer
             CreationTime = creationTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionRun"/>. </summary>
         /// <param name="id"> Run id. </param>
         /// <param name="parentRunId"> Run id which this run is associated to because it has been retried or rerun. </param>
         /// <param name="operation"> Operation. </param>
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="skipExistingItems"> Skip any item that already exist in the GeoCatalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInformation operation, DateTimeOffset creationTime, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInformation operation, DateTimeOffset creationTime, global::System.Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParentRunId = parentRunId;
@@ -61,7 +61,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public DateTimeOffset CreationTime { get; }
 
         /// <summary> URL of the source catalog. </summary>
-        public Uri SourceCatalogUrl { get; }
+        public global::System.Uri SourceCatalogUrl { get; }
 
         /// <summary> Skip any item that already exist in the GeoCatalog. </summary>
         public bool? SkipExistingItems { get; }

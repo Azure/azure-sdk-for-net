@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentEndpointConfiguration. </summary>
-    public partial class AgentEndpointConfiguration : IJsonModel<AgentEndpointConfiguration>
+    public partial class AgentEndpointConfiguration : IJsonModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentEndpointConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentEndpointConfiguration(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentEndpointConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.AgentEndpointConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentEndpointConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.AgentEndpointConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentEndpointConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentEndpointConfiguration IPersistableModel<AgentEndpointConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentEndpointConfiguration IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentEndpointConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentEndpointConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,17 +65,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentEndpointConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.AgentEndpointConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VersionSelector))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(VersionSelector))
             {
                 writer.WritePropertyName("version_selector"u8);
-                writer.WriteObjectValue(VersionSelector, options);
+                writer.WriteObjectValue<VersionSelector>(VersionSelector, options);
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -85,17 +85,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AuthorizationSchemes))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(AuthorizationSchemes))
             {
                 writer.WritePropertyName("authorization_schemes"u8);
                 writer.WriteStartArray();
                 foreach (AgentEndpointAuthorizationScheme item in AuthorizationSchemes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AgentEndpointAuthorizationScheme>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -103,9 +103,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -114,51 +114,51 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentEndpointConfiguration IJsonModel<AgentEndpointConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentEndpointConfiguration IJsonModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentEndpointConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.AgentEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentEndpointConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.AgentEndpointConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentEndpointConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AgentEndpointConfiguration DeserializeAgentEndpointConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             VersionSelector versionSelector = default;
-            IList<AgentEndpointProtocol> protocols = default;
-            IList<AgentEndpointAuthorizationScheme> authorizationSchemes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Projects.Agents.AgentEndpointProtocol> protocols = default;
+            IList<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme> authorizationSchemes = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("version_selector"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    versionSelector = VersionSelector.DeserializeVersionSelector(prop.Value, options);
+                    versionSelector = global::Azure.AI.Projects.Agents.VersionSelector.DeserializeVersionSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protocols"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AgentEndpointProtocol> array = new List<AgentEndpointProtocol>();
+                    List<global::Azure.AI.Projects.Agents.AgentEndpointProtocol> array = new List<global::Azure.AI.Projects.Agents.AgentEndpointProtocol>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AgentEndpointProtocol(item.GetString()));
@@ -168,24 +168,24 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("authorization_schemes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AgentEndpointAuthorizationScheme> array = new List<AgentEndpointAuthorizationScheme>();
+                    List<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme> array = new List<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentEndpointAuthorizationScheme.DeserializeAgentEndpointAuthorizationScheme(item, options));
+                        array.Add(global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme.DeserializeAgentEndpointAuthorizationScheme(item, options));
                     }
                     authorizationSchemes = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentEndpointConfiguration(versionSelector, protocols ?? new ChangeTrackingList<AgentEndpointProtocol>(), authorizationSchemes ?? new ChangeTrackingList<AgentEndpointAuthorizationScheme>(), additionalBinaryDataProperties);
+            return new AgentEndpointConfiguration(versionSelector, (protocols ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.AgentEndpointProtocol>()), (authorizationSchemes ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>()), additionalBinaryDataProperties);
         }
     }
 }

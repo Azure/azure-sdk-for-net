@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.SpecialHeaders.XmsClientRequestId
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class XmsClientRequestIdClientHostExtensions
     {
         public static IClientBuilder AddXmsClientRequestIdClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddXmsClientRequestIdClient(this IHostApplicationBuilder host, string sectionName, Action<XmsClientRequestIdClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddXmsClientRequestIdClient(this IHostApplicationBuilder host, string sectionName, Action<global::Azure.SpecialHeaders.XmsClientRequestId.XmsClientRequestIdClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedXmsClientRequestIdClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedXmsClientRequestIdClient(this IHostApplicationBuilder host, string key, string sectionName, Action<XmsClientRequestIdClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedXmsClientRequestIdClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Azure.SpecialHeaders.XmsClientRequestId.XmsClientRequestIdClientSettings> configureSettings) => throw null;
     }
 }

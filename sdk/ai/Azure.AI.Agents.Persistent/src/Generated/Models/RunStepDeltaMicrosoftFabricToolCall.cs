@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents the Microsoft Fabric tool call in a streaming run step. </summary>
     public partial class RunStepDeltaMicrosoftFabricToolCall : RunStepDeltaToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
@@ -22,13 +22,13 @@ namespace Azure.AI.Agents.Persistent
             MicrosoftFabric = microsoftFabric;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
-        internal RunStepDeltaMicrosoftFabricToolCall(int index, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> microsoftFabric) : base(index, id, @type, additionalBinaryDataProperties)
+        internal RunStepDeltaMicrosoftFabricToolCall(int index, string id, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, string> microsoftFabric) : base(index, id, @type, additionalBinaryDataProperties)
         {
             MicrosoftFabric = microsoftFabric;
         }

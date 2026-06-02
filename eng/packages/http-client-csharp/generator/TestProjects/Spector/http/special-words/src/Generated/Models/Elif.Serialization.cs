@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Elif : IJsonModel<Elif>
+    public partial class Elif : IJsonModel<global::SpecialWords._Models.Elif>
     {
         internal Elif() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Elif>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Elif>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Elif IPersistableModel<Elif>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Elif IPersistableModel<global::SpecialWords._Models.Elif>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Elif>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Elif>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="elif"> The <see cref="Elif"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="elif"> The <see cref="global::SpecialWords._Models.Elif"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Elif elif) => throw null;
 
-        void IJsonModel<Elif>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Elif>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Elif IJsonModel<Elif>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Elif IJsonModel<global::SpecialWords._Models.Elif>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Elif JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

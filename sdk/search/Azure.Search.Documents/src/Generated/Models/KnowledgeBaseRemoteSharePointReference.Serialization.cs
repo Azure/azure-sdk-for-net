@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents a remote SharePoint document reference. </summary>
-    public partial class KnowledgeBaseRemoteSharePointReference : KnowledgeBaseReference, IJsonModel<KnowledgeBaseRemoteSharePointReference>
+    public partial class KnowledgeBaseRemoteSharePointReference : KnowledgeBaseReference, IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointReference"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/> for deserialization. </summary>
         internal KnowledgeBaseRemoteSharePointReference()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseRemoteSharePointReference(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference.DeserializeKnowledgeBaseRemoteSharePointReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseRemoteSharePointReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseRemoteSharePointReference IPersistableModel<KnowledgeBaseRemoteSharePointReference>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseRemoteSharePointReference)PersistableModelCreateCore(data, options);
+        KnowledgeBaseRemoteSharePointReference IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>.Create(BinaryData data, ModelReaderWriterOptions options) => ((KnowledgeBaseRemoteSharePointReference)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseRemoteSharePointReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseRemoteSharePointReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,56 +74,56 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(WebUrl))
+            if (global::Azure.Search.Documents.Optional.IsDefined(WebUrl))
             {
                 writer.WritePropertyName("webUrl"u8);
                 writer.WriteStringValue(WebUrl.AbsoluteUri);
             }
-            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SearchSensitivityLabelInfo))
             {
                 writer.WritePropertyName("searchSensitivityLabelInfo"u8);
-                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
+                writer.WriteObjectValue<PurviewSensitivityLabelInfo>(SearchSensitivityLabelInfo, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseRemoteSharePointReference IJsonModel<KnowledgeBaseRemoteSharePointReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseRemoteSharePointReference)JsonModelCreateCore(ref reader, options);
+        KnowledgeBaseRemoteSharePointReference IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((KnowledgeBaseRemoteSharePointReference)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseRemoteSharePointReference(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference.DeserializeKnowledgeBaseRemoteSharePointReference(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeBaseRemoteSharePointReference DeserializeKnowledgeBaseRemoteSharePointReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             KnowledgeBaseReferenceType @type = default;
             string id = default;
             int activitySource = default;
-            IDictionary<string, BinaryData> sourceData = default;
+            IDictionary<string, global::System.BinaryData> sourceData = default;
             float? rerankerScore = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri webUrl = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            global::System.Uri webUrl = default;
             PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,20 +144,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("sourceData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     sourceData = dictionary;
@@ -165,7 +165,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("rerankerScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -174,32 +174,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("webUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    webUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    webUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("searchSensitivityLabelInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    searchSensitivityLabelInfo = global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeBaseRemoteSharePointReference(
                 @type,
                 id,
                 activitySource,
-                sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (sourceData ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 rerankerScore,
                 additionalBinaryDataProperties,
                 webUrl,

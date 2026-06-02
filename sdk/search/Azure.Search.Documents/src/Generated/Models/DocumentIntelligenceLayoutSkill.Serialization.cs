@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts content and layout information, via Azure AI Services, from files within the enrichment pipeline. </summary>
-    public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill, IJsonModel<DocumentIntelligenceLayoutSkill>
+    public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill"/> for deserialization. </summary>
         internal DocumentIntelligenceLayoutSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentIntelligenceLayoutSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentIntelligenceLayoutSkill IPersistableModel<DocumentIntelligenceLayoutSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentIntelligenceLayoutSkill)PersistableModelCreateCore(data, options);
+        DocumentIntelligenceLayoutSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DocumentIntelligenceLayoutSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentIntelligenceLayoutSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentIntelligenceLayoutSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,28 +74,28 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(OutputFormat))
+            if (global::Azure.Search.Documents.Optional.IsDefined(OutputFormat))
             {
                 writer.WritePropertyName("outputFormat"u8);
                 writer.WriteStringValue(OutputFormat.Value.ToString());
             }
-            if (Optional.IsDefined(OutputMode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(OutputMode))
             {
                 writer.WritePropertyName("outputMode"u8);
                 writer.WriteStringValue(OutputMode.Value.ToString());
             }
-            if (Optional.IsDefined(MarkdownHeaderDepth))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MarkdownHeaderDepth))
             {
                 writer.WritePropertyName("markdownHeaderDepth"u8);
                 writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExtractionOptions))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(ExtractionOptions))
             {
                 writer.WritePropertyName("extractionOptions"u8);
                 writer.WriteStartArray();
@@ -105,35 +105,35 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ChunkingProperties))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ChunkingProperties))
             {
                 writer.WritePropertyName("chunkingProperties"u8);
-                writer.WriteObjectValue(ChunkingProperties, options);
+                writer.WriteObjectValue<DocumentIntelligenceLayoutSkillChunkingProperties>(ChunkingProperties, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentIntelligenceLayoutSkill IJsonModel<DocumentIntelligenceLayoutSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentIntelligenceLayoutSkill)JsonModelCreateCore(ref reader, options);
+        DocumentIntelligenceLayoutSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DocumentIntelligenceLayoutSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentIntelligenceLayoutSkill DeserializeDocumentIntelligenceLayoutSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -141,13 +141,13 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DocumentIntelligenceLayoutSkillOutputFormat? outputFormat = default;
             DocumentIntelligenceLayoutSkillOutputMode? outputMode = default;
             DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth = default;
-            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
             DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,27 +173,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         outputFormat = null;
                         continue;
@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("outputMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         outputMode = null;
                         continue;
@@ -213,7 +213,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("markdownHeaderDepth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         markdownHeaderDepth = null;
                         continue;
@@ -223,11 +223,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("extractionOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<DocumentIntelligenceLayoutSkillExtractionOptions>();
+                    List<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new DocumentIntelligenceLayoutSkillExtractionOptions(item.GetString()));
@@ -237,17 +237,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("chunkingProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         chunkingProperties = null;
                         continue;
                     }
-                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(prop.Value, options);
+                    chunkingProperties = global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentIntelligenceLayoutSkill(
@@ -261,7 +261,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputFormat,
                 outputMode,
                 markdownHeaderDepth,
-                extractionOptions ?? new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>(),
+                (extractionOptions ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillExtractionOptions>()),
                 chunkingProperties);
         }
     }

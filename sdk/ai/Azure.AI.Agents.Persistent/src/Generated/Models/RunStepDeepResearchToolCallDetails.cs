@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepDeepResearchToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided by the model to the deep research tool. </param>
         internal RunStepDeepResearchToolCallDetails(string input)
         {
             Input = input;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided by the model to the deep research tool. </param>
         /// <param name="output"> The final output for the deep research tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeepResearchToolCallDetails(string input, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeepResearchToolCallDetails(string input, string output, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;

@@ -19,33 +19,33 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected MultipleParamsClient() => throw null;
 
-        public MultipleParamsClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
+        public MultipleParamsClient(string name, string region) : this(new global::System.Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public MultipleParamsClient(string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+        public MultipleParamsClient(string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new global::System.Uri("http://localhost:3000"), name, region, options) => throw null;
 
-        internal MultipleParamsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
+        internal MultipleParamsClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public MultipleParamsClient(Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+        public MultipleParamsClient(global::System.Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, region, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MultipleParamsClient(MultipleParamsClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MultipleParamsClient(MultipleParamsClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithQuery(string id, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string id, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string id, RequestContext context) => throw null;
 
         public virtual Response WithQuery(string id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string id, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> WithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> WithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithBody(Input body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithBody(global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithBodyAsync(Input body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithBodyAsync(global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input body, CancellationToken cancellationToken = default) => throw null;
     }
 }

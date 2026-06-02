@@ -16,7 +16,7 @@ namespace Specs.Azure.Core.Page
 
         public string Name => throw null;
 
-        public IList<UserOrder> Orders => throw null;
+        public IList<global::Specs.Azure.Core.Page.UserOrder> Orders => throw null;
 
         public ETag Etag => throw null;
     }

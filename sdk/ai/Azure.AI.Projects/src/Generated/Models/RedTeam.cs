@@ -12,23 +12,23 @@ namespace Azure.AI.Projects.Evaluation
     public partial class RedTeam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedTeam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RedTeam"/>. </summary>
         /// <param name="target"> Target configuration for the red-team run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="target"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="target"/> is null. </exception>
         public RedTeam(TargetConfig target)
         {
-            Argument.AssertNotNull(target, nameof(target));
+            global::Azure.AI.Projects.Argument.AssertNotNull(target, nameof(target));
 
-            AttackStrategies = new ChangeTrackingList<AttackStrategy>();
-            RiskCategories = new ChangeTrackingList<RiskCategory>();
+            AttackStrategies = new ChangeTrackingList<global::Azure.AI.Projects.Evaluation.AttackStrategy>();
+            RiskCategories = new ChangeTrackingList<global::Azure.AI.Projects.Evaluation.RiskCategory>();
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
             Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedTeam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RedTeam"/>. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="displayName"> Name of the red-team run. </param>
         /// <param name="turnCount"> Number of simulation rounds. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedTeam(string name, string displayName, int? turnCount, IList<AttackStrategy> attackStrategies, bool? isSimulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedTeam(string name, string displayName, int? turnCount, IList<global::Azure.AI.Projects.Evaluation.AttackStrategy> attackStrategies, bool? isSimulationOnly, IList<global::Azure.AI.Projects.Evaluation.RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig target, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -67,13 +67,13 @@ namespace Azure.AI.Projects.Evaluation
         public int? TurnCount { get; set; }
 
         /// <summary> List of attack strategies or nested lists of attack strategies. </summary>
-        public IList<AttackStrategy> AttackStrategies { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.AttackStrategy> AttackStrategies { get; }
 
         /// <summary> Simulation-only or Simulation + Evaluation. If `true` the scan outputs conversation not evaluation result. The service defaults to `false` if a value is not specified by the caller. </summary>
         public bool? IsSimulationOnly { get; set; }
 
         /// <summary> List of risk categories to generate attack objectives for. </summary>
-        public IList<RiskCategory> RiskCategories { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.RiskCategory> RiskCategories { get; }
 
         /// <summary> Application scenario for the red team operation, to generate scenario specific attacks. </summary>
         public string ApplicationScenario { get; set; }

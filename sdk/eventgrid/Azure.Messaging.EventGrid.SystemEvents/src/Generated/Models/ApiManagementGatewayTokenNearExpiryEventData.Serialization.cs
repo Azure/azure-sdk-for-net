@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayTokenNearExpiry event. </summary>
-    [JsonConverter(typeof(ApiManagementGatewayTokenNearExpiryEventDataConverter))]
-    public partial class ApiManagementGatewayTokenNearExpiryEventData : IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData.ApiManagementGatewayTokenNearExpiryEventDataConverter))]
+    public partial class ApiManagementGatewayTokenNearExpiryEventData : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/> for deserialization. </summary>
         internal ApiManagementGatewayTokenNearExpiryEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ApiManagementGatewayTokenNearExpiryEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData.DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayTokenNearExpiryEventData IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApiManagementGatewayTokenNearExpiryEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,16 +75,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("gatewayInfo"u8);
-            writer.WriteObjectValue(Gateway, options);
+            writer.WriteObjectValue<ApiManagementGatewayProperties>(Gateway, options);
             writer.WritePropertyName("tokenInfo"u8);
-            writer.WriteObjectValue(Token, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<ApiManagementGatewayTokenNearExpiryProperties>(Token, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,53 +103,53 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayTokenNearExpiryEventData IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApiManagementGatewayTokenNearExpiryEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ApiManagementGatewayTokenNearExpiryEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData.DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ApiManagementGatewayTokenNearExpiryEventData DeserializeApiManagementGatewayTokenNearExpiryEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ApiManagementGatewayProperties gateway = default;
             ApiManagementGatewayTokenNearExpiryProperties token = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("gatewayInfo"u8))
                 {
-                    gateway = ApiManagementGatewayProperties.DeserializeApiManagementGatewayProperties(prop.Value, options);
+                    gateway = global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayProperties.DeserializeApiManagementGatewayProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tokenInfo"u8))
                 {
-                    token = ApiManagementGatewayTokenNearExpiryProperties.DeserializeApiManagementGatewayTokenNearExpiryProperties(prop.Value, options);
+                    token = global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryProperties.DeserializeApiManagementGatewayTokenNearExpiryProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ApiManagementGatewayTokenNearExpiryEventData(gateway, token, additionalBinaryDataProperties);
         }
 
-        internal partial class ApiManagementGatewayTokenNearExpiryEventDataConverter : JsonConverter<ApiManagementGatewayTokenNearExpiryEventData>
+        internal partial class ApiManagementGatewayTokenNearExpiryEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayTokenNearExpiryEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayTokenNearExpiryEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -166,8 +166,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override ApiManagementGatewayTokenNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

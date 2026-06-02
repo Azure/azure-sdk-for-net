@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Annotation in a document, such as a strikethrough or a comment. </summary>
-    public partial class DocumentAnnotation : IJsonModel<DocumentAnnotation>
+    public partial class DocumentAnnotation : IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentAnnotation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotation"/> for deserialization. </summary>
         internal DocumentAnnotation()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentAnnotation(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.DocumentAnnotation.DeserializeDocumentAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentAnnotation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentAnnotation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentAnnotation IPersistableModel<DocumentAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentAnnotation IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,62 +73,62 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentAnnotation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentAnnotation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsCollectionDefined(Spans))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Spans))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
                 foreach (ContentSpan item in Spans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContentSpan>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Source))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsCollectionDefined(Comments))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStartArray();
                 foreach (DocumentAnnotationComment item in Comments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentAnnotationComment>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Author))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedAt))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(LastModifiedAt))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
                 foreach (string item in Tags)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -137,7 +137,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -145,9 +145,9 @@ namespace Azure.AI.ContentUnderstanding
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -156,39 +156,39 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentAnnotation IJsonModel<DocumentAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentAnnotation IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentAnnotation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentAnnotation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentAnnotation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.DocumentAnnotation.DeserializeDocumentAnnotation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentAnnotation DeserializeDocumentAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
             DocumentAnnotationKind kind = default;
-            IList<ContentSpan> spans = default;
+            IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans = default;
             string source = default;
-            IList<DocumentAnnotationComment> comments = default;
+            IList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment> comments = default;
             string author = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? lastModifiedAt = default;
             IList<string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -203,14 +203,14 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("spans"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContentSpan> array = new List<ContentSpan>();
+                    List<global::Azure.AI.ContentUnderstanding.ContentSpan> array = new List<global::Azure.AI.ContentUnderstanding.ContentSpan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContentSpan.DeserializeContentSpan(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.ContentSpan.DeserializeContentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -222,14 +222,14 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("comments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentAnnotationComment> array = new List<DocumentAnnotationComment>();
+                    List<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment> array = new List<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentAnnotationComment.DeserializeDocumentAnnotationComment(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment.DeserializeDocumentAnnotationComment(item, options));
                     }
                     comments = array;
                     continue;
@@ -241,7 +241,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -250,7 +250,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("lastModifiedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -259,14 +259,14 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -278,21 +278,21 @@ namespace Azure.AI.ContentUnderstanding
                     tags = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentAnnotation(
                 id,
                 kind,
-                spans ?? new ChangeTrackingList<ContentSpan>(),
+                (spans ?? new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>()),
                 source,
-                comments ?? new ChangeTrackingList<DocumentAnnotationComment>(),
+                (comments ?? new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment>()),
                 author,
                 createdAt,
                 lastModifiedAt,
-                tags ?? new ChangeTrackingList<string>(),
+                (tags ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

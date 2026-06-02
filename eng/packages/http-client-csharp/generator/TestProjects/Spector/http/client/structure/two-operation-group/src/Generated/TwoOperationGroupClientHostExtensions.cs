@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Structure.TwoOperationGroup
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class TwoOperationGroupClientHostExtensions
     {
         public static IClientBuilder AddTwoOperationGroupClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddTwoOperationGroupClient(this IHostApplicationBuilder host, string sectionName, Action<TwoOperationGroupClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddTwoOperationGroupClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Structure.TwoOperationGroup.TwoOperationGroupClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedTwoOperationGroupClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedTwoOperationGroupClient(this IHostApplicationBuilder host, string key, string sectionName, Action<TwoOperationGroupClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedTwoOperationGroupClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Structure.TwoOperationGroup.TwoOperationGroupClientSettings> configureSettings) => throw null;
     }
 }

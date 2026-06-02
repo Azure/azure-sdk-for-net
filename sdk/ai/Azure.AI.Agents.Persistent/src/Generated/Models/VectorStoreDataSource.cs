@@ -17,25 +17,25 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreDataSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSource"/>. </summary>
         /// <param name="assetIdentifier"> Asset URI. </param>
         /// <param name="assetType"> The asset type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetIdentifier"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assetIdentifier"/> is null. </exception>
         public VectorStoreDataSource(string assetIdentifier, VectorStoreDataSourceAssetType assetType)
         {
-            Argument.AssertNotNull(assetIdentifier, nameof(assetIdentifier));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(assetIdentifier, nameof(assetIdentifier));
 
             AssetIdentifier = assetIdentifier;
             AssetType = assetType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSource"/>. </summary>
         /// <param name="assetIdentifier"> Asset URI. </param>
         /// <param name="assetType"> The asset type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreDataSource(string assetIdentifier, VectorStoreDataSourceAssetType assetType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreDataSource(string assetIdentifier, VectorStoreDataSourceAssetType assetType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssetIdentifier = assetIdentifier;
             AssetType = assetType;

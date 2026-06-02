@@ -14,16 +14,16 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentThreadCreationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentThreadCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentThreadCreationOptions"/>. </summary>
         public PersistentAgentThreadCreationOptions()
         {
-            Messages = new ChangeTrackingList<ThreadMessageOptions>();
+            Messages = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentThreadCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentThreadCreationOptions"/>. </summary>
         /// <param name="messages"> The initial messages to associate with the new thread. </param>
         /// <param name="toolResources">
         /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
@@ -32,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentThreadCreationOptions(IList<ThreadMessageOptions> messages, ToolResources toolResources, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgentThreadCreationOptions(IList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> messages, ToolResources toolResources, IDictionary<string, string> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
             ToolResources = toolResources;
@@ -41,7 +41,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> The initial messages to associate with the new thread. </summary>
-        public IList<ThreadMessageOptions> Messages { get; }
+        public IList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> Messages { get; }
 
         /// <summary>
         /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the

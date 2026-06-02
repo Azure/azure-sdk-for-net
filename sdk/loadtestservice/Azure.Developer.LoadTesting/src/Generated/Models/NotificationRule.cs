@@ -13,14 +13,14 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Notification rule model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TestsNotificationRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.TestsNotificationRule"/>.
     /// </summary>
     public abstract partial class NotificationRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.NotificationRule"/>. </summary>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
@@ -31,7 +31,7 @@ namespace Azure.Developer.LoadTesting
             Scope = scope;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.NotificationRule"/>. </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NotificationRuleId = notificationRuleId;
             DisplayName = displayName;

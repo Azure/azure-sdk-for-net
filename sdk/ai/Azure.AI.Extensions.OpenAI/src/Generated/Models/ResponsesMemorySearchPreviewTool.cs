@@ -10,25 +10,25 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A tool for integrating memories into the agent. </summary>
     public partial class ResponsesMemorySearchPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
-        public ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearchPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
+        public ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base(global::Azure.AI.Extensions.OpenAI.ToolType.MemorySearchPreview)
         {
-            Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
-            Argument.AssertNotNull(scope, nameof(scope));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(scope, nameof(scope));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             MemoryStoreName = memoryStoreName;
             Scope = scope;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -68,7 +68,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The name of the memory store to use. </summary>
         public string MemoryStoreName { get; set; }

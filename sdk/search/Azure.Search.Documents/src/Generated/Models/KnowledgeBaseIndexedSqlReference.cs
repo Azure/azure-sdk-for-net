@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an Azure SQL document reference. </summary>
     public partial class KnowledgeBaseIndexedSqlReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedSqlReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseIndexedSqlReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.IndexedSql, id, activitySource)
+        internal KnowledgeBaseIndexedSqlReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.IndexedSql, id, activitySource)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedSqlReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
-        internal KnowledgeBaseIndexedSqlReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string docUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseIndexedSqlReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string docUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             DocUrl = docUrl;
         }

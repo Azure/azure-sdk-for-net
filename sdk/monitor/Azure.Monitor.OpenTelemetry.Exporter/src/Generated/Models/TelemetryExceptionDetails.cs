@@ -14,17 +14,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryExceptionDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails"/>. </summary>
         /// <param name="message"> Exception message. </param>
         public TelemetryExceptionDetails(string message)
         {
             Message = message;
-            ParsedStack = new ChangeTrackingList<StackFrame>();
+            ParsedStack = new ChangeTrackingList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.StackFrame>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails"/>. </summary>
         /// <param name="id">
         /// In case exception is nested (outer exception contains inner one), the id and
         /// outerId properties are used to represent the nesting.
@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="stack"> Text describing the stack. Either stack or parsedStack should have a value. </param>
         /// <param name="parsedStack"> List of stack frames. Either stack or parsedStack should have a value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryExceptionDetails(int? id, int? outerId, string typeName, string message, bool? hasFullStack, string stack, IList<StackFrame> parsedStack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryExceptionDetails(int? id, int? outerId, string typeName, string message, bool? hasFullStack, string stack, IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.StackFrame> parsedStack, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             OuterId = outerId;
@@ -82,6 +82,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public string Stack { get; set; }
 
         /// <summary> List of stack frames. Either stack or parsedStack should have a value. </summary>
-        public IList<StackFrame> ParsedStack { get; }
+        public IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.StackFrame> ParsedStack { get; }
     }
 }

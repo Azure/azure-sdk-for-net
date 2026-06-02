@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Table in a document, consisting table cells arranged in a rectangular layout. </summary>
-    public partial class DocumentTable : IJsonModel<DocumentTable>
+    public partial class DocumentTable : IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentTable>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTable"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentTable"/> for deserialization. </summary>
         internal DocumentTable()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentTable(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.DocumentTable.DeserializeDocumentTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentTable)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentTable)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTable>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTable IPersistableModel<DocumentTable>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentTable IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentTable)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("rowCount"u8);
             writer.WriteNumberValue(RowCount);
@@ -86,40 +86,40 @@ namespace Azure.AI.ContentUnderstanding
             writer.WriteStartArray();
             foreach (DocumentTableCell item in Cells)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentTableCell>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Source))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Span))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Span))
             {
                 writer.WritePropertyName("span"u8);
-                writer.WriteObjectValue(Span, options);
+                writer.WriteObjectValue<ContentSpan>(Span, options);
             }
-            if (Optional.IsDefined(Caption))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue(Caption, options);
+                writer.WriteObjectValue<DocumentCaption>(Caption, options);
             }
-            if (Optional.IsCollectionDefined(Footnotes))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Footnotes))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();
                 foreach (DocumentFootnote item in Footnotes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentFootnote>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Role))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -127,9 +127,9 @@ namespace Azure.AI.ContentUnderstanding
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -138,38 +138,38 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTable IJsonModel<DocumentTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentTable IJsonModel<global::Azure.AI.ContentUnderstanding.DocumentTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.DocumentTable)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentTable(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.DocumentTable.DeserializeDocumentTable(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentTable DeserializeDocumentTable(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int rowCount = default;
             int columnCount = default;
-            IList<DocumentTableCell> cells = default;
+            IList<global::Azure.AI.ContentUnderstanding.DocumentTableCell> cells = default;
             string source = default;
             ContentSpan span = default;
             DocumentCaption caption = default;
-            IList<DocumentFootnote> footnotes = default;
+            IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default;
             SemanticRole? role = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("rowCount"u8))
@@ -184,10 +184,10 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("cells"u8))
                 {
-                    List<DocumentTableCell> array = new List<DocumentTableCell>();
+                    List<global::Azure.AI.ContentUnderstanding.DocumentTableCell> array = new List<global::Azure.AI.ContentUnderstanding.DocumentTableCell>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTableCell.DeserializeDocumentTableCell(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.DocumentTableCell.DeserializeDocumentTableCell(item, options));
                     }
                     cells = array;
                     continue;
@@ -199,48 +199,48 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("span"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    span = ContentSpan.DeserializeContentSpan(prop.Value, options);
+                    span = global::Azure.AI.ContentUnderstanding.ContentSpan.DeserializeContentSpan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("caption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(prop.Value, options);
+                    caption = global::Azure.AI.ContentUnderstanding.DocumentCaption.DeserializeDocumentCaption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("footnotes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentFootnote> array = new List<DocumentFootnote>();
+                    List<global::Azure.AI.ContentUnderstanding.DocumentFootnote> array = new List<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.DocumentFootnote.DeserializeDocumentFootnote(item, options));
                     }
                     footnotes = array;
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     role = new SemanticRole(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentTable(
@@ -250,7 +250,7 @@ namespace Azure.AI.ContentUnderstanding
                 source,
                 span,
                 caption,
-                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                (footnotes ?? new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>()),
                 role,
                 additionalBinaryDataProperties);
         }

@@ -10,23 +10,23 @@ namespace OpenAI
     internal partial class InternalWebSearchActionFind
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        public InternalWebSearchActionFind(Uri url, string pattern)
+        public InternalWebSearchActionFind(global::System.Uri url, string pattern)
         {
             Url = url;
             Pattern = pattern;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchActionFind"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalWebSearchActionFind(string @type, Uri url, string pattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalWebSearchActionFind(string @type, global::System.Uri url, string pattern, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;
@@ -38,7 +38,7 @@ namespace OpenAI
         internal string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
-        public Uri Url { get; }
+        public global::System.Uri Url { get; }
 
         /// <summary> The pattern or text to search for within the page. </summary>
         public string Pattern { get; }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> All assets for this project. </summary>
-    public partial class QuestionAnsweringAuthoringAssets : IJsonModel<QuestionAnsweringAuthoringAssets>
+    public partial class QuestionAnsweringAuthoringAssets : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QuestionAnsweringAuthoringAssets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets.DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Authoring.AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnsweringAuthoringAssets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringAuthoringAssets IPersistableModel<QuestionAnsweringAuthoringAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QuestionAnsweringAuthoringAssets IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnsweringAuthoringAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuestionAnsweringAuthoringAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,32 +68,32 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Synonyms))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsCollectionDefined(Synonyms))
             {
                 writer.WritePropertyName("synonyms"u8);
                 writer.WriteStartArray();
                 foreach (WordAlterations item in Synonyms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WordAlterations>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Qnas))
+            if (global::Azure.AI.Language.QuestionAnswering.Authoring.Optional.IsCollectionDefined(Qnas))
             {
                 writer.WritePropertyName("qnas"u8);
                 writer.WriteStartArray();
                 foreach (ImportQnaRecord item in Qnas)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ImportQnaRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,68 +112,68 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringAuthoringAssets IJsonModel<QuestionAnsweringAuthoringAssets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QuestionAnsweringAuthoringAssets IJsonModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QuestionAnsweringAuthoringAssets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets.DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static QuestionAnsweringAuthoringAssets DeserializeQuestionAnsweringAuthoringAssets(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<WordAlterations> synonyms = default;
-            IList<ImportQnaRecord> qnas = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> synonyms = default;
+            IList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> qnas = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("synonyms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WordAlterations> array = new List<WordAlterations>();
+                    List<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> array = new List<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterations.DeserializeWordAlterations(item, options));
+                        array.Add(global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations.DeserializeWordAlterations(item, options));
                     }
                     synonyms = array;
                     continue;
                 }
                 if (prop.NameEquals("qnas"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ImportQnaRecord> array = new List<ImportQnaRecord>();
+                    List<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> array = new List<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImportQnaRecord.DeserializeImportQnaRecord(item, options));
+                        array.Add(global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord.DeserializeImportQnaRecord(item, options));
                     }
                     qnas = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuestionAnsweringAuthoringAssets(synonyms ?? new ChangeTrackingList<WordAlterations>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), additionalBinaryDataProperties);
+            return new QuestionAnsweringAuthoringAssets((synonyms ?? new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>()), (qnas ?? new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord>()), additionalBinaryDataProperties);
         }
     }
 }

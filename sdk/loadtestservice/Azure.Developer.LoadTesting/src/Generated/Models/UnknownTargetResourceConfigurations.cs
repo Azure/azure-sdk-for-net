@@ -12,10 +12,10 @@ namespace Azure.Developer.LoadTesting
 {
     internal partial class UnknownTargetResourceConfigurations : TargetResourceConfigurations
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTargetResourceConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.UnknownTargetResourceConfigurations"/>. </summary>
         /// <param name="kind"> Kind of the resource for which the configurations apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTargetResourceConfigurations(ResourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownTargetResourceConfigurations(ResourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

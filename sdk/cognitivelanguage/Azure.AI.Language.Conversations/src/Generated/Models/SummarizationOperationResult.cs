@@ -13,23 +13,23 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Result for the summarization task on the conversation. </summary>
     public partial class SummarizationOperationResult : AnalyzeConversationOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="SummarizationOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> results. </param>
-        internal SummarizationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, SummaryResult results) : base(lastUpdateDateTime, status, AnalyzeConversationOperationResultsKind.SummarizationOperationResults)
+        internal SummarizationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, SummaryResult results) : base(lastUpdateDateTime, status, global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResultsKind.SummarizationOperationResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummarizationOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> results. </param>
-        internal SummarizationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SummaryResult results) : base(lastUpdateDateTime, status, name, kind, additionalBinaryDataProperties)
+        internal SummarizationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SummaryResult results) : base(lastUpdateDateTime, status, name, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

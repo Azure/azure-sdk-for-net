@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> Represents the exported assets of a conversational project. </summary>
     public partial class ConversationExportedProjectAsset : ConversationAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedProjectAsset"/>. </summary>
-        public ConversationExportedProjectAsset() : base(ConversationAuthoringProjectKind.Conversation)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedProjectAsset"/>. </summary>
+        public ConversationExportedProjectAsset() : base(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind.Conversation)
         {
-            Intents = new ChangeTrackingList<ConversationExportedIntent>();
-            Entities = new ChangeTrackingList<ConversationExportedEntity>();
-            Utterances = new ChangeTrackingList<ConversationExportedUtterance>();
+            Intents = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>();
+            Utterances = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> The intents defined in the project. </param>
         /// <param name="entities"> The entities defined in the project. </param>
         /// <param name="utterances"> The utterances defined in the project. </param>
-        internal ConversationExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ConversationExportedIntent> intents, IList<ConversationExportedEntity> entities, IList<ConversationExportedUtterance> utterances) : base(projectKind, additionalBinaryDataProperties)
+        internal ConversationExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent> intents, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity> entities, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance> utterances) : base(projectKind, additionalBinaryDataProperties)
         {
             Intents = intents;
             Entities = entities;
@@ -35,12 +35,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> The intents defined in the project. </summary>
-        public IList<ConversationExportedIntent> Intents { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent> Intents { get; }
 
         /// <summary> The entities defined in the project. </summary>
-        public IList<ConversationExportedEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity> Entities { get; }
 
         /// <summary> The utterances defined in the project. </summary>
-        public IList<ConversationExportedUtterance> Utterances { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance> Utterances { get; }
     }
 }

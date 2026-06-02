@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class CompletedSynchronizationState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CompletedSynchronizationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.CompletedSynchronizationState"/>. </summary>
         /// <param name="startTime"> The start time of the last completed synchronization. </param>
         /// <param name="endTime"> The end time of the last completed synchronization. </param>
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
@@ -31,14 +31,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             ItemsSkipped = itemsSkipped;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CompletedSynchronizationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.CompletedSynchronizationState"/>. </summary>
         /// <param name="startTime"> The start time of the last completed synchronization. </param>
         /// <param name="endTime"> The end time of the last completed synchronization. </param>
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;

@@ -12,12 +12,12 @@ using System.Globalization;
 namespace BasicTypeSpec
 {
     /// <summary></summary>
-    public readonly partial struct ThingModelOptionalLiteralFloat : IEquatable<ThingModelOptionalLiteralFloat>
+    public readonly partial struct ThingModelOptionalLiteralFloat : IEquatable<global::BasicTypeSpec.ThingModelOptionalLiteralFloat>
     {
         private readonly float _value;
         private const float _456Value = 4.56F;
 
-        /// <summary> Initializes a new instance of <see cref="ThingModelOptionalLiteralFloat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralFloat"/>. </summary>
         /// <param name="value"> The value. </param>
         public ThingModelOptionalLiteralFloat(float value)
         {
@@ -27,32 +27,32 @@ namespace BasicTypeSpec
         /// <summary> Gets the _456. </summary>
         public static ThingModelOptionalLiteralFloat _456 { get; } = new ThingModelOptionalLiteralFloat(_456Value);
 
-        /// <summary> Determines if two <see cref="ThingModelOptionalLiteralFloat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralFloat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThingModelOptionalLiteralFloat left, ThingModelOptionalLiteralFloat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThingModelOptionalLiteralFloat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralFloat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThingModelOptionalLiteralFloat left, ThingModelOptionalLiteralFloat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThingModelOptionalLiteralFloat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::BasicTypeSpec.ThingModelOptionalLiteralFloat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ThingModelOptionalLiteralFloat(float value) => new ThingModelOptionalLiteralFloat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThingModelOptionalLiteralFloat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ThingModelOptionalLiteralFloat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ThingModelOptionalLiteralFloat other) => Equals(_value, other._value);
+        public bool Equals(ThingModelOptionalLiteralFloat other) => float.Equals(_value, other._value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <inheritdoc/>
-        public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
+        public override string ToString() => _value.ToString(global::System.Globalization.CultureInfo.InvariantCulture);
     }
 }

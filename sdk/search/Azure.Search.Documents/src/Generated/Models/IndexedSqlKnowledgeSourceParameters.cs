@@ -16,24 +16,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexedSqlKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexedSqlKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> The connection string for the Azure SQL Database or SQL Managed Instance. </param>
         /// <param name="tableOrView"> The name of the table or view to index. Can be schema-qualified (e.g., 'dbo.MyTable'). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="tableOrView"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="tableOrView"/> is null. </exception>
         public IndexedSqlKnowledgeSourceParameters(string connectionString, string tableOrView)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(tableOrView, nameof(tableOrView));
+            global::Azure.Search.Documents.Argument.AssertNotNull(connectionString, nameof(connectionString));
+            global::Azure.Search.Documents.Argument.AssertNotNull(tableOrView, nameof(tableOrView));
 
             ConnectionString = connectionString;
             TableOrView = tableOrView;
-            ContentColumns = new ChangeTrackingList<ContentColumnMapping>();
-            EmbeddingColumns = new ChangeTrackingList<EmbeddingColumnMapping>();
+            ContentColumns = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping>();
+            EmbeddingColumns = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexedSqlKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> The connection string for the Azure SQL Database or SQL Managed Instance. </param>
         /// <param name="tableOrView"> The name of the table or view to index. Can be schema-qualified (e.g., 'dbo.MyTable'). </param>
         /// <param name="highWaterMarkColumnName"> Optional column name for high water mark change detection. If provided, uses HighWaterMarkChangeDetectionPolicy. </param>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings including embedding model, schedule, and identity. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexedSqlKnowledgeSourceParameters(string connectionString, string tableOrView, string highWaterMarkColumnName, IList<ContentColumnMapping> contentColumns, IList<EmbeddingColumnMapping> embeddingColumns, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexedSqlKnowledgeSourceParameters(string connectionString, string tableOrView, string highWaterMarkColumnName, IList<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping> contentColumns, IList<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping> embeddingColumns, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             TableOrView = tableOrView;
@@ -64,10 +64,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public string HighWaterMarkColumnName { get; set; }
 
         /// <summary> Optional column mappings for content fields. If omitted, all columns are auto-discovered. </summary>
-        public IList<ContentColumnMapping> ContentColumns { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping> ContentColumns { get; }
 
         /// <summary> Optional column mappings for embedding vector fields. If omitted, no vector fields are created. </summary>
-        public IList<EmbeddingColumnMapping> EmbeddingColumns { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping> EmbeddingColumns { get; }
 
         /// <summary> Consolidates all general ingestion settings including embedding model, schedule, and identity. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }

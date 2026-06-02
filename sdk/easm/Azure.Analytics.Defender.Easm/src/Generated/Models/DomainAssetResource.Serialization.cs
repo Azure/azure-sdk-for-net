@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The DomainAssetResource. </summary>
-    public partial class DomainAssetResource : AssetResource, IJsonModel<DomainAssetResource>
+    public partial class DomainAssetResource : AssetResource, IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>
     {
-        /// <summary> Initializes a new instance of <see cref="DomainAssetResource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DomainAssetResource"/> for deserialization. </summary>
         internal DomainAssetResource()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AssetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDomainAssetResource(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.DomainAssetResource.DeserializeDomainAssetResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainAssetResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAssetResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DomainAssetResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAssetResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DomainAssetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainAssetResource IPersistableModel<DomainAssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (DomainAssetResource)PersistableModelCreateCore(data, options);
+        DomainAssetResource IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DomainAssetResource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DomainAssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DomainAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,38 +73,38 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DomainAssetResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAssetResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue(Asset, options);
+            writer.WriteObjectValue<DomainAsset>(Asset, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainAssetResource IJsonModel<DomainAssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DomainAssetResource)JsonModelCreateCore(ref reader, options);
+        DomainAssetResource IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DomainAssetResource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AssetResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DomainAssetResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAssetResource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDomainAssetResource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.DomainAssetResource.DeserializeDomainAssetResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DomainAssetResource DeserializeDomainAssetResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -120,9 +120,9 @@ namespace Azure.Analytics.Defender.Easm
             IList<string> labels = default;
             bool? wildcard = default;
             string discoGroupName = default;
-            IList<AuditTrailItem> auditTrail = default;
+            IList<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default;
             string reason = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DomainAsset asset = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("uuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("createdDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("updatedDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -189,14 +189,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("labels"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("wildcard"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -224,14 +224,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("auditTrail"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AuditTrailItem> array = new List<AuditTrailItem>();
+                    List<global::Azure.Analytics.Defender.Easm.AuditTrailItem> array = new List<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AuditTrailItem.DeserializeAuditTrailItem(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.AuditTrailItem.DeserializeAuditTrailItem(item, options));
                     }
                     auditTrail = array;
                     continue;
@@ -243,12 +243,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("asset"u8))
                 {
-                    asset = DomainAsset.DeserializeDomainAsset(prop.Value, options);
+                    asset = global::Azure.Analytics.Defender.Easm.DomainAsset.DeserializeDomainAsset(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DomainAssetResource(
@@ -261,10 +261,10 @@ namespace Azure.Analytics.Defender.Easm
                 updatedDate,
                 state,
                 externalId,
-                labels ?? new ChangeTrackingList<string>(),
+                (labels ?? new ChangeTrackingList<string>()),
                 wildcard,
                 discoGroupName,
-                auditTrail ?? new ChangeTrackingList<AuditTrailItem>(),
+                (auditTrail ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>()),
                 reason,
                 additionalBinaryDataProperties,
                 asset);

@@ -12,24 +12,24 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Configurations of a target resource. This varies with the kind of resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionFlexConsumptionTargetResourceConfigurations"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/>.
     /// </summary>
     public abstract partial class TargetResourceConfigurations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetResourceConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TargetResourceConfigurations"/>. </summary>
         /// <param name="kind"> Kind of the resource for which the configurations apply. </param>
         private protected TargetResourceConfigurations(ResourceKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetResourceConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TargetResourceConfigurations"/>. </summary>
         /// <param name="kind"> Kind of the resource for which the configurations apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResourceConfigurations(ResourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetResourceConfigurations(ResourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

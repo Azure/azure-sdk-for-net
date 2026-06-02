@@ -14,28 +14,28 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class OrchestrationExportedUtterance
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedUtterance"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance"/>. </summary>
         /// <param name="text"> The utterance text. </param>
         /// <param name="intent"> The intent of the utterance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="intent"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> or <paramref name="intent"/> is null. </exception>
         public OrchestrationExportedUtterance(string text, string intent)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(intent, nameof(intent));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(intent, nameof(intent));
 
             Text = text;
             Intent = intent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedUtterance"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance"/>. </summary>
         /// <param name="text"> The utterance text. </param>
         /// <param name="language"> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationExportedUtterance(string text, string language, string intent, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrchestrationExportedUtterance(string text, string language, string intent, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Language = language;

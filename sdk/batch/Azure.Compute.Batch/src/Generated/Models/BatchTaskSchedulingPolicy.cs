@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskSchedulingPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskSchedulingPolicy"/>. </summary>
         /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskSchedulingPolicy"/>. </summary>
         /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
         /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;

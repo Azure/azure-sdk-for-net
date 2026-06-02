@@ -14,14 +14,14 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
 {
     public partial class UsageClient
     {
-        public UsageClient() : this(new Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
+        public UsageClient() : this(new global::System.Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
 
-        internal UsageClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UsageClientOptions options) => throw null;
+        internal UsageClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, UsageClientOptions options) => throw null;
 
-        public UsageClient(Uri endpoint, UsageClientOptions options) : this(null, endpoint, options) => throw null;
+        public UsageClient(global::System.Uri endpoint, UsageClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public UsageClient(UsageClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public UsageClient(UsageClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

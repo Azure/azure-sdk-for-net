@@ -15,24 +15,24 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeRemoveOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRemoveOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeRemoveOptions"/>. </summary>
         /// <param name="nodeIds"> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeIds"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="nodeIds"/> is null. </exception>
         public BatchNodeRemoveOptions(IEnumerable<string> nodeIds)
         {
-            Argument.AssertNotNull(nodeIds, nameof(nodeIds));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(nodeIds, nameof(nodeIds));
 
             NodeIds = nodeIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRemoveOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeRemoveOptions"/>. </summary>
         /// <param name="nodeIds"> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </param>
         /// <param name="resizeTimeout"> The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="nodeDeallocationOption"> Determines what to do with a Compute Node and its running task(s) after it has been selected for deallocation. The default value is requeue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoveOptions(IList<string> nodeIds, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeRemoveOptions(IList<string> nodeIds, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NodeIds = nodeIds;
             ResizeTimeout = resizeTimeout;

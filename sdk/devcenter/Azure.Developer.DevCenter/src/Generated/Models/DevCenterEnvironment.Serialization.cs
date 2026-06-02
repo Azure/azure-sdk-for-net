@@ -17,9 +17,9 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment. </summary>
-    public partial class DevCenterEnvironment : IJsonModel<DevCenterEnvironment>
+    public partial class DevCenterEnvironment : IJsonModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>
     {
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevCenterEnvironment"/> for deserialization. </summary>
         internal DevCenterEnvironment()
         {
         }
@@ -28,55 +28,55 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevCenterEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDevCenterEnvironment(document.RootElement, options);
+                        return global::Azure.Developer.DevCenter.Models.DevCenterEnvironment.DeserializeDevCenterEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevCenterEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevCenterEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevCenterEnvironment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevCenterEnvironment IPersistableModel<DevCenterEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DevCenterEnvironment IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevCenterEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevCenterEnvironment"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.DevCenter.Models.DevCenterEnvironment"/> from. </param>
         public static explicit operator DevCenterEnvironment(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevCenterEnvironment(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.DevCenter.Models.DevCenterEnvironment.DeserializeDevCenterEnvironment(document.RootElement, global::Azure.Developer.DevCenter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DevCenterEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,19 +84,19 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevCenterEnvironment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (global::Azure.Developer.DevCenter.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -104,32 +104,32 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentTypeName);
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(UserId)))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(UserId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ProvisioningState)))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroupId))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ResourceGroupId)))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
@@ -138,12 +138,12 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteStringValue(CatalogName);
             writer.WritePropertyName("environmentDefinitionName"u8);
             writer.WriteStringValue(EnvironmentDefinitionName);
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(Error)))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                ((IJsonModel<global::Azure.ResponseError>)Error).Write(writer, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -151,9 +151,9 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -162,30 +162,30 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevCenterEnvironment IJsonModel<DevCenterEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DevCenterEnvironment IJsonModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevCenterEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevCenterEnvironment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevCenterEnvironment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.DevCenter.Models.DevCenterEnvironment.DeserializeDevCenterEnvironment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DevCenterEnvironment DeserializeDevCenterEnvironment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> parameters = default;
+            IDictionary<string, global::System.BinaryData> parameters = default;
             string name = default;
             string environmentTypeName = default;
             Guid? userId = default;
@@ -194,25 +194,25 @@ namespace Azure.Developer.DevCenter.Models
             string catalogName = default;
             string environmentDefinitionName = default;
             ResponseError error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     parameters = dictionary;
@@ -230,7 +230,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("user"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -239,7 +239,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -248,7 +248,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("resourceGroupId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -267,20 +267,20 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureDeveloperDevCenterContext.Default);
+                    error = global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DevCenterEnvironment(
-                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (parameters ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 name,
                 environmentTypeName,
                 userId,

@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class RedisPatchingCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedisPatchingCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData"/>. </summary>
         internal RedisPatchingCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisPatchingCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.RedisPatchingCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPatchingCompletedEventData(DateTimeOffset? timestamp, string name, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisPatchingCompletedEventData(DateTimeOffset? timestamp, string name, string status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Name = name;

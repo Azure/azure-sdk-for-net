@@ -11,21 +11,21 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApplyPatchCallOutputStatusParam value) => value switch
         {
-            ApplyPatchCallOutputStatusParam.Completed => "completed",
-            ApplyPatchCallOutputStatusParam.Failed => "failed",
+            global::Azure.AI.Projects.ApplyPatchCallOutputStatusParam.Completed => "completed",
+            global::Azure.AI.Projects.ApplyPatchCallOutputStatusParam.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplyPatchCallOutputStatusParam value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ApplyPatchCallOutputStatusParam ToApplyPatchCallOutputStatusParam(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return ApplyPatchCallOutputStatusParam.Completed;
+                return global::Azure.AI.Projects.ApplyPatchCallOutputStatusParam.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return ApplyPatchCallOutputStatusParam.Failed;
+                return global::Azure.AI.Projects.ApplyPatchCallOutputStatusParam.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplyPatchCallOutputStatusParam value.");
         }

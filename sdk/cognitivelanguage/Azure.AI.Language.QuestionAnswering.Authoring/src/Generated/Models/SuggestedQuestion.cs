@@ -14,14 +14,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class SuggestedQuestion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestedQuestion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion"/>. </summary>
         public SuggestedQuestion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestedQuestion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion"/>. </summary>
         /// <param name="question"> Question suggested by the Active Learning feature. </param>
         /// <param name="userSuggestedCount"> The number of times the question was suggested explicitly by the user. </param>
         /// <param name="autoSuggestedCount">
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// Learning algorithm.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestedQuestion(string question, int? userSuggestedCount, int? autoSuggestedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuggestedQuestion(string question, int? userSuggestedCount, int? autoSuggestedCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Question = question;
             UserSuggestedCount = userSuggestedCount;

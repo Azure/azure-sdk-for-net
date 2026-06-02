@@ -10,15 +10,15 @@ namespace Azure.AI.Projects
     /// <summary> Entra ID credential definition. </summary>
     public partial class AIProjectConnectionEntraIdCredential : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionEntraIdCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionEntraIdCredential"/>. </summary>
         internal AIProjectConnectionEntraIdCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionEntraIdCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionEntraIdCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectConnectionEntraIdCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal AIProjectConnectionEntraIdCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

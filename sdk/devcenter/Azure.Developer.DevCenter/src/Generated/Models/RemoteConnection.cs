@@ -14,18 +14,18 @@ namespace Azure.Developer.DevCenter.Models
     public partial class RemoteConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.RemoteConnection"/>. </summary>
         internal RemoteConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.RemoteConnection"/>. </summary>
         /// <param name="webUri"> URL to open a browser based RDP session. </param>
         /// <param name="rdpConnectionUri"> Link to open a Remote Desktop session. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteConnection(Uri webUri, Uri rdpConnectionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoteConnection(global::System.Uri webUri, global::System.Uri rdpConnectionUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             WebUri = webUri;
             RdpConnectionUri = rdpConnectionUri;
@@ -33,9 +33,9 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> URL to open a browser based RDP session. </summary>
-        public Uri WebUri { get; }
+        public global::System.Uri WebUri { get; }
 
         /// <summary> Link to open a Remote Desktop session. </summary>
-        public Uri RdpConnectionUri { get; }
+        public global::System.Uri RdpConnectionUri { get; }
     }
 }

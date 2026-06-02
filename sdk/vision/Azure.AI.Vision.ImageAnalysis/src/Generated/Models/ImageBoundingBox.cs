@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageBoundingBox
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageBoundingBox"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox"/>. </summary>
         /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>
@@ -29,13 +29,13 @@ namespace Azure.AI.Vision.ImageAnalysis
             Height = height;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageBoundingBox"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox"/>. </summary>
         /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>
         /// <param name="height"> Height of the area, in pixels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageBoundingBox(int x, int y, int width, int height, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageBoundingBox(int x, int y, int width, int height, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

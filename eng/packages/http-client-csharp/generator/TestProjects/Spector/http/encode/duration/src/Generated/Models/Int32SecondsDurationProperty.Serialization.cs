@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode.Duration._Property
 {
-    public partial class Int32SecondsDurationProperty : IJsonModel<Int32SecondsDurationProperty>
+    public partial class Int32SecondsDurationProperty : IJsonModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>
     {
         internal Int32SecondsDurationProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode.Duration._Property
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Int32SecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Int32SecondsDurationProperty IPersistableModel<Int32SecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Int32SecondsDurationProperty IPersistableModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Int32SecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="int32SecondsDurationProperty"> The <see cref="Int32SecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="int32SecondsDurationProperty"> The <see cref="global::Encode.Duration._Property.Int32SecondsDurationProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Int32SecondsDurationProperty int32SecondsDurationProperty) => throw null;
 
         public static explicit operator Int32SecondsDurationProperty(Response response) => throw null;
 
-        void IJsonModel<Int32SecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Int32SecondsDurationProperty IJsonModel<Int32SecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Int32SecondsDurationProperty IJsonModel<global::Encode.Duration._Property.Int32SecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Int32SecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

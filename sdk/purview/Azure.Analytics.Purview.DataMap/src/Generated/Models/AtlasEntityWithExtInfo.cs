@@ -17,19 +17,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntityWithExtInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo"/>. </summary>
         public AtlasEntityWithExtInfo()
         {
-            ReferredEntities = new ChangeTrackingDictionary<string, AtlasEntity>();
+            ReferredEntities = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo"/>. </summary>
         /// <param name="referredEntities"> The referred entities. </param>
         /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityWithExtInfo(IDictionary<string, AtlasEntity> referredEntities, AtlasEntity entity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntityWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> referredEntities, AtlasEntity entity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReferredEntities = referredEntities;
             Entity = entity;
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> The referred entities. </summary>
-        public IDictionary<string, AtlasEntity> ReferredEntities { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> ReferredEntities { get; }
 
         /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
         public AtlasEntity Entity { get; set; }

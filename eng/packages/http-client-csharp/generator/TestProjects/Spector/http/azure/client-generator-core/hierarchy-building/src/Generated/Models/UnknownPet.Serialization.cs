@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    internal partial class UnknownPet : Pet, IJsonModel<Pet>
+    internal partial class UnknownPet : Pet, IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>
     {
         internal UnknownPet() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Pet IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Pet IJsonModel<Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Pet IJsonModel<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Animal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

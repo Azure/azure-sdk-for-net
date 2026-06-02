@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class InternalCustomGrammarFormatParam : InternalCustomToolParamFormat, IJsonModel<InternalCustomGrammarFormatParam>
+    internal partial class InternalCustomGrammarFormatParam : InternalCustomToolParamFormat, IJsonModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCustomGrammarFormatParam"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCustomGrammarFormatParam"/> for deserialization. </summary>
         internal InternalCustomGrammarFormatParam()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalCustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalCustomGrammarFormatParam(document.RootElement, options);
+                        return global::Azure.AI.Projects.InternalCustomGrammarFormatParam.DeserializeInternalCustomGrammarFormatParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalCustomGrammarFormatParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalCustomGrammarFormatParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalCustomGrammarFormatParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalCustomGrammarFormatParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalCustomGrammarFormatParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCustomGrammarFormatParam IPersistableModel<InternalCustomGrammarFormatParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalCustomGrammarFormatParam)PersistableModelCreateCore(data, options);
+        InternalCustomGrammarFormatParam IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalCustomGrammarFormatParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalCustomGrammarFormatParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalCustomGrammarFormatParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,10 +69,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalCustomGrammarFormatParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalCustomGrammarFormatParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("syntax"u8);
@@ -83,31 +83,31 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCustomGrammarFormatParam IJsonModel<InternalCustomGrammarFormatParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalCustomGrammarFormatParam)JsonModelCreateCore(ref reader, options);
+        InternalCustomGrammarFormatParam IJsonModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalCustomGrammarFormatParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalCustomToolParamFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalCustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalCustomGrammarFormatParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalCustomGrammarFormatParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalCustomGrammarFormatParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.InternalCustomGrammarFormatParam.DeserializeInternalCustomGrammarFormatParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalCustomGrammarFormatParam DeserializeInternalCustomGrammarFormatParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             CustomToolParamFormatType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             GrammarSyntax1 syntax = default;
             string definition = default;
             foreach (var prop in element.EnumerateObject())
@@ -127,9 +127,9 @@ namespace Azure.AI.Projects
                     definition = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalCustomGrammarFormatParam(@type, additionalBinaryDataProperties, syntax, definition);

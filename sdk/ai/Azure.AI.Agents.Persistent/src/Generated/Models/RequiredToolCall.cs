@@ -12,15 +12,15 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a tool invocation needed by the model to continue a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RequiredFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RequiredMcpToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/>.
     /// </summary>
     public abstract partial class RequiredToolCall : RequiredAction
     {
-        /// <summary> Initializes a new instance of <see cref="RequiredToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        internal RequiredToolCall(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type, additionalBinaryDataProperties)
+        internal RequiredToolCall(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
         }

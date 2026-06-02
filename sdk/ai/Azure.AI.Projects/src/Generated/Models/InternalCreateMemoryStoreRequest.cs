@@ -11,9 +11,9 @@ namespace Azure.AI.Projects
     internal partial class InternalCreateMemoryStoreRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCreateMemoryStoreRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCreateMemoryStoreRequest"/>. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
         internal InternalCreateMemoryStoreRequest(string name, MemoryStoreDefinition definition)

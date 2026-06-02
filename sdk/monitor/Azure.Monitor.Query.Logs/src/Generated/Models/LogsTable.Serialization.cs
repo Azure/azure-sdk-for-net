@@ -14,9 +14,9 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
-    public partial class LogsTable : IJsonModel<LogsTable>
+    public partial class LogsTable : IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>
     {
-        /// <summary> Initializes a new instance of <see cref="LogsTable"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsTable"/> for deserialization. </summary>
         internal LogsTable()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LogsTable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsTable>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.Query.Logs.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLogsTable(document.RootElement, options);
+                        return global::Azure.Monitor.Query.Logs.Models.LogsTable.DeserializeLogsTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogsTable)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsTable)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsTable>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.Query.Logs.AzureMonitorQueryLogsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogsTable)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsTable)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogsTable>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogsTable IPersistableModel<LogsTable>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LogsTable IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogsTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogsTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,10 +74,10 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsTable>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogsTable)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsTable)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -85,12 +85,12 @@ namespace Azure.Monitor.Query.Logs.Models
             writer.WriteStartArray();
             foreach (LogsTableColumn item in Columns)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<LogsTableColumn>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("rows"u8);
             InternalRows.WriteTo(writer);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -98,9 +98,9 @@ namespace Azure.Monitor.Query.Logs.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -109,33 +109,33 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogsTable IJsonModel<LogsTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LogsTable IJsonModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LogsTable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsTable>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.LogsTable>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogsTable)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.LogsTable)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogsTable(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.Query.Logs.Models.LogsTable.DeserializeLogsTable(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LogsTable DeserializeLogsTable(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
-            IReadOnlyList<LogsTableColumn> columns = default;
+            IReadOnlyList<global::Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns = default;
             JsonElement internalRows = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -145,10 +145,10 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (prop.NameEquals("columns"u8))
                 {
-                    List<LogsTableColumn> array = new List<LogsTableColumn>();
+                    List<global::Azure.Monitor.Query.Logs.Models.LogsTableColumn> array = new List<global::Azure.Monitor.Query.Logs.Models.LogsTableColumn>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogsTableColumn.DeserializeLogsTableColumn(item, options));
+                        array.Add(global::Azure.Monitor.Query.Logs.Models.LogsTableColumn.DeserializeLogsTableColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -158,9 +158,9 @@ namespace Azure.Monitor.Query.Logs.Models
                     internalRows = prop.Value.Clone();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LogsTable(name, columns, internalRows, additionalBinaryDataProperties);

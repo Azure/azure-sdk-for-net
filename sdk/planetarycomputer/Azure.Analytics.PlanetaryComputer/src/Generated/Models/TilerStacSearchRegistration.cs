@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerStacSearchRegistration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerStacSearchRegistration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration"/>. </summary>
         /// <param name="search">
         /// Details of the saved search query
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
@@ -24,17 +24,17 @@ namespace Azure.Analytics.PlanetaryComputer
         internal TilerStacSearchRegistration(TilerStacSearchDefinition search)
         {
             Search = search;
-            Links = new ChangeTrackingList<StacLink>();
+            Links = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerStacSearchRegistration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration"/>. </summary>
         /// <param name="search">
         /// Details of the saved search query
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </param>
         /// <param name="links"> Related links for the search query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerStacSearchRegistration(TilerStacSearchDefinition search, IList<StacLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerStacSearchRegistration(TilerStacSearchDefinition search, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             Links = links;
@@ -48,6 +48,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public TilerStacSearchDefinition Search { get; }
 
         /// <summary> Related links for the search query. </summary>
-        public IList<StacLink> Links { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacLink> Links { get; }
     }
 }

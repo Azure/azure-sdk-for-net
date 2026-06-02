@@ -14,18 +14,18 @@ namespace Azure.AI.ContentSafety
     public partial class ContentSafetyImageData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ContentSafetyImageData"/>. </summary>
         public ContentSafetyImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ContentSafetyImageData"/>. </summary>
         /// <param name="content"> The Base64 encoding of the image. </param>
         /// <param name="blobUri"> The blob url of the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentSafetyImageData(BinaryData content, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentSafetyImageData(BinaryData content, global::System.Uri blobUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             BlobUri = blobUri;

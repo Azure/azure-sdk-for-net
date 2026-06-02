@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="WorkIQKnowledgeSource"/>, <see cref="McpServerKnowledgeSource"/>, <see cref="FabricDataAgentKnowledgeSource"/>, and <see cref="FabricOntologyKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.IndexedSharePointKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.IndexedOneLakeKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.FileKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.WebKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.WorkIQKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.McpServerKnowledgeSource"/>, <see cref="Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource"/>, and <see cref="Azure.Search.Documents.Indexes.Models.FabricOntologyKnowledgeSource"/>.
     /// </summary>
     public abstract partial class KnowledgeSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeSource"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         private protected KnowledgeSource(string name, KnowledgeSourceKind kind)
@@ -29,14 +29,14 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeSource"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSource(string name, string description, KnowledgeSourceKind kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSource(string name, string description, KnowledgeSourceKind kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

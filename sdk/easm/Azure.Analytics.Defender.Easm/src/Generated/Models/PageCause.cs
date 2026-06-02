@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class PageCause
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PageCause"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PageCause"/>. </summary>
         internal PageCause()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PageCause"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PageCause"/>. </summary>
         /// <param name="cause"></param>
         /// <param name="causeElementXPath"></param>
         /// <param name="location"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="version"></param>
         /// <param name="domChangeIndex"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PageCause(string cause, string causeElementXPath, string location, int? possibleMatches, bool? loopDetected, int? version, int? domChangeIndex, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PageCause(string cause, string causeElementXPath, string location, int? possibleMatches, bool? loopDetected, int? version, int? domChangeIndex, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Cause = cause;
             CauseElementXPath = causeElementXPath;

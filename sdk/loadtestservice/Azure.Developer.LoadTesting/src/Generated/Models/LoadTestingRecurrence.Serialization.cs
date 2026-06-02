@@ -13,12 +13,12 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Recurrence model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.DailyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.HourlyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="Azure.Developer.LoadTesting.RecurrenceWithCron"/>, and <see cref="Azure.Developer.LoadTesting.WeeklyRecurrence"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownLoadTestingRecurrence))]
-    public abstract partial class LoadTestingRecurrence : IJsonModel<LoadTestingRecurrence>
+    [PersistableModelProxyAttribute(typeof(UnknownLoadTestingRecurrence))]
+    public abstract partial class LoadTestingRecurrence : IJsonModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="LoadTestingRecurrence"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingRecurrence"/> for deserialization. </summary>
         internal LoadTestingRecurrence()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLoadTestingRecurrence(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.LoadTestingRecurrence.DeserializeLoadTestingRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingRecurrence)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestingRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingRecurrence)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestingRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestingRecurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingRecurrence IPersistableModel<LoadTestingRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LoadTestingRecurrence IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestingRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoadTestingRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,19 +76,19 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LoadTestingRecurrence)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestingRecurrence)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (Optional.IsDefined(RecurrenceEnd))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(RecurrenceEnd))
             {
                 writer.WritePropertyName("recurrenceEnd"u8);
-                writer.WriteObjectValue(RecurrenceEnd, options);
+                writer.WriteObjectValue<RecurrenceEnd>(RecurrenceEnd, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -96,9 +96,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -107,26 +107,26 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingRecurrence IJsonModel<LoadTestingRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LoadTestingRecurrence IJsonModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LoadTestingRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestingRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LoadTestingRecurrence)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestingRecurrence)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoadTestingRecurrence(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.LoadTestingRecurrence.DeserializeLoadTestingRecurrence(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LoadTestingRecurrence DeserializeLoadTestingRecurrence(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -135,20 +135,20 @@ namespace Azure.Developer.LoadTesting
                 switch (discriminator.GetString())
                 {
                     case "Daily":
-                        return DailyRecurrence.DeserializeDailyRecurrence(element, options);
+                        return global::Azure.Developer.LoadTesting.DailyRecurrence.DeserializeDailyRecurrence(element, options);
                     case "Hourly":
-                        return HourlyRecurrence.DeserializeHourlyRecurrence(element, options);
+                        return global::Azure.Developer.LoadTesting.HourlyRecurrence.DeserializeHourlyRecurrence(element, options);
                     case "MonthlyByDays":
-                        return MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(element, options);
+                        return global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(element, options);
                     case "MonthlyByDates":
-                        return MonthlyRecurrenceByDates.DeserializeMonthlyRecurrenceByDates(element, options);
+                        return global::Azure.Developer.LoadTesting.MonthlyRecurrenceByDates.DeserializeMonthlyRecurrenceByDates(element, options);
                     case "Cron":
-                        return RecurrenceWithCron.DeserializeRecurrenceWithCron(element, options);
+                        return global::Azure.Developer.LoadTesting.RecurrenceWithCron.DeserializeRecurrenceWithCron(element, options);
                     case "Weekly":
-                        return WeeklyRecurrence.DeserializeWeeklyRecurrence(element, options);
+                        return global::Azure.Developer.LoadTesting.WeeklyRecurrence.DeserializeWeeklyRecurrence(element, options);
                 }
             }
-            return UnknownLoadTestingRecurrence.DeserializeUnknownLoadTestingRecurrence(element, options);
+            return global::Azure.Developer.LoadTesting.UnknownLoadTestingRecurrence.DeserializeUnknownLoadTestingRecurrence(element, options);
         }
     }
 }

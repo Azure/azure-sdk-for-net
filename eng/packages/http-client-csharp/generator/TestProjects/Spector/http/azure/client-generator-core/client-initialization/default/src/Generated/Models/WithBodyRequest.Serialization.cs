@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    public partial class WithBodyRequest : IJsonModel<WithBodyRequest>
+    public partial class WithBodyRequest : IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>
     {
         internal WithBodyRequest() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<WithBodyRequest>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>.Write(ModelReaderWriterOptions options) => throw null;
 
-        WithBodyRequest IPersistableModel<WithBodyRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        WithBodyRequest IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<WithBodyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="withBodyRequest"> The <see cref="WithBodyRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="withBodyRequest"> The <see cref="global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(WithBodyRequest withBodyRequest) => throw null;
 
-        void IJsonModel<WithBodyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        WithBodyRequest IJsonModel<WithBodyRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        WithBodyRequest IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.WithBodyRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual WithBodyRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

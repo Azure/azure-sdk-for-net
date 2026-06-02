@@ -12,39 +12,39 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Client options for <see cref="DeidentificationClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Health.Deidentification.DeidentificationClient"/>. </summary>
     public partial class DeidentificationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_15_Preview;
+        private const global::Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion LatestVersion = global::Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion.V2025_07_15_Preview;
 
         /// <summary> Initializes a new instance of DeidentificationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public DeidentificationClientOptions(ServiceVersion version = LatestVersion)
+        public DeidentificationClientOptions(global::Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_11_15 => "2024-11-15",
-                ServiceVersion.V2025_07_15_Preview => "2025-07-15-preview",
+                global::Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion.V2024_11_15 => "2024-11-15",
+                global::Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion.V2025_07_15_Preview => "2025-07-15-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of DeidentificationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal DeidentificationClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-07-15-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

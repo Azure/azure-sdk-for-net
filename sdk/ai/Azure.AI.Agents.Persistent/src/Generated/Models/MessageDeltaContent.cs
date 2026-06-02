@@ -12,14 +12,14 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a partial streamed message content payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaImageFileContent"/> and <see cref="MessageDeltaTextContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageDeltaImageFileContent"/> and <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextContent"/>.
     /// </summary>
     public abstract partial class MessageDeltaContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
         private protected MessageDeltaContent(int index, string @type)
@@ -28,11 +28,11 @@ namespace Azure.AI.Agents.Persistent
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaContent(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaContent(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Index = index;
             Type = @type;

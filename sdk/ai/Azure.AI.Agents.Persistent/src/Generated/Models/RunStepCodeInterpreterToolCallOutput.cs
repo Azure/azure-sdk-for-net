@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an emitted output from a code interpreter tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterLogOutput"/> and <see cref="RunStepCodeInterpreterImageOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput"/> and <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageOutput"/>.
     /// </summary>
     public abstract partial class RunStepCodeInterpreterToolCallOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         private protected RunStepCodeInterpreterToolCallOutput(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepCodeInterpreterToolCallOutput(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepCodeInterpreterToolCallOutput(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

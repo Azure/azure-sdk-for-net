@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Computer. </summary>
     public partial class ResponsesComputerTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesComputerTool"/>. </summary>
-        public ResponsesComputerTool() : base(ToolType.Computer)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesComputerTool"/>. </summary>
+        public ResponsesComputerTool() : base(global::Azure.AI.Extensions.OpenAI.ToolType.Computer)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesComputerTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesComputerTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesComputerTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesComputerTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

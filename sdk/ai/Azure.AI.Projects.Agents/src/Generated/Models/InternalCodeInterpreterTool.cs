@@ -11,13 +11,13 @@ namespace OpenAI
 {
     internal partial class InternalCodeInterpreterTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
-        public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCodeInterpreterTool"/>. </summary>
+        public InternalCodeInterpreterTool() : base(global::OpenAI.ToolType.CodeInterpreter)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -33,7 +33,7 @@ namespace OpenAI
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,15 +52,15 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -69,7 +69,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalAutoCodeInterpreterToolParam"/>. </description>
+        /// <description> <see cref="global::OpenAI.InternalAutoCodeInterpreterToolParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

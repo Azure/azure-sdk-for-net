@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
-    public partial class Widget : IJsonModel<Widget>
+    public partial class Widget : IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>
     {
         internal Widget() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.Versioning.PreviewVersion
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Widget>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Widget IPersistableModel<Widget>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Widget IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Widget>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator Widget(Response response) => throw null;
 
-        void IJsonModel<Widget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Widget IJsonModel<Widget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Widget IJsonModel<global::Specs.Azure.Versioning.PreviewVersion.Widget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Widget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -12,24 +12,24 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The message content object used to create interactive messages components.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextMessageContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="VideoMessageContent"/>, <see cref="ButtonSetContent"/>, <see cref="LinkContent"/>, and <see cref="ActionGroupContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.TextMessageContent"/>, <see cref="Azure.Communication.Messages.DocumentMessageContent"/>, <see cref="Azure.Communication.Messages.ImageMessageContent"/>, <see cref="Azure.Communication.Messages.VideoMessageContent"/>, <see cref="Azure.Communication.Messages.ButtonSetContent"/>, <see cref="Azure.Communication.Messages.LinkContent"/>, and <see cref="Azure.Communication.Messages.ActionGroupContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         private protected MessageContent(MessageContentKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageContent(MessageContentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

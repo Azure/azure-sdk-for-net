@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> represents the resolution of a date and/or time span. </summary>
     public partial class TemporalSpanResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanResolution"/>. </summary>
-        internal TemporalSpanResolution() : base(ResolutionKind.TemporalSpanResolution)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TemporalSpanResolution"/>. </summary>
+        internal TemporalSpanResolution() : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.TemporalSpanResolution)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TemporalSpanResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="begin"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        internal TemporalSpanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string begin, string end, string duration, TemporalModifier? modifier, string timex) : base(resolutionKind, additionalBinaryDataProperties)
+        internal TemporalSpanResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string begin, string end, string duration, TemporalModifier? modifier, string timex) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Begin = begin;
             End = end;

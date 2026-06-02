@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an LLM answer synthesis activity record. </summary>
     public partial class KnowledgeBaseModelAnswerSynthesisActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.ModelAnswerSynthesis)
+        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.ModelAnswerSynthesis)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM answer synthesis activity. </param>
-        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseModelAnswerSynthesisActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;

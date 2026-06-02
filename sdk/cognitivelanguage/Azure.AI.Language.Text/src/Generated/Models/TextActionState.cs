@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The status of the task at the mentioned last update time. </summary>
-    public readonly partial struct TextActionState : IEquatable<TextActionState>
+    public readonly partial struct TextActionState : IEquatable<global::Azure.AI.Language.Text.TextActionState>
     {
         private readonly string _value;
         /// <summary> Not started status. </summary>
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Cancelling status. </summary>
         private const string CancellingValue = "cancelling";
 
-        /// <summary> Initializes a new instance of <see cref="TextActionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextActionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextActionState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -60,34 +60,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Cancelling status. </summary>
         public static TextActionState Cancelling { get; } = new TextActionState(CancellingValue);
 
-        /// <summary> Determines if two <see cref="TextActionState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.TextActionState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextActionState left, TextActionState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TextActionState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.TextActionState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextActionState left, TextActionState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TextActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.TextActionState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TextActionState(string value) => new TextActionState(value);
 
-        /// <summary> Converts a string to a <see cref="TextActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.TextActionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextActionState?(string value) => value == null ? null : new TextActionState(value);
+        public static implicit operator TextActionState?(string value) => (value == null) ? null : new TextActionState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TextActionState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TextActionState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TextActionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TextActionState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

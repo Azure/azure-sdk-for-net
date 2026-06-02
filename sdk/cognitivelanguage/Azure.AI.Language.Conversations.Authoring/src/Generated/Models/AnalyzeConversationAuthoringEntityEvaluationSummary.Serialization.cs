@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the evaluation result for an entity. </summary>
-    public partial class AnalyzeConversationAuthoringEntityEvaluationSummary : IJsonModel<AnalyzeConversationAuthoringEntityEvaluationSummary>
+    public partial class AnalyzeConversationAuthoringEntityEvaluationSummary : IJsonModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringEntityEvaluationSummary"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary"/> for deserialization. </summary>
         internal AnalyzeConversationAuthoringEntityEvaluationSummary()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeConversationAuthoringEntityEvaluationSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary.DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeConversationAuthoringEntityEvaluationSummary IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeConversationAuthoringEntityEvaluationSummary IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeConversationAuthoringEntityEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("f1"u8);
             writer.WriteNumberValue(F1);
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WriteNumberValue(FalsePositiveCount);
             writer.WritePropertyName("falseNegativeCount"u8);
             writer.WriteNumberValue(FalseNegativeCount);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -100,9 +100,9 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -111,26 +111,26 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeConversationAuthoringEntityEvaluationSummary IJsonModel<AnalyzeConversationAuthoringEntityEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeConversationAuthoringEntityEvaluationSummary IJsonModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeConversationAuthoringEntityEvaluationSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringEntityEvaluationSummary.DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeConversationAuthoringEntityEvaluationSummary DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             int trueNegativeCount = default;
             int falsePositiveCount = default;
             int falseNegativeCount = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("f1"u8))
@@ -179,9 +179,9 @@ namespace Azure.AI.Language.Conversations.Authoring
                     falseNegativeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnalyzeConversationAuthoringEntityEvaluationSummary(

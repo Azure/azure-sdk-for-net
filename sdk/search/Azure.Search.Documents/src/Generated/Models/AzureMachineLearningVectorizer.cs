@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>
     public partial class AzureMachineLearningVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public AzureMachineLearningVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.AML)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AzureMachineLearningVectorizer(string vectorizerName) : base(vectorizerName, global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizerKind.AML)
         {
-            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
-        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
+        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
             AMLParameters = amlParameters;
         }

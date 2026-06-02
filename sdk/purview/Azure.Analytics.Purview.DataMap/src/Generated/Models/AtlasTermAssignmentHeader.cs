@@ -14,14 +14,14 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasTermAssignmentHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTermAssignmentHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader"/>. </summary>
         public AtlasTermAssignmentHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTermAssignmentHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader"/>. </summary>
         /// <param name="confidence"> The confidence of the term assignment. </param>
         /// <param name="createdBy"> The user who created the record. </param>
         /// <param name="description"> The description of the term assignment. </param>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="steward"> The steward of the term. </param>
         /// <param name="termGuid"> The GUID of the term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTermAssignmentHeader(int? confidence, string createdBy, string description, string displayText, string expression, Guid? relationGuid, AtlasTermAssignmentStatus? status, string steward, Guid? termGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasTermAssignmentHeader(int? confidence, string createdBy, string description, string displayText, string expression, Guid? relationGuid, AtlasTermAssignmentStatus? status, string steward, Guid? termGuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Confidence = confidence;
             CreatedBy = createdBy;

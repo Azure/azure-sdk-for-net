@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> An action to type in text. </summary>
     public partial class TypeAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="TypeAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.TypeAction"/>. </summary>
         /// <param name="text"> The text to type. </param>
         internal TypeAction(string text) : base("type")
         {
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TypeAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.TypeAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text to type. </param>
-        internal TypeAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal TypeAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

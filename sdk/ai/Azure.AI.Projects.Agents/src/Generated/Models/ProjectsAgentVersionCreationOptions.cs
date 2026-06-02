@@ -11,20 +11,20 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectsAgentVersionCreationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersionCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions"/>. </summary>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="definition"/> is null. </exception>
         public ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition definition)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(definition, nameof(definition));
 
             Metadata = new ChangeTrackingDictionary<string, string>();
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersionCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;

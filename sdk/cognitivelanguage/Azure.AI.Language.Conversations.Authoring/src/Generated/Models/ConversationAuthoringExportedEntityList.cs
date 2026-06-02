@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringExportedEntityList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntityList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList"/>. </summary>
         public ConversationAuthoringExportedEntityList()
         {
-            Sublists = new ChangeTrackingList<ConversationAuthoringExportedEntitySublist>();
+            Sublists = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntityList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList"/>. </summary>
         /// <param name="sublists"> The sub-lists of the list component. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedEntityList(IList<ConversationAuthoringExportedEntitySublist> sublists, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedEntityList(IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist> sublists, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sublists = sublists;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The sub-lists of the list component. </summary>
-        public IList<ConversationAuthoringExportedEntitySublist> Sublists { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist> Sublists { get; }
     }
 }

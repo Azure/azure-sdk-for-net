@@ -28,70 +28,70 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (translationIds != null && !(translationIds is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((translationIds != null) && !((translationIds is ChangeTrackingList<global::System.Guid> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("ids", translationIds, ",", escape: true);
             }
-            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((statuses != null) && !((statuses is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("statuses", statuses, ",", escape: true);
             }
-            if (createdDateTimeUtcStart != null)
+            if ((createdDateTimeUtcStart != null))
             {
-                uri.AppendQuery("createdDateTimeUtcStart", TypeFormatters.ConvertToString(createdDateTimeUtcStart, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateTimeUtcStart", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(createdDateTimeUtcStart, global::Azure.AI.Translation.Document.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateTimeUtcEnd != null)
+            if ((createdDateTimeUtcEnd != null))
             {
-                uri.AppendQuery("createdDateTimeUtcEnd", TypeFormatters.ConvertToString(createdDateTimeUtcEnd, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateTimeUtcEnd", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(createdDateTimeUtcEnd, global::Azure.AI.Translation.Document.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((orderBy != null) && !((orderBy is ChangeTrackingList<string> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("orderby", orderBy, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetTranslationsStatusRequest(Uri nextPage, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateNextGetTranslationsStatusRequest(global::System.Uri nextPage, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -100,16 +100,16 @@ namespace Azure.AI.Translation.Document
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -123,14 +123,14 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath(translationId.ToString(), true);
             uri.AppendPath("/documents/", false);
             uri.AppendPath(documentId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -142,14 +142,14 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -161,19 +161,19 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentsStatusRequest(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        internal HttpMessage CreateGetDocumentsStatusRequest(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -181,51 +181,51 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/document/batches/", false);
             uri.AppendPath(translationId.ToString(), true);
             uri.AppendPath("/documents", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (documentIds != null && !(documentIds is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((documentIds != null) && !((documentIds is ChangeTrackingList<global::System.Guid> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("ids", documentIds, ",", escape: true);
             }
-            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((statuses != null) && !((statuses is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("statuses", statuses, ",", escape: true);
             }
-            if (createdDateTimeUtcStart != null)
+            if ((createdDateTimeUtcStart != null))
             {
-                uri.AppendQuery("createdDateTimeUtcStart", TypeFormatters.ConvertToString(createdDateTimeUtcStart, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateTimeUtcStart", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(createdDateTimeUtcStart, global::Azure.AI.Translation.Document.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateTimeUtcEnd != null)
+            if ((createdDateTimeUtcEnd != null))
             {
-                uri.AppendQuery("createdDateTimeUtcEnd", TypeFormatters.ConvertToString(createdDateTimeUtcEnd, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateTimeUtcEnd", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(createdDateTimeUtcEnd, global::Azure.AI.Translation.Document.SerializationFormat.DateTime_RFC3339), true);
             }
-            if (@orderby != null && !(@orderby is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((@orderby != null) && !((@orderby is ChangeTrackingList<string> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("orderby", @orderby, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDocumentsStatusRequest(Uri nextPage, Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        internal HttpMessage CreateNextGetDocumentsStatusRequest(global::System.Uri nextPage, Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -234,16 +234,16 @@ namespace Azure.AI.Translation.Document
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -254,18 +254,18 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document/formats", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

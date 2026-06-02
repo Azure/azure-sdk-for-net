@@ -14,23 +14,23 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RoleDefinitionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionProperties"/>. </summary>
         public RoleDefinitionProperties()
         {
-            Permissions = new ChangeTrackingList<KeyVaultPermission>();
-            AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
+            Permissions = new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultPermission>();
+            AssignableScopes = new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleDefinitionProperties"/>. </summary>
         /// <param name="roleName"> The role name. </param>
         /// <param name="description"> The role definition description. </param>
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<global::Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions, IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
             Description = description;
@@ -50,9 +50,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         public KeyVaultRoleType? RoleType { get; set; }
 
         /// <summary> Role definition permissions. </summary>
-        public IList<KeyVaultPermission> Permissions { get; }
+        public IList<global::Azure.Security.KeyVault.Administration.KeyVaultPermission> Permissions { get; }
 
         /// <summary> Role definition assignable scopes. </summary>
-        public IList<KeyVaultRoleScope> AssignableScopes { get; }
+        public IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope> AssignableScopes { get; }
     }
 }

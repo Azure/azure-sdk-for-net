@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerWarning"/>. </summary>
         internal SearchIndexerWarning()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerWarning"/>. </summary>
         /// <param name="key"> The key of the item which generated a warning. </param>
         /// <param name="message"> The message describing the warning that occurred while processing the item. </param>
         /// <param name="name"> The name of the source at which the warning originated. For example, this could refer to a particular skill in the attached skillset. This may not be always available. </param>
         /// <param name="details"> Additional, verbose details about the warning to assist in debugging the indexer. This may not be always available. </param>
         /// <param name="documentationLink"> A link to a troubleshooting guide for these classes of warnings. This may not be always available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerWarning(string key, string message, string name, string details, string documentationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerWarning(string key, string message, string name, string details, string documentationLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Message = message;

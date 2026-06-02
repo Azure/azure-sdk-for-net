@@ -15,18 +15,18 @@ namespace Azure.Analytics.Defender.Easm
     public partial class InnerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.InnerError"/>. </summary>
         internal InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.InnerError"/>. </summary>
         /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
         /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(string code, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InnerError(string code, BinaryData value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Value = value;
@@ -38,8 +38,8 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// This is an additional field representing the value that caused the error to help with debugging.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

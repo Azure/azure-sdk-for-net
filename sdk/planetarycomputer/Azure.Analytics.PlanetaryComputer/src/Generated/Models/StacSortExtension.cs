@@ -17,25 +17,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacSortExtension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacSortExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacSortExtension"/>. </summary>
         /// <param name="field"> The field name to sort by. </param>
         /// <param name="direction"> The sort direction (ascending or descending). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="field"/> is null. </exception>
         public StacSortExtension(string @field, StacSearchSortingDirection direction)
         {
-            Argument.AssertNotNull(@field, nameof(@field));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(@field, nameof(@field));
 
             Field = @field;
             Direction = direction;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacSortExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacSortExtension"/>. </summary>
         /// <param name="field"> The field name to sort by. </param>
         /// <param name="direction"> The sort direction (ascending or descending). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacSortExtension(string @field, StacSearchSortingDirection direction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacSortExtension(string @field, StacSearchSortingDirection direction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             Direction = direction;

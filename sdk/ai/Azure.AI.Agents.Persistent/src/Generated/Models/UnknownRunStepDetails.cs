@@ -12,10 +12,10 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownRunStepDetails : RunStepDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRunStepDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownRunStepDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRunStepDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownRunStepDetails(RunStepType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

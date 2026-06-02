@@ -14,16 +14,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
-        public KnowledgeSourceAzureOpenAIVectorizer() : base(VectorSearchVectorizerKind.AzureOpenAI)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
+        public KnowledgeSourceAzureOpenAIVectorizer() : base(global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizerKind.AzureOpenAI)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
-        internal KnowledgeSourceAzureOpenAIVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
+        internal KnowledgeSourceAzureOpenAIVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
         {
             AzureOpenAIParameters = azureOpenAIParameters;
         }

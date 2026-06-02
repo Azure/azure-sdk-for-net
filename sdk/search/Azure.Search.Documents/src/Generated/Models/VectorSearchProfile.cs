@@ -15,28 +15,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class VectorSearchProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
         public VectorSearchProfile(string name, string algorithmConfigurationName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
 
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
         /// <param name="vectorizerName"> The name of the vectorization being configured for use with vector search. </param>
         /// <param name="compressionName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;

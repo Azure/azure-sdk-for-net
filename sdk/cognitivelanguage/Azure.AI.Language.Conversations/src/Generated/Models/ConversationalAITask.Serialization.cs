@@ -14,9 +14,9 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A conversational AI task. </summary>
-    public partial class ConversationalAITask : AnalyzeConversationInput, IJsonModel<ConversationalAITask>
+    public partial class ConversationalAITask : AnalyzeConversationInput, IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationalAITask"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAITask"/> for deserialization. </summary>
         internal ConversationalAITask()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationalAITask(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.ConversationalAITask.DeserializeConversationalAITask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalAITask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationalAITask)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalAITask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationalAITask)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationalAITask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationalAITask IPersistableModel<ConversationalAITask>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationalAITask)PersistableModelCreateCore(data, options);
+        ConversationalAITask IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ConversationalAITask)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationalAITask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationalAITask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,45 +74,45 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationalAITask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationalAITask)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput, options);
+            writer.WriteObjectValue<ConversationalAIAnalysisInput>(AnalysisInput, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters, options);
+            writer.WriteObjectValue<AIConversationLanguageUnderstandingActionContent>(Parameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationalAITask IJsonModel<ConversationalAITask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConversationalAITask)JsonModelCreateCore(ref reader, options);
+        ConversationalAITask IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ConversationalAITask)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeConversationInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationalAITask>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationalAITask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationalAITask)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationalAITask(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.ConversationalAITask.DeserializeConversationalAITask(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationalAITask DeserializeConversationalAITask(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             AnalyzeConversationInputKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ConversationalAIAnalysisInput analysisInput = default;
             AIConversationLanguageUnderstandingActionContent parameters = default;
             foreach (var prop in element.EnumerateObject())
@@ -124,17 +124,17 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("analysisInput"u8))
                 {
-                    analysisInput = ConversationalAIAnalysisInput.DeserializeConversationalAIAnalysisInput(prop.Value, options);
+                    analysisInput = global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput.DeserializeConversationalAIAnalysisInput(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = AIConversationLanguageUnderstandingActionContent.DeserializeAIConversationLanguageUnderstandingActionContent(prop.Value, options);
+                    parameters = global::Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent.DeserializeAIConversationLanguageUnderstandingActionContent(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConversationalAITask(kind, additionalBinaryDataProperties, analysisInput, parameters);

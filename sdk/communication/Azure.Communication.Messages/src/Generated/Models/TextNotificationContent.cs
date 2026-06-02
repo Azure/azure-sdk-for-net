@@ -13,26 +13,26 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a text notification. </summary>
     public partial class TextNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="TextNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TextNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="content"> Message content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to, CommunicationMessageKind.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
+        public TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.Text)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TextNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Message content. </param>
-        internal TextNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal TextNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string content) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             Content = content;
         }

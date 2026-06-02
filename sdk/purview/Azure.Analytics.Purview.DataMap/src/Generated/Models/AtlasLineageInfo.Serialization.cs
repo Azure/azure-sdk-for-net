@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The lineage information. </summary>
-    public partial class AtlasLineageInfo : IJsonModel<AtlasLineageInfo>
+    public partial class AtlasLineageInfo : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasLineageInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasLineageInfo(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo.DeserializeAtlasLineageInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasLineageInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasLineageInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasLineageInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasLineageInfo IPersistableModel<AtlasLineageInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasLineageInfo IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasLineageInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasLineageInfo"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo"/> from. </param>
         public static explicit operator AtlasLineageInfo(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasLineageInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo.DeserializeAtlasLineageInfo(document.RootElement, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasLineageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,35 +76,35 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasLineageInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BaseEntityGuid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(BaseEntityGuid))
             {
                 writer.WritePropertyName("baseEntityGuid"u8);
                 writer.WriteStringValue(BaseEntityGuid);
             }
-            if (Optional.IsCollectionDefined(GuidEntityMap))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(GuidEntityMap))
             {
                 writer.WritePropertyName("guidEntityMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in GuidEntityMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<AtlasEntityHeader>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(WidthCounts))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(WidthCounts))
             {
                 writer.WritePropertyName("widthCounts"u8);
                 writer.WriteStartObject();
                 foreach (var item in WidthCounts)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        if ((item0.Value == null))
                         {
                             writer.WriteNullValue();
                             continue;
@@ -121,9 +121,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                         writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item0.Value))
                         {
-                            JsonSerializer.Serialize(writer, document.RootElement);
+                            global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                         }
 #endif
                     }
@@ -131,47 +131,47 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LineageDepth))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LineageDepth))
             {
                 writer.WritePropertyName("lineageDepth"u8);
                 writer.WriteNumberValue(LineageDepth.Value);
             }
-            if (Optional.IsDefined(LineageWidth))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LineageWidth))
             {
                 writer.WritePropertyName("lineageWidth"u8);
                 writer.WriteNumberValue(LineageWidth.Value);
             }
-            if (Optional.IsDefined(ChildrenCount))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ChildrenCount))
             {
                 writer.WritePropertyName("childrenCount"u8);
                 writer.WriteNumberValue(ChildrenCount.Value);
             }
-            if (Optional.IsDefined(LineageDirection))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LineageDirection))
             {
                 writer.WritePropertyName("lineageDirection"u8);
                 writer.WriteStringValue(LineageDirection.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ParentRelations))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(ParentRelations))
             {
                 writer.WritePropertyName("parentRelations"u8);
                 writer.WriteStartArray();
                 foreach (ParentRelation item in ParentRelations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ParentRelation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Relations))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Relations))
             {
                 writer.WritePropertyName("relations"u8);
                 writer.WriteStartArray();
                 foreach (LineageRelation item in Relations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<LineageRelation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -179,9 +179,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -190,39 +190,39 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasLineageInfo IJsonModel<AtlasLineageInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasLineageInfo IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasLineageInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasLineageInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasLineageInfo(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo.DeserializeAtlasLineageInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasLineageInfo DeserializeAtlasLineageInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string baseEntityGuid = default;
-            IDictionary<string, AtlasEntityHeader> guidEntityMap = default;
-            IDictionary<string, IDictionary<string, BinaryData>> widthCounts = default;
+            IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> guidEntityMap = default;
+            IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> widthCounts = default;
             int? lineageDepth = default;
             int? lineageWidth = default;
             int? childrenCount = default;
             LineageDirection? lineageDirection = default;
-            IList<ParentRelation> parentRelations = default;
-            IList<LineageRelation> relations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Purview.DataMap.ParentRelation> parentRelations = default;
+            IList<global::Azure.Analytics.Purview.DataMap.LineageRelation> relations = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("baseEntityGuid"u8))
@@ -232,43 +232,43 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("guidEntityMap"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, AtlasEntityHeader> dictionary = new Dictionary<string, AtlasEntityHeader>();
+                    Dictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> dictionary = new Dictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader.DeserializeAtlasEntityHeader(prop0.Value, options));
                     }
                     guidEntityMap = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("widthCounts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
+                    Dictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> dictionary = new Dictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
+                            Dictionary<string, global::System.BinaryData> dictionary0 = new Dictionary<string, global::System.BinaryData>();
                             foreach (var prop1 in prop0.Value.EnumerateObject())
                             {
-                                if (prop1.Value.ValueKind == JsonValueKind.Null)
+                                if ((prop1.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                                 {
                                     dictionary0.Add(prop1.Name, null);
                                 }
                                 else
                                 {
-                                    dictionary0.Add(prop1.Name, BinaryData.FromString(prop1.Value.GetRawText()));
+                                    dictionary0.Add(prop1.Name, global::System.BinaryData.FromString(prop1.Value.GetRawText()));
                                 }
                             }
                             dictionary.Add(prop0.Name, dictionary0);
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("lineageDepth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("lineageWidth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("childrenCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -306,7 +306,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("lineageDirection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -315,47 +315,47 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("parentRelations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ParentRelation> array = new List<ParentRelation>();
+                    List<global::Azure.Analytics.Purview.DataMap.ParentRelation> array = new List<global::Azure.Analytics.Purview.DataMap.ParentRelation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ParentRelation.DeserializeParentRelation(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.ParentRelation.DeserializeParentRelation(item, options));
                     }
                     parentRelations = array;
                     continue;
                 }
                 if (prop.NameEquals("relations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<LineageRelation> array = new List<LineageRelation>();
+                    List<global::Azure.Analytics.Purview.DataMap.LineageRelation> array = new List<global::Azure.Analytics.Purview.DataMap.LineageRelation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LineageRelation.DeserializeLineageRelation(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.LineageRelation.DeserializeLineageRelation(item, options));
                     }
                     relations = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasLineageInfo(
                 baseEntityGuid,
-                guidEntityMap ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(),
-                widthCounts ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                (guidEntityMap ?? new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>()),
+                (widthCounts ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>()),
                 lineageDepth,
                 lineageWidth,
                 childrenCount,
                 lineageDirection,
-                parentRelations ?? new ChangeTrackingList<ParentRelation>(),
-                relations ?? new ChangeTrackingList<LineageRelation>(),
+                (parentRelations ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ParentRelation>()),
+                (relations ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.LineageRelation>()),
                 additionalBinaryDataProperties);
         }
     }

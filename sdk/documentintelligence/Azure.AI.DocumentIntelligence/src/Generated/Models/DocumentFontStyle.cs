@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Font style. </summary>
-    public readonly partial struct DocumentFontStyle : IEquatable<DocumentFontStyle>
+    public readonly partial struct DocumentFontStyle : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentFontStyle>
     {
         private readonly string _value;
         /// <summary> Characters are represented normally. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Characters are visually slanted to the right. </summary>
         private const string ItalicValue = "italic";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFontStyle"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFontStyle"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFontStyle(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Characters are visually slanted to the right. </summary>
         public static DocumentFontStyle Italic { get; } = new DocumentFontStyle(ItalicValue);
 
-        /// <summary> Determines if two <see cref="DocumentFontStyle"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentFontStyle"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFontStyle left, DocumentFontStyle right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentFontStyle"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentFontStyle"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFontStyle left, DocumentFontStyle right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentFontStyle"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentFontStyle(string value) => new DocumentFontStyle(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentFontStyle"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentFontStyle?(string value) => value == null ? null : new DocumentFontStyle(value);
+        public static implicit operator DocumentFontStyle?(string value) => (value == null) ? null : new DocumentFontStyle(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentFontStyle other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentFontStyle other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentFontStyle other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentFontStyle other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

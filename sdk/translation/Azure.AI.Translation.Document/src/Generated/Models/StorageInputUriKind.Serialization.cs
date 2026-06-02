@@ -14,21 +14,21 @@ namespace Azure.AI.Translation.Document
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageInputUriKind value) => value switch
         {
-            StorageInputUriKind.Folder => "Folder",
-            StorageInputUriKind.File => "File",
+            global::Azure.AI.Translation.Document.StorageInputUriKind.Folder => "Folder",
+            global::Azure.AI.Translation.Document.StorageInputUriKind.File => "File",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageInputUriKind value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static StorageInputUriKind ToStorageInputUriKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Folder"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Folder"))
             {
-                return StorageInputUriKind.Folder;
+                return global::Azure.AI.Translation.Document.StorageInputUriKind.Folder;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "File"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "File"))
             {
-                return StorageInputUriKind.File;
+                return global::Azure.AI.Translation.Document.StorageInputUriKind.File;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageInputUriKind value.");
         }

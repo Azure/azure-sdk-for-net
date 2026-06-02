@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Structure.RenamedOperation
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RenamedOperationClientHostExtensions
     {
         public static IClientBuilder AddRenamedOperationClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRenamedOperationClient(this IHostApplicationBuilder host, string sectionName, Action<RenamedOperationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRenamedOperationClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Structure.RenamedOperation.RenamedOperationClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRenamedOperationClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRenamedOperationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RenamedOperationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRenamedOperationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Structure.RenamedOperation.RenamedOperationClientSettings> configureSettings) => throw null;
     }
 }

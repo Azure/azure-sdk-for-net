@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class BatchApplicationPackageReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchApplicationPackageReference"/>. </summary>
         /// <param name="applicationId"> The ID of the application to deploy. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public BatchApplicationPackageReference(string applicationId)
         {
-            Argument.AssertNotNull(applicationId, nameof(applicationId));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(applicationId, nameof(applicationId));
 
             ApplicationId = applicationId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchApplicationPackageReference"/>. </summary>
         /// <param name="applicationId"> The ID of the application to deploy. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). </param>
         /// <param name="version"> The version of the application to deploy. If omitted, the default version is deployed. If this is omitted on a Pool, and no default version is specified for this application, the request fails with the error code InvalidApplicationPackageReferences and HTTP status code 409. If this is omitted on a Task, and no default version is specified for this application, the Task fails with a pre-processing error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchApplicationPackageReference(string applicationId, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchApplicationPackageReference(string applicationId, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             Version = version;

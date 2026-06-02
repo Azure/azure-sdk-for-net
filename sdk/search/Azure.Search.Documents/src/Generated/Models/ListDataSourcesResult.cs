@@ -14,24 +14,24 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class ListDataSourcesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListDataSourcesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListDataSourcesResult"/>. </summary>
         internal ListDataSourcesResult()
         {
-            DataSources = new ChangeTrackingList<SearchIndexerDataSourceConnection>();
+            DataSources = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListDataSourcesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListDataSourcesResult"/>. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSourceConnection> dataSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListDataSourcesResult(IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> dataSources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataSources = dataSources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The datasources in the Search service. </summary>
-        public IReadOnlyList<SearchIndexerDataSourceConnection> DataSources { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> DataSources { get; }
     }
 }

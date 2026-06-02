@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentEntityRegionEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentEntityRegionEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the region's expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the region's predicted entity labels. </param>
         /// <param name="regionOffset"> Represents the region offset. </param>
         /// <param name="regionLength"> Represents the region length. </param>
-        internal DocumentEntityRegionEvalResult(IEnumerable<DocumentEntityLabelEvalResult> expectedEntities, IEnumerable<DocumentEntityLabelEvalResult> predictedEntities, int regionOffset, int regionLength)
+        internal DocumentEntityRegionEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> expectedEntities, IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> predictedEntities, int regionOffset, int regionLength)
         {
             ExpectedEntities = expectedEntities.ToList();
             PredictedEntities = predictedEntities.ToList();
@@ -30,13 +30,13 @@ namespace Azure.AI.Language.Text.Authoring
             RegionLength = regionLength;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentEntityRegionEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the region's expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the region's predicted entity labels. </param>
         /// <param name="regionOffset"> Represents the region offset. </param>
         /// <param name="regionLength"> Represents the region length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentEntityRegionEvalResult(IList<DocumentEntityLabelEvalResult> expectedEntities, IList<DocumentEntityLabelEvalResult> predictedEntities, int regionOffset, int regionLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentEntityRegionEvalResult(IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> expectedEntities, IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> predictedEntities, int regionOffset, int regionLength, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedEntities = expectedEntities;
             PredictedEntities = predictedEntities;
@@ -46,10 +46,10 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Represents the region's expected entity labels. </summary>
-        public IList<DocumentEntityLabelEvalResult> ExpectedEntities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> ExpectedEntities { get; }
 
         /// <summary> Represents the region's predicted entity labels. </summary>
-        public IList<DocumentEntityLabelEvalResult> PredictedEntities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> PredictedEntities { get; }
 
         /// <summary> Represents the region offset. </summary>
         public int RegionOffset { get; }

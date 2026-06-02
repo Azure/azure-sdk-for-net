@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
-    public partial class AtlasEntity : IJsonModel<AtlasEntity>
+    public partial class AtlasEntity : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasEntity(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasEntity.DeserializeAtlasEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntity IPersistableModel<AtlasEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasEntity IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,19 +68,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Attributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -88,32 +88,32 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TypeName))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsDefined(LastModifiedTS))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(LastModifiedTS))
             {
                 writer.WritePropertyName("lastModifiedTS"u8);
                 writer.WriteStringValue(LastModifiedTS);
             }
-            if (Optional.IsCollectionDefined(BusinessAttributes))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(BusinessAttributes))
             {
                 writer.WritePropertyName("businessAttributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in BusinessAttributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -121,42 +121,42 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Classifications))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
                 foreach (AtlasClassification item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasClassification>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CreateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CreateTime))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteNumberValue(CreateTime.Value);
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsCollectionDefined(CustomAttributes))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(CustomAttributes))
             {
                 writer.WritePropertyName("customAttributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomAttributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -165,33 +165,33 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Guid))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Guid))
             {
                 writer.WritePropertyName("guid"u8);
                 writer.WriteStringValue(Guid);
             }
-            if (Optional.IsDefined(HomeId))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(HomeId))
             {
                 writer.WritePropertyName("homeId"u8);
                 writer.WriteStringValue(HomeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CollectionId))
+            if (((options.Format != "W") && global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CollectionId)))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId);
             }
-            if (Optional.IsDefined(IsIncomplete))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(IsIncomplete))
             {
                 writer.WritePropertyName("isIncomplete"u8);
                 writer.WriteBooleanValue(IsIncomplete.Value);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (string item in Labels)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -200,34 +200,34 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Meanings))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Meanings))
             {
                 writer.WritePropertyName("meanings"u8);
                 writer.WriteStartArray();
                 foreach (AtlasTermAssignmentHeader item in Meanings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasTermAssignmentHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProvenanceType))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ProvenanceType))
             {
                 writer.WritePropertyName("provenanceType"u8);
                 writer.WriteNumberValue(ProvenanceType.Value);
             }
-            if (Optional.IsDefined(Proxy))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteBooleanValue(Proxy.Value);
             }
-            if (Optional.IsCollectionDefined(RelationshipAttributes))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(RelationshipAttributes))
             {
                 writer.WritePropertyName("relationshipAttributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in RelationshipAttributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -235,42 +235,42 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateTime))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(UpdateTime))
             {
                 writer.WritePropertyName("updateTime"u8);
                 writer.WriteNumberValue(UpdateTime.Value);
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Version))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsCollectionDefined(Contacts))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Contacts))
             {
                 writer.WritePropertyName("contacts"u8);
                 writer.WriteStartObject();
                 foreach (var item in Contacts)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -278,13 +278,13 @@ namespace Azure.Analytics.Purview.DataMap
                     writer.WriteStartArray();
                     foreach (ContactInfo item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        writer.WriteObjectValue<ContactInfo>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -292,9 +292,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -303,34 +303,34 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntity IJsonModel<AtlasEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasEntity IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntity)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasEntity(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasEntity.DeserializeAtlasEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasEntity DeserializeAtlasEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> attributes = default;
+            IDictionary<string, global::System.BinaryData> attributes = default;
             string typeName = default;
             string lastModifiedTS = default;
-            IDictionary<string, BinaryData> businessAttributes = default;
-            IList<AtlasClassification> classifications = default;
+            IDictionary<string, global::System.BinaryData> businessAttributes = default;
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications = default;
             long? createTime = default;
             string createdBy = default;
             IDictionary<string, string> customAttributes = default;
@@ -339,34 +339,34 @@ namespace Azure.Analytics.Purview.DataMap
             string collectionId = default;
             bool? isIncomplete = default;
             IList<string> labels = default;
-            IList<AtlasTermAssignmentHeader> meanings = default;
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> meanings = default;
             int? provenanceType = default;
             bool? proxy = default;
-            IDictionary<string, BinaryData> relationshipAttributes = default;
+            IDictionary<string, global::System.BinaryData> relationshipAttributes = default;
             EntityStatus? status = default;
             long? updateTime = default;
             string updatedBy = default;
             long? version = default;
-            IDictionary<string, IList<ContactInfo>> contacts = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> contacts = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("attributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     attributes = dictionary;
@@ -384,20 +384,20 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("businessAttributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     businessAttributes = dictionary;
@@ -405,21 +405,21 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("classifications"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasClassification> array = new List<AtlasClassification>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasClassification> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
                 }
                 if (prop.NameEquals("createTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -433,14 +433,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("customAttributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -469,7 +469,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("isIncomplete"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -478,14 +478,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("labels"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -499,21 +499,21 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("meanings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasTermAssignmentHeader> array = new List<AtlasTermAssignmentHeader>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item, options));
                     }
                     meanings = array;
                     continue;
                 }
                 if (prop.NameEquals("provenanceType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -522,7 +522,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("proxy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -531,20 +531,20 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("relationshipAttributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     relationshipAttributes = dictionary;
@@ -552,7 +552,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -561,7 +561,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("updateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -575,7 +575,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -584,23 +584,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("contacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IList<ContactInfo>> dictionary = new Dictionary<string, IList<ContactInfo>>();
+                    Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> dictionary = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            List<ContactInfo> array = new List<ContactInfo>();
+                            List<global::Azure.Analytics.Purview.DataMap.ContactInfo> array = new List<global::Azure.Analytics.Purview.DataMap.ContactInfo>();
                             foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(ContactInfo.DeserializeContactInfo(item, options));
+                                array.Add(global::Azure.Analytics.Purview.DataMap.ContactInfo.DeserializeContactInfo(item, options));
                             }
                             dictionary.Add(prop0.Name, array);
                         }
@@ -608,34 +608,34 @@ namespace Azure.Analytics.Purview.DataMap
                     contacts = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasEntity(
-                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (attributes ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 typeName,
                 lastModifiedTS,
-                businessAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                (businessAttributes ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
+                (classifications ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>()),
                 createTime,
                 createdBy,
-                customAttributes ?? new ChangeTrackingDictionary<string, string>(),
+                (customAttributes ?? new ChangeTrackingDictionary<string, string>()),
                 guid,
                 homeId,
                 collectionId,
                 isIncomplete,
-                labels ?? new ChangeTrackingList<string>(),
-                meanings ?? new ChangeTrackingList<AtlasTermAssignmentHeader>(),
+                (labels ?? new ChangeTrackingList<string>()),
+                (meanings ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>()),
                 provenanceType,
                 proxy,
-                relationshipAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (relationshipAttributes ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 status,
                 updateTime,
                 updatedBy,
                 version,
-                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                (contacts ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>()),
                 additionalBinaryDataProperties);
         }
     }

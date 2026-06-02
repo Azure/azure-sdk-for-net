@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> The location where the data may be processed. </summary>
-    public readonly partial struct ProcessingLocation : IEquatable<ProcessingLocation>
+    public readonly partial struct ProcessingLocation : IEquatable<global::Azure.AI.ContentUnderstanding.ProcessingLocation>
     {
         private readonly string _value;
         /// <summary> Data may be processed in the same geography as the resource. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Data may be processed in any Azure data center globally. </summary>
         private const string GlobalValue = "global";
 
-        /// <summary> Initializes a new instance of <see cref="ProcessingLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ProcessingLocation"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProcessingLocation(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Data may be processed in any Azure data center globally. </summary>
         public static ProcessingLocation Global { get; } = new ProcessingLocation(GlobalValue);
 
-        /// <summary> Determines if two <see cref="ProcessingLocation"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ProcessingLocation"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProcessingLocation left, ProcessingLocation right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProcessingLocation"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ProcessingLocation"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProcessingLocation left, ProcessingLocation right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProcessingLocation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ProcessingLocation"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ProcessingLocation(string value) => new ProcessingLocation(value);
 
-        /// <summary> Converts a string to a <see cref="ProcessingLocation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ProcessingLocation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProcessingLocation?(string value) => value == null ? null : new ProcessingLocation(value);
+        public static implicit operator ProcessingLocation?(string value) => (value == null) ? null : new ProcessingLocation(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProcessingLocation other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ProcessingLocation other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ProcessingLocation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProcessingLocation other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

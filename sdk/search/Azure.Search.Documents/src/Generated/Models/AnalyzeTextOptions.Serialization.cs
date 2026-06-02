@@ -15,9 +15,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies some text and analysis components used to break that text into tokens. </summary>
-    public partial class AnalyzeTextOptions : IJsonModel<AnalyzeTextOptions>
+    public partial class AnalyzeTextOptions : IJsonModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions"/> for deserialization. </summary>
         internal AnalyzeTextOptions()
         {
         }
@@ -26,58 +26,58 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeTextOptions(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions.DeserializeAnalyzeTextOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeTextOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextOptions IPersistableModel<AnalyzeTextOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeTextOptions IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="analyzeTextOptions"> The <see cref="AnalyzeTextOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="analyzeTextOptions"> The <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AnalyzeTextOptions analyzeTextOptions)
         {
-            if (analyzeTextOptions == null)
+            if ((analyzeTextOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(analyzeTextOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(analyzeTextOptions, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -85,29 +85,29 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(AnalyzerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (Optional.IsDefined(TokenizerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(TokenizerName))
             {
                 writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
-            if (Optional.IsDefined(NormalizerName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(NormalizerName))
             {
                 writer.WritePropertyName("normalizer"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -117,13 +117,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
                 foreach (string item in CharFilters)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -140,9 +140,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -151,26 +151,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextOptions IJsonModel<AnalyzeTextOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeTextOptions IJsonModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeTextOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions.DeserializeAnalyzeTextOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeTextOptions DeserializeAnalyzeTextOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -178,9 +178,9 @@ namespace Azure.Search.Documents.Indexes.Models
             LexicalAnalyzerName? analyzerName = default;
             LexicalTokenizerName? tokenizerName = default;
             LexicalNormalizerName? normalizerName = default;
-            IList<TokenFilterName> tokenFilters = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.TokenFilterName> tokenFilters = default;
             IList<string> charFilters = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("text"u8))
@@ -190,7 +190,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("analyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -199,7 +199,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("tokenizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -208,7 +208,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("normalizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -217,11 +217,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("tokenFilters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TokenFilterName> array = new List<TokenFilterName>();
+                    List<global::Azure.Search.Documents.Indexes.Models.TokenFilterName> array = new List<global::Azure.Search.Documents.Indexes.Models.TokenFilterName>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new TokenFilterName(item.GetString()));
@@ -231,14 +231,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("charFilters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -250,9 +250,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     charFilters = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnalyzeTextOptions(
@@ -260,8 +260,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 analyzerName,
                 tokenizerName,
                 normalizerName,
-                tokenFilters ?? new ChangeTrackingList<TokenFilterName>(),
-                charFilters ?? new ChangeTrackingList<string>(),
+                (tokenFilters ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.TokenFilterName>()),
+                (charFilters ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

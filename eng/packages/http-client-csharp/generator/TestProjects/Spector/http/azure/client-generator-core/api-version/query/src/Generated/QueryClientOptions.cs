@@ -13,11 +13,11 @@ namespace Client.AlternateApiVersion.Service.Query
 {
     public partial class QueryClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+        private const global::Client.AlternateApiVersion.Service.Query.QueryClientOptions.ServiceVersion LatestVersion = global::Client.AlternateApiVersion.Service.Query.QueryClientOptions.ServiceVersion.V2025_01_01;
 
-        public QueryClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public QueryClientOptions(global::Client.AlternateApiVersion.Service.Query.QueryClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal QueryClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

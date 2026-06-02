@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Example.Basic
 {
-    public partial class ActionRequest : IJsonModel<ActionRequest>
+    public partial class ActionRequest : IJsonModel<global::Specs.Azure.Example.Basic.ActionRequest>
     {
         internal ActionRequest() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.Example.Basic
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ActionRequest>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Example.Basic.ActionRequest>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ActionRequest IPersistableModel<ActionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ActionRequest IPersistableModel<global::Specs.Azure.Example.Basic.ActionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ActionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Example.Basic.ActionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="actionRequest"> The <see cref="ActionRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="actionRequest"> The <see cref="global::Specs.Azure.Example.Basic.ActionRequest"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ActionRequest actionRequest) => throw null;
 
-        void IJsonModel<ActionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Example.Basic.ActionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ActionRequest IJsonModel<ActionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ActionRequest IJsonModel<global::Specs.Azure.Example.Basic.ActionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ActionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

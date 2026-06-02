@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EasyInputMessageStatus value) => value switch
         {
-            EasyInputMessageStatus.InProgress => "in_progress",
-            EasyInputMessageStatus.Completed => "completed",
-            EasyInputMessageStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EasyInputMessageStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static EasyInputMessageStatus ToEasyInputMessageStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return EasyInputMessageStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return EasyInputMessageStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return EasyInputMessageStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EasyInputMessageStatus value.");
         }

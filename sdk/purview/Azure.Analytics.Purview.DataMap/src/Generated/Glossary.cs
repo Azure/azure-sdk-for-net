@@ -19,7 +19,7 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The Glossary sub-client. </summary>
     public partial class Glossary
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Glossary for mocking. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Glossary(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Glossary(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BatchGet(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -96,15 +96,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchGetAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
+        public virtual async Task<global::Azure.Response> BatchGetAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.BatchGet");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreateBatchGetRequest(limit, offset, sort, ignoreTermsAndCategories, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,18 +125,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasGlossary>> BatchGet(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>> BatchGet(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Response result = BatchGet(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
-            List<AtlasGlossary> value = new List<AtlasGlossary>();
+            Response result = this.BatchGet(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossary.DeserializeAtlasGlossary(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossary.DeserializeAtlasGlossary(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossary>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>)value), result);
         }
 
         /// <summary>
@@ -150,18 +150,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossary>>> BatchGetAsync(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>>> BatchGetAsync(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Response result = await BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasGlossary> value = new List<AtlasGlossary>();
+            Response result = await this.BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossary.DeserializeAtlasGlossary(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossary.DeserializeAtlasGlossary(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossary>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>)value), result);
         }
 
         /// <summary>
@@ -174,8 +174,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
@@ -183,9 +183,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = this.CreateCreateRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -205,18 +205,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Create");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = this.CreateCreateRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -229,27 +229,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Create a glossary. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossary> Create(AtlasGlossary body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> Create(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Create(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = this.Create(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary> Create a glossary. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = await this.CreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary>
@@ -262,8 +262,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateCategories(RequestContent content, RequestContext context = null)
         {
@@ -271,9 +271,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
+                using HttpMessage message = this.CreateCreateCategoriesRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -293,18 +293,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateCategoriesAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateCategoriesAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateCategoriesRequest(content, context);
+                using HttpMessage message = this.CreateCreateCategoriesRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -317,43 +317,43 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Create glossary category in bulk. </summary>
         /// <param name="body"> An array of glossary category definitions to be created. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> CreateCategories(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> CreateCategories(IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = CreateCategories(content, cancellationToken.ToRequestContext());
-            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            Response result = this.CreateCategories(content, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)value), result);
         }
 
         /// <summary> Create glossary category in bulk. </summary>
         /// <param name="body"> An array of glossary category definitions to be created. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = await CreateCategoriesAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            Response result = await this.CreateCategoriesAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)value), result);
         }
 
         /// <summary>
@@ -366,8 +366,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateCategory(RequestContent content, RequestContext context = null)
         {
@@ -375,9 +375,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateCategoryRequest(content, context);
+                using HttpMessage message = this.CreateCreateCategoryRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -397,18 +397,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateCategoryAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateCategoryAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateCategoryRequest(content, context);
+                using HttpMessage message = this.CreateCreateCategoryRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -421,27 +421,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Create a glossary category. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateCategory(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = this.CreateCategory(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary> Create a glossary category. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateCategoryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = await this.CreateCategoryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary>
@@ -454,9 +454,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCategory(string categoryId, RequestContext context)
         {
@@ -464,9 +464,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
+                using HttpMessage message = this.CreateGetCategoryRequest(categoryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -486,19 +486,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCategoryAsync(string categoryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCategoryAsync(string categoryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetCategoryRequest(categoryId, context);
+                using HttpMessage message = this.CreateGetCategoryRequest(categoryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -511,29 +511,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryCategory> GetCategory(string categoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> GetCategory(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = GetCategory(categoryId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = this.GetCategory(categoryId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = await GetCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = await this.GetCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary>
@@ -547,9 +547,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
         {
@@ -557,10 +557,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
+                using HttpMessage message = this.CreateUpdateCategoryRequest(categoryId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -581,20 +581,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateCategoryRequest(categoryId, content, context);
+                using HttpMessage message = this.CreateUpdateCategoryRequest(categoryId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -608,32 +608,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateCategory(categoryId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = this.UpdateCategory(categoryId, body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateCategoryAsync(categoryId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            Response result = await this.UpdateCategoryAsync(categoryId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary>
@@ -646,9 +646,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteCategory(string categoryId, RequestContext context)
         {
@@ -656,9 +656,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
+                using HttpMessage message = this.CreateDeleteCategoryRequest(categoryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -678,19 +678,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteCategoryAsync(string categoryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteCategoryAsync(string categoryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateDeleteCategoryRequest(categoryId, context);
+                using HttpMessage message = this.CreateDeleteCategoryRequest(categoryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -703,27 +703,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteCategory(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            return DeleteCategory(categoryId, cancellationToken.ToRequestContext());
+            return this.DeleteCategory(categoryId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            return await DeleteCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteCategoryAsync(categoryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -738,9 +738,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PartialUpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
         {
@@ -748,10 +748,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
+                using HttpMessage message = this.CreatePartialUpdateCategoryRequest(categoryId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -773,20 +773,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PartialUpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> PartialUpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateCategoryRequest(categoryId, content, context);
+                using HttpMessage message = this.CreatePartialUpdateCategoryRequest(categoryId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -806,17 +806,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// values for partial update.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryCategory> PartialUpdateCategory(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> PartialUpdateCategory(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = PartialUpdateCategory(categoryId, content, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = this.PartialUpdateCategory(categoryId, content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary>
@@ -829,17 +829,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// values for partial update.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = await PartialUpdateCategoryAsync(categoryId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryCategory)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = await this.PartialUpdateCategoryAsync(categoryId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryCategory)result), result);
         }
 
         /// <summary>
@@ -856,9 +856,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetRelatedCategories(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -866,9 +866,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -892,19 +892,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetRelatedCategoriesAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetRelatedCategoriesRequest(categoryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -923,17 +923,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = GetRelatedCategories(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            Response result = this.GetRelatedCategories(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>> value = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>)value), result);
         }
 
         /// <summary>
@@ -945,17 +945,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            Response result = await this.GetRelatedCategoriesAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>> value = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>)value), result);
         }
 
         /// <summary>
@@ -971,9 +971,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCategoryTerms(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -981,9 +981,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1006,19 +1006,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCategoryTermsAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoryTermsRequest(categoryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1034,22 +1034,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = GetCategoryTerms(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            Response result = this.GetCategoryTerms(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>)value), result);
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
@@ -1058,22 +1058,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
-            Response result = await GetCategoryTermsAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            Response result = await this.GetCategoryTermsAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>)value), result);
         }
 
         /// <summary>
@@ -1087,8 +1087,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateTerm(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
@@ -1096,9 +1096,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateTermRequest(content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateCreateTermRequest(content, includeTermHierarchy, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1119,18 +1119,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateTermAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateTermAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateTermRequest(content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateCreateTermRequest(content, includeTermHierarchy, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1144,28 +1144,28 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateTerm(body, includeTermHierarchy, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = this.CreateTerm(body, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary> Create a glossary term. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateTermAsync(body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = await this.CreateTermAsync(body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary>
@@ -1178,9 +1178,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTerm(string termId, RequestContext context)
         {
@@ -1188,9 +1188,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetTermRequest(termId, context);
+                using HttpMessage message = this.CreateGetTermRequest(termId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1210,19 +1210,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTermAsync(string termId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTermAsync(string termId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetTermRequest(termId, context);
+                using HttpMessage message = this.CreateGetTermRequest(termId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1235,29 +1235,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get a specific glossary term by its GUID. . </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = GetTerm(termId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = this.GetTerm(termId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary> Get a specific glossary term by its GUID. . </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = await GetTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = await this.GetTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary>
@@ -1272,9 +1272,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
@@ -1282,10 +1282,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1307,20 +1307,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateUpdateTermRequest(termId, content, includeTermHierarchy, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1335,16 +1335,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateTerm(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = this.UpdateTerm(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary> Update the given glossary term by its GUID. </summary>
@@ -1352,16 +1352,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateTermAsync(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            Response result = await this.UpdateTermAsync(termId, body, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary>
@@ -1374,9 +1374,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTerm(string termId, RequestContext context)
         {
@@ -1384,9 +1384,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateDeleteTermRequest(termId, context);
+                using HttpMessage message = this.CreateDeleteTermRequest(termId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1406,19 +1406,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTermAsync(string termId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteTermAsync(string termId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateDeleteTermRequest(termId, context);
+                using HttpMessage message = this.CreateDeleteTermRequest(termId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1431,27 +1431,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTerm(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            return DeleteTerm(termId, cancellationToken.ToRequestContext());
+            return this.DeleteTerm(termId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTermAsync(string termId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTermAsync(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            return await DeleteTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteTermAsync(termId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1467,9 +1467,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PartialUpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
@@ -1477,10 +1477,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1503,20 +1503,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PartialUpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> PartialUpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreatePartialUpdateTermRequest(termId, content, includeTermHierarchy, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1537,17 +1537,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = PartialUpdateTerm(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = this.PartialUpdateTerm(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary>
@@ -1561,17 +1561,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = await PartialUpdateTermAsync(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryTerm)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = await this.PartialUpdateTermAsync(termId, content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryTerm)result), result);
         }
 
         /// <summary>
@@ -1585,8 +1585,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateTerms(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
@@ -1594,9 +1594,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateTermsRequest(content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateCreateTermsRequest(content, includeTermHierarchy, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1617,18 +1617,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateTermsAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateTermsAsync(RequestContent content, bool? includeTermHierarchy = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateTermsRequest(content, includeTermHierarchy, context);
+                using HttpMessage message = this.CreateCreateTermsRequest(content, includeTermHierarchy, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1642,44 +1642,44 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> CreateTerms(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> CreateTerms(IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = CreateTerms(content, includeTermHierarchy, cancellationToken.ToRequestContext());
-            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            Response result = this.CreateTerms(content, includeTermHierarchy, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>)value), result);
         }
 
         /// <summary> Create glossary terms in bulk. </summary>
         /// <param name="body"> An array of glossary term definitions to be created in bulk. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> body, bool? includeTermHierarchy = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = await CreateTermsAsync(content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            Response result = await this.CreateTermsAsync(content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>)value), result);
         }
 
         /// <summary>
@@ -1696,9 +1696,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEntitiesAssignedWithTerm(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -1706,9 +1706,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1732,19 +1732,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEntitiesAssignedWithTermAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetEntitiesAssignedWithTermRequest(termId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1763,22 +1763,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            Response result = this.GetEntitiesAssignedWithTerm(termId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedObjectId>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>)value), result);
         }
 
         /// <summary>
@@ -1790,22 +1790,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            Response result = await this.GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedObjectId>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>)value), result);
         }
 
         /// <summary>
@@ -1823,9 +1823,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AssignTermToEntities(string termId, RequestContent content, RequestContext context = null)
         {
@@ -1833,10 +1833,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
+                using HttpMessage message = this.CreateAssignTermToEntitiesRequest(termId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1861,20 +1861,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AssignTermToEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAssignTermToEntitiesRequest(termId, content, context);
+                using HttpMessage message = this.CreateAssignTermToEntitiesRequest(termId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1894,16 +1894,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs to which the term has to be associated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AssignTermToEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AssignTermToEntities(string termId, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AssignTermToEntities(termId, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.AssignTermToEntities(termId, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1916,16 +1916,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs to which the term has to be associated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AssignTermToEntitiesAsync(string termId, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AssignTermToEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.AssignTermToEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1939,9 +1939,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTermAssignmentFromEntities(string termId, RequestContent content, RequestContext context = null)
         {
@@ -1949,10 +1949,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
+                using HttpMessage message = this.CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1973,20 +1973,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DeleteTermAssignmentFromEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
+                using HttpMessage message = this.CreateDeleteTermAssignmentFromEntitiesRequest(termId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2000,32 +2000,32 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs from which the term has to be dissociated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteTermAssignmentFromEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteTermAssignmentFromEntities(string termId, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return DeleteTermAssignmentFromEntities(termId, content, cancellationToken.ToRequestContext());
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return this.DeleteTermAssignmentFromEntities(termId, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
         /// <param name="body"> An array of related object IDs from which the term has to be dissociated. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await DeleteTermAssignmentFromEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromEnumerable(body);
+            return await this.DeleteTermAssignmentFromEntitiesAsync(termId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2042,9 +2042,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetRelatedTerms(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -2052,9 +2052,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2078,19 +2078,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRelatedTermsAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetRelatedTermsAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-                using HttpMessage message = CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetRelatedTermsRequest(termId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2109,17 +2109,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = GetRelatedTerms(termId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            Response result = this.GetRelatedTerms(termId, limit, offset, sort, cancellationToken.ToRequestContext());
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>> value = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>)value), result);
         }
 
         /// <summary>
@@ -2131,17 +2131,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="termId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
-            Response result = await GetRelatedTermsAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            Response result = await this.GetRelatedTermsAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>> value = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>();
             BinaryData data = result.Content;
-            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>)value), result);
         }
 
         /// <summary>
@@ -2154,9 +2154,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetGlossary(string glossaryId, RequestContext context)
         {
@@ -2164,9 +2164,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
+                using HttpMessage message = this.CreateGetGlossaryRequest(glossaryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2186,19 +2186,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetGlossaryAsync(string glossaryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetGlossaryAsync(string glossaryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
+                using HttpMessage message = this.CreateGetGlossaryRequest(glossaryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2211,29 +2211,29 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetGlossary(glossaryId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = this.GetGlossary(glossaryId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetGlossaryAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = await this.GetGlossaryAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary>
@@ -2248,9 +2248,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Update(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
@@ -2258,10 +2258,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2283,20 +2283,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Update");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreateUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2311,16 +2311,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Update(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = this.Update(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary> Update the given glossary. </summary>
@@ -2328,16 +2328,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateAsync(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossary)result, result);
+            Response result = await this.UpdateAsync(glossaryId, body, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary>
@@ -2351,9 +2351,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string glossaryId, RequestContext context)
         {
@@ -2361,9 +2361,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateDeleteRequest(glossaryId, context);
+                using HttpMessage message = this.CreateDeleteRequest(glossaryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2384,19 +2384,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string glossaryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteAsync(string glossaryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Delete");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateDeleteRequest(glossaryId, context);
+                using HttpMessage message = this.CreateDeleteRequest(glossaryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2412,14 +2412,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Delete(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            return Delete(glossaryId, cancellationToken.ToRequestContext());
+            return this.Delete(glossaryId, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2428,14 +2428,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string glossaryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            return await DeleteAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2452,9 +2452,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCategories(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -2462,9 +2462,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2488,19 +2488,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCategoriesAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCategoriesAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoriesRequest(glossaryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2519,22 +2519,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetCategories(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            Response result = this.GetCategories(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)value), result);
         }
 
         /// <summary>
@@ -2546,22 +2546,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetCategoriesAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            Response result = await this.GetCategoriesAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryCategory>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>)value), result);
         }
 
         /// <summary>
@@ -2578,9 +2578,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCategoriesHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -2588,9 +2588,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2614,19 +2614,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCategoriesHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetCategoriesHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetCategoriesHeadersRequest(glossaryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2645,22 +2645,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetCategoriesHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            Response result = this.GetCategoriesHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedCategoryHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>)value), result);
         }
 
         /// <summary>
@@ -2672,22 +2672,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            Response result = await this.GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedCategoryHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>)value), result);
         }
 
         /// <summary>
@@ -2704,9 +2704,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDetailed(string glossaryId, RequestContext context)
         {
@@ -2714,9 +2714,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
+                using HttpMessage message = this.CreateGetDetailedRequest(glossaryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2740,19 +2740,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDetailedAsync(string glossaryId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDetailedAsync(string glossaryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetDetailedRequest(glossaryId, context);
+                using HttpMessage message = this.CreateGetDetailedRequest(glossaryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2771,15 +2771,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossaryExtInfo> GetDetailed(string glossaryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo> GetDetailed(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetDetailed(glossaryId, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossaryExtInfo)result, result);
+            Response result = this.GetDetailed(glossaryId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossaryExtInfo)result), result);
         }
 
         /// <summary>
@@ -2791,15 +2791,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetDetailedAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossaryExtInfo)result, result);
+            Response result = await this.GetDetailedAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossaryExtInfo)result), result);
         }
 
         /// <summary>
@@ -2819,9 +2819,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PartialUpdate(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
@@ -2829,10 +2829,10 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2859,20 +2859,20 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PartialUpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> PartialUpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
+                using HttpMessage message = this.CreatePartialUpdateRequest(glossaryId, content, ignoreTermsAndCategories, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2897,17 +2897,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = PartialUpdate(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasGlossary)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = this.PartialUpdate(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary>
@@ -2925,17 +2925,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            Response result = await PartialUpdateAsync(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasGlossary)result, result);
+            using RequestContent content = global::Azure.Analytics.Purview.DataMap.BinaryContentHelper.FromDictionary(body);
+            Response result = await this.PartialUpdateAsync(glossaryId, content, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasGlossary)result), result);
         }
 
         /// <summary>
@@ -2952,9 +2952,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTerms(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -2962,9 +2962,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2988,19 +2988,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTermsAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTermsAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetTermsRequest(glossaryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3019,22 +3019,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetTerms(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            Response result = this.GetTerms(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>)value), result);
         }
 
         /// <summary>
@@ -3046,22 +3046,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetTermsAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            Response result = await this.GetTermsAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasGlossaryTerm>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>)value), result);
         }
 
         /// <summary>
@@ -3078,9 +3078,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTermHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
@@ -3088,9 +3088,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3114,19 +3114,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTermHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTermHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
+                using HttpMessage message = this.CreateGetTermHeadersRequest(glossaryId, limit, offset, sort, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3145,22 +3145,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = GetTermHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            Response result = this.GetTermHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>)value), result);
         }
 
         /// <summary>
@@ -3172,22 +3172,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = default, int? offset = default, string sort = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetTermHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            Response result = await this.GetTermHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> value = new List<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, ModelSerializationExtensions.WireOptions));
+                value.Add(global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<AtlasRelatedTermHeader>)value, result);
+            return global::Azure.Response.FromValue(((IReadOnlyList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>)value), result);
         }
     }
 }

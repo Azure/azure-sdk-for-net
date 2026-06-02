@@ -13,22 +13,22 @@ namespace Azure.AI.Language.Text
     /// <summary> represents the Metadata of a date and/or time span. </summary>
     public partial class TemporalSpanMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
-        internal TemporalSpanMetadata() : base(MetadataKind.TemporalSpanMetadata)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSpanMetadata"/>. </summary>
+        internal TemporalSpanMetadata() : base(global::Azure.AI.Language.Text.MetadataKind.TemporalSpanMetadata)
         {
-            SpanValues = new ChangeTrackingList<TemporalSpanValues>();
+            SpanValues = new ChangeTrackingList<global::Azure.AI.Language.Text.TemporalSpanValues>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSpanMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="spanValues"> List of temporal spans detected. </param>
-        internal TemporalSpanMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TemporalSpanValues> spanValues) : base(metadataKind, additionalBinaryDataProperties)
+        internal TemporalSpanMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.TemporalSpanValues> spanValues) : base(metadataKind, additionalBinaryDataProperties)
         {
             SpanValues = spanValues;
         }
 
         /// <summary> List of temporal spans detected. </summary>
-        public IList<TemporalSpanValues> SpanValues { get; }
+        public IList<global::Azure.AI.Language.Text.TemporalSpanValues> SpanValues { get; }
     }
 }

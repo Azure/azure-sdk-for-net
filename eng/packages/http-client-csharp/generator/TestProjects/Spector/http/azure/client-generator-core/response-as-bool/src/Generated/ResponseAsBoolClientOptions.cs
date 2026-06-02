@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ResponseAsBool
     {
         public ResponseAsBoolClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ResponseAsBoolClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

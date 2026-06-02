@@ -17,9 +17,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class ModelCopyAuthorization
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelCopyAuthorization"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ModelCopyAuthorization"/>. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the document model should be copied to. </param>
         /// <param name="targetResourceRegion">
         /// Location of the target Azure resource where the document model should be copied
@@ -29,14 +29,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="targetModelLocation"> URL of the copied document model in the target account. </param>
         /// <param name="accessToken"> Token used to authorize the request. </param>
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/> or <paramref name="accessToken"/> is null. </exception>
-        public ModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/> or <paramref name="accessToken"/> is null. </exception>
+        public ModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, global::System.Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
-            Argument.AssertNotNull(targetModelId, nameof(targetModelId));
-            Argument.AssertNotNull(targetModelLocation, nameof(targetModelLocation));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(targetModelId, nameof(targetModelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(targetModelLocation, nameof(targetModelLocation));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
             ExpiresOn = expiresOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelCopyAuthorization"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ModelCopyAuthorization"/>. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the document model should be copied to. </param>
         /// <param name="targetResourceRegion">
         /// Location of the target Azure resource where the document model should be copied
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="accessToken"> Token used to authorize the request. </param>
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, global::System.Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
@@ -81,7 +81,7 @@ namespace Azure.AI.DocumentIntelligence
         public string TargetModelId { get; set; }
 
         /// <summary> URL of the copied document model in the target account. </summary>
-        public Uri TargetModelLocation { get; set; }
+        public global::System.Uri TargetModelLocation { get; set; }
 
         /// <summary> Token used to authorize the request. </summary>
         public string AccessToken { get; set; }

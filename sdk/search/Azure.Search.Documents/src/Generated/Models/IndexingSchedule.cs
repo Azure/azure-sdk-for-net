@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         public IndexingSchedule(TimeSpan interval)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         /// <param name="startTime"> The time when an indexer should start running. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexingSchedule(TimeSpan interval, DateTimeOffset? startTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexingSchedule(TimeSpan interval, DateTimeOffset? startTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Interval = interval;
             StartTime = startTime;

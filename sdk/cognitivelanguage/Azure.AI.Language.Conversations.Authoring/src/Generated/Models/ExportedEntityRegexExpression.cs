@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedEntityRegexExpression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedEntityRegexExpression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression"/>. </summary>
         public ExportedEntityRegexExpression()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedEntityRegexExpression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression"/>. </summary>
         /// <param name="regexKey"> The key of the regex expression. </param>
         /// <param name="language"> Represents the language of the regex expression. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="regexPattern"> The regex pattern. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedEntityRegexExpression(string regexKey, string language, string regexPattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedEntityRegexExpression(string regexKey, string language, string regexPattern, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RegexKey = regexKey;
             Language = language;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Specifies an image's detail level. Can be 'auto', 'low', 'high', or an unknown future value. </summary>
-    public readonly partial struct RequestImageContentPartDetail : IEquatable<RequestImageContentPartDetail>
+    public readonly partial struct RequestImageContentPartDetail : IEquatable<global::Azure.AI.VoiceLive.RequestImageContentPartDetail>
     {
         private readonly string _value;
         /// <summary> Automatically select an appropriate detail level. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use a higher detail level—potentially more resource-intensive. </summary>
         private const string HighValue = "high";
 
-        /// <summary> Initializes a new instance of <see cref="RequestImageContentPartDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.RequestImageContentPartDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RequestImageContentPartDetail(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use a higher detail level—potentially more resource-intensive. </summary>
         public static RequestImageContentPartDetail High { get; } = new RequestImageContentPartDetail(HighValue);
 
-        /// <summary> Determines if two <see cref="RequestImageContentPartDetail"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.RequestImageContentPartDetail"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestImageContentPartDetail left, RequestImageContentPartDetail right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RequestImageContentPartDetail"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.RequestImageContentPartDetail"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestImageContentPartDetail left, RequestImageContentPartDetail right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RequestImageContentPartDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.RequestImageContentPartDetail"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RequestImageContentPartDetail(string value) => new RequestImageContentPartDetail(value);
 
-        /// <summary> Converts a string to a <see cref="RequestImageContentPartDetail"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.RequestImageContentPartDetail"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RequestImageContentPartDetail?(string value) => value == null ? null : new RequestImageContentPartDetail(value);
+        public static implicit operator RequestImageContentPartDetail?(string value) => (value == null) ? null : new RequestImageContentPartDetail(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RequestImageContentPartDetail other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RequestImageContentPartDetail other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RequestImageContentPartDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RequestImageContentPartDetail other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

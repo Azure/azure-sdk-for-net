@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputFidelity value) => value switch
         {
-            InputFidelity.High => "high",
-            InputFidelity.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.InputFidelity.High => "high",
+            global::Azure.AI.Extensions.OpenAI.InputFidelity.Low => "low",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputFidelity value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputFidelity ToInputFidelity(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return InputFidelity.High;
+                return global::Azure.AI.Extensions.OpenAI.InputFidelity.High;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return InputFidelity.Low;
+                return global::Azure.AI.Extensions.OpenAI.InputFidelity.Low;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputFidelity value.");
         }

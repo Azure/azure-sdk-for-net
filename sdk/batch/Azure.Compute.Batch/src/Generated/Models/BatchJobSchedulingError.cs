@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class BatchJobSchedulingError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSchedulingError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSchedulingError"/>. </summary>
         /// <param name="category"> The category of the Job scheduling error. </param>
         internal BatchJobSchedulingError(BatchErrorSourceCategory category)
         {
             Category = category;
-            Details = new ChangeTrackingList<BatchNameValuePair>();
+            Details = new ChangeTrackingList<global::Azure.Compute.Batch.BatchNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSchedulingError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSchedulingError"/>. </summary>
         /// <param name="category"> The category of the Job scheduling error. </param>
         /// <param name="code"> An identifier for the Job scheduling error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional error details related to the scheduling error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedulingError(BatchErrorSourceCategory category, string code, string message, IList<BatchNameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobSchedulingError(BatchErrorSourceCategory category, string code, string message, IList<global::Azure.Compute.Batch.BatchNameValuePair> details, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Code = code;
@@ -49,6 +49,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> A list of additional error details related to the scheduling error. </summary>
-        public IList<BatchNameValuePair> Details { get; }
+        public IList<global::Azure.Compute.Batch.BatchNameValuePair> Details { get; }
     }
 }

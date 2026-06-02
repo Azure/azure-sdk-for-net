@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT : AsyncPageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT : AsyncPageable<global::BasicTypeSpec.ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly int _numElements;
@@ -28,7 +28,7 @@ namespace BasicTypeSpec
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT(BasicTypeSpecClient client, int numElements, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT(BasicTypeSpecClient client, int numElements, string token, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _numElements = numElements;
@@ -41,18 +41,18 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::BasicTypeSpec.ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = (continuationToken ?? _token);
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithContinuationTokenWithMaxPageResponse result = (ListWithContinuationTokenWithMaxPageResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage, response);
+                ListWithContinuationTokenWithMaxPageResponse result = ((ListWithContinuationTokenWithMaxPageResponse)response);
+                yield return global::Azure.Page<ThingModel>.FromValues(((IReadOnlyList<global::BasicTypeSpec.ThingModel>)result.Things), nextPage, response);
                 nextPage = result.NextToken;
                 if (string.IsNullOrEmpty(nextPage))
                 {
@@ -64,7 +64,7 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
             HttpMessage message = _client.CreateGetWithContinuationTokenWithMaxPageRequest(pageSize, continuationToken, _context);

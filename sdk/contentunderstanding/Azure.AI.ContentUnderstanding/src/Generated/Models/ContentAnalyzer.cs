@@ -15,18 +15,18 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentAnalyzer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzer"/>. </summary>
         public ContentAnalyzer()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Warnings = new ChangeTrackingList<ResponseError>();
-            KnowledgeSources = new ChangeTrackingList<KnowledgeSource>();
+            Warnings = new ChangeTrackingList<global::Azure.ResponseError>();
+            KnowledgeSources = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.KnowledgeSource>();
             Models = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzer"/>. </summary>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="description"> A description of the analyzer. </param>
         /// <param name="tags"> Tags associated with the analyzer. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="supportedModels"> Chat completion and embedding models supported by the analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzer(string analyzerId, string description, IDictionary<string, string> tags, ContentAnalyzerStatus status, DateTimeOffset createdAt, DateTimeOffset lastModifiedAt, IReadOnlyList<ResponseError> warnings, string baseAnalyzerId, ContentAnalyzerConfig config, ContentFieldSchema fieldSchema, bool? hasDynamicFieldSchema, ProcessingLocation? processingLocation, IList<KnowledgeSource> knowledgeSources, IDictionary<string, string> models, SupportedModels supportedModels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzer(string analyzerId, string description, IDictionary<string, string> tags, ContentAnalyzerStatus status, DateTimeOffset createdAt, DateTimeOffset lastModifiedAt, IReadOnlyList<global::Azure.ResponseError> warnings, string baseAnalyzerId, ContentAnalyzerConfig config, ContentFieldSchema fieldSchema, bool? hasDynamicFieldSchema, ProcessingLocation? processingLocation, IList<global::Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources, IDictionary<string, string> models, SupportedModels supportedModels, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             Description = description;
@@ -85,7 +85,7 @@ namespace Azure.AI.ContentUnderstanding
         public DateTimeOffset LastModifiedAt { get; }
 
         /// <summary> Warnings encountered while creating the analyzer. </summary>
-        public IReadOnlyList<ResponseError> Warnings { get; }
+        public IReadOnlyList<global::Azure.ResponseError> Warnings { get; }
 
         /// <summary> The analyzer to incrementally train from. </summary>
         public string BaseAnalyzerId { get; set; }
@@ -103,7 +103,7 @@ namespace Azure.AI.ContentUnderstanding
         public ProcessingLocation? ProcessingLocation { get; set; }
 
         /// <summary> Additional knowledge sources used to enhance the analyzer. </summary>
-        public IList<KnowledgeSource> KnowledgeSources { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.KnowledgeSource> KnowledgeSources { get; }
 
         /// <summary>
         /// Mapping of model roles to specific model names.

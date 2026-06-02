@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext"/>. </summary>
         internal AcsMessageContext()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageContext"/>. </summary>
         /// <param name="from"> The WhatsApp ID for the customer who replied to an inbound message. </param>
         /// <param name="messageId"> The message ID for the sent message for an inbound reply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageContext(string @from, string messageId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageContext(string @from, string messageId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             From = @from;
             MessageId = messageId;

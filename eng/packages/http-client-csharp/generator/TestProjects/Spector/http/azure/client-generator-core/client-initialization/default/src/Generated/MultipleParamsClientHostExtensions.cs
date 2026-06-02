@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MultipleParamsClientHostExtensions
     {
         public static IClientBuilder AddMultipleParamsClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMultipleParamsClient(this IHostApplicationBuilder host, string sectionName, Action<MultipleParamsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMultipleParamsClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParamsClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMultipleParamsClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMultipleParamsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MultipleParamsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMultipleParamsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParamsClientSettings> configureSettings) => throw null;
     }
 }

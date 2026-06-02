@@ -18,24 +18,24 @@ namespace _Type.Property.ValueTypes
     {
         protected Boolean() => throw null;
 
-        internal Boolean(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Boolean(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<BooleanProperty> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.ValueTypes.BooleanProperty> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BooleanProperty>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.ValueTypes.BooleanProperty>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(BooleanProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(BooleanProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(BooleanProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Agent definition returned in response payloads (includes resolved config). </summary>
-    public partial class OptimizationAgentDefinition : IJsonModel<OptimizationAgentDefinition>
+    public partial class OptimizationAgentDefinition : IJsonModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOptimizationAgentDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.OptimizationAgentDefinition.DeserializeOptimizationAgentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationAgentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationAgentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OptimizationAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationAgentDefinition IPersistableModel<OptimizationAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationAgentDefinition IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OptimizationAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OptimizationAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,38 +65,38 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationAgentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationAgentDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AgentName))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agent_name"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agent_version"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(SystemPrompt))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(SystemPrompt))
             {
                 writer.WritePropertyName("system_prompt"u8);
                 writer.WriteStringValue(SystemPrompt);
             }
-            if (Optional.IsCollectionDefined(Skills))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Skills))
             {
                 writer.WritePropertyName("skills"u8);
                 writer.WriteStartArray();
-                foreach (IDictionary<string, BinaryData> item in Skills)
+                foreach (IDictionary<string, global::System.BinaryData> item in Skills)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -105,7 +105,7 @@ namespace Azure.AI.Projects.Agents
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        if ((item0.Value == null))
                         {
                             writer.WriteNullValue();
                             continue;
@@ -113,9 +113,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                         writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item0.Value))
                         {
-                            JsonSerializer.Serialize(writer, document.RootElement);
+                            global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                         }
 #endif
                     }
@@ -123,13 +123,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (IDictionary<string, BinaryData> item in Tools)
+                foreach (IDictionary<string, global::System.BinaryData> item in Tools)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects.Agents
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        if ((item0.Value == null))
                         {
                             writer.WriteNullValue();
                             continue;
@@ -146,9 +146,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                         writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item0.Value))
                         {
-                            JsonSerializer.Serialize(writer, document.RootElement);
+                            global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                         }
 #endif
                     }
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -164,9 +164,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -175,26 +175,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationAgentDefinition IJsonModel<OptimizationAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationAgentDefinition IJsonModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationAgentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationAgentDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOptimizationAgentDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.OptimizationAgentDefinition.DeserializeOptimizationAgentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OptimizationAgentDefinition DeserializeOptimizationAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -202,9 +202,9 @@ namespace Azure.AI.Projects.Agents
             string agentVersion = default;
             string model = default;
             string systemPrompt = default;
-            IList<IDictionary<string, BinaryData>> skills = default;
-            IList<IDictionary<string, BinaryData>> tools = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> skills = default;
+            IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> tools = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("agent_name"u8))
@@ -229,29 +229,29 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("skills"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
+                    List<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> array = new List<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                             foreach (var prop0 in item.EnumerateObject())
                             {
-                                if (prop0.Value.ValueKind == JsonValueKind.Null)
+                                if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                                 {
                                     dictionary.Add(prop0.Name, null);
                                 }
                                 else
                                 {
-                                    dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                                    dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                                 }
                             }
                             array.Add(dictionary);
@@ -262,29 +262,29 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
+                    List<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> array = new List<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                             foreach (var prop0 in item.EnumerateObject())
                             {
-                                if (prop0.Value.ValueKind == JsonValueKind.Null)
+                                if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                                 {
                                     dictionary.Add(prop0.Name, null);
                                 }
                                 else
                                 {
-                                    dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                                    dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                                 }
                             }
                             array.Add(dictionary);
@@ -293,9 +293,9 @@ namespace Azure.AI.Projects.Agents
                     tools = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OptimizationAgentDefinition(
@@ -303,8 +303,8 @@ namespace Azure.AI.Projects.Agents
                 agentVersion,
                 model,
                 systemPrompt,
-                skills ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
-                tools ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
+                (skills ?? new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>()),
+                (tools ?? new ChangeTrackingList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>()),
                 additionalBinaryDataProperties);
         }
     }

@@ -10,20 +10,20 @@ namespace Azure.AI.Projects
     internal partial class InternalInputImageContentParamAutoParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalInputImageContentParamAutoParam"/>. </summary>
         public InternalInputImageContentParamAutoParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalInputImageContentParamAutoParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_image`. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, InternalImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputImageContentParamAutoParam(string @type, global::System.Uri imageUrl, string fileId, InternalImageDetailLevel? detail, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         internal string Type { get; } = "input_image";
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        public global::System.Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

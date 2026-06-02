@@ -18,32 +18,32 @@ namespace Client.Naming._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Client(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ClientAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ClientAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Client(ClientNameModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ClientAsync(ClientNameModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ClientAsync(ClientNameModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Language(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> LanguageAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> LanguageAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Language(LanguageClientNameModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> LanguageAsync(LanguageClientNameModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> LanguageAsync(LanguageClientNameModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response CompatibleWithEncodedName(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> CompatibleWithEncodedNameAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> CompatibleWithEncodedNameAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response CompatibleWithEncodedName(ClientNameAndJsonEncodedNameModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> CompatibleWithEncodedNameAsync(ClientNameAndJsonEncodedNameModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> CompatibleWithEncodedNameAsync(ClientNameAndJsonEncodedNameModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -15,29 +15,29 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzedDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzedDocument"/>. </summary>
         /// <param name="documentType"> Document type. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        internal AnalyzedDocument(string documentType, IEnumerable<DocumentSpan> spans, float confidence)
+        internal AnalyzedDocument(string documentType, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float confidence)
         {
             DocumentType = documentType;
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
-            FieldsPrivate = new ChangeTrackingDictionary<string, DocumentField>();
+            FieldsPrivate = new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField>();
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzedDocument"/>. </summary>
         /// <param name="documentType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzedDocument(string documentType, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzedDocument(string documentType, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField> fieldsPrivate, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DocumentType = documentType;
             BoundingRegions = boundingRegions;
@@ -51,10 +51,10 @@ namespace Azure.AI.DocumentIntelligence
         public string DocumentType { get; }
 
         /// <summary> Bounding regions covering the document. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the document in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Confidence of correctly extracting the document. </summary>
         public float Confidence { get; }

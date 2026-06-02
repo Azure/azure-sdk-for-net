@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Page
 {
-    public partial class ListItemInputBody : IJsonModel<ListItemInputBody>
+    public partial class ListItemInputBody : IJsonModel<global::Specs.Azure.Core.Page.ListItemInputBody>
     {
         internal ListItemInputBody() => throw null;
 
@@ -20,20 +20,20 @@ namespace Specs.Azure.Core.Page
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ListItemInputBody>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Page.ListItemInputBody>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ListItemInputBody IPersistableModel<ListItemInputBody>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ListItemInputBody IPersistableModel<global::Specs.Azure.Core.Page.ListItemInputBody>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ListItemInputBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Page.ListItemInputBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="listItemInputBody"> The <see cref="ListItemInputBody"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="listItemInputBody"> The <see cref="global::Specs.Azure.Core.Page.ListItemInputBody"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ListItemInputBody listItemInputBody) => throw null;
 
-        void IJsonModel<ListItemInputBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Page.ListItemInputBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ListItemInputBody IJsonModel<ListItemInputBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ListItemInputBody IJsonModel<global::Specs.Azure.Core.Page.ListItemInputBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ListItemInputBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

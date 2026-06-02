@@ -15,36 +15,36 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasGlossaryTerm
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryTerm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm"/>. </summary>
         public AtlasGlossaryTerm()
         {
-            Classifications = new ChangeTrackingList<AtlasClassification>();
-            TemplateName = new ChangeTrackingList<BinaryData>();
-            Antonyms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            HierarchyInfo = new ChangeTrackingList<PurviewObjectId>();
-            Resources = new ChangeTrackingList<ResourceLink>();
-            Contacts = new ChangeTrackingDictionary<string, IList<ContactInfo>>();
-            Attributes = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
-            AssignedEntities = new ChangeTrackingList<AtlasRelatedObjectId>();
-            Categories = new ChangeTrackingList<AtlasTermCategorizationHeader>();
-            Classifies = new ChangeTrackingList<AtlasRelatedTermHeader>();
+            Classifications = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
+            TemplateName = new ChangeTrackingList<global::System.BinaryData>();
+            Antonyms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            HierarchyInfo = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.PurviewObjectId>();
+            Resources = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ResourceLink>();
+            Contacts = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>>();
+            Attributes = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>>();
+            AssignedEntities = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>();
+            Categories = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>();
+            Classifies = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
             Examples = new ChangeTrackingList<string>();
-            IsA = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            PreferredTerms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            PreferredToTerms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            ReplacedBy = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            ReplacementTerms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            SeeAlso = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            Synonyms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            TranslatedTerms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            TranslationTerms = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            ValidValues = new ChangeTrackingList<AtlasRelatedTermHeader>();
-            ValidValuesFor = new ChangeTrackingList<AtlasRelatedTermHeader>();
+            IsA = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            PreferredTerms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            PreferredToTerms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            ReplacedBy = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            ReplacementTerms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            SeeAlso = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            Synonyms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            TranslatedTerms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            TranslationTerms = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            ValidValues = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
+            ValidValuesFor = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryTerm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm"/>. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="classifications"> An array of classifications. </param>
         /// <param name="longDescription"> The long version description. </param>
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="validValues"> An array of related term headers as valid values. </param>
         /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryTerm(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, string abbreviation, IList<BinaryData> templateName, AtlasGlossaryHeader anchor, IList<AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<PurviewObjectId> hierarchyInfo, IList<ResourceLink> resources, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, IDictionary<string, BinaryData>> attributes, IList<AtlasRelatedObjectId> assignedEntities, IList<AtlasTermCategorizationHeader> categories, IList<AtlasRelatedTermHeader> classifies, IList<string> examples, IList<AtlasRelatedTermHeader> isA, IList<AtlasRelatedTermHeader> preferredTerms, IList<AtlasRelatedTermHeader> preferredToTerms, IList<AtlasRelatedTermHeader> replacedBy, IList<AtlasRelatedTermHeader> replacementTerms, IList<AtlasRelatedTermHeader> seeAlso, IList<AtlasRelatedTermHeader> synonyms, IList<AtlasRelatedTermHeader> translatedTerms, IList<AtlasRelatedTermHeader> translationTerms, string usage, IList<AtlasRelatedTermHeader> validValues, IList<AtlasRelatedTermHeader> validValuesFor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasGlossaryTerm(string guid, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, string abbreviation, IList<global::System.BinaryData> templateName, AtlasGlossaryHeader anchor, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<global::Azure.Analytics.Purview.DataMap.PurviewObjectId> hierarchyInfo, IList<global::Azure.Analytics.Purview.DataMap.ResourceLink> resources, IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> contacts, IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> attributes, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> assignedEntities, IList<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader> categories, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> classifies, IList<string> examples, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> isA, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> preferredTerms, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> preferredToTerms, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> replacedBy, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> replacementTerms, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> seeAlso, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> synonyms, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> translatedTerms, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> translationTerms, string usage, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> validValues, IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> validValuesFor, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             Classifications = classifications;
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Guid { get; set; }
 
         /// <summary> An array of classifications. </summary>
-        public IList<AtlasClassification> Classifications { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> Classifications { get; }
 
         /// <summary> The long version description. </summary>
         public string LongDescription { get; set; }
@@ -167,8 +167,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The name of the template.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -191,13 +191,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> TemplateName { get; }
+        public IList<global::System.BinaryData> TemplateName { get; }
 
         /// <summary> The glossary header with basic information. </summary>
         public AtlasGlossaryHeader Anchor { get; set; }
 
         /// <summary> An array of related term headers as antonyms. </summary>
-        public IList<AtlasRelatedTermHeader> Antonyms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Antonyms { get; }
 
         /// <summary> Status of the AtlasGlossaryTerm. </summary>
         public TermStatus? Status { get; set; }
@@ -206,20 +206,20 @@ namespace Azure.Analytics.Purview.DataMap
         public string NickName { get; set; }
 
         /// <summary> The hierarchy information of the term. </summary>
-        public IList<PurviewObjectId> HierarchyInfo { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.PurviewObjectId> HierarchyInfo { get; }
 
         /// <summary> An array of resource link for term. </summary>
-        public IList<ResourceLink> Resources { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.ResourceLink> Resources { get; }
 
         /// <summary> The dictionary of contacts for terms. Key could be Expert or Steward. </summary>
-        public IDictionary<string, IList<ContactInfo>> Contacts { get; }
+        public IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.ContactInfo>> Contacts { get; }
 
         /// <summary>
         /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
         /// The
         /// key of the first layer map is term template name.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -242,54 +242,54 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, IDictionary<string, BinaryData>> Attributes { get; }
+        public IDictionary<string, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Attributes { get; }
 
         /// <summary> An array of related object IDs. </summary>
-        public IList<AtlasRelatedObjectId> AssignedEntities { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId> AssignedEntities { get; }
 
         /// <summary> An array of term categorization headers. </summary>
-        public IList<AtlasTermCategorizationHeader> Categories { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader> Categories { get; }
 
         /// <summary> An array of related term headers. </summary>
-        public IList<AtlasRelatedTermHeader> Classifies { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Classifies { get; }
 
         /// <summary> An array of examples. </summary>
         public IList<string> Examples { get; }
 
         /// <summary> An array of related term headers indicating the is-a relationship. </summary>
-        public IList<AtlasRelatedTermHeader> IsA { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> IsA { get; }
 
         /// <summary> An array of preferred related term headers. </summary>
-        public IList<AtlasRelatedTermHeader> PreferredTerms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> PreferredTerms { get; }
 
         /// <summary> An array of related term headers that are preferred to. </summary>
-        public IList<AtlasRelatedTermHeader> PreferredToTerms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> PreferredToTerms { get; }
 
         /// <summary> An array of related term headers that are replaced by. </summary>
-        public IList<AtlasRelatedTermHeader> ReplacedBy { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ReplacedBy { get; }
 
         /// <summary> An array of related term headers for replacement. </summary>
-        public IList<AtlasRelatedTermHeader> ReplacementTerms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ReplacementTerms { get; }
 
         /// <summary> An array of related term headers for see also. </summary>
-        public IList<AtlasRelatedTermHeader> SeeAlso { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> SeeAlso { get; }
 
         /// <summary> An array of related term headers as synonyms. </summary>
-        public IList<AtlasRelatedTermHeader> Synonyms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Synonyms { get; }
 
         /// <summary> An array of translated related term headers. </summary>
-        public IList<AtlasRelatedTermHeader> TranslatedTerms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> TranslatedTerms { get; }
 
         /// <summary> An array of related term headers for translation. </summary>
-        public IList<AtlasRelatedTermHeader> TranslationTerms { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> TranslationTerms { get; }
 
         /// <summary> The usage of the term. </summary>
         public string Usage { get; set; }
 
         /// <summary> An array of related term headers as valid values. </summary>
-        public IList<AtlasRelatedTermHeader> ValidValues { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ValidValues { get; }
 
         /// <summary> An array of related term headers as valid values for other records. </summary>
-        public IList<AtlasRelatedTermHeader> ValidValuesFor { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ValidValuesFor { get; }
     }
 }

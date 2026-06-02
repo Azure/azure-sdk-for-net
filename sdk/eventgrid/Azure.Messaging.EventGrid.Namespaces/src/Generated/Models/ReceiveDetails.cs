@@ -15,9 +15,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class ReceiveDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReceiveDetails"/>. </summary>
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event)
@@ -26,11 +26,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Event = @event;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReceiveDetails"/>. </summary>
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BrokerProperties = brokerProperties;
             Event = @event;

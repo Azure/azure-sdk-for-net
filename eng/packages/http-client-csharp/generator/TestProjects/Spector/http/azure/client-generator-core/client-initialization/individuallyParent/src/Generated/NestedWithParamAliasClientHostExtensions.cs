@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NestedWithParamAliasClientHostExtensions
     {
         public static IClientBuilder AddNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<NestedWithParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNestedWithParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithParamAliasClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NestedWithParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNestedWithParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithParamAliasClientSettings> configureSettings) => throw null;
     }
 }

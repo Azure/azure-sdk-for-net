@@ -14,17 +14,17 @@ namespace Azure.Data.AppConfiguration
     public partial class SettingLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.SettingLabel"/>. </summary>
         internal SettingLabel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.SettingLabel"/>. </summary>
         /// <param name="name"> The name of the label. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SettingLabel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SettingLabel(string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

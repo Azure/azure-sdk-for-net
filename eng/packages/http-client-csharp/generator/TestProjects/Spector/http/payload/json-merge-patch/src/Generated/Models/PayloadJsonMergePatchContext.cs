@@ -9,8 +9,8 @@ using System.ClientModel.Primitives;
 
 namespace Payload.JsonMergePatch
 {
-    [ModelReaderWriterBuildable(typeof(InnerModel))]
-    [ModelReaderWriterBuildable(typeof(Resource))]
+    [ModelReaderWriterBuildableAttribute(typeof(InnerModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(Resource))]
     public partial class PayloadJsonMergePatchContext : ModelReaderWriterContext
     {
     }

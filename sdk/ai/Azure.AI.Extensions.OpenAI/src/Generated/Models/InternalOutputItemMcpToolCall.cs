@@ -10,19 +10,19 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemMcpToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpToolCall"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
         /// <param name="name"> The name of the tool that was run. </param>
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
-        public InternalOutputItemMcpToolCall(string serverLabel, string name, string arguments) : base(AgentResponseItemKind.McpCall)
+        public InternalOutputItemMcpToolCall(string serverLabel, string name, string arguments) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.McpCall)
         {
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
-            Error = new ChangeTrackingDictionary<string, BinaryData>();
+            Error = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="error"></param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal InternalOutputItemMcpToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, IDictionary<string, global::System.BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;
@@ -60,8 +60,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// Gets the Error.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Error { get; }
+        public IDictionary<string, global::System.BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
         public MCPToolCallStatus? Status { get; set; }

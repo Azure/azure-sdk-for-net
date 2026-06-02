@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.AlternateApiVersion.Service.Header
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class HeaderClientHostExtensions
     {
         public static IClientBuilder AddHeaderClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddHeaderClient(this IHostApplicationBuilder host, string sectionName, Action<HeaderClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddHeaderClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.AlternateApiVersion.Service.Header.HeaderClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedHeaderClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedHeaderClient(this IHostApplicationBuilder host, string key, string sectionName, Action<HeaderClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedHeaderClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.AlternateApiVersion.Service.Header.HeaderClientSettings> configureSettings) => throw null;
     }
 }

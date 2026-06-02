@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// Known SSE event types emitted by the hosted agent session log stream.
     /// Additional event types may be introduced in future versions.
     /// </summary>
-    public readonly partial struct SessionLogEventType : IEquatable<SessionLogEventType>
+    public readonly partial struct SessionLogEventType : IEquatable<global::Azure.AI.Projects.Agents.SessionLogEventType>
     {
         private readonly string _value;
         /// <summary> A log line from the agent session container. </summary>
         private const string LogValue = "log";
 
-        /// <summary> Initializes a new instance of <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SessionLogEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionLogEventType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A log line from the agent session container. </summary>
         public static SessionLogEventType Log { get; } = new SessionLogEventType(LogValue);
 
-        /// <summary> Determines if two <see cref="SessionLogEventType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.SessionLogEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionLogEventType left, SessionLogEventType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SessionLogEventType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.SessionLogEventType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionLogEventType left, SessionLogEventType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.SessionLogEventType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SessionLogEventType(string value) => new SessionLogEventType(value);
 
-        /// <summary> Converts a string to a <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.SessionLogEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionLogEventType?(string value) => value == null ? null : new SessionLogEventType(value);
+        public static implicit operator SessionLogEventType?(string value) => (value == null) ? null : new SessionLogEventType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SessionLogEventType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SessionLogEventType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SessionLogEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SessionLogEventType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    internal partial class UnknownFish : Fish, IJsonModel<Fish>
+    internal partial class UnknownFish : Fish, IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>
     {
         internal UnknownFish() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Fish>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Fish IPersistableModel<Fish>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Fish IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Fish>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Fish>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Fish IJsonModel<Fish>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Fish IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.Fish>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

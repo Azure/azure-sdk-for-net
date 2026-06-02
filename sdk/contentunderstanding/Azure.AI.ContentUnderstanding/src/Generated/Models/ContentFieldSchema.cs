@@ -14,26 +14,26 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentFieldSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentFieldSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldSchema"/>. </summary>
         /// <param name="fields"> The fields defined in the schema. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
-        public ContentFieldSchema(IDictionary<string, ContentFieldDefinition> fields)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fields"/> is null. </exception>
+        public ContentFieldSchema(IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> fields)
         {
-            Argument.AssertNotNull(fields, nameof(fields));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(fields, nameof(fields));
 
             Fields = fields;
-            Definitions = new ChangeTrackingDictionary<string, ContentFieldDefinition>();
+            Definitions = new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFieldSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldSchema"/>. </summary>
         /// <param name="name"> The name of the field schema. </param>
         /// <param name="description"> A description of the field schema. </param>
         /// <param name="fields"> The fields defined in the schema. </param>
         /// <param name="definitions"> Additional definitions referenced by the fields in the schema. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFieldSchema(string name, string description, IDictionary<string, ContentFieldDefinition> fields, IDictionary<string, ContentFieldDefinition> definitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentFieldSchema(string name, string description, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> fields, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> definitions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -49,9 +49,9 @@ namespace Azure.AI.ContentUnderstanding
         public string Description { get; set; }
 
         /// <summary> The fields defined in the schema. </summary>
-        public IDictionary<string, ContentFieldDefinition> Fields { get; }
+        public IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> Fields { get; }
 
         /// <summary> Additional definitions referenced by the fields in the schema. </summary>
-        public IDictionary<string, ContentFieldDefinition> Definitions { get; }
+        public IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> Definitions { get; }
     }
 }

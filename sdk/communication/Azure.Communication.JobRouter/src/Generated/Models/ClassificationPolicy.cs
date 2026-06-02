@@ -15,16 +15,16 @@ namespace Azure.Communication.JobRouter
     public partial class ClassificationPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ClassificationPolicy"/>. </summary>
         internal ClassificationPolicy()
         {
-            QueueSelectorAttachments = new ChangeTrackingList<QueueSelectorAttachment>();
-            WorkerSelectorAttachments = new ChangeTrackingList<WorkerSelectorAttachment>();
+            QueueSelectorAttachments = new ChangeTrackingList<global::Azure.Communication.JobRouter.QueueSelectorAttachment>();
+            WorkerSelectorAttachments = new ChangeTrackingList<global::Azure.Communication.JobRouter.WorkerSelectorAttachment>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ClassificationPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a classification policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
         /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClassificationPolicy(ETag eTag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClassificationPolicy(ETag eTag, string id, string name, string fallbackQueueId, IList<global::Azure.Communication.JobRouter.QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<global::Azure.Communication.JobRouter.WorkerSelectorAttachment> workerSelectorAttachments, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;

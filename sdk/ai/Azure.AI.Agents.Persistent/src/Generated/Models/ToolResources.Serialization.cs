@@ -17,54 +17,54 @@ namespace Azure.AI.Agents.Persistent
     /// tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search`
     /// tool requires a list of vector store IDs.
     /// </summary>
-    public partial class ToolResources : IJsonModel<ToolResources>
+    public partial class ToolResources : IJsonModel<global::Azure.AI.Agents.Persistent.ToolResources>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ToolResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolResources(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.ToolResources.DeserializeToolResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolResources)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ToolResources)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolResources)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ToolResources)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolResources>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolResources IPersistableModel<ToolResources>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ToolResources IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.ToolResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,37 +72,37 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolResources>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ToolResources)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ToolResources)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CodeInterpreter))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(CodeInterpreter))
             {
                 writer.WritePropertyName("code_interpreter"u8);
-                writer.WriteObjectValue(CodeInterpreter, options);
+                writer.WriteObjectValue<CodeInterpreterToolResource>(CodeInterpreter, options);
             }
-            if (Optional.IsDefined(FileSearch))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(FileSearch))
             {
                 writer.WritePropertyName("file_search"u8);
-                writer.WriteObjectValue(FileSearch, options);
+                writer.WriteObjectValue<FileSearchToolResource>(FileSearch, options);
             }
-            if (Optional.IsDefined(AzureAISearch))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(AzureAISearch))
             {
                 writer.WritePropertyName("azure_ai_search"u8);
-                writer.WriteObjectValue(AzureAISearch, options);
+                writer.WriteObjectValue<AzureAISearchToolResource>(AzureAISearch, options);
             }
-            if (Optional.IsCollectionDefined(Mcp))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(Mcp))
             {
                 writer.WritePropertyName("mcp"u8);
                 writer.WriteStartArray();
                 foreach (MCPToolResource item in Mcp)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<MCPToolResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -110,9 +110,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -121,83 +121,83 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolResources IJsonModel<ToolResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ToolResources IJsonModel<global::Azure.AI.Agents.Persistent.ToolResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ToolResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolResources>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.ToolResources>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ToolResources)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.ToolResources)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolResources(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.ToolResources.DeserializeToolResources(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ToolResources DeserializeToolResources(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             CodeInterpreterToolResource codeInterpreter = default;
             FileSearchToolResource fileSearch = default;
             AzureAISearchToolResource azureAISearch = default;
-            IList<MCPToolResource> mcp = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Agents.Persistent.MCPToolResource> mcp = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("code_interpreter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    codeInterpreter = CodeInterpreterToolResource.DeserializeCodeInterpreterToolResource(prop.Value, options);
+                    codeInterpreter = global::Azure.AI.Agents.Persistent.CodeInterpreterToolResource.DeserializeCodeInterpreterToolResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("file_search"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    fileSearch = FileSearchToolResource.DeserializeFileSearchToolResource(prop.Value, options);
+                    fileSearch = global::Azure.AI.Agents.Persistent.FileSearchToolResource.DeserializeFileSearchToolResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    azureAISearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
+                    azureAISearch = global::Azure.AI.Agents.Persistent.AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mcp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<MCPToolResource> array = new List<MCPToolResource>();
+                    List<global::Azure.AI.Agents.Persistent.MCPToolResource> array = new List<global::Azure.AI.Agents.Persistent.MCPToolResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MCPToolResource.DeserializeMCPToolResource(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.MCPToolResource.DeserializeMCPToolResource(item, options));
                     }
                     mcp = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolResources(codeInterpreter, fileSearch, azureAISearch, mcp ?? new ChangeTrackingList<MCPToolResource>(), additionalBinaryDataProperties);
+            return new ToolResources(codeInterpreter, fileSearch, azureAISearch, (mcp ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MCPToolResource>()), additionalBinaryDataProperties);
         }
     }
 }

@@ -11,12 +11,12 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Schedule task model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationScheduleTask"/> and <see cref="InsightScheduleTask"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.EvaluationScheduleTask"/> and <see cref="Azure.AI.Projects.Evaluation.InsightScheduleTask"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownScheduleTask))]
-    public abstract partial class ProjectsScheduleTask : IJsonModel<ProjectsScheduleTask>
+    [PersistableModelProxyAttribute(typeof(UnknownScheduleTask))]
+    public abstract partial class ProjectsScheduleTask : IJsonModel<global::Azure.AI.Projects.ProjectsScheduleTask>
     {
-        /// <summary> Initializes a new instance of <see cref="ProjectsScheduleTask"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ProjectsScheduleTask"/> for deserialization. </summary>
         internal ProjectsScheduleTask()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsScheduleTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectsScheduleTask(document.RootElement, options);
+                        return global::Azure.AI.Projects.ProjectsScheduleTask.DeserializeProjectsScheduleTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsScheduleTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.ProjectsScheduleTask)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsScheduleTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.ProjectsScheduleTask)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectsScheduleTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsScheduleTask IPersistableModel<ProjectsScheduleTask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProjectsScheduleTask IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectsScheduleTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectsScheduleTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.ProjectsScheduleTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,21 +74,21 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ProjectsScheduleTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.ProjectsScheduleTask)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(Configuration))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStartObject();
                 foreach (var item in Configuration)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -105,9 +105,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -116,26 +116,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsScheduleTask IJsonModel<ProjectsScheduleTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProjectsScheduleTask IJsonModel<global::Azure.AI.Projects.ProjectsScheduleTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsScheduleTask JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.ProjectsScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ProjectsScheduleTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.ProjectsScheduleTask)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectsScheduleTask(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.ProjectsScheduleTask.DeserializeProjectsScheduleTask(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ProjectsScheduleTask DeserializeProjectsScheduleTask(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -144,12 +144,12 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "Evaluation":
-                        return EvaluationScheduleTask.DeserializeEvaluationScheduleTask(element, options);
+                        return global::Azure.AI.Projects.Evaluation.EvaluationScheduleTask.DeserializeEvaluationScheduleTask(element, options);
                     case "Insight":
-                        return InsightScheduleTask.DeserializeInsightScheduleTask(element, options);
+                        return global::Azure.AI.Projects.Evaluation.InsightScheduleTask.DeserializeInsightScheduleTask(element, options);
                 }
             }
-            return UnknownScheduleTask.DeserializeUnknownScheduleTask(element, options);
+            return global::Azure.AI.Projects.Evaluation.UnknownScheduleTask.DeserializeUnknownScheduleTask(element, options);
         }
     }
 }

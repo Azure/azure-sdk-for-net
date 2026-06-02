@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodePlacementPolicyType enums. </summary>
-    public readonly partial struct BatchNodePlacementPolicyType : IEquatable<BatchNodePlacementPolicyType>
+    public readonly partial struct BatchNodePlacementPolicyType : IEquatable<global::Azure.Compute.Batch.BatchNodePlacementPolicyType>
     {
         private readonly string _value;
         /// <summary> All nodes in the pool will be allocated in the same region. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Nodes in the pool will be spread across different availability zones with best effort balancing. </summary>
         private const string ZonalValue = "zonal";
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodePlacementPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodePlacementPolicyType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Nodes in the pool will be spread across different availability zones with best effort balancing. </summary>
         public static BatchNodePlacementPolicyType Zonal { get; } = new BatchNodePlacementPolicyType(ZonalValue);
 
-        /// <summary> Determines if two <see cref="BatchNodePlacementPolicyType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodePlacementPolicyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodePlacementPolicyType left, BatchNodePlacementPolicyType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchNodePlacementPolicyType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchNodePlacementPolicyType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodePlacementPolicyType left, BatchNodePlacementPolicyType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchNodePlacementPolicyType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchNodePlacementPolicyType(string value) => new BatchNodePlacementPolicyType(value);
 
-        /// <summary> Converts a string to a <see cref="BatchNodePlacementPolicyType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchNodePlacementPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchNodePlacementPolicyType?(string value) => value == null ? null : new BatchNodePlacementPolicyType(value);
+        public static implicit operator BatchNodePlacementPolicyType?(string value) => (value == null) ? null : new BatchNodePlacementPolicyType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchNodePlacementPolicyType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchNodePlacementPolicyType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchNodePlacementPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchNodePlacementPolicyType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

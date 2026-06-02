@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
-    public partial class WaitTimeExceptionTrigger : ExceptionTrigger, IJsonModel<WaitTimeExceptionTrigger>
+    public partial class WaitTimeExceptionTrigger : ExceptionTrigger, IJsonModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>
     {
-        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger"/> for deserialization. </summary>
         internal WaitTimeExceptionTrigger()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExceptionTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWaitTimeExceptionTrigger(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WaitTimeExceptionTrigger)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WaitTimeExceptionTrigger)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WaitTimeExceptionTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WaitTimeExceptionTrigger IPersistableModel<WaitTimeExceptionTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (WaitTimeExceptionTrigger)PersistableModelCreateCore(data, options);
+        WaitTimeExceptionTrigger IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WaitTimeExceptionTrigger)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WaitTimeExceptionTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WaitTimeExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WaitTimeExceptionTrigger)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("thresholdSeconds"u8);
-            WriteThresholdSeconds(writer, options);
+            this.WriteThresholdSeconds(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WaitTimeExceptionTrigger IJsonModel<WaitTimeExceptionTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WaitTimeExceptionTrigger)JsonModelCreateCore(ref reader, options);
+        WaitTimeExceptionTrigger IJsonModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WaitTimeExceptionTrigger)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExceptionTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WaitTimeExceptionTrigger)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWaitTimeExceptionTrigger(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ExceptionTriggerKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             TimeSpan threshold = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,9 +123,9 @@ namespace Azure.Communication.JobRouter
                     ReadThresholdSeconds(prop, ref threshold);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WaitTimeExceptionTrigger(kind, additionalBinaryDataProperties, threshold);

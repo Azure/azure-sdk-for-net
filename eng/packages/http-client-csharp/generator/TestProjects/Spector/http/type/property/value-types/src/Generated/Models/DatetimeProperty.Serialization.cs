@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class DatetimeProperty : IJsonModel<DatetimeProperty>
+    public partial class DatetimeProperty : IJsonModel<global::_Type.Property.ValueTypes.DatetimeProperty>
     {
         internal DatetimeProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<DatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.DatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        DatetimeProperty IPersistableModel<DatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DatetimeProperty IPersistableModel<global::_Type.Property.ValueTypes.DatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<DatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.DatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="datetimeProperty"> The <see cref="DatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="datetimeProperty"> The <see cref="global::_Type.Property.ValueTypes.DatetimeProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DatetimeProperty datetimeProperty) => throw null;
 
         public static explicit operator DatetimeProperty(Response response) => throw null;
 
-        void IJsonModel<DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        DatetimeProperty IJsonModel<DatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        DatetimeProperty IJsonModel<global::_Type.Property.ValueTypes.DatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual DatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

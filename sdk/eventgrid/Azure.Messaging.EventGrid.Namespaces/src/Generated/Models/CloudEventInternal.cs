@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
     internal partial class CloudEventInternal
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.CloudEventInternal"/>. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Specversion = specversion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.CloudEventInternal"/>. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="data"> Event data specific to the event type. </param>
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEventInternal(string id, string source, BinaryData data, BinaryData dataBase64, string @type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudEventInternal(string id, string source, BinaryData data, BinaryData dataBase64, string @type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Source = source;
@@ -64,8 +64,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary>
         /// Event data specific to the event type.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary>
         /// Event data specific to the event type, encoded as a base64 string.
         /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// To assign a byte[] to this property use <see cref="global::System.BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>

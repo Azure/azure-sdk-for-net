@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Available query types for Azure AI Search tool. </summary>
-    public readonly partial struct ResponsesAzureAISearchQueryType : IEquatable<ResponsesAzureAISearchQueryType>
+    public readonly partial struct ResponsesAzureAISearchQueryType : IEquatable<global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType>
     {
         private readonly string _value;
         /// <summary> Query type `simple`. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Query type `vector_semantic_hybrid`. </summary>
         private const string VectorSemanticHybridValue = "vector_semantic_hybrid";
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchQueryType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponsesAzureAISearchQueryType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -47,34 +47,34 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Query type `vector_semantic_hybrid`. </summary>
         public static ResponsesAzureAISearchQueryType VectorSemanticHybrid { get; } = new ResponsesAzureAISearchQueryType(VectorSemanticHybridValue);
 
-        /// <summary> Determines if two <see cref="ResponsesAzureAISearchQueryType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResponsesAzureAISearchQueryType left, ResponsesAzureAISearchQueryType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResponsesAzureAISearchQueryType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResponsesAzureAISearchQueryType left, ResponsesAzureAISearchQueryType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResponsesAzureAISearchQueryType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ResponsesAzureAISearchQueryType(string value) => new ResponsesAzureAISearchQueryType(value);
 
-        /// <summary> Converts a string to a <see cref="ResponsesAzureAISearchQueryType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResponsesAzureAISearchQueryType?(string value) => value == null ? null : new ResponsesAzureAISearchQueryType(value);
+        public static implicit operator ResponsesAzureAISearchQueryType?(string value) => (value == null) ? null : new ResponsesAzureAISearchQueryType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResponsesAzureAISearchQueryType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ResponsesAzureAISearchQueryType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ResponsesAzureAISearchQueryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ResponsesAzureAISearchQueryType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

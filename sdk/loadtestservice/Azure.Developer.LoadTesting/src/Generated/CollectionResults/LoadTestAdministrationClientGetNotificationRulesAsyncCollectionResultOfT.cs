@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    internal partial class LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT : AsyncPageable<NotificationRule>
+    internal partial class LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Developer.LoadTesting.NotificationRule>
     {
         private readonly LoadTestAdministrationClient _client;
         private readonly string _testIds;
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT(LoadTestAdministrationClient client, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT(LoadTestAdministrationClient client, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _testIds = testIds;
@@ -50,20 +50,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NotificationRule>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Developer.LoadTesting.NotificationRule>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedNotificationRule result = (PagedNotificationRule)response;
-                yield return Page<NotificationRule>.FromValues((IReadOnlyList<NotificationRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedNotificationRule result = ((PagedNotificationRule)response);
+                yield return global::Azure.Page<NotificationRule>.FromValues(((IReadOnlyList<global::Azure.Developer.LoadTesting.NotificationRule>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,9 +73,9 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNotificationRulesRequest(nextLink, _testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context) : _client.CreateGetNotificationRulesRequest(_testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetNotificationRulesRequest(nextLink, _testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context) : _client.CreateGetNotificationRulesRequest(_testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

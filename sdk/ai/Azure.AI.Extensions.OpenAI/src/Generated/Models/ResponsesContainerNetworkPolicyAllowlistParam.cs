@@ -11,23 +11,23 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesContainerNetworkPolicyAllowlistParam. </summary>
     public partial class ResponsesContainerNetworkPolicyAllowlistParam : ResponsesContainerNetworkPolicyParam
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allowedDomains"/> is null. </exception>
-        public ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="allowedDomains"/> is null. </exception>
+        public ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(global::Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType.Allowlist)
         {
-            Argument.AssertNotNull(allowedDomains, nameof(allowedDomains));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(allowedDomains, nameof(allowedDomains));
 
             AllowedDomains = allowedDomains.ToList();
-            DomainSecrets = new ChangeTrackingList<ResponsesContainerNetworkPolicyDomainSecretParam>();
+            DomainSecrets = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
         /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
-        internal ResponsesContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> allowedDomains, IList<ResponsesContainerNetworkPolicyDomainSecretParam> domainSecrets) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> allowedDomains, IList<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam> domainSecrets) : base(@type, additionalBinaryDataProperties)
         {
             AllowedDomains = allowedDomains;
             DomainSecrets = domainSecrets;
@@ -37,6 +37,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<string> AllowedDomains { get; }
 
         /// <summary> Optional domain-scoped secrets for allowlisted domains. </summary>
-        public IList<ResponsesContainerNetworkPolicyDomainSecretParam> DomainSecrets { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam> DomainSecrets { get; }
     }
 }

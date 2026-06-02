@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Models
     internal partial class SuggestDocumentsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SuggestDocumentsResult"/>. </summary>
         internal SuggestDocumentsResult()
         {
-            Results = new ChangeTrackingList<SuggestResult>();
+            Results = new ChangeTrackingList<global::Azure.Search.Documents.Models.SuggestResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SuggestDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuggestDocumentsResult(IReadOnlyList<global::Azure.Search.Documents.Models.SuggestResult> results, double? coverage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             Coverage = coverage;
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The sequence of results returned by the query. </summary>
-        public IReadOnlyList<SuggestResult> Results { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.SuggestResult> Results { get; }
 
         /// <summary> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </summary>
         public double? Coverage { get; }

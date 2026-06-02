@@ -14,9 +14,9 @@ namespace Azure.Communication.JobRouter
     public partial class UnassignJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.UnassignJobResult"/>. </summary>
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         internal UnassignJobResult(string jobId, int unassignmentCount)
@@ -25,11 +25,11 @@ namespace Azure.Communication.JobRouter
             UnassignmentCount = unassignmentCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.UnassignJobResult"/>. </summary>
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnassignJobResult(string jobId, int unassignmentCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnassignJobResult(string jobId, int unassignmentCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobId = jobId;
             UnassignmentCount = unassignmentCount;

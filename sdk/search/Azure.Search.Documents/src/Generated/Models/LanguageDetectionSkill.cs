@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that detects the language of input text and reports a single language code for every document submitted on the request. The language code is paired with a score indicating the confidence of the analysis. </summary>
     public partial class LanguageDetectionSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LanguageDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public LanguageDetectionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.LanguageDetectionSkill", inputs, outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public LanguageDetectionSkill(IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.LanguageDetectionSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LanguageDetectionSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultCountryHint"> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
-        internal LanguageDetectionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultCountryHint, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal LanguageDetectionSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string defaultCountryHint, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultCountryHint = defaultCountryHint;
             ModelVersion = modelVersion;

@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationalAIEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity"/>. </summary>
         /// <param name="name"> The entity name or category. </param>
         /// <param name="text"> The detected text of the entity. </param>
         /// <param name="confidenceScore"> The confidence score of the entity detection (0.0 to 1.0). </param>
@@ -32,11 +32,11 @@ namespace Azure.AI.Language.Conversations.Models
             Offset = offset;
             Length = length;
             ConversationItemId = conversationItemId;
-            Resolutions = new ChangeTrackingList<ResolutionBase>();
-            ExtraInformation = new ChangeTrackingList<ConversationEntityExtraInformation>();
+            Resolutions = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ResolutionBase>();
+            ExtraInformation = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity"/>. </summary>
         /// <param name="name"> The entity name or category. </param>
         /// <param name="text"> The detected text of the entity. </param>
         /// <param name="confidenceScore"> The confidence score of the entity detection (0.0 to 1.0). </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="resolutions"> Entity resolution details, if available. </param>
         /// <param name="extraInformation"> Additional entity metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIEntity(string name, string text, float confidenceScore, int offset, int length, string conversationItemId, int? conversationItemIndex, IList<ResolutionBase> resolutions, IList<ConversationEntityExtraInformation> extraInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalAIEntity(string name, string text, float confidenceScore, int offset, int length, string conversationItemId, int? conversationItemIndex, IList<global::Azure.AI.Language.Conversations.Models.ResolutionBase> resolutions, IList<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation> extraInformation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Text = text;
@@ -83,9 +83,9 @@ namespace Azure.AI.Language.Conversations.Models
         public int? ConversationItemIndex { get; }
 
         /// <summary> Entity resolution details, if available. </summary>
-        public IList<ResolutionBase> Resolutions { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ResolutionBase> Resolutions { get; }
 
         /// <summary> Additional entity metadata. </summary>
-        public IList<ConversationEntityExtraInformation> ExtraInformation { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation> ExtraInformation { get; }
     }
 }

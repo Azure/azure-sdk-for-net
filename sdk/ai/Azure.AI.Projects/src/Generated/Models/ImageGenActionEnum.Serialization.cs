@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ImageGenActionEnum value) => value switch
         {
-            ImageGenActionEnum.Generate => "generate",
-            ImageGenActionEnum.Edit => "edit",
-            ImageGenActionEnum.Auto => "auto",
+            global::Azure.AI.Projects.ImageGenActionEnum.Generate => "generate",
+            global::Azure.AI.Projects.ImageGenActionEnum.Edit => "edit",
+            global::Azure.AI.Projects.ImageGenActionEnum.Auto => "auto",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageGenActionEnum value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ImageGenActionEnum ToImageGenActionEnum(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "generate"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "generate"))
             {
-                return ImageGenActionEnum.Generate;
+                return global::Azure.AI.Projects.ImageGenActionEnum.Generate;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "edit"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "edit"))
             {
-                return ImageGenActionEnum.Edit;
+                return global::Azure.AI.Projects.ImageGenActionEnum.Edit;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ImageGenActionEnum.Auto;
+                return global::Azure.AI.Projects.ImageGenActionEnum.Auto;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageGenActionEnum value.");
         }

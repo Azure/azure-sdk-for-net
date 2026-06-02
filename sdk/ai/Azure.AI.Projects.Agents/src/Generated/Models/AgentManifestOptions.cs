@@ -12,19 +12,19 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentManifestOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentManifestOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentManifestOptions"/>. </summary>
         /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
         /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        internal AgentManifestOptions(string manifestId, IDictionary<string, BinaryData> parameterValues)
+        internal AgentManifestOptions(string manifestId, IDictionary<string, global::System.BinaryData> parameterValues)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ManifestId = manifestId;
             ParameterValues = parameterValues;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentManifestOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentManifestOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
         /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentManifestOptions(IDictionary<string, string> metadata, string description, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentManifestOptions(IDictionary<string, string> metadata, string description, string manifestId, IDictionary<string, global::System.BinaryData> parameterValues, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;
@@ -62,8 +62,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The inputs to the manifest that will result in a fully materialized Agent.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -86,6 +86,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ParameterValues { get; }
+        public IDictionary<string, global::System.BinaryData> ParameterValues { get; }
     }
 }

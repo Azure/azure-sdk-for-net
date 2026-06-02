@@ -24,19 +24,19 @@ namespace Azure.Search.Documents.KnowledgeBases
             uri.AppendPath("/knowledgebases('", false);
             uri.AppendPath(_knowledgeBaseName, true);
             uri.AppendPath("')/retrieve", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if ("application/json;odata.metadata=minimal" != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if (("application/json;odata.metadata=minimal" != null))
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
             }
-            if (querySourceAuthorization != null)
+            if ((querySourceAuthorization != null))
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }

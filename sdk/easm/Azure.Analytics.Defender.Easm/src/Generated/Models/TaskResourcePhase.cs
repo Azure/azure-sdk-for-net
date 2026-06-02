@@ -11,19 +11,19 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The phase the task is in. </summary>
-    public readonly partial struct TaskResourcePhase : IEquatable<TaskResourcePhase>
+    public readonly partial struct TaskResourcePhase : IEquatable<global::Azure.Analytics.Defender.Easm.TaskResourcePhase>
     {
         private readonly string _value;
         private const string RunningValue = "running";
         private const string PollingValue = "polling";
         private const string CompleteValue = "complete";
 
-        /// <summary> Initializes a new instance of <see cref="TaskResourcePhase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.TaskResourcePhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TaskResourcePhase(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -37,34 +37,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Complete. </summary>
         public static TaskResourcePhase Complete { get; } = new TaskResourcePhase(CompleteValue);
 
-        /// <summary> Determines if two <see cref="TaskResourcePhase"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.TaskResourcePhase"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TaskResourcePhase left, TaskResourcePhase right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TaskResourcePhase"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.TaskResourcePhase"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TaskResourcePhase left, TaskResourcePhase right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TaskResourcePhase"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.TaskResourcePhase"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TaskResourcePhase(string value) => new TaskResourcePhase(value);
 
-        /// <summary> Converts a string to a <see cref="TaskResourcePhase"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.TaskResourcePhase"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskResourcePhase?(string value) => value == null ? null : new TaskResourcePhase(value);
+        public static implicit operator TaskResourcePhase?(string value) => (value == null) ? null : new TaskResourcePhase(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TaskResourcePhase other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TaskResourcePhase other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TaskResourcePhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TaskResourcePhase other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

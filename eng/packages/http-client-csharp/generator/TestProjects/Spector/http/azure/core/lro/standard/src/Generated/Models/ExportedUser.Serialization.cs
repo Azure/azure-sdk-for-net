@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.Core.Lro.Standard
 {
-    public partial class ExportedUser : IJsonModel<ExportedUser>
+    public partial class ExportedUser : IJsonModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>
     {
         internal ExportedUser() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.Core.Lro.Standard
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ExportedUser>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ExportedUser IPersistableModel<ExportedUser>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ExportedUser IPersistableModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ExportedUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<ExportedUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ExportedUser IJsonModel<ExportedUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ExportedUser IJsonModel<global::Specs.Azure.Core.Lro.Standard.ExportedUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ExportedUser JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

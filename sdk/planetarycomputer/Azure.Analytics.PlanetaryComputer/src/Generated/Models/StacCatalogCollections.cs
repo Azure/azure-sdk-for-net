@@ -18,22 +18,22 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacCatalogCollections
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacCatalogCollections"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections"/>. </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
-        internal StacCatalogCollections(IEnumerable<StacLink> links, IEnumerable<StacCollectionResource> collections)
+        internal StacCatalogCollections(IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacLink> links, IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource> collections)
         {
             Links = links.ToList();
             Collections = collections.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacCatalogCollections"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacCatalogCollections"/>. </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacCatalogCollections(IList<StacLink> links, IList<StacCollectionResource> collections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacCatalogCollections(IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, IList<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource> collections, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Links = links;
             Collections = collections;
@@ -41,9 +41,9 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Links to related resources and endpoints. </summary>
-        public IList<StacLink> Links { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacLink> Links { get; }
 
         /// <summary> Array of STAC collections available in the catalog. </summary>
-        public IList<StacCollectionResource> Collections { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacCollectionResource> Collections { get; }
     }
 }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The latest run of this disco group with some limited information, null if the group has never been run. </summary>
-    public partial class DiscoveryRunResult : IJsonModel<DiscoveryRunResult>
+    public partial class DiscoveryRunResult : IJsonModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DiscoveryRunResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiscoveryRunResult(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.DiscoveryRunResult.DeserializeDiscoveryRunResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DiscoveryRunResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DiscoveryRunResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiscoveryRunResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveryRunResult IPersistableModel<DiscoveryRunResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DiscoveryRunResult IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiscoveryRunResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiscoveryRunResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,68 +68,68 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DiscoveryRunResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SubmittedDate))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SubmittedDate))
             {
                 writer.WritePropertyName("submittedDate"u8);
                 writer.WriteStringValue(SubmittedDate.Value, "O");
             }
-            if (Optional.IsDefined(StartedDate))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(StartedDate))
             {
                 writer.WritePropertyName("startedDate"u8);
                 writer.WriteStringValue(StartedDate.Value, "O");
             }
-            if (Optional.IsDefined(CompletedDate))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(CompletedDate))
             {
                 writer.WritePropertyName("completedDate"u8);
                 writer.WriteStringValue(CompletedDate.Value, "O");
             }
-            if (Optional.IsDefined(Tier))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(State))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(TotalAssetsFoundCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(TotalAssetsFoundCount))
             {
                 writer.WritePropertyName("totalAssetsFoundCount"u8);
                 writer.WriteNumberValue(TotalAssetsFoundCount.Value);
             }
-            if (Optional.IsCollectionDefined(Seeds))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Seeds))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
                 foreach (DiscoverySource item in Seeds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DiscoverySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Excludes))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Excludes))
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
                 foreach (DiscoverySource item in Excludes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DiscoverySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
                 foreach (string item in Names)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -146,9 +146,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -157,26 +157,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveryRunResult IJsonModel<DiscoveryRunResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DiscoveryRunResult IJsonModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DiscoveryRunResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DiscoveryRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DiscoveryRunResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoveryRunResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.DiscoveryRunResult.DeserializeDiscoveryRunResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DiscoveryRunResult DeserializeDiscoveryRunResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -186,15 +186,15 @@ namespace Azure.Analytics.Defender.Easm
             string tier = default;
             DiscoRunState? state = default;
             long? totalAssetsFoundCount = default;
-            IList<DiscoverySource> seeds = default;
-            IList<DiscoverySource> excludes = default;
+            IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds = default;
+            IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes = default;
             IList<string> names = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("submittedDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("startedDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("completedDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -226,7 +226,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("totalAssetsFoundCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -244,42 +244,42 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("seeds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DiscoverySource> array = new List<DiscoverySource>();
+                    List<global::Azure.Analytics.Defender.Easm.DiscoverySource> array = new List<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
                 }
                 if (prop.NameEquals("excludes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DiscoverySource> array = new List<DiscoverySource>();
+                    List<global::Azure.Analytics.Defender.Easm.DiscoverySource> array = new List<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     excludes = array;
                     continue;
                 }
                 if (prop.NameEquals("names"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -291,9 +291,9 @@ namespace Azure.Analytics.Defender.Easm
                     names = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DiscoveryRunResult(
@@ -303,9 +303,9 @@ namespace Azure.Analytics.Defender.Easm
                 tier,
                 state,
                 totalAssetsFoundCount,
-                seeds ?? new ChangeTrackingList<DiscoverySource>(),
-                excludes ?? new ChangeTrackingList<DiscoverySource>(),
-                names ?? new ChangeTrackingList<string>(),
+                (seeds ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>()),
+                (excludes ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>()),
+                (names ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

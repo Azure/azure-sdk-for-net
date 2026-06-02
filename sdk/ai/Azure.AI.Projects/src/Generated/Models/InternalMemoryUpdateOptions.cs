@@ -10,17 +10,17 @@ namespace Azure.AI.Projects
     internal partial class InternalMemoryUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalMemoryUpdateOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         internal InternalMemoryUpdateOptions(string scope)
         {
             Scope = scope;
-            Items = new ChangeTrackingList<InputItem>();
+            Items = new ChangeTrackingList<global::Azure.AI.Projects.InputItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalMemoryUpdateOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="items"> Conversation items to be stored in memory. </param>
         /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
         /// Defaults to 300 (5 minutes).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemoryUpdateOptions(string scope, IList<InputItem> items, string previousUpdateId, int? updateDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemoryUpdateOptions(string scope, IList<global::Azure.AI.Projects.InputItem> items, string previousUpdateId, int? updateDelay, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects
         public string Scope { get; }
 
         /// <summary> Conversation items to be stored in memory. </summary>
-        public IList<InputItem> Items { get; }
+        public IList<global::Azure.AI.Projects.InputItem> Items { get; }
 
         /// <summary> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </summary>
         public string PreviousUpdateId { get; }

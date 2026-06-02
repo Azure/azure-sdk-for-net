@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownResolutionBase : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownResolutionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownResolutionBase"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resolutionKind != default ? resolutionKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownResolutionBase(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((resolutionKind != default) ? resolutionKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

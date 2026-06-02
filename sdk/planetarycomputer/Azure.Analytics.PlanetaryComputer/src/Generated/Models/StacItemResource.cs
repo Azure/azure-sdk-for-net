@@ -14,20 +14,20 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a STAC Item, which is a GeoJSON Feature with additional metadata. </summary>
     public partial class StacItemResource : StacItemOrStacItemCollection
     {
-        /// <summary> Initializes a new instance of <see cref="StacItemResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemResource"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="properties"> Attributes associated with the feature. </param>
         /// <param name="assets"> Assets. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometry"/>, <paramref name="id"/>, <paramref name="boundingBox"/>, <paramref name="properties"/> or <paramref name="assets"/> is null. </exception>
-        public StacItemResource(GeoJsonGeometry geometry, string id, IEnumerable<float> boundingBox, StacItemProperties properties, IDictionary<string, StacAsset> assets) : base(StacModelType.Feature)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="geometry"/>, <paramref name="id"/>, <paramref name="boundingBox"/>, <paramref name="properties"/> or <paramref name="assets"/> is null. </exception>
+        public StacItemResource(GeoJsonGeometry geometry, string id, IEnumerable<float> boundingBox, StacItemProperties properties, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets) : base(global::Azure.Analytics.PlanetaryComputer.StacModelType.Feature)
         {
-            Argument.AssertNotNull(geometry, nameof(geometry));
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
-            Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(assets, nameof(assets));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(geometry, nameof(geometry));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(properties, nameof(properties));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(assets, nameof(assets));
 
             Geometry = geometry;
             Id = id;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Assets = assets;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemResource"/>. </summary>
         /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="timestamp"> MSFT Timestamp. </param>
         /// <param name="eTag"> MSFT ETag. </param>
-        internal StacItemResource(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, GeoJsonGeometry geometry, string id, string collection, IList<float> boundingBox, StacItemProperties properties, IDictionary<string, StacAsset> assets, DateTimeOffset? timestamp, string eTag) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal StacItemResource(StacModelType @type, string stacVersion, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, GeoJsonGeometry geometry, string id, string collection, IList<float> boundingBox, StacItemProperties properties, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets, DateTimeOffset? timestamp, string eTag) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Id = id;
@@ -81,7 +81,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public StacItemProperties Properties { get; set; }
 
         /// <summary> Assets. </summary>
-        public IDictionary<string, StacAsset> Assets { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> Assets { get; }
 
         /// <summary> MSFT Timestamp. </summary>
         public DateTimeOffset? Timestamp { get; set; }

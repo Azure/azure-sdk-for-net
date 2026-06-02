@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalOutputItemFileSearchToolCall : AgentResponseItem, IJsonModel<InternalOutputItemFileSearchToolCall>
+    internal partial class InternalOutputItemFileSearchToolCall : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemFileSearchToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall"/> for deserialization. </summary>
         internal InternalOutputItemFileSearchToolCall()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalOutputItemFileSearchToolCall(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall.DeserializeInternalOutputItemFileSearchToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemFileSearchToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemFileSearchToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemFileSearchToolCall IPersistableModel<InternalOutputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemFileSearchToolCall)PersistableModelCreateCore(data, options);
+        InternalOutputItemFileSearchToolCall IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalOutputItemFileSearchToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalOutputItemFileSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,10 +69,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemFileSearchToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("status"u8);
@@ -81,7 +81,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStartArray();
             foreach (string item in Queries)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -89,13 +89,13 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Results))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
                 foreach (FileSearchToolCallResults item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<FileSearchToolCallResults>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,26 +103,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemFileSearchToolCall IJsonModel<InternalOutputItemFileSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalOutputItemFileSearchToolCall)JsonModelCreateCore(ref reader, options);
+        InternalOutputItemFileSearchToolCall IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalOutputItemFileSearchToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemFileSearchToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalOutputItemFileSearchToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.InternalOutputItemFileSearchToolCall.DeserializeInternalOutputItemFileSearchToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalOutputItemFileSearchToolCall DeserializeInternalOutputItemFileSearchToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,10 +130,10 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InputItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
-            IList<FileSearchToolCallResults> results = default;
+            IList<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -148,11 +148,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -170,7 +170,7 @@ namespace Azure.AI.Extensions.OpenAI
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -184,21 +184,21 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("results"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<FileSearchToolCallResults> array = new List<FileSearchToolCallResults>();
+                    List<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults> array = new List<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileSearchToolCallResults.DeserializeFileSearchToolCallResults(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults.DeserializeFileSearchToolCallResults(item, options));
                     }
                     results = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalOutputItemFileSearchToolCall(
@@ -209,7 +209,7 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 status,
                 queries,
-                results ?? new ChangeTrackingList<FileSearchToolCallResults>());
+                (results ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.FileSearchToolCallResults>()));
         }
     }
 }

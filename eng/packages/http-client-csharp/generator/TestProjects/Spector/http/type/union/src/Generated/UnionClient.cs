@@ -13,14 +13,14 @@ namespace _Type.Union
 {
     public partial class UnionClient
     {
-        public UnionClient() : this(new Uri("http://localhost:3000"), new UnionClientOptions()) => throw null;
+        public UnionClient() : this(new global::System.Uri("http://localhost:3000"), new UnionClientOptions()) => throw null;
 
-        internal UnionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UnionClientOptions options) => throw null;
+        internal UnionClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, UnionClientOptions options) => throw null;
 
-        public UnionClient(Uri endpoint, UnionClientOptions options) : this(null, endpoint, options) => throw null;
+        public UnionClient(global::System.Uri endpoint, UnionClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public UnionClient(UnionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public UnionClient(UnionClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

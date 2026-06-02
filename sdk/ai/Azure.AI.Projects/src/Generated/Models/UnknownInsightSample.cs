@@ -9,13 +9,13 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownInsightSample : InsightSample
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInsightSample"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownInsightSample"/>. </summary>
         /// <param name="id"> The unique identifier for the analysis sample. </param>
         /// <param name="type"> Sample type. </param>
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInsightSample(string id, SampleType @type, IDictionary<string, BinaryData> features, IDictionary<string, BinaryData> correlationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, @type != default ? @type : "unknown", features, correlationInfo, additionalBinaryDataProperties)
+        internal UnknownInsightSample(string id, SampleType @type, IDictionary<string, global::System.BinaryData> features, IDictionary<string, global::System.BinaryData> correlationInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, (@type != default) ? @type : "unknown", features, correlationInfo, additionalBinaryDataProperties)
         {
         }
     }

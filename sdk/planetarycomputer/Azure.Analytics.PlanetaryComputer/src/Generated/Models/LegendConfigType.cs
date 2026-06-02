@@ -14,7 +14,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Legend type to make, one of: `continuous`, `classmap`, `interval` or `none`
     /// (note, `none` is a string literal).
     /// </summary>
-    public readonly partial struct LegendConfigType : IEquatable<LegendConfigType>
+    public readonly partial struct LegendConfigType : IEquatable<global::Azure.Analytics.PlanetaryComputer.LegendConfigType>
     {
         private readonly string _value;
         /// <summary> Continuous color ramp legend. </summary>
@@ -26,12 +26,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> No legend. </summary>
         private const string NoneValue = "none";
 
-        /// <summary> Initializes a new instance of <see cref="LegendConfigType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.LegendConfigType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LegendConfigType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -48,34 +48,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> No legend. </summary>
         public static LegendConfigType None { get; } = new LegendConfigType(NoneValue);
 
-        /// <summary> Determines if two <see cref="LegendConfigType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.LegendConfigType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LegendConfigType left, LegendConfigType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LegendConfigType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.LegendConfigType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LegendConfigType left, LegendConfigType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LegendConfigType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.LegendConfigType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LegendConfigType(string value) => new LegendConfigType(value);
 
-        /// <summary> Converts a string to a <see cref="LegendConfigType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.LegendConfigType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LegendConfigType?(string value) => value == null ? null : new LegendConfigType(value);
+        public static implicit operator LegendConfigType?(string value) => (value == null) ? null : new LegendConfigType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LegendConfigType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LegendConfigType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LegendConfigType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LegendConfigType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

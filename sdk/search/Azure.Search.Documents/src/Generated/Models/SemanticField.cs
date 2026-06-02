@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SemanticField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticField"/>. </summary>
         /// <param name="fieldName"> File name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
         public SemanticField(string fieldName)
         {
-            Argument.AssertNotNull(fieldName, nameof(fieldName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(fieldName, nameof(fieldName));
 
             FieldName = fieldName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticField"/>. </summary>
         /// <param name="fieldName"> File name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticField(string fieldName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticField(string fieldName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FieldName = fieldName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

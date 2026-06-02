@@ -12,30 +12,30 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluationsDimension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationsDimension"/>. </summary>
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="description"/> is null. </exception>
         public EvaluationsDimension(string id, string description, int weight)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Projects.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(description, nameof(description));
 
             Id = id;
             Description = description;
             Weight = weight;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationsDimension"/>. </summary>
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationsDimension(string id, string description, int weight, bool? alwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationsDimension(string id, string description, int weight, bool? alwaysApplicable, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Description = description;

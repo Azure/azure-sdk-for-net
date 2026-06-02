@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Input audio format types supported. </summary>
-    public readonly partial struct InputAudioFormat : IEquatable<InputAudioFormat>
+    public readonly partial struct InputAudioFormat : IEquatable<global::Azure.AI.VoiceLive.InputAudioFormat>
     {
         private readonly string _value;
         /// <summary> 16-bit PCM audio format at default sampling rate (24kHz). </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> G.711 A-law audio format at 8kHz sampling rate. </summary>
         private const string G711AlawValue = "g711_alaw";
 
-        /// <summary> Initializes a new instance of <see cref="InputAudioFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InputAudioFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InputAudioFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> G.711 A-law audio format at 8kHz sampling rate. </summary>
         public static InputAudioFormat G711Alaw { get; } = new InputAudioFormat(G711AlawValue);
 
-        /// <summary> Determines if two <see cref="InputAudioFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InputAudioFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InputAudioFormat left, InputAudioFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InputAudioFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InputAudioFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InputAudioFormat left, InputAudioFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InputAudioFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InputAudioFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InputAudioFormat(string value) => new InputAudioFormat(value);
 
-        /// <summary> Converts a string to a <see cref="InputAudioFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InputAudioFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InputAudioFormat?(string value) => value == null ? null : new InputAudioFormat(value);
+        public static implicit operator InputAudioFormat?(string value) => (value == null) ? null : new InputAudioFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InputAudioFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InputAudioFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InputAudioFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InputAudioFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

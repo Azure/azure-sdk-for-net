@@ -17,16 +17,16 @@ namespace Payload.Xml
     {
         protected XmlErrorValue() => throw null;
 
-        internal XmlErrorValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal XmlErrorValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<SimpleModel> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Payload.Xml.SimpleModel> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SimpleModel>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Payload.Xml.SimpleModel>> GetAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

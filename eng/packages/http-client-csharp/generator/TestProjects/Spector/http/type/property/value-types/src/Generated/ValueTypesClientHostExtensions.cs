@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Property.ValueTypes
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ValueTypesClientHostExtensions
     {
         public static IClientBuilder AddValueTypesClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddValueTypesClient(this IHostApplicationBuilder host, string sectionName, Action<ValueTypesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddValueTypesClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Property.ValueTypes.ValueTypesClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedValueTypesClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedValueTypesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ValueTypesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedValueTypesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Property.ValueTypes.ValueTypesClientSettings> configureSettings) => throw null;
     }
 }

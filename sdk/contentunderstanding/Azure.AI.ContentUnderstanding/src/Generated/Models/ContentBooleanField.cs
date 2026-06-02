@@ -13,19 +13,19 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Boolean field extracted from the content. </summary>
     public partial class ContentBooleanField : ContentField
     {
-        /// <summary> Initializes a new instance of <see cref="ContentBooleanField"/>. </summary>
-        internal ContentBooleanField() : base(ContentFieldType.Boolean)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentBooleanField"/>. </summary>
+        internal ContentBooleanField() : base(global::Azure.AI.ContentUnderstanding.ContentFieldType.Boolean)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentBooleanField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentBooleanField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueBoolean"> Boolean field value. </param>
-        internal ContentBooleanField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? valueBoolean) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
+        internal ContentBooleanField(ContentFieldType @type, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool? valueBoolean) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
         {
             ValueBoolean = valueBoolean;
         }

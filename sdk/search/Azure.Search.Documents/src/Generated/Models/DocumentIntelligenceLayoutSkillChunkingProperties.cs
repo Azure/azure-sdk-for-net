@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DocumentIntelligenceLayoutSkillChunkingProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
         public DocumentIntelligenceLayoutSkillChunkingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
         /// <param name="unit"> The unit of the chunk. </param>
         /// <param name="maximumLength"> The maximum chunk length in characters. Default is 500. </param>
         /// <param name="overlapLength"> The length of overlap provided between two text chunks. Default is 0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceLayoutSkillChunkingProperties(DocumentIntelligenceLayoutSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentIntelligenceLayoutSkillChunkingProperties(DocumentIntelligenceLayoutSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Unit = unit;
             MaximumLength = maximumLength;

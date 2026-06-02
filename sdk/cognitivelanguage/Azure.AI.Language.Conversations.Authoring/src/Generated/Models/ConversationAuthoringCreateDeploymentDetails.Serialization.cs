@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the options for creating or updating a project deployment. </summary>
-    public partial class ConversationAuthoringCreateDeploymentDetails : IJsonModel<ConversationAuthoringCreateDeploymentDetails>
+    public partial class ConversationAuthoringCreateDeploymentDetails : IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateDeploymentDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails"/> for deserialization. </summary>
         internal ConversationAuthoringCreateDeploymentDetails()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationAuthoringCreateDeploymentDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationAuthoringCreateDeploymentDetails(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails.DeserializeConversationAuthoringCreateDeploymentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringCreateDeploymentDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringCreateDeploymentDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationAuthoringCreateDeploymentDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationAuthoringCreateDeploymentDetails IPersistableModel<ConversationAuthoringCreateDeploymentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationAuthoringCreateDeploymentDetails IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationAuthoringCreateDeploymentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="conversationAuthoringCreateDeploymentDetails"> The <see cref="ConversationAuthoringCreateDeploymentDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="conversationAuthoringCreateDeploymentDetails"> The <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ConversationAuthoringCreateDeploymentDetails conversationAuthoringCreateDeploymentDetails)
         {
-            if (conversationAuthoringCreateDeploymentDetails == null)
+            if ((conversationAuthoringCreateDeploymentDetails == null))
             {
                 return null;
             }
-            return RequestContent.Create(conversationAuthoringCreateDeploymentDetails, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(conversationAuthoringCreateDeploymentDetails, global::Azure.AI.Language.Conversations.Authoring.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationAuthoringCreateDeploymentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,24 +84,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringCreateDeploymentDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("trainedModelLabel"u8);
             writer.WriteStringValue(TrainedModelLabel);
-            if (Optional.IsCollectionDefined(AssignedResources))
+            if (global::Azure.AI.Language.Conversations.Authoring.Optional.IsCollectionDefined(AssignedResources))
             {
                 writer.WritePropertyName("assignedResources"u8);
                 writer.WriteStartArray();
                 foreach (ConversationAuthoringDeploymentResource item in AssignedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ConversationAuthoringDeploymentResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.Conversations.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,32 +120,32 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationAuthoringCreateDeploymentDetails IJsonModel<ConversationAuthoringCreateDeploymentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationAuthoringCreateDeploymentDetails IJsonModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationAuthoringCreateDeploymentDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringCreateDeploymentDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationAuthoringCreateDeploymentDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails.DeserializeConversationAuthoringCreateDeploymentDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationAuthoringCreateDeploymentDetails DeserializeConversationAuthoringCreateDeploymentDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string trainedModelLabel = default;
-            IList<ConversationAuthoringDeploymentResource> assignedResources = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> assignedResources = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("trainedModelLabel"u8))
@@ -155,24 +155,24 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("assignedResources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConversationAuthoringDeploymentResource> array = new List<ConversationAuthoringDeploymentResource>();
+                    List<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> array = new List<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringDeploymentResource.DeserializeConversationAuthoringDeploymentResource(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource.DeserializeConversationAuthoringDeploymentResource(item, options));
                     }
                     assignedResources = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources ?? new ChangeTrackingList<ConversationAuthoringDeploymentResource>(), additionalBinaryDataProperties);
+            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, (assignedResources ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>()), additionalBinaryDataProperties);
         }
     }
 }

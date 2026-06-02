@@ -17,9 +17,9 @@ namespace Azure.AI.VoiceLive
     /// request for a user message failed. These events are separate from other
     /// `error` events so that the client can identify the related Item.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>
+    public partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionFailed()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemInputAudioTranscriptionFailed IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionFailed)PersistableModelCreateCore(data, options);
+        SessionUpdateConversationItemInputAudioTranscriptionFailed IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemInputAudioTranscriptionFailed)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,10 +77,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("item_id"u8);
@@ -88,37 +88,37 @@ namespace Azure.AI.VoiceLive
             writer.WritePropertyName("content_index"u8);
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
+            writer.WriteObjectValue<VoiceLiveErrorDetails>(Error, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemInputAudioTranscriptionFailed IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionFailed)JsonModelCreateCore(ref reader, options);
+        SessionUpdateConversationItemInputAudioTranscriptionFailed IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemInputAudioTranscriptionFailed)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateConversationItemInputAudioTranscriptionFailed DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string itemId = default;
             int contentIndex = default;
             VoiceLiveErrorDetails error = default;
@@ -146,12 +146,12 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    error = VoiceLiveErrorDetails.DeserializeVoiceLiveErrorDetails(prop.Value, options);
+                    error = global::Azure.AI.VoiceLive.VoiceLiveErrorDetails.DeserializeVoiceLiveErrorDetails(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateConversationItemInputAudioTranscriptionFailed(

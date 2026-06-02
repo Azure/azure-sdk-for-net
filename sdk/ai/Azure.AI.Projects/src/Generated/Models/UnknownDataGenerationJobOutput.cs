@@ -9,10 +9,10 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownDataGenerationJobOutput : DataGenerationJobOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataGenerationJobOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownDataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

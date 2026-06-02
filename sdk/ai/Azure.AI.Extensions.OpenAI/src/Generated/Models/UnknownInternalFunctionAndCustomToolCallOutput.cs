@@ -9,10 +9,10 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class UnknownInternalFunctionAndCustomToolCallOutput : InternalFunctionAndCustomToolCallOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInternalFunctionAndCustomToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.UnknownInternalFunctionAndCustomToolCallOutput"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInternalFunctionAndCustomToolCallOutput(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownInternalFunctionAndCustomToolCallOutput(FunctionAndCustomToolCallOutputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

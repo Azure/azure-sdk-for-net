@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary></summary>
-    public readonly partial struct ModelStatus : IEquatable<ModelStatus>
+    public readonly partial struct ModelStatus : IEquatable<global::Azure.AI.AnomalyDetector.ModelStatus>
     {
         private readonly string _value;
         /// <summary> The model has been created. Training has been scheduled but not yet started. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> The model training failed. </summary>
         private const string FailedValue = "FAILED";
 
-        /// <summary> Initializes a new instance of <see cref="ModelStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.ModelStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ModelStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> The model training failed. </summary>
         public static ModelStatus Failed { get; } = new ModelStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="ModelStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.AnomalyDetector.ModelStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ModelStatus left, ModelStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ModelStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.AnomalyDetector.ModelStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ModelStatus left, ModelStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ModelStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.AnomalyDetector.ModelStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ModelStatus(string value) => new ModelStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ModelStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.AnomalyDetector.ModelStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ModelStatus?(string value) => value == null ? null : new ModelStatus(value);
+        public static implicit operator ModelStatus?(string value) => (value == null) ? null : new ModelStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ModelStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ModelStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ModelStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ModelStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,11 +14,11 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         public Eagle(int wingspan) : base("eagle", wingspan) => throw null;
 
-        internal Eagle(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Bird> friends, IDictionary<string, Bird> hate, Bird partner) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
+        internal Eagle(string kind, int wingspan, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> friends, IDictionary<string, global::_Type.Model.Inheritance.SingleDiscriminator.Bird> hate, Bird partner) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
 
-        public IList<Bird> Friends => throw null;
+        public IList<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> Friends => throw null;
 
-        public IDictionary<string, Bird> Hate => throw null;
+        public IDictionary<string, global::_Type.Model.Inheritance.SingleDiscriminator.Bird> Hate => throw null;
 
         public Bird Partner
         {

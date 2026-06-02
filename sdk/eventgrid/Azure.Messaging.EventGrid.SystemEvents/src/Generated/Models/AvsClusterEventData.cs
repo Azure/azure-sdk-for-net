@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsClusterEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvsClusterEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsClusterEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         internal AvsClusterEventData(string operationId)
         {
@@ -26,13 +26,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             InMaintenanceHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsClusterEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsClusterEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsClusterEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsClusterEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             AddedHostNames = addedHostNames;

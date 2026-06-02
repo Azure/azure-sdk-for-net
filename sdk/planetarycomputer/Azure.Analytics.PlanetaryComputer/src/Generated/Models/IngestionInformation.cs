@@ -14,16 +14,16 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class IngestionInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionInformation"/>. </summary>
         /// <param name="importType"> Ingestion type. </param>
         public IngestionInformation(IngestionType importType)
         {
             ImportType = importType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionInformation"/>. </summary>
         /// <param name="id"> Ingestion id. </param>
         /// <param name="importType"> Ingestion type. </param>
         /// <param name="displayName"> Ingestion name. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionInformation(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionInformation(Guid id, IngestionType importType, string displayName, global::System.Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ImportType = importType;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string DisplayName { get; set; }
 
         /// <summary> Source catalog URL. Required for StaticCatalog ingestion type. </summary>
-        public Uri SourceCatalogUrl { get; set; }
+        public global::System.Uri SourceCatalogUrl { get; set; }
 
         /// <summary> Skip processing existing items in the catalog. </summary>
         public bool? SkipExistingItems { get; set; }

@@ -32,15 +32,15 @@ namespace Payload.Xml
 
         public static ModelWithWrappedPrimitiveCustomItemNames ModelWithWrappedPrimitiveCustomItemNames(IEnumerable<string> tags = default) => throw null;
 
-        public static ModelWithArrayOfModel ModelWithArrayOfModel(IEnumerable<SimpleModel> items = default) => throw null;
+        public static ModelWithArrayOfModel ModelWithArrayOfModel(IEnumerable<global::Payload.Xml.SimpleModel> items = default) => throw null;
 
-        public static ModelWithUnwrappedModelArray ModelWithUnwrappedModelArray(IEnumerable<SimpleModel> items = default) => throw null;
+        public static ModelWithUnwrappedModelArray ModelWithUnwrappedModelArray(IEnumerable<global::Payload.Xml.SimpleModel> items = default) => throw null;
 
-        public static ModelWithRenamedWrappedModelArray ModelWithRenamedWrappedModelArray(IEnumerable<SimpleModel> items = default) => throw null;
+        public static ModelWithRenamedWrappedModelArray ModelWithRenamedWrappedModelArray(IEnumerable<global::Payload.Xml.SimpleModel> items = default) => throw null;
 
-        public static ModelWithRenamedUnwrappedModelArray ModelWithRenamedUnwrappedModelArray(IEnumerable<SimpleModel> items = default) => throw null;
+        public static ModelWithRenamedUnwrappedModelArray ModelWithRenamedUnwrappedModelArray(IEnumerable<global::Payload.Xml.SimpleModel> items = default) => throw null;
 
-        public static ModelWithRenamedWrappedAndItemModelArray ModelWithRenamedWrappedAndItemModelArray(IEnumerable<Book> books = default) => throw null;
+        public static ModelWithRenamedWrappedAndItemModelArray ModelWithRenamedWrappedAndItemModelArray(IEnumerable<global::Payload.Xml.Book> books = default) => throw null;
 
         public static Book Book(string title = default) => throw null;
 
@@ -56,7 +56,7 @@ namespace Payload.Xml
 
         public static ModelWithOptionalField ModelWithOptionalField(string item = default, int? value = default) => throw null;
 
-        public static ModelWithEmptyArray ModelWithEmptyArray(IEnumerable<SimpleModel> items = default) => throw null;
+        public static ModelWithEmptyArray ModelWithEmptyArray(IEnumerable<global::Payload.Xml.SimpleModel> items = default) => throw null;
 
         public static ModelWithDictionary ModelWithDictionary(IDictionary<string, string> metadata = default) => throw null;
 

@@ -14,18 +14,18 @@ namespace Azure.AI.VoiceLive
     /// <summary> A response item that represents a call to an MCP tool. </summary>
     public partial class SessionResponseMcpCallItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpCallItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpCallItem"/>. </summary>
         /// <param name="arguments"> The arguments for the tool call. </param>
         /// <param name="serverLabel"> The label of the server that provides the tool. </param>
         /// <param name="name"> The name of the tool to call. </param>
-        internal SessionResponseMcpCallItem(string arguments, string serverLabel, string name) : base(ItemType.McpCall)
+        internal SessionResponseMcpCallItem(string arguments, string serverLabel, string name) : base(global::Azure.AI.VoiceLive.ItemType.McpCall)
         {
             Arguments = arguments;
             ServerLabel = serverLabel;
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpCallItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpCallItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
@@ -36,7 +36,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> The name of the tool to call. </param>
         /// <param name="output"> The output of the tool call. </param>
         /// <param name="error"> The error, if any, from the tool call. </param>
-        internal SessionResponseMcpCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, string arguments, string serverLabel, string name, string output, BinaryData error) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMcpCallItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string approvalRequestId, string arguments, string serverLabel, string name, string output, BinaryData error) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Arguments = arguments;
@@ -63,8 +63,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The error, if any, from the tool call.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

@@ -17,7 +17,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult : AsyncPageable<global::System.BinaryData>
     {
         private readonly SearchIndexClient _client;
         private readonly string _sourceName;
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(SearchIndexClient client, string sourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(SearchIndexClient client, string sourceName, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _sourceName = sourceName;
@@ -41,22 +41,22 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            ListKnowledgeSourceFilesResult result = (ListKnowledgeSourceFilesResult)response;
-            List<BinaryData> items = new List<BinaryData>();
+            Response response = await this.GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            ListKnowledgeSourceFilesResult result = ((ListKnowledgeSourceFilesResult)response);
+            List<global::System.BinaryData> items = new List<global::System.BinaryData>();
             foreach (var item in result.Value)
             {
-                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default));
             }
-            yield return Page<BinaryData>.FromValues(items, null, response);
+            yield return global::Azure.Page<BinaryData>.FromValues(items, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetKnowledgeSourceFilesRequest(_sourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);

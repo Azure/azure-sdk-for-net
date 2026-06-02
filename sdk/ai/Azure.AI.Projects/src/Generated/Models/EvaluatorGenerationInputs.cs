@@ -12,32 +12,32 @@ namespace Azure.AI.Projects
     public partial class EvaluatorGenerationInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationInputs"/>. </summary>
         /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
         /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sources"/>, <paramref name="model"/> or <paramref name="evaluatorName"/> is null. </exception>
-        public EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources, string model, string evaluatorName)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sources"/>, <paramref name="model"/> or <paramref name="evaluatorName"/> is null. </exception>
+        public EvaluatorGenerationInputs(IEnumerable<global::Azure.AI.Projects.EvaluatorGenerationJobSource> sources, string model, string evaluatorName)
         {
-            Argument.AssertNotNull(sources, nameof(sources));
-            Argument.AssertNotNull(model, nameof(model));
-            Argument.AssertNotNull(evaluatorName, nameof(evaluatorName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(sources, nameof(sources));
+            global::Azure.AI.Projects.Argument.AssertNotNull(model, nameof(model));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evaluatorName, nameof(evaluatorName));
 
             Sources = sources.ToList();
             Model = model;
             EvaluatorName = evaluatorName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationInputs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationInputs"/>. </summary>
         /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
         /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
         /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationInputs(IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationInputs(IList<global::Azure.AI.Projects.EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sources = sources;
             Model = model;
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </summary>
-        public IList<EvaluatorGenerationJobSource> Sources { get; }
+        public IList<global::Azure.AI.Projects.EvaluatorGenerationJobSource> Sources { get; }
 
         /// <summary> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </summary>
         public string Model { get; set; }

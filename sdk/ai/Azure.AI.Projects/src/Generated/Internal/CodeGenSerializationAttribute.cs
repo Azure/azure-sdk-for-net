@@ -6,21 +6,21 @@ using System;
 
 namespace Microsoft.TypeSpec.Generator.Customizations
 {
-    [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
+    [AttributeUsageAttribute((global::System.AttributeTargets.Class | global::System.AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute
     {
         /// <param name="propertyName"> The property name which these hooks apply to. </param>
         public CodeGenSerializationAttribute(string propertyName)
         {
-            PropertyName = propertyName;
+            this.PropertyName = propertyName;
         }
 
         /// <param name="propertyName"> The property name which these hooks apply to. </param>
         /// <param name="serializationName"> The serialization name of the property. </param>
         public CodeGenSerializationAttribute(string propertyName, string serializationName)
         {
-            PropertyName = propertyName;
-            SerializationName = serializationName;
+            this.PropertyName = propertyName;
+            this.SerializationName = serializationName;
         }
 
         /// <summary> Gets or sets the property name which these hooks should apply to. </summary>

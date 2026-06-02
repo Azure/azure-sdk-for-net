@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Field mapping configuration class. </summary>
-    public partial class AIProjectIndexFieldMapping : IJsonModel<AIProjectIndexFieldMapping>
+    public partial class AIProjectIndexFieldMapping : IJsonModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectIndexFieldMapping"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectIndexFieldMapping"/> for deserialization. </summary>
         internal AIProjectIndexFieldMapping()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AIProjectIndexFieldMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAIProjectIndexFieldMapping(document.RootElement, options);
+                        return global::Azure.AI.Projects.AIProjectIndexFieldMapping.DeserializeAIProjectIndexFieldMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectIndexFieldMapping)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AIProjectIndexFieldMapping)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AIProjectIndexFieldMapping)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AIProjectIndexFieldMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AIProjectIndexFieldMapping>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectIndexFieldMapping IPersistableModel<AIProjectIndexFieldMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIProjectIndexFieldMapping IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AIProjectIndexFieldMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AIProjectIndexFieldMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,16 +70,16 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AIProjectIndexFieldMapping)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AIProjectIndexFieldMapping)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("contentFields"u8);
             writer.WriteStartArray();
             foreach (string item in ContentFields)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -87,28 +87,28 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FilepathField))
+            if (global::Azure.AI.Projects.Optional.IsDefined(FilepathField))
             {
                 writer.WritePropertyName("filepathField"u8);
                 writer.WriteStringValue(FilepathField);
             }
-            if (Optional.IsDefined(TitleField))
+            if (global::Azure.AI.Projects.Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteStringValue(TitleField);
             }
-            if (Optional.IsDefined(UrlField))
+            if (global::Azure.AI.Projects.Optional.IsDefined(UrlField))
             {
                 writer.WritePropertyName("urlField"u8);
                 writer.WriteStringValue(UrlField);
             }
-            if (Optional.IsCollectionDefined(VectorFields))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(VectorFields))
             {
                 writer.WritePropertyName("vectorFields"u8);
                 writer.WriteStartArray();
                 foreach (string item in VectorFields)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -117,13 +117,13 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetadataFields))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(MetadataFields))
             {
                 writer.WritePropertyName("metadataFields"u8);
                 writer.WriteStartArray();
                 foreach (string item in MetadataFields)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -140,9 +140,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -151,26 +151,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectIndexFieldMapping IJsonModel<AIProjectIndexFieldMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIProjectIndexFieldMapping IJsonModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AIProjectIndexFieldMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AIProjectIndexFieldMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AIProjectIndexFieldMapping)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AIProjectIndexFieldMapping)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAIProjectIndexFieldMapping(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.AIProjectIndexFieldMapping.DeserializeAIProjectIndexFieldMapping(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AIProjectIndexFieldMapping DeserializeAIProjectIndexFieldMapping(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -180,7 +180,7 @@ namespace Azure.AI.Projects
             string urlField = default;
             IList<string> vectorFields = default;
             IList<string> metadataFields = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("contentFields"u8))
@@ -188,7 +188,7 @@ namespace Azure.AI.Projects
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -217,14 +217,14 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("vectorFields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -238,14 +238,14 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("metadataFields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -257,9 +257,9 @@ namespace Azure.AI.Projects
                     metadataFields = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AIProjectIndexFieldMapping(
@@ -267,8 +267,8 @@ namespace Azure.AI.Projects
                 filepathField,
                 titleField,
                 urlField,
-                vectorFields ?? new ChangeTrackingList<string>(),
-                metadataFields ?? new ChangeTrackingList<string>(),
+                (vectorFields ?? new ChangeTrackingList<string>()),
+                (metadataFields ?? new ChangeTrackingList<string>()),
                 additionalBinaryDataProperties);
         }
     }

@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> Tool search tool. </summary>
     public partial class ToolSearchTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="ToolSearchTool"/>. </summary>
-        public ToolSearchTool() : base(ToolType.ToolSearch)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolSearchTool"/>. </summary>
+        public ToolSearchTool() : base(global::OpenAI.ToolType.ToolSearch)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolSearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolSearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal ToolSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        internal ToolSearchTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
         {
             Execution = execution;
             Description = description;

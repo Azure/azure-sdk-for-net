@@ -13,21 +13,21 @@ namespace Azure.Communication.Messages
     /// <summary> The message content of type text information. </summary>
     public partial class TextMessageContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="TextMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TextMessageContent"/>. </summary>
         /// <param name="text"> The text value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public TextMessageContent(string text) : base(MessageContentKind.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public TextMessageContent(string text) : base(global::Azure.Communication.Messages.MessageContentKind.Text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TextMessageContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal TextMessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(kind, additionalBinaryDataProperties)
+        internal TextMessageContent(MessageContentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(kind, additionalBinaryDataProperties)
         {
             Text = text;
         }

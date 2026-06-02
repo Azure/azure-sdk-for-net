@@ -14,28 +14,28 @@ namespace Azure.Communication.Messages
     /// <summary> External conversation participant. </summary>
     public partial class ExternalConversationParticipant : ConversationParticipant
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ExternalConversationParticipant"/>. </summary>
         /// <param name="contacts"> List of external platform identifiers for the participant. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contacts"/> is null. </exception>
-        public ExternalConversationParticipant(IEnumerable<ConversationContact> contacts) : base(ParticipantKind.External)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="contacts"/> is null. </exception>
+        public ExternalConversationParticipant(IEnumerable<global::Azure.Communication.Messages.ConversationContact> contacts) : base(global::Azure.Communication.Messages.ParticipantKind.External)
         {
-            Argument.AssertNotNull(contacts, nameof(contacts));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(contacts, nameof(contacts));
 
             Contacts = contacts.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ExternalConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="contacts"> List of external platform identifiers for the participant. </param>
-        internal ExternalConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ConversationContact> contacts) : base(id, displayName, kind, additionalBinaryDataProperties)
+        internal ExternalConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Communication.Messages.ConversationContact> contacts) : base(id, displayName, kind, additionalBinaryDataProperties)
         {
             Contacts = contacts;
         }
 
         /// <summary> List of external platform identifiers for the participant. </summary>
-        public IList<ConversationContact> Contacts { get; }
+        public IList<global::Azure.Communication.Messages.ConversationContact> Contacts { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
     {
         public NextLinkVerbClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal NextLinkVerbClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

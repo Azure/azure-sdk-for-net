@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.OnlineExperimentation
 {
-    internal partial class OnlineExperimentationClientGetMetricsAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class OnlineExperimentationClientGetMetricsAsyncCollectionResult : AsyncPageable<global::System.BinaryData>
     {
         private readonly OnlineExperimentationClient _client;
         private readonly int? _maxCount;
@@ -31,7 +31,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OnlineExperimentationClientGetMetricsAsyncCollectionResult(OnlineExperimentationClient client, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OnlineExperimentationClientGetMetricsAsyncCollectionResult(OnlineExperimentationClient client, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxCount = maxCount;
@@ -45,25 +45,25 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OnlineExperimentationClientGetMetricsAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedExperimentMetric result = (PagedExperimentMetric)response;
-                List<BinaryData> items = new List<BinaryData>();
+                PagedExperimentMetric result = ((PagedExperimentMetric)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAnalyticsOnlineExperimentationContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.WireOptions, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return global::Azure.Page<BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,10 +73,10 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, pageSize, _context) : _client.CreateGetMetricsRequest(_maxCount, _skip, pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetMetricsRequest(nextLink, pageSize, _context) : _client.CreateGetMetricsRequest(_maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

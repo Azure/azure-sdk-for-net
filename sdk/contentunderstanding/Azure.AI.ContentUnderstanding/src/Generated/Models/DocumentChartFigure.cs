@@ -14,15 +14,15 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Figure containing a chart, such as a bar chart, line chart, or pie chart. </summary>
     public partial class DocumentChartFigure : DocumentFigure
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentChartFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentChartFigure"/>. </summary>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="content"> Chart content represented using [Chart.js config](https://www.chartjs.org/docs/latest/configuration/). </param>
-        internal DocumentChartFigure(string id, IDictionary<string, BinaryData> content) : base(DocumentFigureKind.Chart, id)
+        internal DocumentChartFigure(string id, IDictionary<string, global::System.BinaryData> content) : base(global::Azure.AI.ContentUnderstanding.DocumentFigureKind.Chart, id)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentChartFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentChartFigure"/>. </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
         /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
@@ -34,15 +34,15 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Chart content represented using [Chart.js config](https://www.chartjs.org/docs/latest/configuration/). </param>
-        internal DocumentChartFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, BinaryData> content) : base(kind, id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
+        internal DocumentChartFigure(DocumentFigureKind kind, string id, string source, ContentSpan span, IList<string> elements, DocumentCaption caption, IList<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes, string description, SemanticRole? role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, global::System.BinaryData> content) : base(kind, id, source, span, elements, caption, footnotes, description, role, additionalBinaryDataProperties)
         {
             Content = content;
         }
 
         /// <summary>
         /// Chart content represented using [Chart.js config](https://www.chartjs.org/docs/latest/configuration/).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -65,6 +65,6 @@ namespace Azure.AI.ContentUnderstanding
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Content { get; }
+        public IDictionary<string, global::System.BinaryData> Content { get; }
     }
 }

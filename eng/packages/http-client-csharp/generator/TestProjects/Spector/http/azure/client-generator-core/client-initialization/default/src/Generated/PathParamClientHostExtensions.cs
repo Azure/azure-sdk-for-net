@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PathParamClientHostExtensions
     {
         public static IClientBuilder AddPathParamClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddPathParamClient(this IHostApplicationBuilder host, string sectionName, Action<PathParamClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddPathParamClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParamClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedPathParamClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedPathParamClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PathParamClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedPathParamClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParamClientSettings> configureSettings) => throw null;
     }
 }

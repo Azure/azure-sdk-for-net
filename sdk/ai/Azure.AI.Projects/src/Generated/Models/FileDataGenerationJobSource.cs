@@ -10,22 +10,22 @@ namespace Azure.AI.Projects
     /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
     public partial class FileDataGenerationJobSource : DataGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataGenerationJobSource"/>. </summary>
         /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public FileDataGenerationJobSource(string id) : base(DataGenerationJobSourceType.File)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public FileDataGenerationJobSource(string id) : base(global::Azure.AI.Projects.DataGenerationJobSourceType.File)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
-        internal FileDataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type, description, additionalBinaryDataProperties)
+        internal FileDataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id) : base(@type, description, additionalBinaryDataProperties)
         {
             Id = id;
         }

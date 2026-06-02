@@ -14,20 +14,20 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class SharedAccessSignatureSignedLink
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureSignedLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink"/>. </summary>
         /// <param name="href"> The URL of the unsigned link. </param>
-        internal SharedAccessSignatureSignedLink(Uri href)
+        internal SharedAccessSignatureSignedLink(global::System.Uri href)
         {
             Href = href;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureSignedLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink"/>. </summary>
         /// <param name="expiresOn"> The expiry date of the signed link. This indicates when the link will no longer be valid. </param>
         /// <param name="href"> The URL of the unsigned link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessSignatureSignedLink(DateTimeOffset? expiresOn, Uri href, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedAccessSignatureSignedLink(DateTimeOffset? expiresOn, global::System.Uri href, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpiresOn = expiresOn;
             Href = href;
@@ -38,6 +38,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The URL of the unsigned link. </summary>
-        public Uri Href { get; }
+        public global::System.Uri Href { get; }
     }
 }

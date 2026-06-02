@@ -18,120 +18,120 @@ namespace Encode.Duration._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<DefaultDurationProperty> Default(DefaultDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.DefaultDurationProperty> Default(DefaultDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DefaultDurationProperty>> DefaultAsync(DefaultDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.DefaultDurationProperty>> DefaultAsync(DefaultDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Iso8601(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Iso8601Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Iso8601Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ISO8601DurationProperty> Iso8601(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.ISO8601DurationProperty> Iso8601(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ISO8601DurationProperty>> Iso8601Async(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.ISO8601DurationProperty>> Iso8601Async(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32Seconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Int32SecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Int32SecondsDurationProperty> Int32Seconds(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Int32SecondsDurationProperty> Int32Seconds(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Int32SecondsDurationProperty>> Int32SecondsAsync(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Int32SecondsDurationProperty>> Int32SecondsAsync(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatSeconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatSecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatSecondsDurationProperty> FloatSeconds(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatSecondsDurationProperty> FloatSeconds(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatSecondsDurationProperty>> FloatSecondsAsync(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatSecondsDurationProperty>> FloatSecondsAsync(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Float64Seconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Float64SecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Float64SecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Float64SecondsDurationProperty> Float64Seconds(Float64SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Float64SecondsDurationProperty> Float64Seconds(Float64SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Float64SecondsDurationProperty>> Float64SecondsAsync(Float64SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Float64SecondsDurationProperty>> Float64SecondsAsync(Float64SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32Milliseconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Int32MillisecondsDurationProperty> Int32Milliseconds(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Int32MillisecondsDurationProperty> Int32Milliseconds(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Int32MillisecondsDurationProperty>> Int32MillisecondsAsync(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Int32MillisecondsDurationProperty>> Int32MillisecondsAsync(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatMilliseconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatMillisecondsDurationProperty> FloatMilliseconds(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatMillisecondsDurationProperty> FloatMilliseconds(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatMillisecondsDurationProperty>> FloatMillisecondsAsync(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatMillisecondsDurationProperty>> FloatMillisecondsAsync(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Float64Milliseconds(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Float64MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Float64MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Float64MillisecondsDurationProperty> Float64Milliseconds(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Float64MillisecondsDurationProperty> Float64Milliseconds(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Float64MillisecondsDurationProperty>> Float64MillisecondsAsync(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Float64MillisecondsDurationProperty>> Float64MillisecondsAsync(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatSecondsArray(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatSecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatSecondsDurationArrayProperty> FloatSecondsArray(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatSecondsDurationArrayProperty> FloatSecondsArray(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatSecondsDurationArrayProperty>> FloatSecondsArrayAsync(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatSecondsDurationArrayProperty>> FloatSecondsArrayAsync(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatMillisecondsArray(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatMillisecondsDurationArrayProperty> FloatMillisecondsArray(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatMillisecondsDurationArrayProperty> FloatMillisecondsArray(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatMillisecondsDurationArrayProperty>> FloatMillisecondsArrayAsync(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatMillisecondsDurationArrayProperty>> FloatMillisecondsArrayAsync(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32SecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Int32SecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Int32SecondsLargerUnitDurationProperty> Int32SecondsLargerUnit(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Int32SecondsLargerUnitDurationProperty> Int32SecondsLargerUnit(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Int32SecondsLargerUnitDurationProperty>> Int32SecondsLargerUnitAsync(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Int32SecondsLargerUnitDurationProperty>> Int32SecondsLargerUnitAsync(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatSecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatSecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatSecondsLargerUnitDurationProperty> FloatSecondsLargerUnit(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty> FloatSecondsLargerUnit(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatSecondsLargerUnitDurationProperty>> FloatSecondsLargerUnitAsync(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatSecondsLargerUnitDurationProperty>> FloatSecondsLargerUnitAsync(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32MillisecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Int32MillisecondsLargerUnitDurationProperty> Int32MillisecondsLargerUnit(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.Int32MillisecondsLargerUnitDurationProperty> Int32MillisecondsLargerUnit(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Int32MillisecondsLargerUnitDurationProperty>> Int32MillisecondsLargerUnitAsync(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.Int32MillisecondsLargerUnitDurationProperty>> Int32MillisecondsLargerUnitAsync(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatMillisecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatMillisecondsLargerUnitDurationProperty> FloatMillisecondsLargerUnit(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Duration._Property.FloatMillisecondsLargerUnitDurationProperty> FloatMillisecondsLargerUnit(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FloatMillisecondsLargerUnitDurationProperty>> FloatMillisecondsLargerUnitAsync(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Duration._Property.FloatMillisecondsLargerUnitDurationProperty>> FloatMillisecondsLargerUnitAsync(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

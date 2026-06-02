@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A statically configured chunking strategy. </summary>
     public partial class VectorStoreStaticChunkingStrategyResponse : VectorStoreChunkingStrategyResponse
     {
-        /// <summary> Initializes a new instance of <see cref="VectorStoreStaticChunkingStrategyResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse"/>. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        internal VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static) : base(VectorStoreChunkingStrategyResponseType.Static)
+        internal VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static) : base(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponseType.Static)
         {
             Static = @static;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreStaticChunkingStrategyResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        internal VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VectorStoreStaticChunkingStrategyOptions @static) : base(@type, additionalBinaryDataProperties)
+        internal VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, VectorStoreStaticChunkingStrategyOptions @static) : base(@type, additionalBinaryDataProperties)
         {
             Static = @static;
         }

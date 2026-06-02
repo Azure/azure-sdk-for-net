@@ -15,28 +15,28 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskGroup"/>. </summary>
         /// <param name="tasks"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        public BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> tasks)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
+        public BatchTaskGroup(IEnumerable<global::Azure.Compute.Batch.BatchTaskCreateOptions> tasks)
         {
-            Argument.AssertNotNull(tasks, nameof(tasks));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskGroup"/>. </summary>
         /// <param name="tasks"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskGroup(IList<BatchTaskCreateOptions> tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskGroup(IList<global::Azure.Compute.Batch.BatchTaskCreateOptions> tasks, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Tasks = tasks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </summary>
-        public IList<BatchTaskCreateOptions> Tasks { get; }
+        public IList<global::Azure.Compute.Batch.BatchTaskCreateOptions> Tasks { get; }
     }
 }

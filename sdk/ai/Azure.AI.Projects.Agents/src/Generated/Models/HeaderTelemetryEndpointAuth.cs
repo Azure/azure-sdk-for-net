@@ -10,29 +10,29 @@ namespace Azure.AI.Projects.Agents
     /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
     public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth"/>. </summary>
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
         /// <param name="secretId"> The identifier of the secret store or connection. </param>
         /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headerName"/>, <paramref name="secretId"/> or <paramref name="secretKey"/> is null. </exception>
-        public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) : base(TelemetryEndpointAuthenticationKind.Header)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="headerName"/>, <paramref name="secretId"/> or <paramref name="secretKey"/> is null. </exception>
+        public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) : base(global::Azure.AI.Projects.Agents.TelemetryEndpointAuthenticationKind.Header)
         {
-            Argument.AssertNotNull(headerName, nameof(headerName));
-            Argument.AssertNotNull(secretId, nameof(secretId));
-            Argument.AssertNotNull(secretKey, nameof(secretKey));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(headerName, nameof(headerName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(secretId, nameof(secretId));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(secretKey, nameof(secretKey));
 
             HeaderName = headerName;
             SecretId = secretId;
             SecretKey = secretKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth"/>. </summary>
         /// <param name="type"> The authentication type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
         /// <param name="secretId"> The identifier of the secret store or connection. </param>
         /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        internal HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string headerName, string secretId, string secretKey) : base(@type, additionalBinaryDataProperties)
+        internal HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string headerName, string secretId, string secretKey) : base(@type, additionalBinaryDataProperties)
         {
             HeaderName = headerName;
             SecretId = secretId;

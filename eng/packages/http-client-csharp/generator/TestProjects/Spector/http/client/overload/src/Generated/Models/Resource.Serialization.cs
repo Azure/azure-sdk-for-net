@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Client.Overload
 {
-    public partial class Resource : IJsonModel<Resource>
+    public partial class Resource : IJsonModel<global::Client.Overload.Resource>
     {
         internal Resource() => throw null;
 
@@ -19,17 +19,17 @@ namespace Client.Overload
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Resource>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Overload.Resource>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Resource IPersistableModel<global::Client.Overload.Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Overload.Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Overload.Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Resource IJsonModel<Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Resource IJsonModel<global::Client.Overload.Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

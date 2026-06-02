@@ -17,13 +17,13 @@ namespace Azure.Search.Documents.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryCaptionResult"/>. </summary>
         internal QueryCaptionResult()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryCaptionResult"/>. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>

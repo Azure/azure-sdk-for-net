@@ -13,23 +13,23 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a document conversation message. </summary>
     public partial class DocumentConversationMessageContent : ConversationMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.DocumentConversationMessageContent"/>. </summary>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
-        public DocumentConversationMessageContent(Uri mediaUri) : base(CommunicationMessageKind.Document)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
+        public DocumentConversationMessageContent(global::System.Uri mediaUri) : base(global::Azure.Communication.Messages.CommunicationMessageKind.Document)
         {
-            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentConversationMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.DocumentConversationMessageContent"/>. </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="caption"> Optional text content. </param>
         /// <param name="fileName"> Optional name for the file. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal DocumentConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string caption, string fileName, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
+        internal DocumentConversationMessageContent(CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string caption, string fileName, global::System.Uri mediaUri) : base(kind, additionalBinaryDataProperties)
         {
             Caption = caption;
             FileName = fileName;
@@ -43,6 +43,6 @@ namespace Azure.Communication.Messages
         public string FileName { get; set; }
 
         /// <summary> A media url for the file. Required if the type is one of the supported media types, e.g. image. </summary>
-        public Uri MediaUri { get; set; }
+        public global::System.Uri MediaUri { get; set; }
     }
 }

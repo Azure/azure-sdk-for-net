@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeBatchResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult"/>. </summary>
         /// <param name="succeededCount"> Number of documents that completed with status succeeded. </param>
         /// <param name="failedCount"> Number of documents that completed with status failed. </param>
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
@@ -25,16 +25,16 @@ namespace Azure.AI.DocumentIntelligence
             SucceededCount = succeededCount;
             FailedCount = failedCount;
             SkippedCount = skippedCount;
-            Details = new ChangeTrackingList<AnalyzeBatchResultDetails>();
+            Details = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult"/>. </summary>
         /// <param name="succeededCount"> Number of documents that completed with status succeeded. </param>
         /// <param name="failedCount"> Number of documents that completed with status failed. </param>
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
         /// <param name="details"> Operation detail for each document in the batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IReadOnlyList<AnalyzeBatchResultDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IReadOnlyList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> details, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
@@ -53,6 +53,6 @@ namespace Azure.AI.DocumentIntelligence
         public int SkippedCount { get; }
 
         /// <summary> Operation detail for each document in the batch. </summary>
-        public IReadOnlyList<AnalyzeBatchResultDetails> Details { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> Details { get; }
     }
 }

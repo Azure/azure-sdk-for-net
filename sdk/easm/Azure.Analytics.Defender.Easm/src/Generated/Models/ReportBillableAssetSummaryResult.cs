@@ -14,24 +14,24 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportBillableAssetSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult"/>. </summary>
         internal ReportBillableAssetSummaryResult()
         {
-            AssetSummaries = new ChangeTrackingList<ReportBillableAssetSnapshotResult>();
+            AssetSummaries = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult"/>. </summary>
         /// <param name="assetSummaries"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportBillableAssetSummaryResult(IList<ReportBillableAssetSnapshotResult> assetSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportBillableAssetSummaryResult(IList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult> assetSummaries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssetSummaries = assetSummaries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the AssetSummaries. </summary>
-        public IList<ReportBillableAssetSnapshotResult> AssetSummaries { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult> AssetSummaries { get; }
     }
 }

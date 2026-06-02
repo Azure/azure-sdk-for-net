@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies a user-defined vectorizer for generating the vector embedding of a query string. Integration of an external vectorizer is achieved using the custom Web API interface of a skillset. </summary>
     public partial class WebApiVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebApiVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public WebApiVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.CustomWebApi)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public WebApiVectorizer(string vectorizerName) : base(vectorizerName, global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizerKind.CustomWebApi)
         {
-            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebApiVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
-        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApiVectorizerParameters parameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
+        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, WebApiVectorizerParameters parameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

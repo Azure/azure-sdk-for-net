@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>
-    public partial class AzureMachineLearningVectorizer : VectorSearchVectorizer, IJsonModel<AzureMachineLearningVectorizer>
+    public partial class AzureMachineLearningVectorizer : VectorSearchVectorizer, IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer"/> for deserialization. </summary>
         internal AzureMachineLearningVectorizer()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VectorSearchVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureMachineLearningVectorizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMachineLearningVectorizer IPersistableModel<AzureMachineLearningVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureMachineLearningVectorizer)PersistableModelCreateCore(data, options);
+        AzureMachineLearningVectorizer IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureMachineLearningVectorizer)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureMachineLearningVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureMachineLearningVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,47 +74,47 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AMLParameters))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AMLParameters))
             {
                 writer.WritePropertyName("amlParameters"u8);
-                writer.WriteObjectValue(AMLParameters, options);
+                writer.WriteObjectValue<AzureMachineLearningParameters>(AMLParameters, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMachineLearningVectorizer IJsonModel<AzureMachineLearningVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureMachineLearningVectorizer)JsonModelCreateCore(ref reader, options);
+        AzureMachineLearningVectorizer IJsonModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureMachineLearningVectorizer)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VectorSearchVectorizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureMachineLearningVectorizer DeserializeAzureMachineLearningVectorizer(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string vectorizerName = default;
             VectorSearchVectorizerKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AzureMachineLearningParameters amlParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,16 +130,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("amlParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    amlParameters = AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(prop.Value, options);
+                    amlParameters = global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureMachineLearningVectorizer(vectorizerName, kind, additionalBinaryDataProperties, amlParameters);

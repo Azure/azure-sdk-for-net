@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryOperation"/>. </summary>
         /// <param name="kind"> The type of memory operation being performed. </param>
         /// <param name="memoryItem"> The memory item to create, update, or delete. </param>
         internal MemoryOperation(MemoryOperationKind kind, MemoryItem memoryItem)
@@ -22,11 +22,11 @@ namespace Azure.AI.Projects.Memory
             MemoryItem = memoryItem;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryOperation"/>. </summary>
         /// <param name="kind"> The type of memory operation being performed. </param>
         /// <param name="memoryItem"> The memory item to create, update, or delete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryOperation(MemoryOperationKind kind, MemoryItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryOperation(MemoryOperationKind kind, MemoryItem memoryItem, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             MemoryItem = memoryItem;

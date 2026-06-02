@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> AllocationState enums. </summary>
-    public readonly partial struct AllocationState : IEquatable<AllocationState>
+    public readonly partial struct AllocationState : IEquatable<global::Azure.Compute.Batch.AllocationState>
     {
         private readonly string _value;
         /// <summary> The Pool is not resizing. There are no changes to the number of Compute Nodes in the Pool in progress. A Pool enters this state when it is created and when no operations are being performed on the Pool to change the number of Compute Nodes. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool was resizing, but the user has requested that the resize be stopped, but the stop request has not yet been completed. </summary>
         private const string StoppingValue = "stopping";
 
-        /// <summary> Initializes a new instance of <see cref="AllocationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AllocationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllocationState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool was resizing, but the user has requested that the resize be stopped, but the stop request has not yet been completed. </summary>
         public static AllocationState Stopping { get; } = new AllocationState(StoppingValue);
 
-        /// <summary> Determines if two <see cref="AllocationState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.AllocationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllocationState left, AllocationState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AllocationState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.AllocationState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllocationState left, AllocationState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AllocationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.AllocationState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AllocationState(string value) => new AllocationState(value);
 
-        /// <summary> Converts a string to a <see cref="AllocationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.AllocationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllocationState?(string value) => value == null ? null : new AllocationState(value);
+        public static implicit operator AllocationState?(string value) => (value == null) ? null : new AllocationState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AllocationState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AllocationState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AllocationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AllocationState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

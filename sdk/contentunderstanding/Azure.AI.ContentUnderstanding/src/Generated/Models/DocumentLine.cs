@@ -14,21 +14,21 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentLine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentLine"/>. </summary>
         /// <param name="content"> Line text. </param>
         internal DocumentLine(string content)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentLine"/>. </summary>
         /// <param name="content"> Line text. </param>
         /// <param name="source"> Encoded source that identifies the position of the line in the content. </param>
         /// <param name="span"> Span of the line in the markdown content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLine(string content, string source, ContentSpan span, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentLine(string content, string source, ContentSpan span, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Source = source;

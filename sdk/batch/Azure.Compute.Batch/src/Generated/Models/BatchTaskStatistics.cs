@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskStatistics"/>. </summary>
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
@@ -28,7 +28,7 @@ namespace Azure.Compute.Batch
         /// <param name="readIoGiB"> The total gibibytes read from disk by the Task. </param>
         /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). The time duration is specified in ISO 8601 format. </param>
-        internal BatchTaskStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime)
+        internal BatchTaskStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime)
         {
             Uri = uri;
             StartTime = startTime;
@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch
             WaitTime = waitTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskStatistics"/>. </summary>
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
         /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). The time duration is specified in ISO 8601 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             StartTime = startTime;
@@ -73,7 +73,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Metric definition. </summary>
-    public partial class MetricDefinition : IJsonModel<MetricDefinition>
+    public partial class MetricDefinition : IJsonModel<global::Azure.Developer.LoadTesting.MetricDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetricDefinition(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.MetricDefinition.DeserializeMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MetricDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricDefinition IPersistableModel<MetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MetricDefinition IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.MetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,48 +68,48 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MetricDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (NameAndDescription item in Dimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<NameAndDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(PrimaryAggregationType))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(PrimaryAggregationType))
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(SupportedAggregationTypes))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
                 foreach (string item in SupportedAggregationTypes)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -118,22 +118,22 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Unit))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(MetricAvailabilities))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
                 foreach (MetricAvailability item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<MetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -141,9 +141,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -152,50 +152,50 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricDefinition IJsonModel<MetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MetricDefinition IJsonModel<global::Azure.Developer.LoadTesting.MetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.MetricDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.MetricDefinition.DeserializeMetricDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MetricDefinition DeserializeMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<NameAndDescription> dimensions = default;
+            IList<global::Azure.Developer.LoadTesting.NameAndDescription> dimensions = default;
             string description = default;
             string name = default;
             string @namespace = default;
             AggregationType? primaryAggregationType = default;
             IList<string> supportedAggregationTypes = default;
             MetricUnit? unit = default;
-            IList<MetricAvailability> metricAvailabilities = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Developer.LoadTesting.MetricAvailability> metricAvailabilities = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dimensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<NameAndDescription> array = new List<NameAndDescription>();
+                    List<global::Azure.Developer.LoadTesting.NameAndDescription> array = new List<global::Azure.Developer.LoadTesting.NameAndDescription>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameAndDescription.DeserializeNameAndDescription(item, options));
+                        array.Add(global::Azure.Developer.LoadTesting.NameAndDescription.DeserializeNameAndDescription(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("primaryAggregationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -226,14 +226,14 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("supportedAggregationTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -247,7 +247,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("unit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -256,32 +256,32 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("metricAvailabilities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<MetricAvailability> array = new List<MetricAvailability>();
+                    List<global::Azure.Developer.LoadTesting.MetricAvailability> array = new List<global::Azure.Developer.LoadTesting.MetricAvailability>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
+                        array.Add(global::Azure.Developer.LoadTesting.MetricAvailability.DeserializeMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MetricDefinition(
-                dimensions ?? new ChangeTrackingList<NameAndDescription>(),
+                (dimensions ?? new ChangeTrackingList<global::Azure.Developer.LoadTesting.NameAndDescription>()),
                 description,
                 name,
                 @namespace,
                 primaryAggregationType,
-                supportedAggregationTypes ?? new ChangeTrackingList<string>(),
+                (supportedAggregationTypes ?? new ChangeTrackingList<string>()),
                 unit,
-                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                (metricAvailabilities ?? new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricAvailability>()),
                 additionalBinaryDataProperties);
         }
     }

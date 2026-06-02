@@ -15,21 +15,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SemanticPrioritizedFields
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticPrioritizedFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticPrioritizedFields"/>. </summary>
         public SemanticPrioritizedFields()
         {
-            ContentFields = new ChangeTrackingList<SemanticField>();
-            KeywordsFields = new ChangeTrackingList<SemanticField>();
+            ContentFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SemanticField>();
+            KeywordsFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SemanticField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticPrioritizedFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticPrioritizedFields"/>. </summary>
         /// <param name="titleField"> Defines the title field to be used for semantic ranking, captions, highlights, and answers. If you don't have a title field in your index, leave this blank. </param>
         /// <param name="contentFields"> Defines the content fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
         /// <param name="keywordsFields"> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticPrioritizedFields(SemanticField titleField, IList<SemanticField> contentFields, IList<SemanticField> keywordsFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticPrioritizedFields(SemanticField titleField, IList<global::Azure.Search.Documents.Indexes.Models.SemanticField> contentFields, IList<global::Azure.Search.Documents.Indexes.Models.SemanticField> keywordsFields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TitleField = titleField;
             ContentFields = contentFields;
@@ -41,9 +41,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public SemanticField TitleField { get; set; }
 
         /// <summary> Defines the content fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </summary>
-        public IList<SemanticField> ContentFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SemanticField> ContentFields { get; }
 
         /// <summary> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </summary>
-        public IList<SemanticField> KeywordsFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SemanticField> KeywordsFields { get; }
     }
 }

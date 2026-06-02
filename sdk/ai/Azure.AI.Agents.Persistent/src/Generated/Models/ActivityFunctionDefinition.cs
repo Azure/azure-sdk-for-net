@@ -14,20 +14,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class ActivityFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivityFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition"/>. </summary>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         internal ActivityFunctionDefinition(ActivityFunctionParameters parameters)
         {
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivityFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition"/>. </summary>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityFunctionDefinition(string description, ActivityFunctionParameters parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivityFunctionDefinition(string description, ActivityFunctionParameters parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Parameters = parameters;

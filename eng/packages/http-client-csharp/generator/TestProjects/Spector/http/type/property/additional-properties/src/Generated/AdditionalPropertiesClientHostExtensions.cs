@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Property.AdditionalProperties
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class AdditionalPropertiesClientHostExtensions
     {
         public static IClientBuilder AddAdditionalPropertiesClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddAdditionalPropertiesClient(this IHostApplicationBuilder host, string sectionName, Action<AdditionalPropertiesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddAdditionalPropertiesClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Property.AdditionalProperties.AdditionalPropertiesClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedAdditionalPropertiesClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedAdditionalPropertiesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<AdditionalPropertiesClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedAdditionalPropertiesClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Property.AdditionalProperties.AdditionalPropertiesClientSettings> configureSettings) => throw null;
     }
 }

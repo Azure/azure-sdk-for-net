@@ -21,11 +21,11 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="activeChannels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
         /// <param name="enhancedMode"> Enhanced mode properties. </param>
         /// <param name="phraseList"> Phrase list properties. </param>
-        /// <returns> A new <see cref="Transcription.TranscriptionOptions"/> instance for mocking. </returns>
-        public static TranscriptionOptions TranscriptionOptions(Uri audioUri = default, IEnumerable<string> locales = default, IDictionary<string, Uri> models = default, ProfanityFilterMode? profanityFilterMode = default, TranscriptionDiarizationOptions diarizationOptions = default, IEnumerable<int> activeChannels = default, EnhancedModeProperties enhancedMode = default, PhraseListProperties phraseList = default)
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.TranscriptionOptions"/> instance for mocking. </returns>
+        public static TranscriptionOptions TranscriptionOptions(global::System.Uri audioUri = default, IEnumerable<string> locales = default, IDictionary<string, global::System.Uri> models = default, ProfanityFilterMode? profanityFilterMode = default, TranscriptionDiarizationOptions diarizationOptions = default, IEnumerable<int> activeChannels = default, EnhancedModeProperties enhancedMode = default, PhraseListProperties phraseList = default)
         {
             locales ??= new ChangeTrackingList<string>();
-            models ??= new ChangeTrackingDictionary<string, Uri>();
+            models ??= new ChangeTrackingDictionary<string, global::System.Uri>();
             activeChannels ??= new ChangeTrackingList<int>();
 
             return new TranscriptionOptions(
@@ -43,7 +43,7 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> The Speaker Diarization settings. Diarization settings must be specified to enable speaker diarization. </summary>
         /// <param name="enabled"> Enable speaker diarization. This is automatically set to true when maxSpeakers is specified. </param>
         /// <param name="maxSpeakers"> Gets or sets a hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </param>
-        /// <returns> A new <see cref="Transcription.TranscriptionDiarizationOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions"/> instance for mocking. </returns>
         public static TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = default, int? maxSpeakers = default)
         {
             return new TranscriptionDiarizationOptions(enabled, maxSpeakers, additionalBinaryDataProperties: null);
@@ -54,7 +54,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="task"> Task type for enhanced mode. </param>
         /// <param name="targetLanguage"> Target language for enhanced mode. </param>
         /// <param name="prompt"> A list of user prompts. </param>
-        /// <returns> A new <see cref="Transcription.EnhancedModeProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.EnhancedModeProperties"/> instance for mocking. </returns>
         public static EnhancedModeProperties EnhancedModeProperties(bool? enabled = default, string task = default, string targetLanguage = default, IEnumerable<string> prompt = default)
         {
             prompt ??= new ChangeTrackingList<string>();
@@ -65,7 +65,7 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Phrase list properties for transcription. </summary>
         /// <param name="phrases"> List of phrases for recognition. </param>
         /// <param name="biasingWeight"> Biasing weight for phrase list (0.0-2.0). </param>
-        /// <returns> A new <see cref="Transcription.PhraseListProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.PhraseListProperties"/> instance for mocking. </returns>
         public static PhraseListProperties PhraseListProperties(IEnumerable<string> phrases = default, float? biasingWeight = default)
         {
             phrases ??= new ChangeTrackingList<string>();
@@ -77,11 +77,11 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="durationMilliseconds"> The duration of the audio in milliseconds. </param>
         /// <param name="combinedPhrases"> The full transcript for each channel. </param>
         /// <param name="phrases"> The transcription results segmented into phrases. </param>
-        /// <returns> A new <see cref="Transcription.TranscriptionResult"/> instance for mocking. </returns>
-        public static TranscriptionResult TranscriptionResult(int durationMilliseconds = default, IEnumerable<ChannelCombinedPhrases> combinedPhrases = default, IEnumerable<TranscribedPhrase> phrases = default)
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.TranscriptionResult"/> instance for mocking. </returns>
+        public static TranscriptionResult TranscriptionResult(int durationMilliseconds = default, IEnumerable<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases = default, IEnumerable<global::Azure.AI.Speech.Transcription.TranscribedPhrase> phrases = default)
         {
-            combinedPhrases ??= new ChangeTrackingList<ChannelCombinedPhrases>();
-            phrases ??= new ChangeTrackingList<TranscribedPhrase>();
+            combinedPhrases ??= new ChangeTrackingList<global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases>();
+            phrases ??= new ChangeTrackingList<global::Azure.AI.Speech.Transcription.TranscribedPhrase>();
 
             return new TranscriptionResult(durationMilliseconds, combinedPhrases.ToList(), phrases.ToList(), additionalBinaryDataProperties: null);
         }
@@ -89,7 +89,7 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> The full transcript per channel. </summary>
         /// <param name="channel"> The 0-based channel index. Only present if channel separation is enabled. </param>
         /// <param name="text"> The complete transcribed text for the channel. </param>
-        /// <returns> A new <see cref="Transcription.ChannelCombinedPhrases"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.ChannelCombinedPhrases"/> instance for mocking. </returns>
         public static ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = default, string text = default)
         {
             return new ChannelCombinedPhrases(channel, text, additionalBinaryDataProperties: null);
@@ -104,10 +104,10 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="words"> The words that make up the phrase. Only present if word-level timestamps are enabled. </param>
         /// <param name="locale"> The locale of the phrase. </param>
         /// <param name="confidence"> The confidence value for the phrase. </param>
-        /// <returns> A new <see cref="Transcription.TranscribedPhrase"/> instance for mocking. </returns>
-        public static TranscribedPhrase TranscribedPhrase(int? channel = default, int? speaker = default, int offsetMilliseconds = default, int durationMilliseconds = default, string text = default, IEnumerable<TranscribedWord> words = default, string locale = default, float confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.TranscribedPhrase"/> instance for mocking. </returns>
+        public static TranscribedPhrase TranscribedPhrase(int? channel = default, int? speaker = default, int offsetMilliseconds = default, int durationMilliseconds = default, string text = default, IEnumerable<global::Azure.AI.Speech.Transcription.TranscribedWord> words = default, string locale = default, float confidence = default)
         {
-            words ??= new ChangeTrackingList<TranscribedWord>();
+            words ??= new ChangeTrackingList<global::Azure.AI.Speech.Transcription.TranscribedWord>();
 
             return new TranscribedPhrase(
                 channel,
@@ -125,7 +125,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="text"> The recognized word, including punctuation. </param>
         /// <param name="offsetMilliseconds"> The start offset of the word in milliseconds. </param>
         /// <param name="durationMilliseconds"> The duration of the word in milliseconds. </param>
-        /// <returns> A new <see cref="Transcription.TranscribedWord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Speech.Transcription.TranscribedWord"/> instance for mocking. </returns>
         public static TranscribedWord TranscribedWord(string text = default, int offsetMilliseconds = default, int durationMilliseconds = default)
         {
             return new TranscribedWord(text, offsetMilliseconds, durationMilliseconds, additionalBinaryDataProperties: null);

@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> The TextAuthoringTrainedModel sub-client. </summary>
     public partial class TextAuthoringTrainedModel
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of TextAuthoringTrainedModel for mocking. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TextAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal TextAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

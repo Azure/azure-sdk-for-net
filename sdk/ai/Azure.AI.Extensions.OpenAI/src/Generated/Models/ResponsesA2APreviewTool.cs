@@ -10,13 +10,13 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> An agent implementing the A2A protocol. </summary>
     public partial class ResponsesA2APreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
-        public ResponsesA2APreviewTool() : base(ToolType.A2aPreview)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool"/>. </summary>
+        public ResponsesA2APreviewTool() : base(global::Azure.AI.Extensions.OpenAI.ToolType.A2aPreview)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal ResponsesA2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesA2APreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, global::System.Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -56,10 +56,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; set; }
+        public global::System.Uri BaseUrl { get; set; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.

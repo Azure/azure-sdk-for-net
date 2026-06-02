@@ -18,24 +18,24 @@ namespace Client.Naming.Model
     {
         protected ModelClient() => throw null;
 
-        internal ModelClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Client(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ClientAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ClientAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response Client(ClientModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Client(global::Client.Naming.Model.ClientModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ClientAsync(ClientModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ClientAsync(global::Client.Naming.Model.ClientModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Language(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> LanguageAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> LanguageAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Language(CSModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> LanguageAsync(CSModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> LanguageAsync(CSModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

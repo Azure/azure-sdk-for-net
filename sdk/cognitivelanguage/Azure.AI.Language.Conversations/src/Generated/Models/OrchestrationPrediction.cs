@@ -13,24 +13,24 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> This represents the prediction result of an Orchestration project. </summary>
     public partial class OrchestrationPrediction : PredictionBase
     {
-        /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.OrchestrationPrediction"/>. </summary>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
-        internal OrchestrationPrediction(IDictionary<string, TargetIntentResult> intents) : base(ProjectKind.Orchestration)
+        internal OrchestrationPrediction(IDictionary<string, global::Azure.AI.Language.Conversations.Models.TargetIntentResult> intents) : base(global::Azure.AI.Language.Conversations.Models.ProjectKind.Orchestration)
         {
             Intents = intents;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.OrchestrationPrediction"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
-        internal OrchestrationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent, additionalBinaryDataProperties)
+        internal OrchestrationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IDictionary<string, global::Azure.AI.Language.Conversations.Models.TargetIntentResult> intents) : base(projectKind, topIntent, additionalBinaryDataProperties)
         {
             Intents = intents;
         }
 
         /// <summary> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </summary>
-        public IDictionary<string, TargetIntentResult> Intents { get; }
+        public IDictionary<string, global::Azure.AI.Language.Conversations.Models.TargetIntentResult> Intents { get; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Controls the cardinality of the output format. Default is 'markdown'. </summary>
-    public readonly partial struct DocumentIntelligenceLayoutSkillOutputFormat : IEquatable<DocumentIntelligenceLayoutSkillOutputFormat>
+    public readonly partial struct DocumentIntelligenceLayoutSkillOutputFormat : IEquatable<global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat>
     {
         private readonly string _value;
         /// <summary> Specify the format of the output as text. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Specify the format of the output as markdown. </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentIntelligenceLayoutSkillOutputFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Specify the format of the output as markdown. </summary>
         public static DocumentIntelligenceLayoutSkillOutputFormat Markdown { get; } = new DocumentIntelligenceLayoutSkillOutputFormat(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentIntelligenceLayoutSkillOutputFormat left, DocumentIntelligenceLayoutSkillOutputFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentIntelligenceLayoutSkillOutputFormat left, DocumentIntelligenceLayoutSkillOutputFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat(string value) => new DocumentIntelligenceLayoutSkillOutputFormat(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillOutputFormat(value);
+        public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat?(string value) => (value == null) ? null : new DocumentIntelligenceLayoutSkillOutputFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentIntelligenceLayoutSkillOutputFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentIntelligenceLayoutSkillOutputFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentIntelligenceLayoutSkillOutputFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentIntelligenceLayoutSkillOutputFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

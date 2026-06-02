@@ -15,14 +15,14 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemPointAsset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemPointAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset"/>. </summary>
         /// <param name="id"> STAC item ID. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="assets"> Asset information for the specified point. </param>
         /// <param name="collectionId"> Collection ID. </param>
-        internal StacItemPointAsset(string id, IEnumerable<float> boundingBox, IDictionary<string, StacAsset> assets, string collectionId)
+        internal StacItemPointAsset(string id, IEnumerable<float> boundingBox, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets, string collectionId)
         {
             Id = id;
             BoundingBox = boundingBox.ToList();
@@ -30,13 +30,13 @@ namespace Azure.Analytics.PlanetaryComputer
             CollectionId = collectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemPointAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemPointAsset"/>. </summary>
         /// <param name="id"> STAC item ID. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="assets"> Asset information for the specified point. </param>
         /// <param name="collectionId"> Collection ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemPointAsset(string id, IList<float> boundingBox, IDictionary<string, StacAsset> assets, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemPointAsset(string id, IList<float> boundingBox, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets, string collectionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             BoundingBox = boundingBox;
@@ -52,7 +52,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<float> BoundingBox { get; }
 
         /// <summary> Asset information for the specified point. </summary>
-        public IDictionary<string, StacAsset> Assets { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> Assets { get; }
 
         /// <summary> Collection ID. </summary>
         public string CollectionId { get; }

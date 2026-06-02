@@ -15,9 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TileMatrixSetBoundingBox
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSetBoundingBox"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSetBoundingBox"/>. </summary>
         /// <param name="lowerLeft"> Lower-left corner coordinates [x, y] of bounding box. </param>
         /// <param name="upperRight"> Upper-right corner coordinates [x, y] of bounding box. </param>
         internal TileMatrixSetBoundingBox(IEnumerable<string> lowerLeft, IEnumerable<string> upperRight)
@@ -27,13 +27,13 @@ namespace Azure.Analytics.PlanetaryComputer
             OrderedAxes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSetBoundingBox"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrixSetBoundingBox"/>. </summary>
         /// <param name="lowerLeft"> Lower-left corner coordinates [x, y] of bounding box. </param>
         /// <param name="upperRight"> Upper-right corner coordinates [x, y] of bounding box. </param>
         /// <param name="crs"> Coordinate reference system identifier. </param>
         /// <param name="orderedAxes"> Explicit axis order for the CRS coordinates (e.g., ['x', 'y']). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrixSetBoundingBox(IList<string> lowerLeft, IList<string> upperRight, string crs, IList<string> orderedAxes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileMatrixSetBoundingBox(IList<string> lowerLeft, IList<string> upperRight, string crs, IList<string> orderedAxes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LowerLeft = lowerLeft;
             UpperRight = upperRight;

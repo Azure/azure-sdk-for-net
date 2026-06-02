@@ -18,25 +18,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class SmartCropsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SmartCropsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
-        internal SmartCropsResult(IEnumerable<CropRegion> values)
+        internal SmartCropsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.CropRegion> values)
         {
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SmartCropsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SmartCropsResult(IReadOnlyList<CropRegion> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SmartCropsResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.CropRegion> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of crop regions. </summary>
-        public IReadOnlyList<CropRegion> Values { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.CropRegion> Values { get; }
     }
 }

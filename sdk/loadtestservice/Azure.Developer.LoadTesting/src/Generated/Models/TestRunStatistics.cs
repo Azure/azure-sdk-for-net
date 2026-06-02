@@ -14,14 +14,14 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunStatistics"/>. </summary>
         internal TestRunStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunStatistics"/>. </summary>
         /// <param name="transaction"> Transaction name. </param>
         /// <param name="sampleCount"> Sampler count. </param>
         /// <param name="errorCount"> Error count. </param>
@@ -43,7 +43,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="receivedKBytesPerSec"> Received network bytes. </param>
         /// <param name="sentKBytesPerSec"> Send network bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPercentage, double? meanResponseTime, double? medianResponseTime, double? maxResponseTime, double? minResponseTime, double? percentile90ResponseTime, double? percentile95ResponseTime, double? percentile99ResponseTime, double? percentile75ResponseTime, double? percentile96ResponseTime, double? percentile97ResponseTime, double? percentile98ResponseTime, double? percentile999ResponseTime, double? percentile9999ResponseTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPercentage, double? meanResponseTime, double? medianResponseTime, double? maxResponseTime, double? minResponseTime, double? percentile90ResponseTime, double? percentile95ResponseTime, double? percentile99ResponseTime, double? percentile75ResponseTime, double? percentile96ResponseTime, double? percentile97ResponseTime, double? percentile98ResponseTime, double? percentile999ResponseTime, double? percentile9999ResponseTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Transaction = transaction;
             SampleCount = sampleCount;

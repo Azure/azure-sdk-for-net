@@ -13,14 +13,14 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class HierarchyBuildingClient
     {
-        public HierarchyBuildingClient() : this(new Uri("http://localhost:3000"), new HierarchyBuildingClientOptions()) => throw null;
+        public HierarchyBuildingClient() : this(new global::System.Uri("http://localhost:3000"), new HierarchyBuildingClientOptions()) => throw null;
 
-        internal HierarchyBuildingClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, HierarchyBuildingClientOptions options) => throw null;
+        internal HierarchyBuildingClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, HierarchyBuildingClientOptions options) => throw null;
 
-        public HierarchyBuildingClient(Uri endpoint, HierarchyBuildingClientOptions options) : this(null, endpoint, options) => throw null;
+        public HierarchyBuildingClient(global::System.Uri endpoint, HierarchyBuildingClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public HierarchyBuildingClient(HierarchyBuildingClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public HierarchyBuildingClient(HierarchyBuildingClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

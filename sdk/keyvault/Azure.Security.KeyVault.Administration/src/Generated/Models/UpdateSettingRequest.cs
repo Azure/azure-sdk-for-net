@@ -13,19 +13,19 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class UpdateSettingRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
         public UpdateSettingRequest(string value)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSettingRequest(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateSettingRequest(string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

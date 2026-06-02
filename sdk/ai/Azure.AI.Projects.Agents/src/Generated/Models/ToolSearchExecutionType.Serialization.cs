@@ -11,21 +11,21 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ToolSearchExecutionType value) => value switch
         {
-            ToolSearchExecutionType.Server => "server",
-            ToolSearchExecutionType.Client => "client",
+            global::OpenAI.ToolSearchExecutionType.Server => "server",
+            global::OpenAI.ToolSearchExecutionType.Client => "client",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolSearchExecutionType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ToolSearchExecutionType ToToolSearchExecutionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "server"))
             {
-                return ToolSearchExecutionType.Server;
+                return global::OpenAI.ToolSearchExecutionType.Server;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "client"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "client"))
             {
-                return ToolSearchExecutionType.Client;
+                return global::OpenAI.ToolSearchExecutionType.Client;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolSearchExecutionType value.");
         }

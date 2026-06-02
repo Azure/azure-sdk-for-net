@@ -14,18 +14,18 @@ namespace Azure.AI.AnomalyDetector
     public partial class CorrelationChanges
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.CorrelationChanges"/>. </summary>
         internal CorrelationChanges()
         {
             ChangedVariables = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.CorrelationChanges"/>. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CorrelationChanges(IList<string> changedVariables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CorrelationChanges(IList<string> changedVariables, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ChangedVariables = changedVariables;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

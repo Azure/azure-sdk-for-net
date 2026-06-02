@@ -38,7 +38,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(LoadTestRunClient client, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(LoadTestRunClient client, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _testRunId = testRunId;
@@ -55,20 +55,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                DimensionValueList result = (DimensionValueList)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DimensionValueList result = ((DimensionValueList)response);
+                yield return global::Azure.Page<string>.FromValues(((IReadOnlyList<string>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -78,9 +78,9 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricDimensionValuesRequest(nextLink, _testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context) : _client.CreateGetMetricDimensionValuesRequest(_testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetMetricDimensionValuesRequest(nextLink, _testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context) : _client.CreateGetMetricDimensionValuesRequest(_testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

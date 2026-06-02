@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolEnableAutoScaleOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolEnableAutoScaleOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolEnableAutoScaleOptions"/>. </summary>
         public BatchPoolEnableAutoScaleOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolEnableAutoScaleOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolEnableAutoScaleOptions"/>. </summary>
         /// <param name="autoScaleFormula"> The formula for the desired number of Compute Nodes in the Pool. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If you specify a new interval, then the existing autoscale evaluation schedule will be stopped and a new autoscale evaluation schedule will be started, with its starting time being the time when this request was issued. </param>
         /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If you specify a new interval, then the existing autoscale evaluation schedule will be stopped and a new autoscale evaluation schedule will be started, with its starting time being the time when this request was issued. The time duration is specified in ISO 8601 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolEnableAutoScaleOptions(string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolEnableAutoScaleOptions(string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleFormula = autoScaleFormula;
             AutoScaleEvaluationInterval = autoScaleEvaluationInterval;

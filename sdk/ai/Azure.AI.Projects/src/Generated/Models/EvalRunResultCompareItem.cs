@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvalRunResultCompareItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultCompareItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem"/>. </summary>
         /// <param name="treatmentRunId"> The treatment run ID. </param>
         /// <param name="treatmentRunSummary"> Summary statistics of the treatment run. </param>
         /// <param name="deltaEstimate"> Estimated difference between treatment and baseline. </param>
@@ -29,14 +29,14 @@ namespace Azure.AI.Projects.Evaluation
             TreatmentEffect = treatmentEffect;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultCompareItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem"/>. </summary>
         /// <param name="treatmentRunId"> The treatment run ID. </param>
         /// <param name="treatmentRunSummary"> Summary statistics of the treatment run. </param>
         /// <param name="deltaEstimate"> Estimated difference between treatment and baseline. </param>
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvalRunResultCompareItem(string treatmentRunId, EvalRunResultSummary treatmentRunSummary, float deltaEstimate, float pValue, TreatmentEffectType treatmentEffect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvalRunResultCompareItem(string treatmentRunId, EvalRunResultSummary treatmentRunSummary, float deltaEstimate, float pValue, TreatmentEffectType treatmentEffect, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TreatmentRunId = treatmentRunId;
             TreatmentRunSummary = treatmentRunSummary;

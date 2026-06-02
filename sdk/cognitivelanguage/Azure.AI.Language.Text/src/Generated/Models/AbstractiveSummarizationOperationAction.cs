@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
     public partial class AbstractiveSummarizationOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationOperationAction"/>. </summary>
-        public AbstractiveSummarizationOperationAction() : base(AnalyzeTextOperationActionKind.AbstractiveSummarization)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction"/>. </summary>
+        public AbstractiveSummarizationOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.AbstractiveSummarization)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
-        internal AbstractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AbstractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal AbstractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AbstractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }

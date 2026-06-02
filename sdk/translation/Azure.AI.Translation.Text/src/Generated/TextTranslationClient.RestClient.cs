@@ -22,27 +22,27 @@ namespace Azure.AI.Translation.Text
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/languages", false);
-            if (scope != null)
+            if ((scope != null))
             {
                 uri.AppendQuery("scope", scope, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (clientTraceId != null)
+            request.Method = global::Azure.Core.RequestMethod.Get;
+            if ((clientTraceId != null))
             {
                 request.Headers.SetValue("X-ClientTraceId", clientTraceId);
             }
-            if (acceptLanguage != null)
+            if ((acceptLanguage != null))
             {
                 request.Headers.SetValue("Accept-Language", acceptLanguage);
             }
-            if (ifNoneMatch != null)
+            if ((ifNoneMatch != null))
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
@@ -55,15 +55,15 @@ namespace Azure.AI.Translation.Text
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (clientTraceId != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((clientTraceId != null))
             {
                 request.Headers.SetValue("X-ClientTraceId", clientTraceId);
             }
@@ -81,15 +81,15 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("language", language, true);
             uri.AppendQuery("fromScript", fromScript, true);
             uri.AppendQuery("toScript", toScript, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (clientTraceId != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((clientTraceId != null))
             {
                 request.Headers.SetValue("X-ClientTraceId", clientTraceId);
             }

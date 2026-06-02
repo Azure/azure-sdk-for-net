@@ -14,12 +14,12 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base object for entity extra information.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntitySubtype"/>, <see cref="ListKey"/>, and <see cref="RegexKey"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.EntitySubtype"/>, <see cref="Azure.AI.Language.Conversations.Models.ListKey"/>, and <see cref="Azure.AI.Language.Conversations.Models.RegexKey"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownConversationEntityExtraInformation))]
-    public abstract partial class ConversationEntityExtraInformation : IJsonModel<ConversationEntityExtraInformation>
+    [PersistableModelProxyAttribute(typeof(UnknownConversationEntityExtraInformation))]
+    public abstract partial class ConversationEntityExtraInformation : IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationEntityExtraInformation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation"/> for deserialization. </summary>
         internal ConversationEntityExtraInformation()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationEntityExtraInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationEntityExtraInformation(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation.DeserializeConversationEntityExtraInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationEntityExtraInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationEntityExtraInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationEntityExtraInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationEntityExtraInformation IPersistableModel<ConversationEntityExtraInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationEntityExtraInformation IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationEntityExtraInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationEntityExtraInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,14 +77,14 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationEntityExtraInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("extraInformationKind"u8);
             writer.WriteStringValue(ExtraInformationKind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.AI.Language.Conversations.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,26 +103,26 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationEntityExtraInformation IJsonModel<ConversationEntityExtraInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationEntityExtraInformation IJsonModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationEntityExtraInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationEntityExtraInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationEntityExtraInformation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation.DeserializeConversationEntityExtraInformation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationEntityExtraInformation DeserializeConversationEntityExtraInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -131,14 +131,14 @@ namespace Azure.AI.Language.Conversations.Models
                 switch (discriminator.GetString())
                 {
                     case "EntitySubtype":
-                        return EntitySubtype.DeserializeEntitySubtype(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.EntitySubtype.DeserializeEntitySubtype(element, options);
                     case "ListKey":
-                        return ListKey.DeserializeListKey(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.ListKey.DeserializeListKey(element, options);
                     case "RegexKey":
-                        return RegexKey.DeserializeRegexKey(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.RegexKey.DeserializeRegexKey(element, options);
                 }
             }
-            return UnknownConversationEntityExtraInformation.DeserializeUnknownConversationEntityExtraInformation(element, options);
+            return global::Azure.AI.Language.Conversations.Models.UnknownConversationEntityExtraInformation.DeserializeUnknownConversationEntityExtraInformation(element, options);
         }
     }
 }

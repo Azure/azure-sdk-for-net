@@ -13,12 +13,12 @@ namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary>
     /// The metric definition, which determines how the metric value is calculated from event data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventCountMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="UserRateMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="AverageMetricDefinition"/>, and <see cref="PercentileMetricDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.SumMetricDefinition"/>, <see cref="Azure.Analytics.OnlineExperimentation.AverageMetricDefinition"/>, and <see cref="Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownExperimentMetricDefinition))]
-    public abstract partial class ExperimentMetricDefinition : IJsonModel<ExperimentMetricDefinition>
+    [PersistableModelProxyAttribute(typeof(UnknownExperimentMetricDefinition))]
+    public abstract partial class ExperimentMetricDefinition : IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetricDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition"/> for deserialization. </summary>
         internal ExperimentMetricDefinition()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExperimentMetricDefinition(document.RootElement, options);
+                        return global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition.DeserializeExperimentMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetricDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetricDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExperimentMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetricDefinition IPersistableModel<ExperimentMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExperimentMetricDefinition IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExperimentMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExperimentMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetricDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.Analytics.OnlineExperimentation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetricDefinition IJsonModel<ExperimentMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExperimentMetricDefinition IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetricDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExperimentMetricDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition.DeserializeExperimentMetricDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExperimentMetricDefinition DeserializeExperimentMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,22 +130,22 @@ namespace Azure.Analytics.OnlineExperimentation
                 switch (discriminator.GetString())
                 {
                     case "EventCount":
-                        return EventCountMetricDefinition.DeserializeEventCountMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition.DeserializeEventCountMetricDefinition(element, options);
                     case "UserCount":
-                        return UserCountMetricDefinition.DeserializeUserCountMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition.DeserializeUserCountMetricDefinition(element, options);
                     case "EventRate":
-                        return EventRateMetricDefinition.DeserializeEventRateMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition.DeserializeEventRateMetricDefinition(element, options);
                     case "UserRate":
-                        return UserRateMetricDefinition.DeserializeUserRateMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition.DeserializeUserRateMetricDefinition(element, options);
                     case "Sum":
-                        return SumMetricDefinition.DeserializeSumMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition.DeserializeSumMetricDefinition(element, options);
                     case "Average":
-                        return AverageMetricDefinition.DeserializeAverageMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.AverageMetricDefinition.DeserializeAverageMetricDefinition(element, options);
                     case "Percentile":
-                        return PercentileMetricDefinition.DeserializePercentileMetricDefinition(element, options);
+                        return global::Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition.DeserializePercentileMetricDefinition(element, options);
                 }
             }
-            return UnknownExperimentMetricDefinition.DeserializeUnknownExperimentMetricDefinition(element, options);
+            return global::Azure.Analytics.OnlineExperimentation.UnknownExperimentMetricDefinition.DeserializeUnknownExperimentMetricDefinition(element, options);
         }
     }
 }

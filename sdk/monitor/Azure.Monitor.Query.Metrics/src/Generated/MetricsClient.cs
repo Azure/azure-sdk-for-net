@@ -20,8 +20,8 @@ namespace Azure.Monitor.Query.Metrics
     /// <summary> The MetricsClient. </summary>
     public partial class MetricsClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://metrics.monitor.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://metrics.monitor.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of MetricsClient for mocking. </summary>
@@ -32,8 +32,8 @@ namespace Azure.Monitor.Query.Metrics
         /// <summary> Initializes a new instance of MetricsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MetricsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MetricsClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public MetricsClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MetricsClientOptions())
         {
         }
 
@@ -41,20 +41,20 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal MetricsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MetricsClientOptions options)
+        internal MetricsClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MetricsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Monitor.Query.Metrics.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new MetricsClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -64,14 +64,14 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public MetricsClient(global::System.Uri endpoint, TokenCredential credential, MetricsClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of MetricsClient from a <see cref="MetricsClientSettings"/>. </summary>
         /// <param name="settings"> The settings for MetricsClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public MetricsClient(MetricsClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -137,7 +137,7 @@ namespace Azure.Monitor.Query.Metrics
         /// see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryResources(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, RequestContent content, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, RequestContext context = null)
         {
@@ -145,7 +145,7 @@ namespace Azure.Monitor.Query.Metrics
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryResourcesRequest(subscriptionId, metricNamespace, metricNames, content, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, context);
+                using HttpMessage message = this.CreateQueryResourcesRequest(subscriptionId, metricNamespace, metricNames, content, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -210,15 +210,15 @@ namespace Azure.Monitor.Query.Metrics
         /// see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> QueryResourcesAsync(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, RequestContent content, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> QueryResourcesAsync(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, RequestContent content, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MetricsClient.QueryResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryResourcesRequest(subscriptionId, metricNamespace, metricNames, content, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, context);
+                using HttpMessage message = this.CreateQueryResourcesRequest(subscriptionId, metricNamespace, metricNames, content, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -276,11 +276,11 @@ namespace Azure.Monitor.Query.Metrics
         /// see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<MetricsQueryResourcesResult> QueryResources(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult> QueryResources(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryResources(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext());
-            return Response.FromValue((MetricsQueryResourcesResult)result, result);
+            Response result = this.QueryResources(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MetricsQueryResourcesResult)result), result);
         }
 
         /// <summary> Lists the metric values for multiple resources. </summary>
@@ -331,11 +331,11 @@ namespace Azure.Monitor.Query.Metrics
         /// see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult>> QueryResourcesAsync(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryResourcesAsync(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MetricsQueryResourcesResult)result, result);
+            Response result = await this.QueryResourcesAsync(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MetricsQueryResourcesResult)result), result);
         }
     }
 }

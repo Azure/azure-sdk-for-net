@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents score to use for sort order of documents. </summary>
-    public readonly partial struct RankingOrder : IEquatable<RankingOrder>
+    public readonly partial struct RankingOrder : IEquatable<global::Azure.Search.Documents.Indexes.Models.RankingOrder>
     {
         private readonly string _value;
         /// <summary> Sets sort order as BoostedRerankerScore. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Sets sort order as ReRankerScore. </summary>
         private const string ReRankerScoreValue = "RerankerScore";
 
-        /// <summary> Initializes a new instance of <see cref="RankingOrder"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.RankingOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RankingOrder(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Sets sort order as ReRankerScore. </summary>
         public static RankingOrder ReRankerScore { get; } = new RankingOrder(ReRankerScoreValue);
 
-        /// <summary> Determines if two <see cref="RankingOrder"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.RankingOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RankingOrder left, RankingOrder right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RankingOrder"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.RankingOrder"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RankingOrder left, RankingOrder right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RankingOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.RankingOrder"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RankingOrder(string value) => new RankingOrder(value);
 
-        /// <summary> Converts a string to a <see cref="RankingOrder"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.RankingOrder"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankingOrder?(string value) => value == null ? null : new RankingOrder(value);
+        public static implicit operator RankingOrder?(string value) => (value == null) ? null : new RankingOrder(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RankingOrder other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RankingOrder other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RankingOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RankingOrder other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

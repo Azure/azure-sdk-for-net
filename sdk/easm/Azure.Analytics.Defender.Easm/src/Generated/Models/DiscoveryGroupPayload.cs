@@ -14,17 +14,17 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoveryGroupPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupPayload"/>. </summary>
         public DiscoveryGroupPayload()
         {
-            Seeds = new ChangeTrackingList<DiscoverySource>();
+            Seeds = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             Names = new ChangeTrackingList<string>();
-            Excludes = new ChangeTrackingList<DiscoverySource>();
+            Excludes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupPayload"/>. </summary>
         /// <param name="name"> The name for a disco group. </param>
         /// <param name="description"> The description for a disco group. </param>
         /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroupPayload(string name, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, string templateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryGroupPayload(string name, string description, string tier, long? frequencyMilliseconds, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds, IList<string> names, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes, string templateId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -60,13 +60,13 @@ namespace Azure.Analytics.Defender.Easm
         public long? FrequencyMilliseconds { get; set; }
 
         /// <summary> The list of seeds used for the disco group runs. </summary>
-        public IList<DiscoverySource> Seeds { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get; }
 
         /// <summary> The list of names used for the disco group runs. </summary>
         public IList<string> Names { get; }
 
         /// <summary> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </summary>
-        public IList<DiscoverySource> Excludes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Excludes { get; }
 
         /// <summary> The unique identifier for the disco template used for the disco group creation. </summary>
         public string TemplateId { get; set; }

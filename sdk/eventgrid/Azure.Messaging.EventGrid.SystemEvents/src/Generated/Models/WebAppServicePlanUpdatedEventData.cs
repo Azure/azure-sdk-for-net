@@ -14,14 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class WebAppServicePlanUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData"/>. </summary>
         internal WebAppServicePlanUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData"/>. </summary>
         /// <param name="appServicePlanEventTypeDetail"> Detail of action on the app service plan. </param>
         /// <param name="sku"> sku of app service plan. </param>
         /// <param name="name"> name of the app service plan that had this event. </param>
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppServicePlanUpdatedEventData(AppServicePlanEventTypeDetail appServicePlanEventTypeDetail, WebAppServicePlanUpdatedEventDataSku sku, string name, string clientRequestId, string correlationRequestId, string requestId, string address, string verb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppServicePlanUpdatedEventData(AppServicePlanEventTypeDetail appServicePlanEventTypeDetail, WebAppServicePlanUpdatedEventDataSku sku, string name, string clientRequestId, string correlationRequestId, string requestId, string address, string verb, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AppServicePlanEventTypeDetail = appServicePlanEventTypeDetail;
             Sku = sku;

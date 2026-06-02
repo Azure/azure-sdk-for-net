@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class IntentsEvaluationSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IntentsEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.IntentsEvaluationSummary"/>. </summary>
         /// <param name="confusionMatrix"> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </param>
         /// <param name="intents"> Represents the intents evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        internal IntentsEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
+        internal IntentsEvaluationSummary(IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
         {
             ConfusionMatrix = confusionMatrix;
             Intents = intents;
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             MacroRecall = macroRecall;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntentsEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.IntentsEvaluationSummary"/>. </summary>
         /// <param name="confusionMatrix"> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </param>
         /// <param name="intents"> Represents the intents evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntentsEvaluationSummary(IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IntentsEvaluationSummary(IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix, IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConfusionMatrix = confusionMatrix;
             Intents = intents;
@@ -61,10 +61,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </summary>
-        public IDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> ConfusionMatrix { get; }
+        public IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringConfusionMatrixRow> ConfusionMatrix { get; }
 
         /// <summary> Represents the intents evaluation summary. </summary>
-        public IDictionary<string, IntentEvaluationSummary> Intents { get; }
+        public IDictionary<string, global::Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary> Intents { get; }
 
         /// <summary> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroF1 { get; }

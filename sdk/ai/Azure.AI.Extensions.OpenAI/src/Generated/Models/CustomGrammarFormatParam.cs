@@ -10,24 +10,24 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Grammar format. </summary>
     public partial class CustomGrammarFormatParam : ResponsesCustomToolParamFormat
     {
-        /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base(CustomToolParamFormatType.Grammar)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="definition"/> is null. </exception>
+        public CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base(global::Azure.AI.Extensions.OpenAI.CustomToolParamFormatType.Grammar)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(definition, nameof(definition));
 
             Syntax = syntax;
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        internal CustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesGrammarSyntax syntax, string definition) : base(@type, additionalBinaryDataProperties)
+        internal CustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesGrammarSyntax syntax, string definition) : base(@type, additionalBinaryDataProperties)
         {
             Syntax = syntax;
             Definition = definition;

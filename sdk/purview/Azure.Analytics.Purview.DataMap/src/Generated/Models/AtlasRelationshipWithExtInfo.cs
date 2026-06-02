@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelationshipWithExtInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo"/>. </summary>
         internal AtlasRelationshipWithExtInfo()
         {
-            ReferredEntities = new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+            ReferredEntities = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipWithExtInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo"/>. </summary>
         /// <param name="referredEntities"> The referred entity header. </param>
         /// <param name="relationship"> Atlas relationship instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationshipWithExtInfo(IDictionary<string, AtlasEntityHeader> referredEntities, AtlasRelationship relationship, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelationshipWithExtInfo(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> referredEntities, AtlasRelationship relationship, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReferredEntities = referredEntities;
             Relationship = relationship;
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> The referred entity header. </summary>
-        public IDictionary<string, AtlasEntityHeader> ReferredEntities { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> ReferredEntities { get; }
 
         /// <summary> Atlas relationship instance. </summary>
         public AtlasRelationship Relationship { get; }

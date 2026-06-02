@@ -17,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ResourceNotificationsResourceDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         internal ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails)
@@ -28,11 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             OperationalDetails = operationalDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceDetails = resourceDetails;
             OperationalDetails = operationalDetails;

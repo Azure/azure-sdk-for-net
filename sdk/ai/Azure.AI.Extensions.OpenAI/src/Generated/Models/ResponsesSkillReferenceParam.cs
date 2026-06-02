@@ -10,22 +10,22 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesSkillReferenceParam. </summary>
     public partial class ResponsesSkillReferenceParam : ContainerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesSkillReferenceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam"/>. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillId"/> is null. </exception>
-        public ResponsesSkillReferenceParam(string skillId) : base(ContainerSkillType.SkillReference)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="skillId"/> is null. </exception>
+        public ResponsesSkillReferenceParam(string skillId) : base(global::Azure.AI.Extensions.OpenAI.ContainerSkillType.SkillReference)
         {
-            Argument.AssertNotNull(skillId, nameof(skillId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(skillId, nameof(skillId));
 
             SkillId = skillId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesSkillReferenceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="skillId"> The ID of the referenced skill. </param>
         /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
-        internal ResponsesSkillReferenceParam(ContainerSkillType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string skillId, string version) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesSkillReferenceParam(ContainerSkillType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string skillId, string version) : base(@type, additionalBinaryDataProperties)
         {
             SkillId = skillId;
             Version = version;

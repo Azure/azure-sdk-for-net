@@ -14,14 +14,14 @@ namespace Azure.Communication.JobRouter
     public partial class RouterChannel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterChannel"/>. </summary>
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;

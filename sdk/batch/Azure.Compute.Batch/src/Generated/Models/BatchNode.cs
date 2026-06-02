@@ -15,16 +15,16 @@ namespace Azure.Compute.Batch
     public partial class BatchNode
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNode"/>. </summary>
         internal BatchNode()
         {
-            RecentTasks = new ChangeTrackingList<BatchTaskInfo>();
-            Errors = new ChangeTrackingList<BatchNodeError>();
+            RecentTasks = new ChangeTrackingList<global::Azure.Compute.Batch.BatchTaskInfo>();
+            Errors = new ChangeTrackingList<global::Azure.Compute.Batch.BatchNodeError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNode"/>. </summary>
         /// <param name="id"> The ID of the Compute Node. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the ID is reclaimed and could be reused for new Compute Nodes. </param>
         /// <param name="uri"> The URL of the Compute Node. </param>
         /// <param name="state"> The current state of the Compute Node. </param>
@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNode(string id, Uri uri, BatchNodeState state, SchedulingState? schedulingState, DateTimeOffset stateTransitionTime, DateTimeOffset lastBootTime, DateTimeOffset allocationTime, IPAddress ipAddress, IPAddress ipv6Address, string affinityId, string vmSize, int totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNode(string id, global::System.Uri uri, BatchNodeState state, SchedulingState? schedulingState, DateTimeOffset stateTransitionTime, DateTimeOffset lastBootTime, DateTimeOffset allocationTime, IPAddress ipAddress, IPAddress ipv6Address, string affinityId, string vmSize, int totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<global::Azure.Compute.Batch.BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<global::Azure.Compute.Batch.BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
         public string Id { get; }
 
         /// <summary> The URL of the Compute Node. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The current state of the Compute Node. </summary>
         public BatchNodeState State { get; }
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch
         public int? TotalTasksSucceeded { get; }
 
         /// <summary> A list of Tasks whose state has recently changed. This property is present only if at least one Task has run on this Compute Node since it was assigned to the Pool. </summary>
-        public IReadOnlyList<BatchTaskInfo> RecentTasks { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.BatchTaskInfo> RecentTasks { get; }
 
         /// <summary> The Task specified to run on the Compute Node as it joins the Pool. </summary>
         public BatchStartTask StartTask { get; }
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch
         public BatchStartTaskInfo StartTaskInfo { get; }
 
         /// <summary> The list of errors that are currently being encountered by the Compute Node. </summary>
-        public IReadOnlyList<BatchNodeError> Errors { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.BatchNodeError> Errors { get; }
 
         /// <summary> Whether this Compute Node is a dedicated Compute Node. If false, the Compute Node is a Spot/Low-priority Compute Node. </summary>
         public bool? IsDedicated { get; }

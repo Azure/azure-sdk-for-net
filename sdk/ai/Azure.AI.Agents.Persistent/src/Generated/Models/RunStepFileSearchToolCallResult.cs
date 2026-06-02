@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepFileSearchToolCallResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult"/>. </summary>
         /// <param name="fileId"> The ID of the file that result was found in. </param>
         /// <param name="fileName"> The name of the file that result was found in. </param>
         /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
@@ -25,16 +25,16 @@ namespace Azure.AI.Agents.Persistent
             FileId = fileId;
             FileName = fileName;
             Score = score;
-            Content = new ChangeTrackingList<FileSearchToolCallContent>();
+            Content = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.FileSearchToolCallContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult"/>. </summary>
         /// <param name="fileId"> The ID of the file that result was found in. </param>
         /// <param name="fileName"> The name of the file that result was found in. </param>
         /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
         /// <param name="content"> The content of the result that was found. The content is only included if requested via the include query parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepFileSearchToolCallResult(string fileId, string fileName, float score, IReadOnlyList<FileSearchToolCallContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepFileSearchToolCallResult(string fileId, string fileName, float score, IReadOnlyList<global::Azure.AI.Agents.Persistent.FileSearchToolCallContent> content, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             FileName = fileName;
@@ -53,6 +53,6 @@ namespace Azure.AI.Agents.Persistent
         public float Score { get; }
 
         /// <summary> The content of the result that was found. The content is only included if requested via the include query parameter. </summary>
-        public IReadOnlyList<FileSearchToolCallContent> Content { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.FileSearchToolCallContent> Content { get; }
     }
 }

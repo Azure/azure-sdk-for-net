@@ -12,10 +12,10 @@ namespace Azure.AI.ContentUnderstanding
 {
     internal partial class UnknownKnowledgeSource : KnowledgeSource
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.UnknownKnowledgeSource"/>. </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

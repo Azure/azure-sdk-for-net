@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringUnassignDeploymentResourcesDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
         /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignedResourceIds"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assignedResourceIds"/> is null. </exception>
         public TextAuthoringUnassignDeploymentResourcesDetails(IEnumerable<string> assignedResourceIds)
         {
-            Argument.AssertNotNull(assignedResourceIds, nameof(assignedResourceIds));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(assignedResourceIds, nameof(assignedResourceIds));
 
             AssignedResourceIds = assignedResourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
         /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringUnassignDeploymentResourcesDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringUnassignDeploymentResourcesDetails(IList<string> assignedResourceIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssignedResourceIds = assignedResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

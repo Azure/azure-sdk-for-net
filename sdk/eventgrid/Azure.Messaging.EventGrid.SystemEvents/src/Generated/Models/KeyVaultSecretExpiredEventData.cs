@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class KeyVaultSecretExpiredEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.KeyVaultSecretExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.KeyVaultSecretExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSecretExpiredEventData(string id, string vaultName, string objectType, string objectName, string version, float? nbf, float? exp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSecretExpiredEventData(string id, string vaultName, string objectType, string objectName, string version, float? nbf, float? exp, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             VaultName = vaultName;

@@ -15,30 +15,30 @@ namespace Azure.AI.AnomalyDetector
     public partial class VariableValues
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variable"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="variable"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
         public VariableValues(string variable, IEnumerable<string> timestamps, IEnumerable<float> values)
         {
-            Argument.AssertNotNull(variable, nameof(variable));
-            Argument.AssertNotNull(timestamps, nameof(timestamps));
-            Argument.AssertNotNull(values, nameof(values));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(variable, nameof(variable));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(timestamps, nameof(timestamps));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(values, nameof(values));
 
             Variable = variable;
             Timestamps = timestamps.ToList();
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VariableValues(string variable, IList<string> timestamps, IList<float> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VariableValues(string variable, IList<string> timestamps, IList<float> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Variable = variable;
             Timestamps = timestamps;

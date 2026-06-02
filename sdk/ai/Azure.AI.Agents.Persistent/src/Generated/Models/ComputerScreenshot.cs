@@ -14,19 +14,19 @@ namespace Azure.AI.Agents.Persistent
     public partial class ComputerScreenshot
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputerScreenshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerScreenshot"/>. </summary>
         public ComputerScreenshot()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerScreenshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerScreenshot"/>. </summary>
         /// <param name="type"> Specifies the event type. For a computer screenshot, this property is always set to computer_screenshot. </param>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="imageUrl"> The URL of the screenshot image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerScreenshot(string @type, string fileId, string imageUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerScreenshot(string @type, string fileId, string imageUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;

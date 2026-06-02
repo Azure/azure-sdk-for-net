@@ -15,21 +15,21 @@ namespace Azure.Compute.Batch
     public partial class BatchJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJob"/>. </summary>
         /// <param name="poolInfo"> The Pool settings associated with the Job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
         public BatchJob(BatchPoolInfo poolInfo)
         {
-            Argument.AssertNotNull(poolInfo, nameof(poolInfo));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(poolInfo, nameof(poolInfo));
 
-            CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
+            CommonEnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
             PoolInfo = poolInfo;
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJob"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Job. </param>
         /// <param name="usesTaskDependencies"> Whether Tasks in the Job can define dependencies on each other. The default is false. </param>
@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch
         /// <param name="executionInfo"> The execution information for the Job. </param>
         /// <param name="jobStatistics"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobState state, DateTimeOffset stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<BatchMetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics jobStatistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, global::System.Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobState state, DateTimeOffset stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<global::Azure.Compute.Batch.EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics jobStatistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch
         public bool? UsesTaskDependencies { get; }
 
         /// <summary> The URL of the Job. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The ETag of the Job. This is an opaque string. You can use it to detect whether the Job has changed between requests. In particular, you can be pass the ETag when updating a Job to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </summary>
         public ETag ETag { get; }
@@ -143,7 +143,7 @@ namespace Azure.Compute.Batch
         public BatchJobReleaseTask JobReleaseTask { get; }
 
         /// <summary> The list of common environment variable settings. These environment variables are set for all Tasks in the Job (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </summary>
-        public IReadOnlyList<EnvironmentSetting> CommonEnvironmentSettings { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.EnvironmentSetting> CommonEnvironmentSettings { get; }
 
         /// <summary> The Pool settings associated with the Job. </summary>
         public BatchPoolInfo PoolInfo { get; set; }
@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch
         public BatchJobNetworkConfiguration NetworkConfiguration { get; }
 
         /// <summary> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> The execution information for the Job. </summary>
         public BatchJobExecutionInfo ExecutionInfo { get; }

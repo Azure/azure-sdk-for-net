@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class CollectionsStringProperty : IJsonModel<CollectionsStringProperty>
+    public partial class CollectionsStringProperty : IJsonModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>
     {
         internal CollectionsStringProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<CollectionsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        CollectionsStringProperty IPersistableModel<CollectionsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        CollectionsStringProperty IPersistableModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<CollectionsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="collectionsStringProperty"> The <see cref="CollectionsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="collectionsStringProperty"> The <see cref="global::_Type.Property.ValueTypes.CollectionsStringProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(CollectionsStringProperty collectionsStringProperty) => throw null;
 
         public static explicit operator CollectionsStringProperty(Response response) => throw null;
 
-        void IJsonModel<CollectionsStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        CollectionsStringProperty IJsonModel<CollectionsStringProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        CollectionsStringProperty IJsonModel<global::_Type.Property.ValueTypes.CollectionsStringProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CollectionsStringProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

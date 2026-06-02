@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeFile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeFile"/>. </summary>
         internal BatchNodeFile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeFile"/>. </summary>
         /// <param name="name"> The file path. </param>
         /// <param name="uri"> The URL of the file. </param>
         /// <param name="isDirectory"> Whether the object represents a directory. </param>
         /// <param name="properties"> The file properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeFile(string name, Uri uri, bool? isDirectory, FileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeFile(string name, global::System.Uri uri, bool? isDirectory, FileProperties properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
         public string Name { get; }
 
         /// <summary> The URL of the file. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> Whether the object represents a directory. </summary>
         public bool? IsDirectory { get; }

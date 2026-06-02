@@ -10,7 +10,7 @@ using Customization;
 
 namespace Specs.Azure.ClientGenerator.Core.Override
 {
-    [ModelReaderWriterBuildable(typeof(GroupParametersOptions))]
+    [ModelReaderWriterBuildableAttribute(typeof(GroupParametersOptions))]
     public partial class SpecsAzureClientGeneratorCoreOverrideContext : ModelReaderWriterContext
     {
     }

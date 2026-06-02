@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class OutputFieldMappingEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OutputFieldMappingEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the output defined by the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public OutputFieldMappingEntry(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputFieldMappingEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the output defined by the skill. </param>
         /// <param name="targetName"> The target name of the output. It is optional and default to name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFieldMappingEntry(string name, string targetName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputFieldMappingEntry(string name, string targetName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TargetName = targetName;

@@ -16,19 +16,19 @@ namespace BasicTypeSpec
     public partial class ThingModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ThingModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ThingModel"/>. </summary>
         /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         public ThingModel(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
-            Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
+            global::BasicTypeSpec.Argument.AssertNotNull(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            global::BasicTypeSpec.Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
             Name = name;
             RequiredUnion = requiredUnion;
@@ -37,7 +37,7 @@ namespace BasicTypeSpec
             RequiredNullableList = requiredNullableList?.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThingModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ThingModel"/>. </summary>
         /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
         /// <param name="requiredLiteralString"> required literal string. </param>
@@ -52,7 +52,7 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThingModel(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, ThingModelOptionalLiteralString? optionalLiteralString, ThingModelOptionalLiteralInt? optionalLiteralInt, ThingModelOptionalLiteralFloat? optionalLiteralFloat, bool? optionalLiteralBool, string requiredBadDescription, IList<int> optionalNullableList, IList<int> requiredNullableList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThingModel(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, ThingModelOptionalLiteralString? optionalLiteralString, ThingModelOptionalLiteralInt? optionalLiteralInt, ThingModelOptionalLiteralFloat? optionalLiteralFloat, bool? optionalLiteralBool, string requiredBadDescription, IList<int> optionalNullableList, IList<int> requiredNullableList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RequiredUnion = requiredUnion;
@@ -75,8 +75,8 @@ namespace BasicTypeSpec
 
         /// <summary>
         /// required Union
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -85,7 +85,7 @@ namespace BasicTypeSpec
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="int"/>. </description>

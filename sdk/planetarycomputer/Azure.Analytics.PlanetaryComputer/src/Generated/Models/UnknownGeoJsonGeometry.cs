@@ -12,11 +12,11 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     internal partial class UnknownGeoJsonGeometry : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownGeoJsonGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.UnknownGeoJsonGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownGeoJsonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", boundingBox, additionalBinaryDataProperties)
+        internal UnknownGeoJsonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", boundingBox, additionalBinaryDataProperties)
         {
         }
     }

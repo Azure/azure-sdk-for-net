@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class InsightSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightSummary"/>. </summary>
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
         /// <param name="uniqueSubclusterCount"> Total number of unique subcluster labels. </param>
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects.Evaluation
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightSummary"/>. </summary>
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
         /// <param name="uniqueSubclusterCount"> Total number of unique subcluster labels. </param>
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
         /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SampleCount = sampleCount;
             UniqueSubclusterCount = uniqueSubclusterCount;

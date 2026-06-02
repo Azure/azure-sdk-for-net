@@ -13,24 +13,24 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> represents the resolution of numeric intervals. </summary>
     public partial class NumericRangeResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="NumericRangeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.NumericRangeResolution"/>. </summary>
         /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
-        internal NumericRangeResolution(RangeKind rangeKind, double minimum, double maximum) : base(ResolutionKind.NumericRangeResolution)
+        internal NumericRangeResolution(RangeKind rangeKind, double minimum, double maximum) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.NumericRangeResolution)
         {
             RangeKind = rangeKind;
             Minimum = minimum;
             Maximum = maximum;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NumericRangeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.NumericRangeResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
-        internal NumericRangeResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RangeKind rangeKind, double minimum, double maximum) : base(resolutionKind, additionalBinaryDataProperties)
+        internal NumericRangeResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RangeKind rangeKind, double minimum, double maximum) : base(resolutionKind, additionalBinaryDataProperties)
         {
             RangeKind = rangeKind;
             Minimum = minimum;

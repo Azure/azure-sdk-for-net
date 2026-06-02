@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemLocalShellToolCallOutputStatus value) => value switch
         {
-            InputItemLocalShellToolCallOutputStatus.InProgress => "in_progress",
-            InputItemLocalShellToolCallOutputStatus.Completed => "completed",
-            InputItemLocalShellToolCallOutputStatus.Incomplete => "incomplete",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemLocalShellToolCallOutputStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemLocalShellToolCallOutputStatus ToInputItemLocalShellToolCallOutputStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemLocalShellToolCallOutputStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemLocalShellToolCallOutputStatus.Completed;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemLocalShellToolCallOutputStatus.Incomplete;
+                return global::Azure.AI.Projects.InputItemLocalShellToolCallOutputStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemLocalShellToolCallOutputStatus value.");
         }

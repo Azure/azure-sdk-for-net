@@ -14,21 +14,21 @@ namespace Azure.Communication.Messages.Models.Channels
     /// <summary> WhatsApp Binding actions to the interactive message. </summary>
     public partial class WhatsAppUrlActionBindings : ActionBindings
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings"/>. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public WhatsAppUrlActionBindings(LinkContent content) : base(MessageActionBindingKind.WhatsAppUrlAction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public WhatsAppUrlActionBindings(LinkContent content) : base(global::Azure.Communication.Messages.MessageActionBindingKind.WhatsAppUrlAction)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings"/>. </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Action content of Interactive message. </param>
-        internal WhatsAppUrlActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LinkContent content) : base(kind, additionalBinaryDataProperties)
+        internal WhatsAppUrlActionBindings(MessageActionBindingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, LinkContent content) : base(kind, additionalBinaryDataProperties)
         {
             Content = content;
         }

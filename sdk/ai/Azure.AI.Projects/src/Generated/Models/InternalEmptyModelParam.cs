@@ -10,16 +10,16 @@ namespace Azure.AI.Projects
     internal partial class InternalEmptyModelParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalEmptyModelParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalEmptyModelParam"/>. </summary>
         public InternalEmptyModelParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalEmptyModelParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalEmptyModelParam"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalEmptyModelParam(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalEmptyModelParam(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

@@ -10,22 +10,22 @@ namespace Azure.AI.Projects
     /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
     public partial class PromptDataGenerationJobSource : DataGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="PromptDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.PromptDataGenerationJobSource"/>. </summary>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
-        public PromptDataGenerationJobSource(string prompt) : base(DataGenerationJobSourceType.Prompt)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
+        public PromptDataGenerationJobSource(string prompt) : base(global::Azure.AI.Projects.DataGenerationJobSourceType.Prompt)
         {
-            Argument.AssertNotNull(prompt, nameof(prompt));
+            global::Azure.AI.Projects.Argument.AssertNotNull(prompt, nameof(prompt));
 
             Prompt = prompt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PromptDataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.PromptDataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        internal PromptDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string prompt) : base(@type, description, additionalBinaryDataProperties)
+        internal PromptDataGenerationJobSource(DataGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string description, string prompt) : base(@type, description, additionalBinaryDataProperties)
         {
             Prompt = prompt;
         }

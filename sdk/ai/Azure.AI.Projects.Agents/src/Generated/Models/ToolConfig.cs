@@ -11,14 +11,14 @@ namespace Azure.AI.Projects.Agents
     public partial class ToolConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolConfig"/>. </summary>
         public ToolConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolConfig"/>. </summary>
         /// <param name="pin">
         /// When true, the tool is always included in agent context and visible in `tools/list`.
         /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// to improve discoverability. Does not alter `tools/list` output.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolConfig(bool? pin, string additionalSearchText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolConfig(bool? pin, string additionalSearchText, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Pin = pin;
             AdditionalSearchText = additionalSearchText;

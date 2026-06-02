@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class AutoStopCriteria
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoStopCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.AutoStopCriteria"/>. </summary>
         public AutoStopCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoStopCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.AutoStopCriteria"/>. </summary>
         /// <param name="autoStopDisabled"> Whether auto-stop should be disabled. The default value is false. </param>
         /// <param name="errorRate"> Threshold percentage of errors on which test run should be automatically stopped. Allowed values are in range of 0.0-100.0. </param>
         /// <param name="errorRateTimeWindow"> Time window during which the error percentage should be evaluated in seconds. </param>
         /// <param name="maximumVirtualUsersPerEngine"> Maximum number of virtual users per load testing engine, at which the test run should be automatically stopped. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, TimeSpan? errorRateTimeWindow, int? maximumVirtualUsersPerEngine, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, TimeSpan? errorRateTimeWindow, int? maximumVirtualUsersPerEngine, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AutoStopDisabled = autoStopDisabled;
             ErrorRate = errorRate;

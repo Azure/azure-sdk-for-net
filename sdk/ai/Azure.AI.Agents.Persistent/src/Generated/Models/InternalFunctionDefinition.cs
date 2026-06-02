@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         public InternalFunctionDefinition(string name, BinaryData parameters)
@@ -25,12 +25,12 @@ namespace Azure.AI.Agents.Persistent
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFunctionDefinition(string name, string description, BinaryData parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFunctionDefinition(string name, string description, BinaryData parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -46,8 +46,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The parameters the functions accepts, described as a JSON Schema object.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

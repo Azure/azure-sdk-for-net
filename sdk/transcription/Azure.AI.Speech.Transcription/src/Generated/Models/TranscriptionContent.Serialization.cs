@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class TranscriptionContent : IJsonModel<TranscriptionContent>
+    internal partial class TranscriptionContent : IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.TranscriptionContent"/> for deserialization. </summary>
         internal TranscriptionContent()
         {
         }
@@ -21,58 +21,58 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTranscriptionContent(document.RootElement, options);
+                        return global::Azure.AI.Speech.Transcription.TranscriptionContent.DeserializeTranscriptionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptionContent IPersistableModel<TranscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TranscriptionContent IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="transcriptionContent"> The <see cref="TranscriptionContent"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="transcriptionContent"> The <see cref="global::Azure.AI.Speech.Transcription.TranscriptionContent"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(TranscriptionContent transcriptionContent)
         {
-            if (transcriptionContent == null)
+            if ((transcriptionContent == null))
             {
                 return null;
             }
-            return BinaryContent.Create(transcriptionContent, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(transcriptionContent, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TranscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -80,26 +80,26 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Options, options);
-            if (Optional.IsDefined(Audio))
+            writer.WriteObjectValue<TranscriptionOptions>(Options, options);
+            if (global::Azure.AI.Speech.Transcription.Optional.IsDefined(Audio))
             {
                 writer.WritePropertyName("audio"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Audio);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Audio))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Audio))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,51 +118,51 @@ namespace Azure.AI.Speech.Transcription
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptionContent IJsonModel<TranscriptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TranscriptionContent IJsonModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Speech.Transcription.TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TranscriptionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Speech.Transcription.TranscriptionContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranscriptionContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Speech.Transcription.TranscriptionContent.DeserializeTranscriptionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranscriptionContent DeserializeTranscriptionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TranscriptionOptions options0 = default;
             BinaryData audio = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("definition"u8))
                 {
-                    options0 = TranscriptionOptions.DeserializeTranscriptionOptions(prop.Value, options);
+                    options0 = global::Azure.AI.Speech.Transcription.TranscriptionOptions.DeserializeTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    audio = BinaryData.FromString(prop.Value.GetRawText());
+                    audio = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TranscriptionContent(options0, audio, additionalBinaryDataProperties);

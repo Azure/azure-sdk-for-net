@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EdgeNGramTokenFilterSide value) => value switch
         {
-            EdgeNGramTokenFilterSide.Front => "front",
-            EdgeNGramTokenFilterSide.Back => "back",
+            global::Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide.Front => "front",
+            global::Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide.Back => "back",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdgeNGramTokenFilterSide value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static EdgeNGramTokenFilterSide ToEdgeNGramTokenFilterSide(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "front"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "front"))
             {
-                return EdgeNGramTokenFilterSide.Front;
+                return global::Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide.Front;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "back"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "back"))
             {
-                return EdgeNGramTokenFilterSide.Back;
+                return global::Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide.Back;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdgeNGramTokenFilterSide value.");
         }

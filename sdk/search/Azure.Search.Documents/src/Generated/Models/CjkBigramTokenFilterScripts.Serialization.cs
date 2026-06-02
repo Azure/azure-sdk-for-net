@@ -14,31 +14,31 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CjkBigramTokenFilterScripts value) => value switch
         {
-            CjkBigramTokenFilterScripts.Han => "han",
-            CjkBigramTokenFilterScripts.Hiragana => "hiragana",
-            CjkBigramTokenFilterScripts.Katakana => "katakana",
-            CjkBigramTokenFilterScripts.Hangul => "hangul",
+            global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Han => "han",
+            global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Hiragana => "hiragana",
+            global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Katakana => "katakana",
+            global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Hangul => "hangul",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CjkBigramTokenFilterScripts value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static CjkBigramTokenFilterScripts ToCjkBigramTokenFilterScripts(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "han"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "han"))
             {
-                return CjkBigramTokenFilterScripts.Han;
+                return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Han;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hiragana"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hiragana"))
             {
-                return CjkBigramTokenFilterScripts.Hiragana;
+                return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Hiragana;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "katakana"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "katakana"))
             {
-                return CjkBigramTokenFilterScripts.Katakana;
+                return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Katakana;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hangul"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hangul"))
             {
-                return CjkBigramTokenFilterScripts.Hangul;
+                return global::Azure.Search.Documents.Indexes.Models.CjkBigramTokenFilterScripts.Hangul;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CjkBigramTokenFilterScripts value.");
         }

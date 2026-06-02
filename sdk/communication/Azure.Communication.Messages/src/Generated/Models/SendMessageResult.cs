@@ -15,25 +15,25 @@ namespace Azure.Communication.Messages
     public partial class SendMessageResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
-        internal SendMessageResult(IEnumerable<MessageReceipt> receipts)
+        internal SendMessageResult(IEnumerable<global::Azure.Communication.Messages.MessageReceipt> receipts)
         {
             Receipts = receipts.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SendMessageResult(IReadOnlyList<MessageReceipt> receipts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SendMessageResult(IReadOnlyList<global::Azure.Communication.Messages.MessageReceipt> receipts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Receipts = receipts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Receipts of the send message operation. </summary>
-        public IReadOnlyList<MessageReceipt> Receipts { get; }
+        public IReadOnlyList<global::Azure.Communication.Messages.MessageReceipt> Receipts { get; }
     }
 }

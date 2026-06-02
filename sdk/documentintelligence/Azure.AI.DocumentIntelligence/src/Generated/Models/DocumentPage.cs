@@ -15,23 +15,23 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentPage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
-        internal DocumentPage(int pageNumber, IEnumerable<DocumentSpan> spans)
+        internal DocumentPage(int pageNumber, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             PageNumber = pageNumber;
             Spans = spans.ToList();
-            Words = new ChangeTrackingList<DocumentWord>();
-            SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
-            Lines = new ChangeTrackingList<DocumentLine>();
-            Barcodes = new ChangeTrackingList<DocumentBarcode>();
-            Formulas = new ChangeTrackingList<DocumentFormula>();
+            Words = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentWord>();
+            SelectionMarks = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark>();
+            Lines = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentLine>();
+            Barcodes = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentBarcode>();
+            Formulas = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFormula>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle">
         /// The general orientation of the content in clockwise direction, measured in
@@ -53,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="barcodes"> Extracted barcodes from the page. </param>
         /// <param name="formulas"> Extracted formulas from the page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentWord> words, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark> selectionMarks, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentLine> lines, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentBarcode> barcodes, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFormula> formulas, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Angle = angle;
@@ -91,24 +91,24 @@ namespace Azure.AI.DocumentIntelligence
         public LengthUnit? Unit { get; }
 
         /// <summary> Location of the page in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Extracted words from the page. </summary>
-        public IReadOnlyList<DocumentWord> Words { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentWord> Words { get; }
 
         /// <summary> Extracted selection marks from the page. </summary>
-        public IReadOnlyList<DocumentSelectionMark> SelectionMarks { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark> SelectionMarks { get; }
 
         /// <summary>
         /// Extracted lines from the page, potentially containing both textual and visual
         /// elements.
         /// </summary>
-        public IReadOnlyList<DocumentLine> Lines { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentLine> Lines { get; }
 
         /// <summary> Extracted barcodes from the page. </summary>
-        public IReadOnlyList<DocumentBarcode> Barcodes { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentBarcode> Barcodes { get; }
 
         /// <summary> Extracted formulas from the page. </summary>
-        public IReadOnlyList<DocumentFormula> Formulas { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFormula> Formulas { get; }
     }
 }

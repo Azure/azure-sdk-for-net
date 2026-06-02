@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._ModelProperties
 {
-    public partial class SameAsModel : IJsonModel<SameAsModel>
+    public partial class SameAsModel : IJsonModel<global::SpecialWords._ModelProperties.SameAsModel>
     {
         internal SameAsModel() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._ModelProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SameAsModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._ModelProperties.SameAsModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SameAsModel IPersistableModel<SameAsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SameAsModel IPersistableModel<global::SpecialWords._ModelProperties.SameAsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SameAsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._ModelProperties.SameAsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="sameAsModel"> The <see cref="SameAsModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="sameAsModel"> The <see cref="global::SpecialWords._ModelProperties.SameAsModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(SameAsModel sameAsModel) => throw null;
 
-        void IJsonModel<SameAsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._ModelProperties.SameAsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SameAsModel IJsonModel<SameAsModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SameAsModel IJsonModel<global::SpecialWords._ModelProperties.SameAsModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SameAsModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

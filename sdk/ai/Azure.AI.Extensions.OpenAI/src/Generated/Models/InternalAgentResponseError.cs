@@ -11,9 +11,9 @@ namespace OpenAI
     internal partial class InternalAgentResponseError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponseError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponseError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"> A human-readable description of the error. </param>
         internal InternalAgentResponseError(ResponseErrorCode code, string message)
@@ -22,11 +22,11 @@ namespace OpenAI
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponseError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponseError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"> A human-readable description of the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentResponseError(ResponseErrorCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentResponseError(ResponseErrorCode code, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

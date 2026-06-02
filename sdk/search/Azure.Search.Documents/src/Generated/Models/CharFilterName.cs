@@ -12,18 +12,18 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all character filters supported by the search engine. </summary>
-    public readonly partial struct CharFilterName : IEquatable<CharFilterName>
+    public readonly partial struct CharFilterName : IEquatable<global::Azure.Search.Documents.Indexes.Models.CharFilterName>
     {
         private readonly string _value;
         /// <summary> A character filter that attempts to strip out HTML constructs. See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html. </summary>
         private const string HtmlStripValue = "html_strip";
 
-        /// <summary> Initializes a new instance of <see cref="CharFilterName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CharFilterName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CharFilterName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -31,34 +31,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> A character filter that attempts to strip out HTML constructs. See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html. </summary>
         public static CharFilterName HtmlStrip { get; } = new CharFilterName(HtmlStripValue);
 
-        /// <summary> Determines if two <see cref="CharFilterName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.CharFilterName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CharFilterName left, CharFilterName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CharFilterName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.CharFilterName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CharFilterName left, CharFilterName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CharFilterName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.CharFilterName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CharFilterName(string value) => new CharFilterName(value);
 
-        /// <summary> Converts a string to a <see cref="CharFilterName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.CharFilterName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CharFilterName?(string value) => value == null ? null : new CharFilterName(value);
+        public static implicit operator CharFilterName?(string value) => (value == null) ? null : new CharFilterName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CharFilterName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CharFilterName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CharFilterName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CharFilterName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

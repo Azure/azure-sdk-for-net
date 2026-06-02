@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Time Grain. </summary>
-    public readonly partial struct TimeGrain : IEquatable<TimeGrain>
+    public readonly partial struct TimeGrain : IEquatable<global::Azure.Developer.LoadTesting.TimeGrain>
     {
         private readonly string _value;
         /// <summary> 5 seconds, available only if test run duration is less than 10 minutes. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> 1 hour, available only if test run duration is greater than 1 minute. </summary>
         private const string OneHourValue = "PT1H";
 
-        /// <summary> Initializes a new instance of <see cref="TimeGrain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TimeGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TimeGrain(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> 1 hour, available only if test run duration is greater than 1 minute. </summary>
         public static TimeGrain OneHour { get; } = new TimeGrain(OneHourValue);
 
-        /// <summary> Determines if two <see cref="TimeGrain"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.TimeGrain"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TimeGrain left, TimeGrain right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TimeGrain"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.TimeGrain"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TimeGrain left, TimeGrain right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TimeGrain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.TimeGrain"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TimeGrain(string value) => new TimeGrain(value);
 
-        /// <summary> Converts a string to a <see cref="TimeGrain"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.TimeGrain"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TimeGrain?(string value) => value == null ? null : new TimeGrain(value);
+        public static implicit operator TimeGrain?(string value) => (value == null) ? null : new TimeGrain(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TimeGrain other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TimeGrain other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TimeGrain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TimeGrain other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

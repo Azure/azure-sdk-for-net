@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class ExitConditions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExitConditions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitConditions"/>. </summary>
         public ExitConditions()
         {
-            ExitCodes = new ChangeTrackingList<ExitCodeMapping>();
-            ExitCodeRanges = new ChangeTrackingList<ExitCodeRangeMapping>();
+            ExitCodes = new ChangeTrackingList<global::Azure.Compute.Batch.ExitCodeMapping>();
+            ExitCodeRanges = new ChangeTrackingList<global::Azure.Compute.Batch.ExitCodeRangeMapping>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExitConditions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitConditions"/>. </summary>
         /// <param name="exitCodes"> A list of individual Task exit codes and how the Batch service should respond to them. </param>
         /// <param name="exitCodeRanges"> A list of Task exit code ranges and how the Batch service should respond to them. </param>
         /// <param name="preProcessingError"> How the Batch service should respond if the Task fails to start due to an error. </param>
         /// <param name="fileUploadError"> How the Batch service should respond if a file upload error occurs. If the Task exited with an exit code that was specified via exitCodes or exitCodeRanges, and then encountered a file upload error, then the action specified by the exit code takes precedence. </param>
         /// <param name="defaultExitOptions"> How the Batch service should respond if the Task fails with an exit condition not covered by any of the other properties. This value is used if the Task exits with any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, with a pre-processing error if the preProcessingError property is not present, or with a file upload error if the fileUploadError property is not present. If you want non-default behavior on exit code 0, you must list it explicitly using the exitCodes or exitCodeRanges collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExitConditions(IList<ExitCodeMapping> exitCodes, IList<ExitCodeRangeMapping> exitCodeRanges, ExitOptions preProcessingError, ExitOptions fileUploadError, ExitOptions defaultExitOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExitConditions(IList<global::Azure.Compute.Batch.ExitCodeMapping> exitCodes, IList<global::Azure.Compute.Batch.ExitCodeRangeMapping> exitCodeRanges, ExitOptions preProcessingError, ExitOptions fileUploadError, ExitOptions defaultExitOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExitCodes = exitCodes;
             ExitCodeRanges = exitCodeRanges;
@@ -41,10 +41,10 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> A list of individual Task exit codes and how the Batch service should respond to them. </summary>
-        public IList<ExitCodeMapping> ExitCodes { get; }
+        public IList<global::Azure.Compute.Batch.ExitCodeMapping> ExitCodes { get; }
 
         /// <summary> A list of Task exit code ranges and how the Batch service should respond to them. </summary>
-        public IList<ExitCodeRangeMapping> ExitCodeRanges { get; }
+        public IList<global::Azure.Compute.Batch.ExitCodeRangeMapping> ExitCodeRanges { get; }
 
         /// <summary> How the Batch service should respond if the Task fails to start due to an error. </summary>
         public ExitOptions PreProcessingError { get; set; }

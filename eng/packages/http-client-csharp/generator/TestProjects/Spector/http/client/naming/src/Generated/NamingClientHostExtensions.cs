@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Naming
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NamingClientHostExtensions
     {
         public static IClientBuilder AddNamingClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNamingClient(this IHostApplicationBuilder host, string sectionName, Action<NamingClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNamingClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Naming.NamingClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNamingClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNamingClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NamingClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNamingClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Naming.NamingClientSettings> configureSettings) => throw null;
     }
 }

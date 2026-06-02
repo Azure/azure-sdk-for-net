@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> The output configuration for this retrieval. </summary>
-    public readonly partial struct KnowledgeRetrievalOutputMode : IEquatable<KnowledgeRetrievalOutputMode>
+    public readonly partial struct KnowledgeRetrievalOutputMode : IEquatable<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode>
     {
         private readonly string _value;
         /// <summary> Return data from the knowledge sources directly without generative alteration. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Synthesize an answer for the response payload. </summary>
         private const string AnswerSynthesisValue = "answerSynthesis";
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalOutputMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeRetrievalOutputMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Synthesize an answer for the response payload. </summary>
         public static KnowledgeRetrievalOutputMode AnswerSynthesis { get; } = new KnowledgeRetrievalOutputMode(AnswerSynthesisValue);
 
-        /// <summary> Determines if two <see cref="KnowledgeRetrievalOutputMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeRetrievalOutputMode left, KnowledgeRetrievalOutputMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KnowledgeRetrievalOutputMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeRetrievalOutputMode left, KnowledgeRetrievalOutputMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalOutputMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeRetrievalOutputMode(string value) => new KnowledgeRetrievalOutputMode(value);
 
-        /// <summary> Converts a string to a <see cref="KnowledgeRetrievalOutputMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalOutputMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeRetrievalOutputMode?(string value) => value == null ? null : new KnowledgeRetrievalOutputMode(value);
+        public static implicit operator KnowledgeRetrievalOutputMode?(string value) => (value == null) ? null : new KnowledgeRetrievalOutputMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KnowledgeRetrievalOutputMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is KnowledgeRetrievalOutputMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(KnowledgeRetrievalOutputMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KnowledgeRetrievalOutputMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

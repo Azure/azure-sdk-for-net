@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFileBatches
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VectorStoreFileBatches for mocking. </summary>
@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVectorStoreFileBatch(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -85,15 +85,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CreateVectorStoreFileBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
+                using HttpMessage message = this.CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -109,12 +109,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="dataSources"> List of Azure assets. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
-            Response result = CreateVectorStoreFileBatch(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest((fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), (dataSources?.ToList() as IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource>()), chunkingStrategy, default);
+            Response result = this.CreateVectorStoreFileBatch(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
 
         /// <summary> Create a vector store file batch. </summary>
@@ -123,12 +123,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="dataSources"> List of Azure assets. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
         {
-            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
-            Response result = await CreateVectorStoreFileBatchAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest((fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), (dataSources?.ToList() as IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource>()), chunkingStrategy, default);
+            Response result = await this.CreateVectorStoreFileBatchAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
@@ -150,7 +150,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                using HttpMessage message = this.CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -171,15 +171,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.GetVectorStoreFileBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                using HttpMessage message = this.CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -193,22 +193,22 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            Response result = GetVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            Response result = this.GetVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
 
         /// <summary> Retrieve a vector store file batch. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            Response result = await this.GetVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CancelVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
@@ -230,7 +230,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                using HttpMessage message = this.CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -251,15 +251,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        public virtual async Task<global::Azure.Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CancelVectorStoreFileBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                using HttpMessage message = this.CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -273,22 +273,22 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            Response result = CancelVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            Response result = this.CancelVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
 
         /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            Response result = await CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VectorStoreFileBatch)result, result);
+            Response result = await this.CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((VectorStoreFileBatch)result), result);
         }
     }
 }

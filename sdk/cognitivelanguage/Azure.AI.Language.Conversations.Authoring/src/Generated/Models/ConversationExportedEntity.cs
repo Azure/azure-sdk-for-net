@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationExportedEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity"/>. </summary>
         /// <param name="category"> The category of the entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public ConversationExportedEntity(string category)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
-            Prebuilts = new ChangeTrackingList<ConversationAuthoringExportedPrebuiltEntity>();
+            Prebuilts = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity>();
             RequiredComponents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity"/>. </summary>
         /// <param name="category"> The category of the entity. </param>
         /// <param name="description"> The entity description. </param>
         /// <param name="compositionMode"> The behavior to follow when the entity's components overlap with each other. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedEntity(string category, string description, ConversationAuthoringCompositionMode? compositionMode, ConversationAuthoringExportedEntityList entities, IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationExportedEntity(string category, string description, ConversationAuthoringCompositionMode? compositionMode, ConversationAuthoringExportedEntityList entities, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Description = description;
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringExportedEntityList Entities { get; set; }
 
         /// <summary> The prebuilt entities components. </summary>
-        public IList<ConversationAuthoringExportedPrebuiltEntity> Prebuilts { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> Prebuilts { get; }
 
         /// <summary> The regex component of the entity. </summary>
         public ExportedEntityRegex Regex { get; set; }

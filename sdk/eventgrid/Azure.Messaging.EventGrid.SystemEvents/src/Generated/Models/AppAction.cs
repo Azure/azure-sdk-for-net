@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action of the operation. </summary>
-    public readonly partial struct AppAction : IEquatable<AppAction>
+    public readonly partial struct AppAction : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AppAction>
     {
         private readonly string _value;
         /// <summary> Web app was restarted. </summary>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The job has failed to complete. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="AppAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The job has failed to complete. </summary>
         public static AppAction Failed { get; } = new AppAction(FailedValue);
 
-        /// <summary> Determines if two <see cref="AppAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppAction left, AppAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AppAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppAction left, AppAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AppAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AppAction(string value) => new AppAction(value);
 
-        /// <summary> Converts a string to a <see cref="AppAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AppAction?(string value) => value == null ? null : new AppAction(value);
+        public static implicit operator AppAction?(string value) => (value == null) ? null : new AppAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AppAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AppAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AppAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

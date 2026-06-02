@@ -12,26 +12,26 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation task for the schedule. </summary>
     public partial class EvaluationScheduleTask : ProjectsScheduleTask
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationScheduleTask"/>. </summary>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evalId"/> or <paramref name="evalRun"/> is null. </exception>
-        public EvaluationScheduleTask(string evalId, BinaryData evalRun) : base(ScheduleTaskType.Evaluation)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="evalId"/> or <paramref name="evalRun"/> is null. </exception>
+        public EvaluationScheduleTask(string evalId, BinaryData evalRun) : base(global::Azure.AI.Projects.Evaluation.ScheduleTaskType.Evaluation)
         {
-            Argument.AssertNotNull(evalId, nameof(evalId));
-            Argument.AssertNotNull(evalRun, nameof(evalRun));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evalId, nameof(evalId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evalRun, nameof(evalRun));
 
             EvalId = evalId;
             EvalRun = evalRun;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationScheduleTask"/>. </summary>
         /// <param name="type"> Type of the task. </param>
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
-        internal EvaluationScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, BinaryData evalRun) : base(@type, configuration, additionalBinaryDataProperties)
+        internal EvaluationScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string evalId, BinaryData evalRun) : base(@type, configuration, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             EvalRun = evalRun;
@@ -42,8 +42,8 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary>
         /// The evaluation run payload.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

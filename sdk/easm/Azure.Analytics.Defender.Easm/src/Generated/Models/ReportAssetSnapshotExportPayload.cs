@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportAssetSnapshotExportPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotExportPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotExportPayload"/>. </summary>
         public ReportAssetSnapshotExportPayload()
         {
             Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotExportPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotExportPayload"/>. </summary>
         /// <param name="metric"> The metric to retrieve a snapshot for. </param>
         /// <param name="fileName"> The filename of the exported file. </param>
         /// <param name="columns"> The columns to include in the export. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotExportPayload(string metric, string fileName, IList<string> columns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSnapshotExportPayload(string metric, string fileName, IList<string> columns, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metric = metric;
             FileName = fileName;

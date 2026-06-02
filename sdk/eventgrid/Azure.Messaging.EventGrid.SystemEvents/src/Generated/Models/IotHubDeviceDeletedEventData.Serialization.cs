@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDeleted event. </summary>
-    [JsonConverter(typeof(IotHubDeviceDeletedEventDataConverter))]
-    public partial class IotHubDeviceDeletedEventData : DeviceLifeCycleEventProperties, IJsonModel<IotHubDeviceDeletedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData.IotHubDeviceDeletedEventDataConverter))]
+    public partial class IotHubDeviceDeletedEventData : DeviceLifeCycleEventProperties, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData"/> for deserialization. </summary>
         internal IotHubDeviceDeletedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DeviceLifeCycleEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIotHubDeviceDeletedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDeviceDeletedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDeviceDeletedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotHubDeviceDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubDeviceDeletedEventData IPersistableModel<IotHubDeviceDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubDeviceDeletedEventData)PersistableModelCreateCore(data, options);
+        IotHubDeviceDeletedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IotHubDeviceDeletedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotHubDeviceDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IotHubDeviceDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,43 +75,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IotHubDeviceDeletedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubDeviceDeletedEventData IJsonModel<IotHubDeviceDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IotHubDeviceDeletedEventData)JsonModelCreateCore(ref reader, options);
+        IotHubDeviceDeletedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IotHubDeviceDeletedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DeviceLifeCycleEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IotHubDeviceDeletedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIotHubDeviceDeletedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IotHubDeviceDeletedEventData DeserializeIotHubDeviceDeletedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string deviceId = default;
             string hubName = default;
             DeviceTwinInfo twin = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("deviceId"u8))
@@ -126,18 +126,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("twin"u8))
                 {
-                    twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(prop.Value, options);
+                    twin = global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo.DeserializeDeviceTwinInfo(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new IotHubDeviceDeletedEventData(deviceId, hubName, twin, additionalBinaryDataProperties);
         }
 
-        internal partial class IotHubDeviceDeletedEventDataConverter : JsonConverter<IotHubDeviceDeletedEventData>
+        internal partial class IotHubDeviceDeletedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, IotHubDeviceDeletedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<IotHubDeviceDeletedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -154,8 +154,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override IotHubDeviceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeIotHubDeviceDeletedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeIotHubDeviceDeletedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

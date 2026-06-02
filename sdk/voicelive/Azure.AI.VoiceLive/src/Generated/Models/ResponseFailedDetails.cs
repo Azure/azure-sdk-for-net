@@ -14,26 +14,26 @@ namespace Azure.AI.VoiceLive
     /// <summary> Details for a failed response. </summary>
     public partial class ResponseFailedDetails : ResponseStatusDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseFailedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseFailedDetails"/>. </summary>
         /// <param name="error"></param>
-        internal ResponseFailedDetails(BinaryData error) : base(SessionResponseStatus.Failed)
+        internal ResponseFailedDetails(BinaryData error) : base(global::Azure.AI.VoiceLive.SessionResponseStatus.Failed)
         {
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseFailedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseFailedDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"></param>
-        internal ResponseFailedDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(@type, additionalBinaryDataProperties)
+        internal ResponseFailedDetails(SessionResponseStatus @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BinaryData error) : base(@type, additionalBinaryDataProperties)
         {
             Error = error;
         }
 
         /// <summary>
         /// Gets the Error.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

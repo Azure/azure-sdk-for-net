@@ -25,9 +25,9 @@ namespace Payload.JsonMergePatch
             set => throw null;
         }
 
-        public IDictionary<string, InnerModel> Map => throw null;
+        public IDictionary<string, global::Payload.JsonMergePatch.InnerModel> Map => throw null;
 
-        public IList<InnerModel> Array => throw null;
+        public IList<global::Payload.JsonMergePatch.InnerModel> Array => throw null;
 
         public int? IntValue
         {

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Test run statistics. </summary>
-    public partial class TestRunStatistics : IJsonModel<TestRunStatistics>
+    public partial class TestRunStatistics : IJsonModel<global::Azure.Developer.LoadTesting.TestRunStatistics>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestRunStatistics(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestRunStatistics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestRunStatistics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunStatistics IPersistableModel<TestRunStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TestRunStatistics IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestRunStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.TestRunStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,112 +68,112 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunStatistics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunStatistics)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Transaction))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Transaction)))
             {
                 writer.WritePropertyName("transaction"u8);
                 writer.WriteStringValue(Transaction);
             }
-            if (options.Format != "W" && Optional.IsDefined(SampleCount))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(SampleCount)))
             {
                 writer.WritePropertyName("sampleCount"u8);
                 writer.WriteNumberValue(SampleCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCount))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ErrorCount)))
             {
                 writer.WritePropertyName("errorCount"u8);
                 writer.WriteNumberValue(ErrorCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorPercentage))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ErrorPercentage)))
             {
                 writer.WritePropertyName("errorPct"u8);
                 writer.WriteNumberValue(ErrorPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeanResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(MeanResponseTime)))
             {
                 writer.WritePropertyName("meanResTime"u8);
                 writer.WriteNumberValue(MeanResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MedianResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(MedianResponseTime)))
             {
                 writer.WritePropertyName("medianResTime"u8);
                 writer.WriteNumberValue(MedianResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(MaxResponseTime)))
             {
                 writer.WritePropertyName("maxResTime"u8);
                 writer.WriteNumberValue(MaxResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(MinResponseTime)))
             {
                 writer.WritePropertyName("minResTime"u8);
                 writer.WriteNumberValue(MinResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile90ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile90ResponseTime)))
             {
                 writer.WritePropertyName("pct1ResTime"u8);
                 writer.WriteNumberValue(Percentile90ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile95ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile95ResponseTime)))
             {
                 writer.WritePropertyName("pct2ResTime"u8);
                 writer.WriteNumberValue(Percentile95ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile99ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile99ResponseTime)))
             {
                 writer.WritePropertyName("pct3ResTime"u8);
                 writer.WriteNumberValue(Percentile99ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile75ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile75ResponseTime)))
             {
                 writer.WritePropertyName("pct75ResTime"u8);
                 writer.WriteNumberValue(Percentile75ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile96ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile96ResponseTime)))
             {
                 writer.WritePropertyName("pct96ResTime"u8);
                 writer.WriteNumberValue(Percentile96ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile97ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile97ResponseTime)))
             {
                 writer.WritePropertyName("pct97ResTime"u8);
                 writer.WriteNumberValue(Percentile97ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile98ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile98ResponseTime)))
             {
                 writer.WritePropertyName("pct98ResTime"u8);
                 writer.WriteNumberValue(Percentile98ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile999ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile999ResponseTime)))
             {
                 writer.WritePropertyName("pct999ResTime"u8);
                 writer.WriteNumberValue(Percentile999ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentile9999ResponseTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Percentile9999ResponseTime)))
             {
                 writer.WritePropertyName("pct9999ResTime"u8);
                 writer.WriteNumberValue(Percentile9999ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Throughput))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Throughput)))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReceivedKBytesPerSec))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ReceivedKBytesPerSec)))
             {
                 writer.WritePropertyName("receivedKBytesPerSec"u8);
                 writer.WriteNumberValue(ReceivedKBytesPerSec.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SentKBytesPerSec))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(SentKBytesPerSec)))
             {
                 writer.WritePropertyName("sentKBytesPerSec"u8);
                 writer.WriteNumberValue(SentKBytesPerSec.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -181,9 +181,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -192,26 +192,26 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunStatistics IJsonModel<TestRunStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TestRunStatistics IJsonModel<global::Azure.Developer.LoadTesting.TestRunStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestRunStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TestRunStatistics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.TestRunStatistics)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestRunStatistics(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TestRunStatistics DeserializeTestRunStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -235,7 +235,7 @@ namespace Azure.Developer.LoadTesting
             double? throughput = default;
             double? receivedKBytesPerSec = default;
             double? sentKBytesPerSec = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("transaction"u8))
@@ -245,7 +245,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("sampleCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -254,7 +254,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("errorCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -263,7 +263,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("errorPct"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -272,7 +272,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("meanResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -281,7 +281,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("medianResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -290,7 +290,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("maxResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -299,7 +299,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("minResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -308,7 +308,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct1ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -317,7 +317,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct2ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -326,7 +326,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct3ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -335,7 +335,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct75ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -344,7 +344,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct96ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -353,7 +353,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct97ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -362,7 +362,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct98ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -371,7 +371,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct999ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -380,7 +380,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("pct9999ResTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -389,7 +389,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("throughput"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -398,7 +398,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("receivedKBytesPerSec"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -407,16 +407,16 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("sentKBytesPerSec"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     sentKBytesPerSec = prop.Value.GetDouble();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new TestRunStatistics(

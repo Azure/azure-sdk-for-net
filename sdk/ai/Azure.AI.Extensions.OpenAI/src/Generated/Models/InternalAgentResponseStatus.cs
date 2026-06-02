@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace OpenAI
 {
-    internal readonly partial struct InternalAgentResponseStatus : IEquatable<InternalAgentResponseStatus>
+    internal readonly partial struct InternalAgentResponseStatus : IEquatable<global::OpenAI.InternalAgentResponseStatus>
     {
         private readonly string _value;
         private const string CompletedValue = "completed";
@@ -17,7 +17,7 @@ namespace OpenAI
         private const string QueuedValue = "queued";
         private const string IncompleteValue = "incomplete";
 
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponseStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public InternalAgentResponseStatus(string value)
         {
@@ -42,34 +42,34 @@ namespace OpenAI
         /// <summary> Gets the Incomplete. </summary>
         public static InternalAgentResponseStatus Incomplete { get; } = new InternalAgentResponseStatus(IncompleteValue);
 
-        /// <summary> Determines if two <see cref="InternalAgentResponseStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.InternalAgentResponseStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InternalAgentResponseStatus left, InternalAgentResponseStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InternalAgentResponseStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.InternalAgentResponseStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InternalAgentResponseStatus left, InternalAgentResponseStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InternalAgentResponseStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.InternalAgentResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InternalAgentResponseStatus(string value) => new InternalAgentResponseStatus(value);
 
-        /// <summary> Converts a string to a <see cref="InternalAgentResponseStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.InternalAgentResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InternalAgentResponseStatus?(string value) => value == null ? null : new InternalAgentResponseStatus(value);
+        public static implicit operator InternalAgentResponseStatus?(string value) => (value == null) ? null : new InternalAgentResponseStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InternalAgentResponseStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InternalAgentResponseStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InternalAgentResponseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InternalAgentResponseStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

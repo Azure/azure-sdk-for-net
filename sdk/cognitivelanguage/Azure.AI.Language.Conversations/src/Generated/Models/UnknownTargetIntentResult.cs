@@ -12,12 +12,12 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownTargetIntentResult : TargetIntentResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTargetIntentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownTargetIntentResult"/>. </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(targetProjectKind != default ? targetProjectKind : "unknown", apiVersion, confidence, additionalBinaryDataProperties)
+        internal UnknownTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((targetProjectKind != default) ? targetProjectKind : "unknown", apiVersion, confidence, additionalBinaryDataProperties)
         {
         }
     }

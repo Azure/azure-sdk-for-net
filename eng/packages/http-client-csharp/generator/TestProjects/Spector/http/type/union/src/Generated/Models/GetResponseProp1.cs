@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Union
 {
-    public readonly partial struct GetResponseProp1 : IEquatable<GetResponseProp1>
+    public readonly partial struct GetResponseProp1 : IEquatable<global::_Type.Union.GetResponseProp1>
     {
         public GetResponseProp1(string value) => throw null;
 
@@ -22,20 +22,20 @@ namespace _Type.Union
 
         public static bool operator !=(GetResponseProp1 left, GetResponseProp1 right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="GetResponseProp1"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Union.GetResponseProp1"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator GetResponseProp1(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="GetResponseProp1"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Union.GetResponseProp1"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator GetResponseProp1?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(GetResponseProp1 other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchTaskAddStatus enums. </summary>
-    public readonly partial struct BatchTaskAddStatus : IEquatable<BatchTaskAddStatus>
+    public readonly partial struct BatchTaskAddStatus : IEquatable<global::Azure.Compute.Batch.BatchTaskAddStatus>
     {
         private readonly string _value;
         /// <summary> The Task was added successfully. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> Task failed to add due to a server error and can be retried without modification. </summary>
         private const string ServerErrorValue = "servererror";
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskAddStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskAddStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchTaskAddStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> Task failed to add due to a server error and can be retried without modification. </summary>
         public static BatchTaskAddStatus ServerError { get; } = new BatchTaskAddStatus(ServerErrorValue);
 
-        /// <summary> Determines if two <see cref="BatchTaskAddStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchTaskAddStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchTaskAddStatus left, BatchTaskAddStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchTaskAddStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchTaskAddStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchTaskAddStatus left, BatchTaskAddStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchTaskAddStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchTaskAddStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchTaskAddStatus(string value) => new BatchTaskAddStatus(value);
 
-        /// <summary> Converts a string to a <see cref="BatchTaskAddStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchTaskAddStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchTaskAddStatus?(string value) => value == null ? null : new BatchTaskAddStatus(value);
+        public static implicit operator BatchTaskAddStatus?(string value) => (value == null) ? null : new BatchTaskAddStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchTaskAddStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchTaskAddStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchTaskAddStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchTaskAddStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

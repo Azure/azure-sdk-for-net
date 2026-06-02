@@ -15,21 +15,21 @@ namespace Azure.Communication.JobRouter
     public partial class DistributionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.DistributionPolicy"/>. </summary>
         internal DistributionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.DistributionPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
         /// <param name="mode"> Mode governing the specific distribution method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;

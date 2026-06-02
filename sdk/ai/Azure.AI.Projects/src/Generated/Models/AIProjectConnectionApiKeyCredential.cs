@@ -10,16 +10,16 @@ namespace Azure.AI.Projects
     /// <summary> API Key Credential definition. </summary>
     public partial class AIProjectConnectionApiKeyCredential : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionApiKeyCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionApiKeyCredential"/>. </summary>
         internal AIProjectConnectionApiKeyCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionApiKeyCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionApiKeyCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="apiKey"> API Key. </param>
-        internal AIProjectConnectionApiKeyCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string apiKey) : base(@type, additionalBinaryDataProperties)
+        internal AIProjectConnectionApiKeyCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string apiKey) : base(@type, additionalBinaryDataProperties)
         {
             ApiKey = apiKey;
         }

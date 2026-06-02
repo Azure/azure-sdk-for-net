@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringPrebuiltEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringPrebuiltEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity"/>. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="examples"> English examples for the entity. </param>
         internal TextAuthoringPrebuiltEntity(string description, string examples)
@@ -25,12 +25,12 @@ namespace Azure.AI.Language.Text.Authoring
             Examples = examples;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringPrebuiltEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity"/>. </summary>
         /// <param name="category"> The prebuilt entity category. </param>
         /// <param name="description"> The description. </param>
         /// <param name="examples"> English examples for the entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringPrebuiltEntity(string category, string description, string examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringPrebuiltEntity(string category, string description, string examples, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Description = description;

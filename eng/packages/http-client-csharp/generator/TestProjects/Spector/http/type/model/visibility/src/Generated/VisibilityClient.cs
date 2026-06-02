@@ -17,67 +17,67 @@ namespace _Type.Model.Visibility
 {
     public partial class VisibilityClient
     {
-        public VisibilityClient() : this(new Uri("http://localhost:3000"), new VisibilityClientOptions()) => throw null;
+        public VisibilityClient() : this(new global::System.Uri("http://localhost:3000"), new VisibilityClientOptions()) => throw null;
 
-        internal VisibilityClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, VisibilityClientOptions options) => throw null;
+        internal VisibilityClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, VisibilityClientOptions options) => throw null;
 
-        public VisibilityClient(Uri endpoint, VisibilityClientOptions options) : this(null, endpoint, options) => throw null;
+        public VisibilityClient(global::System.Uri endpoint, VisibilityClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public VisibilityClient(VisibilityClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public VisibilityClient(VisibilityClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> GetModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> GetModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<VisibilityModel> GetModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Visibility.VisibilityModel> GetModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<VisibilityModel>> GetModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Visibility.VisibilityModel>> GetModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response HeadModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> HeadModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> HeadModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response HeadModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeadModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> HeadModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PatchModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PatchModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PatchModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PostModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PostModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PostModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PostModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PostModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response DeleteModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> DeleteModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> DeleteModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response DeleteModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DeleteModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DeleteModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutReadOnlyModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutReadOnlyModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutReadOnlyModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ReadOnlyModel> PutReadOnlyModel(ReadOnlyModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Visibility.ReadOnlyModel> PutReadOnlyModel(ReadOnlyModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ReadOnlyModel>> PutReadOnlyModelAsync(ReadOnlyModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Visibility.ReadOnlyModel>> PutReadOnlyModelAsync(ReadOnlyModel input, CancellationToken cancellationToken = default) => throw null;
     }
 }

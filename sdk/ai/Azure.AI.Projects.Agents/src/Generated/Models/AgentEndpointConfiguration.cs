@@ -11,21 +11,21 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentEndpointConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentEndpointConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentEndpointConfiguration"/>. </summary>
         public AgentEndpointConfiguration()
         {
-            Protocols = new ChangeTrackingList<AgentEndpointProtocol>();
-            AuthorizationSchemes = new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
+            Protocols = new ChangeTrackingList<global::Azure.AI.Projects.Agents.AgentEndpointProtocol>();
+            AuthorizationSchemes = new ChangeTrackingList<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentEndpointConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentEndpointConfiguration"/>. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentEndpointConfiguration(VersionSelector versionSelector, IList<AgentEndpointProtocol> protocols, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentEndpointConfiguration(VersionSelector versionSelector, IList<global::Azure.AI.Projects.Agents.AgentEndpointProtocol> protocols, IList<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VersionSelector = versionSelector;
             Protocols = protocols;
@@ -37,9 +37,9 @@ namespace Azure.AI.Projects.Agents
         public VersionSelector VersionSelector { get; set; }
 
         /// <summary> The protocols that the agent supports. </summary>
-        public IList<AgentEndpointProtocol> Protocols { get; }
+        public IList<global::Azure.AI.Projects.Agents.AgentEndpointProtocol> Protocols { get; }
 
         /// <summary> The authorization schemes supported by the agent endpoint. </summary>
-        public IList<AgentEndpointAuthorizationScheme> AuthorizationSchemes { get; }
+        public IList<global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme> AuthorizationSchemes { get; }
     }
 }

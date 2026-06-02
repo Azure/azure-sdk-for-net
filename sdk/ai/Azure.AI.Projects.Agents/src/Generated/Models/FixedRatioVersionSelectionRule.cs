@@ -10,23 +10,23 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The FixedRatioVersionSelectionRule. </summary>
     public partial class FixedRatioVersionSelectionRule : VersionSelectionRule
     {
-        /// <summary> Initializes a new instance of <see cref="FixedRatioVersionSelectionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule"/>. </summary>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
         /// <param name="trafficPercentage"> The percentage of traffic to route to the version. Must be between 0 and 100. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentVersion"/> is null. </exception>
-        public FixedRatioVersionSelectionRule(string agentVersion, int trafficPercentage) : base(VersionSelectorType.FixedRatio, agentVersion)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentVersion"/> is null. </exception>
+        public FixedRatioVersionSelectionRule(string agentVersion, int trafficPercentage) : base(global::Azure.AI.Projects.Agents.VersionSelectorType.FixedRatio, agentVersion)
         {
-            Argument.AssertNotNull(agentVersion, nameof(agentVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agentVersion, nameof(agentVersion));
 
             TrafficPercentage = trafficPercentage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FixedRatioVersionSelectionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trafficPercentage"> The percentage of traffic to route to the version. Must be between 0 and 100. </param>
-        internal FixedRatioVersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, int trafficPercentage) : base(@type, agentVersion, additionalBinaryDataProperties)
+        internal FixedRatioVersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int trafficPercentage) : base(@type, agentVersion, additionalBinaryDataProperties)
         {
             TrafficPercentage = trafficPercentage;
         }

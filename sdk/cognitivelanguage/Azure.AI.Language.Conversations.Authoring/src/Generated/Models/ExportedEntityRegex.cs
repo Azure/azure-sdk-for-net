@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedEntityRegex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedEntityRegex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex"/>. </summary>
         public ExportedEntityRegex()
         {
-            Expressions = new ChangeTrackingList<ExportedEntityRegexExpression>();
+            Expressions = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedEntityRegex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex"/>. </summary>
         /// <param name="expressions"> The regex expressions of the regex component. These expressions follow the .NET regex syntax. For reference, check here: https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedEntityRegex(IList<ExportedEntityRegexExpression> expressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedEntityRegex(IList<global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression> expressions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Expressions = expressions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The regex expressions of the regex component. These expressions follow the .NET regex syntax. For reference, check here: https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions. </summary>
-        public IList<ExportedEntityRegexExpression> Expressions { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression> Expressions { get; }
     }
 }

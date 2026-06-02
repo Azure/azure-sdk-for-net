@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a File retrieval activity record. </summary>
     public partial class KnowledgeBaseFileActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFileActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseFileActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.File)
+        internal KnowledgeBaseFileActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.File)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFileActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fileArguments"> The File arguments for the retrieval activity. </param>
-        internal KnowledgeBaseFileActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseFileActivityArguments fileArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseFileActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseFileActivityArguments fileArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryTime = queryTime;

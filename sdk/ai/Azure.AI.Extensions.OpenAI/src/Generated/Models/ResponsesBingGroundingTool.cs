@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
     public partial class ResponsesBingGroundingTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
+        public ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(global::Azure.AI.Extensions.OpenAI.ToolType.BingGrounding)
         {
-            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             BingGrounding = bingGrounding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal ResponsesBingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesBingGroundingTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesBingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
         public ResponsesBingGroundingSearchToolParameters BingGrounding { get; set; }

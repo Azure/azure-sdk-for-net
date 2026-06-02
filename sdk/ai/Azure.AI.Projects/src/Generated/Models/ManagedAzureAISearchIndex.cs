@@ -10,17 +10,17 @@ namespace Azure.AI.Projects
     /// <summary> Managed Azure AI Search Index Definition. </summary>
     public partial class ManagedAzureAISearchIndex : AIProjectIndex
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ManagedAzureAISearchIndex"/>. </summary>
         /// <param name="vectorStoreId"> Vector store id of managed index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        public ManagedAzureAISearchIndex(string vectorStoreId) : base(IndexType.ManagedAzureSearch)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        public ManagedAzureAISearchIndex(string vectorStoreId) : base(global::Azure.AI.Projects.IndexType.ManagedAzureSearch)
         {
-            Argument.AssertNotNull(vectorStoreId, nameof(vectorStoreId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(vectorStoreId, nameof(vectorStoreId));
 
             VectorStoreId = vectorStoreId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ManagedAzureAISearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vectorStoreId"> Vector store id of managed index. </param>
-        internal ManagedAzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vectorStoreId) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal ManagedAzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string vectorStoreId) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
             VectorStoreId = vectorStoreId;
         }

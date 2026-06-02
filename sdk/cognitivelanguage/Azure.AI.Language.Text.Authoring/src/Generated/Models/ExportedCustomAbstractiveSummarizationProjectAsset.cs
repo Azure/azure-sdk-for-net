@@ -13,22 +13,22 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for an abstractive summarization project. </summary>
     public partial class ExportedCustomAbstractiveSummarizationProjectAsset : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>. </summary>
-        public ExportedCustomAbstractiveSummarizationProjectAsset() : base(TextAuthoringProjectKind.CustomAbstractiveSummarization)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/>. </summary>
+        public ExportedCustomAbstractiveSummarizationProjectAsset() : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomAbstractiveSummarization)
         {
-            Documents = new ChangeTrackingList<ExportedCustomAbstractiveSummarizationDocument>();
+            Documents = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> The list of documents belonging to this project. </param>
-        internal ExportedCustomAbstractiveSummarizationProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ExportedCustomAbstractiveSummarizationDocument> documents) : base(projectKind, additionalBinaryDataProperties)
+        internal ExportedCustomAbstractiveSummarizationProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument> documents) : base(projectKind, additionalBinaryDataProperties)
         {
             Documents = documents;
         }
 
         /// <summary> The list of documents belonging to this project. </summary>
-        public IList<ExportedCustomAbstractiveSummarizationDocument> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument> Documents { get; }
     }
 }

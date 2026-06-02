@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Client.Overload
 {
-    [ModelReaderWriterBuildable(typeof(Resource))]
+    [ModelReaderWriterBuildableAttribute(typeof(Resource))]
     public partial class ClientOverloadContext : ModelReaderWriterContext
     {
     }

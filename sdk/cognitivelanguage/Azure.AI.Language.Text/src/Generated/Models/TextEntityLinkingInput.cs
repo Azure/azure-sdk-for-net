@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text Entity linking input. </summary>
     public partial class TextEntityLinkingInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextEntityLinkingInput"/>. </summary>
-        public TextEntityLinkingInput() : base(AnalyzeTextInputKind.EntityLinking)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextEntityLinkingInput"/>. </summary>
+        public TextEntityLinkingInput() : base(global::Azure.AI.Language.Text.AnalyzeTextInputKind.EntityLinking)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextEntityLinkingInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextEntityLinkingInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the analysis input to be handled by the service. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal TextEntityLinkingInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntityLinkingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextEntityLinkingInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntityLinkingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;

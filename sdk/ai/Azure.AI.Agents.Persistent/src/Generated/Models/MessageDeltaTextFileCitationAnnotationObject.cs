@@ -14,18 +14,18 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageDeltaTextFileCitationAnnotationObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
         internal MessageDeltaTextFileCitationAnnotationObject()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
         /// <param name="fileId"> The ID of the specific file the citation is from. </param>
         /// <param name="quote"> The specific quote in the cited file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaTextFileCitationAnnotationObject(string fileId, string quote, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaTextFileCitationAnnotationObject(string fileId, string quote, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             Quote = quote;

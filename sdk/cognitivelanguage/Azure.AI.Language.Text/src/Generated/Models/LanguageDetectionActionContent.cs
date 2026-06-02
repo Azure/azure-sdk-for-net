@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Text
     public partial class LanguageDetectionActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionActionContent"/>. </summary>
         public LanguageDetectionActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LanguageDetectionActionContent(bool? loggingOptOut, string modelVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LanguageDetectionActionContent(bool? loggingOptOut, string modelVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

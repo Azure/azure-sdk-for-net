@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientCreatedOrUpdated event. </summary>
     public partial class EventGridMqttClientCreatedOrUpdatedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Attributes = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         ///   the 'createdOn' property.
         /// </param>
         /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
-        internal EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventGridMqttClientState? state, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IReadOnlyDictionary<string, string> attributes) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
+        internal EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EventGridMqttClientState? state, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IReadOnlyDictionary<string, string> attributes) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
         {
             State = state;
             CreatedOn = createdOn;

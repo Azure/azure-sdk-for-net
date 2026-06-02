@@ -13,18 +13,18 @@ namespace Azure.Search.Documents.Models
     /// <summary> The results of the vector query will be filtered based on the vector similarity metric. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </summary>
     public partial class VectorSimilarityThreshold : VectorThreshold
     {
-        /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorSimilarityThreshold"/>. </summary>
         /// <param name="value"> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </param>
-        public VectorSimilarityThreshold(double value) : base(VectorThresholdKind.VectorSimilarity)
+        public VectorSimilarityThreshold(double value) : base(global::Azure.Search.Documents.Models.VectorThresholdKind.VectorSimilarity)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorSimilarityThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </param>
-        internal VectorSimilarityThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value) : base(kind, additionalBinaryDataProperties)
+        internal VectorSimilarityThreshold(VectorThresholdKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value) : base(kind, additionalBinaryDataProperties)
         {
             Value = value;
         }

@@ -11,31 +11,31 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InternalImageDetailLevel value) => value switch
         {
-            InternalImageDetailLevel.Low => "low",
-            InternalImageDetailLevel.High => "high",
-            InternalImageDetailLevel.Auto => "auto",
-            InternalImageDetailLevel.Original => "original",
+            global::Azure.AI.Projects.InternalImageDetailLevel.Low => "low",
+            global::Azure.AI.Projects.InternalImageDetailLevel.High => "high",
+            global::Azure.AI.Projects.InternalImageDetailLevel.Auto => "auto",
+            global::Azure.AI.Projects.InternalImageDetailLevel.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalImageDetailLevel value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InternalImageDetailLevel ToInternalImageDetailLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return InternalImageDetailLevel.Low;
+                return global::Azure.AI.Projects.InternalImageDetailLevel.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return InternalImageDetailLevel.High;
+                return global::Azure.AI.Projects.InternalImageDetailLevel.High;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return InternalImageDetailLevel.Auto;
+                return global::Azure.AI.Projects.InternalImageDetailLevel.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
             {
-                return InternalImageDetailLevel.Original;
+                return global::Azure.AI.Projects.InternalImageDetailLevel.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalImageDetailLevel value.");
         }

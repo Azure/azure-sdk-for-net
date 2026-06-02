@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentSentimentLabelEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSentimentLabelEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult"/>. </summary>
         /// <param name="category"> Represents the sentiment category. </param>
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Text.Authoring
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSentimentLabelEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult"/>. </summary>
         /// <param name="category"> Represents the sentiment category. </param>
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSentimentLabelEvalResult(TextAuthoringSentiment category, int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSentimentLabelEvalResult(TextAuthoringSentiment category, int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Offset = offset;

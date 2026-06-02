@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsVectorStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsVectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store was created. </param>
         /// <param name="name"> The name of the vector store. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsVectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store was created. </param>
@@ -50,10 +50,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentsVectorStore(string id, PersistentAgentsVectorStoreObject @object, DateTimeOffset createdAt, string name, int usageBytes, VectorStoreFileCount fileCounts, VectorStoreStatus status, VectorStoreExpirationPolicy expiresAfter, DateTimeOffset? expiresAt, DateTimeOffset? lastActiveAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgentsVectorStore(string id, PersistentAgentsVectorStoreObject @object, DateTimeOffset createdAt, string name, int usageBytes, VectorStoreFileCount fileCounts, VectorStoreStatus status, VectorStoreExpirationPolicy expiresAfter, DateTimeOffset? expiresAt, DateTimeOffset? lastActiveAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             CreatedAt = createdAt;
             Name = name;
             UsageBytes = usageBytes;

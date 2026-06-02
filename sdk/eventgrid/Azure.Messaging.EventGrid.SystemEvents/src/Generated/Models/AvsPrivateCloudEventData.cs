@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsPrivateCloudEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         internal AvsPrivateCloudEventData(string operationId)
         {
             OperationId = operationId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudEventData(string operationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsPrivateCloudEventData(string operationId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AnalyzeConversationOperationState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState"/>. </summary>
         /// <param name="createdDateTime"> Date and time job created. </param>
         /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
         /// <param name="status"> status. </param>
@@ -27,11 +27,11 @@ namespace Azure.AI.Language.Conversations.Models
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<ConversationError>();
+            Errors = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationError>();
             Actions = actions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState"/>. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdDateTime"> Date and time job created. </param>
         /// <param name="expirationDateTime"> Date and time job expires. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, IList<global::Azure.AI.Language.Conversations.Models.ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Models
         public ConversationActionState Status { get; }
 
         /// <summary> errors. </summary>
-        public IList<ConversationError> Errors { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationError> Errors { get; }
 
         /// <summary> next link. </summary>
         public string NextLink { get; }

@@ -9,24 +9,24 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Output information for a data generation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataGenerationJobOutput"/> and <see cref="DatasetDataGenerationJobOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.FileDataGenerationJobOutput"/> and <see cref="Azure.AI.Projects.DatasetDataGenerationJobOutput"/>.
     /// </summary>
     public abstract partial class DataGenerationJobOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         private protected DataGenerationJobOutput(DataGenerationJobOutputType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

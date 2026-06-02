@@ -15,30 +15,30 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ScoringFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScoringFunction"/>. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="type"> Type of ScoringFunction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="type"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="type"/> is null. </exception>
         public ScoringFunction(string fieldName, double boost, string @type)
         {
-            Argument.AssertNotNull(fieldName, nameof(fieldName));
-            Argument.AssertNotNull(@type, nameof(@type));
+            global::Azure.Search.Documents.Argument.AssertNotNull(fieldName, nameof(fieldName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(@type, nameof(@type));
 
             FieldName = fieldName;
             Boost = boost;
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ScoringFunction"/>. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="type"> Type of ScoringFunction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FieldName = fieldName;
             Boost = boost;

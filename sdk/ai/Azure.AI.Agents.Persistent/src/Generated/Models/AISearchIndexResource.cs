@@ -14,14 +14,14 @@ namespace Azure.AI.Agents.Persistent
     public partial class AISearchIndexResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AISearchIndexResource"/>. </summary>
         public AISearchIndexResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AISearchIndexResource"/>. </summary>
         /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filter"> filter string for search resource. </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AISearchIndexResource(string indexConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AISearchIndexResource(string indexConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IndexConnectionId = indexConnectionId;
             IndexName = indexName;

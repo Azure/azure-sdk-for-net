@@ -15,23 +15,23 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationBatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationBatch"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TranslationBatch(IEnumerable<DocumentTranslationInput> inputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        public TranslationBatch(IEnumerable<global::Azure.AI.Translation.Document.DocumentTranslationInput> inputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationBatch"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <param name="options"> The batch operation options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationBatch(IList<DocumentTranslationInput> inputs, BatchOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationBatch(IList<global::Azure.AI.Translation.Document.DocumentTranslationInput> inputs, BatchOptions options, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             Options = options;
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> The input list of documents or folders containing documents. </summary>
-        public IList<DocumentTranslationInput> Inputs { get; }
+        public IList<global::Azure.AI.Translation.Document.DocumentTranslationInput> Inputs { get; }
 
         /// <summary> The batch operation options. </summary>
         public BatchOptions Options { get; set; }

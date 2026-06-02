@@ -17,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ResourceNotificationsResourceUpdatedDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Properties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, IReadOnlyDictionary<string, string> resourceTags, IReadOnlyDictionary<string, object> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, IReadOnlyDictionary<string, string> resourceTags, IReadOnlyDictionary<string, object> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

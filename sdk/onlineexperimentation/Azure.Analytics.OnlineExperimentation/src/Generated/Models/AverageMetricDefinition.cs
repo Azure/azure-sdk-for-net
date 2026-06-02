@@ -13,21 +13,21 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of an Average metric definition. Calculates the average value of a specified event property. </summary>
     public partial class AverageMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="AverageMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.AverageMetricDefinition"/>. </summary>
         /// <param name="value"> The value to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AverageMetricDefinition(AggregatedValue value) : base(ExperimentMetricType.Average)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AverageMetricDefinition(AggregatedValue value) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.Average)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AverageMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.AverageMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value to aggregate. </param>
-        internal AverageMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AggregatedValue value) : base(@type, additionalBinaryDataProperties)
+        internal AverageMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AggregatedValue value) : base(@type, additionalBinaryDataProperties)
         {
             Value = value;
         }

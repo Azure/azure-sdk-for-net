@@ -16,23 +16,23 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateResponseOutputItemDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseOutputItemDone"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        internal SessionUpdateResponseOutputItemDone(string responseId, int outputIndex) : base(ServerEventType.ResponseOutputItemDone)
+        internal SessionUpdateResponseOutputItemDone(string responseId, int outputIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseOutputItemDone)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseOutputItemDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal SessionUpdateResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;

@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> Response for the asset chain summary. </summary>
-    public partial class AssetChainSummaryResult : IJsonModel<AssetChainSummaryResult>
+    public partial class AssetChainSummaryResult : IJsonModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetChainSummaryResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult"/> for deserialization. </summary>
         internal AssetChainSummaryResult()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetChainSummaryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetChainSummaryResult(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult.DeserializeAssetChainSummaryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetChainSummaryResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetChainSummaryResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetChainSummaryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetChainSummaryResult IPersistableModel<AssetChainSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AssetChainSummaryResult IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetChainSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AssetChainSummaryResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult"/> from. </param>
         public static explicit operator AssetChainSummaryResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAssetChainSummaryResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult.DeserializeAssetChainSummaryResult(document.RootElement, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetChainSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,36 +81,36 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetChainSummaryResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("affectedAssetsSummary"u8);
             writer.WriteStartArray();
             foreach (AssetChainKindSummaryResult item in AffectedAssetsSummary)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<AssetChainKindSummaryResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("affectedGroupsSummary"u8);
             writer.WriteStartArray();
             foreach (DiscoveryGroupSummaryResult item in AffectedGroupsSummary)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DiscoveryGroupSummaryResult>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Errors))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (ErrorResponse item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ErrorResponse>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -118,9 +118,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -129,75 +129,75 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetChainSummaryResult IJsonModel<AssetChainSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AssetChainSummaryResult IJsonModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AssetChainSummaryResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AssetChainSummaryResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetChainSummaryResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult.DeserializeAssetChainSummaryResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AssetChainSummaryResult DeserializeAssetChainSummaryResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<AssetChainKindSummaryResult> affectedAssetsSummary = default;
-            IList<DiscoveryGroupSummaryResult> affectedGroupsSummary = default;
-            IList<ErrorResponse> errors = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult> affectedAssetsSummary = default;
+            IList<global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult> affectedGroupsSummary = default;
+            IList<global::Azure.Analytics.Defender.Easm.ErrorResponse> errors = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("affectedAssetsSummary"u8))
                 {
-                    List<AssetChainKindSummaryResult> array = new List<AssetChainKindSummaryResult>();
+                    List<global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult> array = new List<global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssetChainKindSummaryResult.DeserializeAssetChainKindSummaryResult(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult.DeserializeAssetChainKindSummaryResult(item, options));
                     }
                     affectedAssetsSummary = array;
                     continue;
                 }
                 if (prop.NameEquals("affectedGroupsSummary"u8))
                 {
-                    List<DiscoveryGroupSummaryResult> array = new List<DiscoveryGroupSummaryResult>();
+                    List<global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult> array = new List<global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveryGroupSummaryResult.DeserializeDiscoveryGroupSummaryResult(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult.DeserializeDiscoveryGroupSummaryResult(item, options));
                     }
                     affectedGroupsSummary = array;
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<global::Azure.Analytics.Defender.Easm.ErrorResponse> array = new List<global::Azure.Analytics.Defender.Easm.ErrorResponse>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, errors ?? new ChangeTrackingList<ErrorResponse>(), additionalBinaryDataProperties);
+            return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, (errors ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ErrorResponse>()), additionalBinaryDataProperties);
         }
     }
 }

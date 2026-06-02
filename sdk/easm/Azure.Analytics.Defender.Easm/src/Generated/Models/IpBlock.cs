@@ -14,15 +14,15 @@ namespace Azure.Analytics.Defender.Easm
     public partial class IpBlock
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpBlock"/>. </summary>
         internal IpBlock()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpBlock"/>. </summary>
         /// <param name="ipBlockName"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpBlock(string ipBlockName, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpBlock(string ipBlockName, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IpBlockName = ipBlockName;
             Sources = sources;
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Defender.Easm
         public string IpBlockName { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }

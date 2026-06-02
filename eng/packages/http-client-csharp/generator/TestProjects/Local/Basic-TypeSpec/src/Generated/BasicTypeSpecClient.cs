@@ -20,9 +20,9 @@ namespace BasicTypeSpec
     /// <summary> This is a sample typespec project. </summary>
     public partial class BasicTypeSpecClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "my-api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
         private PlantOperations _cachedPlantOperations;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
@@ -33,16 +33,16 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
         {
         }
 
@@ -50,20 +50,20 @@ namespace BasicTypeSpec
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal BasicTypeSpecClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicTypeSpecClientOptions options)
+        internal BasicTypeSpecClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, BasicTypeSpecClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::BasicTypeSpec.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new BasicTypeSpecClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -72,8 +72,8 @@ namespace BasicTypeSpec
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential credential, BasicTypeSpecClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(global::System.Uri endpoint, AzureKeyCredential credential, BasicTypeSpecClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -81,14 +81,14 @@ namespace BasicTypeSpec
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, TokenCredential credential, BasicTypeSpecClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(global::System.Uri endpoint, TokenCredential credential, BasicTypeSpecClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient from a <see cref="BasicTypeSpecClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BasicTypeSpecClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(settings?.BasicTypeSpecUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -111,9 +111,9 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
@@ -121,10 +121,10 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
-                Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-                using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+                using HttpMessage message = this.CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -146,20 +146,20 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
+        public virtual async Task<global::Azure.Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHi");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
-                Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-                using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+                using HttpMessage message = this.CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -174,16 +174,16 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> SayHi(string headParameter, string queryParameter, string optionalQuery = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> SayHi(string headParameter, string queryParameter, string optionalQuery = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
-            Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-            Response result = SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> Return hi. </summary>
@@ -191,16 +191,16 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
-            Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.SayHiAsync(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -215,9 +215,9 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloAgain(string p2, string p1, RequestContent content, RequestContext context = null)
         {
@@ -225,11 +225,11 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-                Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+                using HttpMessage message = this.CreateHelloAgainRequest(p2, p1, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -251,21 +251,21 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgain");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-                Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+                using HttpMessage message = this.CreateHelloAgainRequest(p2, p1, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -280,17 +280,17 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-            Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-            Argument.AssertNotNull(action, nameof(action));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+            global::BasicTypeSpec.Argument.AssertNotNull(action, nameof(action));
 
-            Response result = HelloAgain(p2, p1, action, cancellationToken.ToRequestContext());
-            return Response.FromValue((RoundTripModel)result, result);
+            Response result = this.HelloAgain(p2, p1, action, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RoundTripModel)result), result);
         }
 
         /// <summary> Return hi again. </summary>
@@ -298,17 +298,17 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RoundTripModel>> HelloAgainAsync(string p2, string p1, RoundTripModel action, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.RoundTripModel>> HelloAgainAsync(string p2, string p1, RoundTripModel action, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-            Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-            Argument.AssertNotNull(action, nameof(action));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+            global::BasicTypeSpec.Argument.AssertNotNull(action, nameof(action));
 
-            Response result = await HelloAgainAsync(p2, p1, action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RoundTripModel)result, result);
+            Response result = await this.HelloAgainAsync(p2, p1, action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RoundTripModel)result), result);
         }
 
         /// <summary>
@@ -323,9 +323,9 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response NoContentType(string p2, string p1, RequestContent content, RequestContext context = null)
         {
@@ -333,11 +333,11 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-                Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+                using HttpMessage message = this.CreateNoContentTypeRequest(p2, p1, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -359,21 +359,21 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="p2"/> or <paramref name="p1"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentType");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(p2, nameof(p2));
-                Argument.AssertNotNullOrEmpty(p1, nameof(p1));
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p2, nameof(p2));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(p1, nameof(p1));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+                using HttpMessage message = this.CreateNoContentTypeRequest(p2, p1, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -392,7 +392,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloDemo2(RequestContext context)
         {
@@ -400,7 +400,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHelloDemo2Request(context);
+                using HttpMessage message = this.CreateHelloDemo2Request(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -419,15 +419,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloDemo2Async(RequestContext context)
+        public virtual async Task<global::Azure.Response> HelloDemo2Async(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHelloDemo2Request(context);
+                using HttpMessage message = this.CreateHelloDemo2Request(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -439,20 +439,20 @@ namespace BasicTypeSpec
 
         /// <summary> Return hi in demo2. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> HelloDemo2(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> HelloDemo2(CancellationToken cancellationToken = default)
         {
-            Response result = HelloDemo2(cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.HelloDemo2(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> Return hi in demo2. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> HelloDemo2Async(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> HelloDemo2Async(CancellationToken cancellationToken = default)
         {
-            Response result = await HelloDemo2Async(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.HelloDemo2Async(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -465,8 +465,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateLiteral(RequestContent content, RequestContext context = null)
         {
@@ -474,9 +474,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateLiteralRequest(content, context);
+                using HttpMessage message = this.CreateCreateLiteralRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -496,18 +496,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateLiteralAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteral");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateLiteralRequest(content, context);
+                using HttpMessage message = this.CreateCreateLiteralRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -520,27 +520,27 @@ namespace BasicTypeSpec
         /// <summary> Create with literal value. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> CreateLiteral(ThingModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> CreateLiteral(ThingModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateLiteral(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.CreateLiteral(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> Create with literal value. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> CreateLiteralAsync(ThingModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> CreateLiteralAsync(ThingModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateLiteralAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.CreateLiteralAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloLiteral(RequestContext context)
         {
@@ -560,7 +560,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHelloLiteralRequest(context);
+                using HttpMessage message = this.CreateHelloLiteralRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -579,15 +579,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloLiteralAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> HelloLiteralAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteral");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHelloLiteralRequest(context);
+                using HttpMessage message = this.CreateHelloLiteralRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -599,20 +599,20 @@ namespace BasicTypeSpec
 
         /// <summary> Send literal parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> HelloLiteral(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> HelloLiteral(CancellationToken cancellationToken = default)
         {
-            Response result = HelloLiteral(cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.HelloLiteral(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> Send literal parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> HelloLiteralAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> HelloLiteralAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await HelloLiteralAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.HelloLiteralAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="action"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response TopAction(DateTimeOffset action, RequestContext context)
         {
@@ -633,7 +633,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTopActionRequest(action, context);
+                using HttpMessage message = this.CreateTopActionRequest(action, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -653,15 +653,15 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="action"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext context)
+        public virtual async Task<global::Azure.Response> TopActionAsync(DateTimeOffset action, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTopActionRequest(action, context);
+                using HttpMessage message = this.CreateTopActionRequest(action, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -674,21 +674,21 @@ namespace BasicTypeSpec
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
-            Response result = TopAction(action, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.TopAction(action, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> TopActionAsync(DateTimeOffset action, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> TopActionAsync(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
-            Response result = await TopActionAsync(action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.TopActionAsync(action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response TopAction2(RequestContext context = null)
         {
@@ -708,7 +708,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTopAction2Request(context);
+                using HttpMessage message = this.CreateTopAction2Request(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -727,15 +727,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TopAction2Async(RequestContext context = null)
+        public virtual async Task<global::Azure.Response> TopAction2Async(RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTopAction2Request(context);
+                using HttpMessage message = this.CreateTopAction2Request(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -755,8 +755,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PatchAction(RequestContent content, RequestContext context = null)
         {
@@ -764,9 +764,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePatchActionRequest(content, context);
+                using HttpMessage message = this.CreatePatchActionRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -786,18 +786,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> PatchActionAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchAction");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePatchActionRequest(content, context);
+                using HttpMessage message = this.CreatePatchActionRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -817,8 +817,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnonymousBody(RequestContent content, RequestContext context = null)
         {
@@ -826,9 +826,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+                using HttpMessage message = this.CreateAnonymousBodyRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -848,18 +848,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AnonymousBodyAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBody");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+                using HttpMessage message = this.CreateAnonymousBodyRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -880,14 +880,14 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
-            Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
                 name,
@@ -901,11 +901,11 @@ namespace BasicTypeSpec
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
-                requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
+                (optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>()),
+                (requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>()),
                 default);
-            Response result = AnonymousBody(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.AnonymousBody(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> body parameter without body decorator. </summary>
@@ -919,14 +919,14 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
-            Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
                 name,
@@ -940,11 +940,11 @@ namespace BasicTypeSpec
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
-                requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
+                (optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>()),
+                (requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>()),
                 default);
-            Response result = await AnonymousBodyAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.AnonymousBodyAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -957,8 +957,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response FriendlyModel(RequestContent content, RequestContext context = null)
         {
@@ -966,9 +966,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateFriendlyModelRequest(content, context);
+                using HttpMessage message = this.CreateFriendlyModelRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -988,18 +988,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> FriendlyModelAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateFriendlyModelRequest(content, context);
+                using HttpMessage message = this.CreateFriendlyModelRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1012,31 +1012,31 @@ namespace BasicTypeSpec
         /// <summary> Model can have its friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FriendModel> FriendlyModel(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.FriendModel> FriendlyModel(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             FriendModel spreadModel = new FriendModel(name, default);
-            Response result = FriendlyModel(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((FriendModel)result, result);
+            Response result = this.FriendlyModel(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((FriendModel)result), result);
         }
 
         /// <summary> Model can have its friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FriendModel>> FriendlyModelAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.FriendModel>> FriendlyModelAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             FriendModel spreadModel = new FriendModel(name, default);
-            Response result = await FriendlyModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((FriendModel)result, result);
+            Response result = await this.FriendlyModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((FriendModel)result), result);
         }
 
         /// <summary>
@@ -1048,7 +1048,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddTimeHeader(RequestContext context)
         {
@@ -1056,7 +1056,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddTimeHeaderRequest(context);
+                using HttpMessage message = this.CreateAddTimeHeaderRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1075,15 +1075,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddTimeHeaderAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> AddTimeHeaderAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeader");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddTimeHeaderRequest(context);
+                using HttpMessage message = this.CreateAddTimeHeaderRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1095,18 +1095,18 @@ namespace BasicTypeSpec
 
         /// <summary> AddTimeHeader. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddTimeHeader(CancellationToken cancellationToken = default)
         {
-            return AddTimeHeader(cancellationToken.ToRequestContext());
+            return this.AddTimeHeader(cancellationToken.ToRequestContext());
         }
 
         /// <summary> AddTimeHeader. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddTimeHeaderAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddTimeHeaderAsync(CancellationToken cancellationToken = default)
         {
-            return await AddTimeHeaderAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.AddTimeHeaderAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1119,8 +1119,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ProjectedNameModel(RequestContent content, RequestContext context = null)
         {
@@ -1128,9 +1128,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+                using HttpMessage message = this.CreateProjectedNameModelRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1150,18 +1150,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ProjectedNameModelAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+                using HttpMessage message = this.CreateProjectedNameModelRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1174,31 +1174,31 @@ namespace BasicTypeSpec
         /// <summary> Model can have its projected name. </summary>
         /// <param name="name"> name of the ModelWithClientName. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RenamedModel> ProjectedNameModel(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.RenamedModel> ProjectedNameModel(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RenamedModel spreadModel = new RenamedModel(name, default);
-            Response result = ProjectedNameModel(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((RenamedModel)result, result);
+            Response result = this.ProjectedNameModel(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RenamedModel)result), result);
         }
 
         /// <summary> Model can have its projected name. </summary>
         /// <param name="name"> name of the ModelWithClientName. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RenamedModel>> ProjectedNameModelAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.RenamedModel>> ProjectedNameModelAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RenamedModel spreadModel = new RenamedModel(name, default);
-            Response result = await ProjectedNameModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RenamedModel)result, result);
+            Response result = await this.ProjectedNameModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RenamedModel)result), result);
         }
 
         /// <summary>
@@ -1210,7 +1210,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ReturnsAnonymousModel(RequestContext context)
         {
@@ -1218,7 +1218,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+                using HttpMessage message = this.CreateReturnsAnonymousModelRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1237,15 +1237,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> ReturnsAnonymousModelAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+                using HttpMessage message = this.CreateReturnsAnonymousModelRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1257,20 +1257,20 @@ namespace BasicTypeSpec
 
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
-            Response result = ReturnsAnonymousModel(cancellationToken.ToRequestContext());
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            Response result = this.ReturnsAnonymousModel(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReturnsAnonymousModelResponse)result), result);
         }
 
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            Response result = await this.ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReturnsAnonymousModelResponse)result), result);
         }
 
         /// <summary>
@@ -1282,7 +1282,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetUnknownValue(RequestContext context)
         {
@@ -1290,7 +1290,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnknownValueRequest(context);
+                using HttpMessage message = this.CreateGetUnknownValueRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1309,15 +1309,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUnknownValueAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetUnknownValueAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnknownValueRequest(context);
+                using HttpMessage message = this.CreateGetUnknownValueRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1329,20 +1329,20 @@ namespace BasicTypeSpec
 
         /// <summary> get extensible enum. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DaysOfWeekExtensibleEnum> GetUnknownValue(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.DaysOfWeekExtensibleEnum> GetUnknownValue(CancellationToken cancellationToken = default)
         {
-            Response result = GetUnknownValue(cancellationToken.ToRequestContext());
-            return Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
+            Response result = this.GetUnknownValue(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
         }
 
         /// <summary> get extensible enum. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DaysOfWeekExtensibleEnum>> GetUnknownValueAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.DaysOfWeekExtensibleEnum>> GetUnknownValueAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetUnknownValueAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
+            Response result = await this.GetUnknownValueAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
         }
 
         /// <summary>
@@ -1355,8 +1355,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response InternalProtocol(RequestContent content, RequestContext context = null)
         {
@@ -1364,9 +1364,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateInternalProtocolRequest(content, context);
+                using HttpMessage message = this.CreateInternalProtocolRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1386,18 +1386,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateInternalProtocolRequest(content, context);
+                using HttpMessage message = this.CreateInternalProtocolRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1410,27 +1410,27 @@ namespace BasicTypeSpec
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> InternalProtocol(ThingModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.ThingModel> InternalProtocol(ThingModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = InternalProtocol(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThingModel)result, result);
+            Response result = this.InternalProtocol(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> InternalProtocolAsync(ThingModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.ThingModel>> InternalProtocolAsync(ThingModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await InternalProtocolAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThingModel)result, result);
+            Response result = await this.InternalProtocolAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThingModel)result), result);
         }
 
         /// <summary>
@@ -1442,7 +1442,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response StillConvenient(RequestContext context)
         {
@@ -1450,7 +1450,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStillConvenientRequest(context);
+                using HttpMessage message = this.CreateStillConvenientRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1469,15 +1469,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StillConvenientAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> StillConvenientAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStillConvenientRequest(context);
+                using HttpMessage message = this.CreateStillConvenientRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1489,18 +1489,18 @@ namespace BasicTypeSpec
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response StillConvenient(CancellationToken cancellationToken = default)
         {
-            return StillConvenient(cancellationToken.ToRequestContext());
+            return this.StillConvenient(cancellationToken.ToRequestContext());
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> StillConvenientAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> StillConvenientAsync(CancellationToken cancellationToken = default)
         {
-            return await StillConvenientAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.StillConvenientAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1513,9 +1513,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="id"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response HeadAsBoolean(string id, RequestContext context)
         {
@@ -1523,9 +1523,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+                using HttpMessage message = this.CreateHeadAsBooleanRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1545,19 +1545,19 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="id"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext context)
+        public virtual async Task<global::Azure.Response> HeadAsBooleanAsync(string id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBoolean");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+                using HttpMessage message = this.CreateHeadAsBooleanRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1570,27 +1570,27 @@ namespace BasicTypeSpec
         /// <summary> head as boolean. </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response HeadAsBoolean(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return HeadAsBoolean(id, cancellationToken.ToRequestContext());
+            return this.HeadAsBoolean(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> head as boolean. </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> HeadAsBooleanAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> HeadAsBooleanAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await HeadAsBooleanAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.HeadAsBooleanAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1602,9 +1602,9 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithNextLink(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithNextLink(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, context, "BasicTypeSpecClient.GetWithNextLink");
         }
@@ -1618,25 +1618,25 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithNextLinkAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithNextLinkAsync(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, context, "BasicTypeSpecClient.GetWithNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithNextLink(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithNextLink(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithNextLinkAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithNextLinkAsync(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithNextLink");
         }
@@ -1650,9 +1650,9 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithStringNextLink(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithStringNextLink(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithStringNextLinkCollectionResult(this, context, "BasicTypeSpecClient.GetWithStringNextLink");
         }
@@ -1666,25 +1666,25 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithStringNextLinkAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithStringNextLinkAsync(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResult(this, context, "BasicTypeSpecClient.GetWithStringNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithStringNextLink(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithStringNextLink(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithStringNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithStringNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithStringNextLinkAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithStringNextLinkAsync(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithStringNextLink");
         }
@@ -1698,9 +1698,9 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithHeaderNextLink(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithHeaderNextLink(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult(this, context, "BasicTypeSpecClient.GetWithHeaderNextLink");
         }
@@ -1714,25 +1714,25 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithHeaderNextLinkAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithHeaderNextLinkAsync(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResult(this, context, "BasicTypeSpecClient.GetWithHeaderNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithHeaderNextLink(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithHeaderNextLink(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithHeaderNextLink");
         }
 
         /// <summary> List things with nextlink. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithHeaderNextLinkAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithHeaderNextLinkAsync(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithHeaderNextLink");
         }
@@ -1747,9 +1747,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="numElements"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithHeaderNextLinkWithMaxPage(int numElements, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithHeaderNextLinkWithMaxPage(int numElements, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(this, numElements, context, "BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
         }
@@ -1764,9 +1764,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="numElements"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageAsyncCollectionResult(this, numElements, context, "BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
         }
@@ -1774,8 +1774,8 @@ namespace BasicTypeSpec
         /// <summary> List things with nextlink. </summary>
         /// <param name="numElements"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithHeaderNextLinkWithMaxPage(int numElements, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithHeaderNextLinkWithMaxPage(int numElements, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT(this, numElements, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
         }
@@ -1783,8 +1783,8 @@ namespace BasicTypeSpec
         /// <summary> List things with nextlink. </summary>
         /// <param name="numElements"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageAsyncCollectionResultOfT(this, numElements, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
         }
@@ -1799,9 +1799,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithContinuationToken(string token, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithContinuationToken(string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context, "BasicTypeSpecClient.GetWithContinuationToken");
         }
@@ -1816,9 +1816,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithContinuationTokenAsync(string token, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithContinuationTokenAsync(string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context, "BasicTypeSpecClient.GetWithContinuationToken");
         }
@@ -1826,8 +1826,8 @@ namespace BasicTypeSpec
         /// <summary> List things with continuation token. </summary>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationToken");
         }
@@ -1835,8 +1835,8 @@ namespace BasicTypeSpec
         /// <summary> List things with continuation token. </summary>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationToken");
         }
@@ -1852,9 +1852,9 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithContinuationTokenWithMaxPage(int numElements, string token, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithContinuationTokenWithMaxPage(int numElements, string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResult(this, numElements, token, context, "BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
         }
@@ -1870,9 +1870,9 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult(this, numElements, token, context, "BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
         }
@@ -1881,8 +1881,8 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithContinuationTokenWithMaxPage(int numElements, string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithContinuationTokenWithMaxPage(int numElements, string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT(this, numElements, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
         }
@@ -1891,8 +1891,8 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT(this, numElements, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
         }
@@ -1907,9 +1907,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithContinuationTokenHeaderResponse(string token, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithContinuationTokenHeaderResponse(string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context, "BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
         }
@@ -1924,9 +1924,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context, "BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
         }
@@ -1934,8 +1934,8 @@ namespace BasicTypeSpec
         /// <summary> List things with continuation token header response. </summary>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
         }
@@ -1943,8 +1943,8 @@ namespace BasicTypeSpec
         /// <summary> List things with continuation token header response. </summary>
         /// <param name="token"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
         }
@@ -1958,9 +1958,9 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWithPaging(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWithPaging(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context, "BasicTypeSpecClient.GetWithPaging");
         }
@@ -1974,25 +1974,25 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWithPagingAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWithPagingAsync(RequestContext context)
         {
             return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context, "BasicTypeSpecClient.GetWithPaging");
         }
 
         /// <summary> List things with paging. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ThingModel> GetWithPaging(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::BasicTypeSpec.ThingModel> GetWithPaging(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithPagingCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithPaging");
         }
 
         /// <summary> List things with paging. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ThingModel> GetWithPagingAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::BasicTypeSpec.ThingModel> GetWithPagingAsync(CancellationToken cancellationToken = default)
         {
             return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithPaging");
         }
@@ -2007,7 +2007,7 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ConditionalRequest(MatchConditions matchConditions, RequestContext context)
         {
@@ -2015,7 +2015,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateConditionalRequestRequest(matchConditions, context);
+                using HttpMessage message = this.CreateConditionalRequestRequest(matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2035,15 +2035,15 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ConditionalRequestAsync(MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> ConditionalRequestAsync(MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateConditionalRequestRequest(matchConditions, context);
+                using HttpMessage message = this.CreateConditionalRequestRequest(matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2056,19 +2056,19 @@ namespace BasicTypeSpec
         /// <summary> A sample operation with conditional requests. </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ConditionalRequest(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return ConditionalRequest(matchConditions, cancellationToken.ToRequestContext());
+            return this.ConditionalRequest(matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> A sample operation with conditional requests. </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ConditionalRequestAsync(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ConditionalRequestAsync(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ConditionalRequestAsync(matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ConditionalRequestAsync(matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2081,7 +2081,7 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions, RequestContext context)
         {
@@ -2089,12 +2089,12 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                if (requestConditions?.IfUnmodifiedSince != null)
+                if ((requestConditions?.IfUnmodifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
+                using HttpMessage message = this.CreateConditionalRequestDateRequest(requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2114,20 +2114,20 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
             scope.Start();
             try
             {
-                if (requestConditions?.IfUnmodifiedSince != null)
+                if ((requestConditions?.IfUnmodifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
+                using HttpMessage message = this.CreateConditionalRequestDateRequest(requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2140,19 +2140,19 @@ namespace BasicTypeSpec
         /// <summary> A sample operation with conditional requests. </summary>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return ConditionalRequestDate(requestConditions, cancellationToken.ToRequestContext());
+            return this.ConditionalRequestDate(requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> A sample operation with conditional requests. </summary>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> ConditionalRequestDateAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ConditionalRequestDateAsync(requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ConditionalRequestDateAsync(requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2166,8 +2166,8 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response MultipartRequest(RequestContent content, string contentType, RequestContext context = null)
         {
@@ -2175,9 +2175,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
+                using HttpMessage message = this.CreateMultipartRequestRequest(content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2198,18 +2198,18 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> MultipartRequestAsync(RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> MultipartRequestAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.MultipartRequest");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
+                using HttpMessage message = this.CreateMultipartRequestRequest(content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2229,8 +2229,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateDataFactoryModel(RequestContent content, RequestContext context = null)
         {
@@ -2238,9 +2238,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDataFactoryModelRequest(content, context);
+                using HttpMessage message = this.CreateCreateDataFactoryModelRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2260,18 +2260,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateDataFactoryModelAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateDataFactoryModelAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateDataFactoryModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateDataFactoryModelRequest(content, context);
+                using HttpMessage message = this.CreateCreateDataFactoryModelRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2284,27 +2284,27 @@ namespace BasicTypeSpec
         /// <summary> Create a model with DataFactoryElement properties. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DataFactoryElementModel> CreateDataFactoryModel(DataFactoryElementModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.DataFactoryElementModel> CreateDataFactoryModel(DataFactoryElementModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateDataFactoryModel(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((DataFactoryElementModel)result, result);
+            Response result = this.CreateDataFactoryModel(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DataFactoryElementModel)result), result);
         }
 
         /// <summary> Create a model with DataFactoryElement properties. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DataFactoryElementModel>> CreateDataFactoryModelAsync(DataFactoryElementModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.DataFactoryElementModel>> CreateDataFactoryModelAsync(DataFactoryElementModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateDataFactoryModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DataFactoryElementModel)result, result);
+            Response result = await this.CreateDataFactoryModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DataFactoryElementModel)result), result);
         }
 
         /// <summary>
@@ -2317,9 +2317,9 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="id"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDataFactoryModel(string id, RequestContext context)
         {
@@ -2327,9 +2327,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateGetDataFactoryModelRequest(id, context);
+                using HttpMessage message = this.CreateGetDataFactoryModelRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2349,19 +2349,19 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="id"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDataFactoryModelAsync(string id, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDataFactoryModelAsync(string id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetDataFactoryModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-                using HttpMessage message = CreateGetDataFactoryModelRequest(id, context);
+                using HttpMessage message = this.CreateGetDataFactoryModelRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2374,29 +2374,29 @@ namespace BasicTypeSpec
         /// <summary> Get a model with DataFactoryElement properties. </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DataFactoryElementModel> GetDataFactoryModel(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.DataFactoryElementModel> GetDataFactoryModel(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = GetDataFactoryModel(id, cancellationToken.ToRequestContext());
-            return Response.FromValue((DataFactoryElementModel)result, result);
+            Response result = this.GetDataFactoryModel(id, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DataFactoryElementModel)result), result);
         }
 
         /// <summary> Get a model with DataFactoryElement properties. </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DataFactoryElementModel>> GetDataFactoryModelAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.DataFactoryElementModel>> GetDataFactoryModelAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::BasicTypeSpec.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = await GetDataFactoryModelAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DataFactoryElementModel)result, result);
+            Response result = await this.GetDataFactoryModelAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DataFactoryElementModel)result), result);
         }
 
         /// <summary>
@@ -2408,7 +2408,7 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetXmlAdvancedModel(RequestContext context)
         {
@@ -2416,7 +2416,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetXmlAdvancedModelRequest(context);
+                using HttpMessage message = this.CreateGetXmlAdvancedModelRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2435,15 +2435,15 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetXmlAdvancedModelAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetXmlAdvancedModelAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetXmlAdvancedModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetXmlAdvancedModelRequest(context);
+                using HttpMessage message = this.CreateGetXmlAdvancedModelRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2455,20 +2455,20 @@ namespace BasicTypeSpec
 
         /// <summary> Get an advanced XML model with various property types. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<XmlAdvancedModel> GetXmlAdvancedModel(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.XmlAdvancedModel> GetXmlAdvancedModel(CancellationToken cancellationToken = default)
         {
-            Response result = GetXmlAdvancedModel(cancellationToken.ToRequestContext());
-            return Response.FromValue((XmlAdvancedModel)result, result);
+            Response result = this.GetXmlAdvancedModel(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((XmlAdvancedModel)result), result);
         }
 
         /// <summary> Get an advanced XML model with various property types. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<XmlAdvancedModel>> GetXmlAdvancedModelAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.XmlAdvancedModel>> GetXmlAdvancedModelAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetXmlAdvancedModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((XmlAdvancedModel)result, result);
+            Response result = await this.GetXmlAdvancedModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((XmlAdvancedModel)result), result);
         }
 
         /// <summary>
@@ -2481,8 +2481,8 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateXmlAdvancedModel(RequestContent content, RequestContext context = null)
         {
@@ -2490,9 +2490,9 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateXmlAdvancedModelRequest(content, context);
+                using HttpMessage message = this.CreateUpdateXmlAdvancedModelRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2512,18 +2512,18 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateXmlAdvancedModelAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateXmlAdvancedModelAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.UpdateXmlAdvancedModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::BasicTypeSpec.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateXmlAdvancedModelRequest(content, context);
+                using HttpMessage message = this.CreateUpdateXmlAdvancedModelRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2536,33 +2536,33 @@ namespace BasicTypeSpec
         /// <summary> Update an advanced XML model with various property types. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<XmlAdvancedModel> UpdateXmlAdvancedModel(XmlAdvancedModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::BasicTypeSpec.XmlAdvancedModel> UpdateXmlAdvancedModel(XmlAdvancedModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateXmlAdvancedModel(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((XmlAdvancedModel)result, result);
+            Response result = this.UpdateXmlAdvancedModel(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((XmlAdvancedModel)result), result);
         }
 
         /// <summary> Update an advanced XML model with various property types. </summary>
         /// <param name="body"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<XmlAdvancedModel>> UpdateXmlAdvancedModelAsync(XmlAdvancedModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::BasicTypeSpec.XmlAdvancedModel>> UpdateXmlAdvancedModelAsync(XmlAdvancedModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::BasicTypeSpec.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateXmlAdvancedModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((XmlAdvancedModel)result, result);
+            Response result = await this.UpdateXmlAdvancedModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((XmlAdvancedModel)result), result);
         }
 
         /// <summary> Initializes a new instance of PlantOperations. </summary>
         public virtual PlantOperations GetPlantOperationsClient()
         {
-            return Volatile.Read(ref _cachedPlantOperations) ?? Interlocked.CompareExchange(ref _cachedPlantOperations, new PlantOperations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPlantOperations;
+            return (global::System.Threading.Volatile.Read(ref _cachedPlantOperations) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedPlantOperations, new PlantOperations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPlantOperations));
         }
     }
 }

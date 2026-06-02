@@ -29,14 +29,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -50,14 +50,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -71,14 +71,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/:delete-from-resources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -95,14 +95,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/delete-from-resources/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -118,14 +118,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -139,14 +139,14 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

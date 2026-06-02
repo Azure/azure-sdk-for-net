@@ -14,21 +14,21 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SavedFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SavedFilter"/>. </summary>
         internal SavedFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SavedFilter"/>. </summary>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="filter"></param>
         /// <param name="description"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavedFilter(string id, string name, string displayName, string filter, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavedFilter(string id, string name, string displayName, string filter, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

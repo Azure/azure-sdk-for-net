@@ -12,25 +12,25 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the parameter set of either the Orchestration project itself or one of the target services.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisConfig"/>, <see cref="QuestionAnsweringConfig"/>, and <see cref="ConversationConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.LuisConfig"/>, <see cref="Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig"/>, and <see cref="Azure.AI.Language.Conversations.Models.ConversationConfig"/>.
     /// </summary>
     public abstract partial class AnalysisConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalysisConfig"/>. </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         private protected AnalysisConfig(TargetProjectKind targetProjectKind)
         {
             TargetProjectKind = targetProjectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalysisConfig"/>. </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetProjectKind = targetProjectKind;
             ApiVersion = apiVersion;

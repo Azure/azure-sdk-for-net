@@ -18,8 +18,8 @@ namespace Azure.Health.Deidentification
     /// <summary> The DeidentificationClient. </summary>
     public partial class DeidentificationClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://deid.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://deid.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DeidentificationClient for mocking. </summary>
@@ -30,8 +30,8 @@ namespace Azure.Health.Deidentification
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeidentificationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DeidentificationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeidentificationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DeidentificationClientOptions())
         {
         }
 
@@ -39,20 +39,20 @@ namespace Azure.Health.Deidentification
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DeidentificationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DeidentificationClientOptions options)
+        internal DeidentificationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DeidentificationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DeidentificationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -62,14 +62,14 @@ namespace Azure.Health.Deidentification
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeidentificationClient(Uri endpoint, TokenCredential credential, DeidentificationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeidentificationClient(global::System.Uri endpoint, TokenCredential credential, DeidentificationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DeidentificationClient from a <see cref="DeidentificationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeidentificationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DeidentificationClient(DeidentificationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -90,9 +90,9 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetJob(string jobName, RequestContext context)
         {
@@ -100,9 +100,9 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateGetJobRequest(jobName, context);
+                using HttpMessage message = this.CreateGetJobRequest(jobName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -122,19 +122,19 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetJobAsync(string jobName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetJobAsync(string jobName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJob");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateGetJobRequest(jobName, context);
+                using HttpMessage message = this.CreateGetJobRequest(jobName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -147,29 +147,29 @@ namespace Azure.Health.Deidentification
         /// <summary> Resource read operation template. </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeidentificationJob> GetJob(string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Health.Deidentification.DeidentificationJob> GetJob(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = GetJob(jobName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeidentificationJob)result, result);
+            Response result = this.GetJob(jobName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DeidentificationJob)result), result);
         }
 
         /// <summary> Resource read operation template. </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeidentificationJob>> GetJobAsync(string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Health.Deidentification.DeidentificationJob>> GetJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = await GetJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeidentificationJob)result, result);
+            Response result = await this.GetJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DeidentificationJob)result), result);
         }
 
         /// <summary> Long-running resource create or replace operation template. </summary>
@@ -177,20 +177,20 @@ namespace Azure.Health.Deidentification
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> DeidentifyDocuments(WaitUntil waitUntil, string jobName, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> DeidentifyDocuments(WaitUntil waitUntil, string jobName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyDocuments");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeidentifyDocumentsRequest(jobName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                using HttpMessage message = this.CreateDeidentifyDocumentsRequest(jobName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -204,20 +204,20 @@ namespace Azure.Health.Deidentification
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string jobName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string jobName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyDocuments");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeidentifyDocumentsRequest(jobName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocumentsAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeidentifyDocumentsRequest(jobName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocumentsAsync", global::Azure.Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -231,15 +231,15 @@ namespace Azure.Health.Deidentification
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation<DeidentificationJob> DeidentifyDocuments(WaitUntil waitUntil, string jobName, DeidentificationJob resource, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<global::Azure.Health.Deidentification.DeidentificationJob> DeidentifyDocuments(WaitUntil waitUntil, string jobName, DeidentificationJob resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(resource, nameof(resource));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = DeidentifyDocuments(waitUntil, jobName, resource, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => (DeidentificationJob)response, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments");
+            Operation<global::System.BinaryData> result = this.DeidentifyDocuments(waitUntil, jobName, resource, cancellationToken.ToRequestContext());
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(result, response => ((DeidentificationJob)response), ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments");
         }
 
         /// <summary> Long-running resource create or replace operation template. </summary>
@@ -247,15 +247,15 @@ namespace Azure.Health.Deidentification
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation<DeidentificationJob>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string jobName, DeidentificationJob resource, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation<global::Azure.Health.Deidentification.DeidentificationJob>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string jobName, DeidentificationJob resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(resource, nameof(resource));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = await DeidentifyDocumentsAsync(waitUntil, jobName, resource, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DeidentificationJob)response, ClientDiagnostics, "DeidentificationClient.DeidentifyDocumentsAsync");
+            Operation<global::System.BinaryData> result = await this.DeidentifyDocumentsAsync(waitUntil, jobName, resource, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(result, response => ((DeidentificationJob)response), ClientDiagnostics, "DeidentificationClient.DeidentifyDocumentsAsync");
         }
 
         /// <summary>
@@ -269,9 +269,9 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetJobsInternal(int? maxPageSize, string continuationToken, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetJobsInternal(int? maxPageSize, string continuationToken, RequestContext context)
         {
             return new DeidentificationClientGetJobsInternalCollectionResult(this, maxPageSize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
         }
@@ -287,9 +287,9 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxPageSize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetJobsInternalAsync(int? maxPageSize, string continuationToken, RequestContext context)
         {
             return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxPageSize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
         }
@@ -298,8 +298,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Health.Deidentification.DeidentificationJob> GetJobsInternal(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
         }
@@ -308,8 +308,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Health.Deidentification.DeidentificationJob> GetJobsInternalAsync(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
         }
@@ -326,9 +326,9 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxPageSize, string continuationToken, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetJobDocumentsInternal(string jobName, int? maxPageSize, string continuationToken, RequestContext context)
         {
             return new DeidentificationClientGetJobDocumentsInternalCollectionResult(
                 this,
@@ -351,9 +351,9 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxPageSize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxPageSize, string continuationToken, RequestContext context)
         {
             return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(
                 this,
@@ -369,8 +369,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Health.Deidentification.DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(
                 this,
@@ -386,8 +386,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Health.Deidentification.DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(
                 this,
@@ -410,9 +410,9 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CancelJob(string jobName, RequestContext context)
         {
@@ -420,9 +420,9 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateCancelJobRequest(jobName, context);
+                using HttpMessage message = this.CreateCancelJobRequest(jobName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -444,19 +444,19 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelJobAsync(string jobName, RequestContext context)
+        public virtual async Task<global::Azure.Response> CancelJobAsync(string jobName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.CancelJob");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateCancelJobRequest(jobName, context);
+                using HttpMessage message = this.CreateCancelJobRequest(jobName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -473,15 +473,15 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeidentificationJob> CancelJob(string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Health.Deidentification.DeidentificationJob> CancelJob(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = CancelJob(jobName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeidentificationJob)result, result);
+            Response result = this.CancelJob(jobName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DeidentificationJob)result), result);
         }
 
         /// <summary>
@@ -491,15 +491,15 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeidentificationJob>> CancelJobAsync(string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Health.Deidentification.DeidentificationJob>> CancelJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = await CancelJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeidentificationJob)result, result);
+            Response result = await this.CancelJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DeidentificationJob)result), result);
         }
 
         /// <summary>
@@ -512,9 +512,9 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteJob(string jobName, RequestContext context)
         {
@@ -522,9 +522,9 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateDeleteJobRequest(jobName, context);
+                using HttpMessage message = this.CreateDeleteJobRequest(jobName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -544,19 +544,19 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteJobAsync(string jobName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteJobAsync(string jobName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeleteJob");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+                global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-                using HttpMessage message = CreateDeleteJobRequest(jobName, context);
+                using HttpMessage message = this.CreateDeleteJobRequest(jobName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -569,27 +569,27 @@ namespace Azure.Health.Deidentification
         /// <summary> Removes the record of the job from the service. Does not delete any documents. </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteJob(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return DeleteJob(jobName, cancellationToken.ToRequestContext());
+            return this.DeleteJob(jobName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Removes the record of the job from the service. Does not delete any documents. </summary>
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteJobAsync(string jobName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            global::Azure.Health.Deidentification.Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return await DeleteJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -602,8 +602,8 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeidentifyText(RequestContent content, RequestContext context = null)
         {
@@ -611,9 +611,9 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeidentifyTextRequest(content, context);
+                using HttpMessage message = this.CreateDeidentifyTextRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -633,18 +633,18 @@ namespace Azure.Health.Deidentification
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeidentifyTextAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DeidentifyTextAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyText");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDeidentifyTextRequest(content, context);
+                using HttpMessage message = this.CreateDeidentifyTextRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -657,27 +657,27 @@ namespace Azure.Health.Deidentification
         /// <summary> A remote procedure call (RPC) operation. </summary>
         /// <param name="content"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeidentificationResult> DeidentifyText(DeidentificationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Health.Deidentification.DeidentificationResult> DeidentifyText(DeidentificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-            Response result = DeidentifyText(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeidentificationResult)result, result);
+            Response result = this.DeidentifyText(content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DeidentificationResult)result), result);
         }
 
         /// <summary> A remote procedure call (RPC) operation. </summary>
         /// <param name="content"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeidentificationResult>> DeidentifyTextAsync(DeidentificationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Health.Deidentification.DeidentificationResult>> DeidentifyTextAsync(DeidentificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(content, nameof(content));
 
-            Response result = await DeidentifyTextAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeidentificationResult)result, result);
+            Response result = await this.DeidentifyTextAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DeidentificationResult)result), result);
         }
     }
 }

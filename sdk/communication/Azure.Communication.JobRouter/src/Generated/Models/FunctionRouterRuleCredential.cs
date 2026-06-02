@@ -14,19 +14,19 @@ namespace Azure.Communication.JobRouter
     public partial class FunctionRouterRuleCredential
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FunctionRouterRuleCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.FunctionRouterRuleCredential"/>. </summary>
         internal FunctionRouterRuleCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionRouterRuleCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.FunctionRouterRuleCredential"/>. </summary>
         /// <param name="functionKey"> Access key scoped to a particular function. </param>
         /// <param name="appKey"> Access key scoped to a Azure Function app. This key grants access to all functions under the app. </param>
         /// <param name="clientId"> Client id, when AppKey is provided In context of Azure function, this is usually the name of the key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionRouterRuleCredential(string functionKey, string appKey, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionRouterRuleCredential(string functionKey, string appKey, string clientId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FunctionKey = functionKey;
             AppKey = appKey;

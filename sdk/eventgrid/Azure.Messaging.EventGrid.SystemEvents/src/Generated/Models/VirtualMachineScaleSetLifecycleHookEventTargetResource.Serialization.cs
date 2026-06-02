@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Define a single target ARM resource in a Virtual Machine Scale Set Lifecycle Hook event. Currently, this can be a Virtual Machine Scale Set resource or an individual virtual machine resource within a VirtualMachineScaleSet. </summary>
-    public partial class VirtualMachineScaleSetLifecycleHookEventTargetResource : IJsonModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>
+    public partial class VirtualMachineScaleSetLifecycleHookEventTargetResource : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTargetResource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource"/> for deserialization. </summary>
         internal VirtualMachineScaleSetLifecycleHookEventTargetResource()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualMachineScaleSetLifecycleHookEventTargetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineScaleSetLifecycleHookEventTargetResource(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource.DeserializeVirtualMachineScaleSetLifecycleHookEventTargetResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetLifecycleHookEventTargetResource IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetLifecycleHookEventTargetResource IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,16 +73,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource, options);
+            writer.WriteObjectValue<ApiEntityReference>(Resource, options);
             writer.WritePropertyName("actionState"u8);
             writer.WriteStringValue(ActionState.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -90,9 +90,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -101,37 +101,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetLifecycleHookEventTargetResource IJsonModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetLifecycleHookEventTargetResource IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualMachineScaleSetLifecycleHookEventTargetResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetLifecycleHookEventTargetResource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource.DeserializeVirtualMachineScaleSetLifecycleHookEventTargetResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VirtualMachineScaleSetLifecycleHookEventTargetResource DeserializeVirtualMachineScaleSetLifecycleHookEventTargetResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ApiEntityReference resource = default;
             LifecycleHookActionState actionState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resource"u8))
                 {
-                    resource = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    resource = global::Azure.Messaging.EventGrid.SystemEvents.ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actionState"u8))
@@ -139,9 +139,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     actionState = new LifecycleHookActionState(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VirtualMachineScaleSetLifecycleHookEventTargetResource(resource, actionState, additionalBinaryDataProperties);

@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskCounts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCounts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCounts"/>. </summary>
         /// <param name="active"> The number of Tasks in the active state. </param>
         /// <param name="running"> The number of Tasks in the running or preparing state. </param>
         /// <param name="completed"> The number of Tasks in the completed state. </param>
@@ -31,14 +31,14 @@ namespace Azure.Compute.Batch
             Failed = failed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCounts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCounts"/>. </summary>
         /// <param name="active"> The number of Tasks in the active state. </param>
         /// <param name="running"> The number of Tasks in the running or preparing state. </param>
         /// <param name="completed"> The number of Tasks in the completed state. </param>
         /// <param name="succeeded"> The number of Tasks which succeeded. A Task succeeds if its result (found in the executionInfo property) is 'success'. </param>
         /// <param name="failed"> The number of Tasks which failed. A Task fails if its result (found in the executionInfo property) is 'failure'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskCounts(int active, int running, int completed, int succeeded, int failed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskCounts(int active, int running, int completed, int succeeded, int failed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Active = active;
             Running = running;

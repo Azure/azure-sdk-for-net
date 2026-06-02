@@ -11,11 +11,11 @@ using Client.Naming._Property;
 
 namespace Client.Naming
 {
-    [ModelReaderWriterBuildable(typeof(ClientModel))]
-    [ModelReaderWriterBuildable(typeof(ClientNameAndJsonEncodedNameModel))]
-    [ModelReaderWriterBuildable(typeof(ClientNameModel))]
-    [ModelReaderWriterBuildable(typeof(CSModel))]
-    [ModelReaderWriterBuildable(typeof(LanguageClientNameModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(global::Client.Naming.Model.ClientModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(ClientNameAndJsonEncodedNameModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(ClientNameModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(CSModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(LanguageClientNameModel))]
     public partial class ClientNamingContext : ModelReaderWriterContext
     {
     }

@@ -17,24 +17,24 @@ namespace Payload.Pageable._XmlPagination
     {
         protected XmlPagination() => throw null;
 
-        internal XmlPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal XmlPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetWithContinuation(string marker, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> GetWithContinuation(string marker, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithContinuationAsync(string marker, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithContinuationAsync(string marker, RequestContext context) => throw null;
 
-        public virtual Pageable<XmlPet> GetWithContinuation(string marker = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<XmlPet> GetWithContinuation(string marker = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<XmlPet> GetWithContinuationAsync(string marker = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.XmlPet> GetWithContinuationAsync(string marker = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetWithNextLink(RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> GetWithNextLink(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithNextLinkAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithNextLinkAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<XmlPet> GetWithNextLink(CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<XmlPet> GetWithNextLink(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<XmlPet> GetWithNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.XmlPet> GetWithNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

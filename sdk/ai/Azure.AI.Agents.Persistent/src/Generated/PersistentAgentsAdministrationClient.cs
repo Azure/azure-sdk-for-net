@@ -20,8 +20,8 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The PersistentAgentsAdministrationClient. </summary>
     public partial class PersistentAgentsAdministrationClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly string _apiVersion;
         private Threads _cachedThreads;
         private ThreadMessages _cachedThreadMessages;
@@ -40,8 +40,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PersistentAgentsAdministrationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
 
@@ -49,20 +49,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal PersistentAgentsAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PersistentAgentsAdministrationClientOptions options)
+        internal PersistentAgentsAdministrationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PersistentAgentsAdministrationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new PersistentAgentsAdministrationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -72,14 +72,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PersistentAgentsAdministrationClient(global::System.Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient from a <see cref="PersistentAgentsAdministrationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for PersistentAgentsAdministrationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public PersistentAgentsAdministrationClient(PersistentAgentsAdministrationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -109,27 +109,27 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="model"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgent> CreateAgent(string model, string name = default, string description = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="model"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgent> CreateAgent(string model, string name = default, string description = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(model, nameof(model));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(model, nameof(model));
 
             CreateAgentRequest spreadModel = new CreateAgentRequest(
                 model,
                 name,
                 description,
                 instructions,
-                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (tools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 temperature,
                 topP,
                 responseFormat,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = CreateAgent(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = this.CreateAgent(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary> Creates a new agent. </summary>
@@ -154,55 +154,55 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="model"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgent>> CreateAgentAsync(string model, string name = default, string description = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="model"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgent>> CreateAgentAsync(string model, string name = default, string description = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(model, nameof(model));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(model, nameof(model));
 
             CreateAgentRequest spreadModel = new CreateAgentRequest(
                 model,
                 name,
                 description,
                 instructions,
-                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (tools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 temperature,
                 topP,
                 responseFormat,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = await CreateAgentAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = await this.CreateAgentAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary> Retrieves an existing agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgent> GetAgent(string assistantId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgent> GetAgent(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            Response result = GetAgent(assistantId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = this.GetAgent(assistantId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary> Retrieves an existing agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            Response result = await GetAgentAsync(assistantId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = await this.GetAgentAsync(assistantId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary> Modifies an existing agent. </summary>
@@ -228,27 +228,27 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgent> UpdateAgent(string assistantId, string model = default, string name = default, string description = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgent> UpdateAgent(string assistantId, string model = default, string name = default, string description = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             UpdateAgentRequest spreadModel = new UpdateAgentRequest(
                 model,
                 name,
                 description,
                 instructions,
-                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (tools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 temperature,
                 topP,
                 responseFormat,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = UpdateAgent(assistantId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = this.UpdateAgent(assistantId, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary> Modifies an existing agent. </summary>
@@ -274,27 +274,27 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgent>> UpdateAgentAsync(string assistantId, string model = default, string name = default, string description = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgent>> UpdateAgentAsync(string assistantId, string model = default, string name = default, string description = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             UpdateAgentRequest spreadModel = new UpdateAgentRequest(
                 model,
                 name,
                 description,
                 instructions,
-                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (tools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 temperature,
                 topP,
                 responseFormat,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = await UpdateAgentAsync(assistantId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgent)result, result);
+            Response result = await this.UpdateAgentAsync(assistantId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgent)result), result);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteAgent(string assistantId, RequestContext context)
         {
@@ -315,7 +315,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteAgentRequest(assistantId, context);
+                using HttpMessage message = this.CreateInternalDeleteAgentRequest(assistantId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -335,15 +335,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteAgentAsync(string assistantId, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalDeleteAgentAsync(string assistantId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.InternalDeleteAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteAgentRequest(assistantId, context);
+                using HttpMessage message = this.CreateInternalDeleteAgentRequest(assistantId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -356,21 +356,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Deletes an agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalAgentDeletionStatus> InternalDeleteAgent(string assistantId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.InternalAgentDeletionStatus> InternalDeleteAgent(string assistantId, CancellationToken cancellationToken = default)
         {
-            Response result = InternalDeleteAgent(assistantId, cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalAgentDeletionStatus)result, result);
+            Response result = this.InternalDeleteAgent(assistantId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((InternalAgentDeletionStatus)result), result);
         }
 
         /// <summary> Deletes an agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalAgentDeletionStatus>> InternalDeleteAgentAsync(string assistantId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.InternalAgentDeletionStatus>> InternalDeleteAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalDeleteAgentAsync(assistantId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalAgentDeletionStatus)result, result);
+            Response result = await this.InternalDeleteAgentAsync(assistantId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((InternalAgentDeletionStatus)result), result);
         }
 
         /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
@@ -410,15 +410,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
                 assistantId,
                 thread,
                 overrideModelName,
                 overrideInstructions,
-                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (overrideTools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 stream,
                 temperature,
@@ -429,10 +429,10 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice,
                 responseFormat,
                 parallelToolCalls,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = CreateThreadAndRun(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
+            Response result = this.CreateThreadAndRun(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThreadRun)result), result);
         }
 
         /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
@@ -472,15 +472,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
                 assistantId,
                 thread,
                 overrideModelName,
                 overrideInstructions,
-                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                (overrideTools?.ToList() as IList<global::Azure.AI.Agents.Persistent.ToolDefinition> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>()),
                 toolResources,
                 stream,
                 temperature,
@@ -491,10 +491,10 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice,
                 responseFormat,
                 parallelToolCalls,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 default);
-            Response result = await CreateThreadAndRunAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
+            Response result = await this.CreateThreadAndRunAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThreadRun)result), result);
         }
     }
 }

@@ -14,15 +14,15 @@ namespace Azure.Monitor.Query.Logs
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(BatchQueryRequest))]
-    [ModelReaderWriterBuildable(typeof(BatchQueryResponse))]
-    [ModelReaderWriterBuildable(typeof(BatchRequest))]
-    [ModelReaderWriterBuildable(typeof(BatchResponse))]
-    [ModelReaderWriterBuildable(typeof(LogsBatchQueryResult))]
-    [ModelReaderWriterBuildable(typeof(LogsQueryResult))]
-    [ModelReaderWriterBuildable(typeof(LogsTable))]
-    [ModelReaderWriterBuildable(typeof(LogsTableColumn))]
-    [ModelReaderWriterBuildable(typeof(QueryBody))]
+    [ModelReaderWriterBuildableAttribute(typeof(BatchQueryRequest))]
+    [ModelReaderWriterBuildableAttribute(typeof(BatchQueryResponse))]
+    [ModelReaderWriterBuildableAttribute(typeof(BatchRequest))]
+    [ModelReaderWriterBuildableAttribute(typeof(BatchResponse))]
+    [ModelReaderWriterBuildableAttribute(typeof(LogsBatchQueryResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(LogsQueryResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(LogsTable))]
+    [ModelReaderWriterBuildableAttribute(typeof(LogsTableColumn))]
+    [ModelReaderWriterBuildableAttribute(typeof(QueryBody))]
     public partial class AzureMonitorQueryLogsContext : ModelReaderWriterContext
     {
     }

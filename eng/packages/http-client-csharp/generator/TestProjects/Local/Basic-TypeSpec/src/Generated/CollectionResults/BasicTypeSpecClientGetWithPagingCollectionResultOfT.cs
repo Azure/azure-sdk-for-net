@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithPagingCollectionResultOfT : Pageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithPagingCollectionResultOfT : Pageable<global::BasicTypeSpec.ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly RequestContext _context;
@@ -23,7 +23,7 @@ namespace BasicTypeSpec
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithPagingCollectionResultOfT(BasicTypeSpecClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithPagingCollectionResultOfT(BasicTypeSpecClient client, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
@@ -34,11 +34,11 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithPagingCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::BasicTypeSpec.ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            PageThingModel result = (PageThingModel)response;
-            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Items, null, response);
+            Response response = this.GetNextResponse(pageSizeHint, null);
+            PageThingModel result = ((PageThingModel)response);
+            yield return global::Azure.Page<ThingModel>.FromValues(((IReadOnlyList<global::BasicTypeSpec.ThingModel>)result.Items), null, response);
         }
 
         /// <summary> Get next page. </summary>

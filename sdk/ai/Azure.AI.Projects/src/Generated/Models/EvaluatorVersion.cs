@@ -13,17 +13,17 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluatorVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorVersion"/>. </summary>
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
         /// <param name="definition"> Definition of the evaluator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
-        public EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
+        public EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<global::Azure.AI.Projects.Evaluation.EvaluatorCategory> categories, EvaluatorDefinition definition)
         {
-            Argument.AssertNotNull(categories, nameof(categories));
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Projects.Argument.AssertNotNull(categories, nameof(categories));
+            global::Azure.AI.Projects.Argument.AssertNotNull(definition, nameof(definition));
 
             Metadata = new ChangeTrackingDictionary<string, string>();
             EvaluatorType = evaluatorType;
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Evaluation
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorVersion"/>. </summary>
         /// <param name="displayName"> Display Name for evaluator. It helps to find the evaluator easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="metadata"> Metadata about the evaluator. </param>
         /// <param name="evaluatorType"> The type of the evaluator. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<global::Azure.AI.Projects.Evaluation.EvaluatorCategory> categories, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metadata = metadata;
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Evaluation
         public EvaluatorType EvaluatorType { get; set; }
 
         /// <summary> The categories of the evaluator. </summary>
-        public IList<EvaluatorCategory> Categories { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.EvaluatorCategory> Categories { get; }
 
         /// <summary> Definition of the evaluator. </summary>
         public EvaluatorDefinition Definition { get; set; }

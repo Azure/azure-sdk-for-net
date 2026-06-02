@@ -14,19 +14,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class RetrieveQnaRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RetrieveQnaRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord"/>. </summary>
         /// <param name="id"> Unique ID for the QnA. </param>
         internal RetrieveQnaRecord(int id)
         {
             Id = id;
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ActiveLearningSuggestions = new ChangeTrackingList<SuggestedQuestionsCluster>();
+            ActiveLearningSuggestions = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetrieveQnaRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord"/>. </summary>
         /// <param name="id"> Unique ID for the QnA. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="source">
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RetrieveQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RetrieveQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Answer = answer;
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public QnaDialog Dialog { get; }
 
         /// <summary> List of Active Learning suggestions for the QnA. </summary>
-        public IList<SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
 
         /// <summary> Date-time when the QnA was last updated. </summary>
         public DateTimeOffset? LastUpdatedDateTime { get; }

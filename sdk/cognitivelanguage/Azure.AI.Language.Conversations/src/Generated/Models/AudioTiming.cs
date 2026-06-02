@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AudioTiming
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AudioTiming"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AudioTiming"/>. </summary>
         internal AudioTiming()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioTiming"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AudioTiming"/>. </summary>
         /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioTiming(long? offset, long? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioTiming(long? offset, long? duration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Duration = duration;

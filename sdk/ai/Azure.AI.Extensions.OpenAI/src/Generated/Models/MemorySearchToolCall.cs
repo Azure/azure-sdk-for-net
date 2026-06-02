@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A memory search tool call. </summary>
     public partial class MemorySearchToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>
-        public MemorySearchToolCall(ToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall)
+        public MemorySearchToolCall(ToolCallStatus status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.MemorySearchCall)
         {
             Status = status;
-            Memories = new ChangeTrackingList<MemoryOutputItem>();
+            Memories = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the tool call. </param>
         /// <param name="memories"> The results returned from the memory search. </param>
-        internal MemorySearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolCallStatus status, IList<MemoryOutputItem> memories) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal MemorySearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ToolCallStatus status, IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Memories = memories;
@@ -36,6 +36,6 @@ namespace Azure.AI.Extensions.OpenAI
         public ToolCallStatus Status { get; set; }
 
         /// <summary> The results returned from the memory search. </summary>
-        public IList<MemoryOutputItem> Memories { get; set; }
+        public IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem> Memories { get; set; }
     }
 }

@@ -13,17 +13,17 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The AzureDataExplorerDataConnectionPayload. </summary>
     public partial class AzureDataExplorerDataConnectionPayload : DataConnectionPayload
     {
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
         /// <param name="properties"> properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public AzureDataExplorerDataConnectionPayload(AzureDataExplorerDataConnectionProperties properties) : base("azureDataExplorer")
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal AzureDataExplorerDataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureDataExplorerDataConnectionProperties properties) : base(kind, name, content, frequency, frequencyOffset, additionalBinaryDataProperties)
+        internal AzureDataExplorerDataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureDataExplorerDataConnectionProperties properties) : base(kind, name, content, frequency, frequencyOffset, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

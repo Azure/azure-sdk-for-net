@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Authentication.ApiKey
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ApiKeyClientHostExtensions
     {
         public static IClientBuilder AddApiKeyClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddApiKeyClient(this IHostApplicationBuilder host, string sectionName, Action<ApiKeyClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddApiKeyClient(this IHostApplicationBuilder host, string sectionName, Action<global::Authentication.ApiKey.ApiKeyClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedApiKeyClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedApiKeyClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ApiKeyClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedApiKeyClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Authentication.ApiKey.ApiKeyClientSettings> configureSettings) => throw null;
     }
 }

@@ -12,24 +12,24 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestImageContentPart"/>, <see cref="RequestTextContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="ResponseTextContentPart"/>, and <see cref="ResponseAudioContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.RequestImageContentPart"/>, <see cref="Azure.AI.VoiceLive.RequestTextContentPart"/>, <see cref="Azure.AI.VoiceLive.RequestAudioContentPart"/>, <see cref="Azure.AI.VoiceLive.ResponseTextContentPart"/>, and <see cref="Azure.AI.VoiceLive.ResponseAudioContentPart"/>.
     /// </summary>
     public abstract partial class VoiceLiveContentPart
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveContentPart"/>. </summary>
         /// <param name="type"></param>
         private protected VoiceLiveContentPart(ContentPartType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

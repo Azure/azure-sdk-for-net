@@ -15,9 +15,9 @@ using Azure.Core;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> Defines experiment metric metadata and computation details. </summary>
-    public partial class ExperimentMetric : IJsonModel<ExperimentMetric>
+    public partial class ExperimentMetric : IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>
     {
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetric"/> for deserialization. </summary>
         internal ExperimentMetric()
         {
         }
@@ -26,65 +26,65 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExperimentMetric(document.RootElement, options);
+                        return global::Azure.Analytics.OnlineExperimentation.ExperimentMetric.DeserializeExperimentMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetric)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetric)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentMetric)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExperimentMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetric IPersistableModel<ExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExperimentMetric IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="experimentMetric"> The <see cref="ExperimentMetric"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="experimentMetric"> The <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetric"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ExperimentMetric experimentMetric)
         {
-            if (experimentMetric == null)
+            if ((experimentMetric == null))
             {
                 return null;
             }
-            return RequestContent.Create(experimentMetric, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(experimentMetric, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExperimentMetric"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetric"/> from. </param>
         public static explicit operator ExperimentMetric(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExperimentMetric(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.OnlineExperimentation.ExperimentMetric.DeserializeExperimentMetric(document.RootElement, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExperimentMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -92,12 +92,12 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetric)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetric)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -112,7 +112,7 @@ namespace Azure.Analytics.OnlineExperimentation
             writer.WriteStartArray();
             foreach (string item in Categories)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -123,18 +123,18 @@ namespace Azure.Analytics.OnlineExperimentation
             writer.WritePropertyName("desiredDirection"u8);
             writer.WriteStringValue(DesiredDirection.ToString());
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
-            if (options.Format != "W")
+            writer.WriteObjectValue<ExperimentMetricDefinition>(Definition, options);
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -142,9 +142,9 @@ namespace Azure.Analytics.OnlineExperimentation
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -153,26 +153,26 @@ namespace Azure.Analytics.OnlineExperimentation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetric IJsonModel<ExperimentMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExperimentMetric IJsonModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExperimentMetric)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.ExperimentMetric)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExperimentMetric(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.OnlineExperimentation.ExperimentMetric.DeserializeExperimentMetric(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExperimentMetric DeserializeExperimentMetric(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -185,7 +185,7 @@ namespace Azure.Analytics.OnlineExperimentation
             ExperimentMetricDefinition definition = default;
             ETag eTag = default;
             DateTimeOffset lastModifiedAt = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -213,7 +213,7 @@ namespace Azure.Analytics.OnlineExperimentation
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -232,7 +232,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("definition"u8))
                 {
-                    definition = ExperimentMetricDefinition.DeserializeExperimentMetricDefinition(prop.Value, options);
+                    definition = global::Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition.DeserializeExperimentMetricDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
@@ -245,9 +245,9 @@ namespace Azure.Analytics.OnlineExperimentation
                     lastModifiedAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExperimentMetric(

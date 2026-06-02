@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class InputWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.InputWarning"/>. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         internal InputWarning(string code, string message)
@@ -25,12 +25,12 @@ namespace Azure.AI.Language.Conversations.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.InputWarning"/>. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputWarning(string code, string message, string targetRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputWarning(string code, string message, string targetRef, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

@@ -16,22 +16,22 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class ExperimentMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetric"/>. </summary>
         /// <param name="lifecycle"> Determines whether it is included in experiment analysis. </param>
         /// <param name="displayName"> A user-friendly display name for the experiment metric shown in reports and dashboards. </param>
         /// <param name="description"> A detailed description of the experiment metric. </param>
         /// <param name="categories"> Categories associated with the experiment metric. Used for organizing and filtering metrics. </param>
         /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
         /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="description"/>, <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="displayName"/>, <paramref name="description"/>, <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
         public ExperimentMetric(LifecycleStage lifecycle, string displayName, string description, IEnumerable<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(categories, nameof(categories));
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(displayName, nameof(displayName));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(categories, nameof(categories));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(definition, nameof(definition));
 
             Lifecycle = lifecycle;
             DisplayName = displayName;
@@ -41,7 +41,7 @@ namespace Azure.Analytics.OnlineExperimentation
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.ExperimentMetric"/>. </summary>
         /// <param name="id"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="lifecycle"> Determines whether it is included in experiment analysis. </param>
         /// <param name="displayName"> A user-friendly display name for the experiment metric shown in reports and dashboards. </param>
@@ -52,7 +52,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="eTag"> ETag of the experiment metric. </param>
         /// <param name="lastModifiedAt"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Lifecycle = lifecycle;

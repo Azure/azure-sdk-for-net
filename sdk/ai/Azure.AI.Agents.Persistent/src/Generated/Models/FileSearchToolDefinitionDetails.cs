@@ -14,21 +14,21 @@ namespace Azure.AI.Agents.Persistent
     public partial class FileSearchToolDefinitionDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolDefinitionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinitionDetails"/>. </summary>
         public FileSearchToolDefinitionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolDefinitionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinitionDetails"/>. </summary>
         /// <param name="maxNumResults">
         /// The maximum number of results the file search tool should output. The default is 20 for gpt-4* models and 5 for gpt-3.5-turbo. This number should be between 1 and 50 inclusive.
         /// Note that the file search tool may output fewer than `max_num_results` results. See the file search tool documentation for more information.
         /// </param>
         /// <param name="rankingOptions"> Ranking options for file search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolDefinitionDetails(int? maxNumResults, FileSearchRankingOptions rankingOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolDefinitionDetails(int? maxNumResults, FileSearchRankingOptions rankingOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MaxNumResults = maxNumResults;
             RankingOptions = rankingOptions;

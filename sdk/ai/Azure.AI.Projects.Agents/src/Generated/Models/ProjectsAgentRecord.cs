@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectsAgentRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="versions"> The latest version of the agent. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
             Versions = versions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentRecord"/>. </summary>
         /// <param name="object"> The object type, which is always 'agent'. </param>
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
@@ -35,9 +35,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             Id = id;
             Name = name;
             Versions = versions;

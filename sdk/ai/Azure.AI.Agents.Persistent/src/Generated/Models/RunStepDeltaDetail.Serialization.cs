@@ -13,57 +13,57 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// Represents a single run step detail item in a streaming run step's delta payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaToolCallObject"/>, <see cref="RunStepDeltaMCPObject"/>, and <see cref="RunStepDeltaOpenAPIObject"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownRunStepDeltaDetail))]
-    public abstract partial class RunStepDeltaDetail : IJsonModel<RunStepDeltaDetail>
+    [PersistableModelProxyAttribute(typeof(UnknownRunStepDeltaDetail))]
+    public abstract partial class RunStepDeltaDetail : IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepDeltaDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepDeltaDetail(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaDetail.DeserializeRunStepDeltaDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaDetail)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaDetail)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaDetail)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepDeltaDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaDetail IPersistableModel<RunStepDeltaDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStepDeltaDetail IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepDeltaDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepDeltaDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,14 +71,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaDetail)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaDetail)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -86,9 +86,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -97,26 +97,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepDeltaDetail IJsonModel<RunStepDeltaDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStepDeltaDetail IJsonModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepDeltaDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepDeltaDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaDetail)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepDeltaDetail)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepDeltaDetail(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepDeltaDetail.DeserializeRunStepDeltaDetail(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepDeltaDetail DeserializeRunStepDeltaDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -125,16 +125,16 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "message_creation":
-                        return RunStepDeltaMessageCreation.DeserializeRunStepDeltaMessageCreation(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation.DeserializeRunStepDeltaMessageCreation(element, options);
                     case "tool_calls":
-                        return RunStepDeltaToolCallObject.DeserializeRunStepDeltaToolCallObject(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject.DeserializeRunStepDeltaToolCallObject(element, options);
                     case "mcp":
-                        return RunStepDeltaMCPObject.DeserializeRunStepDeltaMCPObject(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaMCPObject.DeserializeRunStepDeltaMCPObject(element, options);
                     case "openapi":
-                        return RunStepDeltaOpenAPIObject.DeserializeRunStepDeltaOpenAPIObject(element, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject.DeserializeRunStepDeltaOpenAPIObject(element, options);
                 }
             }
-            return UnknownRunStepDeltaDetail.DeserializeUnknownRunStepDeltaDetail(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownRunStepDeltaDetail.DeserializeUnknownRunStepDeltaDetail(element, options);
         }
     }
 }

@@ -13,10 +13,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeSourceVectorizer : KnowledgeSourceVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.UnknownKnowledgeSourceVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeSourceVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

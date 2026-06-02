@@ -13,11 +13,11 @@ namespace Client.AlternateApiVersion.Service.Header
 {
     public partial class HeaderClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+        private const global::Client.AlternateApiVersion.Service.Header.HeaderClientOptions.ServiceVersion LatestVersion = global::Client.AlternateApiVersion.Service.Header.HeaderClientOptions.ServiceVersion.V2025_01_01;
 
-        public HeaderClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public HeaderClientOptions(global::Client.AlternateApiVersion.Service.Header.HeaderClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal HeaderClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

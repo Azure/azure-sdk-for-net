@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class ToolConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolConnection"/>. </summary>
         /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         public ToolConnection(string connectionId)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(connectionId, nameof(connectionId));
 
             ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolConnection"/>. </summary>
         /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolConnection(string connectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolConnection(string connectionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

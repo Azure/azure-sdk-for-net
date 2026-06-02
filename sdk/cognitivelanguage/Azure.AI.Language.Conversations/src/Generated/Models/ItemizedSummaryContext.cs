@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ItemizedSummaryContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ItemizedSummaryContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ItemizedSummaryContext"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Conversations.Models
             ConversationItemId = conversationItemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ItemizedSummaryContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ItemizedSummaryContext"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ItemizedSummaryContext(int offset, int length, string conversationItemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ItemizedSummaryContext(int offset, int length, string conversationItemId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Length = length;

@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportAssetSnapshotResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult"/>. </summary>
         internal ReportAssetSnapshotResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult"/>. </summary>
         /// <param name="displayName"> The name of the metric. </param>
         /// <param name="metric"> The unique metric name. </param>
         /// <param name="labelName"> The customer label that was filtered on, if one was provided. </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedAt, string description, AssetPageResult assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedAt, string description, AssetPageResult assets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metric = metric;

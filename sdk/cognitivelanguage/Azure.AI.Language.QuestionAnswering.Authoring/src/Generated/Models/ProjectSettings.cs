@@ -14,17 +14,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class ProjectSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings"/>. </summary>
         public ProjectSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings"/>. </summary>
         /// <param name="defaultAnswer"> Default Answer response when no good match is found in the knowledge base. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectSettings(string defaultAnswer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectSettings(string defaultAnswer, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DefaultAnswer = defaultAnswer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

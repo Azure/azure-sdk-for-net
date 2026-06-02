@@ -10,9 +10,9 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalUpdateAgentRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalUpdateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalUpdateAgentRequest"/>. </summary>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         internal InternalUpdateAgentRequest(ProjectsAgentDefinition definition)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalUpdateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalUpdateAgentRequest"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalUpdateAgentRequest(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalUpdateAgentRequest(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;

@@ -14,26 +14,26 @@ namespace Azure.AI.Translation.Text
     public partial class ReferenceTextPair
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReferenceTextPair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.ReferenceTextPair"/>. </summary>
         /// <param name="source"> Source reference sentence. </param>
         /// <param name="target"> Target reference sentence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="target"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="source"/> or <paramref name="target"/> is null. </exception>
         public ReferenceTextPair(string source, string target)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(target, nameof(target));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(source, nameof(source));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(target, nameof(target));
 
             Source = source;
             Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReferenceTextPair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.ReferenceTextPair"/>. </summary>
         /// <param name="source"> Source reference sentence. </param>
         /// <param name="target"> Target reference sentence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReferenceTextPair(string source, string target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReferenceTextPair(string source, string target, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Target = target;

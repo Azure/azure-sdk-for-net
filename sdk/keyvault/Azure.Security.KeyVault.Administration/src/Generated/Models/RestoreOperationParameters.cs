@@ -13,9 +13,9 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RestoreOperationParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         public RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore)
@@ -24,11 +24,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             FolderToRestore = folderToRestore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SasTokenParameters = sasTokenParameters;
             FolderToRestore = folderToRestore;

@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobQueued event. </summary>
     public partial class AcsRouterJobQueuedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobQueuedEventData"/>. </summary>
         internal AcsRouterJobQueuedEventData()
         {
-            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
-            RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
+            RequestedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobQueuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
-        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Priority = priority;
             AttachedWorkerSelectors = attachedWorkerSelectors;
@@ -42,9 +42,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? Priority { get; }
 
         /// <summary> Router Job Queued Attached Worker Selector. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
 
         /// <summary> Router Job Queued Requested Worker Selector. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
     }
 }

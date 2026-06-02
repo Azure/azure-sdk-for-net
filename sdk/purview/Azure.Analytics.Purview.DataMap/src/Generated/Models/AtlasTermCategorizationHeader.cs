@@ -14,21 +14,21 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasTermCategorizationHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTermCategorizationHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader"/>. </summary>
         public AtlasTermCategorizationHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTermCategorizationHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader"/>. </summary>
         /// <param name="categoryGuid"> The GUID of the category. </param>
         /// <param name="description"> The description of the record. </param>
         /// <param name="displayText"> The display text. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
         /// <param name="status"> The status of term relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTermCategorizationHeader(Guid? categoryGuid, string description, string displayText, Guid? relationGuid, AtlasTermRelationshipStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasTermCategorizationHeader(Guid? categoryGuid, string description, string displayText, Guid? relationGuid, AtlasTermRelationshipStatus? status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CategoryGuid = categoryGuid;
             Description = description;

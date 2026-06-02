@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT : Pageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT : Pageable<global::BasicTypeSpec.ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly int _numElements;
@@ -25,7 +25,7 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT(BasicTypeSpecClient client, int numElements, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT(BasicTypeSpecClient client, int numElements, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _numElements = numElements;
@@ -37,21 +37,21 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::BasicTypeSpec.ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkWithMaxPageResponse result = (ListWithHeaderNextLinkWithMaxPageResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
+                ListWithHeaderNextLinkWithMaxPageResponse result = ((ListWithHeaderNextLinkWithMaxPageResponse)response);
+                yield return global::Azure.Page<ThingModel>.FromValues(((IReadOnlyList<global::BasicTypeSpec.ThingModel>)result.Things), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if ((response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value)))
                 {
-                    nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
+                    nextPage = new global::System.Uri(value, global::System.UriKind.RelativeOrAbsolute);
                 }
                 else
                 {
@@ -63,10 +63,10 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

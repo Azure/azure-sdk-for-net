@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalCodeInterpreterToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalCodeInterpreterToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided by the model to the code interpreter tool. </param>
         /// <param name="outputs"> The outputs produced by the code interpreter tool back to the model in response to the tool call. </param>
-        internal InternalCodeInterpreterToolCallDetails(string input, IEnumerable<RunStepCodeInterpreterToolCallOutput> outputs)
+        internal InternalCodeInterpreterToolCallDetails(string input, IEnumerable<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput> outputs)
         {
             Input = input;
             Outputs = outputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalCodeInterpreterToolCallDetails"/>. </summary>
         /// <param name="input"> The input provided by the model to the code interpreter tool. </param>
         /// <param name="outputs"> The outputs produced by the code interpreter tool back to the model in response to the tool call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterToolCallDetails(string input, IList<RunStepCodeInterpreterToolCallOutput> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCodeInterpreterToolCallDetails(string input, IList<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Input = input;
             Outputs = outputs;
@@ -40,6 +40,6 @@ namespace Azure.AI.Agents.Persistent
         public string Input { get; }
 
         /// <summary> The outputs produced by the code interpreter tool back to the model in response to the tool call. </summary>
-        public IList<RunStepCodeInterpreterToolCallOutput> Outputs { get; }
+        public IList<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput> Outputs { get; }
     }
 }

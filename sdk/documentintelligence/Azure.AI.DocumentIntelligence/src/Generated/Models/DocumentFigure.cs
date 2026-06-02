@@ -15,19 +15,19 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentFigure
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFigure"/>. </summary>
         /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
-        internal DocumentFigure(IEnumerable<DocumentSpan> spans)
+        internal DocumentFigure(IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
             Elements = new ChangeTrackingList<string>();
-            Footnotes = new ChangeTrackingList<DocumentFootnote>();
+            Footnotes = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFigure"/>. </summary>
         /// <param name="boundingRegions"> Bounding regions covering the figure. </param>
         /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
         /// <param name="id"> Figure ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFigure(IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoundingRegions = boundingRegions;
             Spans = spans;
@@ -47,10 +47,10 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Bounding regions covering the figure. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the figure in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Child elements of the figure, excluding any caption or footnotes. </summary>
         public IReadOnlyList<string> Elements { get; }
@@ -59,7 +59,7 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentCaption Caption { get; }
 
         /// <summary> List of footnotes associated with the figure. </summary>
-        public IReadOnlyList<DocumentFootnote> Footnotes { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFootnote> Footnotes { get; }
 
         /// <summary> Figure ID. </summary>
         public string Id { get; }

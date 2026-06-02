@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class SessionUpdateErrorDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateErrorDetails"/>. </summary>
         /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
         /// <param name="message"> A human-readable error message. </param>
         internal SessionUpdateErrorDetails(string @type, string message)
@@ -25,14 +25,14 @@ namespace Azure.AI.VoiceLive
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateErrorDetails"/>. </summary>
         /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
         /// <param name="code"> Error code, if any. </param>
         /// <param name="message"> A human-readable error message. </param>
         /// <param name="param"> Parameter related to the error, if any. </param>
         /// <param name="eventId"> The event_id of the client event that caused the error, if applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionUpdateErrorDetails(string @type, string code, string message, string @param, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionUpdateErrorDetails(string @type, string code, string message, string @param, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Code = code;

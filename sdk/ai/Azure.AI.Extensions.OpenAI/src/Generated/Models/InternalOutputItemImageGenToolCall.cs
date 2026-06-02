@@ -9,16 +9,16 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemImageGenToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemImageGenToolCall"/>. </summary>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        public InternalOutputItemImageGenToolCall(InputItemImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
+        public InternalOutputItemImageGenToolCall(InputItemImageGenToolCallStatus status, string result) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.ImageGenerationCall)
         {
             Status = status;
             Result = result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemImageGenToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;

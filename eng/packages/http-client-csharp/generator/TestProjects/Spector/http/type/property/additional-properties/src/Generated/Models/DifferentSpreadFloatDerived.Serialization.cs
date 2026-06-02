@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class DifferentSpreadFloatDerived : DifferentSpreadFloatRecord, IJsonModel<DifferentSpreadFloatDerived>
+    public partial class DifferentSpreadFloatDerived : DifferentSpreadFloatRecord, IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>
     {
         internal DifferentSpreadFloatDerived() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<DifferentSpreadFloatDerived>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>.Write(ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadFloatDerived IPersistableModel<DifferentSpreadFloatDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadFloatDerived IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<DifferentSpreadFloatDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="differentSpreadFloatDerived"> The <see cref="DifferentSpreadFloatDerived"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="differentSpreadFloatDerived"> The <see cref="global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadFloatDerived differentSpreadFloatDerived) => throw null;
 
         public static explicit operator DifferentSpreadFloatDerived(Response response) => throw null;
 
-        void IJsonModel<DifferentSpreadFloatDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadFloatDerived IJsonModel<DifferentSpreadFloatDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadFloatDerived IJsonModel<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override DifferentSpreadFloatRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

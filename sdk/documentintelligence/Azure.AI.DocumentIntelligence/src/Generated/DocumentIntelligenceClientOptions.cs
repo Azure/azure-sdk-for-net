@@ -14,23 +14,23 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Client options for clients in this library. </summary>
     public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;
+        private const global::Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion LatestVersion = global::Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion.V2024_11_30;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal DocumentIntelligenceClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-11-30";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

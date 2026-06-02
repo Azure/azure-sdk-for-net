@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AnalyzeConversationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationResult"/>. </summary>
         /// <param name="query"> The conversation utterance given by the caller. </param>
         /// <param name="prediction"> The prediction result of a conversation project. </param>
         internal AnalyzeConversationResult(string query, PredictionBase prediction)
@@ -25,12 +25,12 @@ namespace Azure.AI.Language.Conversations.Models
             Prediction = prediction;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationResult"/>. </summary>
         /// <param name="query"> The conversation utterance given by the caller. </param>
         /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
         /// <param name="prediction"> The prediction result of a conversation project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationResult(string query, string detectedLanguage, PredictionBase prediction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationResult(string query, string detectedLanguage, PredictionBase prediction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             DetectedLanguage = detectedLanguage;

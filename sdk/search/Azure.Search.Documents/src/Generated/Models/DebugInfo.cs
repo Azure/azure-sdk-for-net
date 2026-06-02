@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Models
     public partial class DebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.DebugInfo"/>. </summary>
         public DebugInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.DebugInfo"/>. </summary>
         /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DebugInfo(QueryRewritesDebugInfo queryRewrites, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DebugInfo(QueryRewritesDebugInfo queryRewrites, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QueryRewrites = queryRewrites;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationalAIIntent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIIntent"/>. </summary>
         /// <param name="name"> The name of the detected intent. </param>
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
-        internal ConversationalAIIntent(string name, string @type, IEnumerable<ConversationItemRange> conversationItemRanges, IEnumerable<ConversationalAIEntity> entities)
+        internal ConversationalAIIntent(string name, string @type, IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationItemRange> conversationItemRanges, IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity> entities)
         {
             Name = name;
             Type = @type;
@@ -30,13 +30,13 @@ namespace Azure.AI.Language.Conversations.Models
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIIntent"/>. </summary>
         /// <param name="name"> The name of the detected intent. </param>
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIIntent(string name, string @type, IList<ConversationItemRange> conversationItemRanges, IList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalAIIntent(string name, string @type, IList<global::Azure.AI.Language.Conversations.Models.ConversationItemRange> conversationItemRanges, IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -52,9 +52,9 @@ namespace Azure.AI.Language.Conversations.Models
         public string Type { get; }
 
         /// <summary> The ranges of conversation items where this intent was identified. </summary>
-        public IList<ConversationItemRange> ConversationItemRanges { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationItemRange> ConversationItemRanges { get; }
 
         /// <summary> The entities associated with this intent. </summary>
-        public IList<ConversationalAIEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity> Entities { get; }
     }
 }

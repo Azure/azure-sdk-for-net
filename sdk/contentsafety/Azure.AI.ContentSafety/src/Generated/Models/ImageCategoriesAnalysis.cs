@@ -14,20 +14,20 @@ namespace Azure.AI.ContentSafety
     public partial class ImageCategoriesAnalysis
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ImageCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The image analysis category. </param>
         internal ImageCategoriesAnalysis(ImageCategory category)
         {
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ImageCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The image analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageCategoriesAnalysis(ImageCategory category, int? severity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageCategoriesAnalysis(ImageCategory category, int? severity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Severity = severity;

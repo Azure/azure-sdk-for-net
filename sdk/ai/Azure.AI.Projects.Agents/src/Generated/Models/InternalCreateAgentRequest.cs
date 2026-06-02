@@ -10,9 +10,9 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalCreateAgentRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Metadata = metadata;

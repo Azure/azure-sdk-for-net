@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> OutputFileUploadCondition enums. </summary>
-    public readonly partial struct OutputFileUploadCondition : IEquatable<OutputFileUploadCondition>
+    public readonly partial struct OutputFileUploadCondition : IEquatable<global::Azure.Compute.Batch.OutputFileUploadCondition>
     {
         private readonly string _value;
         /// <summary> Upload the file(s) only after the Task process exits with an exit code of 0. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> Upload the file(s) after the Task process exits, no matter what the exit code was. </summary>
         private const string TaskCompletionValue = "taskcompletion";
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileUploadCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileUploadCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OutputFileUploadCondition(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> Upload the file(s) after the Task process exits, no matter what the exit code was. </summary>
         public static OutputFileUploadCondition TaskCompletion { get; } = new OutputFileUploadCondition(TaskCompletionValue);
 
-        /// <summary> Determines if two <see cref="OutputFileUploadCondition"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.OutputFileUploadCondition"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OutputFileUploadCondition left, OutputFileUploadCondition right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OutputFileUploadCondition"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.OutputFileUploadCondition"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OutputFileUploadCondition left, OutputFileUploadCondition right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OutputFileUploadCondition"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.OutputFileUploadCondition"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OutputFileUploadCondition(string value) => new OutputFileUploadCondition(value);
 
-        /// <summary> Converts a string to a <see cref="OutputFileUploadCondition"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.OutputFileUploadCondition"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OutputFileUploadCondition?(string value) => value == null ? null : new OutputFileUploadCondition(value);
+        public static implicit operator OutputFileUploadCondition?(string value) => (value == null) ? null : new OutputFileUploadCondition(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OutputFileUploadCondition other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OutputFileUploadCondition other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OutputFileUploadCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OutputFileUploadCondition other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

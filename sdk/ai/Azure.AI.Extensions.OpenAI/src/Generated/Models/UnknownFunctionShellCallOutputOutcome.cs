@@ -9,10 +9,10 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class UnknownFunctionShellCallOutputOutcome : FunctionShellCallOutputOutcome
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellCallOutputOutcome"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.UnknownFunctionShellCallOutputOutcome"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFunctionShellCallOutputOutcome(FunctionShellCallOutputOutcomeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownFunctionShellCallOutputOutcome(FunctionShellCallOutputOutcomeType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

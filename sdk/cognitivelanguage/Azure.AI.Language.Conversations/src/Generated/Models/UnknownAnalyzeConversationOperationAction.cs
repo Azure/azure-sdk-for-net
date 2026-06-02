@@ -12,11 +12,11 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownAnalyzeConversationOperationAction : AnalyzeConversationOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownAnalyzeConversationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(name, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

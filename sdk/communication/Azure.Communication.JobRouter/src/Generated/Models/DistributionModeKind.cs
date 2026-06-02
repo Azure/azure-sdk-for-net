@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Discriminators for supported distribution mode types. </summary>
-    public readonly partial struct DistributionModeKind : IEquatable<DistributionModeKind>
+    public readonly partial struct DistributionModeKind : IEquatable<global::Azure.Communication.JobRouter.DistributionModeKind>
     {
         private readonly string _value;
         /// <summary> Discriminator value for BestWorkerMode. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for RoundRobinMode. </summary>
         private const string RoundRobinValue = "roundRobin";
 
-        /// <summary> Initializes a new instance of <see cref="DistributionModeKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.DistributionModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DistributionModeKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for RoundRobinMode. </summary>
         public static DistributionModeKind RoundRobin { get; } = new DistributionModeKind(RoundRobinValue);
 
-        /// <summary> Determines if two <see cref="DistributionModeKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.DistributionModeKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DistributionModeKind left, DistributionModeKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DistributionModeKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.DistributionModeKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DistributionModeKind left, DistributionModeKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DistributionModeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.DistributionModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DistributionModeKind(string value) => new DistributionModeKind(value);
 
-        /// <summary> Converts a string to a <see cref="DistributionModeKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.DistributionModeKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributionModeKind?(string value) => value == null ? null : new DistributionModeKind(value);
+        public static implicit operator DistributionModeKind?(string value) => (value == null) ? null : new DistributionModeKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DistributionModeKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DistributionModeKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DistributionModeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DistributionModeKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

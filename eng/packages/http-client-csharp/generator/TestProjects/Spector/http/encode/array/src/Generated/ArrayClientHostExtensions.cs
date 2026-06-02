@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Encode._Array
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ArrayClientHostExtensions
     {
         public static IClientBuilder AddArrayClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddArrayClient(this IHostApplicationBuilder host, string sectionName, Action<ArrayClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddArrayClient(this IHostApplicationBuilder host, string sectionName, Action<global::Encode._Array.ArrayClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedArrayClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedArrayClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ArrayClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedArrayClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Encode._Array.ArrayClientSettings> configureSettings) => throw null;
     }
 }

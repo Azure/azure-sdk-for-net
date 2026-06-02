@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Compute.Batch
 {
     /// <summary> Parameters for creating an Azure Batch Job Schedule. </summary>
-    public partial class BatchJobScheduleCreateOptions : IJsonModel<BatchJobScheduleCreateOptions>
+    public partial class BatchJobScheduleCreateOptions : IJsonModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleCreateOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleCreateOptions"/> for deserialization. </summary>
         internal BatchJobScheduleCreateOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchJobScheduleCreateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchJobScheduleCreateOptions(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchJobScheduleCreateOptions.DeserializeBatchJobScheduleCreateOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchJobScheduleCreateOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchJobScheduleCreateOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchJobScheduleCreateOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchJobScheduleCreateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJobScheduleCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobScheduleCreateOptions IPersistableModel<BatchJobScheduleCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchJobScheduleCreateOptions IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJobScheduleCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="batchJobScheduleCreateOptions"> The <see cref="BatchJobScheduleCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="batchJobScheduleCreateOptions"> The <see cref="global::Azure.Compute.Batch.BatchJobScheduleCreateOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BatchJobScheduleCreateOptions batchJobScheduleCreateOptions)
         {
-            if (batchJobScheduleCreateOptions == null)
+            if ((batchJobScheduleCreateOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(batchJobScheduleCreateOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(batchJobScheduleCreateOptions, global::Azure.Compute.Batch.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchJobScheduleCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,33 +84,33 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchJobScheduleCreateOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchJobScheduleCreateOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
+            writer.WriteObjectValue<BatchJobScheduleConfiguration>(Schedule, options);
             writer.WritePropertyName("jobSpecification"u8);
-            writer.WriteObjectValue(JobSpecification, options);
-            if (Optional.IsCollectionDefined(Metadata))
+            writer.WriteObjectValue<BatchJobSpecification>(JobSpecification, options);
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (BatchMetadataItem item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BatchMetadataItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -118,9 +118,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -129,26 +129,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobScheduleCreateOptions IJsonModel<BatchJobScheduleCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchJobScheduleCreateOptions IJsonModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchJobScheduleCreateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchJobScheduleCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchJobScheduleCreateOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchJobScheduleCreateOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchJobScheduleCreateOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchJobScheduleCreateOptions.DeserializeBatchJobScheduleCreateOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchJobScheduleCreateOptions DeserializeBatchJobScheduleCreateOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -156,8 +156,8 @@ namespace Azure.Compute.Batch
             string displayName = default;
             BatchJobScheduleConfiguration schedule = default;
             BatchJobSpecification jobSpecification = default;
-            IList<BatchMetadataItem> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,31 +172,31 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
-                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(prop.Value, options);
+                    schedule = global::Azure.Compute.Batch.BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("jobSpecification"u8))
                 {
-                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(prop.Value, options);
+                    jobSpecification = global::Azure.Compute.Batch.BatchJobSpecification.DeserializeBatchJobSpecification(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<global::Azure.Compute.Batch.BatchMetadataItem> array = new List<global::Azure.Compute.Batch.BatchMetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(global::Azure.Compute.Batch.BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchJobScheduleCreateOptions(
@@ -204,7 +204,7 @@ namespace Azure.Compute.Batch
                 displayName,
                 schedule,
                 jobSpecification,
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                (metadata ?? new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>()),
                 additionalBinaryDataProperties);
         }
     }

@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryEventTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="repository"> The repository name. </param>
         internal ContainerRegistryEventTarget(string mediaType, string repository)
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Repository = repository;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="url"> The direct URL to the content. </param>
         /// <param name="tag"> The tag name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MediaType = mediaType;
             Size = size;

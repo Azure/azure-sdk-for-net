@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageAnalysisResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult"/>. </summary>
         /// <param name="metadata"> Metadata associated with the analyzed image. </param>
         /// <param name="modelVersion"> The cloud AI model used for the analysis. </param>
         internal ImageAnalysisResult(ImageMetadata metadata, string modelVersion)
@@ -25,7 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult"/>. </summary>
         /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>
         /// <param name="denseCaptions">
         /// The up to 10 generated phrases, the first describing the content of the whole image,
@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="tags"> A list of content tags in the analyzed image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Caption = caption;
             DenseCaptions = denseCaptions;

@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedEntitySublist
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntitySublist"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist"/>. </summary>
         public TextAuthoringExportedEntitySublist()
         {
-            Synonyms = new ChangeTrackingList<TextAuthoringExportedEntityListSynonym>();
+            Synonyms = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntitySublist"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist"/>. </summary>
         /// <param name="listKey"> The key of the sub-list. </param>
         /// <param name="synonyms"> The phrases of that correspond to the sub-list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedEntitySublist(string listKey, IList<TextAuthoringExportedEntityListSynonym> synonyms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedEntitySublist(string listKey, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym> synonyms, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ListKey = listKey;
             Synonyms = synonyms;
@@ -37,6 +37,6 @@ namespace Azure.AI.Language.Text.Authoring
         public string ListKey { get; set; }
 
         /// <summary> The phrases of that correspond to the sub-list. </summary>
-        public IList<TextAuthoringExportedEntityListSynonym> Synonyms { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym> Synonyms { get; }
     }
 }

@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Prompt-based evaluator. </summary>
-    public partial class PromptBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<PromptBasedEvaluatorDefinition>
+    public partial class PromptBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="PromptBasedEvaluatorDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition"/> for deserialization. </summary>
         internal PromptBasedEvaluatorDefinition()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePromptBasedEvaluatorDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition.DeserializePromptBasedEvaluatorDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PromptBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PromptBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PromptBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PromptBasedEvaluatorDefinition IPersistableModel<PromptBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromptBasedEvaluatorDefinition)PersistableModelCreateCore(data, options);
+        PromptBasedEvaluatorDefinition IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((PromptBasedEvaluatorDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PromptBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PromptBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,10 +71,10 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PromptBasedEvaluatorDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("prompt_text"u8);
@@ -83,34 +83,34 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PromptBasedEvaluatorDefinition IJsonModel<PromptBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PromptBasedEvaluatorDefinition)JsonModelCreateCore(ref reader, options);
+        PromptBasedEvaluatorDefinition IJsonModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((PromptBasedEvaluatorDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PromptBasedEvaluatorDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePromptBasedEvaluatorDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition.DeserializePromptBasedEvaluatorDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PromptBasedEvaluatorDefinition DeserializePromptBasedEvaluatorDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             EvaluatorDefinitionType @type = default;
             BinaryData initParameters = default;
             BinaryData dataSchema = default;
-            IDictionary<string, EvaluatorMetric> metrics = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string promptText = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,32 +121,32 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("init_parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    initParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    initParameters = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("data_schema"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dataSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    dataSchema = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, EvaluatorMetric> dictionary = new Dictionary<string, EvaluatorMetric>();
+                    Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> dictionary = new Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Evaluation.EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
                     }
                     metrics = dictionary;
                     continue;
@@ -156,16 +156,16 @@ namespace Azure.AI.Projects.Evaluation
                     promptText = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PromptBasedEvaluatorDefinition(
                 @type,
                 initParameters,
                 dataSchema,
-                metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
+                (metrics ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>()),
                 additionalBinaryDataProperties,
                 promptText);
         }

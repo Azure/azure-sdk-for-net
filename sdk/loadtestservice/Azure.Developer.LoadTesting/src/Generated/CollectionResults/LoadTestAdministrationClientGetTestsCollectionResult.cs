@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    internal partial class LoadTestAdministrationClientGetTestsCollectionResult : Pageable<BinaryData>
+    internal partial class LoadTestAdministrationClientGetTestsCollectionResult : Pageable<global::System.BinaryData>
     {
         private readonly LoadTestAdministrationClient _client;
         private readonly string _orderby;
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetTestsCollectionResult(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTestsCollectionResult(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _orderby = @orderby;
@@ -57,25 +57,25 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestAdministrationClientGetTestsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedTest result = (PagedTest)response;
-                List<BinaryData> items = new List<BinaryData>();
+                PagedTest result = ((PagedTest)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureDeveloperLoadTestingContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.WireOptions, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return global::Azure.Page<BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -85,10 +85,10 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestsRequest(nextLink, pageSize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetTestsRequest(nextLink, pageSize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

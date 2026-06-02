@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// Type of vector storage asset. Asset type may be a uri_asset, in this case it should contain asset URI ID,
     /// in the case of id_asset it should contain the data ID.
     /// </summary>
-    public readonly partial struct VectorStoreDataSourceAssetType : IEquatable<VectorStoreDataSourceAssetType>
+    public readonly partial struct VectorStoreDataSourceAssetType : IEquatable<global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType>
     {
         private readonly string _value;
         /// <summary> Azure URI. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The data ID. </summary>
         private const string IdAssetValue = "id_asset";
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreDataSourceAssetType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorStoreDataSourceAssetType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -38,34 +38,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The data ID. </summary>
         public static VectorStoreDataSourceAssetType IdAsset { get; } = new VectorStoreDataSourceAssetType(IdAssetValue);
 
-        /// <summary> Determines if two <see cref="VectorStoreDataSourceAssetType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorStoreDataSourceAssetType left, VectorStoreDataSourceAssetType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorStoreDataSourceAssetType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorStoreDataSourceAssetType left, VectorStoreDataSourceAssetType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreDataSourceAssetType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorStoreDataSourceAssetType(string value) => new VectorStoreDataSourceAssetType(value);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreDataSourceAssetType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSourceAssetType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreDataSourceAssetType?(string value) => value == null ? null : new VectorStoreDataSourceAssetType(value);
+        public static implicit operator VectorStoreDataSourceAssetType?(string value) => (value == null) ? null : new VectorStoreDataSourceAssetType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorStoreDataSourceAssetType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorStoreDataSourceAssetType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorStoreDataSourceAssetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorStoreDataSourceAssetType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

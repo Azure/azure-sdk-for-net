@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The result object for the analyze task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AnalyzeTextEntityLinkingResult"/>, <see cref="AnalyzeTextEntitiesResult"/>, <see cref="AnalyzeTextKeyPhraseResult"/>, <see cref="AnalyzeTextLanguageDetectionResult"/>, <see cref="AnalyzeTextPiiResult"/>, and <see cref="AnalyzeTextSentimentResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextEntitiesResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextPiiResult"/>, and <see cref="Azure.AI.Language.Text.AnalyzeTextSentimentResult"/>.
     /// </summary>
     public abstract partial class AnalyzeTextResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         private protected AnalyzeTextResult(AnalyzeTextResultsKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

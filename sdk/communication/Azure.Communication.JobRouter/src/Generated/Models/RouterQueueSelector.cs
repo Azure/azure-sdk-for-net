@@ -14,9 +14,9 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueueSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueueSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         internal RouterQueueSelector(string key, LabelOperator labelOperator)
@@ -25,12 +25,12 @@ namespace Azure.Communication.JobRouter
             LabelOperator = labelOperator;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueueSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterQueueSelector(string key, LabelOperator labelOperator, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterQueueSelector(string key, LabelOperator labelOperator, BinaryData value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             LabelOperator = labelOperator;

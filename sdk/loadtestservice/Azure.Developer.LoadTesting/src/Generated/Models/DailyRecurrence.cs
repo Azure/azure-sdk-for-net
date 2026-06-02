@@ -13,19 +13,19 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence model when frequency is set as Daily. </summary>
     public partial class DailyRecurrence : LoadTestingRecurrence
     {
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.DailyRecurrence"/>. </summary>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        public DailyRecurrence(int interval) : base(Frequency.Daily)
+        public DailyRecurrence(int interval) : base(global::Azure.Developer.LoadTesting.Frequency.Daily)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.DailyRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        internal DailyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
+        internal DailyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             Interval = interval;
         }

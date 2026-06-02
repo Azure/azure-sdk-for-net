@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerRuntime
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexerRuntime"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerRuntime"/>. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
         /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
@@ -27,13 +27,13 @@ namespace Azure.Search.Documents.Indexes.Models
             EndingTime = endingTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexerRuntime"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerRuntime"/>. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
         /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerRuntime(long usedSeconds, long? remainingSeconds, DateTimeOffset beginningTime, DateTimeOffset endingTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerRuntime(long usedSeconds, long? remainingSeconds, DateTimeOffset beginningTime, DateTimeOffset endingTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UsedSeconds = usedSeconds;
             RemainingSeconds = remainingSeconds;

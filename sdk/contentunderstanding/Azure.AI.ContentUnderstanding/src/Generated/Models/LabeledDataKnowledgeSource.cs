@@ -13,26 +13,26 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Labeled data knowledge source. </summary>
     public partial class LabeledDataKnowledgeSource : KnowledgeSource
     {
-        /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/>. </summary>
         /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileListPath"/> is null. </exception>
-        public LabeledDataKnowledgeSource(Uri containerUri, string fileListPath) : base(KnowledgeSourceKind.LabeledData)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileListPath"/> is null. </exception>
+        public LabeledDataKnowledgeSource(global::System.Uri containerUri, string fileListPath) : base(global::Azure.AI.ContentUnderstanding.KnowledgeSourceKind.LabeledData)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
-            Argument.AssertNotNull(fileListPath, nameof(fileListPath));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(containerUri, nameof(containerUri));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(fileListPath, nameof(fileListPath));
 
             ContainerUri = containerUri;
             FileListPath = fileListPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/>. </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="prefix"> An optional prefix to filter blobs within the container. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
-        internal LabeledDataKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri containerUri, string prefix, string fileListPath) : base(kind, additionalBinaryDataProperties)
+        internal LabeledDataKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri containerUri, string prefix, string fileListPath) : base(kind, additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             Prefix = prefix;
@@ -40,7 +40,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> The URL of the blob container containing labeled data. </summary>
-        public Uri ContainerUri { get; set; }
+        public global::System.Uri ContainerUri { get; set; }
 
         /// <summary> An optional prefix to filter blobs within the container. </summary>
         public string Prefix { get; set; }

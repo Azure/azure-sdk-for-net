@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Documentation._Lists
 {
-    public partial class BulletPointsModel : IJsonModel<BulletPointsModel>
+    public partial class BulletPointsModel : IJsonModel<global::Documentation._Lists.BulletPointsModel>
     {
         internal BulletPointsModel() => throw null;
 
@@ -19,17 +19,17 @@ namespace Documentation._Lists
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<BulletPointsModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Documentation._Lists.BulletPointsModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BulletPointsModel IPersistableModel<BulletPointsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BulletPointsModel IPersistableModel<global::Documentation._Lists.BulletPointsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<BulletPointsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Documentation._Lists.BulletPointsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<BulletPointsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Documentation._Lists.BulletPointsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        BulletPointsModel IJsonModel<BulletPointsModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        BulletPointsModel IJsonModel<global::Documentation._Lists.BulletPointsModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BulletPointsModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

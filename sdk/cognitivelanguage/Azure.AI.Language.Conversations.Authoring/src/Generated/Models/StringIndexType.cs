@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    public readonly partial struct StringIndexType : IEquatable<global::Azure.AI.Language.Conversations.Authoring.StringIndexType>
     {
         private readonly string _value;
         /// <summary> The offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         private const string Utf8CodeUnitValue = "Utf8CodeUnit";
         private const string Utf32CodeUnitValue = "Utf32CodeUnit";
 
-        /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.StringIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -38,34 +38,34 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Gets the Utf32CodeUnit. </summary>
         public static StringIndexType Utf32CodeUnit { get; } = new StringIndexType(Utf32CodeUnitValue);
 
-        /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.StringIndexType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StringIndexType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.StringIndexType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StringIndexType left, StringIndexType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.StringIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StringIndexType(string value) => new StringIndexType(value);
 
-        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.StringIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StringIndexType?(string value) => value == null ? null : new StringIndexType(value);
+        public static implicit operator StringIndexType?(string value) => (value == null) ? null : new StringIndexType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StringIndexType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StringIndexType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StringIndexType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StringIndexType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

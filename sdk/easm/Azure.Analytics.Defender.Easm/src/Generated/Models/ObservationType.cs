@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A list of observation types. </summary>
-    public readonly partial struct ObservationType : IEquatable<ObservationType>
+    public readonly partial struct ObservationType : IEquatable<global::Azure.Analytics.Defender.Easm.ObservationType>
     {
         private readonly string _value;
         /// <summary> common vulnerabilities and exposures. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> insight. </summary>
         private const string InsightValue = "insight";
 
-        /// <summary> Initializes a new instance of <see cref="ObservationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ObservationType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> insight. </summary>
         public static ObservationType Insight { get; } = new ObservationType(InsightValue);
 
-        /// <summary> Determines if two <see cref="ObservationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.ObservationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ObservationType left, ObservationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ObservationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.ObservationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ObservationType left, ObservationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ObservationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.ObservationType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ObservationType(string value) => new ObservationType(value);
 
-        /// <summary> Converts a string to a <see cref="ObservationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.ObservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ObservationType?(string value) => value == null ? null : new ObservationType(value);
+        public static implicit operator ObservationType?(string value) => (value == null) ? null : new ObservationType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ObservationType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ObservationType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ObservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ObservationType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

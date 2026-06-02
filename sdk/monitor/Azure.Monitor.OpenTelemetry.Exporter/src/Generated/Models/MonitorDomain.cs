@@ -14,21 +14,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal abstract partial class MonitorDomain
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
         private protected MonitorDomain(int version)
         {
             Version = version;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
-        internal MonitorDomain(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties)
+        internal MonitorDomain(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Version = version;
             Kind = kind;
@@ -42,6 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal MonitorDomainKind Kind { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

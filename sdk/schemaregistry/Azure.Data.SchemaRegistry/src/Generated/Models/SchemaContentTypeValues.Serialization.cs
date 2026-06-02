@@ -14,31 +14,31 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SchemaContentTypeValues value) => value switch
         {
-            SchemaContentTypeValues.Avro => "application/json; serialization=Avro",
-            SchemaContentTypeValues.Json => "application/json; serialization=Json",
-            SchemaContentTypeValues.Custom => "text/plain; charset=utf-8",
-            SchemaContentTypeValues.Protobuf => "text/vnd.ms.protobuf",
+            global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Avro => "application/json; serialization=Avro",
+            global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Json => "application/json; serialization=Json",
+            global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Custom => "text/plain; charset=utf-8",
+            global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Protobuf => "text/vnd.ms.protobuf",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SchemaContentTypeValues value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SchemaContentTypeValues ToSchemaContentTypeValues(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/json; serialization=Avro"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "application/json; serialization=Avro"))
             {
-                return SchemaContentTypeValues.Avro;
+                return global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Avro;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/json; serialization=Json"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "application/json; serialization=Json"))
             {
-                return SchemaContentTypeValues.Json;
+                return global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Json;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text/plain; charset=utf-8"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "text/plain; charset=utf-8"))
             {
-                return SchemaContentTypeValues.Custom;
+                return global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Custom;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text/vnd.ms.protobuf"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "text/vnd.ms.protobuf"))
             {
-                return SchemaContentTypeValues.Protobuf;
+                return global::Azure.Data.SchemaRegistry.Models.SchemaContentTypeValues.Protobuf;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SchemaContentTypeValues value.");
         }

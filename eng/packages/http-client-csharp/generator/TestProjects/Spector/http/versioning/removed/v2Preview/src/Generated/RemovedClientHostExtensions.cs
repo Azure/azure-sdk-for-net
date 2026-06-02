@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.Removed
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RemovedClientHostExtensions
     {
         public static IClientBuilder AddRemovedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRemovedClient(this IHostApplicationBuilder host, string sectionName, Action<RemovedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRemovedClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.Removed.RemovedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRemovedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRemovedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RemovedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRemovedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.Removed.RemovedClientSettings> configureSettings) => throw null;
     }
 }

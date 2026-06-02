@@ -27,22 +27,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":receive", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxEvents != null)
+            if ((maxEvents != null))
             {
-                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents), true);
+                uri.AppendQuery("maxEvents", global::Azure.Messaging.EventGrid.Namespaces.TypeFormatters.ConvertToString(maxEvents), true);
             }
-            if (maxWaitTime != null)
+            if ((maxWaitTime != null))
             {
-                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("maxWaitTime", global::Azure.Messaging.EventGrid.Namespaces.TypeFormatters.ConvertToString(maxWaitTime, global::Azure.Messaging.EventGrid.Namespaces.SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -56,14 +56,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":acknowledge", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -79,18 +79,18 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":release", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (releaseDelayInSeconds != null)
+            if ((releaseDelayInSeconds != null))
             {
                 uri.AppendQuery("releaseDelayInSeconds", releaseDelayInSeconds, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -106,14 +106,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":reject", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -129,14 +129,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":renewLock", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

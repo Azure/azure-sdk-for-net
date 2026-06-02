@@ -18,9 +18,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> The QuestionAnsweringAuthoringClient. </summary>
     public partial class QuestionAnsweringAuthoringClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient for mocking. </summary>
@@ -31,8 +31,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringAuthoringClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringAuthoringClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringAuthoringClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal QuestionAnsweringAuthoringClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, QuestionAnsweringAuthoringClientOptions options)
+        internal QuestionAnsweringAuthoringClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, QuestionAnsweringAuthoringClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new QuestionAnsweringAuthoringClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -63,15 +63,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringAuthoringClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringAuthoringClient(global::System.Uri endpoint, AzureKeyCredential credential, QuestionAnsweringAuthoringClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient from a <see cref="QuestionAnsweringAuthoringClientSettings"/>. </summary>
         /// <param name="settings"> The settings for QuestionAnsweringAuthoringClient. </param>
-        [Experimental("SCME0002")]
-        public QuestionAnsweringAuthoringClient(QuestionAnsweringAuthoringClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public QuestionAnsweringAuthoringClient(QuestionAnsweringAuthoringClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", global::System.StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
         {
         }
 
@@ -93,9 +93,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(
                 this,
@@ -118,9 +118,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(
                 this,
@@ -136,8 +136,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(
                 this,
@@ -153,8 +153,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(
                 this,
@@ -175,9 +175,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProjectDetails(string projectName, RequestContext context)
         {
@@ -185,9 +185,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
+                using HttpMessage message = this.CreateGetProjectDetailsRequest(projectName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -207,19 +207,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetProjectDetailsAsync(string projectName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetProjectDetails");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
+                using HttpMessage message = this.CreateGetProjectDetailsRequest(projectName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -232,29 +232,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Get the requested project metadata. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringProject> GetProjectDetails(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject> GetProjectDetails(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            Response result = GetProjectDetails(projectName, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringProject)result, result);
+            Response result = this.GetProjectDetails(projectName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringProject)result), result);
         }
 
         /// <summary> Get the requested project metadata. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringProject>> GetProjectDetailsAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject>> GetProjectDetailsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            Response result = await GetProjectDetailsAsync(projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringProject)result, result);
+            Response result = await this.GetProjectDetailsAsync(projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringProject)result), result);
         }
 
         /// <summary>
@@ -268,9 +268,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
@@ -278,10 +278,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                using HttpMessage message = this.CreateCreateProjectRequest(projectName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -302,20 +302,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.CreateProject");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                using HttpMessage message = this.CreateCreateProjectRequest(projectName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -329,8 +329,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context)
         {
@@ -338,10 +338,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteProjectRequest(projectName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -354,19 +354,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeleteProject");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteProjectRequest(projectName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProjectAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -379,26 +379,26 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return DeleteProject(waitUntil, projectName, cancellationToken.ToRequestContext());
+            return this.DeleteProject(waitUntil, projectName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete the project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await DeleteProjectAsync(waitUntil, projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteProjectAsync(waitUntil, projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -411,9 +411,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeleteStatus(string jobId, RequestContext context)
         {
@@ -421,9 +421,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
+                using HttpMessage message = this.CreateGetDeleteStatusRequest(jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -443,19 +443,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDeleteStatusAsync(string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeleteStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
+                using HttpMessage message = this.CreateGetDeleteStatusRequest(jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -468,29 +468,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringProjectDeletionJobState> GetDeleteStatus(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState> GetDeleteStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetDeleteStatus(jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringProjectDeletionJobState)result, result);
+            Response result = this.GetDeleteStatus(jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringProjectDeletionJobState)result), result);
         }
 
         /// <summary> Gets the status of a Project delete job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringProjectDeletionJobState>> GetDeleteStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState>> GetDeleteStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetDeleteStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringProjectDeletionJobState)result, result);
+            Response result = await this.GetDeleteStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringProjectDeletionJobState)result), result);
         }
 
         /// <summary> Export project metadata and assets. </summary>
@@ -499,8 +499,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation Export(WaitUntil waitUntil, string projectName, string format, string assetKind, RequestContext context)
         {
@@ -508,10 +508,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateExportRequest(projectName, format, assetKind, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -526,19 +526,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string format, string assetKind, RequestContext context)
+        public virtual async Task<global::Azure.Operation> ExportAsync(WaitUntil waitUntil, string projectName, string format, string assetKind, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Export");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ExportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateExportRequest(projectName, format, assetKind, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ExportAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -553,13 +553,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation Export(WaitUntil waitUntil, string projectName, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return Export(waitUntil, projectName, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
+            return this.Export(waitUntil, projectName, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Export project metadata and assets. </summary>
@@ -568,13 +568,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> ExportAsync(WaitUntil waitUntil, string projectName, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await ExportAsync(waitUntil, projectName, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ExportAsync(waitUntil, projectName, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -589,9 +589,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
         {
@@ -599,10 +599,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetExportStatusRequest(projectName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -624,20 +624,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetExportStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetExportStatusRequest(projectName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -654,16 +654,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringExportJobState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetExportStatus(projectName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringExportJobState)result, result);
+            Response result = this.GetExportStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringExportJobState)result), result);
         }
 
         /// <summary>
@@ -673,16 +673,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringExportJobState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetExportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringExportJobState)result, result);
+            Response result = await this.GetExportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringExportJobState)result), result);
         }
 
         /// <summary> Import project assets. </summary>
@@ -692,8 +692,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = default, string assetKind = default, RequestContext context = null)
         {
@@ -701,10 +701,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateImportRequest(projectName, content, format, assetKind, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -720,19 +720,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = default, string assetKind = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = default, string assetKind = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Import");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateImportRequest(projectName, content, format, assetKind, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -748,13 +748,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
+            return this.Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Import project assets. </summary>
@@ -764,13 +764,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Import project assets from file. </summary>
@@ -780,8 +780,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation ImportFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = default, RequestContext context = null)
         {
@@ -789,11 +789,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -809,20 +809,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.ImportFromFiles");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFilesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFilesAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -842,9 +842,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
         {
@@ -852,10 +852,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetImportStatusRequest(projectName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -876,20 +876,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetImportStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetImportStatusRequest(projectName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -903,32 +903,32 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringImportJobState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetImportStatus(projectName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringImportJobState)result, result);
+            Response result = this.GetImportStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringImportJobState)result), result);
         }
 
         /// <summary> Gets the status of an Import job. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringImportJobState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetImportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringImportJobState)result, result);
+            Response result = await this.GetImportStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringImportJobState)result), result);
         }
 
         /// <summary> Deploy project to production. </summary>
@@ -936,8 +936,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
@@ -945,11 +945,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeployProjectRequest(projectName, deploymentName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -963,20 +963,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
+        public virtual async Task<global::Azure.Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeployProject");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeployProjectRequest(projectName, deploymentName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProjectAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -990,14 +990,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return DeployProject(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext());
+            return this.DeployProject(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deploy project to production. </summary>
@@ -1005,14 +1005,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return await DeployProjectAsync(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeployProjectAsync(waitUntil, projectName, deploymentName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1027,9 +1027,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context)
         {
@@ -1037,11 +1037,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1063,21 +1063,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeployStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = this.CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1092,17 +1092,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringProjectDeploymentJobState> GetDeployStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState> GetDeployStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetDeployStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringProjectDeploymentJobState)result, result);
+            Response result = this.GetDeployStatus(projectName, deploymentName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringProjectDeploymentJobState)result), result);
         }
 
         /// <summary> Gets the status of a Deploy job. </summary>
@@ -1110,17 +1110,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringProjectDeploymentJobState>> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState>> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetDeployStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringProjectDeploymentJobState)result, result);
+            Response result = await this.GetDeployStatusAsync(projectName, deploymentName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringProjectDeploymentJobState)result), result);
         }
 
         /// <summary>
@@ -1136,13 +1136,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResult(
                 this,
@@ -1167,13 +1167,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResult(
                 this,
@@ -1191,12 +1191,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment> GetDeployments(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResultOfT(
                 this,
@@ -1214,12 +1214,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResultOfT(
                 this,
@@ -1244,13 +1244,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSynonyms(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResult(
                 this,
@@ -1275,13 +1275,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSynonymsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResult(
                 this,
@@ -1299,12 +1299,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WordAlterations> GetSynonyms(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> GetSynonyms(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT(
                 this,
@@ -1322,12 +1322,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WordAlterations> GetSynonymsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> GetSynonymsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResultOfT(
                 this,
@@ -1350,9 +1350,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
         {
@@ -1360,10 +1360,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
+                using HttpMessage message = this.CreateUpdateSynonymsRequest(projectName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1384,20 +1384,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSynonyms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
+                using HttpMessage message = this.CreateUpdateSynonymsRequest(projectName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1411,30 +1411,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> All the synonyms of a project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response UpdateSynonyms(string projectName, SynonymAssets body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(body, nameof(body));
 
-            return UpdateSynonyms(projectName, body, cancellationToken.ToRequestContext());
+            return this.UpdateSynonyms(projectName, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> All the synonyms of a project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UpdateSynonymsAsync(string projectName, SynonymAssets body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> UpdateSynonymsAsync(string projectName, SynonymAssets body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(body, nameof(body));
 
-            return await UpdateSynonymsAsync(projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.UpdateSynonymsAsync(projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1450,13 +1450,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesCollectionResult(
                 this,
@@ -1481,13 +1481,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResult(
                 this,
@@ -1505,12 +1505,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<QnaSourceRecord> GetSources(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord> GetSources(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT(
                 this,
@@ -1528,12 +1528,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<QnaSourceRecord> GetSourcesAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord> GetSourcesAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResultOfT(
                 this,
@@ -1550,8 +1550,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
@@ -1559,11 +1559,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateUpdateSourcesRequest(projectName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1577,20 +1577,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSources");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateUpdateSourcesRequest(projectName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1605,8 +1605,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation UpdateSourcesFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
         {
@@ -1614,11 +1614,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1633,20 +1633,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> UpdateSourcesFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> UpdateSourcesFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFilesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFilesAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1666,9 +1666,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context)
         {
@@ -1676,10 +1676,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1700,20 +1700,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateSourcesStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1727,32 +1727,32 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringUpdateSourcesJobState> GetUpdateSourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState> GetUpdateSourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetUpdateSourcesStatus(projectName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringUpdateSourcesJobState)result, result);
+            Response result = this.GetUpdateSourcesStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringUpdateSourcesJobState)result), result);
         }
 
         /// <summary> Gets the status of update sources job. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringUpdateSourcesJobState>> GetUpdateSourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState>> GetUpdateSourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetUpdateSourcesStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringUpdateSourcesJobState)result, result);
+            Response result = await this.GetUpdateSourcesStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringUpdateSourcesJobState)result), result);
         }
 
         /// <summary>
@@ -1769,13 +1769,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetQnas(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetQnas(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasCollectionResult(
                 this,
@@ -1802,13 +1802,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetQnasAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResult(
                 this,
@@ -1828,12 +1828,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<RetrieveQnaRecord> GetQnas(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord> GetQnas(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT(
                 this,
@@ -1853,12 +1853,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<RetrieveQnaRecord> GetQnasAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord> GetQnasAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResultOfT(
                 this,
@@ -1876,8 +1876,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
@@ -1885,11 +1885,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateUpdateQnasRequest(projectName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1903,20 +1903,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateQnas");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnasAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateUpdateQnasRequest(projectName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnasAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1936,9 +1936,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context)
         {
@@ -1946,10 +1946,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1970,20 +1970,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateQnasStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
+                using HttpMessage message = this.CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1997,32 +1997,32 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QuestionAnsweringAuthoringUpdateQnasJobState> GetUpdateQnasStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState> GetUpdateQnasStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetUpdateQnasStatus(projectName, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QuestionAnsweringAuthoringUpdateQnasJobState)result, result);
+            Response result = this.GetUpdateQnasStatus(projectName, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringUpdateQnasJobState)result), result);
         }
 
         /// <summary> Gets the status of update QnAs job. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringUpdateQnasJobState>> GetUpdateQnasStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState>> GetUpdateQnasStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetUpdateQnasStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QuestionAnsweringAuthoringUpdateQnasJobState)result, result);
+            Response result = await this.GetUpdateQnasStatusAsync(projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QuestionAnsweringAuthoringUpdateQnasJobState)result), result);
         }
 
         /// <summary>
@@ -2036,9 +2036,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
         {
@@ -2046,10 +2046,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
+                using HttpMessage message = this.CreateAddFeedbackRequest(projectName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2070,20 +2070,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.AddFeedback");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
+                using HttpMessage message = this.CreateAddFeedbackRequest(projectName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2097,30 +2097,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> Feedback for Active Learning. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddFeedback(string projectName, ActiveLearningFeedback body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(body, nameof(body));
 
-            return AddFeedback(projectName, body, cancellationToken.ToRequestContext());
+            return this.AddFeedback(projectName, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Update Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> Feedback for Active Learning. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddFeedbackAsync(string projectName, ActiveLearningFeedback body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> AddFeedbackAsync(string projectName, ActiveLearningFeedback body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.QuestionAnswering.Authoring.Argument.AssertNotNull(body, nameof(body));
 
-            return await AddFeedbackAsync(projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.AddFeedbackAsync(projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

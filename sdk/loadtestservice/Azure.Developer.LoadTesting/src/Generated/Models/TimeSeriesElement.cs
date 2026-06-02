@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class TimeSeriesElement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TimeSeriesElement"/>. </summary>
         internal TimeSeriesElement()
         {
-            Data = new ChangeTrackingList<MetricValue>();
-            DimensionValues = new ChangeTrackingList<DimensionValue>();
+            Data = new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricValue>();
+            DimensionValues = new ChangeTrackingList<global::Azure.Developer.LoadTesting.DimensionValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TimeSeriesElement"/>. </summary>
         /// <param name="data"> An array of data points representing the metric values. </param>
         /// <param name="dimensionValues"> The dimension values . </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimeSeriesElement(IList<MetricValue> data, IList<DimensionValue> dimensionValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TimeSeriesElement(IList<global::Azure.Developer.LoadTesting.MetricValue> data, IList<global::Azure.Developer.LoadTesting.DimensionValue> dimensionValues, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             DimensionValues = dimensionValues;
@@ -35,9 +35,9 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> An array of data points representing the metric values. </summary>
-        public IList<MetricValue> Data { get; }
+        public IList<global::Azure.Developer.LoadTesting.MetricValue> Data { get; }
 
         /// <summary> The dimension values . </summary>
-        public IList<DimensionValue> DimensionValues { get; }
+        public IList<global::Azure.Developer.LoadTesting.DimensionValue> DimensionValues { get; }
     }
 }

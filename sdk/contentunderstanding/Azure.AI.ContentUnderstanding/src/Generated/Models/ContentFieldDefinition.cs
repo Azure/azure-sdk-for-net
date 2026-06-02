@@ -14,18 +14,18 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentFieldDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentFieldDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldDefinition"/>. </summary>
         public ContentFieldDefinition()
         {
-            Properties = new ChangeTrackingDictionary<string, ContentFieldDefinition>();
+            Properties = new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition>();
             Examples = new ChangeTrackingList<string>();
             Enum = new ChangeTrackingList<string>();
             EnumDescriptions = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFieldDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldDefinition"/>. </summary>
         /// <param name="method"> Generation method. </param>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="ref"> Reference to another field definition. </param>
         /// <param name="estimateSourceAndConfidence"> Return grounding source and confidence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFieldDefinition(GenerationMethod? @method, ContentFieldType? @type, string description, ContentFieldDefinition itemDefinition, IDictionary<string, ContentFieldDefinition> properties, IList<string> examples, IList<string> @enum, IDictionary<string, string> enumDescriptions, string @ref, bool? estimateSourceAndConfidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentFieldDefinition(GenerationMethod? @method, ContentFieldType? @type, string description, ContentFieldDefinition itemDefinition, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> properties, IList<string> examples, IList<string> @enum, IDictionary<string, string> enumDescriptions, string @ref, bool? estimateSourceAndConfidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Method = @method;
             Type = @type;
@@ -65,7 +65,7 @@ namespace Azure.AI.ContentUnderstanding
         public ContentFieldDefinition ItemDefinition { get; set; }
 
         /// <summary> Named sub-fields, if type is object. </summary>
-        public IDictionary<string, ContentFieldDefinition> Properties { get; }
+        public IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> Properties { get; }
 
         /// <summary> Examples of field values. </summary>
         public IList<string> Examples { get; }

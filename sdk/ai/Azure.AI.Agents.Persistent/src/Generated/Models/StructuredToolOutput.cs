@@ -12,25 +12,25 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolOutput"/> and <see cref="ComputerToolOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.ToolOutput"/> and <see cref="Azure.AI.Agents.Persistent.ComputerToolOutput"/>.
     /// </summary>
     public abstract partial class StructuredToolOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StructuredToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.StructuredToolOutput"/>. </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         private protected StructuredToolOutput(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StructuredToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.StructuredToolOutput"/>. </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredToolOutput(string @type, string toolCallId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredToolOutput(string @type, string toolCallId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ToolCallId = toolCallId;

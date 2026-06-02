@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class JobRouterClientGetWorkersAsyncCollectionResultOfT : AsyncPageable<RouterWorker>
+    internal partial class JobRouterClientGetWorkersAsyncCollectionResultOfT : AsyncPageable<global::Azure.Communication.JobRouter.RouterWorker>
     {
         private readonly JobRouterClient _client;
         private readonly int? _maxpagesize;
@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobRouterClientGetWorkersAsyncCollectionResultOfT(JobRouterClient client, int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobRouterClientGetWorkersAsyncCollectionResultOfT(JobRouterClient client, int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxpagesize = maxpagesize;
@@ -50,20 +50,20 @@ namespace Azure.Communication.JobRouter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of JobRouterClientGetWorkersAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RouterWorker>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Communication.JobRouter.RouterWorker>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedRouterWorker result = (PagedRouterWorker)response;
-                yield return Page<RouterWorker>.FromValues((IReadOnlyList<RouterWorker>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedRouterWorker result = ((PagedRouterWorker)response);
+                yield return global::Azure.Page<RouterWorker>.FromValues(((IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorker>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,10 +73,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetWorkersRequest(nextLink, pageSize, _context) : _client.CreateGetWorkersRequest(pageSize, _state, _channelId, _queueId, _hasCapacity, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetWorkersRequest(nextLink, pageSize, _context) : _client.CreateGetWorkersRequest(pageSize, _state, _channelId, _queueId, _hasCapacity, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

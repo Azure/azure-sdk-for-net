@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> The definition of a Sum metric definition. Calculates the sum of a specified event property. Experiment analysis accounts for unequal traffic allocation. </summary>
-    public partial class SumMetricDefinition : ExperimentMetricDefinition, IJsonModel<SumMetricDefinition>
+    public partial class SumMetricDefinition : ExperimentMetricDefinition, IJsonModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="SumMetricDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition"/> for deserialization. </summary>
         internal SumMetricDefinition()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSumMetricDefinition(document.RootElement, options);
+                        return global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition.DeserializeSumMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SumMetricDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SumMetricDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SumMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SumMetricDefinition IPersistableModel<SumMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (SumMetricDefinition)PersistableModelCreateCore(data, options);
+        SumMetricDefinition IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SumMetricDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SumMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SumMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SumMetricDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value, options);
+            writer.WriteObjectValue<AggregatedValue>(Value, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SumMetricDefinition IJsonModel<SumMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SumMetricDefinition)JsonModelCreateCore(ref reader, options);
+        SumMetricDefinition IJsonModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SumMetricDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SumMetricDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSumMetricDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.OnlineExperimentation.SumMetricDefinition.DeserializeSumMetricDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SumMetricDefinition DeserializeSumMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ExperimentMetricType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AggregatedValue value = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +120,12 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    value = AggregatedValue.DeserializeAggregatedValue(prop.Value, options);
+                    value = global::Azure.Analytics.OnlineExperimentation.AggregatedValue.DeserializeAggregatedValue(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SumMetricDefinition(@type, additionalBinaryDataProperties, value);

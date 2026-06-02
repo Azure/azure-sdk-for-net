@@ -14,22 +14,22 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The multi-region account key of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CognitiveServicesAccountKey"/>. </summary>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public CognitiveServicesAccountKey(string key) : base("#Microsoft.Azure.Search.CognitiveServicesByKey")
         {
-            Argument.AssertNotNull(key, nameof(key));
+            global::Azure.Search.Documents.Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CognitiveServicesAccountKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        internal CognitiveServicesAccountKey(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(odataType, description, additionalBinaryDataProperties)
+        internal CognitiveServicesAccountKey(string odataType, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string key) : base(odataType, description, additionalBinaryDataProperties)
         {
             Key = key;
         }

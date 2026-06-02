@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> Specifies a file upload destination within an Azure blob storage container. </summary>
-    public partial class OutputFileBlobContainerDestination : IJsonModel<OutputFileBlobContainerDestination>
+    public partial class OutputFileBlobContainerDestination : IJsonModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>
     {
-        /// <summary> Initializes a new instance of <see cref="OutputFileBlobContainerDestination"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileBlobContainerDestination"/> for deserialization. </summary>
         internal OutputFileBlobContainerDestination()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OutputFileBlobContainerDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOutputFileBlobContainerDestination(document.RootElement, options);
+                        return global::Azure.Compute.Batch.OutputFileBlobContainerDestination.DeserializeOutputFileBlobContainerDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.OutputFileBlobContainerDestination)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.OutputFileBlobContainerDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OutputFileBlobContainerDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputFileBlobContainerDestination IPersistableModel<OutputFileBlobContainerDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OutputFileBlobContainerDestination IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OutputFileBlobContainerDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OutputFileBlobContainerDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,34 +73,34 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.OutputFileBlobContainerDestination)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("containerUrl"u8);
             writer.WriteStringValue(ContainerUri.AbsoluteUri);
-            if (Optional.IsDefined(IdentityReference))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(IdentityReference, options);
+                writer.WriteObjectValue<BatchNodeIdentityReference>(IdentityReference, options);
             }
-            if (Optional.IsCollectionDefined(UploadHeaders))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(UploadHeaders))
             {
                 writer.WritePropertyName("uploadHeaders"u8);
                 writer.WriteStartArray();
                 foreach (OutputFileUploadHeader item in UploadHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<OutputFileUploadHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -108,9 +108,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -119,34 +119,34 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputFileBlobContainerDestination IJsonModel<OutputFileBlobContainerDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OutputFileBlobContainerDestination IJsonModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OutputFileBlobContainerDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.OutputFileBlobContainerDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.OutputFileBlobContainerDestination)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOutputFileBlobContainerDestination(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.OutputFileBlobContainerDestination.DeserializeOutputFileBlobContainerDestination(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OutputFileBlobContainerDestination DeserializeOutputFileBlobContainerDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string path = default;
-            Uri containerUri = default;
+            global::System.Uri containerUri = default;
             BatchNodeIdentityReference identityReference = default;
-            IList<OutputFileUploadHeader> uploadHeaders = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Compute.Batch.OutputFileUploadHeader> uploadHeaders = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("path"u8))
@@ -156,38 +156,38 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("identityReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(prop.Value, options);
+                    identityReference = global::Azure.Compute.Batch.BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("uploadHeaders"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<OutputFileUploadHeader> array = new List<OutputFileUploadHeader>();
+                    List<global::Azure.Compute.Batch.OutputFileUploadHeader> array = new List<global::Azure.Compute.Batch.OutputFileUploadHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
+                        array.Add(global::Azure.Compute.Batch.OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
                     }
                     uploadHeaders = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputFileBlobContainerDestination(path, containerUri, identityReference, uploadHeaders ?? new ChangeTrackingList<OutputFileUploadHeader>(), additionalBinaryDataProperties);
+            return new OutputFileBlobContainerDestination(path, containerUri, identityReference, (uploadHeaders ?? new ChangeTrackingList<global::Azure.Compute.Batch.OutputFileUploadHeader>()), additionalBinaryDataProperties);
         }
     }
 }

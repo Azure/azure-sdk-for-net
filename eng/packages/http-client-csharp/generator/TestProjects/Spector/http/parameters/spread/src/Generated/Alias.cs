@@ -19,48 +19,48 @@ namespace Parameters.Spread._Alias
     {
         protected Alias() => throw null;
 
-        internal Alias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Alias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default) => throw null;
     }
 }

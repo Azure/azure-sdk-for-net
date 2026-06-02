@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public DifferentSpreadModelRecord(string knownProp) => throw null;
 
-        internal DifferentSpreadModelRecord(string knownProp, IDictionary<string, BinaryData> additionalProperties) => throw null;
+        internal DifferentSpreadModelRecord(string knownProp, IDictionary<string, global::System.BinaryData> additionalProperties) => throw null;
 
         public string KnownProp
         {
@@ -22,6 +22,6 @@ namespace _Type.Property.AdditionalProperties
             set => throw null;
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => throw null;
     }
 }

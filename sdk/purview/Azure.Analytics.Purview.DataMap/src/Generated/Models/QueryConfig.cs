@@ -15,16 +15,16 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class QueryConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.QueryConfig"/>. </summary>
         public QueryConfig()
         {
-            Orderby = new ChangeTrackingList<BinaryData>();
-            Facets = new ChangeTrackingList<SearchFacetItem>();
+            Orderby = new ChangeTrackingList<global::System.BinaryData>();
+            Facets = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.QueryConfig"/>. </summary>
         /// <param name="keywords"> The keywords applied to all searchable fields. </param>
         /// <param name="limit">
         /// The limit of the number of the search result. default value is 50; maximum
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
         /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryConfig(string keywords, int? limit, string continuationToken, IList<BinaryData> @orderby, BinaryData filter, IList<SearchFacetItem> facets, SearchTaxonomySetting taxonomySetting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryConfig(string keywords, int? limit, string continuationToken, IList<global::System.BinaryData> @orderby, BinaryData filter, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem> facets, SearchTaxonomySetting taxonomySetting, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Keywords = keywords;
             Limit = limit;
@@ -68,8 +68,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The sort order of search results, can specify multiple fields.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -92,12 +92,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Orderby { get; }
+        public IList<global::System.BinaryData> Orderby { get; }
 
         /// <summary>
         /// The filter for the search. See examples for the usage of supported filters.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.DataMap
         public BinaryData Filter { get; set; }
 
         /// <summary> The facets for search. See examples for the usage of supported facets. </summary>
-        public IList<SearchFacetItem> Facets { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem> Facets { get; }
 
         /// <summary> The taxonomy setting for search. </summary>
         public SearchTaxonomySetting TaxonomySetting { get; set; }

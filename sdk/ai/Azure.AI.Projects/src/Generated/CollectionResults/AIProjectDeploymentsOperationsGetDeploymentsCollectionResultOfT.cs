@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT : CollectionResult<AIProjectDeployment>
+    internal partial class AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT : CollectionResult<global::Azure.AI.Projects.AIProjectDeployment>
     {
         private readonly AIProjectDeploymentsOperations _client;
         private readonly string _modelPublisher;
@@ -34,17 +34,17 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override IEnumerable<global::System.ClientModel.ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetDeploymentsRequest(_modelPublisher, _modelName, _deploymentType, _options);
-            Uri nextPageUri = null;
+            global::System.Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = GetNextResponse(message);
+                ClientResult result = this.GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedDeployment)result).NextLink;
-                if (nextPageUri == null)
+                if ((nextPageUri == null))
                 {
                     yield break;
                 }
@@ -57,10 +57,10 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedDeployment)page).NextLink;
-            if (nextPage != null)
+            global::System.Uri nextPage = ((PagedDeployment)page).NextLink;
+            if ((nextPage != null))
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
+                return global::System.ClientModel.ContinuationToken.FromBytes(global::System.BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<AIProjectDeployment> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<global::Azure.AI.Projects.AIProjectDeployment> GetValuesFromPage(ClientResult page)
         {
             return ((PagedDeployment)page).Value;
         }
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            return global::System.ClientModel.ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }

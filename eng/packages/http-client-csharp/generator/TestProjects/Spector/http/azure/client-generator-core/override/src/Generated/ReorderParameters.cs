@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.Override
     {
         protected ReorderParameters() => throw null;
 
-        internal ReorderParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ReorderParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Reorder(string param2, string param1, RequestContext context) => throw null;
 
-        public virtual Task<Response> ReorderAsync(string param2, string param1, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ReorderAsync(string param2, string param1, RequestContext context) => throw null;
 
         public virtual Response Reorder(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ReorderAsync(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ReorderAsync(string param1, string param2, CancellationToken cancellationToken = default) => throw null;
     }
 }

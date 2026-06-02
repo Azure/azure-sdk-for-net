@@ -11,9 +11,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Caller-supplied inputs for an optimization job. </summary>
-    public partial class OptimizationJobInputs : IJsonModel<OptimizationJobInputs>
+    public partial class OptimizationJobInputs : IJsonModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>
     {
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobInputs"/> for deserialization. </summary>
         internal OptimizationJobInputs()
         {
         }
@@ -22,58 +22,58 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationJobInputs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOptimizationJobInputs(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.OptimizationJobInputs.DeserializeOptimizationJobInputs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationJobInputs)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationJobInputs)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OptimizationJobInputs)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationJobInputs)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OptimizationJobInputs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationJobInputs IPersistableModel<OptimizationJobInputs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationJobInputs IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OptimizationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="optimizationJobInputs"> The <see cref="OptimizationJobInputs"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="optimizationJobInputs"> The <see cref="global::Azure.AI.Projects.Agents.OptimizationJobInputs"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(OptimizationJobInputs optimizationJobInputs)
         {
-            if (optimizationJobInputs == null)
+            if ((optimizationJobInputs == null))
             {
                 return null;
             }
-            return BinaryContent.Create(optimizationJobInputs, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(optimizationJobInputs, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OptimizationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,27 +81,27 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationJobInputs)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationJobInputs)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("agent"u8);
-            writer.WriteObjectValue(Agent, options);
+            writer.WriteObjectValue<AgentIdentifier>(Agent, options);
             writer.WritePropertyName("train_dataset_reference"u8);
-            writer.WriteObjectValue(TrainDatasetReference, options);
-            if (Optional.IsDefined(ValidationDatasetReference))
+            writer.WriteObjectValue<DatasetRef>(TrainDatasetReference, options);
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(ValidationDatasetReference))
             {
                 writer.WritePropertyName("validation_dataset_reference"u8);
-                writer.WriteObjectValue(ValidationDatasetReference, options);
+                writer.WriteObjectValue<DatasetRef>(ValidationDatasetReference, options);
             }
-            if (Optional.IsCollectionDefined(Evaluators))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Evaluators))
             {
                 writer.WritePropertyName("evaluators"u8);
                 writer.WriteStartArray();
                 foreach (string item in Evaluators)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -110,12 +110,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Options))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                writer.WriteObjectValue<OptimizationOptions>(Options, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -123,9 +123,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -134,26 +134,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OptimizationJobInputs IJsonModel<OptimizationJobInputs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationJobInputs IJsonModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OptimizationJobInputs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.OptimizationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OptimizationJobInputs)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.OptimizationJobInputs)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOptimizationJobInputs(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.OptimizationJobInputs.DeserializeOptimizationJobInputs(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OptimizationJobInputs DeserializeOptimizationJobInputs(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -162,38 +162,38 @@ namespace Azure.AI.Projects.Agents
             DatasetRef validationDatasetReference = default;
             IList<string> evaluators = default;
             OptimizationOptions options0 = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("agent"u8))
                 {
-                    agent = AgentIdentifier.DeserializeAgentIdentifier(prop.Value, options);
+                    agent = global::Azure.AI.Projects.Agents.AgentIdentifier.DeserializeAgentIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("train_dataset_reference"u8))
                 {
-                    trainDatasetReference = DatasetRef.DeserializeDatasetRef(prop.Value, options);
+                    trainDatasetReference = global::Azure.AI.Projects.Agents.DatasetRef.DeserializeDatasetRef(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("validation_dataset_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    validationDatasetReference = DatasetRef.DeserializeDatasetRef(prop.Value, options);
+                    validationDatasetReference = global::Azure.AI.Projects.Agents.DatasetRef.DeserializeDatasetRef(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -207,23 +207,23 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    options0 = OptimizationOptions.DeserializeOptimizationOptions(prop.Value, options);
+                    options0 = global::Azure.AI.Projects.Agents.OptimizationOptions.DeserializeOptimizationOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OptimizationJobInputs(
                 agent,
                 trainDatasetReference,
                 validationDatasetReference,
-                evaluators ?? new ChangeTrackingList<string>(),
+                (evaluators ?? new ChangeTrackingList<string>()),
                 options0,
                 additionalBinaryDataProperties);
         }

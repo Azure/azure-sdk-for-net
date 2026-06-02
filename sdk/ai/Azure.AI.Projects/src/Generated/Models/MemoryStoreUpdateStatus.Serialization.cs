@@ -11,36 +11,36 @@ namespace Azure.AI.Projects.Memory
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MemoryStoreUpdateStatus value) => value switch
         {
-            MemoryStoreUpdateStatus.Queued => "queued",
-            MemoryStoreUpdateStatus.InProgress => "in_progress",
-            MemoryStoreUpdateStatus.Completed => "completed",
-            MemoryStoreUpdateStatus.Failed => "failed",
-            MemoryStoreUpdateStatus.Superseded => "superseded",
+            global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Queued => "queued",
+            global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Completed => "completed",
+            global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Failed => "failed",
+            global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Superseded => "superseded",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MemoryStoreUpdateStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MemoryStoreUpdateStatus ToMemoryStoreUpdateStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "queued"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "queued"))
             {
-                return MemoryStoreUpdateStatus.Queued;
+                return global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Queued;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return MemoryStoreUpdateStatus.InProgress;
+                return global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return MemoryStoreUpdateStatus.Completed;
+                return global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return MemoryStoreUpdateStatus.Failed;
+                return global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Failed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "superseded"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "superseded"))
             {
-                return MemoryStoreUpdateStatus.Superseded;
+                return global::Azure.AI.Projects.Memory.MemoryStoreUpdateStatus.Superseded;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MemoryStoreUpdateStatus value.");
         }

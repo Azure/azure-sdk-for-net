@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseRemoteSharePointActivityArguments
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityArguments"/>. </summary>
         internal KnowledgeBaseRemoteSharePointActivityArguments()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityArguments"/>. </summary>
         /// <param name="search"> The search string used to query the remote SharePoint knowledge source. </param>
         /// <param name="filterExpressionAddOn"> The filter expression add-on for the retrieval activity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRemoteSharePointActivityArguments(string search, string filterExpressionAddOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRemoteSharePointActivityArguments(string search, string filterExpressionAddOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             FilterExpressionAddOn = filterExpressionAddOn;

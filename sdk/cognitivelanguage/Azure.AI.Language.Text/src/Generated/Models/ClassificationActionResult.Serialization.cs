@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the classification doc result for the task with detected language. </summary>
-    public partial class ClassificationActionResult : IJsonModel<ClassificationActionResult>
+    public partial class ClassificationActionResult : IJsonModel<global::Azure.AI.Language.Text.ClassificationActionResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ClassificationActionResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ClassificationActionResult"/> for deserialization. </summary>
         internal ClassificationActionResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ClassificationActionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClassificationActionResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.ClassificationActionResult.DeserializeClassificationActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ClassificationActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ClassificationActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClassificationActionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClassificationActionResult IPersistableModel<ClassificationActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClassificationActionResult IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClassificationActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClassificationActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.ClassificationActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ClassificationActionResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -84,27 +84,27 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (DocumentWarning item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentWarning>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<DocumentStatistics>(Statistics, options);
             }
             writer.WritePropertyName("class"u8);
             writer.WriteStartArray();
             foreach (ClassificationResult item in Class)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ClassificationResult>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(DetectedLanguage))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -112,9 +112,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -123,35 +123,35 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClassificationActionResult IJsonModel<ClassificationActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClassificationActionResult IJsonModel<global::Azure.AI.Language.Text.ClassificationActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ClassificationActionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.ClassificationActionResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClassificationActionResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.ClassificationActionResult.DeserializeClassificationActionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ClassificationActionResult DeserializeClassificationActionResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
-            IList<DocumentWarning> warnings = default;
+            IList<global::Azure.AI.Language.Text.DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IList<ClassificationResult> @class = default;
+            IList<global::Azure.AI.Language.Text.ClassificationResult> @class = default;
             DetectedLanguage detectedLanguage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -161,45 +161,45 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("warnings"u8))
                 {
-                    List<DocumentWarning> array = new List<DocumentWarning>();
+                    List<global::Azure.AI.Language.Text.DocumentWarning> array = new List<global::Azure.AI.Language.Text.DocumentWarning>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWarning.DeserializeDocumentWarning(item, options));
+                        array.Add(global::Azure.AI.Language.Text.DocumentWarning.DeserializeDocumentWarning(item, options));
                     }
                     warnings = array;
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(prop.Value, options);
+                    statistics = global::Azure.AI.Language.Text.DocumentStatistics.DeserializeDocumentStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("class"u8))
                 {
-                    List<ClassificationResult> array = new List<ClassificationResult>();
+                    List<global::Azure.AI.Language.Text.ClassificationResult> array = new List<global::Azure.AI.Language.Text.ClassificationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ClassificationResult.DeserializeClassificationResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.ClassificationResult.DeserializeClassificationResult(item, options));
                     }
                     @class = array;
                     continue;
                 }
                 if (prop.NameEquals("detectedLanguage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(prop.Value, options);
+                    detectedLanguage = global::Azure.AI.Language.Text.DetectedLanguage.DeserializeDetectedLanguage(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ClassificationActionResult(

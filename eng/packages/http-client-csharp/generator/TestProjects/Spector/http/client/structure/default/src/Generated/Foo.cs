@@ -17,24 +17,24 @@ namespace Client.Structure.Service
     {
         protected Foo() => throw null;
 
-        internal Foo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal Foo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Three(RequestContext context) => throw null;
 
-        public virtual Task<Response> ThreeAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ThreeAsync(RequestContext context) => throw null;
 
         public virtual Response Three(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ThreeAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ThreeAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Four(RequestContext context) => throw null;
 
-        public virtual Task<Response> FourAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FourAsync(RequestContext context) => throw null;
 
         public virtual Response Four(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FourAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FourAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

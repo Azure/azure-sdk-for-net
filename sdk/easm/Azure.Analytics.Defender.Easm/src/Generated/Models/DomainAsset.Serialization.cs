@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The DomainAsset. </summary>
-    public partial class DomainAsset : IJsonModel<DomainAsset>
+    public partial class DomainAsset : IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DomainAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDomainAsset(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.DomainAsset.DeserializeDomainAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DomainAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DomainAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainAsset IPersistableModel<DomainAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DomainAsset IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DomainAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DomainAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,292 +68,292 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DomainAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAsset)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Domain))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(WhoisId))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(WhoisId))
             {
                 writer.WritePropertyName("whoisId"u8);
                 writer.WriteNumberValue(WhoisId.Value);
             }
-            if (Optional.IsCollectionDefined(RegistrarIanaIds))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrarIanaIds))
             {
                 writer.WritePropertyName("registrarIanaIds"u8);
                 writer.WriteStartArray();
                 foreach (ObservedInteger item in RegistrarIanaIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedInteger>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantContacts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrantContacts))
             {
                 writer.WritePropertyName("registrantContacts"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in RegistrantContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantOrgs))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrantOrgs))
             {
                 writer.WritePropertyName("registrantOrgs"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in RegistrantOrgs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminContacts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AdminContacts))
             {
                 writer.WritePropertyName("adminContacts"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in AdminContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalContacts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(TechnicalContacts))
             {
                 writer.WritePropertyName("technicalContacts"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in TechnicalContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlexaInfos))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AlexaInfos))
             {
                 writer.WritePropertyName("alexaInfos"u8);
                 writer.WriteStartArray();
                 foreach (AlexaInfo item in AlexaInfos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AlexaInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NameServers))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(NameServers))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in NameServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MailServers))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(MailServers))
             {
                 writer.WritePropertyName("mailServers"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in MailServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WhoisServers))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(WhoisServers))
             {
                 writer.WritePropertyName("whoisServers"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in WhoisServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DomainStatuses))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(DomainStatuses))
             {
                 writer.WritePropertyName("domainStatuses"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in DomainStatuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarCreatedAt))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrarCreatedAt))
             {
                 writer.WritePropertyName("registrarCreatedAt"u8);
                 writer.WriteStartArray();
                 foreach (ObservedLong item in RegistrarCreatedAt)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarUpdatedAt))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrarUpdatedAt))
             {
                 writer.WritePropertyName("registrarUpdatedAt"u8);
                 writer.WriteStartArray();
                 foreach (ObservedLong item in RegistrarUpdatedAt)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarExpiresAt))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrarExpiresAt))
             {
                 writer.WritePropertyName("registrarExpiresAt"u8);
                 writer.WriteStartArray();
                 foreach (ObservedLong item in RegistrarExpiresAt)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SoaRecords))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SoaRecords))
             {
                 writer.WritePropertyName("soaRecords"u8);
                 writer.WriteStartArray();
                 foreach (SoaRecord item in SoaRecords)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SoaRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DetailedFromWhoisAt))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
                 writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
             }
-            if (Optional.IsCollectionDefined(RegistrarNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrarNames))
             {
                 writer.WritePropertyName("registrarNames"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in RegistrarNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (SourceDetails item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(ParkedDomain))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(ParkedDomain))
             {
                 writer.WritePropertyName("parkedDomain"u8);
                 writer.WriteStartArray();
                 foreach (ObservedBoolean item in ParkedDomain)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrantNames))
             {
                 writer.WritePropertyName("registrantNames"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in RegistrantNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AdminNames))
             {
                 writer.WritePropertyName("adminNames"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in AdminNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalNames))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(TechnicalNames))
             {
                 writer.WritePropertyName("technicalNames"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in TechnicalNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminOrgs))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AdminOrgs))
             {
                 writer.WritePropertyName("adminOrgs"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in AdminOrgs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalOrgs))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(TechnicalOrgs))
             {
                 writer.WritePropertyName("technicalOrgs"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in TechnicalOrgs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantPhones))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(RegistrantPhones))
             {
                 writer.WritePropertyName("registrantPhones"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in RegistrantPhones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminPhones))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(AdminPhones))
             {
                 writer.WritePropertyName("adminPhones"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in AdminPhones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalPhones))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(TechnicalPhones))
             {
                 writer.WritePropertyName("technicalPhones"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in TechnicalPhones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -361,9 +361,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -372,61 +372,61 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainAsset IJsonModel<DomainAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DomainAsset IJsonModel<global::Azure.Analytics.Defender.Easm.DomainAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DomainAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DomainAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DomainAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DomainAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDomainAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.DomainAsset.DeserializeDomainAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DomainAsset DeserializeDomainAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string domain = default;
             long? whoisId = default;
-            IList<ObservedInteger> registrarIanaIds = default;
-            IList<ObservedString> registrantContacts = default;
-            IList<ObservedString> registrantOrgs = default;
-            IList<ObservedString> adminContacts = default;
-            IList<ObservedString> technicalContacts = default;
-            IList<AlexaInfo> alexaInfos = default;
-            IList<ObservedString> nameServers = default;
-            IList<ObservedString> mailServers = default;
-            IList<ObservedString> whoisServers = default;
-            IList<ObservedString> domainStatuses = default;
-            IList<ObservedLong> registrarCreatedAt = default;
-            IList<ObservedLong> registrarUpdatedAt = default;
-            IList<ObservedLong> registrarExpiresAt = default;
-            IList<SoaRecord> soaRecords = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> registrarIanaIds = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts = default;
+            IList<global::Azure.Analytics.Defender.Easm.AlexaInfo> alexaInfos = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> nameServers = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> mailServers = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> whoisServers = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> domainStatuses = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt = default;
+            IList<global::Azure.Analytics.Defender.Easm.SoaRecord> soaRecords = default;
             DateTimeOffset? detailedFromWhoisAt = default;
-            IList<ObservedString> registrarNames = default;
-            IList<SourceDetails> sources = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrarNames = default;
+            IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
-            IList<ObservedBoolean> parkedDomain = default;
-            IList<ObservedString> registrantNames = default;
-            IList<ObservedString> adminNames = default;
-            IList<ObservedString> technicalNames = default;
-            IList<ObservedString> adminOrgs = default;
-            IList<ObservedString> technicalOrgs = default;
-            IList<ObservedString> registrantPhones = default;
-            IList<ObservedString> adminPhones = default;
-            IList<ObservedString> technicalPhones = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> parkedDomain = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("domain"u8))
@@ -436,7 +436,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("whoisId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -445,203 +445,203 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("registrarIanaIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedInteger> array = new List<ObservedInteger>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedInteger> array = new List<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedInteger.DeserializeObservedInteger(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedInteger.DeserializeObservedInteger(item, options));
                     }
                     registrarIanaIds = array;
                     continue;
                 }
                 if (prop.NameEquals("registrantContacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantContacts = array;
                     continue;
                 }
                 if (prop.NameEquals("registrantOrgs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantOrgs = array;
                     continue;
                 }
                 if (prop.NameEquals("adminContacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     adminContacts = array;
                     continue;
                 }
                 if (prop.NameEquals("technicalContacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalContacts = array;
                     continue;
                 }
                 if (prop.NameEquals("alexaInfos"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AlexaInfo> array = new List<AlexaInfo>();
+                    List<global::Azure.Analytics.Defender.Easm.AlexaInfo> array = new List<global::Azure.Analytics.Defender.Easm.AlexaInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlexaInfo.DeserializeAlexaInfo(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.AlexaInfo.DeserializeAlexaInfo(item, options));
                     }
                     alexaInfos = array;
                     continue;
                 }
                 if (prop.NameEquals("nameServers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     nameServers = array;
                     continue;
                 }
                 if (prop.NameEquals("mailServers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     mailServers = array;
                     continue;
                 }
                 if (prop.NameEquals("whoisServers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     whoisServers = array;
                     continue;
                 }
                 if (prop.NameEquals("domainStatuses"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     domainStatuses = array;
                     continue;
                 }
                 if (prop.NameEquals("registrarCreatedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedLong> array = new List<ObservedLong>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedLong> array = new List<global::Azure.Analytics.Defender.Easm.ObservedLong>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarCreatedAt = array;
                     continue;
                 }
                 if (prop.NameEquals("registrarUpdatedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedLong> array = new List<ObservedLong>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedLong> array = new List<global::Azure.Analytics.Defender.Easm.ObservedLong>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarUpdatedAt = array;
                     continue;
                 }
                 if (prop.NameEquals("registrarExpiresAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedLong> array = new List<ObservedLong>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedLong> array = new List<global::Azure.Analytics.Defender.Easm.ObservedLong>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarExpiresAt = array;
                     continue;
                 }
                 if (prop.NameEquals("soaRecords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SoaRecord> array = new List<SoaRecord>();
+                    List<global::Azure.Analytics.Defender.Easm.SoaRecord> array = new List<global::Azure.Analytics.Defender.Easm.SoaRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SoaRecord.DeserializeSoaRecord(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SoaRecord.DeserializeSoaRecord(item, options));
                     }
                     soaRecords = array;
                     continue;
                 }
                 if (prop.NameEquals("detailedFromWhoisAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -650,35 +650,35 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("registrarNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     registrarNames = array;
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.SourceDetails> array = new List<global::Azure.Analytics.Defender.Easm.SourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -687,7 +687,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -705,167 +705,167 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("parkedDomain"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedBoolean> array = new List<ObservedBoolean>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedBoolean> array = new List<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     parkedDomain = array;
                     continue;
                 }
                 if (prop.NameEquals("registrantNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantNames = array;
                     continue;
                 }
                 if (prop.NameEquals("adminNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     adminNames = array;
                     continue;
                 }
                 if (prop.NameEquals("technicalNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalNames = array;
                     continue;
                 }
                 if (prop.NameEquals("adminOrgs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     adminOrgs = array;
                     continue;
                 }
                 if (prop.NameEquals("technicalOrgs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalOrgs = array;
                     continue;
                 }
                 if (prop.NameEquals("registrantPhones"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantPhones = array;
                     continue;
                 }
                 if (prop.NameEquals("adminPhones"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     adminPhones = array;
                     continue;
                 }
                 if (prop.NameEquals("technicalPhones"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalPhones = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DomainAsset(
                 domain,
                 whoisId,
-                registrarIanaIds ?? new ChangeTrackingList<ObservedInteger>(),
-                registrantContacts ?? new ChangeTrackingList<ObservedString>(),
-                registrantOrgs ?? new ChangeTrackingList<ObservedString>(),
-                adminContacts ?? new ChangeTrackingList<ObservedString>(),
-                technicalContacts ?? new ChangeTrackingList<ObservedString>(),
-                alexaInfos ?? new ChangeTrackingList<AlexaInfo>(),
-                nameServers ?? new ChangeTrackingList<ObservedString>(),
-                mailServers ?? new ChangeTrackingList<ObservedString>(),
-                whoisServers ?? new ChangeTrackingList<ObservedString>(),
-                domainStatuses ?? new ChangeTrackingList<ObservedString>(),
-                registrarCreatedAt ?? new ChangeTrackingList<ObservedLong>(),
-                registrarUpdatedAt ?? new ChangeTrackingList<ObservedLong>(),
-                registrarExpiresAt ?? new ChangeTrackingList<ObservedLong>(),
-                soaRecords ?? new ChangeTrackingList<SoaRecord>(),
+                (registrarIanaIds ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>()),
+                (registrantContacts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (registrantOrgs ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (adminContacts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (technicalContacts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (alexaInfos ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AlexaInfo>()),
+                (nameServers ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (mailServers ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (whoisServers ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (domainStatuses ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (registrarCreatedAt ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>()),
+                (registrarUpdatedAt ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>()),
+                (registrarExpiresAt ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>()),
+                (soaRecords ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SoaRecord>()),
                 detailedFromWhoisAt,
-                registrarNames ?? new ChangeTrackingList<ObservedString>(),
-                sources ?? new ChangeTrackingList<SourceDetails>(),
+                (registrarNames ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (sources ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>()),
                 firstSeen,
                 lastSeen,
                 count,
-                parkedDomain ?? new ChangeTrackingList<ObservedBoolean>(),
-                registrantNames ?? new ChangeTrackingList<ObservedString>(),
-                adminNames ?? new ChangeTrackingList<ObservedString>(),
-                technicalNames ?? new ChangeTrackingList<ObservedString>(),
-                adminOrgs ?? new ChangeTrackingList<ObservedString>(),
-                technicalOrgs ?? new ChangeTrackingList<ObservedString>(),
-                registrantPhones ?? new ChangeTrackingList<ObservedString>(),
-                adminPhones ?? new ChangeTrackingList<ObservedString>(),
-                technicalPhones ?? new ChangeTrackingList<ObservedString>(),
+                (parkedDomain ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>()),
+                (registrantNames ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (adminNames ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (technicalNames ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (adminOrgs ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (technicalOrgs ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (registrantPhones ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (adminPhones ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (technicalPhones ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
                 additionalBinaryDataProperties);
         }
     }

@@ -15,9 +15,9 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveMcpTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveMcpTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The input schema for the tool. </param>
         internal VoiceLiveMcpTool(string name, BinaryData inputSchema)
@@ -26,13 +26,13 @@ namespace Azure.AI.VoiceLive
             InputSchema = inputSchema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveMcpTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="description"> The description of the tool. </param>
         /// <param name="inputSchema"> The input schema for the tool. </param>
         /// <param name="annotations"> The annotations for the tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveMcpTool(string name, string description, BinaryData inputSchema, BinaryData annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveMcpTool(string name, string description, BinaryData inputSchema, BinaryData annotations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -49,8 +49,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The input schema for the tool.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -77,8 +77,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The annotations for the tool.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

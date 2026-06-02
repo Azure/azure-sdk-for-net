@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Authentication.Http.Custom
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class CustomClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

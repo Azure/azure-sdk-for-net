@@ -14,16 +14,16 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeDocumentOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions"/>. </summary>
         /// <param name="uriSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
         /// <param name="bytesSource">
         /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
         /// must be specified.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentOptions(Uri uriSource, BinaryData bytesSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentOptions(global::System.Uri uriSource, BinaryData bytesSource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UriSource = uriSource;
             BytesSource = bytesSource;

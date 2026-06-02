@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Property.ValueTypes
 {
-    public readonly partial struct InnerEnum : IEquatable<InnerEnum>
+    public readonly partial struct InnerEnum : IEquatable<global::_Type.Property.ValueTypes.InnerEnum>
     {
         public InnerEnum(string value) => throw null;
 
@@ -22,20 +22,20 @@ namespace _Type.Property.ValueTypes
 
         public static bool operator !=(InnerEnum left, InnerEnum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="InnerEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.ValueTypes.InnerEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InnerEnum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="InnerEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.ValueTypes.InnerEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InnerEnum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(InnerEnum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

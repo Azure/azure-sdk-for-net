@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> UpgradeMode enums. </summary>
-    public readonly partial struct UpgradeMode : IEquatable<UpgradeMode>
+    public readonly partial struct UpgradeMode : IEquatable<global::Azure.Compute.Batch.UpgradeMode>
     {
         private readonly string _value;
         /// <summary> All virtual machines in the scale set are automatically updated at the same time. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> The existing instances in a scale set are brought down in batches to be upgraded. Once the upgraded batch is complete, the instances will begin taking traffic again and the next batch will begin. This continues until all instances brought up-to-date. </summary>
         private const string RollingValue = "rolling";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpgradeMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> The existing instances in a scale set are brought down in batches to be upgraded. Once the upgraded batch is complete, the instances will begin taking traffic again and the next batch will begin. This continues until all instances brought up-to-date. </summary>
         public static UpgradeMode Rolling { get; } = new UpgradeMode(RollingValue);
 
-        /// <summary> Determines if two <see cref="UpgradeMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.UpgradeMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpgradeMode left, UpgradeMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.UpgradeMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpgradeMode left, UpgradeMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.UpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator UpgradeMode(string value) => new UpgradeMode(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.UpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeMode?(string value) => value == null ? null : new UpgradeMode(value);
+        public static implicit operator UpgradeMode?(string value) => (value == null) ? null : new UpgradeMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is UpgradeMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(UpgradeMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

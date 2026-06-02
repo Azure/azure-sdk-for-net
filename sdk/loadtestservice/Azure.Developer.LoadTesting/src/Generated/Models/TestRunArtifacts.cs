@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunArtifacts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunArtifacts"/>. </summary>
         internal TestRunArtifacts()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunArtifacts"/>. </summary>
         /// <param name="inputArtifacts"> The input artifacts for the test run. </param>
         /// <param name="outputArtifacts"> The output artifacts for the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunArtifacts(TestRunInputArtifacts inputArtifacts, TestRunOutputArtifacts outputArtifacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunArtifacts(TestRunInputArtifacts inputArtifacts, TestRunOutputArtifacts outputArtifacts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InputArtifacts = inputArtifacts;
             OutputArtifacts = outputArtifacts;

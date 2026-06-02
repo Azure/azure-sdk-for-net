@@ -12,25 +12,25 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput
     {
-        /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput"/>. </summary>
         /// <param name="target"> Target configuration for the agent. </param>
         /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="riskCategories"/> is null. </exception>
-        public AgentTaxonomyInput(EvaluationTarget target, IEnumerable<RiskCategory> riskCategories) : base(EvaluationTaxonomyInputType.Agent)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="target"/> or <paramref name="riskCategories"/> is null. </exception>
+        public AgentTaxonomyInput(EvaluationTarget target, IEnumerable<global::Azure.AI.Projects.Evaluation.RiskCategory> riskCategories) : base(global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInputType.Agent)
         {
-            Argument.AssertNotNull(target, nameof(target));
-            Argument.AssertNotNull(riskCategories, nameof(riskCategories));
+            global::Azure.AI.Projects.Argument.AssertNotNull(target, nameof(target));
+            global::Azure.AI.Projects.Argument.AssertNotNull(riskCategories, nameof(riskCategories));
 
             Target = target;
             RiskCategories = riskCategories.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput"/>. </summary>
         /// <param name="type"> Input type of the evaluation taxonomy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="target"> Target configuration for the agent. </param>
         /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        internal AgentTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvaluationTarget target, IList<RiskCategory> riskCategories) : base(@type, additionalBinaryDataProperties)
+        internal AgentTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EvaluationTarget target, IList<global::Azure.AI.Projects.Evaluation.RiskCategory> riskCategories) : base(@type, additionalBinaryDataProperties)
         {
             Target = target;
             RiskCategories = riskCategories;
@@ -40,6 +40,6 @@ namespace Azure.AI.Projects.Evaluation
         public EvaluationTarget Target { get; set; }
 
         /// <summary> List of risk categories to evaluate against. </summary>
-        public IList<RiskCategory> RiskCategories { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.RiskCategory> RiskCategories { get; }
     }
 }

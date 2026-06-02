@@ -10,21 +10,21 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
     public partial class ResponsesOpenApiManagedAuthDetails : ResponsesOpenApiAuthDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
+        public ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base(global::Azure.AI.Extensions.OpenAI.OpenApiAuthType.ManagedIdentity)
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
             SecurityScheme = securityScheme;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal ResponsesOpenApiManagedAuthDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesOpenApiManagedAuthDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesOpenApiManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }

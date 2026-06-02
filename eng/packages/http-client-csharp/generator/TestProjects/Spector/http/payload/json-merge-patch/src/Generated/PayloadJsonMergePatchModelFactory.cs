@@ -11,7 +11,7 @@ namespace Payload.JsonMergePatch
 {
     public static partial class PayloadJsonMergePatchModelFactory
     {
-        public static Resource Resource(string name = default, string description = default, IDictionary<string, InnerModel> map = default, IEnumerable<InnerModel> array = default, int? intValue = default, float? floatValue = default, InnerModel innerModel = default, IEnumerable<int> intArray = default) => throw null;
+        public static Resource Resource(string name = default, string description = default, IDictionary<string, global::Payload.JsonMergePatch.InnerModel> map = default, IEnumerable<global::Payload.JsonMergePatch.InnerModel> array = default, int? intValue = default, float? floatValue = default, InnerModel innerModel = default, IEnumerable<int> intArray = default) => throw null;
 
         public static InnerModel InnerModel(string name = default, string description = default) => throw null;
     }

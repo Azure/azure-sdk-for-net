@@ -16,25 +16,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="dtype"> Data type. </param>
         internal TilerInfo(IEnumerable<float> bounds, string dtype)
         {
             Bounds = bounds.ToList();
-            BandMetadata = new ChangeTrackingList<IList<BinaryData>>();
-            BandDescriptions = new ChangeTrackingList<IList<string>>();
+            BandMetadata = new ChangeTrackingList<global::System.Collections.Generic.IList<global::System.BinaryData>>();
+            BandDescriptions = new ChangeTrackingList<global::System.Collections.Generic.IList<string>>();
             Dtype = dtype;
             ColorInterpretation = new ChangeTrackingList<string>();
             Overviews = new ChangeTrackingList<int>();
             Scales = new ChangeTrackingList<int>();
             Offsets = new ChangeTrackingList<int>();
-            Colormap = new ChangeTrackingDictionary<string, IList<string>>();
+            Colormap = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="bandMetadata"> Band Metadata. </param>
         /// <param name="bandDescriptions"> Band Descriptions. </param>
@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Maxzoom. </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorInterpretation, string driver, int? count, int? width, int? height, IList<int> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colormap, int? minZoom, int? maxZoom, string coordinateReferenceSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfo(IList<float> bounds, IList<global::System.Collections.Generic.IList<global::System.BinaryData>> bandMetadata, IList<global::System.Collections.Generic.IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorInterpretation, string driver, int? count, int? width, int? height, IList<int> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, global::System.Collections.Generic.IList<string>> colormap, int? minZoom, int? maxZoom, string coordinateReferenceSystem, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             BandMetadata = bandMetadata;
@@ -80,8 +80,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Band Metadata
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -90,7 +90,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <see cref="string"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -117,10 +117,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IList<BinaryData>> BandMetadata { get; }
+        public IList<global::System.Collections.Generic.IList<global::System.BinaryData>> BandMetadata { get; }
 
         /// <summary> Band Descriptions. </summary>
-        public IList<IList<string>> BandDescriptions { get; }
+        public IList<global::System.Collections.Generic.IList<string>> BandDescriptions { get; }
 
         /// <summary> Data type. </summary>
         public string Dtype { get; }
@@ -153,7 +153,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<int> Offsets { get; }
 
         /// <summary> Colormap. </summary>
-        public IDictionary<string, IList<string>> Colormap { get; }
+        public IDictionary<string, global::System.Collections.Generic.IList<string>> Colormap { get; }
 
         /// <summary> Minzoom. </summary>
         public int? MinZoom { get; }

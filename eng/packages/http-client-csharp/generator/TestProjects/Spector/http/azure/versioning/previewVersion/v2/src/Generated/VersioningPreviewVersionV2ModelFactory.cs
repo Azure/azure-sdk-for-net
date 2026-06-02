@@ -14,6 +14,6 @@ namespace Versioning.PreviewVersion.V2
     {
         public static Widget Widget(string id = default, string name = default, string color = default) => throw null;
 
-        public static ListWidgetsResponse ListWidgetsResponse(IEnumerable<Widget> widgets = default) => throw null;
+        public static ListWidgetsResponse ListWidgetsResponse(IEnumerable<global::Specs.Azure.Versioning.PreviewVersion.Widget> widgets = default) => throw null;
     }
 }

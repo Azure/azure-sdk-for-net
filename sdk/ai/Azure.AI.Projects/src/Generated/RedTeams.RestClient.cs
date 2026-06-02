@@ -15,9 +15,9 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
         internal PipelineMessage CreateGetRequest(string name, RequestOptions options)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/redTeams/runs/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/redTeams/runs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(global::System.Uri nextPage, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -61,9 +61,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/redTeams/runs:run", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

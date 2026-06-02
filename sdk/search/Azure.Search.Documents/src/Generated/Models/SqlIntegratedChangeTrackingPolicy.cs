@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a data change detection policy that captures changes using the Integrated Change Tracking feature of Azure SQL Database. </summary>
     public partial class SqlIntegratedChangeTrackingPolicy : DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SqlIntegratedChangeTrackingPolicy"/>. </summary>
         public SqlIntegratedChangeTrackingPolicy() : base("#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SqlIntegratedChangeTrackingPolicy"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlIntegratedChangeTrackingPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
+        internal SqlIntegratedChangeTrackingPolicy(string odataType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
         {
         }
     }

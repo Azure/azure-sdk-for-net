@@ -14,9 +14,9 @@ namespace Azure.Developer.LoadTesting
     public partial class TestProfileRunRecommendation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestProfileRunRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfileRunRecommendation"/>. </summary>
         /// <param name="category"> Category of the recommendation. </param>
         internal TestProfileRunRecommendation(RecommendationCategory category)
         {
@@ -24,11 +24,11 @@ namespace Azure.Developer.LoadTesting
             Configurations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestProfileRunRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfileRunRecommendation"/>. </summary>
         /// <param name="category"> Category of the recommendation. </param>
         /// <param name="configurations"> List of configurations IDs for which the recommendation is applicable. These are a subset of the provided target resource configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfileRunRecommendation(RecommendationCategory category, IList<string> configurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProfileRunRecommendation(RecommendationCategory category, IList<string> configurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Configurations = configurations;

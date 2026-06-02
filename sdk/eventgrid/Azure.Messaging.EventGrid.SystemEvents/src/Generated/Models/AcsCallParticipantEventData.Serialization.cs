@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all participant events. </summary>
-    [JsonConverter(typeof(AcsCallParticipantEventDataConverter))]
-    public partial class AcsCallParticipantEventData : AcsCallingEventProperties, IJsonModel<AcsCallParticipantEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData.AcsCallParticipantEventDataConverter))]
+    public partial class AcsCallParticipantEventData : AcsCallingEventProperties, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData"/> for deserialization. </summary>
         internal AcsCallParticipantEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsCallingEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsCallParticipantEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData.DeserializeAcsCallParticipantEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsCallParticipantEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsCallParticipantEventData IPersistableModel<AcsCallParticipantEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsCallParticipantEventData)PersistableModelCreateCore(data, options);
+        AcsCallParticipantEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsCallParticipantEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsCallParticipantEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsCallParticipantEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,28 +75,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(User))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                writer.WriteObjectValue<AcsCallParticipantProperties>(User, options);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ParticipantId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ParticipantId))
             {
                 writer.WritePropertyName("participantId"u8);
                 writer.WriteStringValue(ParticipantId);
             }
-            if (Optional.IsDefined(UserAgent))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(UserAgent))
             {
                 writer.WritePropertyName("userAgent"u8);
                 writer.WriteStringValue(UserAgent);
@@ -105,26 +105,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsCallParticipantEventData IJsonModel<AcsCallParticipantEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsCallParticipantEventData)JsonModelCreateCore(ref reader, options);
+        AcsCallParticipantEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsCallParticipantEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsCallingEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsCallParticipantEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData.DeserializeAcsCallParticipantEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsCallParticipantEventData DeserializeAcsCallParticipantEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             bool? isTwoParty = default;
             string correlationId = default;
             bool? isRoomsCall = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AcsCallParticipantProperties user = default;
             string displayName = default;
             string participantId = default;
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (prop.NameEquals("startedBy"u8))
                 {
-                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(prop.Value, options);
+                    startedBy = global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serverCallId"u8))
@@ -154,25 +154,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("group"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    @group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(prop.Value, options);
+                    @group = global::Azure.Messaging.EventGrid.SystemEvents.AcsCallGroupProperties.DeserializeAcsCallGroupProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("room"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(prop.Value, options);
+                    room = global::Azure.Messaging.EventGrid.SystemEvents.AcsCallRoomProperties.DeserializeAcsCallRoomProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isTwoParty"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("isRoomsCall"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -195,11 +195,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("user"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    user = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(prop.Value, options);
+                    user = global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -217,9 +217,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     userAgent = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsCallParticipantEventData(
@@ -237,7 +237,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 userAgent);
         }
 
-        internal partial class AcsCallParticipantEventDataConverter : JsonConverter<AcsCallParticipantEventData>
+        internal partial class AcsCallParticipantEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsCallParticipantEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsCallParticipantEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -254,8 +254,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsCallParticipantEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsCallParticipantEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsCallParticipantEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

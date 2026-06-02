@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemReasoningItem : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem"/>. </summary>
         /// <param name="summary"> Reasoning summary content. </param>
-        public InternalOutputItemReasoningItem(IEnumerable<InternalSummaryTextObject> summary) : base(AgentResponseItemKind.Reasoning)
+        public InternalOutputItemReasoningItem(IEnumerable<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject> summary) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.Reasoning)
         {
             Summary = summary.ToList();
-            Content = new ChangeTrackingList<ReasoningTextContent>();
+            Content = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, InputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemReasoningItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject> summary, IList<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent> content, InputItemReasoningItemStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             Summary = summary;
@@ -43,10 +43,10 @@ namespace Azure.AI.Extensions.OpenAI
         public string EncryptedContent { get; set; }
 
         /// <summary> Reasoning summary content. </summary>
-        public IList<InternalSummaryTextObject> Summary { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject> Summary { get; }
 
         /// <summary> Reasoning text content. </summary>
-        public IList<ReasoningTextContent> Content { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent> Content { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or

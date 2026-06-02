@@ -14,19 +14,19 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentSection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentSection"/>. </summary>
         internal DocumentSection()
         {
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentSection"/>. </summary>
         /// <param name="span"> Span of the section in the markdown content. </param>
         /// <param name="elements"> Child elements of the section. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSection(ContentSpan span, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSection(ContentSpan span, IList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Span = span;
             Elements = elements;

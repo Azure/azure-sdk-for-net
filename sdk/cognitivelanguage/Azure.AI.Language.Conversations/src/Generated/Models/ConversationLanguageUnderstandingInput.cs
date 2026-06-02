@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The input for a conversation language understanding task. </summary>
     public partial class ConversationLanguageUnderstandingInput : AnalyzeConversationInput
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput"/>. </summary>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actionContent"/> is null. </exception>
-        public ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(AnalyzeConversationInputKind.Conversation)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actionContent"/> is null. </exception>
+        public ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(global::Azure.AI.Language.Conversations.Models.AnalyzeConversationInputKind.Conversation)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actionContent, nameof(actionContent));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(conversationInput, nameof(conversationInput));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(actionContent, nameof(actionContent));
 
             ConversationInput = conversationInput;
             ActionContent = actionContent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
-        internal ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             ConversationInput = conversationInput;
             ActionContent = actionContent;

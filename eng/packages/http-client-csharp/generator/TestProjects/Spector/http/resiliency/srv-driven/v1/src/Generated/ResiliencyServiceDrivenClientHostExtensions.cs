@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Resiliency.ServiceDriven
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ResiliencyServiceDrivenClientHostExtensions
     {
         public static IClientBuilder AddResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string sectionName, Action<ResiliencyServiceDrivenClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string sectionName, Action<global::Resiliency.ServiceDriven.ResiliencyServiceDrivenClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ResiliencyServiceDrivenClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedResiliencyServiceDrivenClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Resiliency.ServiceDriven.ResiliencyServiceDrivenClientSettings> configureSettings) => throw null;
     }
 }

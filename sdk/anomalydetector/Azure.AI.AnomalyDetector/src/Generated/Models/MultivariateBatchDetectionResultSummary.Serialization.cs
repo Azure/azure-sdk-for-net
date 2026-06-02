@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Multivariate anomaly detection status. </summary>
-    public partial class MultivariateBatchDetectionResultSummary : IJsonModel<MultivariateBatchDetectionResultSummary>
+    public partial class MultivariateBatchDetectionResultSummary : IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary"/> for deserialization. </summary>
         internal MultivariateBatchDetectionResultSummary()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MultivariateBatchDetectionResultSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultivariateBatchDetectionResultSummary(document.RootElement, options);
+                        return global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAnomalyDetectorContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.AnomalyDetector.AzureAIAnomalyDetectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultivariateBatchDetectionResultSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultivariateBatchDetectionResultSummary IPersistableModel<MultivariateBatchDetectionResultSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MultivariateBatchDetectionResultSummary IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultivariateBatchDetectionResultSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultivariateBatchDetectionResultSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,36 +73,36 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Errors))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (ErrorResponse item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ErrorResponse>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
                 foreach (VariableState item in VariableStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VariableState>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("setupInfo"u8);
-            writer.WriteObjectValue(SetupInfo, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<MultivariateBatchDetectionOptions>(SetupInfo, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -110,9 +110,9 @@ namespace Azure.AI.AnomalyDetector
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -121,34 +121,34 @@ namespace Azure.AI.AnomalyDetector
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultivariateBatchDetectionResultSummary IJsonModel<MultivariateBatchDetectionResultSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MultivariateBatchDetectionResultSummary IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MultivariateBatchDetectionResultSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultivariateBatchDetectionResultSummary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MultivariateBatchDetectionResultSummary DeserializeMultivariateBatchDetectionResultSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MultivariateBatchDetectionStatus status = default;
-            IList<ErrorResponse> errors = default;
-            IList<VariableState> variableStates = default;
+            IList<global::Azure.AI.AnomalyDetector.ErrorResponse> errors = default;
+            IList<global::Azure.AI.AnomalyDetector.VariableState> variableStates = default;
             MultivariateBatchDetectionOptions setupInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
@@ -158,43 +158,43 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("errors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<global::Azure.AI.AnomalyDetector.ErrorResponse> array = new List<global::Azure.AI.AnomalyDetector.ErrorResponse>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
+                        array.Add(global::Azure.AI.AnomalyDetector.ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (prop.NameEquals("variableStates"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VariableState> array = new List<VariableState>();
+                    List<global::Azure.AI.AnomalyDetector.VariableState> array = new List<global::Azure.AI.AnomalyDetector.VariableState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item, options));
+                        array.Add(global::Azure.AI.AnomalyDetector.VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
                 }
                 if (prop.NameEquals("setupInfo"u8))
                 {
-                    setupInfo = MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(prop.Value, options);
+                    setupInfo = global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MultivariateBatchDetectionResultSummary(status, errors ?? new ChangeTrackingList<ErrorResponse>(), variableStates ?? new ChangeTrackingList<VariableState>(), setupInfo, additionalBinaryDataProperties);
+            return new MultivariateBatchDetectionResultSummary(status, (errors ?? new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>()), (variableStates ?? new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>()), setupInfo, additionalBinaryDataProperties);
         }
     }
 }

@@ -18,24 +18,24 @@ namespace _Type.Union
     {
         protected MixedTypes() => throw null;
 
-        internal MixedTypes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal MixedTypes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<GetResponse9> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Union.GetResponse9> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<GetResponse9>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Union.GetResponse9>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SendAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SendAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Send(MixedTypesCases prop, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SendAsync(MixedTypesCases prop, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SendAsync(MixedTypesCases prop, CancellationToken cancellationToken = default) => throw null;
     }
 }

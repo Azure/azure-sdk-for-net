@@ -15,19 +15,19 @@ namespace Azure.Compute.Batch
     public partial class BatchPool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPool"/>. </summary>
         internal BatchPool()
         {
-            ResizeErrors = new ChangeTrackingList<ResizeError>();
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
-            UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
-            MountConfiguration = new ChangeTrackingList<MountConfiguration>();
+            ResizeErrors = new ChangeTrackingList<global::Azure.Compute.Batch.ResizeError>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
+            UserAccounts = new ChangeTrackingList<global::Azure.Compute.Batch.UserAccount>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
+            MountConfiguration = new ChangeTrackingList<global::Azure.Compute.Batch.MountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPool"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="uri"> The URL of the Pool. </param>
@@ -63,7 +63,7 @@ namespace Azure.Compute.Batch
         /// <param name="identity"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPool(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchPoolState state, DateTimeOffset stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<ResizeError> resizeErrors, int currentDedicatedNodes, int currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<UserAccount> userAccounts, IReadOnlyList<BatchMetadataItem> metadata, BatchPoolStatistics poolStatistics, IReadOnlyList<MountConfiguration> mountConfiguration, BatchPoolIdentity identity, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPool(string id, string displayName, global::System.Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchPoolState state, DateTimeOffset stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<global::Azure.Compute.Batch.ResizeError> resizeErrors, int currentDedicatedNodes, int currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IReadOnlyList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<global::Azure.Compute.Batch.UserAccount> userAccounts, IReadOnlyList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, BatchPoolStatistics poolStatistics, IReadOnlyList<global::Azure.Compute.Batch.MountConfiguration> mountConfiguration, BatchPoolIdentity identity, UpgradePolicy upgradePolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch
         public string DisplayName { get; }
 
         /// <summary> The URL of the Pool. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The ETag of the Pool. This is an opaque string. You can use it to detect whether the Pool has changed between requests. In particular, you can be pass the ETag when updating a Pool to specify that your changes should take effect only if nobody else has modified the Pool in the meantime. </summary>
         public ETag ETag { get; }
@@ -142,7 +142,7 @@ namespace Azure.Compute.Batch
         public TimeSpan? ResizeTimeout { get; }
 
         /// <summary> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </summary>
-        public IReadOnlyList<ResizeError> ResizeErrors { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.ResizeError> ResizeErrors { get; }
 
         /// <summary> The number of dedicated Compute Nodes currently in the Pool. </summary>
         public int CurrentDedicatedNodes { get; }
@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; }
 
         /// <summary> The list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </summary>
-        public IReadOnlyList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </summary>
         public int? TaskSlotsPerNode { get; }
@@ -187,16 +187,16 @@ namespace Azure.Compute.Batch
         public BatchTaskSchedulingPolicy TaskSchedulingPolicy { get; }
 
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
-        public IReadOnlyList<UserAccount> UserAccounts { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.UserAccount> UserAccounts { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. </summary>
-        public IReadOnlyList<BatchMetadataItem> Metadata { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
         public BatchPoolStatistics PoolStatistics { get; }
 
         /// <summary> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system. </summary>
-        public IReadOnlyList<MountConfiguration> MountConfiguration { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.MountConfiguration> MountConfiguration { get; }
 
         /// <summary> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public BatchPoolIdentity Identity { get; }

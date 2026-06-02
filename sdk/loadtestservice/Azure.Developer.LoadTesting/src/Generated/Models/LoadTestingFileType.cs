@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Types of file supported. </summary>
-    public readonly partial struct LoadTestingFileType : IEquatable<LoadTestingFileType>
+    public readonly partial struct LoadTestingFileType : IEquatable<global::Azure.Developer.LoadTesting.LoadTestingFileType>
     {
         private readonly string _value;
         /// <summary> If the file is a JMX script. </summary>
@@ -31,12 +31,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> If the file is an AI Recommendations file created by the system containing recommendations to create a load test plan from browser recording. </summary>
         private const string TestPlanRecommendationsValue = "TEST_PLAN_RECOMMENDATIONS";
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingFileType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestingFileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadTestingFileType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -65,34 +65,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> If the file is an AI Recommendations file created by the system containing recommendations to create a load test plan from browser recording. </summary>
         public static LoadTestingFileType TestPlanRecommendations { get; } = new LoadTestingFileType(TestPlanRecommendationsValue);
 
-        /// <summary> Determines if two <see cref="LoadTestingFileType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.LoadTestingFileType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadTestingFileType left, LoadTestingFileType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LoadTestingFileType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.LoadTestingFileType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadTestingFileType left, LoadTestingFileType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LoadTestingFileType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.LoadTestingFileType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LoadTestingFileType(string value) => new LoadTestingFileType(value);
 
-        /// <summary> Converts a string to a <see cref="LoadTestingFileType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.LoadTestingFileType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LoadTestingFileType?(string value) => value == null ? null : new LoadTestingFileType(value);
+        public static implicit operator LoadTestingFileType?(string value) => (value == null) ? null : new LoadTestingFileType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LoadTestingFileType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LoadTestingFileType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LoadTestingFileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LoadTestingFileType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

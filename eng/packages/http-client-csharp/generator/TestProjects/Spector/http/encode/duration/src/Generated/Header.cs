@@ -18,120 +18,120 @@ namespace Encode.Duration._Header
     {
         protected Header() => throw null;
 
-        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> DefaultAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Default(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DefaultAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Iso8601(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Iso8601Async(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Iso8601Async(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Iso8601(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Iso8601Async(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Iso8601Async(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
+        public virtual Response Iso8601Array(IEnumerable<global::System.TimeSpan> duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Iso8601ArrayAsync(IEnumerable<global::System.TimeSpan> duration, RequestContext context) => throw null;
 
-        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Iso8601Array(IEnumerable<global::System.TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Iso8601ArrayAsync(IEnumerable<global::System.TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32Seconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Int32SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Int32Seconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Int32SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32SecondsLargerUnit(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Int32SecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Int32SecondsLargerUnit(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Int32SecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Int32SecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatSeconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> FloatSecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response FloatSeconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FloatSecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatSecondsLargerUnit(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> FloatSecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response FloatSecondsLargerUnit(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FloatSecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FloatSecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Float64Seconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Float64SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Float64SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Float64Seconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Float64SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Float64SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32Milliseconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Int32Milliseconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Int32MillisecondsLargerUnit(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Int32MillisecondsLargerUnit(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatMilliseconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response FloatMilliseconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FloatMillisecondsLargerUnit(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsLargerUnitAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response FloatMillisecondsLargerUnit(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FloatMillisecondsLargerUnitAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Float64Milliseconds(TimeSpan duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Float64MillisecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
         public virtual Response Float64Milliseconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Float64MillisecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
+        public virtual Response Int32MillisecondsArray(IEnumerable<global::System.TimeSpan> duration, RequestContext context) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsArrayAsync(IEnumerable<global::System.TimeSpan> duration, RequestContext context) => throw null;
 
-        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Int32MillisecondsArray(IEnumerable<global::System.TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Int32MillisecondsArrayAsync(IEnumerable<global::System.TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -12,43 +12,43 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Client options for <see cref="ConversationAnalysisClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Language.Conversations.ConversationAnalysisClient"/>. </summary>
     public partial class ConversationsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
+        private const global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview;
 
         /// <summary> Initializes a new instance of ConversationAnalysisClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ConversationsClientOptions(ServiceVersion version = LatestVersion)
+        public ConversationsClientOptions(global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2022_05_01 => "2022-05-01",
-                ServiceVersion.V2023_04_01 => "2023-04-01",
-                ServiceVersion.V2024_05_01 => "2024-05-01",
-                ServiceVersion.V2024_11_01 => "2024-11-01",
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
-                ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2022_05_01 => "2022-05-01",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2023_04_01 => "2023-04-01",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2024_05_01 => "2024-05-01",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2024_11_01 => "2024-11-01",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                global::Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of ConversationAnalysisClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ConversationsClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-11-15-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

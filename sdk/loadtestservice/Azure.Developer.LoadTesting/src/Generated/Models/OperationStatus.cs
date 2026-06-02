@@ -15,9 +15,9 @@ namespace Azure.Developer.LoadTesting
     public partial class OperationStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.OperationStatus"/>. </summary>
         /// <param name="status"> The state of the operation. </param>
         /// <param name="kind"> The kind of the operation. </param>
         internal OperationStatus(OperationState status, OperationKind kind)
@@ -26,13 +26,13 @@ namespace Azure.Developer.LoadTesting
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.OperationStatus"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The state of the operation. </param>
         /// <param name="kind"> The kind of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is "Failed". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatus(string id, OperationState status, OperationKind kind, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationStatus(string id, OperationState status, OperationKind kind, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;

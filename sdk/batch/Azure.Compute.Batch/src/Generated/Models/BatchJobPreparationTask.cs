@@ -41,21 +41,21 @@ namespace Azure.Compute.Batch
     public partial class BatchJobPreparationTask
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobPreparationTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobPreparationTask"/>. </summary>
         /// <param name="commandLine"> The command line of the Job Preparation Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commandLine"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="commandLine"/> is null. </exception>
         public BatchJobPreparationTask(string commandLine)
         {
-            Argument.AssertNotNull(commandLine, nameof(commandLine));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(commandLine, nameof(commandLine));
 
             CommandLine = commandLine;
-            ResourceFiles = new ChangeTrackingList<ResourceFile>();
-            EnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
+            ResourceFiles = new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>();
+            EnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobPreparationTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobPreparationTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job Preparation Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. If you do not specify this property, the Batch service assigns a default value of 'jobpreparation'. No other Task in the Job can have the same ID as the Job Preparation Task. If you try to submit a Task with the same id, the Batch service rejects the request with error code TaskIdSameAsJobPreparationTask; if you are calling the REST API directly, the HTTP status code is 409 (Conflict). </param>
         /// <param name="commandLine"> The command line of the Job Preparation Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
         /// <param name="containerSettings"> The settings for the container under which the Job Preparation Task runs. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all Task environment variables are mapped into the container, and the Task command line is executed in the container. Files produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk, meaning that Batch file APIs will not be able to access those files. </param>
@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch
         /// <param name="userIdentity"> The user identity under which the Job Preparation Task runs. If omitted, the Task runs as a non-administrative user unique to the Task on Windows Compute Nodes, or a non-administrative user unique to the Pool on Linux Compute Nodes. </param>
         /// <param name="rerunOnNodeRebootAfterSuccess"> Whether the Batch service should rerun the Job Preparation Task after a Compute Node reboots. The Job Preparation Task is always rerun if a Compute Node is reimaged, or if the Job Preparation Task did not complete (e.g. because the reboot occurred while the Task was running). Therefore, you should always write a Job Preparation Task to be idempotent and to behave correctly if run multiple times. The default value is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobPreparationTask(string id, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, bool? waitForSuccess, UserIdentity userIdentity, bool? rerunOnNodeRebootAfterSuccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobPreparationTask(string id, string commandLine, BatchTaskContainerSettings containerSettings, IList<global::Azure.Compute.Batch.ResourceFile> resourceFiles, IList<global::Azure.Compute.Batch.EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, bool? waitForSuccess, UserIdentity userIdentity, bool? rerunOnNodeRebootAfterSuccess, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             CommandLine = commandLine;
@@ -90,10 +90,10 @@ namespace Azure.Compute.Batch
         public BatchTaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary> A list of files that the Batch service will download to the Compute Node before running the command line. Files listed under this element are located in the Task's working directory.  There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
-        public IList<ResourceFile> ResourceFiles { get; }
+        public IList<global::Azure.Compute.Batch.ResourceFile> ResourceFiles { get; }
 
         /// <summary> A list of environment variable settings for the Job Preparation Task. </summary>
-        public IList<EnvironmentSetting> EnvironmentSettings { get; }
+        public IList<global::Azure.Compute.Batch.EnvironmentSetting> EnvironmentSettings { get; }
 
         /// <summary> Constraints that apply to the Job Preparation Task. </summary>
         public BatchTaskConstraints Constraints { get; set; }

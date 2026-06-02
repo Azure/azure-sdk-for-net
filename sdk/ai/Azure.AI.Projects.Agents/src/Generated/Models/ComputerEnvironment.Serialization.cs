@@ -11,36 +11,36 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputerEnvironment value) => value switch
         {
-            ComputerEnvironment.Windows => "windows",
-            ComputerEnvironment.Mac => "mac",
-            ComputerEnvironment.Linux => "linux",
-            ComputerEnvironment.Ubuntu => "ubuntu",
-            ComputerEnvironment.Browser => "browser",
+            global::OpenAI.ComputerEnvironment.Windows => "windows",
+            global::OpenAI.ComputerEnvironment.Mac => "mac",
+            global::OpenAI.ComputerEnvironment.Linux => "linux",
+            global::OpenAI.ComputerEnvironment.Ubuntu => "ubuntu",
+            global::OpenAI.ComputerEnvironment.Browser => "browser",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputerEnvironment value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ComputerEnvironment ToComputerEnvironment(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "windows"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "windows"))
             {
-                return ComputerEnvironment.Windows;
+                return global::OpenAI.ComputerEnvironment.Windows;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mac"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "mac"))
             {
-                return ComputerEnvironment.Mac;
+                return global::OpenAI.ComputerEnvironment.Mac;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "linux"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "linux"))
             {
-                return ComputerEnvironment.Linux;
+                return global::OpenAI.ComputerEnvironment.Linux;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ubuntu"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ubuntu"))
             {
-                return ComputerEnvironment.Ubuntu;
+                return global::OpenAI.ComputerEnvironment.Ubuntu;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "browser"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "browser"))
             {
-                return ComputerEnvironment.Browser;
+                return global::OpenAI.ComputerEnvironment.Browser;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputerEnvironment value.");
         }

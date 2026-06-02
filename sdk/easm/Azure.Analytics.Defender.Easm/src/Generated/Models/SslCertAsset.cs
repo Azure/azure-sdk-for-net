@@ -13,7 +13,7 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The SslCertAsset. </summary>
     public partial class SslCertAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="SslCertAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslCertAsset"/>. </summary>
         internal SslCertAsset()
         {
             SubjectCommonNames = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             IssuerCommonNames = new ChangeTrackingList<string>();
             SubjectAlternativeNames = new ChangeTrackingList<string>();
             IssuerAlternativeNames = new ChangeTrackingList<string>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
             SubjectLocality = new ChangeTrackingList<string>();
             SubjectState = new ChangeTrackingList<string>();
             SubjectCountry = new ChangeTrackingList<string>();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm
             IssuerOrganizationalUnits = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SslCertAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslCertAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sha1"></param>
         /// <param name="subjectCommonNames"></param>
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sigAlgOid"></param>
         /// <param name="recent"></param>
         /// <param name="validationType"></param>
-        internal SslCertAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string sha1, IList<string> subjectCommonNames, IList<string> organizations, IList<string> organizationalUnits, IList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IList<string> subjectAlternativeNames, IList<string> issuerAlternativeNames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IList<string> subjectLocality, IList<string> subjectState, IList<string> subjectCountry, IList<string> issuerLocality, IList<string> issuerState, IList<string> issuerCountry, IList<string> subjectOrganizations, IList<string> subjectOrganizationalUnits, IList<string> issuerOrganizations, IList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType) : base(additionalBinaryDataProperties)
+        internal SslCertAsset(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string sha1, IList<string> subjectCommonNames, IList<string> organizations, IList<string> organizationalUnits, IList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IList<string> subjectAlternativeNames, IList<string> issuerAlternativeNames, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IList<string> subjectLocality, IList<string> subjectState, IList<string> subjectCountry, IList<string> issuerLocality, IList<string> issuerState, IList<string> issuerCountry, IList<string> subjectOrganizations, IList<string> subjectOrganizationalUnits, IList<string> issuerOrganizations, IList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType) : base(additionalBinaryDataProperties)
         {
             Sha1 = sha1;
             SubjectCommonNames = subjectCommonNames;
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Defender.Easm
         public IList<string> IssuerAlternativeNames { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }

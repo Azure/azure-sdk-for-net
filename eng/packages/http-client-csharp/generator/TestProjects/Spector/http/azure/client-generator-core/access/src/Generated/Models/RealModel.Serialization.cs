@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class RealModel : AbstractModel, IJsonModel<RealModel>
+    public partial class RealModel : AbstractModel, IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>
     {
         internal RealModel() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<RealModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        RealModel IPersistableModel<RealModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        RealModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<RealModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<RealModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        RealModel IJsonModel<RealModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        RealModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.RealModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override AbstractModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

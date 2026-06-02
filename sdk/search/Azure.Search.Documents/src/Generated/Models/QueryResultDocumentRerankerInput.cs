@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Models
     public partial class QueryResultDocumentRerankerInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentRerankerInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentRerankerInput"/>. </summary>
         internal QueryResultDocumentRerankerInput()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentRerankerInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentRerankerInput"/>. </summary>
         /// <param name="title"> The raw string for the title field that was used for semantic enrichment. </param>
         /// <param name="content"> The raw concatenated strings for the content fields that were used for semantic enrichment. </param>
         /// <param name="keywords"> The raw concatenated strings for the keyword fields that were used for semantic enrichment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResultDocumentRerankerInput(string title, string content, string keywords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryResultDocumentRerankerInput(string title, string content, string keywords, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Content = content;

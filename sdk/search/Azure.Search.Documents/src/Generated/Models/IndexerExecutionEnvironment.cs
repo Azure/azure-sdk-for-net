@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the environment in which the indexer should execute. </summary>
-    public readonly partial struct IndexerExecutionEnvironment : IEquatable<IndexerExecutionEnvironment>
+    public readonly partial struct IndexerExecutionEnvironment : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment>
     {
         private readonly string _value;
         /// <summary> Indicates that the search service can determine where the indexer should execute. This is the default environment when nothing is specified and is the recommended value. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
         private const string PrivateValue = "private";
 
-        /// <summary> Initializes a new instance of <see cref="IndexerExecutionEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerExecutionEnvironment(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
         public static IndexerExecutionEnvironment Private { get; } = new IndexerExecutionEnvironment(PrivateValue);
 
-        /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerExecutionEnvironment left, IndexerExecutionEnvironment right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerExecutionEnvironment left, IndexerExecutionEnvironment right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexerExecutionEnvironment"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexerExecutionEnvironment(string value) => new IndexerExecutionEnvironment(value);
 
-        /// <summary> Converts a string to a <see cref="IndexerExecutionEnvironment"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerExecutionEnvironment?(string value) => value == null ? null : new IndexerExecutionEnvironment(value);
+        public static implicit operator IndexerExecutionEnvironment?(string value) => (value == null) ? null : new IndexerExecutionEnvironment(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexerExecutionEnvironment other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexerExecutionEnvironment other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexerExecutionEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexerExecutionEnvironment other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

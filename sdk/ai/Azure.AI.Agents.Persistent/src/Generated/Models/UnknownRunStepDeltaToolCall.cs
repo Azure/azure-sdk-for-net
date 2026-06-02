@@ -12,12 +12,12 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownRunStepDeltaToolCall : RunStepDeltaToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRunStepDeltaToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownRunStepDeltaToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRunStepDeltaToolCall(int index, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, id, @type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownRunStepDeltaToolCall(int index, string id, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(index, id, (@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

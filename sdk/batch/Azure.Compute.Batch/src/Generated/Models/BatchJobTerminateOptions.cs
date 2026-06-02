@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class BatchJobTerminateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobTerminateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobTerminateOptions"/>. </summary>
         public BatchJobTerminateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobTerminateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobTerminateOptions"/>. </summary>
         /// <param name="terminationReason"> The text you want to appear as the Job's TerminationReason. The default is 'UserTerminate'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobTerminateOptions(string terminationReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobTerminateOptions(string terminationReason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TerminationReason = terminationReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The category of the evaluator. </summary>
-    public readonly partial struct EvaluatorCategory : IEquatable<EvaluatorCategory>
+    public readonly partial struct EvaluatorCategory : IEquatable<global::Azure.AI.Projects.Evaluation.EvaluatorCategory>
     {
         private readonly string _value;
         /// <summary> Quality. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Agents. </summary>
         private const string AgentsValue = "agents";
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EvaluatorCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -38,34 +38,34 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Agents. </summary>
         public static EvaluatorCategory Agents { get; } = new EvaluatorCategory(AgentsValue);
 
-        /// <summary> Determines if two <see cref="EvaluatorCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EvaluatorCategory left, EvaluatorCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EvaluatorCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EvaluatorCategory left, EvaluatorCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EvaluatorCategory(string value) => new EvaluatorCategory(value);
 
-        /// <summary> Converts a string to a <see cref="EvaluatorCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EvaluatorCategory?(string value) => value == null ? null : new EvaluatorCategory(value);
+        public static implicit operator EvaluatorCategory?(string value) => (value == null) ? null : new EvaluatorCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EvaluatorCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EvaluatorCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EvaluatorCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EvaluatorCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

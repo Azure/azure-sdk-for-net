@@ -13,10 +13,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a matching mode where matching worker to a job is suspended. </summary>
     public partial class SuspendMode : JobMatchingMode
     {
-        /// <summary> Initializes a new instance of <see cref="SuspendMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.SuspendMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuspendMode(JobMatchingModeKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal SuspendMode(JobMatchingModeKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

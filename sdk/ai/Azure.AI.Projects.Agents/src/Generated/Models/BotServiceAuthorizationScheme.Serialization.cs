@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The BotServiceAuthorizationScheme. </summary>
-    public partial class BotServiceAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<BotServiceAuthorizationScheme>
+    public partial class BotServiceAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentEndpointAuthorizationScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBotServiceAuthorizationScheme(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme.DeserializeBotServiceAuthorizationScheme(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceAuthorizationScheme)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceAuthorizationScheme)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BotServiceAuthorizationScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BotServiceAuthorizationScheme IPersistableModel<BotServiceAuthorizationScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (BotServiceAuthorizationScheme)PersistableModelCreateCore(data, options);
+        BotServiceAuthorizationScheme IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => ((BotServiceAuthorizationScheme)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BotServiceAuthorizationScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BotServiceAuthorizationScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,41 +65,41 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BotServiceAuthorizationScheme)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BotServiceAuthorizationScheme IJsonModel<BotServiceAuthorizationScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BotServiceAuthorizationScheme)JsonModelCreateCore(ref reader, options);
+        BotServiceAuthorizationScheme IJsonModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((BotServiceAuthorizationScheme)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentEndpointAuthorizationScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BotServiceAuthorizationScheme)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBotServiceAuthorizationScheme(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.BotServiceAuthorizationScheme.DeserializeBotServiceAuthorizationScheme(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BotServiceAuthorizationScheme DeserializeBotServiceAuthorizationScheme(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             AgentEndpointAuthorizationSchemeType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,9 +107,9 @@ namespace Azure.AI.Projects.Agents
                     @type = new AgentEndpointAuthorizationSchemeType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BotServiceAuthorizationScheme(@type, additionalBinaryDataProperties);

@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentAnnotationComment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAnnotationComment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment"/>. </summary>
         /// <param name="message"> Comment message in Markdown. </param>
         internal DocumentAnnotationComment(string message)
         {
@@ -24,14 +24,14 @@ namespace Azure.AI.ContentUnderstanding
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAnnotationComment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment"/>. </summary>
         /// <param name="message"> Comment message in Markdown. </param>
         /// <param name="author"> Author of the comment. </param>
         /// <param name="createdAt"> Date and time when the comment was created. </param>
         /// <param name="lastModifiedAt"> Date and time when the comment was last modified. </param>
         /// <param name="tags"> Tags associated with the comment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAnnotationComment(string message, string author, DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt, IList<string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentAnnotationComment(string message, string author, DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt, IList<string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             Author = author;

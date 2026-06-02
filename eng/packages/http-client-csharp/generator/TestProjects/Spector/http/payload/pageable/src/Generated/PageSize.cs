@@ -17,24 +17,24 @@ namespace Payload.Pageable._PageSize
     {
         protected PageSize() => throw null;
 
-        internal PageSize(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PageSize(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetWithoutContinuation(RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> GetWithoutContinuation(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithoutContinuationAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithoutContinuationAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> GetWithoutContinuation(CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> GetWithoutContinuation(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> GetWithoutContinuationAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> GetWithoutContinuationAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetWithPageSize(int? pageSize, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> GetWithPageSize(int? pageSize, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetWithPageSizeAsync(int? pageSize, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetWithPageSizeAsync(int? pageSize, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> GetWithPageSize(int? pageSize = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> GetWithPageSize(int? pageSize = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> GetWithPageSizeAsync(int? pageSize = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> GetWithPageSizeAsync(int? pageSize = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Terminal status of a response. </summary>
-    public readonly partial struct SessionResponseStatus : IEquatable<SessionResponseStatus>
+    public readonly partial struct SessionResponseStatus : IEquatable<global::Azure.AI.VoiceLive.SessionResponseStatus>
     {
         private readonly string _value;
         private const string CompletedValue = "completed";
@@ -20,12 +20,12 @@ namespace Azure.AI.VoiceLive
         private const string IncompleteValue = "incomplete";
         private const string InProgressValue = "in_progress";
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionResponseStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the InProgress. </summary>
         public static SessionResponseStatus InProgress { get; } = new SessionResponseStatus(InProgressValue);
 
-        /// <summary> Determines if two <see cref="SessionResponseStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.SessionResponseStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionResponseStatus left, SessionResponseStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SessionResponseStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.SessionResponseStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionResponseStatus left, SessionResponseStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SessionResponseStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.SessionResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SessionResponseStatus(string value) => new SessionResponseStatus(value);
 
-        /// <summary> Converts a string to a <see cref="SessionResponseStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.SessionResponseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionResponseStatus?(string value) => value == null ? null : new SessionResponseStatus(value);
+        public static implicit operator SessionResponseStatus?(string value) => (value == null) ? null : new SessionResponseStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SessionResponseStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SessionResponseStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SessionResponseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SessionResponseStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

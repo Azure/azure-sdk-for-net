@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> How package dependencies are resolved at deployment time for a code-based hosted agent. </summary>
-    public readonly partial struct CodeDependencyResolution : IEquatable<CodeDependencyResolution>
+    public readonly partial struct CodeDependencyResolution : IEquatable<global::Azure.AI.Projects.Agents.CodeDependencyResolution>
     {
         private readonly string _value;
         /// <summary> The caller has bundled all dependencies into the uploaded zip; the service performs no remote build. </summary>
@@ -16,12 +16,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The service builds dependencies remotely from the manifest included in the uploaded zip. </summary>
         private const string RemoteBuildValue = "remote_build";
 
-        /// <summary> Initializes a new instance of <see cref="CodeDependencyResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CodeDependencyResolution"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CodeDependencyResolution(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -32,34 +32,34 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The service builds dependencies remotely from the manifest included in the uploaded zip. </summary>
         public static CodeDependencyResolution RemoteBuild { get; } = new CodeDependencyResolution(RemoteBuildValue);
 
-        /// <summary> Determines if two <see cref="CodeDependencyResolution"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.CodeDependencyResolution"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CodeDependencyResolution left, CodeDependencyResolution right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CodeDependencyResolution"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.Agents.CodeDependencyResolution"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CodeDependencyResolution left, CodeDependencyResolution right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CodeDependencyResolution"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.CodeDependencyResolution"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CodeDependencyResolution(string value) => new CodeDependencyResolution(value);
 
-        /// <summary> Converts a string to a <see cref="CodeDependencyResolution"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.Agents.CodeDependencyResolution"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CodeDependencyResolution?(string value) => value == null ? null : new CodeDependencyResolution(value);
+        public static implicit operator CodeDependencyResolution?(string value) => (value == null) ? null : new CodeDependencyResolution(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CodeDependencyResolution other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CodeDependencyResolution other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CodeDependencyResolution other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CodeDependencyResolution other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

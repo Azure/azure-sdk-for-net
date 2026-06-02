@@ -14,14 +14,14 @@ namespace Encode._Array
 {
     public partial class ArrayClient
     {
-        public ArrayClient() : this(new Uri("http://localhost:3000"), new ArrayClientOptions()) => throw null;
+        public ArrayClient() : this(new global::System.Uri("http://localhost:3000"), new ArrayClientOptions()) => throw null;
 
-        internal ArrayClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ArrayClientOptions options) => throw null;
+        internal ArrayClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ArrayClientOptions options) => throw null;
 
-        public ArrayClient(Uri endpoint, ArrayClientOptions options) : this(null, endpoint, options) => throw null;
+        public ArrayClient(global::System.Uri endpoint, ArrayClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ArrayClient(ArrayClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ArrayClient(ArrayClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Structure.MultiClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ClientAClientHostExtensions
     {
         public static IClientBuilder AddClientAClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddClientAClient(this IHostApplicationBuilder host, string sectionName, Action<ClientAClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddClientAClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Structure.MultiClient.ClientAClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedClientAClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedClientAClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ClientAClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedClientAClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Structure.MultiClient.ClientAClientSettings> configureSettings) => throw null;
     }
 }

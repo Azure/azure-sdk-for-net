@@ -15,23 +15,23 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationLanguageUnderstandingActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
-            TargetProjectParameters = new ChangeTrackingDictionary<string, AnalysisConfig>();
+            TargetProjectParameters = new ChangeTrackingDictionary<string, global::Azure.AI.Language.Conversations.Models.AnalysisConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="verbose"> If true, the service will return more detailed information in the response. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="directTarget"> The name of a target project to forward the request to. </param>
         /// <param name="targetProjectParameters"> A dictionary representing the parameters for each target project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, bool? verbose, bool? isLoggingEnabled, StringIndexType? stringIndexType, string directTarget, IDictionary<string, AnalysisConfig> targetProjectParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, bool? verbose, bool? isLoggingEnabled, StringIndexType? stringIndexType, string directTarget, IDictionary<string, global::Azure.AI.Language.Conversations.Models.AnalysisConfig> targetProjectParameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string DirectTarget { get; set; }
 
         /// <summary> A dictionary representing the parameters for each target project. </summary>
-        public IDictionary<string, AnalysisConfig> TargetProjectParameters { get; }
+        public IDictionary<string, global::Azure.AI.Language.Conversations.Models.AnalysisConfig> TargetProjectParameters { get; }
     }
 }

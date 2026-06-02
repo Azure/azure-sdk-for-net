@@ -13,28 +13,28 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for a entity recognition project. </summary>
     public partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomEntityRecognitionProjectAsset"/>. </summary>
-        public ExportedCustomEntityRecognitionProjectAsset() : base(TextAuthoringProjectKind.CustomEntityRecognition)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset"/>. </summary>
+        public ExportedCustomEntityRecognitionProjectAsset() : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomEntityRecognition)
         {
-            Entities = new ChangeTrackingList<TextAuthoringExportedEntity>();
-            Documents = new ChangeTrackingList<ExportedCustomEntityRecognitionDocument>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>();
+            Documents = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomEntityRecognitionProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="entities"> The list of entities belonging to the project. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        internal ExportedCustomEntityRecognitionProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TextAuthoringExportedEntity> entities, IList<ExportedCustomEntityRecognitionDocument> documents) : base(projectKind, additionalBinaryDataProperties)
+        internal ExportedCustomEntityRecognitionProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> entities, IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> documents) : base(projectKind, additionalBinaryDataProperties)
         {
             Entities = entities;
             Documents = documents;
         }
 
         /// <summary> The list of entities belonging to the project. </summary>
-        public IList<TextAuthoringExportedEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> Entities { get; }
 
         /// <summary> The list of documents belonging to the project. </summary>
-        public IList<ExportedCustomEntityRecognitionDocument> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> Documents { get; }
     }
 }

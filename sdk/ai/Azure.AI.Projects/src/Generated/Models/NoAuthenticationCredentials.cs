@@ -10,15 +10,15 @@ namespace Azure.AI.Projects
     /// <summary> Credentials that do not require authentication. </summary>
     public partial class NoAuthenticationCredentials : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="NoAuthenticationCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.NoAuthenticationCredentials"/>. </summary>
         internal NoAuthenticationCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NoAuthenticationCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.NoAuthenticationCredentials"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NoAuthenticationCredentials(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal NoAuthenticationCredentials(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

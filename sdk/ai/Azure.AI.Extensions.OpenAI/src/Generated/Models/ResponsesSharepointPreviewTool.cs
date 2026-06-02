@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
     public partial class ResponsesSharepointPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesSharepointPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool"/>. </summary>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharepointGroundingPreview"/> is null. </exception>
-        public ResponsesSharepointPreviewTool(ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(ToolType.SharepointGroundingPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sharepointGroundingPreview"/> is null. </exception>
+        public ResponsesSharepointPreviewTool(ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(global::Azure.AI.Extensions.OpenAI.ToolType.SharepointGroundingPreview)
         {
-            Argument.AssertNotNull(sharepointGroundingPreview, nameof(sharepointGroundingPreview));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(sharepointGroundingPreview, nameof(sharepointGroundingPreview));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             SharepointGroundingPreview = sharepointGroundingPreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesSharepointPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        internal ResponsesSharepointPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesSharepointPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
         public ResponsesSharepointGroundingToolParameters SharepointGroundingPreview { get; set; }

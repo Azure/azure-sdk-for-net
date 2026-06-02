@@ -14,19 +14,19 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxNextAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxNextAction"/>. </summary>
         /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         internal DevBoxNextAction(DateTimeOffset scheduledTime)
         {
             ScheduledTime = scheduledTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxNextAction"/>. </summary>
         /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxNextAction(DateTimeOffset scheduledTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxNextAction(DateTimeOffset scheduledTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ScheduledTime = scheduledTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

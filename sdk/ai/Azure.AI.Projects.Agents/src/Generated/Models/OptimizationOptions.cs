@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationOptions"/>. </summary>
         public OptimizationOptions()
         {
-            OptimizationConfig = new ChangeTrackingDictionary<string, BinaryData>();
+            OptimizationConfig = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationOptions"/>. </summary>
         /// <param name="maxIterations"> Maximum optimization iterations per strategy. Must be &gt;= 1. Default: 5. </param>
         /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
         /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationOptions(int? maxIterations, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, EvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationOptions(int? maxIterations, IDictionary<string, global::System.BinaryData> optimizationConfig, string evalModel, string optimizationModel, EvaluationLevel? evaluationLevel, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MaxIterations = maxIterations;
             OptimizationConfig = optimizationConfig;
@@ -42,8 +42,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> OptimizationConfig { get; }
+        public IDictionary<string, global::System.BinaryData> OptimizationConfig { get; }
 
         /// <summary> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </summary>
         public string EvalModel { get; set; }

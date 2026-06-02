@@ -16,23 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerIndexProjection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjection"/>. </summary>
         /// <param name="selectors"> A list of projections to be performed to secondary search indexes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="selectors"/> is null. </exception>
-        public SearchIndexerIndexProjection(IEnumerable<SearchIndexerIndexProjectionSelector> selectors)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="selectors"/> is null. </exception>
+        public SearchIndexerIndexProjection(IEnumerable<global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector> selectors)
         {
-            Argument.AssertNotNull(selectors, nameof(selectors));
+            global::Azure.Search.Documents.Argument.AssertNotNull(selectors, nameof(selectors));
 
             Selectors = selectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjection"/>. </summary>
         /// <param name="selectors"> A list of projections to be performed to secondary search indexes. </param>
         /// <param name="parameters"> A dictionary of index projection-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerIndexProjection(IList<SearchIndexerIndexProjectionSelector> selectors, SearchIndexerIndexProjectionsParameters parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerIndexProjection(IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector> selectors, SearchIndexerIndexProjectionsParameters parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Selectors = selectors;
             Parameters = parameters;
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> A list of projections to be performed to secondary search indexes. </summary>
-        public IList<SearchIndexerIndexProjectionSelector> Selectors { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector> Selectors { get; }
 
         /// <summary> A dictionary of index projection-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
         public SearchIndexerIndexProjectionsParameters Parameters { get; set; }

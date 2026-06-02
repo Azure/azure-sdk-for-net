@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a Deep Research tool as used to configure an agent. </summary>
     public partial class DeepResearchToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="DeepResearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DeepResearchToolDefinition"/>. </summary>
         /// <param name="deepResearch"> The deep_research tool definition configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deepResearch"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="deepResearch"/> is null. </exception>
         public DeepResearchToolDefinition(DeepResearchDetails deepResearch) : base("deep_research")
         {
-            Argument.AssertNotNull(deepResearch, nameof(deepResearch));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(deepResearch, nameof(deepResearch));
 
             DeepResearch = deepResearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeepResearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DeepResearchToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deepResearch"> The deep_research tool definition configuration. </param>
-        internal DeepResearchToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeepResearchDetails deepResearch) : base(@type, additionalBinaryDataProperties)
+        internal DeepResearchToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DeepResearchDetails deepResearch) : base(@type, additionalBinaryDataProperties)
         {
             DeepResearch = deepResearch;
         }

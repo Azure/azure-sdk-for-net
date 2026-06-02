@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Current state of a trigger. </summary>
-    public readonly partial struct TriggerState : IEquatable<TriggerState>
+    public readonly partial struct TriggerState : IEquatable<global::Azure.Developer.LoadTesting.TriggerState>
     {
         private readonly string _value;
         /// <summary> The trigger is active. </summary>
@@ -23,12 +23,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The trigger is disabled due to error. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="TriggerState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TriggerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TriggerState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The trigger is disabled due to error. </summary>
         public static TriggerState Disabled { get; } = new TriggerState(DisabledValue);
 
-        /// <summary> Determines if two <see cref="TriggerState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.TriggerState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TriggerState left, TriggerState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TriggerState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.TriggerState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TriggerState left, TriggerState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TriggerState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.TriggerState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TriggerState(string value) => new TriggerState(value);
 
-        /// <summary> Converts a string to a <see cref="TriggerState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.TriggerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TriggerState?(string value) => value == null ? null : new TriggerState(value);
+        public static implicit operator TriggerState?(string value) => (value == null) ? null : new TriggerState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TriggerState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TriggerState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TriggerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TriggerState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

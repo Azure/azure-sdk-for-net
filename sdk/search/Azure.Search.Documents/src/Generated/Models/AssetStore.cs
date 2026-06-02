@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class AssetStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.AssetStore"/>. </summary>
         /// <param name="connectionString"> The connection string for the asset store. </param>
         /// <param name="containerName"> The name of the blob container within the asset store where extracted assets (for example, images) are stored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
         public AssetStore(string connectionString, string containerName)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(connectionString, nameof(connectionString));
+            global::Azure.Search.Documents.Argument.AssertNotNull(containerName, nameof(containerName));
 
             ConnectionString = connectionString;
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.AssetStore"/>. </summary>
         /// <param name="connectionString"> The connection string for the asset store. </param>
         /// <param name="containerName"> The name of the blob container within the asset store where extracted assets (for example, images) are stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetStore(string connectionString, string containerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetStore(string connectionString, string containerName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;

@@ -16,31 +16,31 @@ namespace Parameters.Path
 {
     public partial class PathClient
     {
-        public PathClient() : this(new Uri("http://localhost:3000"), new PathClientOptions()) => throw null;
+        public PathClient() : this(new global::System.Uri("http://localhost:3000"), new PathClientOptions()) => throw null;
 
-        internal PathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PathClientOptions options) => throw null;
+        internal PathClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PathClientOptions options) => throw null;
 
-        public PathClient(Uri endpoint, PathClientOptions options) : this(null, endpoint, options) => throw null;
+        public PathClient(global::System.Uri endpoint, PathClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public PathClient(PathClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public PathClient(PathClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Normal(string name, RequestContext context) => throw null;
 
-        public virtual Task<Response> NormalAsync(string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> NormalAsync(string name, RequestContext context) => throw null;
 
         public virtual Response Normal(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> NormalAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> NormalAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Optional(string name, RequestContext context) => throw null;
 
-        public virtual Task<Response> OptionalAsync(string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OptionalAsync(string name, RequestContext context) => throw null;
 
         public virtual Response Optional(string name = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OptionalAsync(string name = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> OptionalAsync(string name = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

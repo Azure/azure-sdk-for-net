@@ -13,22 +13,22 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents an invocation of tool calls as part of a streaming run step. </summary>
     public partial class RunStepDeltaToolCallObject : RunStepDeltaDetail
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCallObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/>. </summary>
         internal RunStepDeltaToolCallObject() : base("tool_calls")
         {
-            ToolCalls = new ChangeTrackingList<RunStepDeltaToolCall>();
+            ToolCalls = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCallObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        internal RunStepDeltaToolCallObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<RunStepDeltaToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepDeltaToolCallObject(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }
 
         /// <summary> The collection of tool calls for the tool call detail item. </summary>
-        public IReadOnlyList<RunStepDeltaToolCall> ToolCalls { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall> ToolCalls { get; }
     }
 }

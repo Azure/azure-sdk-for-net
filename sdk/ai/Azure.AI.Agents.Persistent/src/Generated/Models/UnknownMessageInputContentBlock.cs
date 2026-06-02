@@ -12,10 +12,10 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownMessageInputContentBlock : MessageInputContentBlock
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageInputContentBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownMessageInputContentBlock"/>. </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageInputContentBlock(MessageBlockType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageInputContentBlock(MessageBlockType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

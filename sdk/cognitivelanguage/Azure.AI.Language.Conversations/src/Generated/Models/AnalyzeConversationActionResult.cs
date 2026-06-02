@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The base class of a conversation input task result.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITaskResult"/> and <see cref="ConversationActionResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.ConversationalAITaskResult"/> and <see cref="Azure.AI.Language.Conversations.Models.ConversationActionResult"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationActionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
         private protected AnalyzeConversationActionResult(AnalyzeConversationResultKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,9 +12,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A message item within a conversation. </summary>
-    public partial class MessageItem : ConversationRequestItem, IJsonModel<MessageItem>
+    public partial class MessageItem : ConversationRequestItem, IJsonModel<global::Azure.AI.VoiceLive.MessageItem>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MessageItem"/> for deserialization. </summary>
         internal MessageItem()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationRequestItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMessageItem(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.MessageItem.DeserializeMessageItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MessageItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MessageItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MessageItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageItem IPersistableModel<MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MessageItem)PersistableModelCreateCore(data, options);
+        MessageItem IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MessageItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.MessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,10 +72,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MessageItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
@@ -84,10 +84,10 @@ namespace Azure.AI.VoiceLive
             writer.WriteStartArray();
             foreach (MessageContentPart item in Content)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<MessageContentPart>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Status))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -96,26 +96,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageItem IJsonModel<MessageItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MessageItem)JsonModelCreateCore(ref reader, options);
+        MessageItem IJsonModel<global::Azure.AI.VoiceLive.MessageItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MessageItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationRequestItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.MessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.MessageItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.MessageItem.DeserializeMessageItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MessageItem DeserializeMessageItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -124,14 +124,14 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "assistant":
-                        return AssistantMessageItem.DeserializeAssistantMessageItem(element, options);
+                        return global::Azure.AI.VoiceLive.AssistantMessageItem.DeserializeAssistantMessageItem(element, options);
                     case "system":
-                        return SystemMessageItem.DeserializeSystemMessageItem(element, options);
+                        return global::Azure.AI.VoiceLive.SystemMessageItem.DeserializeSystemMessageItem(element, options);
                     case "user":
-                        return UserMessageItem.DeserializeUserMessageItem(element, options);
+                        return global::Azure.AI.VoiceLive.UserMessageItem.DeserializeUserMessageItem(element, options);
                 }
             }
-            return UnknownMessageItem.DeserializeUnknownMessageItem(element, options);
+            return global::Azure.AI.VoiceLive.UnknownMessageItem.DeserializeUnknownMessageItem(element, options);
         }
     }
 }

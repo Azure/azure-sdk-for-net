@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageReceived event. </summary>
     public partial class AcsMessageReceivedEventData : AcsMessageEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="messageType"> Required. Whatsapp message type. </param>
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MessageType = messageType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReceivedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageReceivedEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="context"> Optional. The received message context. </param>
         /// <param name="button"> Optional. The received message button content. </param>
         /// <param name="interactiveContent"> Optional. The received message interactive content. </param>
-        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, string messageId, string fromBsuid, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
+        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string content, string messageId, string fromBsuid, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
         {
             Content = content;
             MessageId = messageId;

@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class PortDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PortDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PortDetails"/>. </summary>
         internal PortDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PortDetails"/>. </summary>
         /// <param name="portName"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortDetails(int? portName, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortDetails(int? portName, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PortName = portName;
             FirstSeen = firstSeen;

@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class OperationStatusHistoryItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusHistoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem"/>. </summary>
         /// <param name="timestamp"> The UTC time at which the status was set. </param>
         /// <param name="status"> The status of the operation. </param>
         internal OperationStatusHistoryItem(DateTimeOffset timestamp, OperationStatus status)
@@ -25,13 +25,13 @@ namespace Azure.Analytics.PlanetaryComputer
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusHistoryItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem"/>. </summary>
         /// <param name="timestamp"> The UTC time at which the status was set. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="errorCode"> If the status is failed, the error code. </param>
         /// <param name="errorMessage"> If the status is failed, the error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatusHistoryItem(DateTimeOffset timestamp, OperationStatus status, string errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationStatusHistoryItem(DateTimeOffset timestamp, OperationStatus status, string errorCode, string errorMessage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Status = status;

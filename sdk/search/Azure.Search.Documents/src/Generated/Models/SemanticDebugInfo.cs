@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SemanticDebugInfo"/>. </summary>
         internal SemanticDebugInfo()
         {
-            ContentFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
-            KeywordFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
+            ContentFields = new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>();
+            KeywordFields = new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SemanticDebugInfo"/>. </summary>
         /// <param name="titleField"> The title field that was sent to the semantic enrichment process, as well as how it was used. </param>
         /// <param name="contentFields"> The content fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="rerankerInput"> The raw concatenated strings that were sent to the semantic enrichment process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<QueryResultDocumentSemanticField> contentFields, IReadOnlyList<QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerInput rerankerInput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticDebugInfo(QueryResultDocumentSemanticField titleField, IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> contentFields, IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> keywordFields, QueryResultDocumentRerankerInput rerankerInput, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TitleField = titleField;
             ContentFields = contentFields;
@@ -43,10 +43,10 @@ namespace Azure.Search.Documents.Models
         public QueryResultDocumentSemanticField TitleField { get; }
 
         /// <summary> The content fields that were sent to the semantic enrichment process, as well as how they were used. </summary>
-        public IReadOnlyList<QueryResultDocumentSemanticField> ContentFields { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> ContentFields { get; }
 
         /// <summary> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </summary>
-        public IReadOnlyList<QueryResultDocumentSemanticField> KeywordFields { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> KeywordFields { get; }
 
         /// <summary> The raw concatenated strings that were sent to the semantic enrichment process. </summary>
         public QueryResultDocumentRerankerInput RerankerInput { get; }

@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the weight entity resolution model. </summary>
     public partial class WeightResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="WeightResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.WeightResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
-        internal WeightResolution(double value, WeightUnit unit) : base(ResolutionKind.WeightResolution)
+        internal WeightResolution(double value, WeightUnit unit) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.WeightResolution)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeightResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.WeightResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
-        internal WeightResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, WeightUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal WeightResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, WeightUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

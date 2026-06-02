@@ -15,14 +15,14 @@ namespace Azure.AI.ContentUnderstanding
     public partial class TranscriptPhrase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptPhrase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.TranscriptPhrase"/>. </summary>
         /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="words"> List of words in the phrase. </param>
-        internal TranscriptPhrase(long startTimeMsValue, long endTimeMsValue, string text, IEnumerable<TranscriptWord> words)
+        internal TranscriptPhrase(long startTimeMsValue, long endTimeMsValue, string text, IEnumerable<global::Azure.AI.ContentUnderstanding.TranscriptWord> words)
         {
             StartTimeMsValue = startTimeMsValue;
             EndTimeMsValue = endTimeMsValue;
@@ -30,7 +30,7 @@ namespace Azure.AI.ContentUnderstanding
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptPhrase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.TranscriptPhrase"/>. </summary>
         /// <param name="speaker"> Speaker index or name. </param>
         /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptPhrase(string speaker, long startTimeMsValue, long endTimeMsValue, string locale, string text, float? confidence, ContentSpan span, IList<TranscriptWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptPhrase(string speaker, long startTimeMsValue, long endTimeMsValue, string locale, string text, float? confidence, ContentSpan span, IList<global::Azure.AI.ContentUnderstanding.TranscriptWord> words, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Speaker = speaker;
             StartTimeMsValue = startTimeMsValue;
@@ -69,6 +69,6 @@ namespace Azure.AI.ContentUnderstanding
         public ContentSpan Span { get; }
 
         /// <summary> List of words in the phrase. </summary>
-        public IList<TranscriptWord> Words { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.TranscriptWord> Words { get; }
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentTableCell
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Content of the table cell. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.ContentUnderstanding
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentTableCell"/>. </summary>
         /// <param name="kind"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the table cell in the markdown content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RowIndex = rowIndex;

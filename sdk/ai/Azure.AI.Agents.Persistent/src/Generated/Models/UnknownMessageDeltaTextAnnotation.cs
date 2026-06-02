@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownMessageDeltaTextAnnotation : MessageDeltaTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageDeltaTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownMessageDeltaTextAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageDeltaTextAnnotation(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, @type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageDeltaTextAnnotation(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(index, (@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

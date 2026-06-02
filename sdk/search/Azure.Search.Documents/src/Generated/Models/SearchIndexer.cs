@@ -16,27 +16,27 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexer"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
         /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/> or <paramref name="targetIndexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/> or <paramref name="targetIndexName"/> is null. </exception>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
 
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
-            FieldMappings = new ChangeTrackingList<FieldMapping>();
-            OutputFieldMappings = new ChangeTrackingList<FieldMapping>();
+            FieldMappings = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.FieldMapping>();
+            OutputFieldMappings = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.FieldMapping>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexer"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="description"> The description of the indexer. </param>
         /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<global::Azure.Search.Documents.Indexes.Models.FieldMapping> fieldMappings, IList<global::Azure.Search.Documents.Indexes.Models.FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -91,10 +91,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexingParameters Parameters { get; set; }
 
         /// <summary> Defines mappings between fields in the data source and corresponding target fields in the index. </summary>
-        public IList<FieldMapping> FieldMappings { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.FieldMapping> FieldMappings { get; }
 
         /// <summary> Output field mappings are applied after enrichment and immediately before indexing. </summary>
-        public IList<FieldMapping> OutputFieldMappings { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.FieldMapping> OutputFieldMappings { get; }
 
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
         public bool? IsDisabled { get; set; }

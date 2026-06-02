@@ -12,10 +12,10 @@ namespace Azure.Developer.LoadTesting
 {
     internal partial class UnknownTestsNotificationEventFilter : TestsNotificationEventFilter
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTestsNotificationEventFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.UnknownTestsNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTestsNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownTestsNotificationEventFilter(NotificationEventType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

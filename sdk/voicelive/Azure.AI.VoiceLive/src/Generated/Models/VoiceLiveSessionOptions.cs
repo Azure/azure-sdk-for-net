@@ -15,17 +15,17 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveSessionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveSessionOptions"/>. </summary>
         public VoiceLiveSessionOptions()
         {
-            Modalities = new ChangeTrackingList<InteractionModality>();
-            OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
-            Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
+            Modalities = new ChangeTrackingList<global::Azure.AI.VoiceLive.InteractionModality>();
+            OutputAudioTimestampTypes = new ChangeTrackingList<global::Azure.AI.VoiceLive.AudioTimestampType>();
+            Tools = new ChangeTrackingList<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveSessionOptions"/>. </summary>
         /// <param name="model"> The model for the session. </param>
         /// <param name="modalities"> The modalities to be used in the session. </param>
         /// <param name="animation"> The animation configuration for the session. </param>
@@ -54,7 +54,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionOptions(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionOptions(string model, IList<global::Azure.AI.VoiceLive.InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<global::Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes, IList<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, BinaryData turnDetection, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -83,7 +83,7 @@ namespace Azure.AI.VoiceLive
         public string Model { get; set; }
 
         /// <summary> The modalities to be used in the session. </summary>
-        public IList<InteractionModality> Modalities { get; }
+        public IList<global::Azure.AI.VoiceLive.InteractionModality> Modalities { get; }
 
         /// <summary> The animation configuration for the session. </summary>
         public AnimationOptions Animation { get; set; }
@@ -117,10 +117,10 @@ namespace Azure.AI.VoiceLive
         public AudioInputTranscriptionOptions InputAudioTranscription { get; set; }
 
         /// <summary> Types of timestamps to include in audio response content. </summary>
-        public IList<AudioTimestampType> OutputAudioTimestampTypes { get; }
+        public IList<global::Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get; }
 
         /// <summary> Configuration for tools to be used during the session, if applicable. </summary>
-        public IList<VoiceLiveToolDefinition> Tools { get; }
+        public IList<global::Azure.AI.VoiceLive.VoiceLiveToolDefinition> Tools { get; }
 
         /// <summary> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </summary>
         public float? Temperature { get; set; }
@@ -133,17 +133,17 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Configuration for interim response generation during latency or tool calls.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="StaticInterimResponseConfig"/>. </description>
+        /// <description> <see cref="global::Azure.AI.VoiceLive.StaticInterimResponseConfig"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="LlmInterimResponseConfig"/>. </description>
+        /// <description> <see cref="global::Azure.AI.VoiceLive.LlmInterimResponseConfig"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

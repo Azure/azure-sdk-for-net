@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </summary>
-    public readonly partial struct OcrLineEnding : IEquatable<OcrLineEnding>
+    public readonly partial struct OcrLineEnding : IEquatable<global::Azure.Search.Documents.Indexes.Models.OcrLineEnding>
     {
         private readonly string _value;
         /// <summary> Lines are separated by a single space character. </summary>
@@ -24,12 +24,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Lines are separated by a carriage return and a line feed ('\r\n') character. </summary>
         private const string CarriageReturnLineFeedValue = "carriageReturnLineFeed";
 
-        /// <summary> Initializes a new instance of <see cref="OcrLineEnding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OcrLineEnding"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OcrLineEnding(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -46,34 +46,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Lines are separated by a carriage return and a line feed ('\r\n') character. </summary>
         public static OcrLineEnding CarriageReturnLineFeed { get; } = new OcrLineEnding(CarriageReturnLineFeedValue);
 
-        /// <summary> Determines if two <see cref="OcrLineEnding"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.OcrLineEnding"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OcrLineEnding left, OcrLineEnding right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OcrLineEnding"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.OcrLineEnding"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OcrLineEnding left, OcrLineEnding right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OcrLineEnding"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.OcrLineEnding"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OcrLineEnding(string value) => new OcrLineEnding(value);
 
-        /// <summary> Converts a string to a <see cref="OcrLineEnding"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.OcrLineEnding"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OcrLineEnding?(string value) => value == null ? null : new OcrLineEnding(value);
+        public static implicit operator OcrLineEnding?(string value) => (value == null) ? null : new OcrLineEnding(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OcrLineEnding other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OcrLineEnding other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OcrLineEnding other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OcrLineEnding other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

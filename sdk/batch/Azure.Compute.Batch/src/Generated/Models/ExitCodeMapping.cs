@@ -17,25 +17,25 @@ namespace Azure.Compute.Batch
     public partial class ExitCodeMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExitCodeMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitCodeMapping"/>. </summary>
         /// <param name="code"> A process exit code. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with this exit code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exitOptions"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exitOptions"/> is null. </exception>
         public ExitCodeMapping(int code, ExitOptions exitOptions)
         {
-            Argument.AssertNotNull(exitOptions, nameof(exitOptions));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(exitOptions, nameof(exitOptions));
 
             Code = code;
             ExitOptions = exitOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExitCodeMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitCodeMapping"/>. </summary>
         /// <param name="code"> A process exit code. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with this exit code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExitCodeMapping(int code, ExitOptions exitOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExitCodeMapping(int code, ExitOptions exitOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             ExitOptions = exitOptions;

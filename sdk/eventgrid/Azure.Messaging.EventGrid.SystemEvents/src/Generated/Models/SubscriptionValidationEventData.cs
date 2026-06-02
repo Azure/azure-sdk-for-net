@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class SubscriptionValidationEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationEventData"/>. </summary>
         /// <param name="validationCode">
         /// The validation code sent by Azure Event Grid to validate an event subscription.
         /// To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response,
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ValidationUrl = validationUrl;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionValidationEventData"/>. </summary>
         /// <param name="validationCode">
         /// The validation code sent by Azure Event Grid to validate an event subscription.
         /// To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response,
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// or perform a GET request on the validationUrl (available starting version 2018-05-01-preview).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionValidationEventData(string validationCode, string validationUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionValidationEventData(string validationCode, string validationUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ValidationCode = validationCode;
             ValidationUrl = validationUrl;

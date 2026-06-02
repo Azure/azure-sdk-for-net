@@ -10,9 +10,9 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalAgentResponse : IJsonModel<InternalAgentResponse>
+    internal partial class InternalAgentResponse : IJsonModel<global::OpenAI.InternalAgentResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponse"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponse"/> for deserialization. </summary>
         internal InternalAgentResponse()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAgentResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalAgentResponse(document.RootElement, options);
+                        return global::OpenAI.InternalAgentResponse.DeserializeInternalAgentResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalAgentResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAgentResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalAgentResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalAgentResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalAgentResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalAgentResponse>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAgentResponse IPersistableModel<InternalAgentResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalAgentResponse IPersistableModel<global::OpenAI.InternalAgentResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalAgentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalAgentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalAgentResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalAgentResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,119 +70,119 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAgentResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAgentResponse)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Metadata))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                writer.WriteObjectValue<InternalMetadataContainer>(Metadata, options);
             }
-            if (Optional.IsDefined(TopLogprobs))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(TopLogprobs))
             {
                 writer.WritePropertyName("top_logprobs"u8);
                 writer.WriteNumberValue(TopLogprobs.Value);
             }
-            if (Optional.IsDefined(Temperature))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(TopP))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(TopP))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(TopP.Value);
             }
-            if (Optional.IsDefined(User))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(SafetyIdentifier))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(SafetyIdentifier))
             {
                 writer.WritePropertyName("safety_identifier"u8);
                 writer.WriteStringValue(SafetyIdentifier);
             }
-            if (Optional.IsDefined(PromptCacheKey))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(PromptCacheKey))
             {
                 writer.WritePropertyName("prompt_cache_key"u8);
                 writer.WriteStringValue(PromptCacheKey);
             }
-            if (Optional.IsDefined(ServiceTier))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("service_tier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PromptCacheRetention))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(PromptCacheRetention))
             {
                 writer.WritePropertyName("prompt_cache_retention"u8);
                 writer.WriteStringValue(PromptCacheRetention.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PreviousResponseId))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(PreviousResponseId))
             {
                 writer.WritePropertyName("previous_response_id"u8);
                 writer.WriteStringValue(PreviousResponseId);
             }
-            if (Optional.IsDefined(Model))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(Reasoning))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Reasoning))
             {
                 writer.WritePropertyName("reasoning"u8);
-                writer.WriteObjectValue(Reasoning, options);
+                writer.WriteObjectValue<InternalReasoning>(Reasoning, options);
             }
-            if (Optional.IsDefined(Background))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Background))
             {
                 writer.WritePropertyName("background"u8);
                 writer.WriteBooleanValue(Background.Value);
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(MaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
                 writer.WriteNumberValue(MaxOutputTokens.Value);
             }
-            if (Optional.IsDefined(MaxToolCalls))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(MaxToolCalls))
             {
                 writer.WritePropertyName("max_tool_calls"u8);
                 writer.WriteNumberValue(MaxToolCalls.Value);
             }
-            if (Optional.IsDefined(Text))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text, options);
+                writer.WriteObjectValue<ResponseTextParam>(Text, options);
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (ResponsesTool item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ResponsesTool>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(ToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(ToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(ToolChoice))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsDefined(Prompt))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Prompt))
             {
                 writer.WritePropertyName("prompt"u8);
-                writer.WriteObjectValue(Prompt, options);
+                writer.WriteObjectValue<Prompt>(Prompt, options);
             }
-            if (Optional.IsDefined(Truncation))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Truncation))
             {
                 writer.WritePropertyName("truncation"u8);
                 writer.WriteStringValue(Truncation.Value.ToSerialString());
@@ -190,32 +190,32 @@ namespace OpenAI
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
-            if (Optional.IsDefined(Status))
+            writer.WriteStringValue(this.Object);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
-            if (Optional.IsDefined(CompletedAt))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completed_at"u8);
                 writer.WriteNumberValue(CompletedAt.Value, "U");
             }
-            if (Optional.IsDefined(Error))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<InternalAgentResponseError>(Error, options);
             }
             else
             {
                 writer.WriteNull("error"u8);
             }
-            if (Optional.IsDefined(IncompleteDetails))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(IncompleteDetails))
             {
                 writer.WritePropertyName("incomplete_details"u8);
-                writer.WriteObjectValue(IncompleteDetails, options);
+                writer.WriteObjectValue<ResponseIncompleteDetails>(IncompleteDetails, options);
             }
             else
             {
@@ -225,18 +225,18 @@ namespace OpenAI
             writer.WriteStartArray();
             foreach (AgentResponseItem item in Output)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<AgentResponseItem>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Instructions))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Instructions);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Instructions))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Instructions))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -244,43 +244,43 @@ namespace OpenAI
             {
                 writer.WriteNull("instructions"u8);
             }
-            if (Optional.IsDefined(OutputText))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(OutputText))
             {
                 writer.WritePropertyName("output_text"u8);
                 writer.WriteStringValue(OutputText);
             }
-            if (Optional.IsDefined(Usage))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                writer.WriteObjectValue<ResponseUsage>(Usage, options);
             }
             writer.WritePropertyName("parallel_tool_calls"u8);
             writer.WriteBooleanValue(ParallelToolCalls);
-            if (Optional.IsDefined(Conversation))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Conversation))
             {
                 writer.WritePropertyName("conversation"u8);
-                writer.WriteObjectValue(Conversation, options);
+                writer.WriteObjectValue<ConversationReference>(Conversation, options);
             }
-            if (Optional.IsDefined(AgentReference))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(AgentReference))
             {
                 writer.WritePropertyName("agent_reference"u8);
-                writer.WriteObjectValue(AgentReference, options);
+                writer.WriteObjectValue<AgentReference>(AgentReference, options);
             }
             else
             {
                 writer.WriteNull("agent_reference"u8);
             }
-            if (Optional.IsCollectionDefined(ContentFilters))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(ContentFilters))
             {
                 writer.WritePropertyName("content_filters"u8);
                 writer.WriteStartArray();
                 foreach (ContentFilterResult item in ContentFilters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContentFilterResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -288,9 +288,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -299,26 +299,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalAgentResponse IJsonModel<InternalAgentResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalAgentResponse IJsonModel<global::OpenAI.InternalAgentResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAgentResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalAgentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalAgentResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalAgentResponse)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalAgentResponse(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalAgentResponse.DeserializeInternalAgentResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAgentResponse DeserializeInternalAgentResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -338,7 +338,7 @@ namespace OpenAI
             long? maxOutputTokens = default;
             long? maxToolCalls = default;
             ResponseTextParam text = default;
-            IList<ResponsesTool> tools = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> tools = default;
             BinaryData toolChoice = default;
             Prompt prompt = default;
             ResponseTruncation? truncation = default;
@@ -349,30 +349,30 @@ namespace OpenAI
             DateTimeOffset? completedAt = default;
             InternalAgentResponseError error = default;
             ResponseIncompleteDetails incompleteDetails = default;
-            IList<AgentResponseItem> output = default;
+            IList<global::Azure.AI.Extensions.OpenAI.AgentResponseItem> output = default;
             BinaryData instructions = default;
             string outputText = default;
             ResponseUsage usage = default;
             bool parallelToolCalls = default;
             ConversationReference conversation = default;
             AgentReference agentReference = default;
-            IList<ContentFilterResult> contentFilters = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Extensions.OpenAI.ContentFilterResult> contentFilters = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         metadata = null;
                         continue;
                     }
-                    metadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
+                    metadata = global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("top_logprobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         topLogprobs = null;
                         continue;
@@ -382,7 +382,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         temperature = null;
                         continue;
@@ -392,7 +392,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         topP = null;
                         continue;
@@ -417,7 +417,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("service_tier"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         serviceTier = null;
                         continue;
@@ -427,7 +427,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("prompt_cache_retention"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         promptCacheRetention = null;
                         continue;
@@ -437,7 +437,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("previous_response_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         previousResponseId = null;
                         continue;
@@ -452,17 +452,17 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("reasoning"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         reasoning = null;
                         continue;
                     }
-                    reasoning = InternalReasoning.DeserializeInternalReasoning(prop.Value, options);
+                    reasoning = global::OpenAI.InternalReasoning.DeserializeInternalReasoning(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("background"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         background = null;
                         continue;
@@ -472,7 +472,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("max_output_tokens"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         maxOutputTokens = null;
                         continue;
@@ -482,7 +482,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("max_tool_calls"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         maxToolCalls = null;
                         continue;
@@ -492,48 +492,48 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("text"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    text = ResponseTextParam.DeserializeResponseTextParam(prop.Value, options);
+                    text = global::Azure.AI.Extensions.OpenAI.ResponseTextParam.DeserializeResponseTextParam(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResponsesTool> array = new List<ResponsesTool>();
+                    List<global::Azure.AI.Extensions.OpenAI.ResponsesTool> array = new List<global::Azure.AI.Extensions.OpenAI.ResponsesTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesTool.DeserializeResponsesTool(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(item, options));
                     }
                     tools = array;
                     continue;
                 }
                 if (prop.NameEquals("tool_choice"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("prompt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    prompt = Prompt.DeserializePrompt(prop.Value, options);
+                    prompt = global::Azure.AI.Extensions.OpenAI.Prompt.DeserializePrompt(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("truncation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         truncation = null;
                         continue;
@@ -553,7 +553,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -562,62 +562,62 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("completed_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         completedAt = null;
                         continue;
                     }
-                    completedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    completedAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         error = null;
                         continue;
                     }
-                    error = InternalAgentResponseError.DeserializeInternalAgentResponseError(prop.Value, options);
+                    error = global::OpenAI.InternalAgentResponseError.DeserializeInternalAgentResponseError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("incomplete_details"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         incompleteDetails = null;
                         continue;
                     }
-                    incompleteDetails = ResponseIncompleteDetails.DeserializeResponseIncompleteDetails(prop.Value, options);
+                    incompleteDetails = global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetails.DeserializeResponseIncompleteDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    List<AgentResponseItem> array = new List<AgentResponseItem>();
+                    List<global::Azure.AI.Extensions.OpenAI.AgentResponseItem> array = new List<global::Azure.AI.Extensions.OpenAI.AgentResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentResponseItem.DeserializeAgentResponseItem(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.AgentResponseItem.DeserializeAgentResponseItem(item, options));
                     }
                     output = array;
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         instructions = null;
                         continue;
                     }
-                    instructions = BinaryData.FromString(prop.Value.GetRawText());
+                    instructions = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("output_text"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         outputText = null;
                         continue;
@@ -627,11 +627,11 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = global::Azure.AI.Extensions.OpenAI.ResponseUsage.DeserializeResponseUsage(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
@@ -641,41 +641,41 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("conversation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         conversation = null;
                         continue;
                     }
-                    conversation = ConversationReference.DeserializeConversationReference(prop.Value, options);
+                    conversation = global::Azure.AI.Extensions.OpenAI.ConversationReference.DeserializeConversationReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         agentReference = null;
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("content_filters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContentFilterResult> array = new List<ContentFilterResult>();
+                    List<global::Azure.AI.Extensions.OpenAI.ContentFilterResult> array = new List<global::Azure.AI.Extensions.OpenAI.ContentFilterResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContentFilterResult.DeserializeContentFilterResult(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ContentFilterResult.DeserializeContentFilterResult(item, options));
                     }
                     contentFilters = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalAgentResponse(
@@ -695,7 +695,7 @@ namespace OpenAI
                 maxOutputTokens,
                 maxToolCalls,
                 text,
-                tools ?? new ChangeTrackingList<ResponsesTool>(),
+                (tools ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesTool>()),
                 toolChoice,
                 prompt,
                 truncation,
@@ -713,7 +713,7 @@ namespace OpenAI
                 parallelToolCalls,
                 conversation,
                 agentReference,
-                contentFilters ?? new ChangeTrackingList<ContentFilterResult>(),
+                (contentFilters ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ContentFilterResult>()),
                 additionalBinaryDataProperties);
         }
     }

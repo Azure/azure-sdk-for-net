@@ -19,8 +19,8 @@ namespace Azure.Data.SchemaRegistry
     /// <summary> SchemaRegistryClient is a client for registering and retrieving schemas from the Azure Schema Registry service. </summary>
     public partial class SchemaRegistryClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventhubs.azure.net/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://eventhubs.azure.net/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of SchemaRegistryClient. </summary>
@@ -29,18 +29,18 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="options"> The options for configuring the client. </param>
         internal SchemaRegistryClient(HttpPipelinePolicy authenticationPolicy, string fullyQualifiedNamespace, SchemaRegistryClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            global::Azure.Data.SchemaRegistry.Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             options ??= new SchemaRegistryClientOptions();
 
-            _endpoint = new Uri($"https://{fullyQualifiedNamespace}");
-            if (authenticationPolicy != null)
+            _endpoint = new global::System.Uri($"https://{fullyQualifiedNamespace}");
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -48,8 +48,8 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Initializes a new instance of SchemaRegistryClient from a <see cref="SchemaRegistryClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SchemaRegistryClient. </param>
-        [Experimental("SCME0002")]
-        public SchemaRegistryClient(SchemaRegistryClientSettings settings) : this(null, settings?.FullyQualifiedNamespace, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public SchemaRegistryClient(SchemaRegistryClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.FullyQualifiedNamespace, settings?.Options)
         {
         }
 
@@ -68,9 +68,9 @@ namespace Azure.Data.SchemaRegistry
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetSchemaGroups(RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetSchemaGroups(RequestContext context)
         {
             return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context, "SchemaRegistryClient.GetSchemaGroups");
         }
@@ -84,16 +84,16 @@ namespace Azure.Data.SchemaRegistry
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSchemaGroupsAsync(RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetSchemaGroupsAsync(RequestContext context)
         {
             return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context, "SchemaRegistryClient.GetSchemaGroups");
         }
 
         /// <summary> Gets the list of schema groups user is authorized to access. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<string> GetSchemaGroups(CancellationToken cancellationToken = default)
         {
             return new SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaGroups");
@@ -101,7 +101,7 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Gets the list of schema groups user is authorized to access. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<string> GetSchemaGroupsAsync(CancellationToken cancellationToken = default)
         {
             return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaGroups");
@@ -118,9 +118,9 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetSchemaVersions(string groupName, string schemaName, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetSchemaVersions(string groupName, string schemaName, RequestContext context)
         {
             return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context, "SchemaRegistryClient.GetSchemaVersions");
         }
@@ -136,9 +136,9 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
         {
             return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context, "SchemaRegistryClient.GetSchemaVersions");
         }
@@ -147,7 +147,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<int> GetSchemaVersions(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
             return new SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaVersions");
@@ -157,7 +157,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<int> GetSchemaVersionsAsync(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
             return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaVersions");
@@ -173,7 +173,7 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSchemaById(string id, RequestContext context)
         {
@@ -181,7 +181,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                using HttpMessage message = this.CreateGetSchemaByIdRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -201,15 +201,15 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByIdAsync(string id, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetSchemaByIdAsync(string id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                using HttpMessage message = this.CreateGetSchemaByIdRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -222,21 +222,21 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<BinaryData> GetSchemaById(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::System.BinaryData> GetSchemaById(string id, CancellationToken cancellationToken = default)
         {
-            Response result = GetSchemaById(id, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetSchemaById(id, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByIdAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::System.BinaryData>> GetSchemaByIdAsync(string id, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSchemaByIdAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetSchemaByIdAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, RequestContext context)
         {
@@ -259,7 +259,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                using HttpMessage message = this.CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -281,15 +281,15 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                using HttpMessage message = this.CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -304,11 +304,11 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::System.BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
-            Response result = GetSchemaByVersion(groupName, schemaName, schemaVersion, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetSchemaByVersion(groupName, schemaName, schemaVersion, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Gets one specific version of one schema. </summary>
@@ -316,11 +316,11 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::System.BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
@@ -344,7 +344,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
+                using HttpMessage message = this.CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -367,15 +367,15 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
+                using HttpMessage message = this.CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -391,10 +391,10 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return GetSchemaPropertiesByContent(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
+            return this.GetSchemaPropertiesByContent(groupName, schemaName, global::Azure.Core.RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
@@ -403,10 +403,10 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await GetSchemaPropertiesByContentAsync(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.GetSchemaPropertiesByContentAsync(groupName, schemaName, global::Azure.Core.RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response RegisterSchema(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
@@ -430,7 +430,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
+                using HttpMessage message = this.CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -453,15 +453,15 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
+                using HttpMessage message = this.CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -477,10 +477,10 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response RegisterSchema(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return RegisterSchema(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
+            return this.RegisterSchema(groupName, schemaName, global::Azure.Core.RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </summary>
@@ -489,10 +489,10 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> The content type for given schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response> RegisterSchemaAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
         {
-            return await RegisterSchemaAsync(groupName, schemaName, RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RegisterSchemaAsync(groupName, schemaName, global::Azure.Core.RequestContent.Create(schemaContent), contentType.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

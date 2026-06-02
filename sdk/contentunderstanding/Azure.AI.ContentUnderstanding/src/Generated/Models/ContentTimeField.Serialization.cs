@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Time field extracted from the content. </summary>
-    public partial class ContentTimeField : ContentField, IJsonModel<ContentTimeField>
+    public partial class ContentTimeField : ContentField, IJsonModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContentTimeField(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentTimeField.DeserializeContentTimeField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentTimeField)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentTimeField)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContentTimeField)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentTimeField)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentTimeField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentTimeField IPersistableModel<ContentTimeField>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContentTimeField)PersistableModelCreateCore(data, options);
+        ContentTimeField IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ContentTimeField)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentTimeField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContentTimeField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,13 +68,13 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentTimeField)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentTimeField)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ValueTime))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(ValueTime))
             {
                 writer.WritePropertyName("valueTime"u8);
                 writer.WriteStringValue(ValueTime.Value, "T");
@@ -83,34 +83,34 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentTimeField IJsonModel<ContentTimeField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContentTimeField)JsonModelCreateCore(ref reader, options);
+        ContentTimeField IJsonModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ContentTimeField)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContentField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentTimeField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentTimeField)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentTimeField)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentTimeField(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.ContentTimeField.DeserializeContentTimeField(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentTimeField DeserializeContentTimeField(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContentFieldType @type = default;
-            IList<ContentSpan> spans = default;
+            IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans = default;
             float? confidence = default;
             string sourceValue = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             TimeSpan? valueTime = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,21 +121,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("spans"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContentSpan> array = new List<ContentSpan>();
+                    List<global::Azure.AI.ContentUnderstanding.ContentSpan> array = new List<global::Azure.AI.ContentUnderstanding.ContentSpan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContentSpan.DeserializeContentSpan(item, options));
+                        array.Add(global::Azure.AI.ContentUnderstanding.ContentSpan.DeserializeContentSpan(item, options));
                     }
                     spans = array;
                     continue;
                 }
                 if (prop.NameEquals("confidence"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -149,21 +149,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("valueTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     valueTime = prop.Value.GetTimeSpan("T");
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ContentTimeField(
                 @type,
-                spans ?? new ChangeTrackingList<ContentSpan>(),
+                (spans ?? new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>()),
                 confidence,
                 sourceValue,
                 additionalBinaryDataProperties,

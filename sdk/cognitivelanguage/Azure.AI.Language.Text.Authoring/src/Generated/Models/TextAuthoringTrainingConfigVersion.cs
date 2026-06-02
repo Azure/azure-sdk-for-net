@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringTrainingConfigVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingConfigVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion"/>. </summary>
         /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
         internal TextAuthoringTrainingConfigVersion(DateTimeOffset modelExpiredOn)
         {
             ModelExpiredOn = modelExpiredOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringTrainingConfigVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion"/>. </summary>
         /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
         /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpiredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpiredOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TrainingConfigVersion = trainingConfigVersion;
             ModelExpiredOn = modelExpiredOn;

@@ -14,96 +14,96 @@ using Azure.Search.Documents.Indexes;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class DocumentsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="indexName"></param>
         /// <param name="credential"></param>
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, AzureKeyCredential credential)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.SearchClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, string indexName, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(options => new SearchClient(endpoint, indexName, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="indexName"></param>
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.SearchClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, string indexName)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<SearchClient, SearchClientOptions>((options, credential) => new SearchClient(endpoint, indexName, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Search.Documents.SearchClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(configuration);
         }
 
-        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
-        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(options => new SearchIndexClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>((options, credential) => new SearchIndexClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(configuration);
         }
 
-        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
-        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexerClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(options => new SearchIndexerClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexerClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>((options, credential) => new SearchIndexerClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Search.Documents.Indexes.SearchIndexerClient, global::Azure.Search.Documents.SearchClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(configuration);

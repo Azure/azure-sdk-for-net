@@ -10,13 +10,13 @@ namespace OpenAI
 {
     internal partial class InternalLocalShellTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellTool"/>. </summary>
-        public InternalLocalShellTool() : base(ToolType.LocalShell)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLocalShellTool"/>. </summary>
+        public InternalLocalShellTool() : base(global::OpenAI.ToolType.LocalShell)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalLocalShellTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -26,7 +26,7 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalLocalShellTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalLocalShellTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -44,6 +44,6 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

@@ -17,47 +17,47 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
 {
     public partial class ClientDefaultValueClient
     {
-        public ClientDefaultValueClient() : this(new Uri("http://localhost:3000"), new ClientDefaultValueClientOptions()) => throw null;
+        public ClientDefaultValueClient() : this(new global::System.Uri("http://localhost:3000"), new ClientDefaultValueClientOptions()) => throw null;
 
-        internal ClientDefaultValueClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientDefaultValueClientOptions options) => throw null;
+        internal ClientDefaultValueClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientDefaultValueClientOptions options) => throw null;
 
-        public ClientDefaultValueClient(Uri endpoint, ClientDefaultValueClientOptions options) : this(null, endpoint, options) => throw null;
+        public ClientDefaultValueClient(global::System.Uri endpoint, ClientDefaultValueClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ClientDefaultValueClient(ClientDefaultValueClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ClientDefaultValueClient(ClientDefaultValueClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PutModelProperty(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutModelPropertyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutModelPropertyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelWithDefaultValues> PutModelProperty(ModelWithDefaultValues body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.ClientDefaultValue.ModelWithDefaultValues> PutModelProperty(ModelWithDefaultValues body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelWithDefaultValues>> PutModelPropertyAsync(ModelWithDefaultValues body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.ClientDefaultValue.ModelWithDefaultValues>> PutModelPropertyAsync(ModelWithDefaultValues body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetOperationParameter(string name, int? pageSize, string format, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetOperationParameterAsync(string name, int? pageSize, string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetOperationParameterAsync(string name, int? pageSize, string format, RequestContext context) => throw null;
 
         public virtual Response GetOperationParameter(string name, int? pageSize = default, string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetOperationParameterAsync(string name, int? pageSize = default, string format = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetOperationParameterAsync(string name, int? pageSize = default, string format = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetPathParameter(string segment1, string segment2, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetPathParameterAsync(string segment1, string segment2, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetPathParameterAsync(string segment1, string segment2, RequestContext context) => throw null;
 
         public virtual Response GetPathParameter(string segment1, string segment2, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetPathParameterAsync(string segment1, string segment2, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetPathParameterAsync(string segment1, string segment2, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetHeaderParameter(string accept, string customHeader, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetHeaderParameterAsync(string accept, string customHeader, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetHeaderParameterAsync(string accept, string customHeader, RequestContext context) => throw null;
 
         public virtual Response GetHeaderParameter(string accept = default, string customHeader = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetHeaderParameterAsync(string accept = default, string customHeader = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetHeaderParameterAsync(string accept = default, string customHeader = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
-    public partial class Test : IJsonModel<Test>
+    public partial class Test : IJsonModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>
     {
         internal Test() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Test>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Test IPersistableModel<Test>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Test IPersistableModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Test>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Test>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Test IJsonModel<Test>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Test IJsonModel<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.Test>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Test JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

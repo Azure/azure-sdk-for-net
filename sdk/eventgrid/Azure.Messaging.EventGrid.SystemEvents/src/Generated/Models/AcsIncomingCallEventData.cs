@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsIncomingCallEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CustomContext = customContext;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="serverCallId"> The Id of the server call. </param>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="onBehalfOf"> The communication identifier on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, CommunicationIdentifierModel onBehalfOf, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, CommunicationIdentifierModel onBehalfOf, string correlationId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;

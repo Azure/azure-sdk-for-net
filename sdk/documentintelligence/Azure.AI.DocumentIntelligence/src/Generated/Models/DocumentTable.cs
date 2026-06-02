@@ -15,24 +15,24 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentTable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
-        internal DocumentTable(int rowCount, int columnCount, IEnumerable<DocumentTableCell> cells, IEnumerable<DocumentSpan> spans)
+        internal DocumentTable(int rowCount, int columnCount, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentTableCell> cells, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
             Cells = cells.ToList();
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
-            Footnotes = new ChangeTrackingList<DocumentFootnote>();
+            Footnotes = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="caption"> Caption associated with the table. </param>
         /// <param name="footnotes"> List of footnotes associated with the table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentTableCell> cells, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, DocumentCaption caption, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
@@ -60,18 +60,18 @@ namespace Azure.AI.DocumentIntelligence
         public int ColumnCount { get; }
 
         /// <summary> Cells contained within the table. </summary>
-        public IReadOnlyList<DocumentTableCell> Cells { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentTableCell> Cells { get; }
 
         /// <summary> Bounding regions covering the table. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the table in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Caption associated with the table. </summary>
         public DocumentCaption Caption { get; }
 
         /// <summary> List of footnotes associated with the table. </summary>
-        public IReadOnlyList<DocumentFootnote> Footnotes { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFootnote> Footnotes { get; }
     }
 }

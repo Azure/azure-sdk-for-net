@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-    public partial class ConfigurationSnapshot : IJsonModel<ConfigurationSnapshot>
+    public partial class ConfigurationSnapshot : IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/> for deserialization. </summary>
         internal ConfigurationSnapshot()
         {
         }
@@ -25,83 +25,83 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfigurationSnapshot PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfigurationSnapshot(document.RootElement, options);
+                        return global::Azure.Data.AppConfiguration.ConfigurationSnapshot.DeserializeConfigurationSnapshot(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSnapshot)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Data.AppConfiguration.AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSnapshot)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationSnapshot>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSnapshot IPersistableModel<ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationSnapshot IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="configurationSnapshot"> The <see cref="ConfigurationSnapshot"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="configurationSnapshot"> The <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ConfigurationSnapshot configurationSnapshot)
         {
-            if (configurationSnapshot == null)
+            if ((configurationSnapshot == null))
             {
                 return null;
             }
-            return RequestContent.Create(configurationSnapshot, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(configurationSnapshot, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSnapshot"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/> from. </param>
         public static explicit operator ConfigurationSnapshot(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConfigurationSnapshot(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Data.AppConfiguration.ConfigurationSnapshot.DeserializeConfigurationSnapshot(document.RootElement, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfigurationSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSnapshot IJsonModel<ConfigurationSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationSnapshot IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfigurationSnapshot JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSnapshot)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationSnapshot(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Data.AppConfiguration.ConfigurationSnapshot.DeserializeConfigurationSnapshot(document.RootElement, options);
         }
     }
 }

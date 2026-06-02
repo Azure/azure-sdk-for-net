@@ -15,15 +15,15 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaRangeResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaRangeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaRangeResult"/>. </summary>
         /// <param name="range"> The range of dates requested. </param>
         /// <param name="removed"> The total amount of assets removed over a date range. </param>
         /// <param name="added"> The total amount of assets added over a date range. </param>
         /// <param name="difference"> The total amount of assets changed removed over a date range. </param>
         /// <param name="kindSummaries"> A list of summary changes per asset kind. </param>
-        internal DeltaRangeResult(long range, long removed, long added, long difference, IEnumerable<DeltaTypeResult> kindSummaries)
+        internal DeltaRangeResult(long range, long removed, long added, long difference, IEnumerable<global::Azure.Analytics.Defender.Easm.DeltaTypeResult> kindSummaries)
         {
             Range = range;
             Removed = removed;
@@ -32,14 +32,14 @@ namespace Azure.Analytics.Defender.Easm
             KindSummaries = kindSummaries.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaRangeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaRangeResult"/>. </summary>
         /// <param name="range"> The range of dates requested. </param>
         /// <param name="removed"> The total amount of assets removed over a date range. </param>
         /// <param name="added"> The total amount of assets added over a date range. </param>
         /// <param name="difference"> The total amount of assets changed removed over a date range. </param>
         /// <param name="kindSummaries"> A list of summary changes per asset kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaRangeResult(long range, long removed, long added, long difference, IList<DeltaTypeResult> kindSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaRangeResult(long range, long removed, long added, long difference, IList<global::Azure.Analytics.Defender.Easm.DeltaTypeResult> kindSummaries, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Range = range;
             Removed = removed;
@@ -62,6 +62,6 @@ namespace Azure.Analytics.Defender.Easm
         public long Difference { get; }
 
         /// <summary> A list of summary changes per asset kind. </summary>
-        public IList<DeltaTypeResult> KindSummaries { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DeltaTypeResult> KindSummaries { get; }
     }
 }

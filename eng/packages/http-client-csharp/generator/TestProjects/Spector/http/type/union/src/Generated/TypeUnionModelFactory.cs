@@ -42,6 +42,6 @@ namespace _Type.Union
 
         public static GetResponse9 GetResponse9(MixedTypesCases prop = default) => throw null;
 
-        public static MixedTypesCases MixedTypesCases(BinaryData model = default, BinaryData literal = default, BinaryData @int = default, BinaryData boolean = default, IEnumerable<BinaryData> array = default) => throw null;
+        public static MixedTypesCases MixedTypesCases(BinaryData model = default, BinaryData literal = default, BinaryData @int = default, BinaryData boolean = default, IEnumerable<global::System.BinaryData> array = default) => throw null;
     }
 }

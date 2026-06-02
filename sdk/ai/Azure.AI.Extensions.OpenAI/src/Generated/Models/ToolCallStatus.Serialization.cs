@@ -11,31 +11,31 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ToolCallStatus value) => value switch
         {
-            ToolCallStatus.InProgress => "in_progress",
-            ToolCallStatus.Completed => "completed",
-            ToolCallStatus.Incomplete => "incomplete",
-            ToolCallStatus.Failed => "failed",
+            global::Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ToolCallStatus ToToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return ToolCallStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return ToolCallStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return ToolCallStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Incomplete;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return ToolCallStatus.Failed;
+                return global::Azure.AI.Extensions.OpenAI.ToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolCallStatus value.");
         }

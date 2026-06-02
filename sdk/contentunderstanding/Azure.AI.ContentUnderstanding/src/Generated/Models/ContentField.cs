@@ -12,28 +12,28 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.ContentStringField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentTimeField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentNumberField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentIntegerField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentBooleanField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentArrayField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentObjectField"/>, and <see cref="Azure.AI.ContentUnderstanding.ContentJsonField"/>.
     /// </summary>
     public abstract partial class ContentField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         private protected ContentField(ContentFieldType @type)
         {
             Type = @type;
-            Spans = new ChangeTrackingList<ContentSpan>();
+            Spans = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentField(ContentFieldType @type, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Spans = spans;
@@ -46,7 +46,7 @@ namespace Azure.AI.ContentUnderstanding
         internal ContentFieldType Type { get; set; }
 
         /// <summary> Span(s) associated with the field value in the markdown content. </summary>
-        public IList<ContentSpan> Spans { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.ContentSpan> Spans { get; }
 
         /// <summary> Confidence of predicting the field value. </summary>
         public float? Confidence { get; }

@@ -9,22 +9,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.Optional
 {
-    [ModelReaderWriterBuildable(typeof(BooleanLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(BytesProperty))]
-    [ModelReaderWriterBuildable(typeof(CollectionsByteProperty))]
-    [ModelReaderWriterBuildable(typeof(CollectionsModelProperty))]
-    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
-    [ModelReaderWriterBuildable(typeof(DurationProperty))]
-    [ModelReaderWriterBuildable(typeof(FloatLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(IntLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(PlainDateProperty))]
-    [ModelReaderWriterBuildable(typeof(PlainTimeProperty))]
-    [ModelReaderWriterBuildable(typeof(RequiredAndOptionalProperty))]
-    [ModelReaderWriterBuildable(typeof(StringLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(StringProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionFloatLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionIntLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionStringLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(BooleanLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(BytesProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(CollectionsByteProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(CollectionsModelProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(DatetimeProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(DurationProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(FloatLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(IntLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(PlainDateProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(PlainTimeProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(RequiredAndOptionalProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(StringLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(StringProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnionFloatLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnionIntLiteralProperty))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnionStringLiteralProperty))]
     public partial class _TypePropertyOptionalContext : ModelReaderWriterContext
     {
     }

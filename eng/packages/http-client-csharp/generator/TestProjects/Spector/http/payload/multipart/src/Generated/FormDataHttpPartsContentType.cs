@@ -17,20 +17,20 @@ namespace Payload.MultiPart._FormData.HttpParts.ContentType
     {
         protected FormDataHttpPartsContentType() => throw null;
 
-        internal FormDataHttpPartsContentType(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal FormDataHttpPartsContentType(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ImageJpegContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ImageJpegContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ImageJpegContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Response RequiredContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> RequiredContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> RequiredContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Response OptionalContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> OptionalContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> OptionalContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
     }
 }

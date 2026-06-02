@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Administration
         public Utf8JsonRequestContent()
         {
             _stream = new MemoryStream();
-            _content = Create(_stream);
+            _content = global::Azure.Core.RequestContent.Create(_stream);
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
-            length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+            length = (JsonWriter.BytesCommitted + JsonWriter.BytesPending);
             return true;
         }
 

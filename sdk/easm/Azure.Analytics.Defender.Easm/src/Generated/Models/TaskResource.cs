@@ -15,15 +15,15 @@ namespace Azure.Analytics.Defender.Easm
     public partial class TaskResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaskResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.TaskResource"/>. </summary>
         internal TaskResource()
         {
-            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
+            Metadata = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.TaskResource"/>. </summary>
         /// <param name="id"> The unique identifier of the task. </param>
         /// <param name="startedAt"> The time the task started. </param>
         /// <param name="completedAt"> The time the task completed. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskResource(string id, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? lastPolledAt, TaskResourceState? state, TaskResourcePhase? phase, string reason, IDictionary<string, BinaryData> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskResource(string id, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? lastPolledAt, TaskResourceState? state, TaskResourcePhase? phase, string reason, IDictionary<string, global::System.BinaryData> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             StartedAt = startedAt;
@@ -69,8 +69,8 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// Attributes unique to the task.  This differs by task type.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -93,6 +93,6 @@ namespace Azure.Analytics.Defender.Easm
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, global::System.BinaryData> Metadata { get; }
     }
 }

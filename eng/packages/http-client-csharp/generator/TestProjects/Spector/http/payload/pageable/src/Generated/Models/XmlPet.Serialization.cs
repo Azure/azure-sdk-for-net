@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Payload.Pageable
 {
-    public partial class XmlPet : IPersistableModel<XmlPet>, IXmlSerializable
+    public partial class XmlPet : IPersistableModel<global::Payload.Pageable.XmlPet>, IXmlSerializable
     {
         internal XmlPet() => throw null;
 
@@ -20,11 +20,11 @@ namespace Payload.Pageable
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<XmlPet>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Pageable.XmlPet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        XmlPet IPersistableModel<XmlPet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        XmlPet IPersistableModel<global::Payload.Pageable.XmlPet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<XmlPet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Pageable.XmlPet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => throw null;
     }

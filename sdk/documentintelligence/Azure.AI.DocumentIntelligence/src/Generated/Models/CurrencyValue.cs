@@ -14,21 +14,21 @@ namespace Azure.AI.DocumentIntelligence
     public partial class CurrencyValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CurrencyValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         internal CurrencyValue(double amount)
         {
             Amount = amount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CurrencyValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
         /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CurrencyValue(double amount, string currencySymbol, string currencyCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CurrencyValue(double amount, string currencySymbol, string currencyCode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             CurrencySymbol = currencySymbol;

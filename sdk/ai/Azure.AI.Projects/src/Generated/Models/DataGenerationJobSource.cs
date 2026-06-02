@@ -9,25 +9,25 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The base source model for data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.PromptDataGenerationJobSource"/>, <see cref="Azure.AI.Projects.AgentDataGenerationJobSource"/>, <see cref="Azure.AI.Projects.TracesDataGenerationJobSource"/>, and <see cref="Azure.AI.Projects.FileDataGenerationJobSource"/>.
     /// </summary>
     public abstract partial class DataGenerationJobSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         private protected DataGenerationJobSource(DataGenerationJobSourceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobSource(DataGenerationJobSourceType @type, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Description = description;

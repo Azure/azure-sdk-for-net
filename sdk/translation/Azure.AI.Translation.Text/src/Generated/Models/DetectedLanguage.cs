@@ -14,9 +14,9 @@ namespace Azure.AI.Translation.Text
     public partial class DetectedLanguage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.
@@ -28,14 +28,14 @@ namespace Azure.AI.Translation.Text
             Score = score;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedLanguage(string language, float score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedLanguage(string language, float score, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Score = score;

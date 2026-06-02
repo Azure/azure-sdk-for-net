@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Client.Naming.EnumConflict.FirstNamespace
 {
-    public partial class FirstModel : IJsonModel<FirstModel>
+    public partial class FirstModel : IJsonModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>
     {
         internal FirstModel() => throw null;
 
@@ -21,22 +21,22 @@ namespace Client.Naming.EnumConflict.FirstNamespace
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<FirstModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        FirstModel IPersistableModel<FirstModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        FirstModel IPersistableModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<FirstModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="firstModel"> The <see cref="FirstModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="firstModel"> The <see cref="global::Client.Naming.EnumConflict.FirstNamespace.FirstModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(FirstModel firstModel) => throw null;
 
         public static explicit operator FirstModel(Response response) => throw null;
 
-        void IJsonModel<FirstModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        FirstModel IJsonModel<FirstModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        FirstModel IJsonModel<global::Client.Naming.EnumConflict.FirstNamespace.FirstModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual FirstModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

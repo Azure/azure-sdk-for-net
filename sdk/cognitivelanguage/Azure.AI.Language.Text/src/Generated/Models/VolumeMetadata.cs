@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the Volume entity Metadata model. </summary>
     public partial class VolumeMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.VolumeMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for volume. </param>
-        internal VolumeMetadata(double value, VolumeUnit unit) : base(MetadataKind.VolumeMetadata)
+        internal VolumeMetadata(double value, VolumeUnit unit) : base(global::Azure.AI.Language.Text.MetadataKind.VolumeMetadata)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.VolumeMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for volume. </param>
-        internal VolumeMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, VolumeUnit unit) : base(metadataKind, additionalBinaryDataProperties)
+        internal VolumeMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, VolumeUnit unit) : base(metadataKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

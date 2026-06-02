@@ -13,19 +13,19 @@ namespace Azure.AI.VoiceLive
     /// <summary> MCP list tools failed message. </summary>
     public partial class SessionUpdateMcpListToolsFailed : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsFailed"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsFailed"/>. </summary>
         /// <param name="itemId"> The item ID. </param>
-        internal SessionUpdateMcpListToolsFailed(string itemId) : base(ServerEventType.McpListToolsFailed)
+        internal SessionUpdateMcpListToolsFailed(string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.McpListToolsFailed)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsFailed"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsFailed"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The item ID. </param>
-        internal SessionUpdateMcpListToolsFailed(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateMcpListToolsFailed(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }

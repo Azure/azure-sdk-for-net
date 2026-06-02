@@ -11,16 +11,16 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentCardSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentCardSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentCardSkill"/>. </summary>
         /// <param name="id"> a unique identifier for the skill. </param>
         /// <param name="name"> The name of the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public AgentCardSkill(string id, string name)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects.Agents
             Examples = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentCardSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentCardSkill"/>. </summary>
         /// <param name="id"> a unique identifier for the skill. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> A description of the skill. </param>
         /// <param name="tags"> set of tagwords describing classes of capabilities for the skill. </param>
         /// <param name="examples"> A list of example scenarios that the skill can perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentCardSkill(string id, string name, string description, IList<string> tags, IList<string> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentCardSkill(string id, string name, string description, IList<string> tags, IList<string> examples, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

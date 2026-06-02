@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolSpecification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolSpecification"/>. </summary>
         /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public BatchPoolSpecification(string vmSize)
         {
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(vmSize, nameof(vmSize));
 
             VmSize = vmSize;
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
-            UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
-            MountConfiguration = new ChangeTrackingList<MountConfiguration>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
+            UserAccounts = new ChangeTrackingList<global::Azure.Compute.Batch.UserAccount>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
+            MountConfiguration = new ChangeTrackingList<global::Azure.Compute.Batch.MountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolSpecification"/>. </summary>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
         /// <param name="mountConfiguration"> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<UserAccount> userAccounts, IList<BatchMetadataItem> metadata, IList<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IList<global::Azure.Compute.Batch.UserAccount> userAccounts, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IList<global::Azure.Compute.Batch.MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -118,16 +118,16 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; set; }
 
         /// <summary> The list of Packages to be installed on each Compute Node in the Pool. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
-        public IList<UserAccount> UserAccounts { get; }
+        public IList<global::Azure.Compute.Batch.UserAccount> UserAccounts { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
-        public IList<MountConfiguration> MountConfiguration { get; }
+        public IList<global::Azure.Compute.Batch.MountConfiguration> MountConfiguration { get; }
 
         /// <summary> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }

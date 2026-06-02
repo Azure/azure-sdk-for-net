@@ -12,10 +12,10 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownToolChoiceObject : ToolChoiceObject
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownToolChoiceObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownToolChoiceObject"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownToolChoiceObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownToolChoiceObject(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

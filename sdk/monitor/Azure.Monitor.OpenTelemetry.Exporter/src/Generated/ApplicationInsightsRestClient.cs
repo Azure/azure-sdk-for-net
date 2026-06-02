@@ -18,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient for mocking. </summary>
@@ -29,14 +29,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        public ApplicationInsightsRestClient(TokenCredential credential) : this(new Uri("https://dc.services.visualstudio.com"), credential, new ApplicationInsightsRestClientOptions())
+        public ApplicationInsightsRestClient(TokenCredential credential) : this(new global::System.Uri("https://dc.services.visualstudio.com"), credential, new ApplicationInsightsRestClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ApplicationInsightsRestClient(TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new Uri("https://dc.services.visualstudio.com"), credential, options)
+        public ApplicationInsightsRestClient(TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new global::System.Uri("https://dc.services.visualstudio.com"), credential, options)
         {
         }
 
@@ -44,20 +44,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ApplicationInsightsRestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ApplicationInsightsRestClientOptions options)
+        internal ApplicationInsightsRestClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ApplicationInsightsRestClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Monitor.OpenTelemetry.Exporter.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new ApplicationInsightsRestClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ApplicationInsightsRestClient(Uri endpoint, TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        public ApplicationInsightsRestClient(global::System.Uri endpoint, TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Track(RequestContent content, RequestContext context = null)
         {
@@ -96,7 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrackRequest(content, context);
+                using HttpMessage message = this.CreateTrackRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -117,15 +117,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> TrackAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> TrackAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ApplicationInsightsRestClient.Track");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrackRequest(content, context);
+                using HttpMessage message = this.CreateTrackRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -141,12 +141,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TrackResponse> Track(IEnumerable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryItem> body, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = Track(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((TrackResponse)result, result);
+            using RequestContent content = global::Azure.Monitor.OpenTelemetry.Exporter.BinaryContentHelper.FromEnumerable(body);
+            Response result = this.Track(content, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TrackResponse)result), result);
         }
 
         /// <summary>
@@ -155,12 +155,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TrackResponse>> TrackAsync(IEnumerable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryItem> body, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = await TrackAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TrackResponse)result, result);
+            using RequestContent content = global::Azure.Monitor.OpenTelemetry.Exporter.BinaryContentHelper.FromEnumerable(body);
+            Response result = await this.TrackAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TrackResponse)result), result);
         }
     }
 }

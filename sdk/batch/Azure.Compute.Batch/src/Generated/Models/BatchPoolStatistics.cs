@@ -14,27 +14,27 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolStatistics"/>. </summary>
         /// <param name="uri"> The URL for the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime)
+        internal BatchPoolStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime)
         {
             Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolStatistics"/>. </summary>
         /// <param name="uri"> The URL for the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="usageStatistics"> Statistics related to Pool usage, such as the amount of core-time used. </param>
         /// <param name="resourceStatistics"> Statistics related to resource consumption by Compute Nodes in the Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolUsageStatistics usageStatistics, BatchPoolResourceStatistics resourceStatistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolStatistics(global::System.Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolUsageStatistics usageStatistics, BatchPoolResourceStatistics resourceStatistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             StartTime = startTime;
@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL for the statistics. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }

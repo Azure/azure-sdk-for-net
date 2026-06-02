@@ -11,18 +11,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A FabricIQ server-side tool. </summary>
     public partial class ResponsesFabricIQPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public ResponsesFabricIQPreviewTool(string projectConnectionId) : base(ToolType.FabricIqPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public ResponsesFabricIQPreviewTool(string projectConnectionId) : base(global::Azure.AI.Extensions.OpenAI.ToolType.FabricIqPreview)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, global::System.Uri serverUrl, BinaryData requireApproval, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
@@ -54,18 +54,18 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; set; }
 
         /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUrl { get; set; }
+        public global::System.Uri ServerUrl { get; set; }
 
         /// <summary>
         /// (Optional) Whether the agent requires approval before executing actions. Default is always.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ResponsesMCPToolRequireApproval"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMCPToolRequireApproval"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="string"/>. </description>
@@ -108,6 +108,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
     }
 }

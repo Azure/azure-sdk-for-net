@@ -19,8 +19,8 @@ namespace Azure.Monitor.Query.Logs
     /// <summary> The LogsQueryClient. </summary>
     public partial class LogsQueryClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://api.loganalytics.io/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://api.loganalytics.io/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of LogsQueryClient for mocking. </summary>
@@ -30,8 +30,8 @@ namespace Azure.Monitor.Query.Logs
 
         /// <summary> Initializes a new instance of LogsQueryClient. </summary>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public LogsQueryClient(TokenCredential credential) : this(new Uri("https://api.loganalytics.io"), credential, new LogsQueryClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public LogsQueryClient(TokenCredential credential) : this(new global::System.Uri("https://api.loganalytics.io"), credential, new LogsQueryClientOptions())
         {
         }
 
@@ -39,20 +39,20 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal LogsQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LogsQueryClientOptions options)
+        internal LogsQueryClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, LogsQueryClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Monitor.Query.Logs.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new LogsQueryClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -60,8 +60,8 @@ namespace Azure.Monitor.Query.Logs
 
         /// <summary> Initializes a new instance of LogsQueryClient from a <see cref="LogsQueryClientSettings"/>. </summary>
         /// <param name="settings"> The settings for LogsQueryClient. </param>
-        [Experimental("SCME0002")]
-        public LogsQueryClient(LogsQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public LogsQueryClient(LogsQueryClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryWorkspace(string workspaceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
@@ -96,7 +96,7 @@ namespace Azure.Monitor.Query.Logs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryWorkspaceRequest(workspaceId, content, prefer, context);
+                using HttpMessage message = this.CreateQueryWorkspaceRequest(workspaceId, content, prefer, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -123,15 +123,15 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> QueryWorkspaceAsync(string workspaceId, RequestContent content, string prefer = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> QueryWorkspaceAsync(string workspaceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryWorkspace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryWorkspaceRequest(workspaceId, content, prefer, context);
+                using HttpMessage message = this.CreateQueryWorkspaceRequest(workspaceId, content, prefer, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -156,11 +156,11 @@ namespace Azure.Monitor.Query.Logs
         /// </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryWorkspace(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryWorkspace(workspaceId, body, prefer, cancellationToken.ToRequestContext());
-            return Response.FromValue((LogsQueryResult)result, result);
+            Response result = this.QueryWorkspace(workspaceId, body, prefer, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((LogsQueryResult)result), result);
         }
 
         /// <summary>
@@ -178,11 +178,11 @@ namespace Azure.Monitor.Query.Logs
         /// </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LogsQueryResult)result, result);
+            Response result = await this.QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((LogsQueryResult)result), result);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.Monitor.Query.Logs
         /// visualization information.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryResource(string resourceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
@@ -210,7 +210,7 @@ namespace Azure.Monitor.Query.Logs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryResourceRequest(resourceId, content, prefer, context);
+                using HttpMessage message = this.CreateQueryResourceRequest(resourceId, content, prefer, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -237,15 +237,15 @@ namespace Azure.Monitor.Query.Logs
         /// visualization information.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> QueryResourceAsync(string resourceId, RequestContent content, string prefer = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> QueryResourceAsync(string resourceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryResource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryResourceRequest(resourceId, content, prefer, context);
+                using HttpMessage message = this.CreateQueryResourceRequest(resourceId, content, prefer, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -270,11 +270,11 @@ namespace Azure.Monitor.Query.Logs
         /// visualization information.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<LogsQueryResult> QueryResource(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryResource(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryResource(resourceId, body, prefer, cancellationToken.ToRequestContext());
-            return Response.FromValue((LogsQueryResult)result, result);
+            Response result = this.QueryResource(resourceId, body, prefer, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((LogsQueryResult)result), result);
         }
 
         /// <summary>
@@ -292,11 +292,11 @@ namespace Azure.Monitor.Query.Logs
         /// visualization information.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryResourceAsync(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryResourceAsync(resourceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LogsQueryResult)result, result);
+            Response result = await this.QueryResourceAsync(resourceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((LogsQueryResult)result), result);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.Monitor.Query.Logs
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryBatch(RequestContent content, RequestContext context = null)
         {
@@ -319,7 +319,7 @@ namespace Azure.Monitor.Query.Logs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryBatchRequest(content, context);
+                using HttpMessage message = this.CreateQueryBatchRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -341,15 +341,15 @@ namespace Azure.Monitor.Query.Logs
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> QueryBatchAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> QueryBatchAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryBatchRequest(content, context);
+                using HttpMessage message = this.CreateQueryBatchRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -366,11 +366,11 @@ namespace Azure.Monitor.Query.Logs
         /// </summary>
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<BatchResponse> QueryBatch(BatchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Monitor.Query.Logs.Models.BatchResponse> QueryBatch(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = QueryBatch(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((BatchResponse)result, result);
+            Response result = this.QueryBatch(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((BatchResponse)result), result);
         }
 
         /// <summary>
@@ -380,11 +380,11 @@ namespace Azure.Monitor.Query.Logs
         /// </summary>
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<BatchResponse>> QueryBatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Monitor.Query.Logs.Models.BatchResponse>> QueryBatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryBatchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((BatchResponse)result, result);
+            Response result = await this.QueryBatchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((BatchResponse)result), result);
         }
     }
 }

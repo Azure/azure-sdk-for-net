@@ -11,21 +11,21 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
     public partial class AzureOpenAIModelConfiguration : TargetConfig
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
         public AzureOpenAIModelConfiguration(string modelDeploymentName) : base("AzureOpenAIModel")
         {
-            Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
 
             ModelDeploymentName = modelDeploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration"/>. </summary>
         /// <param name="type"> Type of the model configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
-        internal AzureOpenAIModelConfiguration(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelDeploymentName) : base(@type, additionalBinaryDataProperties)
+        internal AzureOpenAIModelConfiguration(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string modelDeploymentName) : base(@type, additionalBinaryDataProperties)
         {
             ModelDeploymentName = modelDeploymentName;
         }

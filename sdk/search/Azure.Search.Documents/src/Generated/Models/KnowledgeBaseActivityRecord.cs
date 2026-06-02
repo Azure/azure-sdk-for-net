@@ -12,14 +12,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseWorkIQActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWorkIQActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseActivityRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         private protected KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type)
@@ -28,14 +28,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;

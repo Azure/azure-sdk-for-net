@@ -14,46 +14,46 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.Monitor.Ingestion
 {
-    /// <summary> Extension methods to add <see cref="LogsIngestionClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
-    [Experimental("SCME0002")]
+    /// <summary> Extension methods to add <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/> to an <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>. </summary>
+    [ExperimentalAttribute("SCME0002")]
     public static partial class LogsIngestionClientHostExtensions
     {
-        /// <summary> Adds a singleton <see cref="LogsIngestionClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <summary> Adds a singleton <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddLogsIngestionClient(this IHostApplicationBuilder host, string sectionName)
         {
             return host.AddAzureClient<LogsIngestionClient, LogsIngestionClientSettings>(sectionName);
         }
 
-        /// <summary> Adds a singleton <see cref="LogsIngestionClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="LogsIngestionClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddLogsIngestionClient(this IHostApplicationBuilder host, string sectionName, Action<LogsIngestionClientSettings> configureSettings)
+        /// <summary> Adds a singleton <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddLogsIngestionClient(this IHostApplicationBuilder host, string sectionName, Action<global::Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings)
         {
             return host.AddAzureClient<LogsIngestionClient, LogsIngestionClientSettings>(sectionName, configureSettings);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="LogsIngestionClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddKeyedLogsIngestionClient(this IHostApplicationBuilder host, string key, string sectionName)
         {
             return host.AddKeyedAzureClient<LogsIngestionClient, LogsIngestionClientSettings>(key, sectionName);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="LogsIngestionClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="LogsIngestionClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedLogsIngestionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<LogsIngestionClientSettings> configureSettings)
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.Monitor.Ingestion.LogsIngestionClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedLogsIngestionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings)
         {
             return host.AddKeyedAzureClient<LogsIngestionClient, LogsIngestionClientSettings>(key, sectionName, configureSettings);
         }

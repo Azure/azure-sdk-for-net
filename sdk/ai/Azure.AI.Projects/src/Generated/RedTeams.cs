@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> The RedTeams sub-client. </summary>
     public partial class RedTeams
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of RedTeams for mocking. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal RedTeams(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal RedTeams(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -46,16 +46,16 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -68,44 +68,44 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a redteam by name. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RedTeam> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.RedTeam> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = Get(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
+            ClientResult result = this.Get(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((RedTeam)result), result.GetRawResponse());
         }
 
         /// <summary> Get a redteam by name. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RedTeam>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.RedTeam>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
+            ClientResult result = await this.GetAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((RedTeam)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(RequestOptions options)
         {
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(RequestOptions options)
         {
@@ -142,16 +142,16 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> List a redteam by name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RedTeam> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.RedTeam> GetAll(CancellationToken cancellationToken = default)
         {
             return new RedTeamsGetAllCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List a redteam by name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RedTeam> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.RedTeam> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return new RedTeamsGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
@@ -166,15 +166,15 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Create(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -187,41 +187,41 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Creates a redteam run. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RedTeam> Create(RedTeam redTeam, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.RedTeam> Create(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redTeam, nameof(redTeam));
+            global::Azure.AI.Projects.Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = Create(redTeam, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
+            ClientResult result = this.Create(redTeam, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((RedTeam)result), result.GetRawResponse());
         }
 
         /// <summary> Creates a redteam run. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.RedTeam>> CreateAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redTeam, nameof(redTeam));
+            global::Azure.AI.Projects.Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = await CreateAsync(redTeam, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
+            ClientResult result = await this.CreateAsync(redTeam, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((RedTeam)result), result.GetRawResponse());
         }
     }
 }

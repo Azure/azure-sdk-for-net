@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AnalyzeBatchOperationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchOperationDetails"/>. </summary>
         /// <param name="status"> Operation status.  notStarted, running, succeeded, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was submitted. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchOperationDetails"/>. </summary>
         /// <param name="resultId"> Analyze batch operation result ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, succeeded, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was submitted. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error during batch document analysis. </param>
         /// <param name="result"> Batch document analysis result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchOperationDetails(string resultId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int? percentCompleted, DocumentIntelligenceError error, AnalyzeBatchResult result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeBatchOperationDetails(string resultId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int? percentCompleted, DocumentIntelligenceError error, AnalyzeBatchResult result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResultId = resultId;
             Status = status;

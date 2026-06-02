@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEnumElementDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEnumElementDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef"/>. </summary>
         public AtlasEnumElementDef()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEnumElementDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef"/>. </summary>
         /// <param name="description"> The description of the enum element definition. </param>
         /// <param name="ordinal"> The ordinal of the enum element definition. </param>
         /// <param name="value"> The value of the enum element definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEnumElementDef(string description, int? ordinal, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEnumElementDef(string description, int? ordinal, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Ordinal = ordinal;

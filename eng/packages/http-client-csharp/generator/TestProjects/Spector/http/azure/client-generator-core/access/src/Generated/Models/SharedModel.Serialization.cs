@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 {
-    public partial class SharedModel : IJsonModel<SharedModel>
+    public partial class SharedModel : IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>
     {
         internal SharedModel() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SharedModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SharedModel IPersistableModel<SharedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SharedModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SharedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator SharedModel(Response response) => throw null;
 
-        void IJsonModel<SharedModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SharedModel IJsonModel<SharedModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SharedModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation.SharedModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SharedModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

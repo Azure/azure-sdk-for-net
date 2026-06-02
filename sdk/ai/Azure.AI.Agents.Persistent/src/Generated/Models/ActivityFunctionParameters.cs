@@ -15,24 +15,24 @@ namespace Azure.AI.Agents.Persistent
     public partial class ActivityFunctionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivityFunctionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionParameters"/>. </summary>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
-        internal ActivityFunctionParameters(IDictionary<string, FunctionArgument> properties, IEnumerable<string> @required)
+        internal ActivityFunctionParameters(IDictionary<string, global::Azure.AI.Agents.Persistent.FunctionArgument> properties, IEnumerable<string> @required)
         {
             Properties = properties;
             Required = @required.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivityFunctionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionParameters"/>. </summary>
         /// <param name="type"> The parameter type, it is always object. </param>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
         /// <param name="additionalProperties"> If true the function has additional parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityFunctionParameters(string @type, IDictionary<string, FunctionArgument> properties, IList<string> @required, bool? additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivityFunctionParameters(string @type, IDictionary<string, global::Azure.AI.Agents.Persistent.FunctionArgument> properties, IList<string> @required, bool? additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.AI.Agents.Persistent
         public string Type { get; } = "object";
 
         /// <summary> The dictionary of function arguments. </summary>
-        public IDictionary<string, FunctionArgument> Properties { get; }
+        public IDictionary<string, global::Azure.AI.Agents.Persistent.FunctionArgument> Properties { get; }
 
         /// <summary> The list of the required parameters. </summary>
         public IList<string> Required { get; }

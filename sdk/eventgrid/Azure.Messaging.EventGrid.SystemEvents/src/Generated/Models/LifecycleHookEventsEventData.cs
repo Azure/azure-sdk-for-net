@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class LifecycleHookEventsEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleHookEventsEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookEventsEventData"/>. </summary>
         /// <param name="name"> The name of the Lifecycle Hook event. This is a unique identifier for the Lifecycle Hook event. </param>
         /// <param name="id"> The ARM resource ID of the Lifecycle Hook event entity created by the platform for this event. Customers can use this ARM resource ID to query more details about the event through Azure Resource Manager APIs. </param>
         /// <param name="properties"> The properties of the Virtual Machine Scale Set Lifecycle Hook event. </param>
@@ -29,13 +29,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             OperationalInfo = operationalInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleHookEventsEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.LifecycleHookEventsEventData"/>. </summary>
         /// <param name="name"> The name of the Lifecycle Hook event. This is a unique identifier for the Lifecycle Hook event. </param>
         /// <param name="id"> The ARM resource ID of the Lifecycle Hook event entity created by the platform for this event. Customers can use this ARM resource ID to query more details about the event through Azure Resource Manager APIs. </param>
         /// <param name="properties"> The properties of the Virtual Machine Scale Set Lifecycle Hook event. </param>
         /// <param name="operationalInfo"> Operational information related to the Lifecycle Hook event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleHookEventsEventData(string name, string id, VirtualMachineScaleSetLifecycleHookEventProperties properties, OperationalInfo operationalInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LifecycleHookEventsEventData(string name, string id, VirtualMachineScaleSetLifecycleHookEventProperties properties, OperationalInfo operationalInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

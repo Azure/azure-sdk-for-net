@@ -12,17 +12,17 @@ namespace Azure.AI.Projects
     {
         private IDictionary<string, string> _additionalStringProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionCustomCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionCustomCredential"/>. </summary>
         internal AIProjectConnectionCustomCredential()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectConnectionCustomCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectConnectionCustomCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalProperties"></param>
-        internal AIProjectConnectionCustomCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> additionalProperties) : base(@type, additionalBinaryDataProperties)
+        internal AIProjectConnectionCustomCredential(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> additionalProperties) : base(@type, additionalBinaryDataProperties)
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
         }

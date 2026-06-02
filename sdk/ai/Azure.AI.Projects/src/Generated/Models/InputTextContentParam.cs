@@ -11,23 +11,23 @@ namespace Azure.AI.Projects
     public partial class InputTextContentParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InputTextContentParam"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public InputTextContentParam(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Projects.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InputTextContentParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_text`. </param>
         /// <param name="text"> The text input to the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTextContentParam(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTextContentParam(string @type, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;

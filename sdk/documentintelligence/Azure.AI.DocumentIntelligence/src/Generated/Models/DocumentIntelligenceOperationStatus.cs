@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Operation status. </summary>
-    public readonly partial struct DocumentIntelligenceOperationStatus : IEquatable<DocumentIntelligenceOperationStatus>
+    public readonly partial struct DocumentIntelligenceOperationStatus : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus>
     {
         private readonly string _value;
         /// <summary> The operation has not started yet. </summary>
@@ -27,12 +27,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> The operation has been skipped. </summary>
         private const string SkippedValue = "skipped";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceOperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentIntelligenceOperationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> The operation has been skipped. </summary>
         public static DocumentIntelligenceOperationStatus Skipped { get; } = new DocumentIntelligenceOperationStatus(SkippedValue);
 
-        /// <summary> Determines if two <see cref="DocumentIntelligenceOperationStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentIntelligenceOperationStatus left, DocumentIntelligenceOperationStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentIntelligenceOperationStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentIntelligenceOperationStatus left, DocumentIntelligenceOperationStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentIntelligenceOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentIntelligenceOperationStatus(string value) => new DocumentIntelligenceOperationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentIntelligenceOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentIntelligenceOperationStatus?(string value) => value == null ? null : new DocumentIntelligenceOperationStatus(value);
+        public static implicit operator DocumentIntelligenceOperationStatus?(string value) => (value == null) ? null : new DocumentIntelligenceOperationStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentIntelligenceOperationStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentIntelligenceOperationStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentIntelligenceOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentIntelligenceOperationStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

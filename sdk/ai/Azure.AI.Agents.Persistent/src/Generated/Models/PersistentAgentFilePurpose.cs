@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The possible values denoting the intended usage of a file. </summary>
-    public readonly partial struct PersistentAgentFilePurpose : IEquatable<PersistentAgentFilePurpose>
+    public readonly partial struct PersistentAgentFilePurpose : IEquatable<global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose>
     {
         private readonly string _value;
         /// <summary> Indicates a file is used as input to agents. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Indicates a file is used as input to a vision operation. </summary>
         private const string VisionValue = "vision";
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFilePurpose"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersistentAgentFilePurpose(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Indicates a file is used as input to a vision operation. </summary>
         public static PersistentAgentFilePurpose Vision { get; } = new PersistentAgentFilePurpose(VisionValue);
 
-        /// <summary> Determines if two <see cref="PersistentAgentFilePurpose"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersistentAgentFilePurpose left, PersistentAgentFilePurpose right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PersistentAgentFilePurpose"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersistentAgentFilePurpose left, PersistentAgentFilePurpose right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PersistentAgentFilePurpose"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PersistentAgentFilePurpose(string value) => new PersistentAgentFilePurpose(value);
 
-        /// <summary> Converts a string to a <see cref="PersistentAgentFilePurpose"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFilePurpose"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersistentAgentFilePurpose?(string value) => value == null ? null : new PersistentAgentFilePurpose(value);
+        public static implicit operator PersistentAgentFilePurpose?(string value) => (value == null) ? null : new PersistentAgentFilePurpose(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PersistentAgentFilePurpose other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PersistentAgentFilePurpose other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PersistentAgentFilePurpose other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PersistentAgentFilePurpose other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

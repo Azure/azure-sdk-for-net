@@ -14,11 +14,11 @@ namespace Azure.AI.Projects.Agents
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateGetAgentRequest(string agentName, RequestOptions options)
         {
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -42,13 +42,13 @@ namespace Azure.AI.Projects.Agents
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -64,13 +64,13 @@ namespace Azure.AI.Projects.Agents
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -89,13 +89,13 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -112,13 +112,13 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -135,7 +135,7 @@ namespace Azure.AI.Projects.Agents
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents:import", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/import", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -174,11 +174,11 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(force), true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -194,27 +194,27 @@ namespace Azure.AI.Projects.Agents
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents", false);
-            if (kind != null)
+            if ((kind != null))
             {
                 uri.AppendQuery("kind", kind, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -232,13 +232,13 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -256,7 +256,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions:import", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -277,7 +277,7 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -296,11 +296,11 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
-            if (force != null)
+            if ((force != null))
             {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+                uri.AppendQuery("force", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(force), true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -318,23 +318,23 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions", false);
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -351,13 +351,13 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -375,13 +375,13 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -400,17 +400,17 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/code:download", false);
-            if (agentVersion != null)
+            if ((agentVersion != null))
             {
                 uri.AppendQuery("agent_version", agentVersion, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -426,17 +426,17 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -455,17 +455,17 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
             uri.AppendPath(sessionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -482,17 +482,17 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
             uri.AppendPath(sessionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -509,13 +509,13 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/endpoint/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath(":stop", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -530,33 +530,33 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions", false);
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.Agents.TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
+            if ((order != null))
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (after != null)
+            if ((after != null))
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
+            if ((before != null))
             {
                 uri.AppendQuery("before", before, true);
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            if (userIsolationKey != null)
+            if ((userIsolationKey != null))
             {
                 request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
@@ -576,13 +576,13 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath(":logstream", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }

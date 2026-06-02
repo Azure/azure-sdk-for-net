@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace SpecialWords
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class SpecialWordsClientHostExtensions
     {
         public static IClientBuilder AddSpecialWordsClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddSpecialWordsClient(this IHostApplicationBuilder host, string sectionName, Action<SpecialWordsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddSpecialWordsClient(this IHostApplicationBuilder host, string sectionName, Action<global::SpecialWords.SpecialWordsClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedSpecialWordsClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedSpecialWordsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<SpecialWordsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedSpecialWordsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::SpecialWords.SpecialWordsClientSettings> configureSettings) => throw null;
     }
 }

@@ -15,27 +15,27 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AIConversationLanguageUnderstandingActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public AIConversationLanguageUnderstandingActionContent(string projectName, string deploymentName)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, StringIndexType? stringIndexType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, StringIndexType? stringIndexType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;

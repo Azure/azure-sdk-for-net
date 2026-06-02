@@ -18,48 +18,48 @@ namespace Specs.Azure.Core.Scalar
     {
         protected AzureLocationScalar() => throw null;
 
-        internal AzureLocationScalar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal AzureLocationScalar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<AzureLocation> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Azure.Core.AzureLocation> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<AzureLocation>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Azure.Core.AzureLocation>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(AzureLocation body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(AzureLocation body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(AzureLocation body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Post(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PostAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PostAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<AzureLocationModel> Post(AzureLocationModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Core.Scalar.AzureLocationModel> Post(AzureLocationModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<AzureLocationModel>> PostAsync(AzureLocationModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Core.Scalar.AzureLocationModel>> PostAsync(AzureLocationModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Header(AzureLocation region, RequestContext context) => throw null;
 
-        public virtual Task<Response> HeaderAsync(AzureLocation region, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> HeaderAsync(AzureLocation region, RequestContext context) => throw null;
 
         public virtual Response Header(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeaderAsync(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> HeaderAsync(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Query(AzureLocation region, RequestContext context) => throw null;
 
-        public virtual Task<Response> QueryAsync(AzureLocation region, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> QueryAsync(AzureLocation region, RequestContext context) => throw null;
 
         public virtual Response Query(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> QueryAsync(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> QueryAsync(AzureLocation region, CancellationToken cancellationToken = default) => throw null;
     }
 }

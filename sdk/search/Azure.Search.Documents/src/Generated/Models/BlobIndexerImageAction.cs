@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Determines how to process embedded images and image files in Azure blob storage.  Setting the "imageAction" configuration to any value other than "none" requires that a skillset also be attached to that indexer. </summary>
-    public readonly partial struct BlobIndexerImageAction : IEquatable<BlobIndexerImageAction>
+    public readonly partial struct BlobIndexerImageAction : IEquatable<global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction>
     {
         private readonly string _value;
         /// <summary> Ignores embedded images or image files in the data set.  This is the default. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if "generateNormalizedImages" was set. </summary>
         private const string GenerateNormalizedImagePerPageValue = "generateNormalizedImagePerPage";
 
-        /// <summary> Initializes a new instance of <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerImageAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if "generateNormalizedImages" was set. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImagePerPage { get; } = new BlobIndexerImageAction(GenerateNormalizedImagePerPageValue);
 
-        /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerImageAction left, BlobIndexerImageAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerImageAction left, BlobIndexerImageAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerImageAction(string value) => new BlobIndexerImageAction(value);
 
-        /// <summary> Converts a string to a <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.BlobIndexerImageAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobIndexerImageAction?(string value) => value == null ? null : new BlobIndexerImageAction(value);
+        public static implicit operator BlobIndexerImageAction?(string value) => (value == null) ? null : new BlobIndexerImageAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BlobIndexerImageAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BlobIndexerImageAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BlobIndexerImageAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BlobIndexerImageAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

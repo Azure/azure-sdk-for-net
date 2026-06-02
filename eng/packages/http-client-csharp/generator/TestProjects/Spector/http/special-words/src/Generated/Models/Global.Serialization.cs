@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Global : IJsonModel<Global>
+    public partial class Global : IJsonModel<global::SpecialWords._Models.Global>
     {
         internal Global() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Global>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Global>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Global IPersistableModel<Global>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Global IPersistableModel<global::SpecialWords._Models.Global>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Global>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Global>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="global"> The <see cref="Global"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="global"> The <see cref="global::SpecialWords._Models.Global"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Global @global) => throw null;
 
-        void IJsonModel<Global>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Global>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Global IJsonModel<Global>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Global IJsonModel<global::SpecialWords._Models.Global>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Global JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

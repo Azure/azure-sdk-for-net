@@ -13,15 +13,15 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Represents the policy of masking PII with the entity type. </summary>
     public partial class EntityMaskTypePolicyType : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="EntityMaskTypePolicyType"/>. </summary>
-        public EntityMaskTypePolicyType() : base(RedactionPolicyKind.EntityMask)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType"/>. </summary>
+        public EntityMaskTypePolicyType() : base(global::Azure.AI.Language.Conversations.Models.RedactionPolicyKind.EntityMask)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityMaskTypePolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityMaskTypePolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind, additionalBinaryDataProperties)
+        internal EntityMaskTypePolicyType(RedactionPolicyKind policyKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(policyKind, additionalBinaryDataProperties)
         {
         }
     }

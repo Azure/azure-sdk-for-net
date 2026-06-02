@@ -14,21 +14,21 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureAISearchToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolResource"/>. </summary>
         public AzureAISearchToolResource()
         {
-            IndexList = new ChangeTrackingList<AISearchIndexResource>();
+            IndexList = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.AISearchIndexResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolResource"/>. </summary>
         /// <param name="indexList">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolResource(IList<AISearchIndexResource> indexList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolResource(IList<global::Azure.AI.Agents.Persistent.AISearchIndexResource> indexList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IndexList = indexList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.AI.Agents.Persistent
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </summary>
-        public IList<AISearchIndexResource> IndexList { get; }
+        public IList<global::Azure.AI.Agents.Persistent.AISearchIndexResource> IndexList { get; }
     }
 }

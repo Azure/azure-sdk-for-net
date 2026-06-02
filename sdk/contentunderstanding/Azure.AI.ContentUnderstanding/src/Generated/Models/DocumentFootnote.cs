@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentFootnote
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         internal DocumentFootnote(string content)
         {
@@ -24,13 +24,13 @@ namespace Azure.AI.ContentUnderstanding
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="source"> Encoded source that identifies the position of the footnote in the content. </param>
         /// <param name="span"> Span of the footnote in the markdown content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFootnote(string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFootnote(string content, string source, ContentSpan span, IList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Source = source;

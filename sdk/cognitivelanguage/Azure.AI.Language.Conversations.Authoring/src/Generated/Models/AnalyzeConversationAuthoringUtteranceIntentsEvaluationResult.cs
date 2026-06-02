@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult"/>. </summary>
         /// <param name="expectedIntent"> Represents the utterance's expected intent. </param>
         /// <param name="predictedIntent"> Represents the utterance's predicted intent. </param>
         internal AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult(string expectedIntent, string predictedIntent)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             PredictedIntent = predictedIntent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult"/>. </summary>
         /// <param name="expectedIntent"> Represents the utterance's expected intent. </param>
         /// <param name="predictedIntent"> Represents the utterance's predicted intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult(string expectedIntent, string predictedIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult(string expectedIntent, string predictedIntent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedIntent = expectedIntent;
             PredictedIntent = predictedIntent;

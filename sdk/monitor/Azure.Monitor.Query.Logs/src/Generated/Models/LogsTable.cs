@@ -16,25 +16,25 @@ namespace Azure.Monitor.Query.Logs.Models
     public partial class LogsTable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
-        internal LogsTable(string name, IEnumerable<LogsTableColumn> columns, JsonElement internalRows)
+        internal LogsTable(string name, IEnumerable<global::Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, JsonElement internalRows)
         {
             Name = name;
             Columns = columns.ToList();
             InternalRows = internalRows;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogsTable(string name, IReadOnlyList<LogsTableColumn> columns, JsonElement internalRows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogsTable(string name, IReadOnlyList<global::Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, JsonElement internalRows, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Columns = columns;

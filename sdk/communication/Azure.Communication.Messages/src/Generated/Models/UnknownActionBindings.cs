@@ -12,10 +12,10 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownActionBindings : ActionBindings
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownActionBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownActionBindings"/>. </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownActionBindings(MessageActionBindingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

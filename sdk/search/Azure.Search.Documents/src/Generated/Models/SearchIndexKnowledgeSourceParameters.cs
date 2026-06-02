@@ -15,28 +15,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters"/>. </summary>
         /// <param name="searchIndexName"> The name of the Search index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchIndexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchIndexName"/> is null. </exception>
         public SearchIndexKnowledgeSourceParameters(string searchIndexName)
         {
-            Argument.AssertNotNull(searchIndexName, nameof(searchIndexName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(searchIndexName, nameof(searchIndexName));
 
             SearchIndexName = searchIndexName;
-            SourceDataFields = new ChangeTrackingList<SearchIndexFieldReference>();
-            SearchFields = new ChangeTrackingList<SearchIndexFieldReference>();
+            SourceDataFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference>();
+            SearchFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters"/>. </summary>
         /// <param name="searchIndexName"> The name of the Search index. </param>
         /// <param name="sourceDataFields"> Used to request additional fields for referenced source data. </param>
         /// <param name="searchFields"> Used to restrict which fields to search on the search index. </param>
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> sourceDataFields, IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchIndexName = searchIndexName;
             SourceDataFields = sourceDataFields;
@@ -50,10 +50,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public string SearchIndexName { get; set; }
 
         /// <summary> Used to request additional fields for referenced source data. </summary>
-        public IList<SearchIndexFieldReference> SourceDataFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> SourceDataFields { get; }
 
         /// <summary> Used to restrict which fields to search on the search index. </summary>
-        public IList<SearchIndexFieldReference> SearchFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> SearchFields { get; }
 
         /// <summary> Used to specify a different semantic configuration on the target search index other than the default one. </summary>
         public string SemanticConfigurationName { get; set; }

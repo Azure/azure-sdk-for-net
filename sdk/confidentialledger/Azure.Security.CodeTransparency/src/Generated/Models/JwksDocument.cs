@@ -15,20 +15,20 @@ namespace Azure.Security.CodeTransparency
     public partial class JwksDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.CodeTransparency.JwksDocument"/>. </summary>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
-        internal JwksDocument(IEnumerable<JsonWebKey> keys)
+        internal JwksDocument(IEnumerable<global::Azure.Security.CodeTransparency.JsonWebKey> keys)
         {
             Keys = keys.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.CodeTransparency.JwksDocument"/>. </summary>
         /// <param name="contentType"> Content type header. </param>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JwksDocument(string contentType, IList<JsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JwksDocument(string contentType, IList<global::Azure.Security.CodeTransparency.JsonWebKey> keys, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContentType = contentType;
             Keys = keys;
@@ -39,6 +39,6 @@ namespace Azure.Security.CodeTransparency
         public string ContentType { get; } = "application/json";
 
         /// <summary> List of public keys used for receipt verification. </summary>
-        public IList<JsonWebKey> Keys { get; }
+        public IList<global::Azure.Security.CodeTransparency.JsonWebKey> Keys { get; }
     }
 }

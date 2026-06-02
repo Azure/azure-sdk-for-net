@@ -38,10 +38,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
-        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, ETag eTag = default)
+        /// <returns> A new <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
+        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, ETag eTag = default)
         {
-            filters ??= new ChangeTrackingList<ConfigurationSettingsFilter>();
+            filters ??= new ChangeTrackingList<global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ConfigurationSnapshot(
@@ -66,7 +66,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <param name="label"> Filters key-values by their label field. </param>
         /// <param name="tags"> Filters key-values by their tags field. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSettingsFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter"/> instance for mocking. </returns>
         public static ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = default, string label = default, IEnumerable<string> tags = default)
         {
             tags ??= new ChangeTrackingList<string>();
@@ -76,7 +76,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Labels are used to group key-values. </summary>
         /// <param name="name"> The name of the label. </param>
-        /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Data.AppConfiguration.SettingLabel"/> instance for mocking. </returns>
         public static SettingLabel SettingLabel(string name = default)
         {
             return new SettingLabel(name, additionalBinaryDataProperties: null);

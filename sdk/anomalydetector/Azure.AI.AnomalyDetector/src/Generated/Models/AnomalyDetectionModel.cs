@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectionModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector
             LastUpdatedTime = lastUpdatedTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.AnomalyDetector
         /// information.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             CreatedTime = createdTime;

@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary>
     /// Represents the assets of an exported project.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationExportedProjectAsset"/> and <see cref="OrchestrationExportedProjectAsset"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Authoring.ConversationExportedProjectAsset"/> and <see cref="Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset"/>.
     /// </summary>
     public abstract partial class ConversationAuthoringExportedProjectAsset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         private protected ConversationAuthoringExportedProjectAsset(ConversationAuthoringProjectKind projectKind)
         {
             ProjectKind = projectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

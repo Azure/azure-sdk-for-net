@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Text
 {
     internal partial class UnknownBaseMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBaseMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.UnknownBaseMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(metadataKind != default ? metadataKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownBaseMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((metadataKind != default) ? metadataKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

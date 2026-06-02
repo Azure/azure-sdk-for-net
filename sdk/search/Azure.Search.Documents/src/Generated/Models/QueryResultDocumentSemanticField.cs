@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Models
     public partial class QueryResultDocumentSemanticField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSemanticField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField"/>. </summary>
         internal QueryResultDocumentSemanticField()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSemanticField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField"/>. </summary>
         /// <param name="name"> The name of the field that was sent to the semantic enrichment process. </param>
         /// <param name="state"> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResultDocumentSemanticField(string name, SemanticFieldState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryResultDocumentSemanticField(string name, SemanticFieldState? state, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             State = state;

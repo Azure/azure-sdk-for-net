@@ -17,35 +17,35 @@ namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class PreviewVersionClient
     {
-        public PreviewVersionClient() : this(new Uri("http://localhost:3000"), new PreviewVersionClientOptions()) => throw null;
+        public PreviewVersionClient() : this(new global::System.Uri("http://localhost:3000"), new PreviewVersionClientOptions()) => throw null;
 
-        internal PreviewVersionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PreviewVersionClientOptions options) => throw null;
+        internal PreviewVersionClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PreviewVersionClientOptions options) => throw null;
 
-        public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options) : this(null, endpoint, options) => throw null;
+        public PreviewVersionClient(global::System.Uri endpoint, PreviewVersionClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public PreviewVersionClient(PreviewVersionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public PreviewVersionClient(PreviewVersionClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetWidget(string id, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetWidgetAsync(string id, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetWidgetAsync(string id, RequestContext context) => throw null;
 
-        public virtual Response<Widget> GetWidget(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Versioning.PreviewVersion.Widget> GetWidget(string id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Versioning.PreviewVersion.Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UpdateWidgetColor(string id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateWidgetColorAsync(string id, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdateWidgetColorAsync(string id, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response GetWidgets(string name, string color, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetWidgetsAsync(string name, string color, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetWidgetsAsync(string name, string color, RequestContext context) => throw null;
 
-        public virtual Response<ListWidgetsResponse> GetWidgets(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse> GetWidgets(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ListWidgetsResponse>> GetWidgetsAsync(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse>> GetWidgetsAsync(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

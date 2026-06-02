@@ -19,8 +19,8 @@ namespace Azure.Developer.DevCenter
     /// <summary> The DevCenterClient. </summary>
     public partial class DevCenterClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DevCenterClient for mocking. </summary>
@@ -31,8 +31,8 @@ namespace Azure.Developer.DevCenter
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevCenterClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DevCenterClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DevCenterClientOptions options)
+        internal DevCenterClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DevCenterClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -61,8 +61,8 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Initializes a new instance of DevCenterClient from a <see cref="DevCenterClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DevCenterClient. </param>
-        [Experimental("SCME0002")]
-        public DevCenterClient(DevCenterClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public DevCenterClient(DevCenterClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -81,9 +81,9 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetProjects(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetProjects(RequestContext context)
         {
             return new DevCenterClientGetProjectsCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
@@ -97,25 +97,25 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetProjectsAsync(RequestContext context)
         {
             return new DevCenterClientGetProjectsAsyncCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.DevCenter.Models.DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
         {
             return new DevCenterClientGetProjectsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.DevCenter.Models.DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
         {
             return new DevCenterClientGetProjectsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
@@ -130,9 +130,9 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProject(string projectName, RequestContext context)
         {
@@ -140,9 +140,9 @@ namespace Azure.Developer.DevCenter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                using HttpMessage message = this.CreateGetProjectRequest(projectName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -162,19 +162,19 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetProjectAsync(string projectName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DevCenterClient.GetProject");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                using HttpMessage message = this.CreateGetProjectRequest(projectName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -187,29 +187,29 @@ namespace Azure.Developer.DevCenter
         /// <summary> Gets a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DevCenterProject> GetProject(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.DevCenter.Models.DevCenterProject> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            Response result = GetProject(projectName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DevCenterProject)result, result);
+            Response result = this.GetProject(projectName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DevCenterProject)result), result);
         }
 
         /// <summary> Gets a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DevCenterProject>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.DevCenter.Models.DevCenterProject>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            Response result = await GetProjectAsync(projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DevCenterProject)result, result);
+            Response result = await this.GetProjectAsync(projectName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DevCenterProject)result), result);
         }
     }
 }

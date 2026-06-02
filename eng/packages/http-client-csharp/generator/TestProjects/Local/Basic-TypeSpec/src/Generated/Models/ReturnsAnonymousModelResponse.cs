@@ -14,16 +14,16 @@ namespace BasicTypeSpec
     public partial class ReturnsAnonymousModelResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReturnsAnonymousModelResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ReturnsAnonymousModelResponse"/>. </summary>
         internal ReturnsAnonymousModelResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReturnsAnonymousModelResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.ReturnsAnonymousModelResponse"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReturnsAnonymousModelResponse(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReturnsAnonymousModelResponse(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunEndedEventCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunEndedEventCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunEndedEventCondition"/>. </summary>
         public TestRunEndedEventCondition()
         {
-            TestRunStatuses = new ChangeTrackingList<TestRunStatus>();
-            TestRunResults = new ChangeTrackingList<PassFailTestResult>();
+            TestRunStatuses = new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunStatus>();
+            TestRunResults = new ChangeTrackingList<global::Azure.Developer.LoadTesting.PassFailTestResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunEndedEventCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunEndedEventCondition"/>. </summary>
         /// <param name="testRunStatuses"> The test run statuses to send notification for. </param>
         /// <param name="testRunResults"> The test run results to send notification for. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunEndedEventCondition(IList<TestRunStatus> testRunStatuses, IList<PassFailTestResult> testRunResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunEndedEventCondition(IList<global::Azure.Developer.LoadTesting.TestRunStatus> testRunStatuses, IList<global::Azure.Developer.LoadTesting.PassFailTestResult> testRunResults, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestRunStatuses = testRunStatuses;
             TestRunResults = testRunResults;
@@ -35,9 +35,9 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> The test run statuses to send notification for. </summary>
-        public IList<TestRunStatus> TestRunStatuses { get; }
+        public IList<global::Azure.Developer.LoadTesting.TestRunStatus> TestRunStatuses { get; }
 
         /// <summary> The test run results to send notification for. </summary>
-        public IList<PassFailTestResult> TestRunResults { get; }
+        public IList<global::Azure.Developer.LoadTesting.PassFailTestResult> TestRunResults { get; }
     }
 }

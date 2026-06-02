@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the data type of a field in a search index. </summary>
-    public readonly partial struct SearchFieldDataType : IEquatable<SearchFieldDataType>
+    public readonly partial struct SearchFieldDataType : IEquatable<global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType>
     {
         private readonly string _value;
         /// <summary> Indicates that a field contains a string. </summary>
@@ -42,12 +42,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
         private const string ByteValue = "Edm.Byte";
 
-        /// <summary> Initializes a new instance of <see cref="SearchFieldDataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchFieldDataType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -91,34 +91,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
         public static SearchFieldDataType Byte { get; } = new SearchFieldDataType(ByteValue);
 
-        /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchFieldDataType left, SearchFieldDataType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchFieldDataType left, SearchFieldDataType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SearchFieldDataType(string value) => new SearchFieldDataType(value);
 
-        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchFieldDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchFieldDataType?(string value) => value == null ? null : new SearchFieldDataType(value);
+        public static implicit operator SearchFieldDataType?(string value) => (value == null) ? null : new SearchFieldDataType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SearchFieldDataType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SearchFieldDataType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SearchFieldDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SearchFieldDataType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

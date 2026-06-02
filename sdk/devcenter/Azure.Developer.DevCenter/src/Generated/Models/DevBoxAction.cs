@@ -14,9 +14,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxAction"/>. </summary>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
         internal DevBoxAction(DevBoxActionType actionType, string sourceId)
@@ -25,14 +25,14 @@ namespace Azure.Developer.DevCenter.Models
             SourceId = sourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxAction"/>. </summary>
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionType = actionType;

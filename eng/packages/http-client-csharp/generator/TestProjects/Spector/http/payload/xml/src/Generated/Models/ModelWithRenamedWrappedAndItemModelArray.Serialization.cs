@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithRenamedWrappedAndItemModelArray : IPersistableModel<ModelWithRenamedWrappedAndItemModelArray>, IXmlSerializable
+    public partial class ModelWithRenamedWrappedAndItemModelArray : IPersistableModel<global::Payload.Xml.ModelWithRenamedWrappedAndItemModelArray>, IXmlSerializable
     {
         internal ModelWithRenamedWrappedAndItemModelArray() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithRenamedWrappedAndItemModelArray>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithRenamedWrappedAndItemModelArray>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithRenamedWrappedAndItemModelArray IPersistableModel<ModelWithRenamedWrappedAndItemModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithRenamedWrappedAndItemModelArray IPersistableModel<global::Payload.Xml.ModelWithRenamedWrappedAndItemModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithRenamedWrappedAndItemModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithRenamedWrappedAndItemModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithRenamedWrappedAndItemModelArray"> The <see cref="ModelWithRenamedWrappedAndItemModelArray"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithRenamedWrappedAndItemModelArray"> The <see cref="global::Payload.Xml.ModelWithRenamedWrappedAndItemModelArray"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRenamedWrappedAndItemModelArray modelWithRenamedWrappedAndItemModelArray) => throw null;
 
         public static explicit operator ModelWithRenamedWrappedAndItemModelArray(Response response) => throw null;

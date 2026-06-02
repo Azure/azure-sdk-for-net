@@ -13,11 +13,11 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a queue selector that will be attached to a job. </summary>
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.StaticQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueSelector"> The queue selector to attach. </param>
-        internal StaticQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouterQueueSelector queueSelector) : base(kind, additionalBinaryDataProperties)
+        internal StaticQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RouterQueueSelector queueSelector) : base(kind, additionalBinaryDataProperties)
         {
             QueueSelector = queueSelector;
         }

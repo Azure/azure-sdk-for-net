@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Request of the entire or last anomaly detection. </summary>
-    public partial class UnivariateDetectionOptions : IJsonModel<UnivariateDetectionOptions>
+    public partial class UnivariateDetectionOptions : IJsonModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions"/> for deserialization. </summary>
         internal UnivariateDetectionOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UnivariateDetectionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUnivariateDetectionOptions(document.RootElement, options);
+                        return global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions.DeserializeUnivariateDetectionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateDetectionOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAnomalyDetectorContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.AnomalyDetector.AzureAIAnomalyDetectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateDetectionOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UnivariateDetectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UnivariateDetectionOptions IPersistableModel<UnivariateDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UnivariateDetectionOptions IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UnivariateDetectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="univariateDetectionOptions"> The <see cref="UnivariateDetectionOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="univariateDetectionOptions"> The <see cref="global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(UnivariateDetectionOptions univariateDetectionOptions)
         {
-            if (univariateDetectionOptions == null)
+            if ((univariateDetectionOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(univariateDetectionOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(univariateDetectionOptions, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UnivariateDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,54 +84,54 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(UnivariateDetectionOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("series"u8);
             writer.WriteStartArray();
             foreach (TimeSeriesPoint item in Series)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<TimeSeriesPoint>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Granularity))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(CustomInterval))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(CustomInterval))
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Optional.IsDefined(Period))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (Optional.IsDefined(MaxAnomalyRatio))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(MaxAnomalyRatio))
             {
                 writer.WritePropertyName("maxAnomalyRatio"u8);
                 writer.WriteNumberValue(MaxAnomalyRatio.Value);
             }
-            if (Optional.IsDefined(Sensitivity))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteNumberValue(Sensitivity.Value);
             }
-            if (Optional.IsDefined(ImputeMode))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(ImputeMode))
             {
                 writer.WritePropertyName("imputeMode"u8);
                 writer.WriteStringValue(ImputeMode.Value.ToString());
             }
-            if (Optional.IsDefined(ImputeFixedValue))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsDefined(ImputeFixedValue))
             {
                 writer.WritePropertyName("imputeFixedValue"u8);
                 writer.WriteNumberValue(ImputeFixedValue.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -139,9 +139,9 @@ namespace Azure.AI.AnomalyDetector
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -150,30 +150,30 @@ namespace Azure.AI.AnomalyDetector
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UnivariateDetectionOptions IJsonModel<UnivariateDetectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UnivariateDetectionOptions IJsonModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UnivariateDetectionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(UnivariateDetectionOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnivariateDetectionOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions.DeserializeUnivariateDetectionOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static UnivariateDetectionOptions DeserializeUnivariateDetectionOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<TimeSeriesPoint> series = default;
+            IList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series = default;
             TimeGranularity? granularity = default;
             int? customInterval = default;
             int? period = default;
@@ -181,22 +181,22 @@ namespace Azure.AI.AnomalyDetector
             int? sensitivity = default;
             ImputeMode? imputeMode = default;
             float? imputeFixedValue = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("series"u8))
                 {
-                    List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
+                    List<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> array = new List<global::Azure.AI.AnomalyDetector.TimeSeriesPoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item, options));
+                        array.Add(global::Azure.AI.AnomalyDetector.TimeSeriesPoint.DeserializeTimeSeriesPoint(item, options));
                     }
                     series = array;
                     continue;
                 }
                 if (prop.NameEquals("granularity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -205,7 +205,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("customInterval"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -214,7 +214,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("period"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -223,7 +223,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("maxAnomalyRatio"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -232,7 +232,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("sensitivity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -241,7 +241,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("imputeMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -250,16 +250,16 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("imputeFixedValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     imputeFixedValue = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new UnivariateDetectionOptions(

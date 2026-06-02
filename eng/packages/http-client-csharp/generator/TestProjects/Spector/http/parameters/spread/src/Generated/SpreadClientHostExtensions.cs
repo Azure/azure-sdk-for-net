@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Parameters.Spread
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class SpreadClientHostExtensions
     {
         public static IClientBuilder AddSpreadClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddSpreadClient(this IHostApplicationBuilder host, string sectionName, Action<SpreadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddSpreadClient(this IHostApplicationBuilder host, string sectionName, Action<global::Parameters.Spread.SpreadClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedSpreadClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedSpreadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<SpreadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedSpreadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Parameters.Spread.SpreadClientSettings> configureSettings) => throw null;
     }
 }

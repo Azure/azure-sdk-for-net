@@ -12,25 +12,25 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, <see cref="SentimentAnalysisOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CustomEntitiesOperationAction"/>, <see cref="Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Azure.AI.Language.Text.EntityLinkingOperationAction"/>, <see cref="Azure.AI.Language.Text.EntitiesOperationAction"/>, <see cref="Azure.AI.Language.Text.HealthcareOperationAction"/>, <see cref="Azure.AI.Language.Text.KeyPhraseOperationAction"/>, <see cref="Azure.AI.Language.Text.PiiOperationAction"/>, <see cref="Azure.AI.Language.Text.SentimentAnalysisOperationAction"/>, <see cref="Azure.AI.Language.Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Azure.AI.Language.Text.AbstractiveSummarizationOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeTextOperationAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationAction"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         private protected AnalyzeTextOperationAction(AnalyzeTextOperationActionKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Kind = kind;

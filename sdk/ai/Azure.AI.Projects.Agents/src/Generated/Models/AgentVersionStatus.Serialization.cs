@@ -11,36 +11,36 @@ namespace Azure.AI.Projects.Agents
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AgentVersionStatus value) => value switch
         {
-            AgentVersionStatus.Creating => "creating",
-            AgentVersionStatus.Active => "active",
-            AgentVersionStatus.Failed => "failed",
-            AgentVersionStatus.Deleting => "deleting",
-            AgentVersionStatus.Deleted => "deleted",
+            global::Azure.AI.Projects.Agents.AgentVersionStatus.Creating => "creating",
+            global::Azure.AI.Projects.Agents.AgentVersionStatus.Active => "active",
+            global::Azure.AI.Projects.Agents.AgentVersionStatus.Failed => "failed",
+            global::Azure.AI.Projects.Agents.AgentVersionStatus.Deleting => "deleting",
+            global::Azure.AI.Projects.Agents.AgentVersionStatus.Deleted => "deleted",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentVersionStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static AgentVersionStatus ToAgentVersionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "creating"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "creating"))
             {
-                return AgentVersionStatus.Creating;
+                return global::Azure.AI.Projects.Agents.AgentVersionStatus.Creating;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "active"))
             {
-                return AgentVersionStatus.Active;
+                return global::Azure.AI.Projects.Agents.AgentVersionStatus.Active;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return AgentVersionStatus.Failed;
+                return global::Azure.AI.Projects.Agents.AgentVersionStatus.Failed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleting"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "deleting"))
             {
-                return AgentVersionStatus.Deleting;
+                return global::Azure.AI.Projects.Agents.AgentVersionStatus.Deleting;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "deleted"))
             {
-                return AgentVersionStatus.Deleted;
+                return global::Azure.AI.Projects.Agents.AgentVersionStatus.Deleted;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentVersionStatus value.");
         }

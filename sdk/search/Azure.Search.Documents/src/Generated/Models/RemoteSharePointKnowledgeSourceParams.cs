@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Specifies runtime parameters for a remote SharePoint knowledge source. </summary>
     public partial class RemoteSharePointKnowledgeSourceParams : KnowledgeSourceParams
     {
-        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
-        public RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, KnowledgeSourceKind.RemoteSharePoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
+        public RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceKind.RemoteSharePoint)
         {
-            Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterExpressionAddOn"> A filter condition applied to the SharePoint data source. It must be specified in the Keyword Query Language syntax. It will be combined as a conjunction with the filter expression specified in the knowledge source definition. </param>
-        internal RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterExpressionAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, failOnError, rerankerThreshold, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
+        internal RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string filterExpressionAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, failOnError, rerankerThreshold, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
             FilterExpressionAddOn = filterExpressionAddOn;
         }

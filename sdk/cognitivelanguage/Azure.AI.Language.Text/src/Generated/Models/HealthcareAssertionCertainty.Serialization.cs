@@ -14,36 +14,36 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareAssertionCertainty value) => value switch
         {
-            HealthcareAssertionCertainty.Positive => "positive",
-            HealthcareAssertionCertainty.PositivePossible => "positivePossible",
-            HealthcareAssertionCertainty.NeutralPossible => "neutralPossible",
-            HealthcareAssertionCertainty.NegativePossible => "negativePossible",
-            HealthcareAssertionCertainty.Negative => "negative",
+            global::Azure.AI.Language.Text.HealthcareAssertionCertainty.Positive => "positive",
+            global::Azure.AI.Language.Text.HealthcareAssertionCertainty.PositivePossible => "positivePossible",
+            global::Azure.AI.Language.Text.HealthcareAssertionCertainty.NeutralPossible => "neutralPossible",
+            global::Azure.AI.Language.Text.HealthcareAssertionCertainty.NegativePossible => "negativePossible",
+            global::Azure.AI.Language.Text.HealthcareAssertionCertainty.Negative => "negative",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionCertainty value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static HealthcareAssertionCertainty ToHealthcareAssertionCertainty(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
             {
-                return HealthcareAssertionCertainty.Positive;
+                return global::Azure.AI.Language.Text.HealthcareAssertionCertainty.Positive;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positivePossible"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "positivePossible"))
             {
-                return HealthcareAssertionCertainty.PositivePossible;
+                return global::Azure.AI.Language.Text.HealthcareAssertionCertainty.PositivePossible;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutralPossible"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "neutralPossible"))
             {
-                return HealthcareAssertionCertainty.NeutralPossible;
+                return global::Azure.AI.Language.Text.HealthcareAssertionCertainty.NeutralPossible;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negativePossible"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "negativePossible"))
             {
-                return HealthcareAssertionCertainty.NegativePossible;
+                return global::Azure.AI.Language.Text.HealthcareAssertionCertainty.NegativePossible;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
             {
-                return HealthcareAssertionCertainty.Negative;
+                return global::Azure.AI.Language.Text.HealthcareAssertionCertainty.Negative;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionCertainty value.");
         }

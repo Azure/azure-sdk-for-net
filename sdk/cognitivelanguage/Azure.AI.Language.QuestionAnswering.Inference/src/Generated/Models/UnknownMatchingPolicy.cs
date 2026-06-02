@@ -12,10 +12,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     internal partial class UnknownMatchingPolicy : MatchingPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMatchingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.UnknownMatchingPolicy"/>. </summary>
         /// <param name="kind"> Kind of matching policy to be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

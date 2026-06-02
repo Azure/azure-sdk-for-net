@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreFileCount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileCount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileCount"/>. </summary>
         /// <param name="inProgress"> The number of files that are currently being processed. </param>
         /// <param name="completed"> The number of files that have been successfully processed. </param>
         /// <param name="failed"> The number of files that have failed to process. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.Agents.Persistent
             Total = total;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileCount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileCount"/>. </summary>
         /// <param name="inProgress"> The number of files that are currently being processed. </param>
         /// <param name="completed"> The number of files that have been successfully processed. </param>
         /// <param name="failed"> The number of files that have failed to process. </param>
         /// <param name="cancelled"> The number of files that were cancelled. </param>
         /// <param name="total"> The total number of files. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileCount(int inProgress, int completed, int failed, int cancelled, int total, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFileCount(int inProgress, int completed, int failed, int cancelled, int total, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InProgress = inProgress;
             Completed = completed;

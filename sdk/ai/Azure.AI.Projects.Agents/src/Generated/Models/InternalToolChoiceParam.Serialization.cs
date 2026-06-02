@@ -9,10 +9,10 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    [PersistableModelProxy(typeof(UnknownInternalToolChoiceParam))]
-    internal abstract partial class InternalToolChoiceParam : IJsonModel<InternalToolChoiceParam>
+    [PersistableModelProxyAttribute(typeof(UnknownInternalToolChoiceParam))]
+    internal abstract partial class InternalToolChoiceParam : IJsonModel<global::OpenAI.InternalToolChoiceParam>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalToolChoiceParam"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalToolChoiceParam"/> for deserialization. </summary>
         internal InternalToolChoiceParam()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalToolChoiceParam(document.RootElement, options);
+                        return global::OpenAI.InternalToolChoiceParam.DeserializeInternalToolChoiceParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalToolChoiceParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalToolChoiceParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalToolChoiceParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalToolChoiceParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalToolChoiceParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalToolChoiceParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalToolChoiceParam IPersistableModel<InternalToolChoiceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalToolChoiceParam IPersistableModel<global::OpenAI.InternalToolChoiceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalToolChoiceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalToolChoiceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalToolChoiceParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalToolChoiceParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalToolChoiceParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalToolChoiceParam)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -85,9 +85,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -96,26 +96,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalToolChoiceParam IJsonModel<InternalToolChoiceParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalToolChoiceParam IJsonModel<global::OpenAI.InternalToolChoiceParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalToolChoiceParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalToolChoiceParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalToolChoiceParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalToolChoiceParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalToolChoiceParam.DeserializeInternalToolChoiceParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalToolChoiceParam DeserializeInternalToolChoiceParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -124,36 +124,36 @@ namespace OpenAI
                 switch (discriminator.GetString())
                 {
                     case "allowed_tools":
-                        return ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
+                        return global::OpenAI.ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
                     case "function":
-                        return ToolChoiceFunction.DeserializeToolChoiceFunction(element, options);
+                        return global::OpenAI.ToolChoiceFunction.DeserializeToolChoiceFunction(element, options);
                     case "mcp":
-                        return ToolChoiceMCP.DeserializeToolChoiceMCP(element, options);
+                        return global::OpenAI.ToolChoiceMCP.DeserializeToolChoiceMCP(element, options);
                     case "custom":
-                        return ToolChoiceCustom.DeserializeToolChoiceCustom(element, options);
+                        return global::OpenAI.ToolChoiceCustom.DeserializeToolChoiceCustom(element, options);
                     case "apply_patch":
-                        return SpecificApplyPatchParam.DeserializeSpecificApplyPatchParam(element, options);
+                        return global::OpenAI.SpecificApplyPatchParam.DeserializeSpecificApplyPatchParam(element, options);
                     case "shell":
-                        return SpecificFunctionShellParam.DeserializeSpecificFunctionShellParam(element, options);
+                        return global::OpenAI.SpecificFunctionShellParam.DeserializeSpecificFunctionShellParam(element, options);
                     case "file_search":
-                        return ToolChoiceFileSearch.DeserializeToolChoiceFileSearch(element, options);
+                        return global::OpenAI.ToolChoiceFileSearch.DeserializeToolChoiceFileSearch(element, options);
                     case "web_search_preview":
-                        return ToolChoiceWebSearchPreview.DeserializeToolChoiceWebSearchPreview(element, options);
+                        return global::OpenAI.ToolChoiceWebSearchPreview.DeserializeToolChoiceWebSearchPreview(element, options);
                     case "computer_use_preview":
-                        return ToolChoiceComputerUsePreview.DeserializeToolChoiceComputerUsePreview(element, options);
+                        return global::OpenAI.ToolChoiceComputerUsePreview.DeserializeToolChoiceComputerUsePreview(element, options);
                     case "web_search_preview_2025_03_11":
-                        return ToolChoiceWebSearchPreview20250311.DeserializeToolChoiceWebSearchPreview20250311(element, options);
+                        return global::OpenAI.ToolChoiceWebSearchPreview20250311.DeserializeToolChoiceWebSearchPreview20250311(element, options);
                     case "image_generation":
-                        return ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
+                        return global::OpenAI.ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
                     case "code_interpreter":
-                        return ToolChoiceCodeInterpreter.DeserializeToolChoiceCodeInterpreter(element, options);
+                        return global::OpenAI.ToolChoiceCodeInterpreter.DeserializeToolChoiceCodeInterpreter(element, options);
                     case "computer":
-                        return ToolChoiceComputer.DeserializeToolChoiceComputer(element, options);
+                        return global::OpenAI.ToolChoiceComputer.DeserializeToolChoiceComputer(element, options);
                     case "computer_use":
-                        return ToolChoiceComputerUse.DeserializeToolChoiceComputerUse(element, options);
+                        return global::OpenAI.ToolChoiceComputerUse.DeserializeToolChoiceComputerUse(element, options);
                 }
             }
-            return UnknownInternalToolChoiceParam.DeserializeUnknownInternalToolChoiceParam(element, options);
+            return global::OpenAI.UnknownInternalToolChoiceParam.DeserializeUnknownInternalToolChoiceParam(element, options);
         }
     }
 }

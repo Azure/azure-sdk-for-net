@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentFormula
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFormula"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFormula"/>. </summary>
         /// <param name="kind"> Formula kind. </param>
         /// <param name="value"> LaTex expression describing the formula. </param>
         internal DocumentFormula(DocumentFormulaKind kind, string value)
@@ -25,14 +25,14 @@ namespace Azure.AI.ContentUnderstanding
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFormula"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentFormula"/>. </summary>
         /// <param name="kind"> Formula kind. </param>
         /// <param name="value"> LaTex expression describing the formula. </param>
         /// <param name="source"> Encoded source that identifies the position of the formula in the content. </param>
         /// <param name="span"> Span of the formula in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the formula. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFormula(DocumentFormulaKind kind, string value, string source, ContentSpan span, float? confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFormula(DocumentFormulaKind kind, string value, string source, ContentSpan span, float? confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

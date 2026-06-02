@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Compute.Batch
 {
     /// <summary> Parameters for replacing properties on an Azure Batch Pool. </summary>
-    public partial class BatchPoolReplaceOptions : IJsonModel<BatchPoolReplaceOptions>
+    public partial class BatchPoolReplaceOptions : IJsonModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchPoolReplaceOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolReplaceOptions"/> for deserialization. </summary>
         internal BatchPoolReplaceOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchPoolReplaceOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchPoolReplaceOptions(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchPoolReplaceOptions.DeserializeBatchPoolReplaceOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolReplaceOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchPoolReplaceOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchPoolReplaceOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchPoolReplaceOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolReplaceOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolReplaceOptions IPersistableModel<BatchPoolReplaceOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchPoolReplaceOptions IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolReplaceOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="batchPoolReplaceOptions"> The <see cref="BatchPoolReplaceOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="batchPoolReplaceOptions"> The <see cref="global::Azure.Compute.Batch.BatchPoolReplaceOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BatchPoolReplaceOptions batchPoolReplaceOptions)
         {
-            if (batchPoolReplaceOptions == null)
+            if ((batchPoolReplaceOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(batchPoolReplaceOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(batchPoolReplaceOptions, global::Azure.Compute.Batch.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchPoolReplaceOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,31 +84,31 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchPoolReplaceOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchPoolReplaceOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartTask))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask, options);
+                writer.WriteObjectValue<BatchStartTask>(StartTask, options);
             }
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (BatchApplicationPackageReference item in ApplicationPackageReferences)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartArray();
             foreach (BatchMetadataItem item in Metadata)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<BatchMetadataItem>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,67 +127,67 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolReplaceOptions IJsonModel<BatchPoolReplaceOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchPoolReplaceOptions IJsonModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchPoolReplaceOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchPoolReplaceOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchPoolReplaceOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchPoolReplaceOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchPoolReplaceOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchPoolReplaceOptions.DeserializeBatchPoolReplaceOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchPoolReplaceOptions DeserializeBatchPoolReplaceOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             BatchStartTask startTask = default;
-            IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            IList<BatchMetadataItem> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences = default;
+            IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startTask"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(prop.Value, options);
+                    startTask = global::Azure.Compute.Batch.BatchStartTask.DeserializeBatchStartTask(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("applicationPackageReferences"u8))
                 {
-                    List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
+                    List<global::Azure.Compute.Batch.BatchApplicationPackageReference> array = new List<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
+                        array.Add(global::Azure.Compute.Batch.BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackageReferences = array;
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<global::Azure.Compute.Batch.BatchMetadataItem> array = new List<global::Azure.Compute.Batch.BatchMetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(global::Azure.Compute.Batch.BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchPoolReplaceOptions(startTask, applicationPackageReferences, metadata, additionalBinaryDataProperties);

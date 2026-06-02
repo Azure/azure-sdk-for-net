@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class SingleDiscriminatorClientHostExtensions
     {
         public static IClientBuilder AddSingleDiscriminatorClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddSingleDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<SingleDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddSingleDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Inheritance.SingleDiscriminator.SingleDiscriminatorClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedSingleDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedSingleDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<SingleDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedSingleDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Inheritance.SingleDiscriminator.SingleDiscriminatorClientSettings> configureSettings) => throw null;
     }
 }

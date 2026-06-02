@@ -12,9 +12,9 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventInputAudioTurnStart : ClientEvent, IJsonModel<ClientEventInputAudioTurnStart>
+    internal partial class ClientEventInputAudioTurnStart : ClientEvent, IJsonModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart"/> for deserialization. </summary>
         internal ClientEventInputAudioTurnStart()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventInputAudioTurnStart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventInputAudioTurnStart IPersistableModel<ClientEventInputAudioTurnStart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnStart)PersistableModelCreateCore(data, options);
+        ClientEventInputAudioTurnStart IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ClientEventInputAudioTurnStart)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventInputAudioTurnStart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClientEventInputAudioTurnStart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,10 +72,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("turn_id"u8);
@@ -84,32 +84,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventInputAudioTurnStart IJsonModel<ClientEventInputAudioTurnStart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnStart)JsonModelCreateCore(ref reader, options);
+        ClientEventInputAudioTurnStart IJsonModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ClientEventInputAudioTurnStart)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEventInputAudioTurnStart)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ClientEventInputAudioTurnStart DeserializeClientEventInputAudioTurnStart(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ClientEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string turnId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,9 +128,9 @@ namespace Azure.AI.VoiceLive
                     turnId = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ClientEventInputAudioTurnStart(@type, eventId, additionalBinaryDataProperties, turnId);

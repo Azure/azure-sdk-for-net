@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class UploadBatchServiceLogsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UploadBatchServiceLogsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UploadBatchServiceLogsResult"/>. </summary>
         /// <param name="virtualDirectoryName"> The virtual directory within Azure Blob Storage container to which the Batch Service log file(s) will be uploaded. The virtual directory name is part of the blob name for each log file uploaded, and it is built based poolId, nodeId and a unique identifier. </param>
         /// <param name="numberOfFilesUploaded"> The number of log files which will be uploaded. </param>
         internal UploadBatchServiceLogsResult(string virtualDirectoryName, int numberOfFilesUploaded)
@@ -25,11 +25,11 @@ namespace Azure.Compute.Batch
             NumberOfFilesUploaded = numberOfFilesUploaded;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UploadBatchServiceLogsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UploadBatchServiceLogsResult"/>. </summary>
         /// <param name="virtualDirectoryName"> The virtual directory within Azure Blob Storage container to which the Batch Service log file(s) will be uploaded. The virtual directory name is part of the blob name for each log file uploaded, and it is built based poolId, nodeId and a unique identifier. </param>
         /// <param name="numberOfFilesUploaded"> The number of log files which will be uploaded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UploadBatchServiceLogsResult(string virtualDirectoryName, int numberOfFilesUploaded, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UploadBatchServiceLogsResult(string virtualDirectoryName, int numberOfFilesUploaded, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VirtualDirectoryName = virtualDirectoryName;
             NumberOfFilesUploaded = numberOfFilesUploaded;

@@ -15,25 +15,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class PeopleResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PeopleResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
-        internal PeopleResult(IEnumerable<DetectedPerson> values)
+        internal PeopleResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedPerson> values)
         {
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeopleResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeopleResult(IReadOnlyList<DetectedPerson> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeopleResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedPerson> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of people detected in an image and their location. </summary>
-        public IReadOnlyList<DetectedPerson> Values { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedPerson> Values { get; }
     }
 }

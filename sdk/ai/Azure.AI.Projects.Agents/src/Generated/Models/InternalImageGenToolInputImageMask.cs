@@ -10,18 +10,18 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalImageGenToolInputImageMask
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalImageGenToolInputImageMask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalImageGenToolInputImageMask"/>. </summary>
         public InternalImageGenToolInputImageMask()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalImageGenToolInputImageMask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalImageGenToolInputImageMask"/>. </summary>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalImageGenToolInputImageMask(Uri imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalImageGenToolInputImageMask(global::System.Uri imageUrl, string fileId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        public global::System.Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

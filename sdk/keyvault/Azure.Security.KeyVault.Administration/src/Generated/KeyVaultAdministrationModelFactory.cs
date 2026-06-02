@@ -18,13 +18,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="dataActions"> Data action permissions that are granted. </param>
         /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultPermission"/> instance for mocking. </returns>
-        public static KeyVaultPermission KeyVaultPermission(IEnumerable<string> actions = default, IEnumerable<string> notActions = default, IEnumerable<KeyVaultDataAction> dataActions = default, IEnumerable<KeyVaultDataAction> notDataActions = default)
+        /// <returns> A new <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultPermission"/> instance for mocking. </returns>
+        public static KeyVaultPermission KeyVaultPermission(IEnumerable<string> actions = default, IEnumerable<string> notActions = default, IEnumerable<global::Azure.Security.KeyVault.Administration.KeyVaultDataAction> dataActions = default, IEnumerable<global::Azure.Security.KeyVault.Administration.KeyVaultDataAction> notDataActions = default)
         {
             actions ??= new ChangeTrackingList<string>();
             notActions ??= new ChangeTrackingList<string>();
-            dataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
-            notDataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
+            dataActions ??= new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultDataAction>();
+            notDataActions ??= new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultDataAction>();
 
             return new KeyVaultPermission(actions.ToList(), notActions.ToList(), dataActions.ToList(), notDataActions.ToList(), additionalBinaryDataProperties: null);
         }
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment"/> instance for mocking. </returns>
         public static KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = default, string name = default, string @type = default, KeyVaultRoleAssignmentProperties properties = default)
         {
             return new KeyVaultRoleAssignment(id, name, @type, properties, additionalBinaryDataProperties: null);
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultRoleAssignmentProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties"/> instance for mocking. </returns>
         public static KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope = default, string roleDefinitionId = default, string principalId = default)
         {
             return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId, additionalBinaryDataProperties: null);
@@ -52,10 +52,10 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> The settings list result. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
-        /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
-        public static GetSettingsResult GetSettingsResult(IEnumerable<KeyVaultSetting> settings = default)
+        /// <returns> A new <see cref="global::Azure.Security.KeyVault.Administration.GetSettingsResult"/> instance for mocking. </returns>
+        public static GetSettingsResult GetSettingsResult(IEnumerable<global::Azure.Security.KeyVault.Administration.KeyVaultSetting> settings = default)
         {
-            settings ??= new ChangeTrackingList<KeyVaultSetting>();
+            settings ??= new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultSetting>();
 
             return new GetSettingsResult(settings.ToList(), additionalBinaryDataProperties: null);
         }

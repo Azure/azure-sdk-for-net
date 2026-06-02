@@ -14,21 +14,21 @@ namespace Azure.AI.ContentUnderstanding
     public partial class AnalysisInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisInput"/>. </summary>
         public AnalysisInput()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisInput"/>. </summary>
         /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
         /// <param name="data"> Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified. </param>
         /// <param name="name"> Name of the input. </param>
         /// <param name="mimeType"> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="contentRangeValue"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisInput(Uri uri, BinaryData data, string name, string mimeType, string contentRangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisInput(global::System.Uri uri, BinaryData data, string name, string mimeType, string contentRangeValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Data = data;
@@ -39,12 +39,12 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> The URL of the input to analyze.  Only one of url or data should be specified. </summary>
-        public Uri Uri { get; set; }
+        public global::System.Uri Uri { get; set; }
 
         /// <summary>
         /// Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified.
         /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// To assign a byte[] to this property use <see cref="global::System.BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>

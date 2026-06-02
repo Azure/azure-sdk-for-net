@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     {
         public Dog(string name, bool trained, string breed) : base("dog", name, trained) => throw null;
 
-        internal Dog(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool trained, string breed) : base(kind, name, additionalBinaryDataProperties, trained) => throw null;
+        internal Dog(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool trained, string breed) : base(kind, name, additionalBinaryDataProperties, trained) => throw null;
 
         public string Breed
         {

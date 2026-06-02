@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    [PersistableModelProxy(typeof(UnknownExtendsUnknownAdditionalPropertiesDiscriminated))]
-    public abstract partial class ExtendsUnknownAdditionalPropertiesDiscriminated : IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminated>
+    [PersistableModelProxyAttribute(typeof(UnknownExtendsUnknownAdditionalPropertiesDiscriminated))]
+    public abstract partial class ExtendsUnknownAdditionalPropertiesDiscriminated : IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>
     {
         internal ExtendsUnknownAdditionalPropertiesDiscriminated() => throw null;
 
@@ -22,22 +22,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ExtendsUnknownAdditionalPropertiesDiscriminated IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ExtendsUnknownAdditionalPropertiesDiscriminated IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="extendsUnknownAdditionalPropertiesDiscriminated"> The <see cref="ExtendsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="extendsUnknownAdditionalPropertiesDiscriminated"> The <see cref="global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsUnknownAdditionalPropertiesDiscriminated extendsUnknownAdditionalPropertiesDiscriminated) => throw null;
 
         public static explicit operator ExtendsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
 
-        void IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ExtendsUnknownAdditionalPropertiesDiscriminated IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ExtendsUnknownAdditionalPropertiesDiscriminated IJsonModel<global::_Type.Property.AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ExtendsUnknownAdditionalPropertiesDiscriminated JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

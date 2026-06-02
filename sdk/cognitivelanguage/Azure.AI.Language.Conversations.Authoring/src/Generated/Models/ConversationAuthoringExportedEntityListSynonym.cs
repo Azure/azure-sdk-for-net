@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringExportedEntityListSynonym
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntityListSynonym"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym"/>. </summary>
         public ConversationAuthoringExportedEntityListSynonym()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedEntityListSynonym"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym"/>. </summary>
         /// <param name="language"> Represents the language of the synonyms. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="values"> The list of synonyms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedEntityListSynonym(string language, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedEntityListSynonym(string language, IList<string> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Values = values;

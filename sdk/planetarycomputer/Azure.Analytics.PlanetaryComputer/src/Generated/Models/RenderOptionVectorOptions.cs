@@ -14,23 +14,23 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class RenderOptionVectorOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionVectorOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionVectorOptions"/>. </summary>
         /// <param name="tilejsonKey"> Asset key containing the TileJSON URL. </param>
         /// <param name="sourceLayer"> Name of the source layer in the vector tiles. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tilejsonKey"/> or <paramref name="sourceLayer"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tilejsonKey"/> or <paramref name="sourceLayer"/> is null. </exception>
         public RenderOptionVectorOptions(string tilejsonKey, string sourceLayer)
         {
-            Argument.AssertNotNull(tilejsonKey, nameof(tilejsonKey));
-            Argument.AssertNotNull(sourceLayer, nameof(sourceLayer));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(tilejsonKey, nameof(tilejsonKey));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(sourceLayer, nameof(sourceLayer));
 
             TilejsonKey = tilejsonKey;
             SourceLayer = sourceLayer;
             Filter = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionVectorOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionVectorOptions"/>. </summary>
         /// <param name="tilejsonKey"> Asset key containing the TileJSON URL. </param>
         /// <param name="sourceLayer"> Name of the source layer in the vector tiles. </param>
         /// <param name="fillColor"> Fill color for polygon features. </param>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="strokeWidth"> Width of line strokes in pixels. </param>
         /// <param name="filter"> MapBox GL filter expression to filter features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionVectorOptions(string tilejsonKey, string sourceLayer, string fillColor, string strokeColor, int? strokeWidth, IList<string> filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderOptionVectorOptions(string tilejsonKey, string sourceLayer, string fillColor, string strokeColor, int? strokeWidth, IList<string> filter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TilejsonKey = tilejsonKey;
             SourceLayer = sourceLayer;

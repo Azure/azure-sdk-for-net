@@ -9,24 +9,24 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesFabricIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesToolboxSearchPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponsesComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesComputerTool"/>, <see cref="Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam"/>, and <see cref="Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam"/>.
     /// </summary>
     public abstract partial class ResponsesTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesTool"/>. </summary>
         /// <param name="type"></param>
         private protected ResponsesTool(ToolType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

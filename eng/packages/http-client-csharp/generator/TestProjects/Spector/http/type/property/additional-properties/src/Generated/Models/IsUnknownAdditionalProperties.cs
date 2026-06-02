@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public IsUnknownAdditionalProperties(string name) => throw null;
 
-        internal IsUnknownAdditionalProperties(string name, IDictionary<string, BinaryData> additionalProperties) => throw null;
+        internal IsUnknownAdditionalProperties(string name, IDictionary<string, global::System.BinaryData> additionalProperties) => throw null;
 
         public string Name
         {
@@ -22,6 +22,6 @@ namespace _Type.Property.AdditionalProperties
             set => throw null;
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => throw null;
     }
 }

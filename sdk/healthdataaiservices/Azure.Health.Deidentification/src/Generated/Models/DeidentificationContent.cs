@@ -14,25 +14,25 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
         public DeidentificationContent(string inputText)
         {
-            Argument.AssertNotNull(inputText, nameof(inputText));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(inputText, nameof(inputText));
 
             InputText = inputText;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, TaggedPhiEntities taggedEntities, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, TaggedPhiEntities taggedEntities, DeidentificationCustomizationOptions customizations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InputText = inputText;
             OperationType = operationType;

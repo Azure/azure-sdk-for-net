@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class PurviewSensitivityLabelInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PurviewSensitivityLabelInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo"/>. </summary>
         internal PurviewSensitivityLabelInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewSensitivityLabelInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.PurviewSensitivityLabelInfo"/>. </summary>
         /// <param name="displayName"> The display name for the sensitivity label. </param>
         /// <param name="sensitivityLabelId"> The ID of the sensitivity label. </param>
         /// <param name="toolTip"> The tooltip that should be displayed for the label in a UI. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="color"> The color that the UI should display for the label, if configured. </param>
         /// <param name="isEncrypted"> Indicates whether the sensitivity label enforces encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewSensitivityLabelInfo(string displayName, string sensitivityLabelId, string toolTip, int? priority, string color, bool? isEncrypted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewSensitivityLabelInfo(string displayName, string sensitivityLabelId, string toolTip, int? priority, string color, bool? isEncrypted, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             SensitivityLabelId = sensitivityLabelId;

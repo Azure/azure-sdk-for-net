@@ -15,27 +15,27 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class GeoJsonFeature
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.GeoJsonFeature"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
         public GeoJsonFeature(GeoJsonGeometry geometry, FeatureType @type)
         {
-            Argument.AssertNotNull(geometry, nameof(geometry));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(geometry, nameof(geometry));
 
             Geometry = geometry;
             Type = @type;
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.GeoJsonFeature"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <param name="properties"> Feature properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonFeature(GeoJsonGeometry geometry, FeatureType @type, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonFeature(GeoJsonGeometry geometry, FeatureType @type, IDictionary<string, global::System.BinaryData> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Type = @type;
@@ -51,8 +51,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Feature properties
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -75,6 +75,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Properties { get; }
+        public IDictionary<string, global::System.BinaryData> Properties { get; }
     }
 }

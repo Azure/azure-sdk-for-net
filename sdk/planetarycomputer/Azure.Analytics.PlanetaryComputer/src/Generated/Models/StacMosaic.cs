@@ -16,31 +16,31 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacMosaic
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacMosaic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacMosaic"/>. </summary>
         /// <param name="id"> Unique identifier for the mosaic. </param>
         /// <param name="name"> Short descriptive name for the mosaic. </param>
         /// <param name="cql"> A list of valid CQL2-JSON expressions used to filter the collection to moasic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="cql"/> is null. </exception>
-        public StacMosaic(string id, string name, IEnumerable<IDictionary<string, BinaryData>> cql)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="cql"/> is null. </exception>
+        public StacMosaic(string id, string name, IEnumerable<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> cql)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(cql, nameof(cql));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(cql, nameof(cql));
 
             Id = id;
             Name = name;
             Cql = cql.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacMosaic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacMosaic"/>. </summary>
         /// <param name="id"> Unique identifier for the mosaic. </param>
         /// <param name="name"> Short descriptive name for the mosaic. </param>
         /// <param name="description"> Detailed description of the mosaic. </param>
         /// <param name="cql"> A list of valid CQL2-JSON expressions used to filter the collection to moasic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacMosaic(string id, string name, string description, IList<IDictionary<string, BinaryData>> cql, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacMosaic(string id, string name, string description, IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> cql, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -60,8 +60,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// A list of valid CQL2-JSON expressions used to filter the collection to moasic.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -84,6 +84,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IList<IDictionary<string, BinaryData>> Cql { get; }
+        public IList<global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>> Cql { get; }
     }
 }

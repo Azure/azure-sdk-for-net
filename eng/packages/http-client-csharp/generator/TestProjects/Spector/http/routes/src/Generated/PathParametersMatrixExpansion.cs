@@ -16,7 +16,7 @@ namespace Routes._PathParameters.MatrixExpansion
     {
         protected PathParametersMatrixExpansion() => throw null;
 
-        internal PathParametersMatrixExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PathParametersMatrixExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

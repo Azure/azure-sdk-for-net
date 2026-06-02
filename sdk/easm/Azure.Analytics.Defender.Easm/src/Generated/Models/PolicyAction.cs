@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A list of policy actions. </summary>
-    public readonly partial struct PolicyAction : IEquatable<PolicyAction>
+    public readonly partial struct PolicyAction : IEquatable<global::Azure.Analytics.Defender.Easm.PolicyAction>
     {
         private readonly string _value;
         /// <summary> Add a resource label with a given name. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Remove from inventory. </summary>
         private const string RemoveFromInventoryValue = "removeFromInventory";
 
-        /// <summary> Initializes a new instance of <see cref="PolicyAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.PolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Remove from inventory. </summary>
         public static PolicyAction RemoveFromInventory { get; } = new PolicyAction(RemoveFromInventoryValue);
 
-        /// <summary> Determines if two <see cref="PolicyAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.PolicyAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyAction left, PolicyAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PolicyAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.PolicyAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyAction left, PolicyAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PolicyAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.PolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PolicyAction(string value) => new PolicyAction(value);
 
-        /// <summary> Converts a string to a <see cref="PolicyAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.PolicyAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyAction?(string value) => value == null ? null : new PolicyAction(value);
+        public static implicit operator PolicyAction?(string value) => (value == null) ? null : new PolicyAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PolicyAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PolicyAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PolicyAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

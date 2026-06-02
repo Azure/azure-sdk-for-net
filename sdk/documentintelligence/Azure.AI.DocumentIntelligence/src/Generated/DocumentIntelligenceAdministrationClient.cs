@@ -18,9 +18,9 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> The DocumentIntelligenceAdministrationClient. </summary>
     public partial class DocumentIntelligenceAdministrationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient for mocking. </summary>
@@ -31,16 +31,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -48,20 +48,20 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentIntelligenceAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentIntelligenceClientOptions options)
+        internal DocumentIntelligenceAdministrationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DocumentIntelligenceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DocumentIntelligenceClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,8 +71,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(global::System.Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -80,14 +80,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(global::System.Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient from a <see cref="DocumentIntelligenceAdministrationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DocumentIntelligenceAdministrationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DocumentIntelligenceAdministrationClient(DocumentIntelligenceAdministrationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -109,8 +109,8 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AuthorizeModelCopy(RequestContent content, RequestContext context = null)
         {
@@ -118,9 +118,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAuthorizeModelCopyRequest(content, context);
+                using HttpMessage message = this.CreateAuthorizeModelCopyRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -141,18 +141,18 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AuthorizeModelCopyAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AuthorizeModelCopyAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAuthorizeModelCopyRequest(content, context);
+                using HttpMessage message = this.CreateAuthorizeModelCopyRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -172,9 +172,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetModel(string modelId, RequestContext context)
         {
@@ -182,9 +182,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateGetModelRequest(modelId, context);
+                using HttpMessage message = this.CreateGetModelRequest(modelId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -204,19 +204,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetModelAsync(string modelId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetModelAsync(string modelId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateGetModelRequest(modelId, context);
+                using HttpMessage message = this.CreateGetModelRequest(modelId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -229,29 +229,29 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Gets detailed document model information. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = GetModel(modelId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentModelDetails)result, result);
+            Response result = this.GetModel(modelId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DocumentModelDetails)result), result);
         }
 
         /// <summary> Gets detailed document model information. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.DocumentIntelligence.DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = await GetModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentModelDetails)result, result);
+            Response result = await this.GetModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DocumentModelDetails)result), result);
         }
 
         /// <summary>
@@ -263,9 +263,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetModels(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetModels(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
@@ -279,25 +279,25 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetModelsAsync(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
@@ -312,9 +312,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteModel(string modelId, RequestContext context)
         {
@@ -322,9 +322,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateDeleteModelRequest(modelId, context);
+                using HttpMessage message = this.CreateDeleteModelRequest(modelId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -344,19 +344,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteModelAsync(string modelId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteModelAsync(string modelId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                using HttpMessage message = CreateDeleteModelRequest(modelId, context);
+                using HttpMessage message = this.CreateDeleteModelRequest(modelId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -369,27 +369,27 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Deletes document model. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return DeleteModel(modelId, cancellationToken.ToRequestContext());
+            return this.DeleteModel(modelId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes document model. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return await DeleteModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetResourceDetails(RequestContext context)
         {
@@ -409,7 +409,7 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceDetailsRequest(context);
+                using HttpMessage message = this.CreateGetResourceDetailsRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -428,15 +428,15 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetResourceDetailsAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetResourceDetailsAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetResourceDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetResourceDetailsRequest(context);
+                using HttpMessage message = this.CreateGetResourceDetailsRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -448,20 +448,20 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Return information about the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentIntelligenceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
         {
-            Response result = GetResourceDetails(cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
+            Response result = this.GetResourceDetails(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DocumentIntelligenceResourceDetails)result), result);
         }
 
         /// <summary> Return information about the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetResourceDetailsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
+            Response result = await this.GetResourceDetailsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DocumentIntelligenceResourceDetails)result), result);
         }
 
         /// <summary>
@@ -474,9 +474,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetOperation(string operationId, RequestContext context)
         {
@@ -484,9 +484,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                using HttpMessage message = this.CreateGetOperationRequest(operationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -506,19 +506,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetOperationAsync(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                using HttpMessage message = this.CreateGetOperationRequest(operationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -531,29 +531,29 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentIntelligenceOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
+            Response result = this.GetOperation(operationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DocumentIntelligenceOperationDetails)result), result);
         }
 
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DocumentIntelligenceOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
+            Response result = await this.GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DocumentIntelligenceOperationDetails)result), result);
         }
 
         /// <summary>
@@ -565,9 +565,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperations(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetOperations(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
@@ -581,25 +581,25 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetOperationsAsync(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
@@ -615,8 +615,8 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AuthorizeClassifierCopy(RequestContent content, RequestContext context = null)
         {
@@ -624,9 +624,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
+                using HttpMessage message = this.CreateAuthorizeClassifierCopyRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -647,18 +647,18 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AuthorizeClassifierCopyAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AuthorizeClassifierCopyAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
+                using HttpMessage message = this.CreateAuthorizeClassifierCopyRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -678,9 +678,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassifier(string classifierId, RequestContext context)
         {
@@ -688,9 +688,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
+                using HttpMessage message = this.CreateGetClassifierRequest(classifierId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -710,19 +710,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassifierAsync(string classifierId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetClassifierAsync(string classifierId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
+                using HttpMessage message = this.CreateGetClassifierRequest(classifierId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -735,29 +735,29 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Gets detailed document classifier information. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            Response result = GetClassifier(classifierId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentClassifierDetails)result, result);
+            Response result = this.GetClassifier(classifierId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DocumentClassifierDetails)result), result);
         }
 
         /// <summary> Gets detailed document classifier information. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DocumentClassifierDetails>> GetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails>> GetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            Response result = await GetClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentClassifierDetails)result, result);
+            Response result = await this.GetClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DocumentClassifierDetails)result), result);
         }
 
         /// <summary>
@@ -769,9 +769,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetClassifiers(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
@@ -785,25 +785,25 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetClassifiersAsync(RequestContext context)
         {
             return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
             return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
@@ -818,9 +818,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteClassifier(string classifierId, RequestContext context)
         {
@@ -828,9 +828,9 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
+                using HttpMessage message = this.CreateDeleteClassifierRequest(classifierId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -850,19 +850,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteClassifierAsync(string classifierId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteClassifierAsync(string classifierId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+                global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
+                using HttpMessage message = this.CreateDeleteClassifierRequest(classifierId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -875,27 +875,27 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Deletes document classifier. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            return DeleteClassifier(classifierId, cancellationToken.ToRequestContext());
+            return this.DeleteClassifier(classifierId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes document classifier. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            return await DeleteClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

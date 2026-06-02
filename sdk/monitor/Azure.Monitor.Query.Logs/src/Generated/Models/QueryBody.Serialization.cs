@@ -14,9 +14,9 @@ using Azure.Monitor.Query.Logs;
 
 namespace Azure.Monitor.Query.Logs.Models
 {
-    internal partial class QueryBody : IJsonModel<QueryBody>
+    internal partial class QueryBody : IJsonModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>
     {
-        /// <summary> Initializes a new instance of <see cref="QueryBody"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.QueryBody"/> for deserialization. </summary>
         internal QueryBody()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QueryBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.Query.Logs.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQueryBody(document.RootElement, options);
+                        return global::Azure.Monitor.Query.Logs.Models.QueryBody.DeserializeQueryBody(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.QueryBody)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.Query.Logs.AzureMonitorQueryLogsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QueryBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.QueryBody)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QueryBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryBody IPersistableModel<QueryBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QueryBody IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QueryBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="queryBody"> The <see cref="QueryBody"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="queryBody"> The <see cref="global::Azure.Monitor.Query.Logs.Models.QueryBody"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(QueryBody queryBody)
         {
-            if (queryBody == null)
+            if ((queryBody == null))
             {
                 return null;
             }
-            return RequestContent.Create(queryBody, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(queryBody, global::Azure.Monitor.Query.Logs.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QueryBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,25 +84,25 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryBody>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QueryBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.QueryBody)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(Timespan))
+            if (global::Azure.Monitor.Query.Logs.Optional.IsDefined(Timespan))
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (global::Azure.Monitor.Query.Logs.Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
                 foreach (string item in Workspaces)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -111,7 +111,7 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -119,9 +119,9 @@ namespace Azure.Monitor.Query.Logs.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -130,33 +130,33 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryBody IJsonModel<QueryBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QueryBody IJsonModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QueryBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryBody>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Logs.Models.QueryBody>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QueryBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Logs.Models.QueryBody)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQueryBody(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.Query.Logs.Models.QueryBody.DeserializeQueryBody(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static QueryBody DeserializeQueryBody(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string query = default;
             string timespan = default;
             IList<string> workspaces = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("query"u8))
@@ -171,14 +171,14 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (prop.NameEquals("workspaces"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -190,12 +190,12 @@ namespace Azure.Monitor.Query.Logs.Models
                     workspaces = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QueryBody(query, timespan, workspaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new QueryBody(query, timespan, (workspaces ?? new ChangeTrackingList<string>()), additionalBinaryDataProperties);
         }
     }
 }

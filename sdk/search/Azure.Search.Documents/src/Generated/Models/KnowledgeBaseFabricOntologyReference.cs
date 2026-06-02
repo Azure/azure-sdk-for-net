@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents a Fabric Ontology document reference. </summary>
     public partial class KnowledgeBaseFabricOntologyReference : KnowledgeBaseReference
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricOntologyReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        internal KnowledgeBaseFabricOntologyReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.FabricOntology, id, activitySource)
+        internal KnowledgeBaseFabricOntologyReference(string id, int activitySource) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReferenceType.FabricOntology, id, activitySource)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFabricOntologyReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> The Fabric workspace ID. </param>
         /// <param name="ontologyId"> The ontology ID within the workspace. </param>
-        internal KnowledgeBaseFabricOntologyReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string ontologyId) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        internal KnowledgeBaseFabricOntologyReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string workspaceId, string ontologyId) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             OntologyId = ontologyId;

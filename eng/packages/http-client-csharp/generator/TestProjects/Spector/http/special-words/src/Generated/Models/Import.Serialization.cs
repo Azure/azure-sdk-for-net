@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Import : IJsonModel<Import>
+    public partial class Import : IJsonModel<global::SpecialWords._Models.Import>
     {
         internal Import() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Import>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Import>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Import IPersistableModel<Import>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Import IPersistableModel<global::SpecialWords._Models.Import>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Import>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Import>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="import"> The <see cref="Import"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="import"> The <see cref="global::SpecialWords._Models.Import"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Import import) => throw null;
 
-        void IJsonModel<Import>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Import>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Import IJsonModel<Import>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Import IJsonModel<global::SpecialWords._Models.Import>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Import JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

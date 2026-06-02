@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by CustomEntityLookupSkill. </summary>
-    public readonly partial struct CustomEntityLookupSkillLanguage : IEquatable<CustomEntityLookupSkillLanguage>
+    public readonly partial struct CustomEntityLookupSkillLanguage : IEquatable<global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage>
     {
         private readonly string _value;
         /// <summary> Danish. </summary>
@@ -34,12 +34,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Portuguese. </summary>
         private const string PtValue = "pt";
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomEntityLookupSkillLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -71,34 +71,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Portuguese. </summary>
         public static CustomEntityLookupSkillLanguage Pt { get; } = new CustomEntityLookupSkillLanguage(PtValue);
 
-        /// <summary> Determines if two <see cref="CustomEntityLookupSkillLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomEntityLookupSkillLanguage left, CustomEntityLookupSkillLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CustomEntityLookupSkillLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomEntityLookupSkillLanguage left, CustomEntityLookupSkillLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CustomEntityLookupSkillLanguage(string value) => new CustomEntityLookupSkillLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CustomEntityLookupSkillLanguage?(string value) => value == null ? null : new CustomEntityLookupSkillLanguage(value);
+        public static implicit operator CustomEntityLookupSkillLanguage?(string value) => (value == null) ? null : new CustomEntityLookupSkillLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CustomEntityLookupSkillLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CustomEntityLookupSkillLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CustomEntityLookupSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CustomEntityLookupSkillLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

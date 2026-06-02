@@ -15,7 +15,7 @@ namespace Client.Structure.Service._Baz
     {
         protected Baz() => throw null;
 
-        internal Baz(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal Baz(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

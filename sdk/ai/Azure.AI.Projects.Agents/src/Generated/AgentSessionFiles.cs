@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
     /// </summary>
     public partial class AgentSessionFiles
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AgentSessionFiles for mocking. </summary>
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentSessionFiles(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentSessionFiles(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -58,12 +58,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -82,12 +82,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::Azure.AI.Projects.Agents.SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = UploadSessionFile(agentName, agentSessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+            ClientResult result = this.UploadSessionFile(agentName, agentSessionId, path, global::System.ClientModel.BinaryContent.Create(content), foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((SessionFileWriteResponse)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -119,11 +119,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await UploadSessionFileAsync(agentName, agentSessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+            ClientResult result = await this.UploadSessionFileAsync(agentName, agentSessionId, path, global::System.ClientModel.BinaryContent.Create(content), foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((SessionFileWriteResponse)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -140,12 +140,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -162,12 +162,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Download a file from the session sandbox as a binary stream. </summary>
@@ -177,11 +177,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::System.BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = this.DownloadSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary> Download a file from the session sandbox as a binary stream. </summary>
@@ -191,11 +191,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::System.BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = await this.DownloadSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
@@ -214,12 +214,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -238,12 +238,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -257,10 +257,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            return DeleteSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, userIsolationKey, cancellationToken.ToRequestOptions());
+            return this.DeleteSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, userIsolationKey, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -274,10 +274,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

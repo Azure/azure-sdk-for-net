@@ -14,23 +14,23 @@ namespace Azure.AI.DocumentIntelligence
     public partial class BlobContentSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BlobContentSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BlobContentSource"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
-        public BlobContentSource(Uri containerUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public BlobContentSource(global::System.Uri containerUri)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(containerUri, nameof(containerUri));
 
             ContainerUri = containerUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobContentSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BlobContentSource"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="prefix"> Blob name prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobContentSource(Uri containerUri, string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobContentSource(global::System.Uri containerUri, string prefix, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             Prefix = prefix;
@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUri { get; set; }
+        public global::System.Uri ContainerUri { get; set; }
 
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }

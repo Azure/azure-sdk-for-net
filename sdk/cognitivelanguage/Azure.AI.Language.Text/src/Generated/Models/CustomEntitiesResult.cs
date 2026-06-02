@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Text
     public partial class CustomEntitiesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomEntitiesResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
-        internal CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomEntityActionResult> documents)
+        internal CustomEntitiesResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors, string projectName, string deploymentName, IEnumerable<global::Azure.AI.Language.Text.CustomEntityActionResult> documents)
         {
             Errors = errors.ToList();
             ProjectName = projectName;
@@ -30,14 +30,14 @@ namespace Azure.AI.Language.Text
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomEntitiesResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntitiesResult(IList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IList<CustomEntityActionResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomEntitiesResult(IList<global::Azure.AI.Language.Text.DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IList<global::Azure.AI.Language.Text.CustomEntityActionResult> documents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Text
         public string DeploymentName { get; }
 
         /// <summary> Enumeration of the document results. </summary>
-        public IList<CustomEntityActionResult> Documents { get; }
+        public IList<global::Azure.AI.Language.Text.CustomEntityActionResult> Documents { get; }
     }
 }

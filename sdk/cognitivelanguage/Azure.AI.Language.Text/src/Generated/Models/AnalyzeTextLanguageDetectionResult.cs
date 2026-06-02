@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the language detection task result for the request. </summary>
     public partial class AnalyzeTextLanguageDetectionResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLanguageDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult"/>. </summary>
         /// <param name="results"> Contains the language detection results. </param>
-        internal AnalyzeTextLanguageDetectionResult(LanguageDetectionResult results) : base(AnalyzeTextResultsKind.LanguageDetectionResults)
+        internal AnalyzeTextLanguageDetectionResult(LanguageDetectionResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.LanguageDetectionResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLanguageDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Contains the language detection results. </param>
-        internal AnalyzeTextLanguageDetectionResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LanguageDetectionResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextLanguageDetectionResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, LanguageDetectionResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

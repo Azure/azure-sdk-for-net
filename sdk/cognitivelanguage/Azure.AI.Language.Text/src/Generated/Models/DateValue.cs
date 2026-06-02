@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class DateValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DateValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DateValue"/>. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         internal DateValue(string timex, string value)
@@ -25,12 +25,12 @@ namespace Azure.AI.Language.Text
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DateValue"/>. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DateValue(string timex, string value, TemporalModifier? modifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DateValue(string timex, string value, TemporalModifier? modifier, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timex = timex;
             Value = value;

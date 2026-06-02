@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a set of worker selectors that will be attached if the given condition resolves to true. </summary>
-    public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<ConditionalWorkerSelectorAttachment>
+    public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>
     {
-        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment"/> for deserialization. </summary>
         internal ConditionalWorkerSelectorAttachment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConditionalWorkerSelectorAttachment(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment.DeserializeConditionalWorkerSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConditionalWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConditionalWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConditionalWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConditionalWorkerSelectorAttachment IPersistableModel<ConditionalWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConditionalWorkerSelectorAttachment)PersistableModelCreateCore(data, options);
+        ConditionalWorkerSelectorAttachment IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ConditionalWorkerSelectorAttachment)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConditionalWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConditionalWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,52 +73,52 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConditionalWorkerSelectorAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            writer.WriteObjectValue<RouterRule>(Condition, options);
             writer.WritePropertyName("workerSelectors"u8);
             writer.WriteStartArray();
             foreach (RouterWorkerSelector item in WorkerSelectors)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<RouterWorkerSelector>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConditionalWorkerSelectorAttachment IJsonModel<ConditionalWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConditionalWorkerSelectorAttachment)JsonModelCreateCore(ref reader, options);
+        ConditionalWorkerSelectorAttachment IJsonModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ConditionalWorkerSelectorAttachment)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConditionalWorkerSelectorAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConditionalWorkerSelectorAttachment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.ConditionalWorkerSelectorAttachment.DeserializeConditionalWorkerSelectorAttachment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConditionalWorkerSelectorAttachment DeserializeConditionalWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             WorkerSelectorAttachmentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             RouterRule condition = default;
-            IList<RouterWorkerSelector> workerSelectors = default;
+            IList<global::Azure.Communication.JobRouter.RouterWorkerSelector> workerSelectors = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -128,22 +128,22 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("condition"u8))
                 {
-                    condition = RouterRule.DeserializeRouterRule(prop.Value, options);
+                    condition = global::Azure.Communication.JobRouter.RouterRule.DeserializeRouterRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workerSelectors"u8))
                 {
-                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
+                    List<global::Azure.Communication.JobRouter.RouterWorkerSelector> array = new List<global::Azure.Communication.JobRouter.RouterWorkerSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     workerSelectors = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConditionalWorkerSelectorAttachment(kind, additionalBinaryDataProperties, condition, workerSelectors);

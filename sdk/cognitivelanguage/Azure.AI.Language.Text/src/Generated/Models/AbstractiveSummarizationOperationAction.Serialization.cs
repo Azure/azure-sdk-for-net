@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
-    public partial class AbstractiveSummarizationOperationAction : AnalyzeTextOperationAction, IJsonModel<AbstractiveSummarizationOperationAction>
+    public partial class AbstractiveSummarizationOperationAction : AnalyzeTextOperationAction, IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAbstractiveSummarizationOperationAction(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummarizationOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummarizationOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AbstractiveSummarizationOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AbstractiveSummarizationOperationAction IPersistableModel<AbstractiveSummarizationOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (AbstractiveSummarizationOperationAction)PersistableModelCreateCore(data, options);
+        AbstractiveSummarizationOperationAction IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AbstractiveSummarizationOperationAction)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AbstractiveSummarizationOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AbstractiveSummarizationOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,47 +68,47 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummarizationOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue<AbstractiveSummarizationActionContent>(ActionContent, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AbstractiveSummarizationOperationAction IJsonModel<AbstractiveSummarizationOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AbstractiveSummarizationOperationAction)JsonModelCreateCore(ref reader, options);
+        AbstractiveSummarizationOperationAction IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AbstractiveSummarizationOperationAction)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummarizationOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAbstractiveSummarizationOperationAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AbstractiveSummarizationOperationAction DeserializeAbstractiveSummarizationOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
             AnalyzeTextOperationActionKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AbstractiveSummarizationActionContent actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -124,16 +124,16 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    actionContent = AbstractiveSummarizationActionContent.DeserializeAbstractiveSummarizationActionContent(prop.Value, options);
+                    actionContent = global::Azure.AI.Language.Text.AbstractiveSummarizationActionContent.DeserializeAbstractiveSummarizationActionContent(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AbstractiveSummarizationOperationAction(name, kind, additionalBinaryDataProperties, actionContent);

@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-    public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
+    public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
         internal AgentWorkflowPreviewActionResponseItem()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentWorkflowPreviewActionResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentWorkflowPreviewActionResponseItem IPersistableModel<AgentWorkflowPreviewActionResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgentWorkflowPreviewActionResponseItem)PersistableModelCreateCore(data, options);
+        AgentWorkflowPreviewActionResponseItem IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AgentWorkflowPreviewActionResponseItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentWorkflowPreviewActionResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentWorkflowPreviewActionResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,22 +70,22 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("action_id"u8);
             writer.WriteStringValue(ActionId);
-            if (Optional.IsDefined(ParentActionId))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(ParentActionId))
             {
                 writer.WritePropertyName("parent_action_id"u8);
                 writer.WriteStringValue(ParentActionId);
             }
-            if (Optional.IsDefined(PreviousActionId))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(PreviousActionId))
             {
                 writer.WritePropertyName("previous_action_id"u8);
                 writer.WriteStringValue(PreviousActionId);
@@ -96,26 +96,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentWorkflowPreviewActionResponseItem IJsonModel<AgentWorkflowPreviewActionResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentWorkflowPreviewActionResponseItem)JsonModelCreateCore(ref reader, options);
+        AgentWorkflowPreviewActionResponseItem IJsonModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AgentWorkflowPreviewActionResponseItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AgentWorkflowPreviewActionResponseItem DeserializeAgentWorkflowPreviewActionResponseItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -123,7 +123,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string kind = default;
             string actionId = default;
             string parentActionId = default;
@@ -143,11 +143,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -180,9 +180,9 @@ namespace Azure.AI.Extensions.OpenAI
                     status = new AgentWorkflowPreviewActionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AgentWorkflowPreviewActionResponseItem(

@@ -11,25 +11,25 @@ namespace Azure.AI.Projects
     public partial class AIProjectBlobReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectBlobReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectBlobReference"/>. </summary>
         /// <param name="blobUri"> Blob URI path for client to upload data. Example: `https://blob.windows.core.net/Container/Path`. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        internal AIProjectBlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential)
+        internal AIProjectBlobReference(global::System.Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential)
         {
             BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
             Credential = credential;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectBlobReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectBlobReference"/>. </summary>
         /// <param name="blobUri"> Blob URI path for client to upload data. Example: `https://blob.windows.core.net/Container/Path`. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectBlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectBlobReference(global::System.Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;

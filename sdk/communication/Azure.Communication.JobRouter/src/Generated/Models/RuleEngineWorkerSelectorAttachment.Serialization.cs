@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
-    public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<RuleEngineWorkerSelectorAttachment>
+    public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment, IJsonModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>
     {
-        /// <summary> Initializes a new instance of <see cref="RuleEngineWorkerSelectorAttachment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment"/> for deserialization. </summary>
         internal RuleEngineWorkerSelectorAttachment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuleEngineWorkerSelectorAttachment(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment.DeserializeRuleEngineWorkerSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleEngineWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuleEngineWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuleEngineWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleEngineWorkerSelectorAttachment IPersistableModel<RuleEngineWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => (RuleEngineWorkerSelectorAttachment)PersistableModelCreateCore(data, options);
+        RuleEngineWorkerSelectorAttachment IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RuleEngineWorkerSelectorAttachment)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuleEngineWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuleEngineWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,43 +73,43 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RuleEngineWorkerSelectorAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("rule"u8);
-            writer.WriteObjectValue(Rule, options);
+            writer.WriteObjectValue<RouterRule>(Rule, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleEngineWorkerSelectorAttachment IJsonModel<RuleEngineWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RuleEngineWorkerSelectorAttachment)JsonModelCreateCore(ref reader, options);
+        RuleEngineWorkerSelectorAttachment IJsonModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RuleEngineWorkerSelectorAttachment)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkerSelectorAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RuleEngineWorkerSelectorAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuleEngineWorkerSelectorAttachment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.RuleEngineWorkerSelectorAttachment.DeserializeRuleEngineWorkerSelectorAttachment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RuleEngineWorkerSelectorAttachment DeserializeRuleEngineWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             WorkerSelectorAttachmentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             RouterRule rule = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +120,12 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("rule"u8))
                 {
-                    rule = RouterRule.DeserializeRouterRule(prop.Value, options);
+                    rule = global::Azure.Communication.JobRouter.RouterRule.DeserializeRouterRule(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RuleEngineWorkerSelectorAttachment(kind, additionalBinaryDataProperties, rule);

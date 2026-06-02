@@ -10,13 +10,13 @@ namespace OpenAI
 {
     internal partial class InternalWebSearchTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchTool"/>. </summary>
-        public InternalWebSearchTool() : base(ToolType.WebSearch)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchTool"/>. </summary>
+        public InternalWebSearchTool() : base(global::OpenAI.ToolType.WebSearch)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filters"></param>
@@ -33,7 +33,7 @@ namespace OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal InternalWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal InternalWebSearchTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             Filters = filters;
             UserLocation = userLocation;
@@ -64,7 +64,7 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection

@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     internal partial class UnknownExportedOrchestrationDetails : ExportedOrchestrationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownExportedOrchestrationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.UnknownExportedOrchestrationDetails"/>. </summary>
         /// <param name="targetProjectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownExportedOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(targetProjectKind != default ? targetProjectKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownExportedOrchestrationDetails(OrchestrationTargetProjectKind targetProjectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((targetProjectKind != default) ? targetProjectKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

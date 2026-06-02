@@ -22,8 +22,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="name"> Name of the input. </param>
         /// <param name="mimeType"> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="contentRangeValue"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalysisInput"/> instance for mocking. </returns>
-        public static AnalysisInput AnalysisInput(Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string contentRangeValue = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.AnalysisInput"/> instance for mocking. </returns>
+        public static AnalysisInput AnalysisInput(global::System.Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string contentRangeValue = default)
         {
             return new AnalysisInput(
                 uri,
@@ -44,11 +44,11 @@ namespace Azure.AI.ContentUnderstanding
         ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
         /// </param>
         /// <param name="contents"> The extracted content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
-        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<AnalysisContent> contents = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
+        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<global::Azure.ResponseError> warnings = default, string stringEncoding = default, IEnumerable<global::Azure.AI.ContentUnderstanding.AnalysisContent> contents = default)
         {
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            contents ??= new ChangeTrackingList<AnalysisContent>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            contents ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.AnalysisContent>();
 
             return new AnalysisResult(
                 analyzerId,
@@ -62,7 +62,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Media content base class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.DocumentContent"/> and <see cref="ContentUnderstanding.AudioVisualContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.DocumentContent"/> and <see cref="Azure.AI.ContentUnderstanding.AudioVisualContent"/>.
         /// </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
@@ -71,10 +71,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalysisContent"/> instance for mocking. </returns>
-        public static AnalysisContent AnalysisContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.AnalysisContent"/> instance for mocking. </returns>
+        public static AnalysisContent AnalysisContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields = default)
         {
-            fields ??= new ChangeTrackingDictionary<string, ContentField>();
+            fields ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
 
             return new UnknownAnalysisContent(
                 new AnalysisContentKind(kind),
@@ -89,16 +89,16 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Field extracted from the content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.ContentStringField"/>, <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="ContentUnderstanding.ContentTimeField"/>, <see cref="ContentUnderstanding.ContentNumberField"/>, <see cref="ContentUnderstanding.ContentIntegerField"/>, <see cref="ContentUnderstanding.ContentBooleanField"/>, <see cref="ContentUnderstanding.ContentArrayField"/>, <see cref="ContentUnderstanding.ContentObjectField"/>, and <see cref="ContentUnderstanding.ContentJsonField"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.ContentStringField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentTimeField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentNumberField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentIntegerField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentBooleanField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentArrayField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentObjectField"/>, and <see cref="Azure.AI.ContentUnderstanding.ContentJsonField"/>.
         /// </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentField"/> instance for mocking. </returns>
-        public static ContentField ContentField(string @type = default, IEnumerable<ContentSpan> spans = default, float? confidence = default, string sourceValue = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentField"/> instance for mocking. </returns>
+        public static ContentField ContentField(string @type = default, IEnumerable<global::Azure.AI.ContentUnderstanding.ContentSpan> spans = default, float? confidence = default, string sourceValue = default)
         {
-            spans ??= new ChangeTrackingList<ContentSpan>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
 
             return new UnknownContentField(new ContentFieldType(@type), spans.ToList(), confidence, sourceValue, additionalBinaryDataProperties: null);
         }
@@ -106,7 +106,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Position of the element in markdown, specified as a character offset and length. </summary>
         /// <param name="offset"> Starting position (0-indexed) of the element in markdown, specified in characters. </param>
         /// <param name="length"> Length of the element in markdown, specified in characters. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentSpan"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentSpan"/> instance for mocking. </returns>
         public static ContentSpan ContentSpan(int offset = default, int length = default)
         {
             return new ContentSpan(offset, length, additionalBinaryDataProperties: null);
@@ -133,21 +133,21 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
         /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
-        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
+        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields = default, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentPage> pages = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentParagraph> paragraphs = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentSection> sections = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentTable> tables = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFigure> figures = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentAnnotation> annotations = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentHyperlink> hyperlinks = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentContentSegment> segments = default)
         {
-            fields ??= new ChangeTrackingDictionary<string, ContentField>();
-            pages ??= new ChangeTrackingList<DocumentPage>();
-            paragraphs ??= new ChangeTrackingList<DocumentParagraph>();
-            sections ??= new ChangeTrackingList<DocumentSection>();
-            tables ??= new ChangeTrackingList<DocumentTable>();
-            figures ??= new ChangeTrackingList<DocumentFigure>();
-            annotations ??= new ChangeTrackingList<DocumentAnnotation>();
-            hyperlinks ??= new ChangeTrackingList<DocumentHyperlink>();
-            segments ??= new ChangeTrackingList<DocumentContentSegment>();
+            fields ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
+            pages ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentPage>();
+            paragraphs ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentParagraph>();
+            sections ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentSection>();
+            tables ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentTable>();
+            figures ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFigure>();
+            annotations ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentAnnotation>();
+            hyperlinks ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentHyperlink>();
+            segments ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentContentSegment>();
 
             return new DocumentContent(
-                AnalysisContentKind.Document,
+                global::Azure.AI.ContentUnderstanding.AnalysisContentKind.Document,
                 mimeType,
                 analyzerId,
                 category,
@@ -182,14 +182,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="lines"> List of lines in the page.  Only if enableOcr and returnDetails are true. </param>
         /// <param name="barcodes"> List of barcodes in the page.  Only if enableBarcode and returnDetails are true. </param>
         /// <param name="formulas"> List of mathematical formulas in the page.  Only if enableFormula and returnDetails are true. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? width = default, float? height = default, IEnumerable<ContentSpan> spans = default, float? angle = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentPage"/> instance for mocking. </returns>
+        public static DocumentPage DocumentPage(int pageNumber = default, float? width = default, float? height = default, IEnumerable<global::Azure.AI.ContentUnderstanding.ContentSpan> spans = default, float? angle = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentWord> words = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentLine> lines = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentBarcode> barcodes = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFormula> formulas = default)
         {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-            words ??= new ChangeTrackingList<DocumentWord>();
-            lines ??= new ChangeTrackingList<DocumentLine>();
-            barcodes ??= new ChangeTrackingList<DocumentBarcode>();
-            formulas ??= new ChangeTrackingList<DocumentFormula>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
+            words ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentWord>();
+            lines ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentLine>();
+            barcodes ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentBarcode>();
+            formulas ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFormula>();
 
             return new DocumentPage(
                 pageNumber,
@@ -213,7 +213,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the word in the content. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the word. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentWord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentWord"/> instance for mocking. </returns>
         public static DocumentWord DocumentWord(string content = default, string source = default, ContentSpan span = default, float? confidence = default)
         {
             return new DocumentWord(content, source, span, confidence, additionalBinaryDataProperties: null);
@@ -223,7 +223,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="content"> Line text. </param>
         /// <param name="source"> Encoded source that identifies the position of the line in the content. </param>
         /// <param name="span"> Span of the line in the markdown content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentLine"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentLine"/> instance for mocking. </returns>
         public static DocumentLine DocumentLine(string content = default, string source = default, ContentSpan span = default)
         {
             return new DocumentLine(content, source, span, additionalBinaryDataProperties: null);
@@ -235,7 +235,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the barcode in the content. </param>
         /// <param name="span"> Span of the barcode in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the barcode. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentBarcode"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcode"/> instance for mocking. </returns>
         public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = default, string source = default, ContentSpan span = default, float? confidence = default)
         {
             return new DocumentBarcode(
@@ -253,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the formula in the content. </param>
         /// <param name="span"> Span of the formula in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the formula. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentFormula"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentFormula"/> instance for mocking. </returns>
         public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = default, string source = default, ContentSpan span = default, float? confidence = default)
         {
             return new DocumentFormula(
@@ -273,7 +273,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="content"> Paragraph text. </param>
         /// <param name="source"> Encoded source that identifies the position of the paragraph in the content. </param>
         /// <param name="span"> Span of the paragraph in the markdown content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentParagraph"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentParagraph"/> instance for mocking. </returns>
         public static DocumentParagraph DocumentParagraph(SemanticRole? role = default, string content = default, string source = default, ContentSpan span = default)
         {
             return new DocumentParagraph(role, content, source, span, additionalBinaryDataProperties: null);
@@ -282,7 +282,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Section in a document. </summary>
         /// <param name="span"> Span of the section in the markdown content. </param>
         /// <param name="elements"> Child elements of the section. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentSection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentSection"/> instance for mocking. </returns>
         public static DocumentSection DocumentSection(ContentSpan span = default, IEnumerable<string> elements = default)
         {
             elements ??= new ChangeTrackingList<string>();
@@ -299,11 +299,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="caption"> Table caption. </param>
         /// <param name="footnotes"> List of table footnotes. </param>
         /// <param name="role"> Semantic role of the table. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = default, string source = default, ContentSpan span = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, SemanticRole? role = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentTable"/> instance for mocking. </returns>
+        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentTableCell> cells = default, string source = default, ContentSpan span = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default, SemanticRole? role = default)
         {
-            cells ??= new ChangeTrackingList<DocumentTableCell>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
+            cells ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentTableCell>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
 
             return new DocumentTable(
                 rowCount,
@@ -327,7 +327,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the table cell in the content. </param>
         /// <param name="span"> Span of the table cell in the markdown content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentTableCell"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentTableCell"/> instance for mocking. </returns>
         public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = default, int columnIndex = default, int? rowSpan = default, int? columnSpan = default, string content = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default)
         {
             elements ??= new ChangeTrackingList<string>();
@@ -350,7 +350,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the caption in the content. </param>
         /// <param name="span"> Span of the caption in the markdown content. </param>
         /// <param name="elements"> Child elements of the caption. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentCaption"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentCaption"/> instance for mocking. </returns>
         public static DocumentCaption DocumentCaption(string content = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default)
         {
             elements ??= new ChangeTrackingList<string>();
@@ -363,7 +363,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Encoded source that identifies the position of the footnote in the content. </param>
         /// <param name="span"> Span of the footnote in the markdown content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentFootnote"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentFootnote"/> instance for mocking. </returns>
         public static DocumentFootnote DocumentFootnote(string content = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default)
         {
             elements ??= new ChangeTrackingList<string>();
@@ -373,7 +373,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Figure in a document.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.DocumentChartFigure"/> and <see cref="ContentUnderstanding.DocumentMermaidFigure"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.DocumentChartFigure"/> and <see cref="Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/>.
         /// </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
@@ -384,11 +384,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="footnotes"> List of figure footnotes. </param>
         /// <param name="description"> Description of the figure. </param>
         /// <param name="role"> Semantic role of the figure. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentFigure"/> instance for mocking. </returns>
-        public static DocumentFigure DocumentFigure(string kind = default, string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentFigure"/> instance for mocking. </returns>
+        public static DocumentFigure DocumentFigure(string kind = default, string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default)
         {
             elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
 
             return new UnknownDocumentFigure(
                 new DocumentFigureKind(kind),
@@ -413,15 +413,15 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> Description of the figure. </param>
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="content"> Chart content represented using [Chart.js config](https://www.chartjs.org/docs/latest/configuration/). </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentChartFigure"/> instance for mocking. </returns>
-        public static DocumentChartFigure DocumentChartFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, IDictionary<string, BinaryData> content = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentChartFigure"/> instance for mocking. </returns>
+        public static DocumentChartFigure DocumentChartFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, IDictionary<string, global::System.BinaryData> content = default)
         {
             elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
-            content ??= new ChangeTrackingDictionary<string, BinaryData>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
+            content ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new DocumentChartFigure(
-                DocumentFigureKind.Chart,
+                global::Azure.AI.ContentUnderstanding.DocumentFigureKind.Chart,
                 id,
                 source,
                 span,
@@ -444,14 +444,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> Description of the figure. </param>
         /// <param name="role"> Semantic role of the figure. </param>
         /// <param name="content"> Diagram content represented using [Mermaid syntax](https://mermaid.js.org/intro/). </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentMermaidFigure"/> instance for mocking. </returns>
-        public static DocumentMermaidFigure DocumentMermaidFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, string content = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentMermaidFigure"/> instance for mocking. </returns>
+        public static DocumentMermaidFigure DocumentMermaidFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, string content = default)
         {
             elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentFootnote>();
 
             return new DocumentMermaidFigure(
-                DocumentFigureKind.Mermaid,
+                global::Azure.AI.ContentUnderstanding.DocumentFigureKind.Mermaid,
                 id,
                 source,
                 span,
@@ -474,11 +474,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="createdAt"> Date and time when the annotation was created. </param>
         /// <param name="lastModifiedAt"> Date and time when the annotation was last modified. </param>
         /// <param name="tags"> Tags associated with the annotation. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentAnnotation"/> instance for mocking. </returns>
-        public static DocumentAnnotation DocumentAnnotation(string id = default, DocumentAnnotationKind kind = default, IEnumerable<ContentSpan> spans = default, string source = default, IEnumerable<DocumentAnnotationComment> comments = default, string author = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastModifiedAt = default, IEnumerable<string> tags = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotation"/> instance for mocking. </returns>
+        public static DocumentAnnotation DocumentAnnotation(string id = default, DocumentAnnotationKind kind = default, IEnumerable<global::Azure.AI.ContentUnderstanding.ContentSpan> spans = default, string source = default, IEnumerable<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment> comments = default, string author = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastModifiedAt = default, IEnumerable<string> tags = default)
         {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-            comments ??= new ChangeTrackingList<DocumentAnnotationComment>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
+            comments ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment>();
             tags ??= new ChangeTrackingList<string>();
 
             return new DocumentAnnotation(
@@ -500,7 +500,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="createdAt"> Date and time when the comment was created. </param>
         /// <param name="lastModifiedAt"> Date and time when the comment was last modified. </param>
         /// <param name="tags"> Tags associated with the comment. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentAnnotationComment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment"/> instance for mocking. </returns>
         public static DocumentAnnotationComment DocumentAnnotationComment(string message = default, string author = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastModifiedAt = default, IEnumerable<string> tags = default)
         {
             tags ??= new ChangeTrackingList<string>();
@@ -519,7 +519,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="uri"> URL of the hyperlink. </param>
         /// <param name="span"> Span of the hyperlink in the markdown content. </param>
         /// <param name="source"> Position of the hyperlink. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentHyperlink"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentHyperlink"/> instance for mocking. </returns>
         public static DocumentHyperlink DocumentHyperlink(string content = default, string uri = default, ContentSpan span = default, string source = default)
         {
             return new DocumentHyperlink(content, uri, span, source, additionalBinaryDataProperties: null);
@@ -531,7 +531,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the segment. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
         public static DocumentContentSegment DocumentContentSegment(string segmentId = default, string category = default, ContentSpan span = default, int startPageNumber = default, int endPageNumber = default)
         {
             return new DocumentContentSegment(
@@ -558,17 +558,17 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
-        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
+        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields = default, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<global::Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = default, IEnumerable<global::Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = default)
         {
-            fields ??= new ChangeTrackingDictionary<string, ContentField>();
+            fields ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
             cameraShotTimesMsValues ??= new ChangeTrackingList<long>();
             keyFrameTimesMsValues ??= new ChangeTrackingList<long>();
-            transcriptPhrases ??= new ChangeTrackingList<TranscriptPhrase>();
-            segments ??= new ChangeTrackingList<AudioVisualContentSegment>();
+            transcriptPhrases ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.TranscriptPhrase>();
+            segments ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.AudioVisualContentSegment>();
 
             return new AudioVisualContent(
-                AnalysisContentKind.AudioVisual,
+                global::Azure.AI.ContentUnderstanding.AnalysisContentKind.AudioVisual,
                 mimeType,
                 analyzerId,
                 category,
@@ -595,10 +595,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of predicting the phrase. </param>
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.TranscriptPhrase"/> instance for mocking. </returns>
-        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = default, long endTimeMsValue = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.TranscriptPhrase"/> instance for mocking. </returns>
+        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = default, long endTimeMsValue = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<global::Azure.AI.ContentUnderstanding.TranscriptWord> words = default)
         {
-            words ??= new ChangeTrackingList<TranscriptWord>();
+            words ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.TranscriptWord>();
 
             return new TranscriptPhrase(
                 speaker,
@@ -617,7 +617,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.TranscriptWord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.TranscriptWord"/> instance for mocking. </returns>
         public static TranscriptWord TranscriptWord(long startTimeMsValue = default, long endTimeMsValue = default, string text = default, ContentSpan span = default)
         {
             return new TranscriptWord(startTimeMsValue, endTimeMsValue, text, span, additionalBinaryDataProperties: null);
@@ -629,7 +629,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContentSegment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.AudioVisualContentSegment"/> instance for mocking. </returns>
         public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMsValue = default, long endTimeMsValue = default)
         {
             return new AudioVisualContentSegment(
@@ -660,12 +660,12 @@ namespace Azure.AI.ContentUnderstanding
         /// Ex. { "completion": "gpt-4.1", "embedding": "text-embedding-3-large" }.
         /// </param>
         /// <param name="supportedModels"> Chat completion and embedding models supported by the analyzer. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzer"/> instance for mocking. </returns>
-        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? hasDynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzer"/> instance for mocking. </returns>
+        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<global::Azure.ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? hasDynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<global::Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            warnings ??= new ChangeTrackingList<ResponseError>();
-            knowledgeSources ??= new ChangeTrackingList<KnowledgeSource>();
+            warnings ??= new ChangeTrackingList<global::Azure.ResponseError>();
+            knowledgeSources ??= new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.KnowledgeSource>();
             models ??= new ChangeTrackingDictionary<string, string>();
 
             return new ContentAnalyzer(
@@ -707,11 +707,11 @@ namespace Azure.AI.ContentUnderstanding
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default)
         {
             locales ??= new ChangeTrackingList<string>();
-            contentCategories ??= new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
+            contentCategories ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition>();
 
             return new ContentAnalyzerConfig(
                 shouldReturnDetails,
@@ -737,7 +737,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> The description of the category. </param>
         /// <param name="analyzerId"> Optional analyzer used to process the content. </param>
         /// <param name="analyzer"> Optional inline definition of analyzer used to process the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentCategoryDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition"/> instance for mocking. </returns>
         public static ContentCategoryDefinition ContentCategoryDefinition(string description = default, string analyzerId = default, ContentAnalyzer analyzer = default)
         {
             return new ContentCategoryDefinition(description, analyzerId, analyzer, additionalBinaryDataProperties: null);
@@ -748,11 +748,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> A description of the field schema. </param>
         /// <param name="fields"> The fields defined in the schema. </param>
         /// <param name="definitions"> Additional definitions referenced by the fields in the schema. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentFieldSchema"/> instance for mocking. </returns>
-        public static ContentFieldSchema ContentFieldSchema(string name = default, string description = default, IDictionary<string, ContentFieldDefinition> fields = default, IDictionary<string, ContentFieldDefinition> definitions = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldSchema"/> instance for mocking. </returns>
+        public static ContentFieldSchema ContentFieldSchema(string name = default, string description = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> fields = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> definitions = default)
         {
-            fields ??= new ChangeTrackingDictionary<string, ContentFieldDefinition>();
-            definitions ??= new ChangeTrackingDictionary<string, ContentFieldDefinition>();
+            fields ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition>();
+            definitions ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition>();
 
             return new ContentFieldSchema(name, description, fields, definitions, additionalBinaryDataProperties: null);
         }
@@ -768,10 +768,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="enumDescriptions"> Descriptions for each enumeration value. </param>
         /// <param name="ref"> Reference to another field definition. </param>
         /// <param name="estimateSourceAndConfidence"> Return grounding source and confidence. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentFieldDefinition"/> instance for mocking. </returns>
-        public static ContentFieldDefinition ContentFieldDefinition(GenerationMethod? @method = default, ContentFieldType? @type = default, string description = default, ContentFieldDefinition itemDefinition = default, IDictionary<string, ContentFieldDefinition> properties = default, IEnumerable<string> examples = default, IEnumerable<string> @enum = default, IDictionary<string, string> enumDescriptions = default, string @ref = default, bool? estimateSourceAndConfidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldDefinition"/> instance for mocking. </returns>
+        public static ContentFieldDefinition ContentFieldDefinition(GenerationMethod? @method = default, ContentFieldType? @type = default, string description = default, ContentFieldDefinition itemDefinition = default, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition> properties = default, IEnumerable<string> examples = default, IEnumerable<string> @enum = default, IDictionary<string, string> enumDescriptions = default, string @ref = default, bool? estimateSourceAndConfidence = default)
         {
-            properties ??= new ChangeTrackingDictionary<string, ContentFieldDefinition>();
+            properties ??= new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentFieldDefinition>();
             examples ??= new ChangeTrackingList<string>();
             @enum ??= new ChangeTrackingList<string>();
             enumDescriptions ??= new ChangeTrackingDictionary<string, string>();
@@ -792,10 +792,10 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Knowledge source.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.LabeledDataKnowledgeSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/>.
         /// </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.KnowledgeSource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.KnowledgeSource"/> instance for mocking. </returns>
         public static KnowledgeSource KnowledgeSource(string kind = default)
         {
             return new UnknownKnowledgeSource(new KnowledgeSourceKind(kind), additionalBinaryDataProperties: null);
@@ -805,16 +805,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="prefix"> An optional prefix to filter blobs within the container. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.LabeledDataKnowledgeSource"/> instance for mocking. </returns>
-        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(Uri containerUri = default, string prefix = default, string fileListPath = default)
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/> instance for mocking. </returns>
+        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(global::System.Uri containerUri = default, string prefix = default, string fileListPath = default)
         {
-            return new LabeledDataKnowledgeSource(KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUri, prefix, fileListPath);
+            return new LabeledDataKnowledgeSource(global::Azure.AI.ContentUnderstanding.KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUri, prefix, fileListPath);
         }
 
         /// <summary> Chat completion and embedding models supported by the analyzer. </summary>
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.SupportedModels"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.SupportedModels"/> instance for mocking. </returns>
         public static SupportedModels SupportedModels(IEnumerable<string> completion = default, IEnumerable<string> embedding = default)
         {
             completion ??= new ChangeTrackingList<string>();
@@ -825,7 +825,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Default settings for this Content Understanding resource. </summary>
         /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentUnderstandingDefaults"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults"/> instance for mocking. </returns>
         public static ContentUnderstandingDefaults ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments = default)
         {
             modelDeployments ??= new ChangeTrackingDictionary<string, string>();
@@ -837,7 +837,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="source"> Full path of the source analyzer. </param>
         /// <param name="targetAzureResourceId"> Azure resource ID of the target location to copy to. </param>
         /// <param name="expiresAt"> Date/time when the copy authorization expires. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.CopyAuthorization"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.ContentUnderstanding.CopyAuthorization"/> instance for mocking. </returns>
         public static CopyAuthorization CopyAuthorization(string source = default, string targetAzureResourceId = default, DateTimeOffset expiresAt = default)
         {
             return new CopyAuthorization(source, targetAzureResourceId, expiresAt, additionalBinaryDataProperties: null);

@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a entity recognition project. </summary>
-    public partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomEntityRecognitionProjectAsset>
+    public partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringExportedProjectAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExportedCustomEntityRecognitionProjectAsset(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset.DeserializeExportedCustomEntityRecognitionProjectAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomEntityRecognitionProjectAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomEntityRecognitionProjectAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomEntityRecognitionProjectAsset IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportedCustomEntityRecognitionProjectAsset)PersistableModelCreateCore(data, options);
+        ExportedCustomEntityRecognitionProjectAsset IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ExportedCustomEntityRecognitionProjectAsset)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExportedCustomEntityRecognitionProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,29 +68,29 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomEntityRecognitionProjectAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Entities))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
                 foreach (TextAuthoringExportedEntity item in Entities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TextAuthoringExportedEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Documents))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();
                 foreach (ExportedCustomEntityRecognitionDocument item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ExportedCustomEntityRecognitionDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,33 +98,33 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomEntityRecognitionProjectAsset IJsonModel<ExportedCustomEntityRecognitionProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExportedCustomEntityRecognitionProjectAsset)JsonModelCreateCore(ref reader, options);
+        ExportedCustomEntityRecognitionProjectAsset IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ExportedCustomEntityRecognitionProjectAsset)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringExportedProjectAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomEntityRecognitionProjectAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedCustomEntityRecognitionProjectAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset.DeserializeExportedCustomEntityRecognitionProjectAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExportedCustomEntityRecognitionProjectAsset DeserializeExportedCustomEntityRecognitionProjectAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TextAuthoringProjectKind projectKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<TextAuthoringExportedEntity> entities = default;
-            IList<ExportedCustomEntityRecognitionDocument> documents = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> entities = default;
+            IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> documents = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("projectKind"u8))
@@ -134,38 +134,38 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TextAuthoringExportedEntity> array = new List<TextAuthoringExportedEntity>();
+                    List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> array = new List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TextAuthoringExportedEntity.DeserializeTextAuthoringExportedEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity.DeserializeTextAuthoringExportedEntity(item, options));
                     }
                     entities = array;
                     continue;
                 }
                 if (prop.NameEquals("documents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ExportedCustomEntityRecognitionDocument> array = new List<ExportedCustomEntityRecognitionDocument>();
+                    List<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> array = new List<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExportedCustomEntityRecognitionDocument.DeserializeExportedCustomEntityRecognitionDocument(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument.DeserializeExportedCustomEntityRecognitionDocument(item, options));
                     }
                     documents = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportedCustomEntityRecognitionProjectAsset(projectKind, additionalBinaryDataProperties, entities ?? new ChangeTrackingList<TextAuthoringExportedEntity>(), documents ?? new ChangeTrackingList<ExportedCustomEntityRecognitionDocument>());
+            return new ExportedCustomEntityRecognitionProjectAsset(projectKind, additionalBinaryDataProperties, (entities ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>()), (documents ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>()));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The Lineage sub-client. </summary>
     public partial class Lineage
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Lineage for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Lineage(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Lineage(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -56,9 +56,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetLineage(string guid, string direction, int? depth = default, RequestContext context = null)
         {
@@ -66,9 +66,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetLineageRequest(guid, direction, depth, context);
+                using HttpMessage message = this.CreateGetLineageRequest(guid, direction, depth, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -90,19 +90,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLineageAsync(string guid, string direction, int? depth = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetLineageAsync(string guid, string direction, int? depth = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.GetLineage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetLineageRequest(guid, direction, depth, context);
+                using HttpMessage message = this.CreateGetLineageRequest(guid, direction, depth, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -117,15 +117,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasLineageInfo> GetLineage(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo> GetLineage(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetLineage(guid, direction.ToString(), depth, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = this.GetLineage(guid, direction.ToString(), depth, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
 
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
@@ -133,15 +133,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasLineageInfo>> GetLineageAsync(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>> GetLineageAsync(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetLineageAsync(guid, direction.ToString(), depth, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = await this.GetLineageAsync(guid, direction.ToString(), depth, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetNextPage(string guid, string direction, int? offset = default, int? limit = default, RequestContext context = null)
         {
@@ -167,9 +167,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetNextPageRequest(guid, direction, offset, limit, context);
+                using HttpMessage message = this.CreateGetNextPageRequest(guid, direction, offset, limit, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -192,19 +192,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetNextPageAsync(string guid, string direction, int? offset = default, int? limit = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetNextPageAsync(string guid, string direction, int? offset = default, int? limit = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.GetNextPage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetNextPageRequest(guid, direction, offset, limit, context);
+                using HttpMessage message = this.CreateGetNextPageRequest(guid, direction, offset, limit, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -220,15 +220,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasLineageInfo> GetNextPage(string guid, LineageDirection direction, int? offset = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo> GetNextPage(string guid, LineageDirection direction, int? offset = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = GetNextPage(guid, direction.ToString(), offset, limit, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = this.GetNextPage(guid, direction.ToString(), offset, limit, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
 
         /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
@@ -237,15 +237,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasLineageInfo>> GetNextPageAsync(string guid, LineageDirection direction, int? offset = default, int? limit = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>> GetNextPageAsync(string guid, LineageDirection direction, int? offset = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetNextPageAsync(guid, direction.ToString(), offset, limit, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = await this.GetNextPageAsync(guid, direction.ToString(), offset, limit, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
 
         /// <summary>
@@ -274,9 +274,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetByUniqueAttribute(string typeName, string direction, int? depth = default, string attribute = default, RequestContext context = null)
         {
@@ -284,9 +284,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, direction, depth, attribute, context);
+                using HttpMessage message = this.CreateGetByUniqueAttributeRequest(typeName, direction, depth, attribute, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -322,19 +322,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetByUniqueAttributeAsync(string typeName, string direction, int? depth = default, string attribute = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> GetByUniqueAttributeAsync(string typeName, string direction, int? depth = default, string attribute = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.GetByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, direction, depth, attribute, context);
+                using HttpMessage message = this.CreateGetByUniqueAttributeRequest(typeName, direction, depth, attribute, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -365,15 +365,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasLineageInfo> GetByUniqueAttribute(string typeName, LineageDirection direction, int? depth = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo> GetByUniqueAttribute(string typeName, LineageDirection direction, int? depth = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = GetByUniqueAttribute(typeName, direction.ToString(), depth, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = this.GetByUniqueAttribute(typeName, direction.ToString(), depth, attribute, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
 
         /// <summary>
@@ -397,15 +397,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasLineageInfo>> GetByUniqueAttributeAsync(string typeName, LineageDirection direction, int? depth = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AtlasLineageInfo>> GetByUniqueAttributeAsync(string typeName, LineageDirection direction, int? depth = default, string attribute = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = await GetByUniqueAttributeAsync(typeName, direction.ToString(), depth, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasLineageInfo)result, result);
+            Response result = await this.GetByUniqueAttributeAsync(typeName, direction.ToString(), depth, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AtlasLineageInfo)result), result);
         }
     }
 }

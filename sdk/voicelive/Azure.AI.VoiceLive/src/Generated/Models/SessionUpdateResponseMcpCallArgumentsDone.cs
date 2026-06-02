@@ -13,18 +13,18 @@ namespace Azure.AI.VoiceLive
     /// <summary> Indicates the completion of the arguments for an MCP tool call. </summary>
     public partial class SessionUpdateResponseMcpCallArgumentsDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallArgumentsDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>. </summary>
         /// <param name="itemId"> The ID of the item associated with the event. </param>
         /// <param name="responseId"> The ID of the response associated with the event. </param>
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
-        internal SessionUpdateResponseMcpCallArgumentsDone(string itemId, string responseId, int outputIndex) : base(ServerEventType.ResponseMcpCallArgumentsDone)
+        internal SessionUpdateResponseMcpCallArgumentsDone(string itemId, string responseId, int outputIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseMcpCallArgumentsDone)
         {
             ItemId = itemId;
             ResponseId = responseId;
             OutputIndex = outputIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallArgumentsDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the response associated with the event. </param>
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <param name="arguments"> The full arguments for the tool call. </param>
-        internal SessionUpdateResponseMcpCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string responseId, int outputIndex, string arguments) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseMcpCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId, string responseId, int outputIndex, string arguments) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ResponseId = responseId;

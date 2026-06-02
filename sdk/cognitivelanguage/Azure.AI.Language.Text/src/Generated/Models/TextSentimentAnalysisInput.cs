@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text SentimentAnalysis task input. </summary>
     public partial class TextSentimentAnalysisInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextSentimentAnalysisInput"/>. </summary>
-        public TextSentimentAnalysisInput() : base(AnalyzeTextInputKind.SentimentAnalysis)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextSentimentAnalysisInput"/>. </summary>
+        public TextSentimentAnalysisInput() : base(global::Azure.AI.Language.Text.AnalyzeTextInputKind.SentimentAnalysis)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextSentimentAnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextSentimentAnalysisInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Sentiment Analysis task parameters. </param>
-        internal TextSentimentAnalysisInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, SentimentAnalysisActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextSentimentAnalysisInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, SentimentAnalysisActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;

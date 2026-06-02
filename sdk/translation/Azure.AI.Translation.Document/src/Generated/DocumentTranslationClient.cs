@@ -19,29 +19,29 @@ namespace Azure.AI.Translation.Document
     /// <summary> The DocumentTranslationClient. </summary>
     public partial class DocumentTranslationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentTranslationClientOptions options)
+        internal DocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DocumentTranslationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DocumentTranslationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -51,14 +51,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentTranslationClient(global::System.Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DocumentTranslationClient from a <see cref="DocumentTranslationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DocumentTranslationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public DocumentTranslationClient(DocumentTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -90,18 +90,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> StartTranslation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> StartTranslation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.StartTranslation");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateStartTranslationRequest(content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -131,18 +131,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> StartTranslationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> StartTranslationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.StartTranslation");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Document.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateStartTranslationRequest(content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -172,12 +172,12 @@ namespace Azure.AI.Translation.Document
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Operation<global::Azure.AI.Translation.Document.TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(body, nameof(body));
 
-            return ProtocolOperationHelpers.Convert(StartTranslation(waitUntil, body, cancellationToken.ToRequestContext()), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(this.StartTranslation(waitUntil, body, cancellationToken.ToRequestContext()), response => ((TranslationStatusResult)response), ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
         }
 
         /// <summary>
@@ -201,12 +201,12 @@ namespace Azure.AI.Translation.Document
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<global::Azure.Operation<global::Azure.AI.Translation.Document.TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(body, nameof(body));
 
-            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync");
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(await this.StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ((TranslationStatusResult)response), ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync");
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDocumentStatus(Guid translationId, Guid documentId, RequestContext context)
         {
@@ -229,7 +229,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentStatusRequest(translationId, documentId, context);
+                using HttpMessage message = this.CreateGetDocumentStatusRequest(translationId, documentId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -251,15 +251,15 @@ namespace Azure.AI.Translation.Document
         /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentStatusAsync(Guid translationId, Guid documentId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDocumentStatusAsync(Guid translationId, Guid documentId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentStatusRequest(translationId, documentId, context);
+                using HttpMessage message = this.CreateGetDocumentStatusRequest(translationId, documentId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -276,11 +276,11 @@ namespace Azure.AI.Translation.Document
         /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentStatusResult> GetDocumentStatus(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Translation.Document.DocumentStatusResult> GetDocumentStatus(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
         {
-            Response result = GetDocumentStatus(translationId, documentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentStatusResult)result, result);
+            Response result = this.GetDocumentStatus(translationId, documentId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DocumentStatusResult)result), result);
         }
 
         /// <summary>
@@ -290,11 +290,11 @@ namespace Azure.AI.Translation.Document
         /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DocumentStatusResult>> GetDocumentStatusAsync(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Translation.Document.DocumentStatusResult>> GetDocumentStatusAsync(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetDocumentStatusAsync(translationId, documentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentStatusResult)result, result);
+            Response result = await this.GetDocumentStatusAsync(translationId, documentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DocumentStatusResult)result), result);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTranslationStatus(Guid translationId, RequestContext context)
         {
@@ -318,7 +318,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTranslationStatusRequest(translationId, context);
+                using HttpMessage message = this.CreateGetTranslationStatusRequest(translationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -341,15 +341,15 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTranslationStatusAsync(Guid translationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTranslationStatusAsync(Guid translationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetTranslationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTranslationStatusRequest(translationId, context);
+                using HttpMessage message = this.CreateGetTranslationStatusRequest(translationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -367,11 +367,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TranslationStatusResult> GetTranslationStatus(Guid translationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Translation.Document.TranslationStatusResult> GetTranslationStatus(Guid translationId, CancellationToken cancellationToken = default)
         {
-            Response result = GetTranslationStatus(translationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TranslationStatusResult)result, result);
+            Response result = this.GetTranslationStatus(translationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TranslationStatusResult)result), result);
         }
 
         /// <summary>
@@ -382,11 +382,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TranslationStatusResult>> GetTranslationStatusAsync(Guid translationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Translation.Document.TranslationStatusResult>> GetTranslationStatusAsync(Guid translationId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetTranslationStatusAsync(translationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TranslationStatusResult)result, result);
+            Response result = await this.GetTranslationStatusAsync(translationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TranslationStatusResult)result), result);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CancelTranslation(Guid translationId, RequestContext context)
         {
@@ -414,7 +414,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelTranslationRequest(translationId, context);
+                using HttpMessage message = this.CreateCancelTranslationRequest(translationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -441,15 +441,15 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelTranslationAsync(Guid translationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> CancelTranslationAsync(Guid translationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.CancelTranslation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelTranslationRequest(translationId, context);
+                using HttpMessage message = this.CreateCancelTranslationRequest(translationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -471,11 +471,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TranslationStatusResult> CancelTranslation(Guid translationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Translation.Document.TranslationStatusResult> CancelTranslation(Guid translationId, CancellationToken cancellationToken = default)
         {
-            Response result = CancelTranslation(translationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TranslationStatusResult)result, result);
+            Response result = this.CancelTranslation(translationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TranslationStatusResult)result), result);
         }
 
         /// <summary>
@@ -490,11 +490,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid translationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Translation.Document.TranslationStatusResult>> CancelTranslationAsync(Guid translationId, CancellationToken cancellationToken = default)
         {
-            Response result = await CancelTranslationAsync(translationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TranslationStatusResult)result, result);
+            Response result = await this.CancelTranslationAsync(translationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TranslationStatusResult)result), result);
         }
 
         /// <summary>
@@ -583,9 +583,9 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDocumentsStatus(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDocumentsStatus(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
             return new DocumentTranslationClientGetDocumentsStatusCollectionResult(
                 this,
@@ -688,9 +688,9 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDocumentsStatusAsync(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<global::System.Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
             return new DocumentTranslationClientGetDocumentsStatusAsyncCollectionResult(
                 this,
@@ -788,8 +788,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Translation.Document.DocumentStatusResult> GetDocumentsStatus(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<global::System.Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
         {
             return new DocumentTranslationClientGetDocumentsStatusCollectionResultOfT(
                 this,
@@ -887,8 +887,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Translation.Document.DocumentStatusResult> GetDocumentsStatusAsync(Guid translationId, int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<global::System.Guid> documentIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
         {
             return new DocumentTranslationClientGetDocumentsStatusAsyncCollectionResultOfT(
                 this,
@@ -918,7 +918,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSupportedFormats(string @type, RequestContext context)
         {
@@ -926,7 +926,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSupportedFormatsRequest(@type, context);
+                using HttpMessage message = this.CreateGetSupportedFormatsRequest(@type, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -949,15 +949,15 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSupportedFormatsAsync(string @type, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetSupportedFormatsAsync(string @type, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSupportedFormatsRequest(@type, context);
+                using HttpMessage message = this.CreateGetSupportedFormatsRequest(@type, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -975,11 +975,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? @type = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Translation.Document.SupportedFileFormats> GetSupportedFormats(FileFormatType? @type = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSupportedFormats(@type?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((SupportedFileFormats)result, result);
+            Response result = this.GetSupportedFormats(@type?.ToString(), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SupportedFileFormats)result), result);
         }
 
         /// <summary>
@@ -990,11 +990,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? @type = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Translation.Document.SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? @type = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSupportedFormatsAsync(@type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SupportedFileFormats)result, result);
+            Response result = await this.GetSupportedFormatsAsync(@type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SupportedFileFormats)result), result);
         }
     }
 }

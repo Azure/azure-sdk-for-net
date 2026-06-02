@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> The TextAuthoringProject sub-client. </summary>
     public partial class TextAuthoringProject
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of TextAuthoringProject for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -54,9 +54,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProjectDeletionStatus(string jobId, RequestContext context)
         {
@@ -64,9 +64,9 @@ namespace Azure.AI.Language.Text.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
+                using HttpMessage message = this.CreateGetProjectDeletionStatusRequest(jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -86,19 +86,19 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetProjectDeletionStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
+                using HttpMessage message = this.CreateGetProjectDeletionStatusRequest(jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -111,29 +111,29 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Gets the status for a project deletion job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TextAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetProjectDeletionStatus(jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TextAuthoringProjectDeletionState)result, result);
+            Response result = this.GetProjectDeletionStatus(jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TextAuthoringProjectDeletionState)result), result);
         }
 
         /// <summary> Gets the status for a project deletion job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TextAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetProjectDeletionStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TextAuthoringProjectDeletionState)result, result);
+            Response result = await this.GetProjectDeletionStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TextAuthoringProjectDeletionState)result), result);
         }
     }
 }

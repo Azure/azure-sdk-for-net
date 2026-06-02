@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
     {
         protected ResourceOperations() => throw null;
 
-        internal ResourceOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ResourceOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetResource(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetResourceAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetResourceAsync(RequestContext context) => throw null;
 
         public virtual Response GetResource(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetResourceAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetResourceAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

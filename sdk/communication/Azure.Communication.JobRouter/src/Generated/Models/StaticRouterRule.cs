@@ -13,16 +13,16 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing static rules that always return the same result, regardless of input. </summary>
     public partial class StaticRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of <see cref="StaticRouterRule"/>. </summary>
-        internal StaticRouterRule() : base(RouterRuleKind.Static)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.StaticRouterRule"/>. </summary>
+        internal StaticRouterRule() : base(global::Azure.Communication.JobRouter.RouterRuleKind.Static)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StaticRouterRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.StaticRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
-        internal StaticRouterRule(RouterRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData value) : base(kind, additionalBinaryDataProperties)
+        internal StaticRouterRule(RouterRuleKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BinaryData value) : base(kind, additionalBinaryDataProperties)
         {
             _value = value;
         }

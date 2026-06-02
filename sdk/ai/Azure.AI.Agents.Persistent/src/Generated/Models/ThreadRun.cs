@@ -16,9 +16,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class ThreadRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
         /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
-        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
+        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
         {
             Id = id;
             ThreadId = threadId;
@@ -69,7 +69,7 @@ namespace Azure.AI.Agents.Persistent
             ParallelToolCalls = parallelToolCalls;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.run'. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
@@ -99,10 +99,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, ToolResources toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, ToolResources toolResources, bool parallelToolCalls, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             ThreadId = threadId;
             AssistantId = assistantId;
             Status = status;
@@ -157,7 +157,7 @@ namespace Azure.AI.Agents.Persistent
         public string Instructions { get; }
 
         /// <summary> The overridden enabled tools used for this agent thread run. </summary>
-        public IReadOnlyList<ToolDefinition> Tools { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> Tools { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
@@ -200,8 +200,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -210,10 +210,10 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsToolChoiceOptionMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsNamedToolChoice"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -244,8 +244,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The response format of the tool calls used in this run.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -254,13 +254,13 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
-        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<UtteranceEntityEvaluationResult> expectedEntities, IEnumerable<UtteranceEntityEvaluationResult> predictedEntities)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> expectedEntities, IEnumerable<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> predictedEntities)
         {
             ExpectedEntities = expectedEntities.ToList();
             PredictedEntities = predictedEntities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IList<UtteranceEntityEvaluationResult> expectedEntities, IList<UtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IList<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> expectedEntities, IList<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedEntities = expectedEntities;
             PredictedEntities = predictedEntities;
@@ -38,9 +38,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the expected entity labels. </summary>
-        public IList<UtteranceEntityEvaluationResult> ExpectedEntities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> ExpectedEntities { get; }
 
         /// <summary> Represents the predicted entity labels. </summary>
-        public IList<UtteranceEntityEvaluationResult> PredictedEntities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> PredictedEntities { get; }
     }
 }

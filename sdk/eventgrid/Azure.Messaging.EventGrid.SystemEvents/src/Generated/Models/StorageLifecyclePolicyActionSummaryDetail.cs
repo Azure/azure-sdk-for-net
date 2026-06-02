@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         internal StorageLifecyclePolicyActionSummaryDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         /// <param name="totalObjectsCount"> Total number of objects to be acted on by this action. </param>
         /// <param name="successCount"> Number of success operations of this action. </param>
         /// <param name="errorList"> Error messages of this action if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TotalObjectsCount = totalObjectsCount;
             SuccessCount = successCount;

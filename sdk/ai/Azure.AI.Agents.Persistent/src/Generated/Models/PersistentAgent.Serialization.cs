@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents an agent that can call the model and use tools. </summary>
-    public partial class PersistentAgent : IJsonModel<PersistentAgent>
+    public partial class PersistentAgent : IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgent>
     {
-        /// <summary> Initializes a new instance of <see cref="PersistentAgent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgent"/> for deserialization. </summary>
         internal PersistentAgent()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PersistentAgent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePersistentAgent(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.PersistentAgent.DeserializePersistentAgent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PersistentAgent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PersistentAgent IPersistableModel<PersistentAgent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PersistentAgent IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PersistentAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PersistentAgent"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Agents.Persistent.PersistentAgent"/> from. </param>
         public static explicit operator PersistentAgent(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePersistentAgent(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Agents.Persistent.PersistentAgent.DeserializePersistentAgent(document.RootElement, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PersistentAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,18 +81,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PersistentAgent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(this.Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -101,7 +101,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("name"u8);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -112,7 +112,7 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Instructions))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
@@ -125,19 +125,19 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (ToolDefinition item in Tools)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ToolDefinition>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ToolResources))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(ToolResources))
             {
                 writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                writer.WriteObjectValue<ToolResources>(ToolResources, options);
             }
             else
             {
                 writer.WriteNull("tool_resources"u8);
             }
-            if (Optional.IsDefined(Temperature))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
@@ -146,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("temperature"u8);
             }
-            if (Optional.IsDefined(TopP))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(TopP))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(TopP.Value);
@@ -155,26 +155,26 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("top_p"u8);
             }
-            if (Optional.IsDefined(ResponseFormat))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(ResponseFormat);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(ResponseFormat))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -187,7 +187,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("metadata"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -195,9 +195,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -206,26 +206,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PersistentAgent IJsonModel<PersistentAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PersistentAgent IJsonModel<global::Azure.AI.Agents.Persistent.PersistentAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PersistentAgent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.PersistentAgent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PersistentAgent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.PersistentAgent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePersistentAgent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.PersistentAgent.DeserializePersistentAgent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PersistentAgent DeserializePersistentAgent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -236,13 +236,13 @@ namespace Azure.AI.Agents.Persistent
             string description = default;
             string model = default;
             string instructions = default;
-            IReadOnlyList<ToolDefinition> tools = default;
+            IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default;
             ToolResources toolResources = default;
             float? temperature = default;
             float? topP = default;
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -257,12 +257,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         name = null;
                         continue;
@@ -272,7 +272,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("description"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         description = null;
                         continue;
@@ -287,7 +287,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         instructions = null;
                         continue;
@@ -297,27 +297,27 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ToolDefinition> array = new List<ToolDefinition>();
+                    List<global::Azure.AI.Agents.Persistent.ToolDefinition> array = new List<global::Azure.AI.Agents.Persistent.ToolDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
                 }
                 if (prop.NameEquals("tool_resources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         toolResources = null;
                         continue;
                     }
-                    toolResources = ToolResources.DeserializeToolResources(prop.Value, options);
+                    toolResources = global::Azure.AI.Agents.Persistent.ToolResources.DeserializeToolResources(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         temperature = null;
                         continue;
@@ -327,7 +327,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         topP = null;
                         continue;
@@ -337,17 +337,17 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("response_format"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         responseFormat = null;
                         continue;
                     }
-                    responseFormat = BinaryData.FromString(prop.Value.GetRawText());
+                    responseFormat = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
@@ -355,7 +355,7 @@ namespace Azure.AI.Agents.Persistent
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -367,9 +367,9 @@ namespace Azure.AI.Agents.Persistent
                     metadata = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new PersistentAgent(

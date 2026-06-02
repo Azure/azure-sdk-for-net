@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> A conversational AI task. </summary>
     public partial class ConversationalAITask : AnalyzeConversationInput
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationalAITask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAITask"/>. </summary>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(AnalyzeConversationInputKind.ConversationalAI)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
+        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(global::Azure.AI.Language.Conversations.Models.AnalyzeConversationInputKind.ConversationalAI)
         {
-            Argument.AssertNotNull(analysisInput, nameof(analysisInput));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(analysisInput, nameof(analysisInput));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(parameters, nameof(parameters));
 
             AnalysisInput = analysisInput;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAITask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAITask"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
-        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(kind, additionalBinaryDataProperties)
+        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(kind, additionalBinaryDataProperties)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;

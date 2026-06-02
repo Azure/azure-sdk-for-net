@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The detailed information associated with a message creation run step. </summary>
     public partial class RunStepMessageCreationDetails : RunStepDetails
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepMessageCreationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMessageCreationDetails"/>. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        internal RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation) : base(RunStepType.MessageCreation)
+        internal RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation) : base(global::Azure.AI.Agents.Persistent.RunStepType.MessageCreation)
         {
             MessageCreation = messageCreation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepMessageCreationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepMessageCreationDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        internal RunStepMessageCreationDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepMessageCreationReference messageCreation) : base(@type, additionalBinaryDataProperties)
+        internal RunStepMessageCreationDetails(RunStepType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepMessageCreationReference messageCreation) : base(@type, additionalBinaryDataProperties)
         {
             MessageCreation = messageCreation;
         }

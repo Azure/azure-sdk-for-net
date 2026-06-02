@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that extracts text from image files. </summary>
     public partial class OcrSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="OcrSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public OcrSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Vision.OcrSkill", inputs, outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public OcrSkill(IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Vision.OcrSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="OcrSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.OcrSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="shouldDetectOrientation"> A value indicating to turn orientation detection on or not. Default is false. </param>
         /// <param name="lineEnding"> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </param>
-        internal OcrSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, OcrLineEnding? lineEnding) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal OcrSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, OcrLineEnding? lineEnding) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
             ShouldDetectOrientation = shouldDetectOrientation;

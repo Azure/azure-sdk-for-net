@@ -12,24 +12,24 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetectionEn"/>, and <see cref="AzureSemanticVadTurnDetectionMultilingual"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.ServerVadTurnDetection"/>, <see cref="Azure.AI.VoiceLive.AzureSemanticVadTurnDetection"/>, <see cref="Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn"/>, and <see cref="Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>.
     /// </summary>
     public abstract partial class TurnDetection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TurnDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.TurnDetection"/>. </summary>
         /// <param name="type"></param>
         private protected TurnDetection(TurnDetectionType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TurnDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.TurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TurnDetection(TurnDetectionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

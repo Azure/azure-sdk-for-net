@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of DataBox Stage Name enumeration. </summary>
-    public readonly partial struct DataBoxStageName : IEquatable<DataBoxStageName>
+    public readonly partial struct DataBoxStageName : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName>
     {
         private readonly string _value;
         /// <summary> Copy has started. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Order has been completed. </summary>
         private const string OrderCompletedValue = "OrderCompleted";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxStageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxStageName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Order has been completed. </summary>
         public static DataBoxStageName OrderCompleted { get; } = new DataBoxStageName(OrderCompletedValue);
 
-        /// <summary> Determines if two <see cref="DataBoxStageName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxStageName left, DataBoxStageName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DataBoxStageName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxStageName left, DataBoxStageName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DataBoxStageName(string value) => new DataBoxStageName(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxStageName?(string value) => value == null ? null : new DataBoxStageName(value);
+        public static implicit operator DataBoxStageName?(string value) => (value == null) ? null : new DataBoxStageName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataBoxStageName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DataBoxStageName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DataBoxStageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataBoxStageName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

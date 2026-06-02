@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    internal partial class LoadTestRunClientGetMetricsCollectionResultOfT : Pageable<TimeSeriesElement>
+    internal partial class LoadTestRunClientGetMetricsCollectionResultOfT : Pageable<global::Azure.Developer.LoadTesting.TimeSeriesElement>
     {
         private readonly LoadTestRunClient _client;
         private readonly string _testRunId;
@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _testRunId = testRunId;
@@ -58,20 +58,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestRunClientGetMetricsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<TimeSeriesElement>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Developer.LoadTesting.TimeSeriesElement>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                Metrics result = (Metrics)response;
-                yield return Page<TimeSeriesElement>.FromValues((IReadOnlyList<TimeSeriesElement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                global::Azure.Developer.LoadTesting.Metrics result = ((global::Azure.Developer.LoadTesting.Metrics)response);
+                yield return global::Azure.Page<TimeSeriesElement>.FromValues(((IReadOnlyList<global::Azure.Developer.LoadTesting.TimeSeriesElement>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -81,9 +81,9 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, _testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context) : _client.CreateGetMetricsRequest(_testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetMetricsRequest(nextLink, _testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context) : _client.CreateGetMetricsRequest(_testRunId, _metricName, _metricNamespace, _timespan, _content, _aggregation, _interval, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

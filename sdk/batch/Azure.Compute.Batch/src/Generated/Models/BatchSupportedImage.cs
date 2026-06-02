@@ -17,9 +17,9 @@ namespace Azure.Compute.Batch
     public partial class BatchSupportedImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchSupportedImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSupportedImage"/>. </summary>
         /// <param name="nodeAgentSkuId"> The ID of the Compute Node agent SKU which the Image supports. </param>
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
             VerificationType = verificationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchSupportedImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSupportedImage"/>. </summary>
         /// <param name="nodeAgentSkuId"> The ID of the Compute Node agent SKU which the Image supports. </param>
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, IList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, IList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;

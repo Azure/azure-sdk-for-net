@@ -14,23 +14,23 @@ namespace Azure.Compute.Batch
     public partial class OutputFileUploadHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileUploadHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileUploadHeader"/>. </summary>
         /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public OutputFileUploadHeader(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileUploadHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileUploadHeader"/>. </summary>
         /// <param name="name"> The case-insensitive name of the header to be used while uploading output files. </param>
         /// <param name="value"> The value of the header to be used while uploading output files. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFileUploadHeader(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputFileUploadHeader(string name, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

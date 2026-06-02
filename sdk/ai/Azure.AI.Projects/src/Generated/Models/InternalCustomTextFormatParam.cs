@@ -9,15 +9,15 @@ namespace Azure.AI.Projects
 {
     internal partial class InternalCustomTextFormatParam : InternalCustomToolParamFormat
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCustomTextFormatParam"/>. </summary>
-        public InternalCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCustomTextFormatParam"/>. </summary>
+        public InternalCustomTextFormatParam() : base(global::Azure.AI.Projects.CustomToolParamFormatType.Text)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCustomTextFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalCustomTextFormatParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCustomTextFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal InternalCustomTextFormatParam(CustomToolParamFormatType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

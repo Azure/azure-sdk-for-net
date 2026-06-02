@@ -17,24 +17,24 @@ namespace Specs.Azure.ClientGenerator.Core.Access._PublicOperation
     {
         protected PublicOperation() => throw null;
 
-        internal PublicOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PublicOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response NoDecoratorInPublic(string name, RequestContext context) => throw null;
 
-        public virtual Task<Response> NoDecoratorInPublicAsync(string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> NoDecoratorInPublicAsync(string name, RequestContext context) => throw null;
 
-        public virtual Response<NoDecoratorModelInPublic> NoDecoratorInPublic(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.Access._PublicOperation.NoDecoratorModelInPublic> NoDecoratorInPublic(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<NoDecoratorModelInPublic>> NoDecoratorInPublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.Access._PublicOperation.NoDecoratorModelInPublic>> NoDecoratorInPublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PublicDecoratorInPublic(string name, RequestContext context) => throw null;
 
-        public virtual Task<Response> PublicDecoratorInPublicAsync(string name, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PublicDecoratorInPublicAsync(string name, RequestContext context) => throw null;
 
-        public virtual Response<PublicDecoratorModelInPublic> PublicDecoratorInPublic(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.Access._PublicOperation.PublicDecoratorModelInPublic> PublicDecoratorInPublic(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<PublicDecoratorModelInPublic>> PublicDecoratorInPublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.Access._PublicOperation.PublicDecoratorModelInPublic>> PublicDecoratorInPublicAsync(string name, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,16 +14,16 @@ namespace Azure.AI.Speech.Transcription
     /// <summary> The TranscriptionClient. </summary>
     public partial class TranscriptionClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://cognitiveservices.azure.com/.default" } },
-                { GetTokenOptions.TokenUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/token" },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/authorize" }
+                { global::System.ClientModel.Primitives.GetTokenOptions.ScopesPropertyName, new string[] { "https://cognitiveservices.azure.com/.default" } },
+                { global::System.ClientModel.Primitives.GetTokenOptions.TokenUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/token" },
+                { global::System.ClientModel.Primitives.GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/authorize" }
             }
         };
         private readonly string _apiVersion;
@@ -36,16 +36,16 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, ApiKeyCredential credential) : this(endpoint, credential, new TranscriptionClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TranscriptionClient(global::System.Uri endpoint, ApiKeyCredential credential) : this(endpoint, credential, new TranscriptionClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new TranscriptionClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public TranscriptionClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new TranscriptionClientOptions())
         {
         }
 
@@ -53,20 +53,20 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal TranscriptionClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, TranscriptionClientOptions options)
+        internal TranscriptionClient(AuthenticationPolicy authenticationPolicy, global::System.Uri endpoint, TranscriptionClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Speech.Transcription.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TranscriptionClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             }
             else
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
             _apiVersion = options.Version;
         }
@@ -75,8 +75,8 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, ApiKeyCredential credential, TranscriptionClientOptions options) : this(ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TranscriptionClient(global::System.Uri endpoint, ApiKeyCredential credential, TranscriptionClientOptions options) : this(global::System.ClientModel.Primitives.ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -84,15 +84,15 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, TranscriptionClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public TranscriptionClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider, TranscriptionClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient from a <see cref="TranscriptionClientSettings"/>. </summary>
         /// <param name="settings"> The settings for TranscriptionClient. </param>
-        [Experimental("SCME0002")]
-        public TranscriptionClient(TranscriptionClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public TranscriptionClient(TranscriptionClientSettings settings) : this(global::System.ClientModel.Primitives.AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -110,12 +110,12 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Transcribe(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateTranscribeRequest(content, contentType, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -129,12 +129,12 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateTranscribeRequest(content, contentType, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
     }
 }

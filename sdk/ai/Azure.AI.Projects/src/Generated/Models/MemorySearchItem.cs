@@ -11,19 +11,19 @@ namespace Azure.AI.Projects.Memory
     public partial class MemorySearchItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         internal MemorySearchItem(MemoryItem memoryItem)
         {
             MemoryItem = memoryItem;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchItem(MemoryItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemorySearchItem(MemoryItem memoryItem, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MemoryItem = memoryItem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

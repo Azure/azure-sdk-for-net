@@ -15,9 +15,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringUpdateQnasJobState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringUpdateQnasJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
@@ -26,10 +26,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<global::Azure.ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringUpdateQnasJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<global::Azure.ResponseError> errors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -64,6 +64,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public JobStatus Status { get; }
 
         /// <summary> The errors encountered while executing the job. </summary>
-        public IList<ResponseError> Errors { get; }
+        public IList<global::Azure.ResponseError> Errors { get; }
     }
 }

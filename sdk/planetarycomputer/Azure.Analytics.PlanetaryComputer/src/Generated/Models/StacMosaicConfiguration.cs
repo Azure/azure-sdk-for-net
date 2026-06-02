@@ -16,25 +16,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacMosaicConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacMosaicConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration"/>. </summary>
         /// <param name="mosaics"> Predefined data mosaics available for this collection. </param>
         /// <param name="renderOptions"> Available render options for visualizing the data. </param>
-        internal StacMosaicConfiguration(IEnumerable<StacMosaic> mosaics, IEnumerable<RenderConfiguration> renderOptions)
+        internal StacMosaicConfiguration(IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacMosaic> mosaics, IEnumerable<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration> renderOptions)
         {
             Mosaics = mosaics.ToList();
             RenderOptions = renderOptions.ToList();
-            DefaultCustomQuery = new ChangeTrackingDictionary<string, BinaryData>();
+            DefaultCustomQuery = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacMosaicConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration"/>. </summary>
         /// <param name="mosaics"> Predefined data mosaics available for this collection. </param>
         /// <param name="renderOptions"> Available render options for visualizing the data. </param>
         /// <param name="defaultLocation"> Default map location when displaying this collection. </param>
         /// <param name="defaultCustomQuery"> A list of CQL-JSON expressions to use as the default for  this collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacMosaicConfiguration(IList<StacMosaic> mosaics, IList<RenderConfiguration> renderOptions, DefaultLocation defaultLocation, IDictionary<string, BinaryData> defaultCustomQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacMosaicConfiguration(IList<global::Azure.Analytics.PlanetaryComputer.StacMosaic> mosaics, IList<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration> renderOptions, DefaultLocation defaultLocation, IDictionary<string, global::System.BinaryData> defaultCustomQuery, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Mosaics = mosaics;
             RenderOptions = renderOptions;
@@ -44,18 +44,18 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Predefined data mosaics available for this collection. </summary>
-        public IList<StacMosaic> Mosaics { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacMosaic> Mosaics { get; }
 
         /// <summary> Available render options for visualizing the data. </summary>
-        public IList<RenderConfiguration> RenderOptions { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.RenderConfiguration> RenderOptions { get; }
 
         /// <summary> Default map location when displaying this collection. </summary>
         public DefaultLocation DefaultLocation { get; }
 
         /// <summary>
         /// A list of CQL-JSON expressions to use as the default for  this collection.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -78,6 +78,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> DefaultCustomQuery { get; }
+        public IDictionary<string, global::System.BinaryData> DefaultCustomQuery { get; }
     }
 }

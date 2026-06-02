@@ -14,7 +14,7 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
     {
         private protected Dog(DogKind kind, int weight) => throw null;
 
-        internal Dog(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+        internal Dog(DogKind kind, int weight, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) => throw null;
 
         internal DogKind Kind
         {

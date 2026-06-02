@@ -13,19 +13,19 @@ namespace Azure.AI.Projects.Evaluation
     public partial class ClusterInsightResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ClusterInsightResult"/>. </summary>
         /// <param name="summary"> Summary of the insights report. </param>
         /// <param name="clusters"> List of clusters identified in the insights. </param>
-        internal ClusterInsightResult(InsightSummary summary, IEnumerable<InsightCluster> clusters)
+        internal ClusterInsightResult(InsightSummary summary, IEnumerable<global::Azure.AI.Projects.Evaluation.InsightCluster> clusters)
         {
             Summary = summary;
             Clusters = clusters.ToList();
-            Coordinates = new ChangeTrackingDictionary<string, ChartCoordinate>();
+            Coordinates = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Evaluation.ChartCoordinate>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ClusterInsightResult"/>. </summary>
         /// <param name="summary"> Summary of the insights report. </param>
         /// <param name="clusters"> List of clusters identified in the insights. </param>
         /// <param name="coordinates">
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects.Evaluation
         ///   modify the canonical insights results.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterInsightResult(InsightSummary summary, IList<InsightCluster> clusters, IDictionary<string, ChartCoordinate> coordinates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterInsightResult(InsightSummary summary, IList<global::Azure.AI.Projects.Evaluation.InsightCluster> clusters, IDictionary<string, global::Azure.AI.Projects.Evaluation.ChartCoordinate> coordinates, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Summary = summary;
             Clusters = clusters;
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Evaluation
         public InsightSummary Summary { get; }
 
         /// <summary> List of clusters identified in the insights. </summary>
-        public IList<InsightCluster> Clusters { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.InsightCluster> Clusters { get; }
 
         /// <summary>
         ///   Optional mapping of IDs to 2D coordinates used by the UX for visualization.
@@ -75,6 +75,6 @@ namespace Azure.AI.Projects.Evaluation
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.
         /// </summary>
-        public IDictionary<string, ChartCoordinate> Coordinates { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Evaluation.ChartCoordinate> Coordinates { get; }
     }
 }

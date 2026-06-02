@@ -12,10 +12,10 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    [PersistableModelProxy(typeof(UnknownMonitorDomain))]
-    internal abstract partial class MonitorDomain : IJsonModel<MonitorDomain>
+    [PersistableModelProxyAttribute(typeof(UnknownMonitorDomain))]
+    internal abstract partial class MonitorDomain : IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>
     {
-        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain"/> for deserialization. </summary>
         internal MonitorDomain()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.OpenTelemetry.Exporter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitorDomain(document.RootElement, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain.DeserializeMonitorDomain(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorDomain>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorDomain IPersistableModel<MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorDomain IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorDomain>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,14 +73,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ver"u8);
             writer.WriteNumberValue(Version);
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.ToString());
@@ -91,9 +91,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -101,26 +101,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorDomain IJsonModel<MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorDomain IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorDomain(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain.DeserializeMonitorDomain(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MonitorDomain DeserializeMonitorDomain(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -129,26 +129,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 switch (discriminator.GetString())
                 {
                     case "AvailabilityData":
-                        return AvailabilityData.DeserializeAvailabilityData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.AvailabilityData.DeserializeAvailabilityData(element, options);
                     case "EventData":
-                        return TelemetryEventData.DeserializeTelemetryEventData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryEventData.DeserializeTelemetryEventData(element, options);
                     case "ExceptionData":
-                        return TelemetryExceptionData.DeserializeTelemetryExceptionData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData.DeserializeTelemetryExceptionData(element, options);
                     case "MessageData":
-                        return MessageData.DeserializeMessageData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MessageData.DeserializeMessageData(element, options);
                     case "MetricsData":
-                        return MetricsData.DeserializeMetricsData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData.DeserializeMetricsData(element, options);
                     case "PageViewData":
-                        return PageViewData.DeserializePageViewData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewData.DeserializePageViewData(element, options);
                     case "PageViewPerfData":
-                        return PageViewPerfData.DeserializePageViewPerfData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData.DeserializePageViewPerfData(element, options);
                     case "RemoteDependencyData":
-                        return RemoteDependencyData.DeserializeRemoteDependencyData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.RemoteDependencyData.DeserializeRemoteDependencyData(element, options);
                     case "RequestData":
-                        return RequestData.DeserializeRequestData(element, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.RequestData.DeserializeRequestData(element, options);
                 }
             }
-            return UnknownMonitorDomain.DeserializeUnknownMonitorDomain(element, options);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.UnknownMonitorDomain.DeserializeUnknownMonitorDomain(element, options);
         }
     }
 }

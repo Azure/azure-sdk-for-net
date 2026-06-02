@@ -13,18 +13,18 @@ namespace Azure.AI.VoiceLive
     /// <summary> Details for an incomplete response. </summary>
     public partial class ResponseIncompleteDetails : ResponseStatusDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseIncompleteDetails"/>. </summary>
         /// <param name="reason"></param>
-        internal ResponseIncompleteDetails(ResponseIncompleteDetailsReason reason) : base(SessionResponseStatus.Incomplete)
+        internal ResponseIncompleteDetails(ResponseIncompleteDetailsReason reason) : base(global::Azure.AI.VoiceLive.SessionResponseStatus.Incomplete)
         {
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseIncompleteDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reason"></param>
-        internal ResponseIncompleteDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseIncompleteDetailsReason reason) : base(@type, additionalBinaryDataProperties)
+        internal ResponseIncompleteDetails(SessionResponseStatus @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponseIncompleteDetailsReason reason) : base(@type, additionalBinaryDataProperties)
         {
             Reason = reason;
         }

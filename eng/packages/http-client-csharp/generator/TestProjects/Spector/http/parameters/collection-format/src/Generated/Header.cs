@@ -18,16 +18,16 @@ namespace Parameters.CollectionFormat._Header
     {
         protected Header() => throw null;
 
-        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> CsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
     }
 }

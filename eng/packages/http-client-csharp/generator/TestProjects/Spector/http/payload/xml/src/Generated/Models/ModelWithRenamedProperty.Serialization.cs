@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithRenamedProperty : IPersistableModel<ModelWithRenamedProperty>, IXmlSerializable
+    public partial class ModelWithRenamedProperty : IPersistableModel<global::Payload.Xml.ModelWithRenamedProperty>, IXmlSerializable
     {
         internal ModelWithRenamedProperty() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithRenamedProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithRenamedProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithRenamedProperty IPersistableModel<ModelWithRenamedProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithRenamedProperty IPersistableModel<global::Payload.Xml.ModelWithRenamedProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithRenamedProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithRenamedProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithRenamedProperty"> The <see cref="ModelWithRenamedProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithRenamedProperty"> The <see cref="global::Payload.Xml.ModelWithRenamedProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRenamedProperty modelWithRenamedProperty) => throw null;
 
         public static explicit operator ModelWithRenamedProperty(Response response) => throw null;

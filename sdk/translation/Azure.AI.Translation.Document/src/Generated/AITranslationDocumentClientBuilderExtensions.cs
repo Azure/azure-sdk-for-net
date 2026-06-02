@@ -13,74 +13,74 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class AITranslationDocumentClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.DocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>((options, credential) => new DocumentTranslationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.DocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>(options => new DocumentTranslationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.DocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>(configuration);
         }
 
-        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static IAzureClientBuilder<SingleDocumentTranslationClient, DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.SingleDocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(credential, nameof(credential));
 
             return builder.RegisterClientFactory<SingleDocumentTranslationClient, DocumentTranslationClientOptions>(options => new SingleDocumentTranslationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<SingleDocumentTranslationClient, DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.SingleDocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<SingleDocumentTranslationClient, DocumentTranslationClientOptions>((options, credential) => new SingleDocumentTranslationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SingleDocumentTranslationClient, DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Document.SingleDocumentTranslationClient, global::Azure.AI.Translation.Document.DocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SingleDocumentTranslationClient, DocumentTranslationClientOptions>(configuration);

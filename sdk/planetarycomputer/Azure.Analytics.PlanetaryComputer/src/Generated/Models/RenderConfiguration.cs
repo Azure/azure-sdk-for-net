@@ -14,23 +14,23 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class RenderConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RenderConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderConfiguration"/>. </summary>
         /// <param name="id"> Unique identifier for the render option. </param>
         /// <param name="name"> Short descriptive name for the render option. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public RenderConfiguration(string id, string name)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;
-            Conditions = new ChangeTrackingList<RenderOptionCondition>();
+            Conditions = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenderConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderConfiguration"/>. </summary>
         /// <param name="id"> Unique identifier for the render option. </param>
         /// <param name="name"> Short descriptive name for the render option. </param>
         /// <param name="description">
@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// this render option to be enabled
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderConfiguration(string id, string name, string description, RenderOptionType? @type, string options, RenderOptionVectorOptions vectorOptions, int? minZoom, RenderOptionLegend legend, IList<RenderOptionCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderConfiguration(string id, string name, string description, RenderOptionType? @type, string options, RenderOptionVectorOptions vectorOptions, int? minZoom, RenderOptionLegend legend, IList<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition> conditions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -104,6 +104,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// A list of property/value conditions that must be in the active mosaic CQL for
         /// this render option to be enabled
         /// </summary>
-        public IList<RenderOptionCondition> Conditions { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition> Conditions { get; }
     }
 }

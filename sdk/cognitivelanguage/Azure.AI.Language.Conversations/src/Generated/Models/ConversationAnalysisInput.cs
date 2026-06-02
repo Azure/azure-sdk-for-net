@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationAnalysisInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationAnalysisInput"/>. </summary>
         /// <param name="conversationItem"> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationItem"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversationItem"/> is null. </exception>
         public ConversationAnalysisInput(TextConversationItem conversationItem)
         {
-            Argument.AssertNotNull(conversationItem, nameof(conversationItem));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(conversationItem, nameof(conversationItem));
 
             ConversationItem = conversationItem;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationAnalysisInput"/>. </summary>
         /// <param name="conversationItem"> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAnalysisInput(TextConversationItem conversationItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAnalysisInput(TextConversationItem conversationItem, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConversationItem = conversationItem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

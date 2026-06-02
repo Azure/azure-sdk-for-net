@@ -14,21 +14,21 @@ namespace Azure.Compute.Batch
     public partial class VMExtensionInstanceView
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMExtensionInstanceView"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VMExtensionInstanceView"/>. </summary>
         internal VMExtensionInstanceView()
         {
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
-            SubStatuses = new ChangeTrackingList<InstanceViewStatus>();
+            Statuses = new ChangeTrackingList<global::Azure.Compute.Batch.InstanceViewStatus>();
+            SubStatuses = new ChangeTrackingList<global::Azure.Compute.Batch.InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMExtensionInstanceView"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VMExtensionInstanceView"/>. </summary>
         /// <param name="name"> The name of the vm extension instance view. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="subStatuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMExtensionInstanceView(string name, IList<InstanceViewStatus> statuses, IList<InstanceViewStatus> subStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMExtensionInstanceView(string name, IList<global::Azure.Compute.Batch.InstanceViewStatus> statuses, IList<global::Azure.Compute.Batch.InstanceViewStatus> subStatuses, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Statuses = statuses;
@@ -40,9 +40,9 @@ namespace Azure.Compute.Batch
         public string Name { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IList<global::Azure.Compute.Batch.InstanceViewStatus> Statuses { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> SubStatuses { get; }
+        public IList<global::Azure.Compute.Batch.InstanceViewStatus> SubStatuses { get; }
     }
 }

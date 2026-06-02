@@ -13,11 +13,11 @@ namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class PreviewVersionClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01_Preview;
+        private const global::Specs.Azure.Versioning.PreviewVersion.PreviewVersionClientOptions.ServiceVersion LatestVersion = global::Specs.Azure.Versioning.PreviewVersion.PreviewVersionClientOptions.ServiceVersion.V2024_12_01_Preview;
 
-        public PreviewVersionClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public PreviewVersionClientOptions(global::Specs.Azure.Versioning.PreviewVersion.PreviewVersionClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal PreviewVersionClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

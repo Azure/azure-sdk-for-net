@@ -23,31 +23,31 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendPath("/translator", false);
             uri.AppendPath("/document:translate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (sourceLanguage != null)
+            if ((sourceLanguage != null))
             {
                 uri.AppendQuery("sourceLanguage", sourceLanguage, true);
             }
             uri.AppendQuery("targetLanguage", targetLanguage, true);
-            if (category != null)
+            if ((category != null))
             {
                 uri.AppendQuery("category", category, true);
             }
-            if (allowFallback != null)
+            if ((allowFallback != null))
             {
-                uri.AppendQuery("allowFallback", TypeFormatters.ConvertToString(allowFallback), true);
+                uri.AppendQuery("allowFallback", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(allowFallback), true);
             }
-            if (translateTextWithinImage != null)
+            if ((translateTextWithinImage != null))
             {
-                uri.AppendQuery("translateTextWithinImage", TypeFormatters.ConvertToString(translateTextWithinImage), true);
+                uri.AppendQuery("translateTextWithinImage", global::Azure.AI.Translation.Document.TypeFormatters.ConvertToString(translateTextWithinImage), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
             request.Headers.SetValue("Accept", "application/octet-stream");
             request.Content = content;

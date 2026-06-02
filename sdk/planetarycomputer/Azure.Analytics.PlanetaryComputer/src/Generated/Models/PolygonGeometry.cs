@@ -14,27 +14,27 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a Polygon. </summary>
     public partial class PolygonGeometry : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.PolygonGeometry"/>. </summary>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public PolygonGeometry(IEnumerable<IList<IList<float>>> coordinates) : base(GeometryType.Polygon)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public PolygonGeometry(IEnumerable<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> coordinates) : base(global::Azure.Analytics.PlanetaryComputer.GeometryType.Polygon)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.PolygonGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
-        internal PolygonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal PolygonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> The coordinates of the polygon. </summary>
-        public IList<IList<IList<float>>> Coordinates { get; }
+        public IList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> Coordinates { get; }
     }
 }

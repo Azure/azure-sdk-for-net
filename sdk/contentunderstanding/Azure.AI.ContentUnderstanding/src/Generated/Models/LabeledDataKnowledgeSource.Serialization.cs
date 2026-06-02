@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Labeled data knowledge source. </summary>
-    public partial class LabeledDataKnowledgeSource : KnowledgeSource, IJsonModel<LabeledDataKnowledgeSource>
+    public partial class LabeledDataKnowledgeSource : KnowledgeSource, IJsonModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>
     {
-        /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/> for deserialization. </summary>
         internal LabeledDataKnowledgeSource()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLabeledDataKnowledgeSource(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource.DeserializeLabeledDataKnowledgeSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabeledDataKnowledgeSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LabeledDataKnowledgeSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LabeledDataKnowledgeSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabeledDataKnowledgeSource IPersistableModel<LabeledDataKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (LabeledDataKnowledgeSource)PersistableModelCreateCore(data, options);
+        LabeledDataKnowledgeSource IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((LabeledDataKnowledgeSource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LabeledDataKnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LabeledDataKnowledgeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,15 +73,15 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LabeledDataKnowledgeSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("containerUrl"u8);
             writer.WriteStringValue(ContainerUri.AbsoluteUri);
-            if (Optional.IsDefined(Prefix))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
@@ -92,32 +92,32 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabeledDataKnowledgeSource IJsonModel<LabeledDataKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LabeledDataKnowledgeSource)JsonModelCreateCore(ref reader, options);
+        LabeledDataKnowledgeSource IJsonModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((LabeledDataKnowledgeSource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LabeledDataKnowledgeSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLabeledDataKnowledgeSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource.DeserializeLabeledDataKnowledgeSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LabeledDataKnowledgeSource DeserializeLabeledDataKnowledgeSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             KnowledgeSourceKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri containerUri = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            global::System.Uri containerUri = default;
             string prefix = default;
             string fileListPath = default;
             foreach (var prop in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))
@@ -142,9 +142,9 @@ namespace Azure.AI.ContentUnderstanding
                     fileListPath = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LabeledDataKnowledgeSource(kind, additionalBinaryDataProperties, containerUri, prefix, fileListPath);

@@ -16,10 +16,10 @@ namespace Azure.AI.Language.Text
     {
         /// <summary>
         /// Collection of documents to analyze and a single task to execute.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.TextEntityLinkingInput"/>, <see cref="Text.TextEntityRecognitionInput"/>, <see cref="Text.TextKeyPhraseExtractionInput"/>, <see cref="Text.TextLanguageDetectionInput"/>, <see cref="Text.TextPiiEntitiesRecognitionInput"/>, and <see cref="Text.TextSentimentAnalysisInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.TextEntityLinkingInput"/>, <see cref="Azure.AI.Language.Text.TextEntityRecognitionInput"/>, <see cref="Azure.AI.Language.Text.TextKeyPhraseExtractionInput"/>, <see cref="Azure.AI.Language.Text.TextLanguageDetectionInput"/>, <see cref="Azure.AI.Language.Text.TextPiiEntitiesRecognitionInput"/>, and <see cref="Azure.AI.Language.Text.TextSentimentAnalysisInput"/>.
         /// </summary>
         /// <param name="kind"> The kind of task to perform. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextInput"/> instance for mocking. </returns>
         public static AnalyzeTextInput AnalyzeTextInput(string kind = default)
         {
             return new UnknownAnalyzeTextInput(new AnalyzeTextInputKind(kind), additionalBinaryDataProperties: null);
@@ -28,18 +28,18 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text Entity linking input. </summary>
         /// <param name="textInput"> Contains the analysis input to be handled by the service. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.TextEntityLinkingInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextEntityLinkingInput"/> instance for mocking. </returns>
         public static TextEntityLinkingInput TextEntityLinkingInput(MultiLanguageTextInput textInput = default, EntityLinkingActionContent actionContent = default)
         {
-            return new TextEntityLinkingInput(AnalyzeTextInputKind.EntityLinking, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextEntityLinkingInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.EntityLinking, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Collection of input documents to be analyzed by the service. </summary>
         /// <param name="multiLanguageInputs"> The input documents to be analyzed. </param>
-        /// <returns> A new <see cref="Text.MultiLanguageTextInput"/> instance for mocking. </returns>
-        public static MultiLanguageTextInput MultiLanguageTextInput(IEnumerable<MultiLanguageInput> multiLanguageInputs = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.MultiLanguageTextInput"/> instance for mocking. </returns>
+        public static MultiLanguageTextInput MultiLanguageTextInput(IEnumerable<global::Azure.AI.Language.Text.MultiLanguageInput> multiLanguageInputs = default)
         {
-            multiLanguageInputs ??= new ChangeTrackingList<MultiLanguageInput>();
+            multiLanguageInputs ??= new ChangeTrackingList<global::Azure.AI.Language.Text.MultiLanguageInput>();
 
             return new MultiLanguageTextInput(multiLanguageInputs.ToList(), additionalBinaryDataProperties: null);
         }
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         /// <param name="language"> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use \"en\" for English; \"es\" for Spanish etc. If not set, use \"en\" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto Language Detection, use \"auto\". If not set, use \"en\" for English as default. </param>
-        /// <returns> A new <see cref="Text.MultiLanguageInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.MultiLanguageInput"/> instance for mocking. </returns>
         public static MultiLanguageInput MultiLanguageInput(string id = default, string text = default, string language = default)
         {
             return new MultiLanguageInput(id, text, language, additionalBinaryDataProperties: null);
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Text
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"> Optional parameter to provide the string index type used to interpret string offsets. Defaults to TextElements (Graphemes). </param>
-        /// <returns> A new <see cref="Text.EntityLinkingActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingActionContent"/> instance for mocking. </returns>
         public static EntityLinkingActionContent EntityLinkingActionContent(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default)
         {
             return new EntityLinkingActionContent(loggingOptOut, modelVersion, stringIndexType, additionalBinaryDataProperties: null);
@@ -67,10 +67,10 @@ namespace Azure.AI.Language.Text
         /// <summary> The entity recognition analyze text input task request. </summary>
         /// <param name="textInput"> The input to be analyzed. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.TextEntityRecognitionInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextEntityRecognitionInput"/> instance for mocking. </returns>
         public static TextEntityRecognitionInput TextEntityRecognitionInput(MultiLanguageTextInput textInput = default, EntitiesActionContent actionContent = default)
         {
-            return new TextEntityRecognitionInput(AnalyzeTextInputKind.EntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextEntityRecognitionInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.EntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Supported parameters for an Entity Recognition task. </summary>
@@ -81,11 +81,11 @@ namespace Azure.AI.Language.Text
         /// <param name="exclusions"> (Optional) request parameter that filters out any entities that are included the excludeList. When a user specifies an excludeList, they cannot get a prediction returned with an entity in that list. We will apply inclusionList before exclusionList. </param>
         /// <param name="overlapPolicy"> (Optional) describes the type of overlap policy to apply to the ner output. </param>
         /// <param name="inferenceOptions"> (Optional) request parameter that allows the user to provide settings for running the inference. </param>
-        /// <returns> A new <see cref="Text.EntitiesActionContent"/> instance for mocking. </returns>
-        public static EntitiesActionContent EntitiesActionContent(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default, IEnumerable<EntityCategory> inclusions = default, IEnumerable<EntityCategory> exclusions = default, EntityOverlapPolicy overlapPolicy = default, EntityInferenceConfig inferenceOptions = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitiesActionContent"/> instance for mocking. </returns>
+        public static EntitiesActionContent EntitiesActionContent(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default, IEnumerable<global::Azure.AI.Language.Text.EntityCategory> inclusions = default, IEnumerable<global::Azure.AI.Language.Text.EntityCategory> exclusions = default, EntityOverlapPolicy overlapPolicy = default, EntityInferenceConfig inferenceOptions = default)
         {
-            inclusions ??= new ChangeTrackingList<EntityCategory>();
-            exclusions ??= new ChangeTrackingList<EntityCategory>();
+            inclusions ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityCategory>();
+            exclusions ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityCategory>();
 
             return new EntitiesActionContent(
                 loggingOptOut,
@@ -100,32 +100,32 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity OverlapPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.MatchLongestEntityPolicyType"/> and <see cref="Text.AllowOverlapEntityPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.MatchLongestEntityPolicyType"/> and <see cref="Azure.AI.Language.Text.AllowOverlapEntityPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
-        /// <returns> A new <see cref="Text.EntityOverlapPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityOverlapPolicy"/> instance for mocking. </returns>
         public static EntityOverlapPolicy EntityOverlapPolicy(string policyKind = default)
         {
             return new UnknownEntityOverlapPolicy(new PolicyKind(policyKind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the Match longest overlap policy. No overlapping entities as far as it is possible. 1. If there are overlapping entities, the longest one will be returned. 2. If the set of characters predicted for 2 or more entities are exactly the same, select the entity that has the higher confidence score.3. If the entity scores are identical, return all entities that are still present after applying the previous rules. 3. If there is partial overlap (as in Hello Text Analytics) follow the above steps starting from 1. </summary>
-        /// <returns> A new <see cref="Text.MatchLongestEntityPolicyType"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.MatchLongestEntityPolicyType"/> instance for mocking. </returns>
         public static MatchLongestEntityPolicyType MatchLongestEntityPolicyType()
         {
-            return new MatchLongestEntityPolicyType(PolicyKind.MatchLongest, additionalBinaryDataProperties: null);
+            return new MatchLongestEntityPolicyType(global::Azure.AI.Language.Text.PolicyKind.MatchLongest, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the allow overlap policy. Will apply no post processing logic for the entities. Whatever the model predicts is what will be returned to the user. This allows the user to get a full view of every single model's possible values and apply their own custom logic on entity selection. </summary>
-        /// <returns> A new <see cref="Text.AllowOverlapEntityPolicyType"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AllowOverlapEntityPolicyType"/> instance for mocking. </returns>
         public static AllowOverlapEntityPolicyType AllowOverlapEntityPolicyType()
         {
-            return new AllowOverlapEntityPolicyType(PolicyKind.AllowOverlap, additionalBinaryDataProperties: null);
+            return new AllowOverlapEntityPolicyType(global::Azure.AI.Language.Text.PolicyKind.AllowOverlap, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The class that houses the inference options allowed for named entity recognition. </summary>
         /// <param name="excludeNormalizedValues"> Option to include/exclude the detected entity values to be normalized and included in the metadata. The numeric and temporal entity types support value normalization. </param>
-        /// <returns> A new <see cref="Text.EntityInferenceConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityInferenceConfig"/> instance for mocking. </returns>
         public static EntityInferenceConfig EntityInferenceConfig(bool? excludeNormalizedValues = default)
         {
             return new EntityInferenceConfig(excludeNormalizedValues, additionalBinaryDataProperties: null);
@@ -134,16 +134,16 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text KeyPhraseExtraction task input. </summary>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Key phrase extraction task parameters. </param>
-        /// <returns> A new <see cref="Text.TextKeyPhraseExtractionInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextKeyPhraseExtractionInput"/> instance for mocking. </returns>
         public static TextKeyPhraseExtractionInput TextKeyPhraseExtractionInput(MultiLanguageTextInput textInput = default, KeyPhraseActionContent actionContent = default)
         {
-            return new TextKeyPhraseExtractionInput(AnalyzeTextInputKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextKeyPhraseExtractionInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Supported parameters for a Key Phrase Extraction task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.KeyPhraseActionContent"/> instance for mocking. </returns>
         public static KeyPhraseActionContent KeyPhraseActionContent(bool? loggingOptOut = default, string modelVersion = default)
         {
             return new KeyPhraseActionContent(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
@@ -152,18 +152,18 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the language detection document analysis task input. </summary>
         /// <param name="textInput"> Documents to be analyzed. </param>
         /// <param name="actionContent"> task parameters. </param>
-        /// <returns> A new <see cref="Text.TextLanguageDetectionInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextLanguageDetectionInput"/> instance for mocking. </returns>
         public static TextLanguageDetectionInput TextLanguageDetectionInput(LanguageDetectionTextInput textInput = default, LanguageDetectionActionContent actionContent = default)
         {
-            return new TextLanguageDetectionInput(AnalyzeTextInputKind.LanguageDetection, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextLanguageDetectionInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.LanguageDetection, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Contains the language detection document analysis input. </summary>
         /// <param name="languageInputs"> List of documents to be analyzed. </param>
-        /// <returns> A new <see cref="Text.LanguageDetectionTextInput"/> instance for mocking. </returns>
-        public static LanguageDetectionTextInput LanguageDetectionTextInput(IEnumerable<LanguageInput> languageInputs = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LanguageDetectionTextInput"/> instance for mocking. </returns>
+        public static LanguageDetectionTextInput LanguageDetectionTextInput(IEnumerable<global::Azure.AI.Language.Text.LanguageInput> languageInputs = default)
         {
-            languageInputs ??= new ChangeTrackingList<LanguageInput>();
+            languageInputs ??= new ChangeTrackingList<global::Azure.AI.Language.Text.LanguageInput>();
 
             return new LanguageDetectionTextInput(languageInputs.ToList(), additionalBinaryDataProperties: null);
         }
@@ -172,7 +172,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         /// <param name="countryHint"> The country hint to help with language detection of the text. </param>
-        /// <returns> A new <see cref="Text.LanguageInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LanguageInput"/> instance for mocking. </returns>
         public static LanguageInput LanguageInput(string id = default, string text = default, string countryHint = default)
         {
             return new LanguageInput(id, text, countryHint, additionalBinaryDataProperties: null);
@@ -181,7 +181,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Supported parameters for a Language Detection task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        /// <returns> A new <see cref="Text.LanguageDetectionActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LanguageDetectionActionContent"/> instance for mocking. </returns>
         public static LanguageDetectionActionContent LanguageDetectionActionContent(bool? loggingOptOut = default, string modelVersion = default)
         {
             return new LanguageDetectionActionContent(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
@@ -190,10 +190,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text PIIEntityRecognition task input. </summary>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Pii task parameters. </param>
-        /// <returns> A new <see cref="Text.TextPiiEntitiesRecognitionInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextPiiEntitiesRecognitionInput"/> instance for mocking. </returns>
         public static TextPiiEntitiesRecognitionInput TextPiiEntitiesRecognitionInput(MultiLanguageTextInput textInput = default, PiiActionContent actionContent = default)
         {
-            return new TextPiiEntitiesRecognitionInput(AnalyzeTextInputKind.PiiEntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextPiiEntitiesRecognitionInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.PiiEntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
@@ -208,13 +208,13 @@ namespace Azure.AI.Language.Text
         /// <param name="redactionPolicies"> List of RedactionPolicies to be used on the input. </param>
         /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
         /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
-        /// <returns> A new <see cref="Text.PiiActionContent"/> instance for mocking. </returns>
-        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategory> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategoriesExclude> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<BaseRedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiActionContent"/> instance for mocking. </returns>
+        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<global::Azure.AI.Language.Text.PiiCategory> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<global::Azure.AI.Language.Text.EntitySynonyms> entitySynonyms = default, IEnumerable<global::Azure.AI.Language.Text.BaseRedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
         {
-            piiCategories ??= new ChangeTrackingList<PiiCategory>();
-            excludePiiCategories ??= new ChangeTrackingList<PiiCategoriesExclude>();
-            entitySynonyms ??= new ChangeTrackingList<EntitySynonyms>();
-            redactionPolicies ??= new ChangeTrackingList<BaseRedactionPolicy>();
+            piiCategories ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategory>();
+            excludePiiCategories ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
+            entitySynonyms ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntitySynonyms>();
+            redactionPolicies ??= new ChangeTrackingList<global::Azure.AI.Language.Text.BaseRedactionPolicy>();
 
             return new PiiActionContent(
                 loggingOptOut,
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Policy for specific words and terms that should be excluded from detection by the PII detection service. </summary>
         /// <param name="caseSensitive"> Option to make the values excluded values case sensitive. </param>
         /// <param name="excludedValues"> List of words and terms that should be excluded from detection by the PII detection service. </param>
-        /// <returns> A new <see cref="Text.ValueExclusionPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ValueExclusionPolicy"/> instance for mocking. </returns>
         public static ValueExclusionPolicy ValueExclusionPolicy(bool caseSensitive = default, IEnumerable<string> excludedValues = default)
         {
             excludedValues ??= new ChangeTrackingList<string>();
@@ -245,10 +245,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Object that allows the user to provide synonyms for context words that to enhance pii entity detection. </summary>
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
-        /// <returns> A new <see cref="Text.EntitySynonyms"/> instance for mocking. </returns>
-        public static EntitySynonyms EntitySynonyms(EntityCategory entityType = default, IEnumerable<EntitySynonym> synonyms = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitySynonyms"/> instance for mocking. </returns>
+        public static EntitySynonyms EntitySynonyms(EntityCategory entityType = default, IEnumerable<global::Azure.AI.Language.Text.EntitySynonym> synonyms = default)
         {
-            synonyms ??= new ChangeTrackingList<EntitySynonym>();
+            synonyms ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntitySynonym>();
 
             return new EntitySynonyms(entityType, synonyms.ToList(), additionalBinaryDataProperties: null);
         }
@@ -256,7 +256,7 @@ namespace Azure.AI.Language.Text
         /// <summary> The entity synonyms used to enhance pii entity detection. </summary>
         /// <param name="synonym"> The synonym to be used for context. </param>
         /// <param name="language"> The 2 letter ISO 639-1 language the synonym. </param>
-        /// <returns> A new <see cref="Text.EntitySynonym"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitySynonym"/> instance for mocking. </returns>
         public static EntitySynonym EntitySynonym(string synonym = default, string language = default)
         {
             return new EntitySynonym(synonym, language, additionalBinaryDataProperties: null);
@@ -264,16 +264,16 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CharacterMaskPolicyType"/>, <see cref="Text.SyntheticReplacementPolicyType"/>, <see cref="Text.NoMaskPolicyType"/>, and <see cref="Text.EntityMaskPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CharacterMaskPolicyType"/>, <see cref="Azure.AI.Language.Text.SyntheticReplacementPolicyType"/>, <see cref="Azure.AI.Language.Text.NoMaskPolicyType"/>, and <see cref="Azure.AI.Language.Text.EntityMaskPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Text.BaseRedactionPolicy"/> instance for mocking. </returns>
-        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default, IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.BaseRedactionPolicy"/> instance for mocking. </returns>
+        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default, IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
         {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
+            entityTypes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
 
             return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
         }
@@ -285,13 +285,13 @@ namespace Azure.AI.Language.Text
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="unmaskLength"> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </param>
         /// <param name="unmaskFromEnd"> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </param>
-        /// <returns> A new <see cref="Text.CharacterMaskPolicyType"/> instance for mocking. </returns>
-        public static CharacterMaskPolicyType CharacterMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, RedactionCharacter? redactionCharacter = default, int? unmaskLength = default, bool? unmaskFromEnd = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CharacterMaskPolicyType"/> instance for mocking. </returns>
+        public static CharacterMaskPolicyType CharacterMaskPolicyType(IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, RedactionCharacter? redactionCharacter = default, int? unmaskLength = default, bool? unmaskFromEnd = default)
         {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
+            entityTypes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
 
             return new CharacterMaskPolicyType(
-                RedactionPolicyKind.CharacterMask,
+                global::Azure.AI.Language.Text.RedactionPolicyKind.CharacterMask,
                 entityTypes.ToList(),
                 policyName,
                 isDefaultPolicy,
@@ -306,13 +306,13 @@ namespace Azure.AI.Language.Text
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="preserveDataFormat"> Optional flag to indicate whether to preserve the original data format in the synthetic replacement. Default is false. </param>
-        /// <returns> A new <see cref="Text.SyntheticReplacementPolicyType"/> instance for mocking. </returns>
-        public static SyntheticReplacementPolicyType SyntheticReplacementPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, bool? preserveDataFormat = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SyntheticReplacementPolicyType"/> instance for mocking. </returns>
+        public static SyntheticReplacementPolicyType SyntheticReplacementPolicyType(IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, bool? preserveDataFormat = default)
         {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
+            entityTypes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
 
             return new SyntheticReplacementPolicyType(
-                RedactionPolicyKind.SyntheticReplacement,
+                global::Azure.AI.Language.Text.RedactionPolicyKind.SyntheticReplacement,
                 entityTypes.ToList(),
                 policyName,
                 isDefaultPolicy,
@@ -324,33 +324,33 @@ namespace Azure.AI.Language.Text
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Text.NoMaskPolicyType"/> instance for mocking. </returns>
-        public static NoMaskPolicyType NoMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.NoMaskPolicyType"/> instance for mocking. </returns>
+        public static NoMaskPolicyType NoMaskPolicyType(IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
         {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
+            entityTypes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
 
-            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
+            return new NoMaskPolicyType(global::Azure.AI.Language.Text.RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the policy of redacting PII with the entity type. </summary>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Text.EntityMaskPolicyType"/> instance for mocking. </returns>
-        public static EntityMaskPolicyType EntityMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityMaskPolicyType"/> instance for mocking. </returns>
+        public static EntityMaskPolicyType EntityMaskPolicyType(IEnumerable<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
         {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
+            entityTypes ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
 
-            return new EntityMaskPolicyType(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
+            return new EntityMaskPolicyType(global::Azure.AI.Language.Text.RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for confidence score threshold for PII entity recognition. </summary>
         /// <param name="default"> Minimum confidence score threshold for the PII entities to be returned in the response. Entities with a confidence score below this threshold will be filtered out. Value should be between 0.0 and 1.0. </param>
         /// <param name="overrides"> List of confidence score threshold overrides for specific PII categories. </param>
-        /// <returns> A new <see cref="Text.ConfidenceScoreThreshold"/> instance for mocking. </returns>
-        public static ConfidenceScoreThreshold ConfidenceScoreThreshold(float @default = default, IEnumerable<ConfidenceScoreThresholdOverride> overrides = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThreshold"/> instance for mocking. </returns>
+        public static ConfidenceScoreThreshold ConfidenceScoreThreshold(float @default = default, IEnumerable<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> overrides = default)
         {
-            overrides ??= new ChangeTrackingList<ConfidenceScoreThresholdOverride>();
+            overrides ??= new ChangeTrackingList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride>();
 
             return new ConfidenceScoreThreshold(@default, overrides.ToList(), additionalBinaryDataProperties: null);
         }
@@ -359,7 +359,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entity"> The PII category for which to override the confidence score threshold. </param>
         /// <param name="value"> The confidence score threshold for the specified PII category. </param>
         /// <param name="language"> The 2 letter ISO 639-1 language for which the override applies. If not specified, the override applies to all languages. </param>
-        /// <returns> A new <see cref="Text.ConfidenceScoreThresholdOverride"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride"/> instance for mocking. </returns>
         public static ConfidenceScoreThresholdOverride ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity = default, float value = default, string language = default)
         {
             return new ConfidenceScoreThresholdOverride(entity, value, language, additionalBinaryDataProperties: null);
@@ -368,10 +368,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text SentimentAnalysis task input. </summary>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Sentiment Analysis task parameters. </param>
-        /// <returns> A new <see cref="Text.TextSentimentAnalysisInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextSentimentAnalysisInput"/> instance for mocking. </returns>
         public static TextSentimentAnalysisInput TextSentimentAnalysisInput(MultiLanguageTextInput textInput = default, SentimentAnalysisActionContent actionContent = default)
         {
-            return new TextSentimentAnalysisInput(AnalyzeTextInputKind.SentimentAnalysis, additionalBinaryDataProperties: null, textInput, actionContent);
+            return new TextSentimentAnalysisInput(global::Azure.AI.Language.Text.AnalyzeTextInputKind.SentimentAnalysis, additionalBinaryDataProperties: null, textInput, actionContent);
         }
 
         /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
@@ -379,7 +379,7 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> model version. </param>
         /// <param name="opinionMining"> Whether to use opinion mining in the request or not. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
-        /// <returns> A new <see cref="Text.SentimentAnalysisActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentAnalysisActionContent"/> instance for mocking. </returns>
         public static SentimentAnalysisActionContent SentimentAnalysisActionContent(bool? loggingOptOut = default, string modelVersion = default, bool? opinionMining = default, StringIndexType? stringIndexType = default)
         {
             return new SentimentAnalysisActionContent(loggingOptOut, modelVersion, opinionMining, stringIndexType, additionalBinaryDataProperties: null);
@@ -387,10 +387,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The result object for the analyze task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AnalyzeTextEntityLinkingResult"/>, <see cref="Text.AnalyzeTextEntitiesResult"/>, <see cref="Text.AnalyzeTextKeyPhraseResult"/>, <see cref="Text.AnalyzeTextLanguageDetectionResult"/>, <see cref="Text.AnalyzeTextPiiResult"/>, and <see cref="Text.AnalyzeTextSentimentResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextEntitiesResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult"/>, <see cref="Azure.AI.Language.Text.AnalyzeTextPiiResult"/>, and <see cref="Azure.AI.Language.Text.AnalyzeTextSentimentResult"/>.
         /// </summary>
         /// <param name="kind"> The kind of task result. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextResult"/> instance for mocking. </returns>
         public static AnalyzeTextResult AnalyzeTextResult(string kind = default)
         {
             return new UnknownAnalyzeTextResult(new AnalyzeTextResultsKind(kind), additionalBinaryDataProperties: null);
@@ -398,10 +398,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Contains the analyze text Entity linking task result. </summary>
         /// <param name="results"> Entity linking result. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextEntityLinkingResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult"/> instance for mocking. </returns>
         public static AnalyzeTextEntityLinkingResult AnalyzeTextEntityLinkingResult(EntityLinkingResult results = default)
         {
-            return new AnalyzeTextEntityLinkingResult(AnalyzeTextResultsKind.EntityLinkingResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextEntityLinkingResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.EntityLinkingResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Entity linking result. </summary>
@@ -409,11 +409,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingResult"/> instance for mocking. </returns>
-        public static EntityLinkingResult EntityLinkingResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<EntityLinkingActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingResult"/> instance for mocking. </returns>
+        public static EntityLinkingResult EntityLinkingResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.EntityLinkingActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<EntityLinkingActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityLinkingActionResult>();
 
             return new EntityLinkingResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -421,7 +421,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains details of errors encountered during a job execution. </summary>
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
-        /// <returns> A new <see cref="Text.DocumentError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DocumentError"/> instance for mocking. </returns>
         public static DocumentError DocumentError(string id = default, AnalyzeTextError error = default)
         {
             return new DocumentError(id, error, additionalBinaryDataProperties: null);
@@ -433,10 +433,10 @@ namespace Azure.AI.Language.Text
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextError"/> instance for mocking. </returns>
-        public static AnalyzeTextError AnalyzeTextError(AnalyzeTextErrorCode code = default, string message = default, string target = default, IEnumerable<AnalyzeTextError> details = default, InnerErrorModel innererror = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextError"/> instance for mocking. </returns>
+        public static AnalyzeTextError AnalyzeTextError(AnalyzeTextErrorCode code = default, string message = default, string target = default, IEnumerable<global::Azure.AI.Language.Text.AnalyzeTextError> details = default, InnerErrorModel innererror = default)
         {
-            details ??= new ChangeTrackingList<AnalyzeTextError>();
+            details ??= new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextError>();
 
             return new AnalyzeTextError(
                 code,
@@ -453,7 +453,7 @@ namespace Azure.AI.Language.Text
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Text.InnerErrorModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.InnerErrorModel"/> instance for mocking. </returns>
         public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = default, IDictionary<string, string> details = default, string target = default, InnerErrorModel innererror = default)
         {
             details ??= new ChangeTrackingDictionary<string, string>();
@@ -472,7 +472,7 @@ namespace Azure.AI.Language.Text
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        /// <returns> A new <see cref="Text.RequestStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.RequestStatistics"/> instance for mocking. </returns>
         public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
         {
             return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalBinaryDataProperties: null);
@@ -484,11 +484,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingActionResult"/> instance for mocking. </returns>
-        public static EntityLinkingActionResult EntityLinkingActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<LinkedEntity> entities = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingActionResult"/> instance for mocking. </returns>
+        public static EntityLinkingActionResult EntityLinkingActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.LinkedEntity> entities = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<LinkedEntity>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.LinkedEntity>();
 
             return new EntityLinkingActionResult(
                 id,
@@ -503,7 +503,7 @@ namespace Azure.AI.Language.Text
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        /// <returns> A new <see cref="Text.DocumentWarning"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DocumentWarning"/> instance for mocking. </returns>
         public static DocumentWarning DocumentWarning(WarningCode code = default, string message = default, string targetRef = default)
         {
             return new DocumentWarning(code, message, targetRef, additionalBinaryDataProperties: null);
@@ -512,7 +512,7 @@ namespace Azure.AI.Language.Text
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         /// <param name="charactersCount"> Number of text elements recognized in the document. </param>
         /// <param name="transactionsCount"> Number of transactions for the document. </param>
-        /// <returns> A new <see cref="Text.DocumentStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DocumentStatistics"/> instance for mocking. </returns>
         public static DocumentStatistics DocumentStatistics(int charactersCount = default, int transactionsCount = default)
         {
             return new DocumentStatistics(charactersCount, transactionsCount, additionalBinaryDataProperties: null);
@@ -526,10 +526,10 @@ namespace Azure.AI.Language.Text
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
         /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
-        /// <returns> A new <see cref="Text.LinkedEntity"/> instance for mocking. </returns>
-        public static LinkedEntity LinkedEntity(string name = default, IEnumerable<EntityLinkingMatch> matches = default, string language = default, string id = default, string url = default, string dataSource = default, string bingId = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LinkedEntity"/> instance for mocking. </returns>
+        public static LinkedEntity LinkedEntity(string name = default, IEnumerable<global::Azure.AI.Language.Text.EntityLinkingMatch> matches = default, string language = default, string id = default, string url = default, string dataSource = default, string bingId = default)
         {
-            matches ??= new ChangeTrackingList<EntityLinkingMatch>();
+            matches ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityLinkingMatch>();
 
             return new LinkedEntity(
                 name,
@@ -547,7 +547,7 @@ namespace Azure.AI.Language.Text
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="offset"> Start position for the entity match text. </param>
         /// <param name="length"> Length for the entity match text. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingMatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingMatch"/> instance for mocking. </returns>
         public static EntityLinkingMatch EntityLinkingMatch(double confidenceScore = default, string text = default, int offset = default, int length = default)
         {
             return new EntityLinkingMatch(confidenceScore, text, offset, length, additionalBinaryDataProperties: null);
@@ -559,7 +559,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
         /// <param name="scriptName"> Identifies the script name of the input document according to the ISO 15924 standard. </param>
         /// <param name="scriptIso15924Code"> Identifies the script code of the input document according to the ISO 15924 standard. </param>
-        /// <returns> A new <see cref="Text.DetectedLanguage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DetectedLanguage"/> instance for mocking. </returns>
         public static DetectedLanguage DetectedLanguage(string name = default, string iso6391Name = default, double confidenceScore = default, ScriptKind? scriptName = default, ScriptCode? scriptIso15924Code = default)
         {
             return new DetectedLanguage(
@@ -573,10 +573,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Contains the entity task. </summary>
         /// <param name="results"> Results for entity recognition. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextEntitiesResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntitiesResult"/> instance for mocking. </returns>
         public static AnalyzeTextEntitiesResult AnalyzeTextEntitiesResult(EntitiesWithMetadataAutoResult results = default)
         {
-            return new AnalyzeTextEntitiesResult(AnalyzeTextResultsKind.EntityRecognitionResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextEntitiesResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.EntityRecognitionResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Contains the entity recognition task result. </summary>
@@ -584,11 +584,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.EntitiesWithMetadataAutoResult"/> instance for mocking. </returns>
-        public static EntitiesWithMetadataAutoResult EntitiesWithMetadataAutoResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<EntityActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitiesWithMetadataAutoResult"/> instance for mocking. </returns>
+        public static EntitiesWithMetadataAutoResult EntitiesWithMetadataAutoResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.EntityActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<EntityActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityActionResult>();
 
             return new EntitiesWithMetadataAutoResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -599,11 +599,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntityActionResult"/> instance for mocking. </returns>
-        public static EntityActionResult EntityActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<NamedEntityWithMetadata> entities = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityActionResult"/> instance for mocking. </returns>
+        public static EntityActionResult EntityActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.NamedEntityWithMetadata> entities = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<NamedEntityWithMetadata>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.NamedEntityWithMetadata>();
 
             return new EntityActionResult(
                 id,
@@ -624,10 +624,10 @@ namespace Azure.AI.Language.Text
         /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
         /// <param name="metadata"> The entity metadata object. </param>
-        /// <returns> A new <see cref="Text.NamedEntityWithMetadata"/> instance for mocking. </returns>
-        public static NamedEntityWithMetadata NamedEntityWithMetadata(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string @type = default, IEnumerable<EntityTag> tags = default, BaseMetadata metadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.NamedEntityWithMetadata"/> instance for mocking. </returns>
+        public static NamedEntityWithMetadata NamedEntityWithMetadata(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string @type = default, IEnumerable<global::Azure.AI.Language.Text.EntityTag> tags = default, BaseMetadata metadata = default)
         {
-            tags ??= new ChangeTrackingList<EntityTag>();
+            tags ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityTag>();
 
             return new NamedEntityWithMetadata(
                 text,
@@ -645,7 +645,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Entity tag object which contains the name of the tags abd any associated confidence score. Entity Tags are used to express some similarities/affinity between entities. </summary>
         /// <param name="name"> Name of the tag. Entity Tag names will be unique globally. </param>
         /// <param name="confidenceScore"> Detection score between 0 and 1 of the extracted entity. </param>
-        /// <returns> A new <see cref="Text.EntityTag"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityTag"/> instance for mocking. </returns>
         public static EntityTag EntityTag(string name = default, double? confidenceScore = default)
         {
             return new EntityTag(name, confidenceScore, additionalBinaryDataProperties: null);
@@ -653,10 +653,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity Metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AgeMetadata"/>, <see cref="Text.VolumeMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.WeightMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.AddressMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, and <see cref="Text.NumericRangeMetadata"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.AgeMetadata"/>, <see cref="Azure.AI.Language.Text.VolumeMetadata"/>, <see cref="Azure.AI.Language.Text.SpeedMetadata"/>, <see cref="Azure.AI.Language.Text.AreaMetadata"/>, <see cref="Azure.AI.Language.Text.LengthMetadata"/>, <see cref="Azure.AI.Language.Text.InformationMetadata"/>, <see cref="Azure.AI.Language.Text.TemperatureMetadata"/>, <see cref="Azure.AI.Language.Text.WeightMetadata"/>, <see cref="Azure.AI.Language.Text.CurrencyMetadata"/>, <see cref="Azure.AI.Language.Text.AddressMetadata"/>, <see cref="Azure.AI.Language.Text.DateMetadata"/>, <see cref="Azure.AI.Language.Text.DateTimeMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSetMetadata"/>, <see cref="Azure.AI.Language.Text.TimeMetadata"/>, <see cref="Azure.AI.Language.Text.NumberMetadata"/>, <see cref="Azure.AI.Language.Text.OrdinalMetadata"/>, <see cref="Azure.AI.Language.Text.TemporalSpanMetadata"/>, and <see cref="Azure.AI.Language.Text.NumericRangeMetadata"/>.
         /// </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
-        /// <returns> A new <see cref="Text.BaseMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.BaseMetadata"/> instance for mocking. </returns>
         public static BaseMetadata BaseMetadata(string metadataKind = default)
         {
             return new UnknownBaseMetadata(new MetadataKind(metadataKind), additionalBinaryDataProperties: null);
@@ -665,83 +665,83 @@ namespace Azure.AI.Language.Text
         /// <summary> Represents the Age entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for age. </param>
-        /// <returns> A new <see cref="Text.AgeMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AgeMetadata"/> instance for mocking. </returns>
         public static AgeMetadata AgeMetadata(double value = default, AgeUnit unit = default)
         {
-            return new AgeMetadata(MetadataKind.AgeMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new AgeMetadata(global::Azure.AI.Language.Text.MetadataKind.AgeMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Volume entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for volume. </param>
-        /// <returns> A new <see cref="Text.VolumeMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.VolumeMetadata"/> instance for mocking. </returns>
         public static VolumeMetadata VolumeMetadata(double value = default, VolumeUnit unit = default)
         {
-            return new VolumeMetadata(MetadataKind.VolumeMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new VolumeMetadata(global::Azure.AI.Language.Text.MetadataKind.VolumeMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Speed entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for speed. </param>
-        /// <returns> A new <see cref="Text.SpeedMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SpeedMetadata"/> instance for mocking. </returns>
         public static SpeedMetadata SpeedMetadata(double value = default, SpeedUnit unit = default)
         {
-            return new SpeedMetadata(MetadataKind.SpeedMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new SpeedMetadata(global::Azure.AI.Language.Text.MetadataKind.SpeedMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Area entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for area. </param>
-        /// <returns> A new <see cref="Text.AreaMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AreaMetadata"/> instance for mocking. </returns>
         public static AreaMetadata AreaMetadata(double value = default, AreaUnit unit = default)
         {
-            return new AreaMetadata(MetadataKind.AreaMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new AreaMetadata(global::Azure.AI.Language.Text.MetadataKind.AreaMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Length entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for length. </param>
-        /// <returns> A new <see cref="Text.LengthMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LengthMetadata"/> instance for mocking. </returns>
         public static LengthMetadata LengthMetadata(double value = default, LengthUnit unit = default)
         {
-            return new LengthMetadata(MetadataKind.LengthMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new LengthMetadata(global::Azure.AI.Language.Text.MetadataKind.LengthMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Information (data) entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for information. </param>
-        /// <returns> A new <see cref="Text.InformationMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.InformationMetadata"/> instance for mocking. </returns>
         public static InformationMetadata InformationMetadata(double value = default, InformationUnit unit = default)
         {
-            return new InformationMetadata(MetadataKind.InformationMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new InformationMetadata(global::Azure.AI.Language.Text.MetadataKind.InformationMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Information entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for temperature. </param>
-        /// <returns> A new <see cref="Text.TemperatureMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TemperatureMetadata"/> instance for mocking. </returns>
         public static TemperatureMetadata TemperatureMetadata(double value = default, TemperatureUnit unit = default)
         {
-            return new TemperatureMetadata(MetadataKind.TemperatureMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new TemperatureMetadata(global::Azure.AI.Language.Text.MetadataKind.TemperatureMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Weight ) entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for weight. </param>
-        /// <returns> A new <see cref="Text.WeightMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.WeightMetadata"/> instance for mocking. </returns>
         public static WeightMetadata WeightMetadata(double value = default, WeightUnit unit = default)
         {
-            return new WeightMetadata(MetadataKind.WeightMetadata, additionalBinaryDataProperties: null, value, unit);
+            return new WeightMetadata(global::Azure.AI.Language.Text.MetadataKind.WeightMetadata, additionalBinaryDataProperties: null, value, unit);
         }
 
         /// <summary> Represents the Currency ) entity Metadata model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Currency unit. </param>
         /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
-        /// <returns> A new <see cref="Text.CurrencyMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CurrencyMetadata"/> instance for mocking. </returns>
         public static CurrencyMetadata CurrencyMetadata(double value = default, string unit = default, string iso4217 = default)
         {
-            return new CurrencyMetadata(MetadataKind.CurrencyMetadata, additionalBinaryDataProperties: null, value, unit, iso4217);
+            return new CurrencyMetadata(global::Azure.AI.Language.Text.MetadataKind.CurrencyMetadata, additionalBinaryDataProperties: null, value, unit, iso4217);
         }
 
         /// <summary> Represents the Address entity Metadata model. </summary>
@@ -751,13 +751,13 @@ namespace Azure.AI.Language.Text
         /// <param name="state"> The state or province name of the address. </param>
         /// <param name="postalCode"> The postal or ZIP code of the address. </param>
         /// <param name="countryOrRegion"> The country or region name of the address. </param>
-        /// <returns> A new <see cref="Text.AddressMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AddressMetadata"/> instance for mocking. </returns>
         public static AddressMetadata AddressMetadata(string formatedAddress = default, IEnumerable<string> addressLines = default, string city = default, string state = default, string postalCode = default, string countryOrRegion = default)
         {
             addressLines ??= new ChangeTrackingList<string>();
 
             return new AddressMetadata(
-                MetadataKind.AddressMetadata,
+                global::Azure.AI.Language.Text.MetadataKind.AddressMetadata,
                 additionalBinaryDataProperties: null,
                 formatedAddress,
                 addressLines.ToList(),
@@ -769,19 +769,19 @@ namespace Azure.AI.Language.Text
 
         /// <summary> A Metadata for date entity instances. </summary>
         /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.DateMetadata"/> instance for mocking. </returns>
-        public static DateMetadata DateMetadata(IEnumerable<DateValue> dates = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DateMetadata"/> instance for mocking. </returns>
+        public static DateMetadata DateMetadata(IEnumerable<global::Azure.AI.Language.Text.DateValue> dates = default)
         {
-            dates ??= new ChangeTrackingList<DateValue>();
+            dates ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DateValue>();
 
-            return new DateMetadata(MetadataKind.DateMetadata, additionalBinaryDataProperties: null, dates.ToList());
+            return new DateMetadata(global::Azure.AI.Language.Text.MetadataKind.DateMetadata, additionalBinaryDataProperties: null, dates.ToList());
         }
 
         /// <summary> Represents the date value. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
-        /// <returns> A new <see cref="Text.DateValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DateValue"/> instance for mocking. </returns>
         public static DateValue DateValue(string timex = default, string value = default, TemporalModifier? modifier = default)
         {
             return new DateValue(timex, value, modifier, additionalBinaryDataProperties: null);
@@ -789,61 +789,61 @@ namespace Azure.AI.Language.Text
 
         /// <summary> A Metadata for datetime entity instances. </summary>
         /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.DateTimeMetadata"/> instance for mocking. </returns>
-        public static DateTimeMetadata DateTimeMetadata(IEnumerable<DateValue> dates = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.DateTimeMetadata"/> instance for mocking. </returns>
+        public static DateTimeMetadata DateTimeMetadata(IEnumerable<global::Azure.AI.Language.Text.DateValue> dates = default)
         {
-            dates ??= new ChangeTrackingList<DateValue>();
+            dates ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DateValue>();
 
-            return new DateTimeMetadata(MetadataKind.DateTimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
+            return new DateTimeMetadata(global::Azure.AI.Language.Text.MetadataKind.DateTimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
         }
 
         /// <summary> A Metadata for temporal set entity instances. </summary>
         /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.TemporalSetMetadata"/> instance for mocking. </returns>
-        public static TemporalSetMetadata TemporalSetMetadata(IEnumerable<DateValue> dates = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TemporalSetMetadata"/> instance for mocking. </returns>
+        public static TemporalSetMetadata TemporalSetMetadata(IEnumerable<global::Azure.AI.Language.Text.DateValue> dates = default)
         {
-            dates ??= new ChangeTrackingList<DateValue>();
+            dates ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DateValue>();
 
-            return new TemporalSetMetadata(MetadataKind.TemporalSetMetadata, additionalBinaryDataProperties: null, dates.ToList());
+            return new TemporalSetMetadata(global::Azure.AI.Language.Text.MetadataKind.TemporalSetMetadata, additionalBinaryDataProperties: null, dates.ToList());
         }
 
         /// <summary> A Metadata for time entity instances. </summary>
         /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.TimeMetadata"/> instance for mocking. </returns>
-        public static TimeMetadata TimeMetadata(IEnumerable<DateValue> dates = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TimeMetadata"/> instance for mocking. </returns>
+        public static TimeMetadata TimeMetadata(IEnumerable<global::Azure.AI.Language.Text.DateValue> dates = default)
         {
-            dates ??= new ChangeTrackingList<DateValue>();
+            dates ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DateValue>();
 
-            return new TimeMetadata(MetadataKind.TimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
+            return new TimeMetadata(global::Azure.AI.Language.Text.MetadataKind.TimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
         }
 
         /// <summary> A metadata for numeric entity instances. </summary>
         /// <param name="numberKind"> Kind of the number type. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        /// <returns> A new <see cref="Text.NumberMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.NumberMetadata"/> instance for mocking. </returns>
         public static NumberMetadata NumberMetadata(NumberKind numberKind = default, double value = default)
         {
-            return new NumberMetadata(MetadataKind.NumberMetadata, additionalBinaryDataProperties: null, numberKind, value);
+            return new NumberMetadata(global::Azure.AI.Language.Text.MetadataKind.NumberMetadata, additionalBinaryDataProperties: null, numberKind, value);
         }
 
         /// <summary> A metadata for numeric entity instances. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        /// <returns> A new <see cref="Text.OrdinalMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.OrdinalMetadata"/> instance for mocking. </returns>
         public static OrdinalMetadata OrdinalMetadata(string offset = default, RelativeTo relativeTo = default, string value = default)
         {
-            return new OrdinalMetadata(MetadataKind.OrdinalMetadata, additionalBinaryDataProperties: null, offset, relativeTo, value);
+            return new OrdinalMetadata(global::Azure.AI.Language.Text.MetadataKind.OrdinalMetadata, additionalBinaryDataProperties: null, offset, relativeTo, value);
         }
 
         /// <summary> represents the Metadata of a date and/or time span. </summary>
         /// <param name="spanValues"> List of temporal spans detected. </param>
-        /// <returns> A new <see cref="Text.TemporalSpanMetadata"/> instance for mocking. </returns>
-        public static TemporalSpanMetadata TemporalSpanMetadata(IEnumerable<TemporalSpanValues> spanValues = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TemporalSpanMetadata"/> instance for mocking. </returns>
+        public static TemporalSpanMetadata TemporalSpanMetadata(IEnumerable<global::Azure.AI.Language.Text.TemporalSpanValues> spanValues = default)
         {
-            spanValues ??= new ChangeTrackingList<TemporalSpanValues>();
+            spanValues ??= new ChangeTrackingList<global::Azure.AI.Language.Text.TemporalSpanValues>();
 
-            return new TemporalSpanMetadata(MetadataKind.TemporalSpanMetadata, additionalBinaryDataProperties: null, spanValues.ToList());
+            return new TemporalSpanMetadata(global::Azure.AI.Language.Text.MetadataKind.TemporalSpanMetadata, additionalBinaryDataProperties: null, spanValues.ToList());
         }
 
         /// <summary> Temporal span object. </summary>
@@ -852,7 +852,7 @@ namespace Azure.AI.Language.Text
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        /// <returns> A new <see cref="Text.TemporalSpanValues"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TemporalSpanValues"/> instance for mocking. </returns>
         public static TemporalSpanValues TemporalSpanValues(string begin = default, string end = default, string duration = default, TemporalModifier? modifier = default, string timex = default)
         {
             return new TemporalSpanValues(
@@ -869,11 +869,11 @@ namespace Azure.AI.Language.Text
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
         /// <param name="rangeInclusivity"> The inclusiveness of this range. </param>
-        /// <returns> A new <see cref="Text.NumericRangeMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.NumericRangeMetadata"/> instance for mocking. </returns>
         public static NumericRangeMetadata NumericRangeMetadata(RangeKind rangeKind = default, double minimum = default, double maximum = default, RangeInclusivity? rangeInclusivity = default)
         {
             return new NumericRangeMetadata(
-                MetadataKind.NumericRangeMetadata,
+                global::Azure.AI.Language.Text.MetadataKind.NumericRangeMetadata,
                 additionalBinaryDataProperties: null,
                 rangeKind,
                 minimum,
@@ -883,10 +883,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Contains the analyze text KeyPhraseExtraction task result. </summary>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextKeyPhraseResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult"/> instance for mocking. </returns>
         public static AnalyzeTextKeyPhraseResult AnalyzeTextKeyPhraseResult(KeyPhraseResult results = default)
         {
-            return new AnalyzeTextKeyPhraseResult(AnalyzeTextResultsKind.KeyPhraseExtractionResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextKeyPhraseResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.KeyPhraseExtractionResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Contains the KeyPhraseResult. </summary>
@@ -894,11 +894,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseResult"/> instance for mocking. </returns>
-        public static KeyPhraseResult KeyPhraseResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<KeyPhrasesActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.KeyPhraseResult"/> instance for mocking. </returns>
+        public static KeyPhraseResult KeyPhraseResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.KeyPhrasesActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<KeyPhrasesActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.KeyPhrasesActionResult>();
 
             return new KeyPhraseResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -909,10 +909,10 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.KeyPhrasesActionResult"/> instance for mocking. </returns>
-        public static KeyPhrasesActionResult KeyPhrasesActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<string> keyPhrases = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.KeyPhrasesActionResult"/> instance for mocking. </returns>
+        public static KeyPhrasesActionResult KeyPhrasesActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<string> keyPhrases = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
             keyPhrases ??= new ChangeTrackingList<string>();
 
             return new KeyPhrasesActionResult(
@@ -926,10 +926,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Contains the language detection task result for the request. </summary>
         /// <param name="results"> Contains the language detection results. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextLanguageDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult"/> instance for mocking. </returns>
         public static AnalyzeTextLanguageDetectionResult AnalyzeTextLanguageDetectionResult(LanguageDetectionResult results = default)
         {
-            return new AnalyzeTextLanguageDetectionResult(AnalyzeTextResultsKind.LanguageDetectionResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextLanguageDetectionResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.LanguageDetectionResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Contains the language detection result for the request. </summary>
@@ -937,11 +937,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Enumeration of language detection results for each input document. </param>
-        /// <returns> A new <see cref="Text.LanguageDetectionResult"/> instance for mocking. </returns>
-        public static LanguageDetectionResult LanguageDetectionResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<LanguageDetectionDocumentResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LanguageDetectionResult"/> instance for mocking. </returns>
+        public static LanguageDetectionResult LanguageDetectionResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.LanguageDetectionDocumentResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<LanguageDetectionDocumentResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.LanguageDetectionDocumentResult>();
 
             return new LanguageDetectionResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -951,20 +951,20 @@ namespace Azure.AI.Language.Text
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
-        /// <returns> A new <see cref="Text.LanguageDetectionDocumentResult"/> instance for mocking. </returns>
-        public static LanguageDetectionDocumentResult LanguageDetectionDocumentResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.LanguageDetectionDocumentResult"/> instance for mocking. </returns>
+        public static LanguageDetectionDocumentResult LanguageDetectionDocumentResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
 
             return new LanguageDetectionDocumentResult(id, warnings.ToList(), statistics, detectedLanguage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
         /// <param name="results"> The list of pii results. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextPiiResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextPiiResult"/> instance for mocking. </returns>
         public static AnalyzeTextPiiResult AnalyzeTextPiiResult(PiiResult results = default)
         {
-            return new AnalyzeTextPiiResult(AnalyzeTextResultsKind.PiiEntityRecognitionResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextPiiResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.PiiEntityRecognitionResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Contains the PiiResult. </summary>
@@ -972,11 +972,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.PiiResult"/> instance for mocking. </returns>
-        public static PiiResult PiiResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<PiiResultWithDetectedLanguage> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiResult"/> instance for mocking. </returns>
+        public static PiiResult PiiResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.PiiResultWithDetectedLanguage> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<PiiResultWithDetectedLanguage>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiResultWithDetectedLanguage>();
 
             return new PiiResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -988,11 +988,11 @@ namespace Azure.AI.Language.Text
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.PiiResultWithDetectedLanguage"/> instance for mocking. </returns>
-        public static PiiResultWithDetectedLanguage PiiResultWithDetectedLanguage(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, string redactedText = default, IEnumerable<PiiEntity> entities = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiResultWithDetectedLanguage"/> instance for mocking. </returns>
+        public static PiiResultWithDetectedLanguage PiiResultWithDetectedLanguage(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, string redactedText = default, IEnumerable<global::Azure.AI.Language.Text.PiiEntity> entities = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<PiiEntity>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.PiiEntity>();
 
             return new PiiResultWithDetectedLanguage(
                 id,
@@ -1016,10 +1016,10 @@ namespace Azure.AI.Language.Text
         /// <param name="mask"> Optional field which will be returned only when using the redaction policy kind “MaskWithEntityType”.  This field will contain the exact mask text used to mask the PII entity in the original text. </param>
         /// <param name="maskOffset"> Start position of masked text in the redacted text when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="maskLength"> The length of the masked text. Will be present when using the redaction policy kind “MaskWithEntityType”. </param>
-        /// <returns> A new <see cref="Text.PiiEntity"/> instance for mocking. </returns>
-        public static PiiEntity PiiEntity(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string @type = default, IEnumerable<EntityTag> tags = default, string mask = default, int? maskOffset = default, int? maskLength = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiEntity"/> instance for mocking. </returns>
+        public static PiiEntity PiiEntity(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string @type = default, IEnumerable<global::Azure.AI.Language.Text.EntityTag> tags = default, string mask = default, int? maskOffset = default, int? maskLength = default)
         {
-            tags ??= new ChangeTrackingList<EntityTag>();
+            tags ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityTag>();
 
             return new PiiEntity(
                 text,
@@ -1038,10 +1038,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Contains the analyze text SentimentAnalysis LRO task result. </summary>
         /// <param name="results"> The sentiment analysis results. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextSentimentResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextSentimentResult"/> instance for mocking. </returns>
         public static AnalyzeTextSentimentResult AnalyzeTextSentimentResult(SentimentResult results = default)
         {
-            return new AnalyzeTextSentimentResult(AnalyzeTextResultsKind.SentimentAnalysisResults, additionalBinaryDataProperties: null, results);
+            return new AnalyzeTextSentimentResult(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.SentimentAnalysisResults, additionalBinaryDataProperties: null, results);
         }
 
         /// <summary> Sentiment analysis results for the input documents. </summary>
@@ -1049,11 +1049,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
-        /// <returns> A new <see cref="Text.SentimentResult"/> instance for mocking. </returns>
-        public static SentimentResult SentimentResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<SentimentActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentResult"/> instance for mocking. </returns>
+        public static SentimentResult SentimentResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.SentimentActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<SentimentActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.SentimentActionResult>();
 
             return new SentimentResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1066,11 +1066,11 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="sentences"> The document's sentences sentiment. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.SentimentActionResult"/> instance for mocking. </returns>
-        public static SentimentActionResult SentimentActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, DocumentSentiment sentiment = default, SentimentConfidenceScores confidenceScores = default, IEnumerable<SentenceSentiment> sentences = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentActionResult"/> instance for mocking. </returns>
+        public static SentimentActionResult SentimentActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, DocumentSentiment sentiment = default, SentimentConfidenceScores confidenceScores = default, IEnumerable<global::Azure.AI.Language.Text.SentenceSentiment> sentences = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            sentences ??= new ChangeTrackingList<SentenceSentiment>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            sentences ??= new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceSentiment>();
 
             return new SentimentActionResult(
                 id,
@@ -1087,7 +1087,7 @@ namespace Azure.AI.Language.Text
         /// <param name="positive"> Confidence score for positive sentiment. </param>
         /// <param name="neutral"> Confidence score for neutral sentiment. </param>
         /// <param name="negative"> Confidence score for negative sentiment. </param>
-        /// <returns> A new <see cref="Text.SentimentConfidenceScores"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentConfidenceScores"/> instance for mocking. </returns>
         public static SentimentConfidenceScores SentimentConfidenceScores(double positive = default, double neutral = default, double negative = default)
         {
             return new SentimentConfidenceScores(positive, neutral, negative, additionalBinaryDataProperties: null);
@@ -1101,11 +1101,11 @@ namespace Azure.AI.Language.Text
         /// <param name="length"> The length of the target. </param>
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
-        /// <returns> A new <see cref="Text.SentenceSentiment"/> instance for mocking. </returns>
-        public static SentenceSentiment SentenceSentiment(string text = default, SentenceSentimentValue sentiment = default, SentimentConfidenceScores confidenceScores = default, int offset = default, int length = default, IEnumerable<SentenceTarget> targets = default, IEnumerable<SentenceAssessment> assessments = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentenceSentiment"/> instance for mocking. </returns>
+        public static SentenceSentiment SentenceSentiment(string text = default, SentenceSentimentValue sentiment = default, SentimentConfidenceScores confidenceScores = default, int offset = default, int length = default, IEnumerable<global::Azure.AI.Language.Text.SentenceTarget> targets = default, IEnumerable<global::Azure.AI.Language.Text.SentenceAssessment> assessments = default)
         {
-            targets ??= new ChangeTrackingList<SentenceTarget>();
-            assessments ??= new ChangeTrackingList<SentenceAssessment>();
+            targets ??= new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceTarget>();
+            assessments ??= new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceAssessment>();
 
             return new SentenceSentiment(
                 text,
@@ -1125,10 +1125,10 @@ namespace Azure.AI.Language.Text
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        /// <returns> A new <see cref="Text.SentenceTarget"/> instance for mocking. </returns>
-        public static SentenceTarget SentenceTarget(TokenSentiment sentiment = default, TargetConfidenceScoreLabel confidenceScores = default, int offset = default, int length = default, string text = default, IEnumerable<TargetRelation> relations = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentenceTarget"/> instance for mocking. </returns>
+        public static SentenceTarget SentenceTarget(TokenSentiment sentiment = default, TargetConfidenceScoreLabel confidenceScores = default, int offset = default, int length = default, string text = default, IEnumerable<global::Azure.AI.Language.Text.TargetRelation> relations = default)
         {
-            relations ??= new ChangeTrackingList<TargetRelation>();
+            relations ??= new ChangeTrackingList<global::Azure.AI.Language.Text.TargetRelation>();
 
             return new SentenceTarget(
                 sentiment,
@@ -1143,7 +1143,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Represents the confidence scores across all sentiment classes: positive and negative. </summary>
         /// <param name="positive"> Confidence score for positive sentiment. </param>
         /// <param name="negative"> Confidence score for negative sentiment. </param>
-        /// <returns> A new <see cref="Text.TargetConfidenceScoreLabel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TargetConfidenceScoreLabel"/> instance for mocking. </returns>
         public static TargetConfidenceScoreLabel TargetConfidenceScoreLabel(double positive = default, double negative = default)
         {
             return new TargetConfidenceScoreLabel(positive, negative, additionalBinaryDataProperties: null);
@@ -1152,7 +1152,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Represents the relation between assessments and/or targets. </summary>
         /// <param name="ref"> The JSON pointer indicating the linked object. </param>
         /// <param name="relationType"> The type related to the target. </param>
-        /// <returns> A new <see cref="Text.TargetRelation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TargetRelation"/> instance for mocking. </returns>
         public static TargetRelation TargetRelation(string @ref = default, TargetRelationType relationType = default)
         {
             return new TargetRelation(@ref, relationType, additionalBinaryDataProperties: null);
@@ -1165,7 +1165,7 @@ namespace Azure.AI.Language.Text
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="isNegated"> The indicator representing if the assessment is negated. </param>
-        /// <returns> A new <see cref="Text.SentenceAssessment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentenceAssessment"/> instance for mocking. </returns>
         public static SentenceAssessment SentenceAssessment(TokenSentiment sentiment = default, TargetConfidenceScoreLabel confidenceScores = default, int offset = default, int length = default, string text = default, bool isNegated = default)
         {
             return new SentenceAssessment(
@@ -1189,10 +1189,10 @@ namespace Azure.AI.Language.Text
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextJobState"/> instance for mocking. </returns>
-        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, TextActionState status = default, IEnumerable<AnalyzeTextError> errors = default, string nextLink = default, TextActions tasks = default, RequestStatistics statistics = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextJobState"/> instance for mocking. </returns>
+        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, TextActionState status = default, IEnumerable<global::Azure.AI.Language.Text.AnalyzeTextError> errors = default, string nextLink = default, TextActions tasks = default, RequestStatistics statistics = default)
         {
-            errors ??= new ChangeTrackingList<AnalyzeTextError>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextError>();
 
             return new AnalyzeTextJobState(
                 displayName,
@@ -1214,10 +1214,10 @@ namespace Azure.AI.Language.Text
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze text job results. </param>
-        /// <returns> A new <see cref="Text.TextActions"/> instance for mocking. </returns>
-        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextOperationResult> items = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.TextActions"/> instance for mocking. </returns>
+        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<global::Azure.AI.Language.Text.AnalyzeTextOperationResult> items = default)
         {
-            items ??= new ChangeTrackingList<AnalyzeTextOperationResult>();
+            items ??= new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextOperationResult>();
 
             return new TextActions(
                 completed,
@@ -1230,13 +1230,13 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// Contains the AnalyzeText long running operation result object.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, <see cref="Text.SentimentOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Text.AbstractiveSummarizationOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CustomEntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Azure.AI.Language.Text.EntityLinkingOperationResult"/>, <see cref="Azure.AI.Language.Text.EntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.HealthcareOperationResult"/>, <see cref="Azure.AI.Language.Text.KeyPhraseExtractionOperationResult"/>, <see cref="Azure.AI.Language.Text.PiiEntityRecognitionOperationResult"/>, <see cref="Azure.AI.Language.Text.SentimentOperationResult"/>, <see cref="Azure.AI.Language.Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Azure.AI.Language.Text.AbstractiveSummarizationOperationResult"/>.
         /// </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationResult"/> instance for mocking. </returns>
         public static AnalyzeTextOperationResult AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, string kind = default)
         {
             return new UnknownAnalyzeTextOperationResult(lastUpdateDateTime, status, taskName, new AnalyzeTextOperationResultsKind(kind), additionalBinaryDataProperties: null);
@@ -1247,14 +1247,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
-        /// <returns> A new <see cref="Text.CustomEntityRecognitionOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomEntityRecognitionOperationResult"/> instance for mocking. </returns>
         public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomEntitiesResult results = default)
         {
             return new CustomEntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1265,11 +1265,11 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesResult"/> instance for mocking. </returns>
-        public static CustomEntitiesResult CustomEntitiesResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default, IEnumerable<CustomEntityActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomEntitiesResult"/> instance for mocking. </returns>
+        public static CustomEntitiesResult CustomEntitiesResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default, IEnumerable<global::Azure.AI.Language.Text.CustomEntityActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<CustomEntityActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.CustomEntityActionResult>();
 
             return new CustomEntitiesResult(
                 errors.ToList(),
@@ -1286,11 +1286,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.CustomEntityActionResult"/> instance for mocking. </returns>
-        public static CustomEntityActionResult CustomEntityActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<NamedEntity> entities = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomEntityActionResult"/> instance for mocking. </returns>
+        public static CustomEntityActionResult CustomEntityActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.NamedEntity> entities = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<NamedEntity>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.NamedEntity>();
 
             return new CustomEntityActionResult(
                 id,
@@ -1308,7 +1308,7 @@ namespace Azure.AI.Language.Text
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <returns> A new <see cref="Text.NamedEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.NamedEntity"/> instance for mocking. </returns>
         public static NamedEntity NamedEntity(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default)
         {
             return new NamedEntity(
@@ -1326,14 +1326,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
-        /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
         {
             return new CustomSingleLabelClassificationOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1344,11 +1344,11 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.CustomLabelClassificationResult"/> instance for mocking. </returns>
-        public static CustomLabelClassificationResult CustomLabelClassificationResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default, IEnumerable<ClassificationActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomLabelClassificationResult"/> instance for mocking. </returns>
+        public static CustomLabelClassificationResult CustomLabelClassificationResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default, IEnumerable<global::Azure.AI.Language.Text.ClassificationActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<ClassificationActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.ClassificationActionResult>();
 
             return new CustomLabelClassificationResult(
                 errors.ToList(),
@@ -1365,11 +1365,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="class"> Contains the classification doc results for all docs. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.ClassificationActionResult"/> instance for mocking. </returns>
-        public static ClassificationActionResult ClassificationActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<ClassificationResult> @class = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ClassificationActionResult"/> instance for mocking. </returns>
+        public static ClassificationActionResult ClassificationActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.ClassificationResult> @class = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            @class ??= new ChangeTrackingList<ClassificationResult>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            @class ??= new ChangeTrackingList<global::Azure.AI.Language.Text.ClassificationResult>();
 
             return new ClassificationActionResult(
                 id,
@@ -1383,7 +1383,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the classification result. </summary>
         /// <param name="category"> Classification type. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
-        /// <returns> A new <see cref="Text.ClassificationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ClassificationResult"/> instance for mocking. </returns>
         public static ClassificationResult ClassificationResult(string category = default, double confidenceScore = default)
         {
             return new ClassificationResult(category, confidenceScore, additionalBinaryDataProperties: null);
@@ -1394,14 +1394,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
-        /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
         {
             return new CustomMultiLabelClassificationOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.CustomMultiLabelClassificationOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.CustomMultiLabelClassificationOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1411,14 +1411,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Entity linking result. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingOperationResult"/> instance for mocking. </returns>
         public static EntityLinkingOperationResult EntityLinkingOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, EntityLinkingResult results = default)
         {
             return new EntityLinkingOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.EntityLinkingOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.EntityLinkingOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1428,14 +1428,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results for the task. </param>
-        /// <returns> A new <see cref="Text.EntityRecognitionOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityRecognitionOperationResult"/> instance for mocking. </returns>
         public static EntityRecognitionOperationResult EntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, EntitiesResult results = default)
         {
             return new EntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.EntityRecognitionOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.EntityRecognitionOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1445,11 +1445,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.EntitiesResult"/> instance for mocking. </returns>
-        public static EntitiesResult EntitiesResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<EntityActionResultWithMetadata> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitiesResult"/> instance for mocking. </returns>
+        public static EntitiesResult EntitiesResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.EntityActionResultWithMetadata> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<EntityActionResultWithMetadata>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.EntityActionResultWithMetadata>();
 
             return new EntitiesResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1459,11 +1459,11 @@ namespace Azure.AI.Language.Text
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        /// <returns> A new <see cref="Text.EntityActionResultWithMetadata"/> instance for mocking. </returns>
-        public static EntityActionResultWithMetadata EntityActionResultWithMetadata(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<NamedEntityWithMetadata> entities = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityActionResultWithMetadata"/> instance for mocking. </returns>
+        public static EntityActionResultWithMetadata EntityActionResultWithMetadata(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.NamedEntityWithMetadata> entities = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<NamedEntityWithMetadata>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.NamedEntityWithMetadata>();
 
             return new EntityActionResultWithMetadata(id, warnings.ToList(), statistics, entities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1473,14 +1473,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
-        /// <returns> A new <see cref="Text.HealthcareOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareOperationResult"/> instance for mocking. </returns>
         public static HealthcareOperationResult HealthcareOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, HealthcareResult results = default)
         {
             return new HealthcareOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.HealthcareOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.HealthcareOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1490,11 +1490,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> List of result objects for the processed Healthcare documents. </param>
-        /// <returns> A new <see cref="Text.HealthcareResult"/> instance for mocking. </returns>
-        public static HealthcareResult HealthcareResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<HealthcareActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareResult"/> instance for mocking. </returns>
+        public static HealthcareResult HealthcareResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.HealthcareActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<HealthcareActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareActionResult>();
 
             return new HealthcareResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1507,12 +1507,12 @@ namespace Azure.AI.Language.Text
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.HealthcareActionResult"/> instance for mocking. </returns>
-        public static HealthcareActionResult HealthcareActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<HealthcareEntity> entities = default, IEnumerable<HealthcareRelation> relations = default, FhirBundle fhirBundle = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareActionResult"/> instance for mocking. </returns>
+        public static HealthcareActionResult HealthcareActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.HealthcareEntity> entities = default, IEnumerable<global::Azure.AI.Language.Text.HealthcareRelation> relations = default, FhirBundle fhirBundle = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            entities ??= new ChangeTrackingList<HealthcareEntity>();
-            relations ??= new ChangeTrackingList<HealthcareRelation>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareEntity>();
+            relations ??= new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareRelation>();
 
             return new HealthcareActionResult(
                 id,
@@ -1535,10 +1535,10 @@ namespace Azure.AI.Language.Text
         /// <param name="assertion"> Assertion of the entity. </param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        /// <returns> A new <see cref="Text.HealthcareEntity"/> instance for mocking. </returns>
-        public static HealthcareEntity HealthcareEntity(string text = default, HealthcareEntityCategory category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, HealthcareAssertion assertion = default, string name = default, IEnumerable<HealthcareEntityLink> links = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareEntity"/> instance for mocking. </returns>
+        public static HealthcareEntity HealthcareEntity(string text = default, HealthcareEntityCategory category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, HealthcareAssertion assertion = default, string name = default, IEnumerable<global::Azure.AI.Language.Text.HealthcareEntityLink> links = default)
         {
-            links ??= new ChangeTrackingList<HealthcareEntityLink>();
+            links ??= new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareEntityLink>();
 
             return new HealthcareEntity(
                 text,
@@ -1558,7 +1558,7 @@ namespace Azure.AI.Language.Text
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <param name="temporality"> Describes temporal information regarding the entity. </param>
-        /// <returns> A new <see cref="Text.HealthcareAssertion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareAssertion"/> instance for mocking. </returns>
         public static HealthcareAssertion HealthcareAssertion(HealthcareAssertionConditionality? conditionality = default, HealthcareAssertionCertainty? certainty = default, HealthcareAssertionAssociation? association = default, HealthcareAssertionTemporality? temporality = default)
         {
             return new HealthcareAssertion(conditionality, certainty, association, temporality, additionalBinaryDataProperties: null);
@@ -1567,7 +1567,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Reference to an entity in known data sources. </summary>
         /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="id"> Entity id in the given source catalog. </param>
-        /// <returns> A new <see cref="Text.HealthcareEntityLink"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareEntityLink"/> instance for mocking. </returns>
         public static HealthcareEntityLink HealthcareEntityLink(string dataSource = default, string id = default)
         {
             return new HealthcareEntityLink(dataSource, id, additionalBinaryDataProperties: null);
@@ -1577,10 +1577,10 @@ namespace Azure.AI.Language.Text
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted relation. </param>
-        /// <returns> A new <see cref="Text.HealthcareRelation"/> instance for mocking. </returns>
-        public static HealthcareRelation HealthcareRelation(RelationType relationType = default, IEnumerable<HealthcareRelationEntity> entities = default, double? confidenceScore = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareRelation"/> instance for mocking. </returns>
+        public static HealthcareRelation HealthcareRelation(RelationType relationType = default, IEnumerable<global::Azure.AI.Language.Text.HealthcareRelationEntity> entities = default, double? confidenceScore = default)
         {
-            entities ??= new ChangeTrackingList<HealthcareRelationEntity>();
+            entities ??= new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareRelationEntity>();
 
             return new HealthcareRelation(relationType, entities.ToList(), confidenceScore, additionalBinaryDataProperties: null);
         }
@@ -1588,7 +1588,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Entity in the relation. </summary>
         /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
         /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
-        /// <returns> A new <see cref="Text.HealthcareRelationEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareRelationEntity"/> instance for mocking. </returns>
         public static HealthcareRelationEntity HealthcareRelationEntity(string @ref = default, string role = default)
         {
             return new HealthcareRelationEntity(@ref, role, additionalBinaryDataProperties: null);
@@ -1596,10 +1596,10 @@ namespace Azure.AI.Language.Text
 
         /// <summary> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Text.FhirBundle"/> instance for mocking. </returns>
-        public static FhirBundle FhirBundle(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.FhirBundle"/> instance for mocking. </returns>
+        public static FhirBundle FhirBundle(IReadOnlyDictionary<string, global::System.BinaryData> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new FhirBundle(additionalProperties);
         }
@@ -1609,14 +1609,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseExtractionOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.KeyPhraseExtractionOperationResult"/> instance for mocking. </returns>
         public static KeyPhraseExtractionOperationResult KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, KeyPhraseResult results = default)
         {
             return new KeyPhraseExtractionOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1626,14 +1626,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of pii results. </param>
-        /// <returns> A new <see cref="Text.PiiEntityRecognitionOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiEntityRecognitionOperationResult"/> instance for mocking. </returns>
         public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, PiiResult results = default)
         {
             return new PiiEntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.PiiEntityRecognitionOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.PiiEntityRecognitionOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1643,14 +1643,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        /// <returns> A new <see cref="Text.SentimentOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentOperationResult"/> instance for mocking. </returns>
         public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, SentimentResult results = default)
         {
             return new SentimentOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1660,14 +1660,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
-        /// <returns> A new <see cref="Text.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
         public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, ExtractiveSummarizationResult results = default)
         {
             return new ExtractiveSummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.ExtractiveSummarizationOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.ExtractiveSummarizationOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1677,11 +1677,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.ExtractiveSummarizationResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationResult ExtractiveSummarizationResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<ExtractedSummaryActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationResult"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationResult ExtractiveSummarizationResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.ExtractedSummaryActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<ExtractedSummaryActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.ExtractedSummaryActionResult>();
 
             return new ExtractiveSummarizationResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1692,11 +1692,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="sentences"> Specifies the the extracted sentences from the input document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.ExtractedSummaryActionResult"/> instance for mocking. </returns>
-        public static ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<ExtractedSummarySentence> sentences = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractedSummaryActionResult"/> instance for mocking. </returns>
+        public static ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.ExtractedSummarySentence> sentences = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            sentences ??= new ChangeTrackingList<ExtractedSummarySentence>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            sentences ??= new ChangeTrackingList<global::Azure.AI.Language.Text.ExtractedSummarySentence>();
 
             return new ExtractedSummaryActionResult(
                 id,
@@ -1712,7 +1712,7 @@ namespace Azure.AI.Language.Text
         /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
         /// <param name="length"> The length of the sentence. </param>
-        /// <returns> A new <see cref="Text.ExtractedSummarySentence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractedSummarySentence"/> instance for mocking. </returns>
         public static ExtractedSummarySentence ExtractedSummarySentence(string text = default, double rankScore = default, int offset = default, int length = default)
         {
             return new ExtractedSummarySentence(text, rankScore, offset, length, additionalBinaryDataProperties: null);
@@ -1723,14 +1723,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummarizationOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationOperationResult"/> instance for mocking. </returns>
         public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, AbstractiveSummarizationResult results = default)
         {
             return new AbstractiveSummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
-                AnalyzeTextOperationResultsKind.AbstractiveSummarizationOperationResults,
+                global::Azure.AI.Language.Text.AnalyzeTextOperationResultsKind.AbstractiveSummarizationOperationResults,
                 additionalBinaryDataProperties: null,
                 results);
         }
@@ -1740,11 +1740,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummarizationResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationResult AbstractiveSummarizationResult(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<AbstractiveSummaryActionResult> documents = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationResult"/> instance for mocking. </returns>
+        public static AbstractiveSummarizationResult AbstractiveSummarizationResult(IEnumerable<global::Azure.AI.Language.Text.DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<global::Azure.AI.Language.Text.AbstractiveSummaryActionResult> documents = default)
         {
-            errors ??= new ChangeTrackingList<DocumentError>();
-            documents ??= new ChangeTrackingList<AbstractiveSummaryActionResult>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentError>();
+            documents ??= new ChangeTrackingList<global::Azure.AI.Language.Text.AbstractiveSummaryActionResult>();
 
             return new AbstractiveSummarizationResult(errors.ToList(), statistics, modelVersion, documents.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1755,11 +1755,11 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummaryActionResult"/> instance for mocking. </returns>
-        public static AbstractiveSummaryActionResult AbstractiveSummaryActionResult(string id = default, IEnumerable<DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<AbstractiveSummary> summaries = default, DetectedLanguage detectedLanguage = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummaryActionResult"/> instance for mocking. </returns>
+        public static AbstractiveSummaryActionResult AbstractiveSummaryActionResult(string id = default, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings = default, DocumentStatistics statistics = default, IEnumerable<global::Azure.AI.Language.Text.AbstractiveSummary> summaries = default, DetectedLanguage detectedLanguage = default)
         {
-            warnings ??= new ChangeTrackingList<DocumentWarning>();
-            summaries ??= new ChangeTrackingList<AbstractiveSummary>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.Language.Text.DocumentWarning>();
+            summaries ??= new ChangeTrackingList<global::Azure.AI.Language.Text.AbstractiveSummary>();
 
             return new AbstractiveSummaryActionResult(
                 id,
@@ -1773,10 +1773,10 @@ namespace Azure.AI.Language.Text
         /// <summary> An object representing a single summary with context for given document. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummary"/> instance for mocking. </returns>
-        public static AbstractiveSummary AbstractiveSummary(string text = default, IEnumerable<SummaryContext> contexts = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummary"/> instance for mocking. </returns>
+        public static AbstractiveSummary AbstractiveSummary(string text = default, IEnumerable<global::Azure.AI.Language.Text.SummaryContext> contexts = default)
         {
-            contexts ??= new ChangeTrackingList<SummaryContext>();
+            contexts ??= new ChangeTrackingList<global::Azure.AI.Language.Text.SummaryContext>();
 
             return new AbstractiveSummary(text, contexts.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1784,7 +1784,7 @@ namespace Azure.AI.Language.Text
         /// <summary> The context of the summary. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
-        /// <returns> A new <see cref="Text.SummaryContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SummaryContext"/> instance for mocking. </returns>
         public static SummaryContext SummaryContext(int offset = default, int length = default)
         {
             return new SummaryContext(offset, length, additionalBinaryDataProperties: null);
@@ -1792,11 +1792,11 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntitiesOperationAction"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.EntityLinkingOperationAction"/>, <see cref="Text.EntitiesOperationAction"/>, <see cref="Text.HealthcareOperationAction"/>, <see cref="Text.KeyPhraseOperationAction"/>, <see cref="Text.PiiOperationAction"/>, <see cref="Text.SentimentAnalysisOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Text.AbstractiveSummarizationOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.CustomEntitiesOperationAction"/>, <see cref="Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Azure.AI.Language.Text.EntityLinkingOperationAction"/>, <see cref="Azure.AI.Language.Text.EntitiesOperationAction"/>, <see cref="Azure.AI.Language.Text.HealthcareOperationAction"/>, <see cref="Azure.AI.Language.Text.KeyPhraseOperationAction"/>, <see cref="Azure.AI.Language.Text.PiiOperationAction"/>, <see cref="Azure.AI.Language.Text.SentimentAnalysisOperationAction"/>, <see cref="Azure.AI.Language.Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Azure.AI.Language.Text.AbstractiveSummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AnalyzeTextOperationAction"/> instance for mocking. </returns>
         public static AnalyzeTextOperationAction AnalyzeTextOperationAction(string name = default, string kind = default)
         {
             return new UnknownAnalyzeTextOperationAction(name, new AnalyzeTextOperationActionKind(kind), additionalBinaryDataProperties: null);
@@ -1805,10 +1805,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the custom text LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> task parameters. </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomEntitiesOperationAction"/> instance for mocking. </returns>
         public static CustomEntitiesOperationAction CustomEntitiesOperationAction(string name = default, CustomEntitiesActionContent parameters = default)
         {
-            return new CustomEntitiesOperationAction(name, AnalyzeTextOperationActionKind.CustomEntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new CustomEntitiesOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.CustomEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Supported parameters for a Custom Entities task. </summary>
@@ -1816,7 +1816,7 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"> Optional parameter to provide the string index type used to interpret string offsets. Defaults to TextElements (Graphemes). </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomEntitiesActionContent"/> instance for mocking. </returns>
         public static CustomEntitiesActionContent CustomEntitiesActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
         {
             return new CustomEntitiesActionContent(loggingOptOut, projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
@@ -1825,17 +1825,17 @@ namespace Azure.AI.Language.Text
         /// <summary> Use custom models to classify text into single label taxonomy. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationOperationAction CustomSingleLabelClassificationOperationAction(string name = default, CustomSingleLabelClassificationActionContent actionContent = default)
         {
-            return new CustomSingleLabelClassificationOperationAction(name, AnalyzeTextOperationActionKind.CustomSingleLabelClassification, additionalBinaryDataProperties: null, actionContent);
+            return new CustomSingleLabelClassificationOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.CustomSingleLabelClassification, additionalBinaryDataProperties: null, actionContent);
         }
 
         /// <summary> Supported parameters for a Custom Single Classification task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Text.CustomSingleLabelClassificationActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomSingleLabelClassificationActionContent"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationActionContent CustomSingleLabelClassificationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
         {
             return new CustomSingleLabelClassificationActionContent(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
@@ -1844,17 +1844,17 @@ namespace Azure.AI.Language.Text
         /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationOperationAction CustomMultiLabelClassificationOperationAction(string name = default, CustomMultiLabelClassificationActionContent actionContent = default)
         {
-            return new CustomMultiLabelClassificationOperationAction(name, AnalyzeTextOperationActionKind.CustomMultiLabelClassification, additionalBinaryDataProperties: null, actionContent);
+            return new CustomMultiLabelClassificationOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.CustomMultiLabelClassification, additionalBinaryDataProperties: null, actionContent);
         }
 
         /// <summary> Supported parameters for a Custom Multi Classification task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Text.CustomMultiLabelClassificationActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationActionContent CustomMultiLabelClassificationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
         {
             return new CustomMultiLabelClassificationActionContent(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
@@ -1863,28 +1863,28 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text Entity linking LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntityLinkingOperationAction"/> instance for mocking. </returns>
         public static EntityLinkingOperationAction EntityLinkingOperationAction(string name = default, EntityLinkingActionContent parameters = default)
         {
-            return new EntityLinkingOperationAction(name, AnalyzeTextOperationActionKind.EntityLinking, additionalBinaryDataProperties: null, parameters);
+            return new EntityLinkingOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.EntityLinking, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> An object representing the task definition for an Entities Recognition task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.EntitiesOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.EntitiesOperationAction"/> instance for mocking. </returns>
         public static EntitiesOperationAction EntitiesOperationAction(string name = default, EntitiesActionContent parameters = default)
         {
-            return new EntitiesOperationAction(name, AnalyzeTextOperationActionKind.EntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new EntitiesOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.EntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> The long running task to be performed by the service on the Healthcare input documents. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Parameters for the Healthcare task. </param>
-        /// <returns> A new <see cref="Text.HealthcareOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareOperationAction"/> instance for mocking. </returns>
         public static HealthcareOperationAction HealthcareOperationAction(string name = default, HealthcareTaskParameters parameters = default)
         {
-            return new HealthcareOperationAction(name, AnalyzeTextOperationActionKind.Healthcare, additionalBinaryDataProperties: null, parameters);
+            return new HealthcareOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.Healthcare, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Supported parameters for a Healthcare task. </summary>
@@ -1893,7 +1893,7 @@ namespace Azure.AI.Language.Text
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="documentType"> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </param>
-        /// <returns> A new <see cref="Text.HealthcareTaskParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.HealthcareTaskParameters"/> instance for mocking. </returns>
         public static HealthcareTaskParameters HealthcareTaskParameters(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default, FhirVersion? fhirVersion = default, HealthcareDocumentType? documentType = default)
         {
             return new HealthcareTaskParameters(
@@ -1908,37 +1908,37 @@ namespace Azure.AI.Language.Text
         /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Key phrase extraction task parameters. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.KeyPhraseOperationAction"/> instance for mocking. </returns>
         public static KeyPhraseOperationAction KeyPhraseOperationAction(string name = default, KeyPhraseActionContent parameters = default)
         {
-            return new KeyPhraseOperationAction(name, AnalyzeTextOperationActionKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, parameters);
+            return new KeyPhraseOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Pii task parameters. </param>
-        /// <returns> A new <see cref="Text.PiiOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.PiiOperationAction"/> instance for mocking. </returns>
         public static PiiOperationAction PiiOperationAction(string name = default, PiiActionContent parameters = default)
         {
-            return new PiiOperationAction(name, AnalyzeTextOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new PiiOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Parameters for the Sentiment Analysis task. </param>
-        /// <returns> A new <see cref="Text.SentimentAnalysisOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.SentimentAnalysisOperationAction"/> instance for mocking. </returns>
         public static SentimentAnalysisOperationAction SentimentAnalysisOperationAction(string name = default, SentimentAnalysisActionContent parameters = default)
         {
-            return new SentimentAnalysisOperationAction(name, AnalyzeTextOperationActionKind.SentimentAnalysis, additionalBinaryDataProperties: null, parameters);
+            return new SentimentAnalysisOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.SentimentAnalysis, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
-        /// <returns> A new <see cref="Text.ExtractiveSummarizationOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationOperationAction"/> instance for mocking. </returns>
         public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationActionContent actionContent = default)
         {
-            return new ExtractiveSummarizationOperationAction(name, AnalyzeTextOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
+            return new ExtractiveSummarizationOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
 
         /// <summary> Supported parameters for an Extractive Summarization task. </summary>
@@ -1948,7 +1948,7 @@ namespace Azure.AI.Language.Text
         /// <param name="sortBy"> Specifies how to sort the extracted summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        /// <returns> A new <see cref="Text.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
         public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationSortingCriteria? sortBy = default, StringIndexType? stringIndexType = default, string query = default)
         {
             return new ExtractiveSummarizationActionContent(
@@ -1964,10 +1964,10 @@ namespace Azure.AI.Language.Text
         /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummarizationOperationAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationOperationAction"/> instance for mocking. </returns>
         public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationActionContent actionContent = default)
         {
-            return new AbstractiveSummarizationOperationAction(name, AnalyzeTextOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
+            return new AbstractiveSummarizationOperationAction(name, global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
 
         /// <summary> Supported parameters for the pre-built Abstractive Summarization task. </summary>
@@ -1977,7 +1977,7 @@ namespace Azure.AI.Language.Text
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the query will be used to generate the summary. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
         public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, string instruction = default)
         {
             return new AbstractiveSummarizationActionContent(

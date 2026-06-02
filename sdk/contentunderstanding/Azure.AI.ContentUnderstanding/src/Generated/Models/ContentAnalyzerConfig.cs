@@ -14,16 +14,16 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentAnalyzerConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentAnalyzerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig"/>. </summary>
         public ContentAnalyzerConfig()
         {
             Locales = new ChangeTrackingList<string>();
-            ContentCategories = new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
+            ContentCategories = new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentAnalyzerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig"/>. </summary>
         /// <param name="shouldReturnDetails"> Return all content details. </param>
         /// <param name="locales"> List of locale hints for speech transcription. </param>
         /// <param name="enableOcr"> Enable optical character recognition (OCR). </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzerConfig(bool? shouldReturnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzerConfig(bool? shouldReturnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ShouldReturnDetails = shouldReturnDetails;
             Locales = locales;
@@ -102,7 +102,7 @@ namespace Azure.AI.ContentUnderstanding
         public bool? EstimateFieldSourceAndConfidence { get; set; }
 
         /// <summary> Map of categories to classify the input content(s) against. </summary>
-        public IDictionary<string, ContentCategoryDefinition> ContentCategories { get; }
+        public IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition> ContentCategories { get; }
 
         /// <summary> Enable segmentation of the input by contentCategories. </summary>
         public bool? EnableSegment { get; set; }

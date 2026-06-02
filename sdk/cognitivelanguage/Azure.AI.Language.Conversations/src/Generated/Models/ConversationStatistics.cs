@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationStatistics"/>. </summary>
         /// <param name="transactionsCount"> Number of text units for the request. </param>
         internal ConversationStatistics(int transactionsCount)
         {
             TransactionsCount = transactionsCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationStatistics"/>. </summary>
         /// <param name="transactionsCount"> Number of text units for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationStatistics(int transactionsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationStatistics(int transactionsCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TransactionsCount = transactionsCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

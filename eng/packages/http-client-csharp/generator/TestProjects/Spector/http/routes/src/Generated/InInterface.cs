@@ -17,16 +17,16 @@ namespace Routes
     {
         protected InInterface() => throw null;
 
-        internal InInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal InInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Fixed(RequestContext context) => throw null;
 
-        public virtual Task<Response> FixedAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FixedAsync(RequestContext context) => throw null;
 
         public virtual Response Fixed(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FixedAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FixedAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

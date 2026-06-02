@@ -14,23 +14,23 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobAssignment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobAssignment"/>. </summary>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         internal RouterJobAssignment(DateTimeOffset assignedAt)
         {
             AssignedAt = assignedAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="workerId"> Id of the Worker assigned to the job. </param>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
         /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssignmentId = assignmentId;
             WorkerId = workerId;

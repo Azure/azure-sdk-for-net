@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportAssetSnapshotPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload"/>. </summary>
         public ReportAssetSnapshotPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload"/>. </summary>
         /// <param name="metric"> The metric to retrieve a snapshot for. </param>
         /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
         /// <param name="size"> The number of assets per page. </param>
         /// <param name="page"> The page to retrieve. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotPayload(string metric, string labelName, int? size, int? page, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSnapshotPayload(string metric, string labelName, int? size, int? page, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metric = metric;
             LabelName = labelName;

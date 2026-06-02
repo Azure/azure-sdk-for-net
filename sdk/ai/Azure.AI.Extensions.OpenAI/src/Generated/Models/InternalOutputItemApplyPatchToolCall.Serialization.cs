@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalOutputItemApplyPatchToolCall : AgentResponseItem, IJsonModel<InternalOutputItemApplyPatchToolCall>
+    internal partial class InternalOutputItemApplyPatchToolCall : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemApplyPatchToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall"/> for deserialization. </summary>
         internal InternalOutputItemApplyPatchToolCall()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalOutputItemApplyPatchToolCall(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall.DeserializeInternalOutputItemApplyPatchToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemApplyPatchToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemApplyPatchToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemApplyPatchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemApplyPatchToolCall IPersistableModel<InternalOutputItemApplyPatchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemApplyPatchToolCall)PersistableModelCreateCore(data, options);
+        InternalOutputItemApplyPatchToolCall IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalOutputItemApplyPatchToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemApplyPatchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalOutputItemApplyPatchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,10 +69,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemApplyPatchToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
@@ -80,8 +80,8 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation, options);
-            if (Optional.IsDefined(CreatedBy))
+            writer.WriteObjectValue<InternalApplyPatchFileOperation>(Operation, options);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
                 writer.WriteStringValue(CreatedBy);
@@ -90,26 +90,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemApplyPatchToolCall IJsonModel<InternalOutputItemApplyPatchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalOutputItemApplyPatchToolCall)JsonModelCreateCore(ref reader, options);
+        InternalOutputItemApplyPatchToolCall IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalOutputItemApplyPatchToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemApplyPatchToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalOutputItemApplyPatchToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.InternalOutputItemApplyPatchToolCall.DeserializeInternalOutputItemApplyPatchToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalOutputItemApplyPatchToolCall DeserializeInternalOutputItemApplyPatchToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string callId = default;
             ApplyPatchCallStatus status = default;
             InternalApplyPatchFileOperation operation = default;
@@ -136,11 +136,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("operation"u8))
                 {
-                    operation = InternalApplyPatchFileOperation.DeserializeInternalApplyPatchFileOperation(prop.Value, options);
+                    operation = global::Azure.AI.Extensions.OpenAI.InternalApplyPatchFileOperation.DeserializeInternalApplyPatchFileOperation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -168,9 +168,9 @@ namespace Azure.AI.Extensions.OpenAI
                     createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalOutputItemApplyPatchToolCall(

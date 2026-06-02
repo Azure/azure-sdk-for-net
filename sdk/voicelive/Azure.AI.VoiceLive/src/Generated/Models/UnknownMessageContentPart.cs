@@ -12,10 +12,10 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownMessageContentPart : MessageContentPart
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownMessageContentPart"/>. </summary>
         /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

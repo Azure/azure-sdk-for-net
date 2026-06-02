@@ -16,20 +16,20 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSnapshot
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/>. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        public ConfigurationSnapshot(IEnumerable<global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters)
         {
-            Argument.AssertNotNull(filters, nameof(filters));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(filters, nameof(filters));
 
             Filters = filters.ToList();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshot"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
@@ -52,7 +52,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;

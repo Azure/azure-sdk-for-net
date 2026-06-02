@@ -13,20 +13,20 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the evaluation summary for a custom health care project. </summary>
     public partial class CustomHealthcareEvalSummary : TextAuthoringEvalSummary
     {
-        /// <summary> Initializes a new instance of <see cref="CustomHealthcareEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
-        internal CustomHealthcareEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, EntityRecognitionEvalSummary customHealthcareEvaluation) : base(TextAuthoringProjectKind.CustomHealthcare, evaluationOptions)
+        internal CustomHealthcareEvalSummary(TextAuthoringEvaluationDetails evaluationOptions, EntityRecognitionEvalSummary customHealthcareEvaluation) : base(global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind.CustomHealthcare, evaluationOptions)
         {
             CustomHealthcareEvaluation = customHealthcareEvaluation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomHealthcareEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
-        internal CustomHealthcareEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityRecognitionEvalSummary customHealthcareEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
+        internal CustomHealthcareEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EntityRecognitionEvalSummary customHealthcareEvaluation) : base(projectKind, evaluationOptions, additionalBinaryDataProperties)
         {
             CustomHealthcareEvaluation = customHealthcareEvaluation;
         }

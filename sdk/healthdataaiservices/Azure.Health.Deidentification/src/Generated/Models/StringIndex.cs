@@ -14,9 +14,9 @@ namespace Azure.Health.Deidentification
     public partial class StringIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StringIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.StringIndex"/>. </summary>
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification
             CodePoint = codePoint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StringIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.StringIndex"/>. </summary>
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
@@ -44,7 +44,7 @@ namespace Azure.Health.Deidentification
         /// Primary encoding used by Python.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StringIndex(int utf8, int utf16, int codePoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StringIndex(int utf8, int utf16, int codePoint, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Utf8 = utf8;
             Utf16 = utf16;

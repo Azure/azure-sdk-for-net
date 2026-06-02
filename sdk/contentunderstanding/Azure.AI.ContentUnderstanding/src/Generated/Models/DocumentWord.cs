@@ -18,22 +18,22 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentWord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentWord"/>. </summary>
         /// <param name="content"> Word text. </param>
         internal DocumentWord(string content)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentWord"/>. </summary>
         /// <param name="content"> Word text. </param>
         /// <param name="source"> Encoded source that identifies the position of the word in the content. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the word. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentWord(string content, string source, ContentSpan span, float? confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentWord(string content, string source, ContentSpan span, float? confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Source = source;

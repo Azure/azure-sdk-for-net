@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation comparison between the expected and predicted entities of a document region. </summary>
-    public partial class DocumentEntityRegionEvalResult : IJsonModel<DocumentEntityRegionEvalResult>
+    public partial class DocumentEntityRegionEvalResult : IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentEntityRegionEvalResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult"/> for deserialization. </summary>
         internal DocumentEntityRegionEvalResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentEntityRegionEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentEntityRegionEvalResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult.DeserializeDocumentEntityRegionEvalResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentEntityRegionEvalResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentEntityRegionEvalResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentEntityRegionEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentEntityRegionEvalResult IPersistableModel<DocumentEntityRegionEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentEntityRegionEvalResult IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentEntityRegionEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentEntityRegionEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,30 +73,30 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentEntityRegionEvalResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("expectedEntities"u8);
             writer.WriteStartArray();
             foreach (DocumentEntityLabelEvalResult item in ExpectedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentEntityLabelEvalResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedEntities"u8);
             writer.WriteStartArray();
             foreach (DocumentEntityLabelEvalResult item in PredictedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentEntityLabelEvalResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("regionOffset"u8);
             writer.WriteNumberValue(RegionOffset);
             writer.WritePropertyName("regionLength"u8);
             writer.WriteNumberValue(RegionLength);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -104,9 +104,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -115,52 +115,52 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentEntityRegionEvalResult IJsonModel<DocumentEntityRegionEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentEntityRegionEvalResult IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentEntityRegionEvalResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentEntityRegionEvalResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentEntityRegionEvalResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult.DeserializeDocumentEntityRegionEvalResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentEntityRegionEvalResult DeserializeDocumentEntityRegionEvalResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<DocumentEntityLabelEvalResult> expectedEntities = default;
-            IList<DocumentEntityLabelEvalResult> predictedEntities = default;
+            IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> expectedEntities = default;
+            IList<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> predictedEntities = default;
             int regionOffset = default;
             int regionLength = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expectedEntities"u8))
                 {
-                    List<DocumentEntityLabelEvalResult> array = new List<DocumentEntityLabelEvalResult>();
+                    List<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> array = new List<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentEntityLabelEvalResult.DeserializeDocumentEntityLabelEvalResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult.DeserializeDocumentEntityLabelEvalResult(item, options));
                     }
                     expectedEntities = array;
                     continue;
                 }
                 if (prop.NameEquals("predictedEntities"u8))
                 {
-                    List<DocumentEntityLabelEvalResult> array = new List<DocumentEntityLabelEvalResult>();
+                    List<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> array = new List<global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentEntityLabelEvalResult.DeserializeDocumentEntityLabelEvalResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult.DeserializeDocumentEntityLabelEvalResult(item, options));
                     }
                     predictedEntities = array;
                     continue;
@@ -175,9 +175,9 @@ namespace Azure.AI.Language.Text.Authoring
                     regionLength = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentEntityRegionEvalResult(expectedEntities, predictedEntities, regionOffset, regionLength, additionalBinaryDataProperties);

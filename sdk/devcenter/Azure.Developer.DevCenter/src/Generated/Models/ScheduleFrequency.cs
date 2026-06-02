@@ -12,18 +12,18 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The frequency of task execution. </summary>
-    public readonly partial struct ScheduleFrequency : IEquatable<ScheduleFrequency>
+    public readonly partial struct ScheduleFrequency : IEquatable<global::Azure.Developer.DevCenter.Models.ScheduleFrequency>
     {
         private readonly string _value;
         /// <summary> The scheduled task will run every day. </summary>
         private const string DailyValue = "Daily";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleFrequency"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.ScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduleFrequency(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -31,34 +31,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The scheduled task will run every day. </summary>
         public static ScheduleFrequency Daily { get; } = new ScheduleFrequency(DailyValue);
 
-        /// <summary> Determines if two <see cref="ScheduleFrequency"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.ScheduleFrequency"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduleFrequency left, ScheduleFrequency right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScheduleFrequency"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.ScheduleFrequency"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduleFrequency left, ScheduleFrequency right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.ScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ScheduleFrequency(string value) => new ScheduleFrequency(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.ScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleFrequency?(string value) => value == null ? null : new ScheduleFrequency(value);
+        public static implicit operator ScheduleFrequency?(string value) => (value == null) ? null : new ScheduleFrequency(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScheduleFrequency other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ScheduleFrequency other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ScheduleFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScheduleFrequency other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

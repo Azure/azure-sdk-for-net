@@ -13,9 +13,9 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricsData : MonitorDomain, IJsonModel<MetricsData>
+    internal partial class MetricsData : MonitorDomain, IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>
     {
-        /// <summary> Initializes a new instance of <see cref="MetricsData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData"/> for deserialization. </summary>
         internal MetricsData()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.OpenTelemetry.Exporter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetricsData(document.RootElement, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData.DeserializeMetricsData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricsData IPersistableModel<MetricsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MetricsData)PersistableModelCreateCore(data, options);
+        MetricsData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MetricsData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MetricsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,27 +73,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricsData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
             foreach (MetricDataPoint item in Metrics)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<MetricDataPoint>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Properties))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -106,33 +106,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricsData IJsonModel<MetricsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MetricsData)JsonModelCreateCore(ref reader, options);
+        MetricsData IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MetricsData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricsData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricsData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricsData.DeserializeMetricsData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MetricsData DeserializeMetricsData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int version = default;
             MonitorDomainKind kind = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<MetricDataPoint> metrics = default;
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> metrics = default;
             IDictionary<string, string> properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,24 +148,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("metrics"u8))
                 {
-                    List<MetricDataPoint> array = new List<MetricDataPoint>();
+                    List<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> array = new List<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricDataPoint.DeserializeMetricDataPoint(item, options));
+                        array.Add(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint.DeserializeMetricDataPoint(item, options));
                     }
                     metrics = array;
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -177,9 +177,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     properties = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new MetricsData(version, kind, additionalProperties, metrics, properties ?? new ChangeTrackingDictionary<string, string>());
+            return new MetricsData(version, kind, additionalProperties, metrics, (properties ?? new ChangeTrackingDictionary<string, string>()));
         }
     }
 }

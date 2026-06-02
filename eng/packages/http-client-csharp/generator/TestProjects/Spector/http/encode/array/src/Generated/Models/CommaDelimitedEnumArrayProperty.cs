@@ -11,8 +11,8 @@ namespace Encode._Array
 {
     public partial class CommaDelimitedEnumArrayProperty
     {
-        public CommaDelimitedEnumArrayProperty(IEnumerable<Colors> value) => throw null;
+        public CommaDelimitedEnumArrayProperty(IEnumerable<global::Encode._Array.Colors> value) => throw null;
 
-        public IList<Colors> Value => throw null;
+        public IList<global::Encode._Array.Colors> Value => throw null;
     }
 }

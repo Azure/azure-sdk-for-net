@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Results of the last detection. </summary>
-    public partial class MultivariateLastDetectionResult : IJsonModel<MultivariateLastDetectionResult>
+    public partial class MultivariateLastDetectionResult : IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MultivariateLastDetectionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultivariateLastDetectionResult(document.RootElement, options);
+                        return global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult.DeserializeMultivariateLastDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAnomalyDetectorContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.AnomalyDetector.AzureAIAnomalyDetectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultivariateLastDetectionResult IPersistableModel<MultivariateLastDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MultivariateLastDetectionResult IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MultivariateLastDetectionResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult"/> from. </param>
         public static explicit operator MultivariateLastDetectionResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMultivariateLastDetectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult.DeserializeMultivariateLastDetectionResult(document.RootElement, global::Azure.AI.AnomalyDetector.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultivariateLastDetectionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,32 +76,32 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
                 foreach (VariableState item in VariableStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VariableState>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (global::Azure.AI.AnomalyDetector.Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
                 foreach (AnomalyState item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AnomalyState>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.AI.AnomalyDetector
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,68 +120,68 @@ namespace Azure.AI.AnomalyDetector
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultivariateLastDetectionResult IJsonModel<MultivariateLastDetectionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MultivariateLastDetectionResult IJsonModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MultivariateLastDetectionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultivariateLastDetectionResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult.DeserializeMultivariateLastDetectionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MultivariateLastDetectionResult DeserializeMultivariateLastDetectionResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<VariableState> variableStates = default;
-            IList<AnomalyState> results = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.AnomalyDetector.VariableState> variableStates = default;
+            IList<global::Azure.AI.AnomalyDetector.AnomalyState> results = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("variableStates"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VariableState> array = new List<VariableState>();
+                    List<global::Azure.AI.AnomalyDetector.VariableState> array = new List<global::Azure.AI.AnomalyDetector.VariableState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item, options));
+                        array.Add(global::Azure.AI.AnomalyDetector.VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AnomalyState> array = new List<AnomalyState>();
+                    List<global::Azure.AI.AnomalyDetector.AnomalyState> array = new List<global::Azure.AI.AnomalyDetector.AnomalyState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyState.DeserializeAnomalyState(item, options));
+                        array.Add(global::Azure.AI.AnomalyDetector.AnomalyState.DeserializeAnomalyState(item, options));
                     }
                     results = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MultivariateLastDetectionResult(variableStates ?? new ChangeTrackingList<VariableState>(), results ?? new ChangeTrackingList<AnomalyState>(), additionalBinaryDataProperties);
+            return new MultivariateLastDetectionResult((variableStates ?? new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>()), (results ?? new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyState>()), additionalBinaryDataProperties);
         }
     }
 }

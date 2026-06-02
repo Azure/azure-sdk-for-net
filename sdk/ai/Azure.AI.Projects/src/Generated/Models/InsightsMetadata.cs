@@ -11,20 +11,20 @@ namespace Azure.AI.Projects.Evaluation
     public partial class InsightsMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightsMetadata"/>. </summary>
         /// <param name="createdAt"> The timestamp when the insights were created. </param>
         internal InsightsMetadata(DateTimeOffset createdAt)
         {
             CreatedAt = createdAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightsMetadata"/>. </summary>
         /// <param name="createdAt"> The timestamp when the insights were created. </param>
         /// <param name="completedAt"> The timestamp when the insights were completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightsMetadata(DateTimeOffset createdAt, DateTimeOffset? completedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightsMetadata(DateTimeOffset createdAt, DateTimeOffset? completedAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreatedAt = createdAt;
             CompletedAt = completedAt;

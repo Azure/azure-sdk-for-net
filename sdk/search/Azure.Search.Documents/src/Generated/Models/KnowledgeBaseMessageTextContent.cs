@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Text message type. </summary>
     public partial class KnowledgeBaseMessageTextContent : KnowledgeBaseMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/>. </summary>
         /// <param name="text"> The text content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public KnowledgeBaseMessageTextContent(string text) : base(KnowledgeBaseMessageContentType.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public KnowledgeBaseMessageTextContent(string text) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType.Text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Search.Documents.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text content. </param>
-        internal KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

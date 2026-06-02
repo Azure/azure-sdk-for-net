@@ -14,25 +14,25 @@ namespace Azure.Template
     public partial class FakedSharedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.FakedSharedModel"/>. </summary>
         /// <param name="tag"> The tag. </param>
         /// <param name="createdAt"> The created date. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         public FakedSharedModel(string tag, DateTimeOffset createdAt)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            global::Azure.Template.Argument.AssertNotNull(tag, nameof(tag));
 
             Tag = tag;
             CreatedAt = createdAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.FakedSharedModel"/>. </summary>
         /// <param name="tag"> The tag. </param>
         /// <param name="createdAt"> The created date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FakedSharedModel(string tag, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FakedSharedModel(string tag, DateTimeOffset createdAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Tag = tag;
             CreatedAt = createdAt;

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Parameters.BodyOptionality
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class BodyOptionalityClientHostExtensions
     {
         public static IClientBuilder AddBodyOptionalityClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddBodyOptionalityClient(this IHostApplicationBuilder host, string sectionName, Action<BodyOptionalityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddBodyOptionalityClient(this IHostApplicationBuilder host, string sectionName, Action<global::Parameters.BodyOptionality.BodyOptionalityClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedBodyOptionalityClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedBodyOptionalityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<BodyOptionalityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedBodyOptionalityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Parameters.BodyOptionality.BodyOptionalityClientSettings> configureSettings) => throw null;
     }
 }

@@ -26,16 +26,16 @@ namespace Azure.Communication.Messages
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/notifications:send", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -48,14 +48,14 @@ namespace Azure.Communication.Messages
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/streams/", false);
             uri.AppendPath(id, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/octet-stream");
             return message;
         }
@@ -65,16 +65,16 @@ namespace Azure.Communication.Messages
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/readreceipts:send", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

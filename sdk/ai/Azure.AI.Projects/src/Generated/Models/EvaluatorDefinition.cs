@@ -10,28 +10,28 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base evaluator configuration with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, and <see cref="RubricBasedEvaluatorDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Azure.AI.Projects.RubricBasedEvaluatorDefinition"/>.
     /// </summary>
     public abstract partial class EvaluatorDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinition"/>. </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         private protected EvaluatorDefinition(EvaluatorDefinitionType @type)
         {
             Type = @type;
-            Metrics = new ChangeTrackingDictionary<string, EvaluatorMetric>();
+            Metrics = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorDefinition"/>. </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             InitParameters = initParameters;
@@ -44,6 +44,6 @@ namespace Azure.AI.Projects.Evaluation
         internal EvaluatorDefinitionType Type { get; set; }
 
         /// <summary> List of output metrics produced by this evaluator. </summary>
-        public IDictionary<string, EvaluatorMetric> Metrics { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> Metrics { get; }
     }
 }

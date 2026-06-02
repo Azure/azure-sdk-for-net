@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownRecurrenceSchedule : RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownRecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

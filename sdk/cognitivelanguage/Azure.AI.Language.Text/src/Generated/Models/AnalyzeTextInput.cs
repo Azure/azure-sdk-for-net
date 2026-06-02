@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// Collection of documents to analyze and a single task to execute.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextEntityLinkingInput"/>, <see cref="TextEntityRecognitionInput"/>, <see cref="TextKeyPhraseExtractionInput"/>, <see cref="TextLanguageDetectionInput"/>, <see cref="TextPiiEntitiesRecognitionInput"/>, and <see cref="TextSentimentAnalysisInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.TextEntityLinkingInput"/>, <see cref="Azure.AI.Language.Text.TextEntityRecognitionInput"/>, <see cref="Azure.AI.Language.Text.TextKeyPhraseExtractionInput"/>, <see cref="Azure.AI.Language.Text.TextLanguageDetectionInput"/>, <see cref="Azure.AI.Language.Text.TextPiiEntitiesRecognitionInput"/>, and <see cref="Azure.AI.Language.Text.TextSentimentAnalysisInput"/>.
     /// </summary>
     public abstract partial class AnalyzeTextInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         private protected AnalyzeTextInput(AnalyzeTextInputKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

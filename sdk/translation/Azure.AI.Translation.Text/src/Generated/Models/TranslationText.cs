@@ -14,9 +14,9 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationText
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationText"/>. </summary>
         /// <param name="language"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         internal TranslationText(string language, string text)
@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Text
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Text.TranslationText"/>. </summary>
         /// <param name="language"> A string representing the language code of the target language. </param>
         /// <param name="sourceCharacters"> An integer indicating the number of characters in the source text string. </param>
         /// <param name="instructionTokens"> An integer indicating the number of tokens used in generating the translated text. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="targetTokens"> An integer indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             SourceCharacters = sourceCharacters;

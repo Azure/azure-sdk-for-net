@@ -11,9 +11,9 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store implementation. </summary>
-    public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition, IJsonModel<MemoryStoreDefaultDefinition>
+    public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition, IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition"/> for deserialization. </summary>
         internal MemoryStoreDefaultDefinition()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MemoryStoreDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryStoreDefaultDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition.DeserializeMemoryStoreDefaultDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreDefaultDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreDefaultDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryStoreDefaultDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreDefaultDefinition IPersistableModel<MemoryStoreDefaultDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemoryStoreDefaultDefinition)PersistableModelCreateCore(data, options);
+        MemoryStoreDefaultDefinition IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MemoryStoreDefaultDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryStoreDefaultDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryStoreDefaultDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,50 +71,50 @@ namespace Azure.AI.Projects.Memory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryStoreDefaultDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("chat_model"u8);
             writer.WriteStringValue(ChatModel);
             writer.WritePropertyName("embedding_model"u8);
             writer.WriteStringValue(EmbeddingModel);
-            if (Optional.IsDefined(Options))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                writer.WriteObjectValue<MemoryStoreDefaultOptions>(Options, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreDefaultDefinition IJsonModel<MemoryStoreDefaultDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MemoryStoreDefaultDefinition)JsonModelCreateCore(ref reader, options);
+        MemoryStoreDefaultDefinition IJsonModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MemoryStoreDefaultDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MemoryStoreDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MemoryStoreDefaultDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryStoreDefaultDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition.DeserializeMemoryStoreDefaultDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MemoryStoreDefaultDefinition DeserializeMemoryStoreDefaultDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MemoryStoreKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string chatModel = default;
             string embeddingModel = default;
             MemoryStoreDefaultOptions options0 = default;
@@ -137,16 +137,16 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    options0 = MemoryStoreDefaultOptions.DeserializeMemoryStoreDefaultOptions(prop.Value, options);
+                    options0 = global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions.DeserializeMemoryStoreDefaultOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MemoryStoreDefaultDefinition(kind, additionalBinaryDataProperties, chatModel, embeddingModel, options0);

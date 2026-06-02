@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.SpecialHeaders.XmsClientRequestId
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class XmsClientRequestIdClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

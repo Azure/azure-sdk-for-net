@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class AzureOpenAIVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public AzureOpenAIVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.AzureOpenAI)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AzureOpenAIVectorizer(string vectorizerName) : base(vectorizerName, global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizerKind.AzureOpenAI)
         {
-            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
-        internal AzureOpenAIVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters parameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
+        internal AzureOpenAIVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters parameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

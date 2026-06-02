@@ -12,22 +12,22 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalCompoundFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
-        public InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
+        public InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<global::System.BinaryData> filters)
         {
             Type = @type;
             Filters = filters.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IList<global::System.BinaryData> filters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Filters = filters;
@@ -39,17 +39,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalComparisonFilter"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.InternalComparisonFilter"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="BinaryData"/>. </description>
+        /// <description> <see cref="global::System.BinaryData"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -76,6 +76,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Filters { get; }
+        public IList<global::System.BinaryData> Filters { get; }
     }
 }

@@ -12,10 +12,10 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownResponseStatusDetails : ResponseStatusDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownResponseStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResponseStatusDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownResponseStatusDetails(SessionResponseStatus @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

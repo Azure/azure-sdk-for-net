@@ -18,23 +18,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
         /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="knowledgeSources"/> is null. </exception>
-        public KnowledgeBase(string name, IEnumerable<KnowledgeSourceReference> knowledgeSources)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="knowledgeSources"/> is null. </exception>
+        public KnowledgeBase(string name, IEnumerable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference> knowledgeSources)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(knowledgeSources, nameof(knowledgeSources));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(knowledgeSources, nameof(knowledgeSources));
 
             Name = name;
             KnowledgeSources = knowledgeSources.ToList();
-            Models = new ChangeTrackingList<KnowledgeBaseModel>();
+            Models = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
         /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
         /// <param name="models"> Contains configuration options on how to connect to AI models. </param>
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference> knowledgeSources, IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
@@ -67,10 +67,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
 
         /// <summary> Knowledge sources referenced by this knowledge base. </summary>
-        public IList<KnowledgeSourceReference> KnowledgeSources { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference> KnowledgeSources { get; }
 
         /// <summary> Contains configuration options on how to connect to AI models. </summary>
-        public IList<KnowledgeBaseModel> Models { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel> Models { get; }
 
         /// <summary> The retrieval reasoning effort configuration. </summary>
         public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; set; }

@@ -13,25 +13,25 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     /// <summary> Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>
     public partial class PrebuiltQueryMatchingPolicy : MatchingPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="PrebuiltQueryMatchingPolicy"/>. </summary>
-        public PrebuiltQueryMatchingPolicy() : base(MatchingPolicyKind.Prebuilt)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/>. </summary>
+        public PrebuiltQueryMatchingPolicy() : base(global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyKind.Prebuilt)
         {
-            Fields = new ChangeTrackingList<MatchingPolicyFieldsType>();
+            Fields = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrebuiltQueryMatchingPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy"/>. </summary>
         /// <param name="kind"> Kind of matching policy to be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fields"> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </param>
         /// <param name="disableFullMatch"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
-        internal PrebuiltQueryMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MatchingPolicyFieldsType> fields, bool? disableFullMatch) : base(kind, additionalBinaryDataProperties)
+        internal PrebuiltQueryMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType> fields, bool? disableFullMatch) : base(kind, additionalBinaryDataProperties)
         {
             Fields = fields;
             DisableFullMatch = disableFullMatch;
         }
 
         /// <summary> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </summary>
-        public IList<MatchingPolicyFieldsType> Fields { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType> Fields { get; }
 
         /// <summary> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </summary>
         public bool? DisableFullMatch { get; set; }

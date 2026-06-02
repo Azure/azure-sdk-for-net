@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownMcpServerOutputParsing : McpServerOutputParsing
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMcpServerOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownMcpServerOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMcpServerOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMcpServerOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The AgentToolboxes sub-client. </summary>
     public partial class AgentToolboxes
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AgentToolboxes for mocking. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentToolboxes(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentToolboxes(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -48,17 +48,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. If the toolbox does not exist, it will be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateToolboxVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateToolboxVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateToolboxVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -72,17 +72,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. If the toolbox does not exist, it will be created. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateToolboxVersionAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateToolboxVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateToolboxVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateToolboxVersionRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a new version of a toolbox. If the toolbox does not exist, it will be created. </summary>
@@ -93,23 +93,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </param>
         /// <param name="policies"> Policy configuration for this toolbox version. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<global::Azure.AI.Projects.Agents.ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(tools, nameof(tools));
 
             CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
                 description,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
-                skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
+                (tools?.ToList() as IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProjectsAgentTool>()),
+                (skills?.ToList() as IList<global::Azure.AI.Projects.Agents.ToolboxSkill> ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ToolboxSkill>()),
                 policies,
                 default);
-            ClientResult result = CreateToolboxVersion(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
+            ClientResult result = this.CreateToolboxVersion(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Create a new version of a toolbox. If the toolbox does not exist, it will be created. </summary>
@@ -120,23 +120,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </param>
         /// <param name="policies"> Policy configuration for this toolbox version. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<global::Azure.AI.Projects.Agents.ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(tools, nameof(tools));
 
             CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
                 description,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
-                skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
+                (tools?.ToList() as IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ProjectsAgentTool>()),
+                (skills?.ToList() as IList<global::Azure.AI.Projects.Agents.ToolboxSkill> ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ToolboxSkill>()),
                 policies,
                 default);
-            ClientResult result = await CreateToolboxVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
+            ClientResult result = await this.CreateToolboxVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -149,16 +149,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetToolbox(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetToolboxRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetToolboxRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -171,44 +171,44 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetToolboxAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetToolboxAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetToolboxRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetToolboxRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieve a toolbox. </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxRecord> GetToolbox(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.ToolboxRecord> GetToolbox(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetToolbox(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
+            ClientResult result = this.GetToolbox(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxRecord)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieve a toolbox. </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxRecord>> GetToolboxAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.ToolboxRecord>> GetToolboxAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetToolboxAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
+            ClientResult result = await this.GetToolboxAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxRecord)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetToolboxes(int? limit, string order, string after, string before, RequestOptions options)
         {
@@ -278,7 +278,7 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetToolboxesAsync(int? limit, string order, string after, string before, RequestOptions options)
         {
@@ -319,13 +319,13 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetToolboxVersions(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new AgentToolboxesGetToolboxVersionsCollectionResult(
                 this,
@@ -365,13 +365,13 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetToolboxVersionsAsync(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new AgentToolboxesGetToolboxVersionsAsyncCollectionResult(
                 this,
@@ -394,17 +394,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetToolboxVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetToolboxVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetToolboxVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -418,49 +418,49 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetToolboxVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetToolboxVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetToolboxVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetToolboxVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieve a specific version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxVersion> GetToolboxVersion(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Agents.ToolboxVersion> GetToolboxVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetToolboxVersion(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
+            ClientResult result = this.GetToolboxVersion(name, version, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxVersion)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieve a specific version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxVersion>> GetToolboxVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Agents.ToolboxVersion>> GetToolboxVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetToolboxVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
+            ClientResult result = await this.GetToolboxVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ToolboxVersion)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -474,17 +474,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateToolbox(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateToolboxRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateToolboxRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -498,17 +498,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateToolboxAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateToolboxAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateToolboxRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateToolboxRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -521,16 +521,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteToolbox(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteToolboxRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteToolboxRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -543,42 +543,42 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteToolboxAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteToolboxAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteToolboxRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteToolboxRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a toolbox and all its versions. </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult DeleteToolbox(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return DeleteToolbox(name, cancellationToken.ToRequestOptions());
+            return this.DeleteToolbox(name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete a toolbox and all its versions. </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteToolboxAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteToolboxAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await DeleteToolboxAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteToolboxAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -592,17 +592,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteToolboxVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteToolboxVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteToolboxVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -616,47 +616,47 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteToolboxVersionAsync(string name, string version, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteToolboxVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteToolboxVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteToolboxVersionRequest(name, version, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a specific version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult DeleteToolboxVersion(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return DeleteToolboxVersion(name, version, cancellationToken.ToRequestOptions());
+            return this.DeleteToolboxVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete a specific version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteToolboxVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteToolboxVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await DeleteToolboxVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteToolboxVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

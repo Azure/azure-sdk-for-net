@@ -11,22 +11,22 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Insights on set of Agent Evaluation Results. </summary>
     public partial class AgentClusterInsightRequest : InsightRequest
     {
-        /// <summary> Initializes a new instance of <see cref="AgentClusterInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AgentClusterInsightRequest"/>. </summary>
         /// <param name="agentName"> Identifier for the agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public AgentClusterInsightRequest(string agentName) : base(InsightType.AgentClusterInsight)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        public AgentClusterInsightRequest(string agentName) : base(global::Azure.AI.Projects.Evaluation.InsightType.AgentClusterInsight)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentClusterInsightRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.AgentClusterInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
-        internal AgentClusterInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal AgentClusterInsightRequest(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string agentName, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             AgentName = agentName;
             ModelConfiguration = modelConfiguration;

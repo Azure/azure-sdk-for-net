@@ -16,9 +16,9 @@ namespace Azure.AI.VoiceLive
     /// Returned when the model-generated audio is done. Also emitted when a Response
     /// is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseAudioDone : SessionUpdate, IJsonModel<SessionUpdateResponseAudioDone>
+    public partial class SessionUpdateResponseAudioDone : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDone"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioDone()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateResponseAudioDone(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateResponseAudioDone)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateResponseAudioDone)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseAudioDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseAudioDone IPersistableModel<SessionUpdateResponseAudioDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseAudioDone)PersistableModelCreateCore(data, options);
+        SessionUpdateResponseAudioDone IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateResponseAudioDone)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseAudioDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateResponseAudioDone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,10 +76,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateResponseAudioDone)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
@@ -94,32 +94,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseAudioDone IJsonModel<SessionUpdateResponseAudioDone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateResponseAudioDone)JsonModelCreateCore(ref reader, options);
+        SessionUpdateResponseAudioDone IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateResponseAudioDone)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateResponseAudioDone)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateResponseAudioDone(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateResponseAudioDone DeserializeSessionUpdateResponseAudioDone(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
@@ -156,9 +156,9 @@ namespace Azure.AI.VoiceLive
                     contentIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateResponseAudioDone(

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchPoolIdentityType enums. </summary>
-    public readonly partial struct BatchPoolIdentityType : IEquatable<BatchPoolIdentityType>
+    public readonly partial struct BatchPoolIdentityType : IEquatable<global::Azure.Compute.Batch.BatchPoolIdentityType>
     {
         private readonly string _value;
         /// <summary> Batch pool has user assigned identities with it. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Batch pool has no identity associated with it. Setting `None` in update pool will remove existing identities. </summary>
         private const string NoneValue = "None";
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchPoolIdentityType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Batch pool has no identity associated with it. Setting `None` in update pool will remove existing identities. </summary>
         public static BatchPoolIdentityType None { get; } = new BatchPoolIdentityType(NoneValue);
 
-        /// <summary> Determines if two <see cref="BatchPoolIdentityType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchPoolIdentityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchPoolIdentityType left, BatchPoolIdentityType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchPoolIdentityType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchPoolIdentityType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchPoolIdentityType left, BatchPoolIdentityType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchPoolIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchPoolIdentityType(string value) => new BatchPoolIdentityType(value);
 
-        /// <summary> Converts a string to a <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchPoolIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchPoolIdentityType?(string value) => value == null ? null : new BatchPoolIdentityType(value);
+        public static implicit operator BatchPoolIdentityType?(string value) => (value == null) ? null : new BatchPoolIdentityType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchPoolIdentityType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchPoolIdentityType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchPoolIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchPoolIdentityType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The definition of an MCP server as used by the voicelive endpoint. </summary>
-    public partial class VoiceLiveMcpServerDefinition : VoiceLiveToolDefinition, IJsonModel<VoiceLiveMcpServerDefinition>
+    public partial class VoiceLiveMcpServerDefinition : VoiceLiveToolDefinition, IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpServerDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition"/> for deserialization. </summary>
         internal VoiceLiveMcpServerDefinition()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveToolDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceLiveMcpServerDefinition(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition.DeserializeVoiceLiveMcpServerDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveMcpServerDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveMcpServerDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceLiveMcpServerDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveMcpServerDefinition IPersistableModel<VoiceLiveMcpServerDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceLiveMcpServerDefinition)PersistableModelCreateCore(data, options);
+        VoiceLiveMcpServerDefinition IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((VoiceLiveMcpServerDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceLiveMcpServerDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceLiveMcpServerDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,29 +73,29 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveMcpServerDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("server_url"u8);
             writer.WriteStringValue(ServerUrl);
-            if (Optional.IsDefined(Authorization))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteStringValue(Authorization);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -104,13 +104,13 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(AllowedTools))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(AllowedTools))
             {
                 writer.WritePropertyName("allowed_tools"u8);
                 writer.WriteStartArray();
                 foreach (string item in AllowedTools)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -119,15 +119,15 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(_requireApproval))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(_requireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(_requireApproval);
 #else
-                using (JsonDocument document = JsonDocument.Parse(_requireApproval))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(_requireApproval))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -135,31 +135,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveMcpServerDefinition IJsonModel<VoiceLiveMcpServerDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceLiveMcpServerDefinition)JsonModelCreateCore(ref reader, options);
+        VoiceLiveMcpServerDefinition IJsonModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((VoiceLiveMcpServerDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveToolDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VoiceLiveMcpServerDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceLiveMcpServerDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition.DeserializeVoiceLiveMcpServerDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VoiceLiveMcpServerDefinition DeserializeVoiceLiveMcpServerDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string serverLabel = default;
             string serverUrl = default;
             string authorization = default;
@@ -190,14 +190,14 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("headers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -211,14 +211,14 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("allowed_tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -232,16 +232,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("require_approval"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApproval = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VoiceLiveMcpServerDefinition(
@@ -250,8 +250,8 @@ namespace Azure.AI.VoiceLive
                 serverLabel,
                 serverUrl,
                 authorization,
-                headers ?? new ChangeTrackingDictionary<string, string>(),
-                allowedTools ?? new ChangeTrackingList<string>(),
+                (headers ?? new ChangeTrackingDictionary<string, string>()),
+                (allowedTools ?? new ChangeTrackingList<string>()),
                 requireApproval);
         }
     }

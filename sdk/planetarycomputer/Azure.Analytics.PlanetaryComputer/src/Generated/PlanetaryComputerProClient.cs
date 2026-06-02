@@ -16,8 +16,8 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> The PlanetaryComputerProClient. </summary>
     public partial class PlanetaryComputerProClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
         private IngestionClient _cachedIngestionClient;
         private StacClient _cachedStacClient;
@@ -32,8 +32,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of PlanetaryComputerProClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PlanetaryComputerProClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PlanetaryComputerProClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PlanetaryComputerProClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PlanetaryComputerProClientOptions())
         {
         }
 
@@ -41,20 +41,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal PlanetaryComputerProClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PlanetaryComputerProClientOptions options)
+        internal PlanetaryComputerProClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, PlanetaryComputerProClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new PlanetaryComputerProClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -64,14 +64,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PlanetaryComputerProClient(Uri endpoint, TokenCredential credential, PlanetaryComputerProClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PlanetaryComputerProClient(global::System.Uri endpoint, TokenCredential credential, PlanetaryComputerProClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of PlanetaryComputerProClient from a <see cref="PlanetaryComputerProClientSettings"/>. </summary>
         /// <param name="settings"> The settings for PlanetaryComputerProClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public PlanetaryComputerProClient(PlanetaryComputerProClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -85,25 +85,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of IngestionClient. </summary>
         public virtual IngestionClient GetIngestionClient()
         {
-            return Volatile.Read(ref _cachedIngestionClient) ?? Interlocked.CompareExchange(ref _cachedIngestionClient, new IngestionClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionClient;
+            return (global::System.Threading.Volatile.Read(ref _cachedIngestionClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedIngestionClient, new IngestionClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionClient));
         }
 
         /// <summary> Initializes a new instance of StacClient. </summary>
         public virtual StacClient GetStacClient()
         {
-            return Volatile.Read(ref _cachedStacClient) ?? Interlocked.CompareExchange(ref _cachedStacClient, new StacClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedStacClient;
+            return (global::System.Threading.Volatile.Read(ref _cachedStacClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedStacClient, new StacClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedStacClient));
         }
 
         /// <summary> Initializes a new instance of DataClient. </summary>
         public virtual DataClient GetDataClient()
         {
-            return Volatile.Read(ref _cachedDataClient) ?? Interlocked.CompareExchange(ref _cachedDataClient, new DataClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataClient;
+            return (global::System.Threading.Volatile.Read(ref _cachedDataClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedDataClient, new DataClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataClient));
         }
 
         /// <summary> Initializes a new instance of ManagedStorageSharedAccessSignatureClient. </summary>
         public virtual ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient()
         {
-            return Volatile.Read(ref _cachedManagedStorageSharedAccessSignatureClient) ?? Interlocked.CompareExchange(ref _cachedManagedStorageSharedAccessSignatureClient, new ManagedStorageSharedAccessSignatureClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedStorageSharedAccessSignatureClient;
+            return (global::System.Threading.Volatile.Read(ref _cachedManagedStorageSharedAccessSignatureClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedManagedStorageSharedAccessSignatureClient, new ManagedStorageSharedAccessSignatureClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedStorageSharedAccessSignatureClient));
         }
     }
 }

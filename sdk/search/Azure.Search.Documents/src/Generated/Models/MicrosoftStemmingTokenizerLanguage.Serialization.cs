@@ -14,236 +14,236 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MicrosoftStemmingTokenizerLanguage value) => value switch
         {
-            MicrosoftStemmingTokenizerLanguage.Arabic => "arabic",
-            MicrosoftStemmingTokenizerLanguage.Bangla => "bangla",
-            MicrosoftStemmingTokenizerLanguage.Bulgarian => "bulgarian",
-            MicrosoftStemmingTokenizerLanguage.Catalan => "catalan",
-            MicrosoftStemmingTokenizerLanguage.Croatian => "croatian",
-            MicrosoftStemmingTokenizerLanguage.Czech => "czech",
-            MicrosoftStemmingTokenizerLanguage.Danish => "danish",
-            MicrosoftStemmingTokenizerLanguage.Dutch => "dutch",
-            MicrosoftStemmingTokenizerLanguage.English => "english",
-            MicrosoftStemmingTokenizerLanguage.Estonian => "estonian",
-            MicrosoftStemmingTokenizerLanguage.Finnish => "finnish",
-            MicrosoftStemmingTokenizerLanguage.French => "french",
-            MicrosoftStemmingTokenizerLanguage.German => "german",
-            MicrosoftStemmingTokenizerLanguage.Greek => "greek",
-            MicrosoftStemmingTokenizerLanguage.Gujarati => "gujarati",
-            MicrosoftStemmingTokenizerLanguage.Hebrew => "hebrew",
-            MicrosoftStemmingTokenizerLanguage.Hindi => "hindi",
-            MicrosoftStemmingTokenizerLanguage.Hungarian => "hungarian",
-            MicrosoftStemmingTokenizerLanguage.Icelandic => "icelandic",
-            MicrosoftStemmingTokenizerLanguage.Indonesian => "indonesian",
-            MicrosoftStemmingTokenizerLanguage.Italian => "italian",
-            MicrosoftStemmingTokenizerLanguage.Kannada => "kannada",
-            MicrosoftStemmingTokenizerLanguage.Latvian => "latvian",
-            MicrosoftStemmingTokenizerLanguage.Lithuanian => "lithuanian",
-            MicrosoftStemmingTokenizerLanguage.Malay => "malay",
-            MicrosoftStemmingTokenizerLanguage.Malayalam => "malayalam",
-            MicrosoftStemmingTokenizerLanguage.Marathi => "marathi",
-            MicrosoftStemmingTokenizerLanguage.NorwegianBokmaal => "norwegianBokmaal",
-            MicrosoftStemmingTokenizerLanguage.Polish => "polish",
-            MicrosoftStemmingTokenizerLanguage.Portuguese => "portuguese",
-            MicrosoftStemmingTokenizerLanguage.PortugueseBrazilian => "portugueseBrazilian",
-            MicrosoftStemmingTokenizerLanguage.Punjabi => "punjabi",
-            MicrosoftStemmingTokenizerLanguage.Romanian => "romanian",
-            MicrosoftStemmingTokenizerLanguage.Russian => "russian",
-            MicrosoftStemmingTokenizerLanguage.SerbianCyrillic => "serbianCyrillic",
-            MicrosoftStemmingTokenizerLanguage.SerbianLatin => "serbianLatin",
-            MicrosoftStemmingTokenizerLanguage.Slovak => "slovak",
-            MicrosoftStemmingTokenizerLanguage.Slovenian => "slovenian",
-            MicrosoftStemmingTokenizerLanguage.Spanish => "spanish",
-            MicrosoftStemmingTokenizerLanguage.Swedish => "swedish",
-            MicrosoftStemmingTokenizerLanguage.Tamil => "tamil",
-            MicrosoftStemmingTokenizerLanguage.Telugu => "telugu",
-            MicrosoftStemmingTokenizerLanguage.Turkish => "turkish",
-            MicrosoftStemmingTokenizerLanguage.Ukrainian => "ukrainian",
-            MicrosoftStemmingTokenizerLanguage.Urdu => "urdu",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Arabic => "arabic",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Bangla => "bangla",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Bulgarian => "bulgarian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Catalan => "catalan",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Croatian => "croatian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Czech => "czech",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Danish => "danish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Dutch => "dutch",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.English => "english",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Estonian => "estonian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Finnish => "finnish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.French => "french",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.German => "german",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Greek => "greek",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Gujarati => "gujarati",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hebrew => "hebrew",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hindi => "hindi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hungarian => "hungarian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Icelandic => "icelandic",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Indonesian => "indonesian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Italian => "italian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Kannada => "kannada",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Latvian => "latvian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Lithuanian => "lithuanian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Malay => "malay",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Malayalam => "malayalam",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Marathi => "marathi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.NorwegianBokmaal => "norwegianBokmaal",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Polish => "polish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Portuguese => "portuguese",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.PortugueseBrazilian => "portugueseBrazilian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Punjabi => "punjabi",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Romanian => "romanian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Russian => "russian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.SerbianCyrillic => "serbianCyrillic",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.SerbianLatin => "serbianLatin",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Slovak => "slovak",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Slovenian => "slovenian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Spanish => "spanish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Swedish => "swedish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Tamil => "tamil",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Telugu => "telugu",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Turkish => "turkish",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Ukrainian => "ukrainian",
+            global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Urdu => "urdu",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MicrosoftStemmingTokenizerLanguage value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MicrosoftStemmingTokenizerLanguage ToMicrosoftStemmingTokenizerLanguage(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Arabic;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Arabic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bangla"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bangla"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Bangla;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Bangla;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Bulgarian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Bulgarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Catalan;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Catalan;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "croatian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "croatian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Croatian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Croatian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Czech;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Czech;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Danish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Danish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Dutch;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Dutch;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
             {
-                return MicrosoftStemmingTokenizerLanguage.English;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.English;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "estonian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "estonian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Estonian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Estonian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Finnish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Finnish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
             {
-                return MicrosoftStemmingTokenizerLanguage.French;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.French;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
             {
-                return MicrosoftStemmingTokenizerLanguage.German;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.German;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Greek;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Greek;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "gujarati"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "gujarati"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Gujarati;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Gujarati;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hebrew"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hebrew"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Hebrew;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hebrew;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Hindi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hindi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Hungarian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Hungarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "icelandic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "icelandic"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Icelandic;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Icelandic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Indonesian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Indonesian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Italian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Italian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "kannada"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "kannada"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Kannada;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Kannada;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Latvian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Latvian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lithuanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lithuanian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Lithuanian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Lithuanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "malay"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "malay"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Malay;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Malay;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "malayalam"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "malayalam"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Malayalam;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Malayalam;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "marathi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "marathi"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Marathi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Marathi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "norwegianBokmaal"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "norwegianBokmaal"))
             {
-                return MicrosoftStemmingTokenizerLanguage.NorwegianBokmaal;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.NorwegianBokmaal;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "polish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "polish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Polish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Polish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Portuguese;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Portuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseBrazilian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseBrazilian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.PortugueseBrazilian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.PortugueseBrazilian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "punjabi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "punjabi"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Punjabi;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Punjabi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Romanian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Romanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Russian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Russian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serbianCyrillic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "serbianCyrillic"))
             {
-                return MicrosoftStemmingTokenizerLanguage.SerbianCyrillic;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.SerbianCyrillic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serbianLatin"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "serbianLatin"))
             {
-                return MicrosoftStemmingTokenizerLanguage.SerbianLatin;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.SerbianLatin;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "slovak"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "slovak"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Slovak;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Slovak;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "slovenian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "slovenian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Slovenian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Slovenian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Spanish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Spanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Swedish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Swedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tamil"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "tamil"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Tamil;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Tamil;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "telugu"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "telugu"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Telugu;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Telugu;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Turkish;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Turkish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ukrainian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "ukrainian"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Ukrainian;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Ukrainian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "urdu"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "urdu"))
             {
-                return MicrosoftStemmingTokenizerLanguage.Urdu;
+                return global::Azure.Search.Documents.Indexes.Models.MicrosoftStemmingTokenizerLanguage.Urdu;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MicrosoftStemmingTokenizerLanguage value.");
         }

@@ -13,14 +13,14 @@ namespace Azure.AI.VoiceLive
     /// <summary> The definition of an MCP server as used by the voicelive endpoint. </summary>
     public partial class VoiceLiveMcpServerDefinition : VoiceLiveToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpServerDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition"/>. </summary>
         /// <param name="serverLabel"></param>
         /// <param name="serverUrl"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
-        public VoiceLiveMcpServerDefinition(string serverLabel, string serverUrl) : base(ToolType.Mcp)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
+        public VoiceLiveMcpServerDefinition(string serverLabel, string serverUrl) : base(global::Azure.AI.VoiceLive.ToolType.Mcp)
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(serverUrl, nameof(serverUrl));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(serverUrl, nameof(serverUrl));
 
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             AllowedTools = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpServerDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"></param>
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
-        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
+        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;

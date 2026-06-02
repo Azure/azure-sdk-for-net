@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Query parameter filter for vector store file retrieval endpoint. </summary>
-    public readonly partial struct VectorStoreFileStatusFilter : IEquatable<VectorStoreFileStatusFilter>
+    public readonly partial struct VectorStoreFileStatusFilter : IEquatable<global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter>
     {
         private readonly string _value;
         /// <summary> Retrieve only files that are currently being processed. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Retrieve only files that were cancelled. </summary>
         private const string CancelledValue = "cancelled";
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileStatusFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorStoreFileStatusFilter(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Retrieve only files that were cancelled. </summary>
         public static VectorStoreFileStatusFilter Cancelled { get; } = new VectorStoreFileStatusFilter(CancelledValue);
 
-        /// <summary> Determines if two <see cref="VectorStoreFileStatusFilter"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorStoreFileStatusFilter left, VectorStoreFileStatusFilter right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorStoreFileStatusFilter"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorStoreFileStatusFilter left, VectorStoreFileStatusFilter right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreFileStatusFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorStoreFileStatusFilter(string value) => new VectorStoreFileStatusFilter(value);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreFileStatusFilter"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreFileStatusFilter?(string value) => value == null ? null : new VectorStoreFileStatusFilter(value);
+        public static implicit operator VectorStoreFileStatusFilter?(string value) => (value == null) ? null : new VectorStoreFileStatusFilter(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorStoreFileStatusFilter other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorStoreFileStatusFilter other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorStoreFileStatusFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorStoreFileStatusFilter other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

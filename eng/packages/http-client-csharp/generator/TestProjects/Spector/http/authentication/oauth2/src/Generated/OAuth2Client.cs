@@ -17,37 +17,37 @@ namespace Authentication.OAuth2
 {
     public partial class OAuth2Client
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://security.microsoft.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://security.microsoft.com/.default" };
 
         protected OAuth2Client() => throw null;
 
-        public OAuth2Client(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new OAuth2ClientOptions()) => throw null;
+        public OAuth2Client(TokenCredential credential) : this(new global::System.Uri("http://localhost:3000"), credential, new OAuth2ClientOptions()) => throw null;
 
-        public OAuth2Client(TokenCredential credential, OAuth2ClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+        public OAuth2Client(TokenCredential credential, OAuth2ClientOptions options) : this(new global::System.Uri("http://localhost:3000"), credential, options) => throw null;
 
-        internal OAuth2Client(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OAuth2ClientOptions options) => throw null;
+        internal OAuth2Client(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, OAuth2ClientOptions options) => throw null;
 
-        public OAuth2Client(Uri endpoint, TokenCredential credential, OAuth2ClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
+        public OAuth2Client(global::System.Uri endpoint, TokenCredential credential, OAuth2ClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public OAuth2Client(OAuth2ClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 
-        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(RequestContext context) => throw null;
 
         public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Invalid(RequestContext context) => throw null;
 
-        public virtual Task<Response> InvalidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> InvalidAsync(RequestContext context) => throw null;
 
         public virtual Response Invalid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

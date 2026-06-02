@@ -13,11 +13,11 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Represents the settings used to configure a <see cref="DataMapClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class DataMapClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
-        public Uri Endpoint { get; set; }
+        public global::System.Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public DataMapClientOptions Options { get; set; }
@@ -26,14 +26,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
+            if (global::System.Uri.TryCreate(section["Endpoint"], global::System.UriKind.Absolute, out global::System.Uri endpoint))
             {
-                Endpoint = endpoint;
+                this.Endpoint = endpoint;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new DataMapClientOptions(optionsSection);
+                this.Options = new DataMapClientOptions(optionsSection);
             }
         }
     }

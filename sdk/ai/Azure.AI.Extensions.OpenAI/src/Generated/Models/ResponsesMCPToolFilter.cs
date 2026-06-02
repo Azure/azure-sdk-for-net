@@ -11,15 +11,15 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesMCPToolFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter"/>. </summary>
         public ResponsesMCPToolFilter()
         {
             ToolNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter"/>. </summary>
         /// <param name="toolNames"> List of allowed tool names. </param>
         /// <param name="isReadOnly">
         /// Indicates whether or not a tool modifies data or is read-only. If an
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   it will match this filter.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesMCPToolFilter(IList<string> toolNames, bool? isReadOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesMCPToolFilter(IList<string> toolNames, bool? isReadOnly, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToolNames = toolNames;
             IsReadOnly = isReadOnly;

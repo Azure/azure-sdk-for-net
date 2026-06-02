@@ -16,13 +16,13 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class StaticInterimResponseConfig : InterimResponseConfigBase
     {
-        /// <summary> Initializes a new instance of <see cref="StaticInterimResponseConfig"/>. </summary>
-        public StaticInterimResponseConfig() : base(InterimResponseConfigType.StaticInterimResponse)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.StaticInterimResponseConfig"/>. </summary>
+        public StaticInterimResponseConfig() : base(global::Azure.AI.VoiceLive.InterimResponseConfigType.StaticInterimResponse)
         {
             Texts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StaticInterimResponseConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.StaticInterimResponseConfig"/>. </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         /// <param name="triggers">
         /// List of triggers that can fire the interim response. Any trigger can activate it (OR logic).
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="latencyThresholdMs"> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="texts"> List of interim response text options to randomly select from. </param>
-        internal StaticInterimResponseConfig(InterimResponseConfigType @type, IList<InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> texts) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal StaticInterimResponseConfig(InterimResponseConfigType @type, IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> texts) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
             Texts = texts;
         }

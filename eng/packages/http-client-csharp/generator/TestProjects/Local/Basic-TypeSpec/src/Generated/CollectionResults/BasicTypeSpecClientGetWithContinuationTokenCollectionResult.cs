@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithContinuationTokenCollectionResult : Pageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenCollectionResult : Pageable<global::System.BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
@@ -26,7 +26,7 @@ namespace BasicTypeSpec
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenCollectionResult(BasicTypeSpecClient client, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenCollectionResult(BasicTypeSpecClient client, string token, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _token = token;
@@ -38,23 +38,23 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = (continuationToken ?? _token);
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
-                List<BinaryData> items = new List<BinaryData>();
+                ListWithContinuationTokenResponse result = ((ListWithContinuationTokenResponse)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage, response);
+                yield return global::Azure.Page<BinaryData>.FromValues(items, nextPage, response);
                 nextPage = result.NextToken;
                 if (string.IsNullOrEmpty(nextPage))
                 {

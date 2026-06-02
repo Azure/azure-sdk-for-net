@@ -14,26 +14,26 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepDetailsActivity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDetailsActivity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDetailsActivity"/>. </summary>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
-        internal RunStepDetailsActivity(string id, string serverLabel, IDictionary<string, ActivityFunctionDefinition> tools)
+        internal RunStepDetailsActivity(string id, string serverLabel, IDictionary<string, global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition> tools)
         {
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDetailsActivity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDetailsActivity"/>. </summary>
         /// <param name="type"> The activity type, which is always 'mcp_list_tools'. </param>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDetailsActivity(string @type, string id, string serverLabel, IDictionary<string, ActivityFunctionDefinition> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDetailsActivity(string @type, string id, string serverLabel, IDictionary<string, global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition> tools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
@@ -52,6 +52,6 @@ namespace Azure.AI.Agents.Persistent
         public string ServerLabel { get; }
 
         /// <summary> The supported function list. </summary>
-        public IDictionary<string, ActivityFunctionDefinition> Tools { get; }
+        public IDictionary<string, global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition> Tools { get; }
     }
 }

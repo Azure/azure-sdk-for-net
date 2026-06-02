@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The detailed information associated with a run step activities. </summary>
     public partial class RunStepActivityDetails : RunStepDetails
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepActivityDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepActivityDetails"/>. </summary>
         /// <param name="activities"> A list of activities for this run step. </param>
-        internal RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities) : base(RunStepType.Activities)
+        internal RunStepActivityDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDetailsActivity> activities) : base(global::Azure.AI.Agents.Persistent.RunStepType.Activities)
         {
             Activities = activities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepActivityDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepActivityDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activities"> A list of activities for this run step. </param>
-        internal RunStepActivityDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RunStepDetailsActivity> activities) : base(@type, additionalBinaryDataProperties)
+        internal RunStepActivityDetails(RunStepType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Agents.Persistent.RunStepDetailsActivity> activities) : base(@type, additionalBinaryDataProperties)
         {
             Activities = activities;
         }
 
         /// <summary> A list of activities for this run step. </summary>
-        public IList<RunStepDetailsActivity> Activities { get; }
+        public IList<global::Azure.AI.Agents.Persistent.RunStepDetailsActivity> Activities { get; }
     }
 }

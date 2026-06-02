@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedCustomEntityRecognitionDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomEntityRecognitionDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument"/>. </summary>
         public ExportedCustomEntityRecognitionDocument()
         {
-            Entities = new ChangeTrackingList<ExportedDocumentEntityRegion>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomEntityRecognitionDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument"/>. </summary>
         /// <param name="entities"> The list of entity labels belonging to the document. </param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCustomEntityRecognitionDocument(IList<ExportedDocumentEntityRegion> entities, string location, string language, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedCustomEntityRecognitionDocument(IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> entities, string location, string language, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             Location = location;
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> The list of entity labels belonging to the document. </summary>
-        public IList<ExportedDocumentEntityRegion> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> Entities { get; }
 
         /// <summary> The location of the document in the storage. </summary>
         public string Location { get; set; }

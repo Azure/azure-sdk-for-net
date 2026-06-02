@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation
 {
-    public partial class Plant : IJsonModel<Plant>
+    public partial class Plant : IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>
     {
         internal Plant() => throw null;
 
@@ -21,22 +21,22 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Plant>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Plant IPersistableModel<Plant>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Plant IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Plant>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="plant"> The <see cref="Plant"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="plant"> The <see cref="global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Plant plant) => throw null;
 
         public static explicit operator Plant(Response response) => throw null;
 
-        void IJsonModel<Plant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Plant IJsonModel<Plant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Plant IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation.Plant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Plant JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

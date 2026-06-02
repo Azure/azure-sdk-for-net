@@ -18,9 +18,9 @@ namespace Azure.Compute.Batch
     public partial class DataDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.DataDisk"/>. </summary>
         /// <param name="logicalUnitNumber"> The logical unit number. The logicalUnitNumber is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct logicalUnitNumber. The value must be between 0 and 63, inclusive. </param>
         /// <param name="diskSizeGb"> The initial disk size in gigabytes. </param>
         public DataDisk(int logicalUnitNumber, int diskSizeGb)
@@ -29,13 +29,13 @@ namespace Azure.Compute.Batch
             DiskSizeGb = diskSizeGb;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.DataDisk"/>. </summary>
         /// <param name="logicalUnitNumber"> The logical unit number. The logicalUnitNumber is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct logicalUnitNumber. The value must be between 0 and 63, inclusive. </param>
         /// <param name="caching"> The type of caching to be enabled for the data disks. The default value for caching is readwrite. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/. </param>
         /// <param name="diskSizeGb"> The initial disk size in gigabytes. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisk(int logicalUnitNumber, CachingType? caching, int diskSizeGb, ManagedDisk managedDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataDisk(int logicalUnitNumber, CachingType? caching, int diskSizeGb, ManagedDisk managedDisk, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LogicalUnitNumber = logicalUnitNumber;
             Caching = caching;

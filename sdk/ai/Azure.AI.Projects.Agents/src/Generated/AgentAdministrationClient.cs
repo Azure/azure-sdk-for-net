@@ -15,14 +15,14 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The AgentAdministrationClient sub-client. </summary>
     public partial class AgentAdministrationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+                { global::System.ClientModel.Primitives.GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { global::System.ClientModel.Primitives.GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
         private readonly string _apiVersion;
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentAdministrationClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentAdministrationClient(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -46,8 +46,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-        public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public AgentAdministrationClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
         {
         }
 
@@ -55,27 +55,27 @@ namespace Azure.AI.Projects.Agents
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
+        internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, global::System.Uri endpoint, AgentAdministrationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new AgentAdministrationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             }
             else
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AgentAdministrationClient. </param>
-        [Experimental("SCME0002")]
-        public AgentAdministrationClient(AgentAdministrationClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public AgentAdministrationClient(AgentAdministrationClientSettings settings) : this(global::System.ClientModel.Primitives.AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -94,12 +94,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -114,12 +114,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -139,12 +139,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -192,12 +192,12 @@ namespace Azure.AI.Projects.Agents
         /// If omitted, the latest version's code zip is returned.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DownloadAgentCode(string agentName, string foundryFeatures, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, agentVersion, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDownloadAgentCodeRequest(agentName, foundryFeatures, agentVersion, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -220,12 +220,12 @@ namespace Azure.AI.Projects.Agents
         /// If omitted, the latest version's code zip is returned.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadAgentCodeAsync(string agentName, string foundryFeatures, string agentVersion, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> DownloadAgentCodeAsync(string agentName, string foundryFeatures, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, agentVersion, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDownloadAgentCodeRequest(agentName, foundryFeatures, agentVersion, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -243,11 +243,11 @@ namespace Azure.AI.Projects.Agents
         /// If omitted, the latest version's code zip is returned.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, string agentVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<global::System.BinaryData> DownloadAgentCode(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, string agentVersion = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadAgentCode(agentName, foundryFeatures?.ToSerialString(), agentVersion, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = this.DownloadAgentCode(agentName, foundryFeatures?.ToSerialString(), agentVersion, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
@@ -265,11 +265,11 @@ namespace Azure.AI.Projects.Agents
         /// If omitted, the latest version's code zip is returned.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, string agentVersion = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult<global::System.BinaryData>> DownloadAgentCodeAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, string agentVersion = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadAgentCodeAsync(agentName, foundryFeatures?.ToSerialString(), agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = await this.DownloadAgentCodeAsync(agentName, foundryFeatures?.ToSerialString(), agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
@@ -287,12 +287,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateSession(string agentName, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateSessionRequest(agentName, content, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -310,12 +310,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual async Task<global::System.ClientModel.ClientResult> CreateSessionAsync(string agentName, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateSessionRequest(agentName, content, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -331,12 +331,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetSession(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -352,12 +352,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -374,12 +374,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteSession(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -396,12 +396,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> DeleteSessionAsync(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, userIsolationKey, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -417,12 +417,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult StopSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateStopSessionRequest(agentName, sessionId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -438,12 +438,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> StopSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateStopSessionRequest(agentName, sessionId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -454,10 +454,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult StopSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return StopSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return this.StopSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -468,10 +468,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::System.ClientModel.ClientResult> StopSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await StopSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.StopSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -505,12 +505,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -544,12 +544,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<global::System.ClientModel.ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
     }
 }

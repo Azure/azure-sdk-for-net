@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Scheme for tile addressing in TileJSON specification. </summary>
-    public readonly partial struct TileAddressingScheme : IEquatable<TileAddressingScheme>
+    public readonly partial struct TileAddressingScheme : IEquatable<global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme>
     {
         private readonly string _value;
         /// <summary> XYZ tile addressing scheme with origin at top-left. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> TMS tile addressing scheme with origin at bottom-left. </summary>
         private const string TmsValue = "tms";
 
-        /// <summary> Initializes a new instance of <see cref="TileAddressingScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TileAddressingScheme(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> TMS tile addressing scheme with origin at bottom-left. </summary>
         public static TileAddressingScheme Tms { get; } = new TileAddressingScheme(TmsValue);
 
-        /// <summary> Determines if two <see cref="TileAddressingScheme"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TileAddressingScheme left, TileAddressingScheme right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TileAddressingScheme"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TileAddressingScheme left, TileAddressingScheme right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TileAddressingScheme"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TileAddressingScheme(string value) => new TileAddressingScheme(value);
 
-        /// <summary> Converts a string to a <see cref="TileAddressingScheme"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.TileAddressingScheme"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TileAddressingScheme?(string value) => value == null ? null : new TileAddressingScheme(value);
+        public static implicit operator TileAddressingScheme?(string value) => (value == null) ? null : new TileAddressingScheme(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TileAddressingScheme other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TileAddressingScheme other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TileAddressingScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TileAddressingScheme other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

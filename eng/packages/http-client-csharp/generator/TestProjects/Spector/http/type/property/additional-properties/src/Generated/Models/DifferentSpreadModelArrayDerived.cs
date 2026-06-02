@@ -12,10 +12,10 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class DifferentSpreadModelArrayDerived : DifferentSpreadModelArrayRecord
     {
-        public DifferentSpreadModelArrayDerived(string knownProp, IEnumerable<ModelForRecord> derivedProp) : base(knownProp) => throw null;
+        public DifferentSpreadModelArrayDerived(string knownProp, IEnumerable<global::_Type.Property.AdditionalProperties.ModelForRecord> derivedProp) : base(knownProp) => throw null;
 
-        internal DifferentSpreadModelArrayDerived(string knownProp, IDictionary<string, IList<BinaryData>> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ModelForRecord> derivedProp) : base(knownProp, additionalProperties, additionalBinaryDataProperties) => throw null;
+        internal DifferentSpreadModelArrayDerived(string knownProp, IDictionary<string, global::System.Collections.Generic.IList<global::System.BinaryData>> additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::_Type.Property.AdditionalProperties.ModelForRecord> derivedProp) : base(knownProp, additionalProperties, additionalBinaryDataProperties) => throw null;
 
-        public IList<ModelForRecord> DerivedProp => throw null;
+        public IList<global::_Type.Property.AdditionalProperties.ModelForRecord> DerivedProp => throw null;
     }
 }

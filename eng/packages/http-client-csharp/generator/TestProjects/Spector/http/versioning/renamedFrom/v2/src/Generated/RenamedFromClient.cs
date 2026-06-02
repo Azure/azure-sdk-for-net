@@ -19,24 +19,24 @@ namespace Versioning.RenamedFrom
     {
         protected RenamedFromClient() => throw null;
 
-        public RenamedFromClient(Uri endpoint) : this(endpoint, new RenamedFromClientOptions()) => throw null;
+        public RenamedFromClient(global::System.Uri endpoint) : this(endpoint, new RenamedFromClientOptions()) => throw null;
 
-        internal RenamedFromClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RenamedFromClientOptions options) => throw null;
+        internal RenamedFromClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, RenamedFromClientOptions options) => throw null;
 
-        public RenamedFromClient(Uri endpoint, RenamedFromClientOptions options) : this(null, endpoint, options) => throw null;
+        public RenamedFromClient(global::System.Uri endpoint, RenamedFromClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public RenamedFromClient(RenamedFromClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public RenamedFromClient(RenamedFromClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response NewOp(string newQuery, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> NewOpAsync(string newQuery, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> NewOpAsync(string newQuery, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<NewModel> NewOp(string newQuery, NewModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.RenamedFrom.NewModel> NewOp(string newQuery, NewModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<NewModel>> NewOpAsync(string newQuery, NewModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.RenamedFrom.NewModel>> NewOpAsync(string newQuery, NewModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual NewInterface GetNewInterfaceClient() => throw null;
     }

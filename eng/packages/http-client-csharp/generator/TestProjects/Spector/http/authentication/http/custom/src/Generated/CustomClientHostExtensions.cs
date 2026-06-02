@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Authentication.Http.Custom
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class CustomClientHostExtensions
     {
         public static IClientBuilder AddCustomClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddCustomClient(this IHostApplicationBuilder host, string sectionName, Action<CustomClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddCustomClient(this IHostApplicationBuilder host, string sectionName, Action<global::Authentication.Http.Custom.CustomClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedCustomClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedCustomClient(this IHostApplicationBuilder host, string key, string sectionName, Action<CustomClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedCustomClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Authentication.Http.Custom.CustomClientSettings> configureSettings) => throw null;
     }
 }

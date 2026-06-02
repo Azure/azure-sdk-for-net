@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateCompactResponseConversationRequest(BinaryContent content, RequestOptions options)
         {

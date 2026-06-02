@@ -30,14 +30,14 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -48,14 +48,14 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -67,27 +67,27 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Health.Deidentification.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (continuationToken != null)
+            if ((continuationToken != null))
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetJobsInternalRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -96,20 +96,20 @@ namespace Azure.Health.Deidentification
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Health.Deidentification.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -121,27 +121,27 @@ namespace Azure.Health.Deidentification
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/documents", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.Health.Deidentification.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (continuationToken != null)
+            if ((continuationToken != null))
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(global::System.Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -150,20 +150,20 @@ namespace Azure.Health.Deidentification
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
+                uri.UpdateQuery("maxpagesize", global::Azure.Health.Deidentification.TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -175,14 +175,14 @@ namespace Azure.Health.Deidentification
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath(":cancel", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -193,14 +193,14 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -209,14 +209,14 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deid", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

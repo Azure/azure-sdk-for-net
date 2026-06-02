@@ -14,15 +14,15 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricsFilters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricsFilters"/>. </summary>
         public MetricsFilters()
         {
-            Filters = new ChangeTrackingList<DimensionFilter>();
+            Filters = new ChangeTrackingList<global::Azure.Developer.LoadTesting.DimensionFilter>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricsFilters"/>. </summary>
         /// <param name="filters">
         /// Get metrics for specific dimension values. Example: Metric contains dimension
         /// like SamplerName, Error. To retrieve all the time series data where SamplerName
@@ -30,7 +30,7 @@ namespace Azure.Developer.LoadTesting
         /// {"SamplerName", ["HTTPRequest1", "HTTPRequest2"}
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsFilters(IList<DimensionFilter> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricsFilters(IList<global::Azure.Developer.LoadTesting.DimensionFilter> filters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,6 +42,6 @@ namespace Azure.Developer.LoadTesting
         /// is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be
         /// {"SamplerName", ["HTTPRequest1", "HTTPRequest2"}
         /// </summary>
-        public IList<DimensionFilter> Filters { get; }
+        public IList<global::Azure.Developer.LoadTesting.DimensionFilter> Filters { get; }
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents an LLM web summarization activity record. </summary>
     public partial class KnowledgeBaseModelWebSummarizationActivityRecord : KnowledgeBaseActivityRecord
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.ModelWebSummarization)
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id) : base(id, global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType.ModelWebSummarization)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokensCount = inputTokensCount;
             OutputTokensCount = outputTokensCount;

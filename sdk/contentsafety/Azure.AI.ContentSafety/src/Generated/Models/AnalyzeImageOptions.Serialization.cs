@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The image analysis request. </summary>
-    public partial class AnalyzeImageOptions : IJsonModel<AnalyzeImageOptions>
+    public partial class AnalyzeImageOptions : IJsonModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeImageOptions"/> for deserialization. </summary>
         internal AnalyzeImageOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeImageOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentSafety.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeImageOptions(document.RootElement, options);
+                        return global::Azure.AI.ContentSafety.AnalyzeImageOptions.DeserializeAnalyzeImageOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeImageOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentSafety.AzureAIContentSafetyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeImageOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeImageOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeImageOptions IPersistableModel<AnalyzeImageOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeImageOptions IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeImageOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="analyzeImageOptions"> The <see cref="AnalyzeImageOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="analyzeImageOptions"> The <see cref="global::Azure.AI.ContentSafety.AnalyzeImageOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AnalyzeImageOptions analyzeImageOptions)
         {
-            if (analyzeImageOptions == null)
+            if ((analyzeImageOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(analyzeImageOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(analyzeImageOptions, global::Azure.AI.ContentSafety.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeImageOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,14 +84,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeImageOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image, options);
-            if (Optional.IsCollectionDefined(Categories))
+            writer.WriteObjectValue<ContentSafetyImageData>(Image, options);
+            if (global::Azure.AI.ContentSafety.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -101,12 +101,12 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputType))
+            if (global::Azure.AI.ContentSafety.Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace Azure.AI.ContentSafety
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,47 +125,47 @@ namespace Azure.AI.ContentSafety
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeImageOptions IJsonModel<AnalyzeImageOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeImageOptions IJsonModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnalyzeImageOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.AnalyzeImageOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeImageOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentSafety.AnalyzeImageOptions.DeserializeAnalyzeImageOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnalyzeImageOptions DeserializeAnalyzeImageOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContentSafetyImageData image = default;
-            IList<ImageCategory> categories = default;
+            IList<global::Azure.AI.ContentSafety.ImageCategory> categories = default;
             AnalyzeImageOutputType? outputType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(prop.Value, options);
+                    image = global::Azure.AI.ContentSafety.ContentSafetyImageData.DeserializeContentSafetyImageData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("categories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ImageCategory> array = new List<ImageCategory>();
+                    List<global::Azure.AI.ContentSafety.ImageCategory> array = new List<global::Azure.AI.ContentSafety.ImageCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ImageCategory(item.GetString()));
@@ -175,19 +175,19 @@ namespace Azure.AI.ContentSafety
                 }
                 if (prop.NameEquals("outputType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     outputType = new AnalyzeImageOutputType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnalyzeImageOptions(image, categories ?? new ChangeTrackingList<ImageCategory>(), outputType, additionalBinaryDataProperties);
+            return new AnalyzeImageOptions(image, (categories ?? new ChangeTrackingList<global::Azure.AI.ContentSafety.ImageCategory>()), outputType, additionalBinaryDataProperties);
         }
     }
 }

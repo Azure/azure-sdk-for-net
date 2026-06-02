@@ -14,121 +14,121 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SnowballTokenFilterLanguage value) => value switch
         {
-            SnowballTokenFilterLanguage.Armenian => "armenian",
-            SnowballTokenFilterLanguage.Basque => "basque",
-            SnowballTokenFilterLanguage.Catalan => "catalan",
-            SnowballTokenFilterLanguage.Danish => "danish",
-            SnowballTokenFilterLanguage.Dutch => "dutch",
-            SnowballTokenFilterLanguage.English => "english",
-            SnowballTokenFilterLanguage.Finnish => "finnish",
-            SnowballTokenFilterLanguage.French => "french",
-            SnowballTokenFilterLanguage.German => "german",
-            SnowballTokenFilterLanguage.German2 => "german2",
-            SnowballTokenFilterLanguage.Hungarian => "hungarian",
-            SnowballTokenFilterLanguage.Italian => "italian",
-            SnowballTokenFilterLanguage.Kp => "kp",
-            SnowballTokenFilterLanguage.Lovins => "lovins",
-            SnowballTokenFilterLanguage.Norwegian => "norwegian",
-            SnowballTokenFilterLanguage.Porter => "porter",
-            SnowballTokenFilterLanguage.Portuguese => "portuguese",
-            SnowballTokenFilterLanguage.Romanian => "romanian",
-            SnowballTokenFilterLanguage.Russian => "russian",
-            SnowballTokenFilterLanguage.Spanish => "spanish",
-            SnowballTokenFilterLanguage.Swedish => "swedish",
-            SnowballTokenFilterLanguage.Turkish => "turkish",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Armenian => "armenian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Basque => "basque",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Catalan => "catalan",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Danish => "danish",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Dutch => "dutch",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.English => "english",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Finnish => "finnish",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.French => "french",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.German => "german",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.German2 => "german2",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Hungarian => "hungarian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Italian => "italian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Kp => "kp",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Lovins => "lovins",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Norwegian => "norwegian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Porter => "porter",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Portuguese => "portuguese",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Romanian => "romanian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Russian => "russian",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Spanish => "spanish",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Swedish => "swedish",
+            global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Turkish => "turkish",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SnowballTokenFilterLanguage value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SnowballTokenFilterLanguage ToSnowballTokenFilterLanguage(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
             {
-                return SnowballTokenFilterLanguage.Armenian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Armenian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
             {
-                return SnowballTokenFilterLanguage.Basque;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Basque;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
             {
-                return SnowballTokenFilterLanguage.Catalan;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Catalan;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
             {
-                return SnowballTokenFilterLanguage.Danish;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Danish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
             {
-                return SnowballTokenFilterLanguage.Dutch;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Dutch;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
             {
-                return SnowballTokenFilterLanguage.English;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.English;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
             {
-                return SnowballTokenFilterLanguage.Finnish;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Finnish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
             {
-                return SnowballTokenFilterLanguage.French;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.French;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
             {
-                return SnowballTokenFilterLanguage.German;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.German;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german2"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german2"))
             {
-                return SnowballTokenFilterLanguage.German2;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.German2;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
             {
-                return SnowballTokenFilterLanguage.Hungarian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Hungarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
             {
-                return SnowballTokenFilterLanguage.Italian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Italian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "kp"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "kp"))
             {
-                return SnowballTokenFilterLanguage.Kp;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Kp;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lovins"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lovins"))
             {
-                return SnowballTokenFilterLanguage.Lovins;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Lovins;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
             {
-                return SnowballTokenFilterLanguage.Norwegian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Norwegian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "porter"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "porter"))
             {
-                return SnowballTokenFilterLanguage.Porter;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Porter;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
             {
-                return SnowballTokenFilterLanguage.Portuguese;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Portuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
             {
-                return SnowballTokenFilterLanguage.Romanian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Romanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
             {
-                return SnowballTokenFilterLanguage.Russian;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Russian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
             {
-                return SnowballTokenFilterLanguage.Spanish;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Spanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
             {
-                return SnowballTokenFilterLanguage.Swedish;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Swedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
             {
-                return SnowballTokenFilterLanguage.Turkish;
+                return global::Azure.Search.Documents.Indexes.Models.SnowballTokenFilterLanguage.Turkish;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SnowballTokenFilterLanguage value.");
         }

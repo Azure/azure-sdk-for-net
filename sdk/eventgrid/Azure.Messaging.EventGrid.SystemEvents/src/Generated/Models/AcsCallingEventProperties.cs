@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsCallingEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallingEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallingEventProperties"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CorrelationId = correlationId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallingEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallingEventProperties"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallingEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsCallingEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartedBy = startedBy;
             ServerCallId = serverCallId;

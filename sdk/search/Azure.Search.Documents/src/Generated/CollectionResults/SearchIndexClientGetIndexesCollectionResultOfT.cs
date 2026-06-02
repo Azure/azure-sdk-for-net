@@ -14,7 +14,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetIndexesCollectionResultOfT : Pageable<SearchIndex>
+    internal partial class SearchIndexClientGetIndexesCollectionResultOfT : Pageable<global::Azure.Search.Documents.Indexes.Models.SearchIndex>
     {
         private readonly SearchIndexClient _client;
         private readonly int? _top;
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetIndexesCollectionResultOfT(SearchIndexClient client, int? top, int? skip, bool? count, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetIndexesCollectionResultOfT(SearchIndexClient client, int? top, int? skip, bool? count, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _top = top;
@@ -44,33 +44,33 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetIndexesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SearchIndex>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Search.Documents.Indexes.Models.SearchIndex>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListIndexesResult result = (ListIndexesResult)response;
-                yield return Page<SearchIndex>.FromValues(result.Indexes, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListIndexesResult result = ((ListIndexesResult)response);
+                yield return global::Azure.Page<SearchIndex>.FromValues(((IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndex>)result.Indexes), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
             }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexesRequest(nextLink, _top, _skip, _count, _context) : _client.CreateGetIndexesRequest(_top, _skip, _count, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetIndexesRequest(nextLink, _top, _skip, _count, _context) : _client.CreateGetIndexesRequest(_top, _skip, _count, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

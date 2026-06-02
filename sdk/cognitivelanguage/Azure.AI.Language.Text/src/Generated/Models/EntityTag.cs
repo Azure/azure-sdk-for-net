@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text
     public partial class EntityTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityTag"/>. </summary>
         /// <param name="name"> Name of the tag. Entity Tag names will be unique globally. </param>
         internal EntityTag(string name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityTag"/>. </summary>
         /// <param name="name"> Name of the tag. Entity Tag names will be unique globally. </param>
         /// <param name="confidenceScore"> Detection score between 0 and 1 of the extracted entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityTag(string name, double? confidenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityTag(string name, double? confidenceScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ConfidenceScore = confidenceScore;

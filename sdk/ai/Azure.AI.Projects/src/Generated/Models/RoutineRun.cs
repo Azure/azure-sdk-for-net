@@ -11,14 +11,14 @@ namespace Azure.AI.Projects
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RoutineRun"/>. </summary>
         internal RoutineRun()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RoutineRun"/>. </summary>
         /// <param name="id"> The unique run identifier for the routine attempt. </param>
         /// <param name="status"> The run status. </param>
         /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, string status, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, string status, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;

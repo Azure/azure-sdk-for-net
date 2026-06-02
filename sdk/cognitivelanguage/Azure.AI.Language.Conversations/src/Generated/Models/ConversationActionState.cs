@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The status of the task at the mentioned last update time. </summary>
-    public readonly partial struct ConversationActionState : IEquatable<ConversationActionState>
+    public readonly partial struct ConversationActionState : IEquatable<global::Azure.AI.Language.Conversations.Models.ConversationActionState>
     {
         private readonly string _value;
         /// <summary> Not started state. </summary>
@@ -30,12 +30,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Cancelling state. </summary>
         private const string CancellingValue = "cancelling";
 
-        /// <summary> Initializes a new instance of <see cref="ConversationActionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationActionState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -61,34 +61,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Cancelling state. </summary>
         public static ConversationActionState Cancelling { get; } = new ConversationActionState(CancellingValue);
 
-        /// <summary> Determines if two <see cref="ConversationActionState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationActionState left, ConversationActionState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConversationActionState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationActionState left, ConversationActionState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConversationActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConversationActionState(string value) => new ConversationActionState(value);
 
-        /// <summary> Converts a string to a <see cref="ConversationActionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationActionState?(string value) => value == null ? null : new ConversationActionState(value);
+        public static implicit operator ConversationActionState?(string value) => (value == null) ? null : new ConversationActionState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConversationActionState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConversationActionState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConversationActionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConversationActionState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

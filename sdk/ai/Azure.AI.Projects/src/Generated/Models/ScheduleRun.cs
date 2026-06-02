@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class ScheduleRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ScheduleRun"/>. </summary>
         /// <param name="scheduleId"> Identifier of the schedule. </param>
         internal ScheduleRun(string scheduleId)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Evaluation
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ScheduleRun"/>. </summary>
         /// <param name="runId"> Identifier of the schedule run. </param>
         /// <param name="scheduleId"> Identifier of the schedule. </param>
         /// <param name="success"> Trigger success status of the schedule run. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleRun(string runId, string scheduleId, bool success, DateTimeOffset? triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleRun(string runId, string scheduleId, bool success, DateTimeOffset? triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             ScheduleId = scheduleId;

@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class InsightCluster
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightCluster"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightCluster"/>. </summary>
         /// <param name="id"> The id of the analysis cluster. </param>
         /// <param name="label"> Label for the cluster. </param>
         /// <param name="suggestion"> Suggestion for the cluster. </param>
@@ -29,11 +29,11 @@ namespace Azure.AI.Projects.Evaluation
             SuggestionTitle = suggestionTitle;
             Description = description;
             Weight = weight;
-            SubClusters = new ChangeTrackingList<InsightCluster>();
-            Samples = new ChangeTrackingList<InsightSample>();
+            SubClusters = new ChangeTrackingList<global::Azure.AI.Projects.Evaluation.InsightCluster>();
+            Samples = new ChangeTrackingList<global::Azure.AI.Projects.Evaluation.InsightSample>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightCluster"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightCluster"/>. </summary>
         /// <param name="id"> The id of the analysis cluster. </param>
         /// <param name="label"> Label for the cluster. </param>
         /// <param name="suggestion"> Suggestion for the cluster. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight, IList<InsightCluster> subClusters, IList<InsightSample> samples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight, IList<global::Azure.AI.Projects.Evaluation.InsightCluster> subClusters, IList<global::Azure.AI.Projects.Evaluation.InsightSample> samples, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Label = label;
@@ -75,9 +75,9 @@ namespace Azure.AI.Projects.Evaluation
         public int Weight { get; }
 
         /// <summary> List of subclusters within this cluster. Empty if no subclusters exist. </summary>
-        public IList<InsightCluster> SubClusters { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.InsightCluster> SubClusters { get; }
 
         /// <summary> List of samples that belong to this cluster. Empty if samples are part of subclusters. </summary>
-        public IList<InsightSample> Samples { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.InsightSample> Samples { get; }
     }
 }

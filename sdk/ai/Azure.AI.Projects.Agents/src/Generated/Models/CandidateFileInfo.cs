@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class CandidateFileInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CandidateFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateFileInfo"/>. </summary>
         /// <param name="path"> Relative path of the file. </param>
         /// <param name="type"> File type category (e.g. 'config', 'results'). </param>
         /// <param name="sizeBytes"> File size in bytes. </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.Projects.Agents
             SizeBytes = sizeBytes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CandidateFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateFileInfo"/>. </summary>
         /// <param name="path"> Relative path of the file. </param>
         /// <param name="type"> File type category (e.g. 'config', 'results'). </param>
         /// <param name="sizeBytes"> File size in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CandidateFileInfo(string path, string @type, long sizeBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CandidateFileInfo(string path, string @type, long sizeBytes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             Type = @type;

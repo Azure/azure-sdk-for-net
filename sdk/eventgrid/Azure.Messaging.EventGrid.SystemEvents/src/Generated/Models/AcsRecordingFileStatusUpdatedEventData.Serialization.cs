@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
-    [JsonConverter(typeof(AcsRecordingFileStatusUpdatedEventDataConverter))]
-    public partial class AcsRecordingFileStatusUpdatedEventData : IJsonModel<AcsRecordingFileStatusUpdatedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData.AcsRecordingFileStatusUpdatedEventDataConverter))]
+    public partial class AcsRecordingFileStatusUpdatedEventData : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> for deserialization. </summary>
         internal AcsRecordingFileStatusUpdatedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AcsRecordingFileStatusUpdatedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData.DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRecordingFileStatusUpdatedEventData IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AcsRecordingFileStatusUpdatedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsRecordingFileStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,44 +75,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("recordingStorageInfo"u8);
-            writer.WriteObjectValue(RecordingStorageInfo, options);
-            if (Optional.IsDefined(RecordingStartTime))
+            writer.WriteObjectValue<AcsRecordingStorageInfoProperties>(RecordingStorageInfo, options);
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(RecordingStartTime))
             {
                 writer.WritePropertyName("recordingStartTime"u8);
                 writer.WriteStringValue(RecordingStartTime.Value, "O");
             }
-            if (Optional.IsDefined(RecordingDurationMs))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(RecordingDurationMs))
             {
                 writer.WritePropertyName("recordingDurationMs"u8);
                 writer.WriteNumberValue(RecordingDurationMs.Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (Optional.IsDefined(ChannelType))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ChannelType))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(ChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(FormatType))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(FormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(FormatType.Value.ToString());
             }
-            if (Optional.IsDefined(SessionEndReason))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(SessionEndReason))
             {
                 writer.WritePropertyName("sessionEndReason"u8);
                 writer.WriteStringValue(SessionEndReason);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -120,9 +120,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -131,26 +131,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRecordingFileStatusUpdatedEventData IJsonModel<AcsRecordingFileStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AcsRecordingFileStatusUpdatedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AcsRecordingFileStatusUpdatedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData.DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -161,17 +161,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsRecordingChannelType? channelType = default;
             AcsRecordingFormatType? formatType = default;
             string sessionEndReason = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recordingStorageInfo"u8))
                 {
-                    recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(prop.Value, options);
+                    recordingStorageInfo = global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recordingStartTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("recordingDurationMs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("recordingContentType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("recordingChannelType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -207,7 +207,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("recordingFormatType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -219,9 +219,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sessionEndReason = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsRecordingFileStatusUpdatedEventData(
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties);
         }
 
-        internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>
+        internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsRecordingFileStatusUpdatedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsRecordingFileStatusUpdatedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -252,8 +252,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsRecordingFileStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

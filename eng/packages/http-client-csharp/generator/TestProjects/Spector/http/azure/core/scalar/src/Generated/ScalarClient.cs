@@ -13,14 +13,14 @@ namespace Specs.Azure.Core.Scalar
 {
     public partial class ScalarClient
     {
-        public ScalarClient() : this(new Uri("http://localhost:3000"), new ScalarClientOptions()) => throw null;
+        public ScalarClient() : this(new global::System.Uri("http://localhost:3000"), new ScalarClientOptions()) => throw null;
 
-        internal ScalarClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ScalarClientOptions options) => throw null;
+        internal ScalarClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ScalarClientOptions options) => throw null;
 
-        public ScalarClient(Uri endpoint, ScalarClientOptions options) : this(null, endpoint, options) => throw null;
+        public ScalarClient(global::System.Uri endpoint, ScalarClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ScalarClient(ScalarClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ScalarClient(ScalarClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

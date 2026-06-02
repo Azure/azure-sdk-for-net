@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Represents the assets of an exported project.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>, and <see cref="CustomTextSentimentProjectAssets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets"/>.
     /// </summary>
     public abstract partial class TextAuthoringExportedProjectAsset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         private protected TextAuthoringExportedProjectAsset(TextAuthoringProjectKind projectKind)
         {
             ProjectKind = projectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedProjectAsset(TextAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -12,8 +12,8 @@ using Azure;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    [PersistableModelProxy(typeof(UnknownAbstractModel))]
-    public abstract partial class AbstractModel : IJsonModel<AbstractModel>
+    [PersistableModelProxyAttribute(typeof(UnknownAbstractModel))]
+    public abstract partial class AbstractModel : IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>
     {
         internal AbstractModel() => throw null;
 
@@ -21,19 +21,19 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<AbstractModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        AbstractModel IPersistableModel<AbstractModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        AbstractModel IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<AbstractModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator AbstractModel(Response response) => throw null;
 
-        void IJsonModel<AbstractModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        AbstractModel IJsonModel<AbstractModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        AbstractModel IJsonModel<global::Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation.AbstractModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual AbstractModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The way the field was used for the semantic enrichment process. </summary>
-    public readonly partial struct SemanticFieldState : IEquatable<SemanticFieldState>
+    public readonly partial struct SemanticFieldState : IEquatable<global::Azure.Search.Documents.Models.SemanticFieldState>
     {
         private readonly string _value;
         /// <summary> The field was fully used for semantic enrichment. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> The field was partially used for semantic enrichment. </summary>
         private const string PartialValue = "partial";
 
-        /// <summary> Initializes a new instance of <see cref="SemanticFieldState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SemanticFieldState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticFieldState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> The field was partially used for semantic enrichment. </summary>
         public static SemanticFieldState Partial { get; } = new SemanticFieldState(PartialValue);
 
-        /// <summary> Determines if two <see cref="SemanticFieldState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticFieldState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticFieldState left, SemanticFieldState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SemanticFieldState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticFieldState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticFieldState left, SemanticFieldState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SemanticFieldState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticFieldState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SemanticFieldState(string value) => new SemanticFieldState(value);
 
-        /// <summary> Converts a string to a <see cref="SemanticFieldState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticFieldState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticFieldState?(string value) => value == null ? null : new SemanticFieldState(value);
+        public static implicit operator SemanticFieldState?(string value) => (value == null) ? null : new SemanticFieldState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SemanticFieldState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SemanticFieldState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SemanticFieldState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SemanticFieldState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

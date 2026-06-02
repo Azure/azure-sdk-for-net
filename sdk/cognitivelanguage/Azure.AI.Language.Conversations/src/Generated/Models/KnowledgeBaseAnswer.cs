@@ -15,16 +15,16 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class KnowledgeBaseAnswer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswer"/>. </summary>
         internal KnowledgeBaseAnswer()
         {
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswer"/>. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseAnswer(IList<string> questions, string answer, double? confidence, int? qnaId, string source, IDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan shortAnswer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseAnswer(IList<string> questions, string answer, double? confidence, int? qnaId, string source, IDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan shortAnswer, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Questions = questions;
             Answer = answer;

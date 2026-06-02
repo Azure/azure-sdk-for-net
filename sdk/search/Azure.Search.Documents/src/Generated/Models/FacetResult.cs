@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.Models
     public partial class FacetResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.FacetResult"/>. </summary>
         public FacetResult()
         {
-            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Facets = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.FacetResult"/>. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>
         /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
         /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"></param>
-        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, BinaryData> additionalProperties)
+        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> facets, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Count = count;
             Avg = avg;
@@ -64,6 +64,6 @@ namespace Azure.Search.Documents.Models
         public long? Cardinality { get; }
 
         /// <summary> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </summary>
-        public IReadOnlyDictionary<string, IList<FacetResult>> Facets { get; }
+        public IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> Facets { get; }
     }
 }

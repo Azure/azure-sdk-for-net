@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A text block in a new message, containing plain text content. </summary>
     public partial class MessageInputTextBlock : MessageInputContentBlock
     {
-        /// <summary> Initializes a new instance of <see cref="MessageInputTextBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputTextBlock"/>. </summary>
         /// <param name="text"> The plain text content for this block. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public MessageInputTextBlock(string text) : base(MessageBlockType.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public MessageInputTextBlock(string text) : base(global::Azure.AI.Agents.Persistent.MessageBlockType.Text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageInputTextBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageInputTextBlock"/>. </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The plain text content for this block. </param>
-        internal MessageInputTextBlock(MessageBlockType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal MessageInputTextBlock(MessageBlockType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

@@ -24,7 +24,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="client"> The SchemaRegistryClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(SchemaRegistryClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(SchemaRegistryClient client, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
@@ -35,20 +35,20 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SchemaRegistryClientGetSchemaGroupsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                SchemaGroups result = (SchemaGroups)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                SchemaGroups result = ((SchemaGroups)response);
+                yield return global::Azure.Page<string>.FromValues(((IReadOnlyList<string>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -58,9 +58,9 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaGroupsRequest(nextLink, _context) : _client.CreateGetSchemaGroupsRequest(_context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetSchemaGroupsRequest(nextLink, _context) : _client.CreateGetSchemaGroupsRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

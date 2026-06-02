@@ -19,23 +19,23 @@ namespace Versioning.Added
     {
         protected AddedClient() => throw null;
 
-        public AddedClient(Uri endpoint) : this(endpoint, new AddedClientOptions()) => throw null;
+        public AddedClient(global::System.Uri endpoint) : this(endpoint, new AddedClientOptions()) => throw null;
 
-        internal AddedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AddedClientOptions options) => throw null;
+        internal AddedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, AddedClientOptions options) => throw null;
 
-        public AddedClient(Uri endpoint, AddedClientOptions options) : this(null, endpoint, options) => throw null;
+        public AddedClient(global::System.Uri endpoint, AddedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public AddedClient(AddedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public AddedClient(AddedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response V1(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> V1Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> V1Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelV1> V1(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.Added.ModelV1> V1(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelV1>> V1Async(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.Added.ModelV1>> V1Async(ModelV1 body, CancellationToken cancellationToken = default) => throw null;
     }
 }

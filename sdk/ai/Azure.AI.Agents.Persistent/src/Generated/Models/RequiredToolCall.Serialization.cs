@@ -13,57 +13,57 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a tool invocation needed by the model to continue a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RequiredFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RequiredMcpToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownRequiredToolCall))]
-    public abstract partial class RequiredToolCall : RequiredAction, IJsonModel<RequiredToolCall>
+    [PersistableModelProxyAttribute(typeof(UnknownRequiredToolCall))]
+    public abstract partial class RequiredToolCall : RequiredAction, IJsonModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RequiredAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRequiredToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RequiredToolCall.DeserializeRequiredToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RequiredToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RequiredToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RequiredToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequiredToolCall IPersistableModel<RequiredToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequiredToolCall)PersistableModelCreateCore(data, options);
+        RequiredToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RequiredToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RequiredToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RequiredToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,10 +71,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RequiredToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RequiredToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("id"u8);
@@ -83,26 +83,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequiredToolCall IJsonModel<RequiredToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequiredToolCall)JsonModelCreateCore(ref reader, options);
+        RequiredToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RequiredToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RequiredAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RequiredToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RequiredToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequiredToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RequiredToolCall.DeserializeRequiredToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RequiredToolCall DeserializeRequiredToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -111,14 +111,14 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "function":
-                        return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element, options);
                     case "mcp":
-                        return RequiredMcpToolCall.DeserializeRequiredMcpToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RequiredMcpToolCall.DeserializeRequiredMcpToolCall(element, options);
                     case "computer_use_preview":
-                        return RequiredComputerUseToolCall.DeserializeRequiredComputerUseToolCall(element, options);
+                        return global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCall.DeserializeRequiredComputerUseToolCall(element, options);
                 }
             }
-            return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element, options);
         }
     }
 }

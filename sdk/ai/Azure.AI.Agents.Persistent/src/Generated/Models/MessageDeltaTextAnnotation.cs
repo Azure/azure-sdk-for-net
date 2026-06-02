@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a streamed text content part's text annotation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaTextUriCitationAnnotation"/>, <see cref="MessageDeltaTextFileCitationAnnotation"/>, and <see cref="MessageDeltaTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/>.
     /// </summary>
     public abstract partial class MessageDeltaTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         private protected MessageDeltaTextAnnotation(int index, string @type)
@@ -25,11 +25,11 @@ namespace Azure.AI.Agents.Persistent
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaTextAnnotation(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaTextAnnotation(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Index = index;
             Type = @type;

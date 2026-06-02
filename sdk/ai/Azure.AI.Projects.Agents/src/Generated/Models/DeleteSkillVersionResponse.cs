@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class DeleteSkillVersionResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillVersionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DeleteSkillVersionResponse"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill version. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects.Agents
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillVersionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DeleteSkillVersionResponse"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill version. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
         /// <param name="version"> The version that was deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteSkillVersionResponse(string id, string name, bool deleted, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteSkillVersionResponse(string id, string name, bool deleted, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

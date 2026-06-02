@@ -13,18 +13,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
     public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
     {
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         internal IotHubDeviceTelemetryEventData(object body) : base(body)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(body, properties, systemProperties, additionalBinaryDataProperties)
+        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(body, properties, systemProperties, additionalBinaryDataProperties)
         {
         }
     }

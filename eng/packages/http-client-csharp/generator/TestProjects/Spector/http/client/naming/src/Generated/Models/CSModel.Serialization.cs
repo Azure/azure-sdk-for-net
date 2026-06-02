@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Client.Naming.Model
 {
-    public partial class CSModel : IJsonModel<CSModel>
+    public partial class CSModel : IJsonModel<global::Client.Naming.Model.CSModel>
     {
         internal CSModel() => throw null;
 
@@ -20,20 +20,20 @@ namespace Client.Naming.Model
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<CSModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Naming.Model.CSModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        CSModel IPersistableModel<CSModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        CSModel IPersistableModel<global::Client.Naming.Model.CSModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<CSModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Naming.Model.CSModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="csModel"> The <see cref="CSModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="csModel"> The <see cref="global::Client.Naming.Model.CSModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(CSModel csModel) => throw null;
 
-        void IJsonModel<CSModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Naming.Model.CSModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        CSModel IJsonModel<CSModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        CSModel IJsonModel<global::Client.Naming.Model.CSModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CSModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

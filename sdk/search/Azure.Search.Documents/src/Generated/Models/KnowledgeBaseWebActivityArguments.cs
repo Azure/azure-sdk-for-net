@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseWebActivityArguments
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWebActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWebActivityArguments"/>. </summary>
         internal KnowledgeBaseWebActivityArguments()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWebActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWebActivityArguments"/>. </summary>
         /// <param name="search"> The search string used to query the web. </param>
         /// <param name="language"> The language for the retrieval activity. </param>
         /// <param name="market"> The market for the retrieval activity. </param>
         /// <param name="count"> The number of web results returned. </param>
         /// <param name="freshness"> The freshness for the retrieval activity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseWebActivityArguments(string search, string language, string market, int? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseWebActivityArguments(string search, string language, string market, int? count, string freshness, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             Language = language;

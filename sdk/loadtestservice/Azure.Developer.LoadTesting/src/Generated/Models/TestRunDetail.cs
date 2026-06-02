@@ -14,9 +14,9 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunDetail"/>. </summary>
         /// <param name="status"> Status of the test run. </param>
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
@@ -27,12 +27,12 @@ namespace Azure.Developer.LoadTesting
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunDetail"/>. </summary>
         /// <param name="status"> Status of the test run. </param>
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunDetail(TestRunStatus status, string configurationId, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunDetail(TestRunStatus status, string configurationId, IDictionary<string, string> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ConfigurationId = configurationId;

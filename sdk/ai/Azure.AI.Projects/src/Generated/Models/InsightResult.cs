@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The result of the insights.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationComparisonInsightResult"/>, <see cref="EvaluationRunClusterInsightResult"/>, and <see cref="AgentClusterInsightResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult"/>, <see cref="Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult"/>, and <see cref="Azure.AI.Projects.Evaluation.AgentClusterInsightResult"/>.
     /// </summary>
     public abstract partial class InsightResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         private protected InsightResult(InsightType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightResult(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

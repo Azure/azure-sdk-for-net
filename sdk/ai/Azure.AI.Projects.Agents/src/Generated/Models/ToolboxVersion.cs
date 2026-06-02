@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Agents
     public partial class ToolboxVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
-        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, IEnumerable<ProjectsAgentTool> tools)
+        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, IEnumerable<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools)
         {
             Metadata = metadata;
             Id = id;
@@ -35,10 +35,10 @@ namespace Azure.AI.Projects.Agents
             Version = version;
             CreatedAt = createdAt;
             Tools = tools.ToList();
-            Skills = new ChangeTrackingList<ToolboxSkill>();
+            Skills = new ChangeTrackingList<global::Azure.AI.Projects.Agents.ToolboxSkill>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, IList<ProjectsAgentTool> tools, IList<ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools, IList<global::Azure.AI.Projects.Agents.ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Id = id;
@@ -94,10 +94,10 @@ namespace Azure.AI.Projects.Agents
         public DateTimeOffset CreatedAt { get; }
 
         /// <summary> The list of tools contained in this toolbox version. </summary>
-        public IList<ProjectsAgentTool> Tools { get; }
+        public IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> Tools { get; }
 
         /// <summary> The list of skill sources included in this toolbox version. </summary>
-        public IList<ToolboxSkill> Skills { get; }
+        public IList<global::Azure.AI.Projects.Agents.ToolboxSkill> Skills { get; }
 
         /// <summary> Policy configuration for the toolbox version. </summary>
         public ToolboxPolicies Policies { get; }

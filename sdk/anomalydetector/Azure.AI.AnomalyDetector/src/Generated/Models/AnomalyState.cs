@@ -14,22 +14,22 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IList<global::Azure.AI.AnomalyDetector.ErrorResponse> errors, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Value = value;
@@ -44,6 +44,6 @@ namespace Azure.AI.AnomalyDetector
         public AnomalyValue Value { get; }
 
         /// <summary> Error message for the current time stamp. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IList<global::Azure.AI.AnomalyDetector.ErrorResponse> Errors { get; }
     }
 }

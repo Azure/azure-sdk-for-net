@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message delivery status. </summary>
-    public readonly partial struct AcsMessageDeliveryStatus : IEquatable<AcsMessageDeliveryStatus>
+    public readonly partial struct AcsMessageDeliveryStatus : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus>
     {
         private readonly string _value;
         /// <summary> Read. </summary>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Unknown. </summary>
         private const string UnknownValue = "unknown";
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsMessageDeliveryStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -55,34 +55,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Unknown. </summary>
         public static AcsMessageDeliveryStatus Unknown { get; } = new AcsMessageDeliveryStatus(UnknownValue);
 
-        /// <summary> Determines if two <see cref="AcsMessageDeliveryStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsMessageDeliveryStatus left, AcsMessageDeliveryStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsMessageDeliveryStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsMessageDeliveryStatus left, AcsMessageDeliveryStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsMessageDeliveryStatus(string value) => new AcsMessageDeliveryStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsMessageDeliveryStatus?(string value) => value == null ? null : new AcsMessageDeliveryStatus(value);
+        public static implicit operator AcsMessageDeliveryStatus?(string value) => (value == null) ? null : new AcsMessageDeliveryStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsMessageDeliveryStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsMessageDeliveryStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsMessageDeliveryStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsMessageDeliveryStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

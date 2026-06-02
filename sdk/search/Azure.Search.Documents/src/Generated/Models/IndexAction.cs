@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Models
     internal partial class IndexAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexAction"/>. </summary>
         public IndexAction()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexAction"/>. </summary>
         /// <param name="actionType"> The operation to perform on a document in an indexing batch. </param>
         /// <param name="additionalProperties"></param>
-        internal IndexAction(IndexActionType? actionType, IDictionary<string, BinaryData> additionalProperties)
+        internal IndexAction(IndexActionType? actionType, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             ActionType = actionType;
             _additionalBinaryDataProperties = additionalProperties;
@@ -35,6 +35,6 @@ namespace Azure.Search.Documents.Models
         public IndexActionType? ActionType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

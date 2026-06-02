@@ -13,19 +13,19 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
     public partial class SyntheticReplacementPolicyType : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="SyntheticReplacementPolicyType"/>. </summary>
-        public SyntheticReplacementPolicyType() : base(RedactionPolicyKind.SyntheticReplacement)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SyntheticReplacementPolicyType"/>. </summary>
+        public SyntheticReplacementPolicyType() : base(global::Azure.AI.Language.Text.RedactionPolicyKind.SyntheticReplacement)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SyntheticReplacementPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SyntheticReplacementPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preserveDataFormat"> Optional flag to indicate whether to preserve the original data format in the synthetic replacement. Default is false. </param>
-        internal SyntheticReplacementPolicyType(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? preserveDataFormat) : base(policyKind, entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
+        internal SyntheticReplacementPolicyType(RedactionPolicyKind policyKind, IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool? preserveDataFormat) : base(policyKind, entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
         {
             PreserveDataFormat = preserveDataFormat;
         }

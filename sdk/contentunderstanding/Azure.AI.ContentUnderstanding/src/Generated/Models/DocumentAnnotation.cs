@@ -14,21 +14,21 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentAnnotation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotation"/>. </summary>
         /// <param name="id"> Annotation identifier. </param>
         /// <param name="kind"> Annotation kind. </param>
         internal DocumentAnnotation(string id, DocumentAnnotationKind kind)
         {
             Id = id;
             Kind = kind;
-            Spans = new ChangeTrackingList<ContentSpan>();
-            Comments = new ChangeTrackingList<DocumentAnnotationComment>();
+            Spans = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentSpan>();
+            Comments = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment>();
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentAnnotation"/>. </summary>
         /// <param name="id"> Annotation identifier. </param>
         /// <param name="kind"> Annotation kind. </param>
         /// <param name="spans"> Spans of the content associated with the annotation. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="lastModifiedAt"> Date and time when the annotation was last modified. </param>
         /// <param name="tags"> Tags associated with the annotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAnnotation(string id, DocumentAnnotationKind kind, IList<ContentSpan> spans, string source, IList<DocumentAnnotationComment> comments, string author, DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt, IList<string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentAnnotation(string id, DocumentAnnotationKind kind, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, string source, IList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment> comments, string author, DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt, IList<string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;
@@ -60,13 +60,13 @@ namespace Azure.AI.ContentUnderstanding
         public DocumentAnnotationKind Kind { get; }
 
         /// <summary> Spans of the content associated with the annotation. </summary>
-        public IList<ContentSpan> Spans { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.ContentSpan> Spans { get; }
 
         /// <summary> Position of the annotation. </summary>
         public string Source { get; }
 
         /// <summary> Comments associated with the annotation. </summary>
-        public IList<DocumentAnnotationComment> Comments { get; }
+        public IList<global::Azure.AI.ContentUnderstanding.DocumentAnnotationComment> Comments { get; }
 
         /// <summary> Annotation author. </summary>
         public string Author { get; }

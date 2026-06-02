@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReputationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReputationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReputationDetails"/>. </summary>
         internal ReputationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReputationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReputationDetails"/>. </summary>
         /// <param name="listName"></param>
         /// <param name="threatType"></param>
         /// <param name="trusted"></param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="listUpdatedAt"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReputationDetails(string listName, string threatType, bool? trusted, string cidr, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, DateTimeOffset? listUpdatedAt, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReputationDetails(string listName, string threatType, bool? trusted, string cidr, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, DateTimeOffset? listUpdatedAt, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ListName = listName;
             ThreatType = threatType;

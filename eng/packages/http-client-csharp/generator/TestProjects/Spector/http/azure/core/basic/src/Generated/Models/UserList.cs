@@ -11,6 +11,6 @@ namespace Specs.Azure.Core.Basic
 {
     public partial class UserList
     {
-        public IList<User> Users => throw null;
+        public IList<global::Specs.Azure.Core.Basic.User> Users => throw null;
     }
 }

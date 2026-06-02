@@ -14,16 +14,16 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the Address entity Metadata model. </summary>
     public partial class AddressMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="AddressMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AddressMetadata"/>. </summary>
         /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>
         /// <param name="addressLines"> The full address string as recognized from the input text. </param>
-        internal AddressMetadata(string formatedAddress, IEnumerable<string> addressLines) : base(MetadataKind.AddressMetadata)
+        internal AddressMetadata(string formatedAddress, IEnumerable<string> addressLines) : base(global::Azure.AI.Language.Text.MetadataKind.AddressMetadata)
         {
             FormatedAddress = formatedAddress;
             AddressLines = addressLines.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddressMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AddressMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
         /// <param name="state"> The state or province name of the address. </param>
         /// <param name="postalCode"> The postal or ZIP code of the address. </param>
         /// <param name="countryOrRegion"> The country or region name of the address. </param>
-        internal AddressMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string formatedAddress, IList<string> addressLines, string city, string state, string postalCode, string countryOrRegion) : base(metadataKind, additionalBinaryDataProperties)
+        internal AddressMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string formatedAddress, IList<string> addressLines, string city, string state, string postalCode, string countryOrRegion) : base(metadataKind, additionalBinaryDataProperties)
         {
             FormatedAddress = formatedAddress;
             AddressLines = addressLines;

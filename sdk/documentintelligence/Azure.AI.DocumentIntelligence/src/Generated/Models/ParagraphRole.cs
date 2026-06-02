@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Semantic role of the paragraph. </summary>
-    public readonly partial struct ParagraphRole : IEquatable<ParagraphRole>
+    public readonly partial struct ParagraphRole : IEquatable<global::Azure.AI.DocumentIntelligence.ParagraphRole>
     {
         private readonly string _value;
         /// <summary> Text near the top edge of the page. </summary>
@@ -29,12 +29,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> A block of formulas, often with shared alignment. </summary>
         private const string FormulaBlockValue = "formulaBlock";
 
-        /// <summary> Initializes a new instance of <see cref="ParagraphRole"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.ParagraphRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ParagraphRole(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -60,34 +60,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> A block of formulas, often with shared alignment. </summary>
         public static ParagraphRole FormulaBlock { get; } = new ParagraphRole(FormulaBlockValue);
 
-        /// <summary> Determines if two <see cref="ParagraphRole"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.ParagraphRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ParagraphRole left, ParagraphRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ParagraphRole"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.ParagraphRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ParagraphRole left, ParagraphRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ParagraphRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.ParagraphRole"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ParagraphRole(string value) => new ParagraphRole(value);
 
-        /// <summary> Converts a string to a <see cref="ParagraphRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.ParagraphRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParagraphRole?(string value) => value == null ? null : new ParagraphRole(value);
+        public static implicit operator ParagraphRole?(string value) => (value == null) ? null : new ParagraphRole(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ParagraphRole other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ParagraphRole other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ParagraphRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ParagraphRole other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

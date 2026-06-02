@@ -14,51 +14,51 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SettingFields value) => value switch
         {
-            SettingFields.Key => "key",
-            SettingFields.Label => "label",
-            SettingFields.ContentType => "content_type",
-            SettingFields.Value => "value",
-            SettingFields.LastModified => "last_modified",
-            SettingFields.Tags => "tags",
-            SettingFields.IsReadOnly => "locked",
-            SettingFields.ETag => "etag",
+            global::Azure.Data.AppConfiguration.SettingFields.Key => "key",
+            global::Azure.Data.AppConfiguration.SettingFields.Label => "label",
+            global::Azure.Data.AppConfiguration.SettingFields.ContentType => "content_type",
+            global::Azure.Data.AppConfiguration.SettingFields.Value => "value",
+            global::Azure.Data.AppConfiguration.SettingFields.LastModified => "last_modified",
+            global::Azure.Data.AppConfiguration.SettingFields.Tags => "tags",
+            global::Azure.Data.AppConfiguration.SettingFields.IsReadOnly => "locked",
+            global::Azure.Data.AppConfiguration.SettingFields.ETag => "etag",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingFields value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SettingFields ToSettingFields(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "key"))
             {
-                return SettingFields.Key;
+                return global::Azure.Data.AppConfiguration.SettingFields.Key;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "label"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "label"))
             {
-                return SettingFields.Label;
+                return global::Azure.Data.AppConfiguration.SettingFields.Label;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "content_type"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "content_type"))
             {
-                return SettingFields.ContentType;
+                return global::Azure.Data.AppConfiguration.SettingFields.ContentType;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "value"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "value"))
             {
-                return SettingFields.Value;
+                return global::Azure.Data.AppConfiguration.SettingFields.Value;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "last_modified"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "last_modified"))
             {
-                return SettingFields.LastModified;
+                return global::Azure.Data.AppConfiguration.SettingFields.LastModified;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tags"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "tags"))
             {
-                return SettingFields.Tags;
+                return global::Azure.Data.AppConfiguration.SettingFields.Tags;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
             {
-                return SettingFields.IsReadOnly;
+                return global::Azure.Data.AppConfiguration.SettingFields.IsReadOnly;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "etag"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "etag"))
             {
-                return SettingFields.ETag;
+                return global::Azure.Data.AppConfiguration.SettingFields.ETag;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingFields value.");
         }

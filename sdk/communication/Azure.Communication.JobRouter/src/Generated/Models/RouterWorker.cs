@@ -15,20 +15,20 @@ namespace Azure.Communication.JobRouter
     public partial class RouterWorker
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterWorker"/>. </summary>
         internal RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
-            _labels = new ChangeTrackingDictionary<string, BinaryData>();
-            _tags = new ChangeTrackingDictionary<string, BinaryData>();
-            Channels = new ChangeTrackingList<RouterChannel>();
-            Offers = new ChangeTrackingList<RouterJobOffer>();
-            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+            _labels = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Channels = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterChannel>();
+            Offers = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterJobOffer>();
+            AssignedJobs = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterWorkerAssignment>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterWorker"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a worker. </param>
         /// <param name="state"> Current state of a worker. </param>
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
         /// <param name="maxConcurrentOffers"> If this is set, the worker will only receive up to this many new offers at a time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, int? maxConcurrentOffers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, global::System.BinaryData> labels, IDictionary<string, global::System.BinaryData> tags, IList<global::Azure.Communication.JobRouter.RouterChannel> channels, IReadOnlyList<global::Azure.Communication.JobRouter.RouterJobOffer> offers, IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, int? maxConcurrentOffers, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;
@@ -68,10 +68,10 @@ namespace Azure.Communication.JobRouter
         public RouterWorkerState? State { get; }
 
         /// <summary> A list of active offers issued to this worker. </summary>
-        public IReadOnlyList<RouterJobOffer> Offers { get; }
+        public IReadOnlyList<global::Azure.Communication.JobRouter.RouterJobOffer> Offers { get; }
 
         /// <summary> A list of assigned jobs attached to this worker. </summary>
-        public IReadOnlyList<RouterWorkerAssignment> AssignedJobs { get; }
+        public IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorkerAssignment> AssignedJobs { get; }
 
         /// <summary> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </summary>
         public double? LoadRatio { get; }

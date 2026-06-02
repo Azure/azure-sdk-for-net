@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class ArtifactsContainerInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ArtifactsContainerInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.ArtifactsContainerInfo"/>. </summary>
         internal ArtifactsContainerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArtifactsContainerInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.ArtifactsContainerInfo"/>. </summary>
         /// <param name="uri"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
         /// <param name="expiresOn"> Expiry time of the container (RFC 3339 literal format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactsContainerInfo(Uri uri, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactsContainerInfo(global::System.Uri uri, DateTimeOffset? expiresOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ExpiresOn = expiresOn;
@@ -33,7 +33,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> Expiry time of the container (RFC 3339 literal format). </summary>
         public DateTimeOffset? ExpiresOn { get; }

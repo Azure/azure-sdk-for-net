@@ -15,23 +15,23 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeStoreProjectionSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
         private protected string _generatedKeyName;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector"/>. </summary>
         public KnowledgeStoreProjectionSelector()
         {
-            Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
+            Inputs = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReferenceKeyName = referenceKeyName;
             GeneratedKeyName = generatedKeyName;
@@ -54,6 +54,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string SourceContext { get; set; }
 
         /// <summary> Nested inputs for complex projections. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get; }
     }
 }

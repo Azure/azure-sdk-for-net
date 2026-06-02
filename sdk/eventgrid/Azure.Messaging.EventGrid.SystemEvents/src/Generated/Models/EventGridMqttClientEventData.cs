@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class EventGridMqttClientEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             NamespaceName = namespaceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridMqttClientEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridMqttClientEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClientAuthenticationName = clientAuthenticationName;
             ClientName = clientName;

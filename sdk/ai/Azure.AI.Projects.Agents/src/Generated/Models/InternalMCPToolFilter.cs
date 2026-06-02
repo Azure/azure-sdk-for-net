@@ -11,15 +11,15 @@ namespace OpenAI
     internal partial class InternalMCPToolFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPToolFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPToolFilter"/>. </summary>
         public InternalMCPToolFilter()
         {
             ToolNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPToolFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPToolFilter"/>. </summary>
         /// <param name="toolNames"> List of allowed tool names. </param>
         /// <param name="readOnly">
         /// Indicates whether or not a tool modifies data or is read-only. If an
@@ -27,7 +27,7 @@ namespace OpenAI
         ///   it will match this filter.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMCPToolFilter(IList<string> toolNames, bool? readOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMCPToolFilter(IList<string> toolNames, bool? readOnly, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToolNames = toolNames;
             ReadOnly = readOnly;

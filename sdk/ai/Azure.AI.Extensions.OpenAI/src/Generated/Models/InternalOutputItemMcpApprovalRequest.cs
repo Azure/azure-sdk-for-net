@@ -9,18 +9,18 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemMcpApprovalRequest : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpApprovalRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpApprovalRequest"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        public InternalOutputItemMcpApprovalRequest(string serverLabel, string name, string arguments) : base(AgentResponseItemKind.McpApprovalRequest)
+        public InternalOutputItemMcpApprovalRequest(string serverLabel, string name, string arguments) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.McpApprovalRequest)
         {
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpApprovalRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemMcpApprovalRequest"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal InternalOutputItemMcpApprovalRequest(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpApprovalRequest(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;

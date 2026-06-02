@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> File Format. </summary>
-    public partial class DocumentTranslationFileFormat : IJsonModel<DocumentTranslationFileFormat>
+    public partial class DocumentTranslationFileFormat : IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentTranslationFileFormat"/> for deserialization. </summary>
         internal DocumentTranslationFileFormat()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Translation.Document
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTranslationFileFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Translation.Document.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentTranslationFileFormat(document.RootElement, options);
+                        return global::Azure.AI.Translation.Document.DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslationFileFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Translation.Document.AzureAITranslationDocumentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslationFileFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTranslationFileFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTranslationFileFormat IPersistableModel<DocumentTranslationFileFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentTranslationFileFormat IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTranslationFileFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentTranslationFileFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslationFileFormat)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
@@ -84,7 +84,7 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartArray();
             foreach (string item in FileExtensions)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -96,7 +96,7 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartArray();
             foreach (string item in ContentTypes)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -104,18 +104,18 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(DefaultFormatVersion))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(DefaultFormatVersion))
             {
                 writer.WritePropertyName("defaultVersion"u8);
                 writer.WriteStringValue(DefaultFormatVersion);
             }
-            if (Optional.IsCollectionDefined(FormatVersions))
+            if (global::Azure.AI.Translation.Document.Optional.IsCollectionDefined(FormatVersions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartArray();
                 foreach (string item in FormatVersions)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -124,12 +124,12 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -137,9 +137,9 @@ namespace Azure.AI.Translation.Document
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -148,26 +148,26 @@ namespace Azure.AI.Translation.Document
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTranslationFileFormat IJsonModel<DocumentTranslationFileFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentTranslationFileFormat IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTranslationFileFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentTranslationFileFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentTranslationFileFormat)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentTranslationFileFormat(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Translation.Document.DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -177,7 +177,7 @@ namespace Azure.AI.Translation.Document
             string defaultFormatVersion = default;
             IReadOnlyList<string> formatVersions = default;
             FileFormatType? @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("format"u8))
@@ -190,7 +190,7 @@ namespace Azure.AI.Translation.Document
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -207,7 +207,7 @@ namespace Azure.AI.Translation.Document
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -226,14 +226,14 @@ namespace Azure.AI.Translation.Document
                 }
                 if (prop.NameEquals("versions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -247,16 +247,16 @@ namespace Azure.AI.Translation.Document
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     @type = new FileFormatType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentTranslationFileFormat(
@@ -264,7 +264,7 @@ namespace Azure.AI.Translation.Document
                 fileExtensions,
                 contentTypes,
                 defaultFormatVersion,
-                formatVersions ?? new ChangeTrackingList<string>(),
+                (formatVersions ?? new ChangeTrackingList<string>()),
                 @type,
                 additionalBinaryDataProperties);
         }

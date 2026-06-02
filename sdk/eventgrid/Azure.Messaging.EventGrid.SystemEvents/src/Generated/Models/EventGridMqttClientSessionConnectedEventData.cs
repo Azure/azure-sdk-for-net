@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionConnected event. </summary>
     public partial class EventGridMqttClientSessionConnectedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ClientSessionName = clientSessionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// disconnected events. Latest event will have a sequence number that is higher
         /// than the previous event.
         /// </param>
-        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
         {
             ClientSessionName = clientSessionName;
             SequenceNumber = sequenceNumber;

@@ -12,10 +12,10 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownEouDetection : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEouDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEouDetection(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(model != default ? model : "unknown", additionalBinaryDataProperties)
+        internal UnknownEouDetection(EouDetectionModel model, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((model != default) ? model : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -10,18 +10,18 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Insights from the evaluation run cluster analysis. </summary>
     public partial class EvaluationRunClusterInsightResult : InsightResult
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult"/>. </summary>
         /// <param name="clusterInsight"></param>
-        internal EvaluationRunClusterInsightResult(ClusterInsightResult clusterInsight) : base(InsightType.EvaluationRunClusterInsight)
+        internal EvaluationRunClusterInsightResult(ClusterInsightResult clusterInsight) : base(global::Azure.AI.Projects.Evaluation.InsightType.EvaluationRunClusterInsight)
         {
             ClusterInsight = clusterInsight;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clusterInsight"></param>
-        internal EvaluationRunClusterInsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClusterInsightResult clusterInsight) : base(@type, additionalBinaryDataProperties)
+        internal EvaluationRunClusterInsightResult(InsightType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ClusterInsightResult clusterInsight) : base(@type, additionalBinaryDataProperties)
         {
             ClusterInsight = clusterInsight;
         }

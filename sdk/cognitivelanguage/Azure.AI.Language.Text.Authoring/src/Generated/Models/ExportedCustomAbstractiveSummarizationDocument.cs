@@ -14,25 +14,25 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedCustomAbstractiveSummarizationDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
         /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryLocation"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="summaryLocation"/> is null. </exception>
         public ExportedCustomAbstractiveSummarizationDocument(string summaryLocation)
         {
-            Argument.AssertNotNull(summaryLocation, nameof(summaryLocation));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(summaryLocation, nameof(summaryLocation));
 
             SummaryLocation = summaryLocation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
         /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCustomAbstractiveSummarizationDocument(string summaryLocation, string location, string language, string dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedCustomAbstractiveSummarizationDocument(string summaryLocation, string location, string language, string dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SummaryLocation = summaryLocation;
             Location = location;

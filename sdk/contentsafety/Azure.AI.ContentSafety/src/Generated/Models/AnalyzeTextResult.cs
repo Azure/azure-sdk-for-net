@@ -15,21 +15,21 @@ namespace Azure.AI.ContentSafety
     public partial class AnalyzeTextResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeTextResult"/>. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
-        internal AnalyzeTextResult(IEnumerable<TextCategoriesAnalysis> categoriesAnalysis)
+        internal AnalyzeTextResult(IEnumerable<global::Azure.AI.ContentSafety.TextCategoriesAnalysis> categoriesAnalysis)
         {
-            BlocklistsMatch = new ChangeTrackingList<TextBlocklistMatch>();
+            BlocklistsMatch = new ChangeTrackingList<global::Azure.AI.ContentSafety.TextBlocklistMatch>();
             CategoriesAnalysis = categoriesAnalysis.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeTextResult"/>. </summary>
         /// <param name="blocklistsMatch"> The blocklist match details. </param>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatch> blocklistsMatch, IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextResult(IReadOnlyList<global::Azure.AI.ContentSafety.TextBlocklistMatch> blocklistsMatch, IReadOnlyList<global::Azure.AI.ContentSafety.TextCategoriesAnalysis> categoriesAnalysis, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistsMatch = blocklistsMatch;
             CategoriesAnalysis = categoriesAnalysis;
@@ -37,9 +37,9 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> The blocklist match details. </summary>
-        public IReadOnlyList<TextBlocklistMatch> BlocklistsMatch { get; }
+        public IReadOnlyList<global::Azure.AI.ContentSafety.TextBlocklistMatch> BlocklistsMatch { get; }
 
         /// <summary> Analysis result for categories. </summary>
-        public IReadOnlyList<TextCategoriesAnalysis> CategoriesAnalysis { get; }
+        public IReadOnlyList<global::Azure.AI.ContentSafety.TextCategoriesAnalysis> CategoriesAnalysis { get; }
     }
 }

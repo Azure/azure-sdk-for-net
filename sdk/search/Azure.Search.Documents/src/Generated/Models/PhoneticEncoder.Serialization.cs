@@ -14,66 +14,66 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PhoneticEncoder value) => value switch
         {
-            PhoneticEncoder.Metaphone => "metaphone",
-            PhoneticEncoder.DoubleMetaphone => "doubleMetaphone",
-            PhoneticEncoder.Soundex => "soundex",
-            PhoneticEncoder.RefinedSoundex => "refinedSoundex",
-            PhoneticEncoder.Caverphone1 => "caverphone1",
-            PhoneticEncoder.Caverphone2 => "caverphone2",
-            PhoneticEncoder.Cologne => "cologne",
-            PhoneticEncoder.Nysiis => "nysiis",
-            PhoneticEncoder.KoelnerPhonetik => "koelnerPhonetik",
-            PhoneticEncoder.HaasePhonetik => "haasePhonetik",
-            PhoneticEncoder.BeiderMorse => "beiderMorse",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Metaphone => "metaphone",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.DoubleMetaphone => "doubleMetaphone",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Soundex => "soundex",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.RefinedSoundex => "refinedSoundex",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Caverphone1 => "caverphone1",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Caverphone2 => "caverphone2",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Cologne => "cologne",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Nysiis => "nysiis",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.KoelnerPhonetik => "koelnerPhonetik",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.HaasePhonetik => "haasePhonetik",
+            global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.BeiderMorse => "beiderMorse",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PhoneticEncoder value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static PhoneticEncoder ToPhoneticEncoder(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metaphone"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "metaphone"))
             {
-                return PhoneticEncoder.Metaphone;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Metaphone;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "doubleMetaphone"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "doubleMetaphone"))
             {
-                return PhoneticEncoder.DoubleMetaphone;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.DoubleMetaphone;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "soundex"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "soundex"))
             {
-                return PhoneticEncoder.Soundex;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Soundex;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "refinedSoundex"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "refinedSoundex"))
             {
-                return PhoneticEncoder.RefinedSoundex;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.RefinedSoundex;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone1"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone1"))
             {
-                return PhoneticEncoder.Caverphone1;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Caverphone1;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone2"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone2"))
             {
-                return PhoneticEncoder.Caverphone2;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Caverphone2;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cologne"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "cologne"))
             {
-                return PhoneticEncoder.Cologne;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Cologne;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "nysiis"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "nysiis"))
             {
-                return PhoneticEncoder.Nysiis;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.Nysiis;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "koelnerPhonetik"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "koelnerPhonetik"))
             {
-                return PhoneticEncoder.KoelnerPhonetik;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.KoelnerPhonetik;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "haasePhonetik"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "haasePhonetik"))
             {
-                return PhoneticEncoder.HaasePhonetik;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.HaasePhonetik;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "beiderMorse"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "beiderMorse"))
             {
-                return PhoneticEncoder.BeiderMorse;
+                return global::Azure.Search.Documents.Indexes.Models.PhoneticEncoder.BeiderMorse;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PhoneticEncoder value.");
         }

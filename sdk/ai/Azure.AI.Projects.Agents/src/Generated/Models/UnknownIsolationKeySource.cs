@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownIsolationKeySource : IsolationKeySource
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownIsolationKeySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownIsolationKeySource"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownIsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownIsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

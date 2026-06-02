@@ -12,13 +12,13 @@ namespace BasicTypeSpec
     /// <summary> A nested model for XML testing. </summary>
     public partial class XmlNestedModel
     {
-        /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.XmlNestedModel"/>. </summary>
         /// <param name="value"> The value of the nested model. </param>
         /// <param name="nestedId"> An attribute on the nested model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public XmlNestedModel(string value, int nestedId)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::BasicTypeSpec.Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
             NestedId = nestedId;

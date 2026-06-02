@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Healthcare entity extracted from the document. </summary>
-    public partial class HealthcareEntity : IJsonModel<HealthcareEntity>
+    public partial class HealthcareEntity : IJsonModel<global::Azure.AI.Language.Text.HealthcareEntity>
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareEntity"/> for deserialization. </summary>
         internal HealthcareEntity()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HealthcareEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealthcareEntity(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.HealthcareEntity.DeserializeHealthcareEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthcareEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareEntity IPersistableModel<HealthcareEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HealthcareEntity IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthcareEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HealthcareEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.HealthcareEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,16 +73,16 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HealthcareEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareEntity)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Optional.IsDefined(Subcategory))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -93,27 +93,27 @@ namespace Azure.AI.Language.Text
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
-            if (Optional.IsDefined(Assertion))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue(Assertion, options);
+                writer.WriteObjectValue<HealthcareAssertion>(Assertion, options);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (HealthcareEntityLink item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<HealthcareEntityLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -121,9 +121,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -132,26 +132,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareEntity IJsonModel<HealthcareEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HealthcareEntity IJsonModel<global::Azure.AI.Language.Text.HealthcareEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HealthcareEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HealthcareEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareEntity)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareEntity(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.HealthcareEntity.DeserializeHealthcareEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -163,8 +163,8 @@ namespace Azure.AI.Language.Text
             double confidenceScore = default;
             HealthcareAssertion assertion = default;
             string name = default;
-            IList<HealthcareEntityLink> links = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.HealthcareEntityLink> links = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("text"u8))
@@ -199,11 +199,11 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("assertion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    assertion = HealthcareAssertion.DeserializeHealthcareAssertion(prop.Value, options);
+                    assertion = global::Azure.AI.Language.Text.HealthcareAssertion.DeserializeHealthcareAssertion(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -213,21 +213,21 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("links"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<HealthcareEntityLink> array = new List<HealthcareEntityLink>();
+                    List<global::Azure.AI.Language.Text.HealthcareEntityLink> array = new List<global::Azure.AI.Language.Text.HealthcareEntityLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntityLink.DeserializeHealthcareEntityLink(item, options));
+                        array.Add(global::Azure.AI.Language.Text.HealthcareEntityLink.DeserializeHealthcareEntityLink(item, options));
                     }
                     links = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new HealthcareEntity(
@@ -239,7 +239,7 @@ namespace Azure.AI.Language.Text
                 confidenceScore,
                 assertion,
                 name,
-                links ?? new ChangeTrackingList<HealthcareEntityLink>(),
+                (links ?? new ChangeTrackingList<global::Azure.AI.Language.Text.HealthcareEntityLink>()),
                 additionalBinaryDataProperties);
         }
     }

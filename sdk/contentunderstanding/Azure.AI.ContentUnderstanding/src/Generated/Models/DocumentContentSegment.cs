@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentContentSegment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentContentSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentContentSegment"/>. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
@@ -31,14 +31,14 @@ namespace Azure.AI.ContentUnderstanding
             EndPageNumber = endPageNumber;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentContentSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentContentSegment"/>. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the segment. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SegmentId = segmentId;
             Category = category;

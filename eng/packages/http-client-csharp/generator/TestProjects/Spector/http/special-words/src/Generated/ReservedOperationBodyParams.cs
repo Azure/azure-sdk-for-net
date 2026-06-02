@@ -19,16 +19,16 @@ namespace SpecialWords._ReservedOperationBodyParams
     {
         protected ReservedOperationBodyParams() => throw null;
 
-        internal ReservedOperationBodyParams(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ReservedOperationBodyParams(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithItems(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> WithItemsAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> WithItemsAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response WithItems(IEnumerable<string> items, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithItemsAsync(IEnumerable<string> items, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithItemsAsync(IEnumerable<string> items, CancellationToken cancellationToken = default) => throw null;
     }
 }

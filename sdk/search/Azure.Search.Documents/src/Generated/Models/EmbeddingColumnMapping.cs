@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EmbeddingColumnMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingColumnMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping"/>. </summary>
         /// <param name="name"> Target vector field name in the search index. </param>
         /// <param name="sourceField"> SQL column used as input for embedding generation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sourceField"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="sourceField"/> is null. </exception>
         public EmbeddingColumnMapping(string name, string sourceField)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sourceField, nameof(sourceField));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(sourceField, nameof(sourceField));
 
             Name = name;
             SourceField = sourceField;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingColumnMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping"/>. </summary>
         /// <param name="name"> Target vector field name in the search index. </param>
         /// <param name="sourceField"> SQL column used as input for embedding generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingColumnMapping(string name, string sourceField, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingColumnMapping(string name, string sourceField, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SourceField = sourceField;

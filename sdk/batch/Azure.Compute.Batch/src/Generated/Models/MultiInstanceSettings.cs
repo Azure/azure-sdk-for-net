@@ -19,25 +19,25 @@ namespace Azure.Compute.Batch
     public partial class MultiInstanceSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultiInstanceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.MultiInstanceSettings"/>. </summary>
         /// <param name="coordinationCommandLine"> The command line to run on all the Compute Nodes to enable them to coordinate when the primary runs the main Task command. A typical coordination command line launches a background service and verifies that the service is ready to process inter-node messages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinationCommandLine"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="coordinationCommandLine"/> is null. </exception>
         public MultiInstanceSettings(string coordinationCommandLine)
         {
-            Argument.AssertNotNull(coordinationCommandLine, nameof(coordinationCommandLine));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(coordinationCommandLine, nameof(coordinationCommandLine));
 
             CoordinationCommandLine = coordinationCommandLine;
-            CommonResourceFiles = new ChangeTrackingList<ResourceFile>();
+            CommonResourceFiles = new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiInstanceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.MultiInstanceSettings"/>. </summary>
         /// <param name="numberOfInstances"> The number of Compute Nodes required by the Task. If omitted, the default is 1. </param>
         /// <param name="coordinationCommandLine"> The command line to run on all the Compute Nodes to enable them to coordinate when the primary runs the main Task command. A typical coordination command line launches a background service and verifies that the service is ready to process inter-node messages. </param>
         /// <param name="commonResourceFiles"> A list of files that the Batch service will download before running the coordination command line. The difference between common resource files and Task resource files is that common resource files are downloaded for all subtasks including the primary, whereas Task resource files are downloaded only for the primary. Also note that these resource files are not downloaded to the Task working directory, but instead are downloaded to the Task root directory (one directory above the working directory).  There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiInstanceSettings(int? numberOfInstances, string coordinationCommandLine, IList<ResourceFile> commonResourceFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiInstanceSettings(int? numberOfInstances, string coordinationCommandLine, IList<global::Azure.Compute.Batch.ResourceFile> commonResourceFiles, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NumberOfInstances = numberOfInstances;
             CoordinationCommandLine = coordinationCommandLine;
@@ -52,6 +52,6 @@ namespace Azure.Compute.Batch
         public string CoordinationCommandLine { get; set; }
 
         /// <summary> A list of files that the Batch service will download before running the coordination command line. The difference between common resource files and Task resource files is that common resource files are downloaded for all subtasks including the primary, whereas Task resource files are downloaded only for the primary. Also note that these resource files are not downloaded to the Task working directory, but instead are downloaded to the Task root directory (one directory above the working directory).  There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
-        public IList<ResourceFile> CommonResourceFiles { get; }
+        public IList<global::Azure.Compute.Batch.ResourceFile> CommonResourceFiles { get; }
     }
 }

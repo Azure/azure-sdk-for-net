@@ -15,9 +15,9 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for indexed SQL knowledge source. </summary>
-    public partial class IndexedSqlKnowledgeSourceParameters : IJsonModel<IndexedSqlKnowledgeSourceParameters>
+    public partial class IndexedSqlKnowledgeSourceParameters : IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="IndexedSqlKnowledgeSourceParameters"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters"/> for deserialization. </summary>
         internal IndexedSqlKnowledgeSourceParameters()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IndexedSqlKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIndexedSqlKnowledgeSourceParameters(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters.DeserializeIndexedSqlKnowledgeSourceParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IndexedSqlKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IndexedSqlKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IndexedSqlKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IndexedSqlKnowledgeSourceParameters IPersistableModel<IndexedSqlKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IndexedSqlKnowledgeSourceParameters IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IndexedSqlKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IndexedSqlKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,51 +75,51 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IndexedSqlKnowledgeSourceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("tableOrView"u8);
             writer.WriteStringValue(TableOrView);
-            if (Optional.IsDefined(HighWaterMarkColumnName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(HighWaterMarkColumnName))
             {
                 writer.WritePropertyName("highWaterMarkColumnName"u8);
                 writer.WriteStringValue(HighWaterMarkColumnName);
             }
-            if (Optional.IsCollectionDefined(ContentColumns))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(ContentColumns))
             {
                 writer.WritePropertyName("contentColumns"u8);
                 writer.WriteStartArray();
                 foreach (ContentColumnMapping item in ContentColumns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContentColumnMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmbeddingColumns))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(EmbeddingColumns))
             {
                 writer.WritePropertyName("embeddingColumns"u8);
                 writer.WriteStartArray();
                 foreach (EmbeddingColumnMapping item in EmbeddingColumns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<EmbeddingColumnMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IngestionParameters))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IngestionParameters))
             {
                 writer.WritePropertyName("ingestionParameters"u8);
-                writer.WriteObjectValue(IngestionParameters, options);
+                writer.WriteObjectValue<KnowledgeSourceIngestionParameters>(IngestionParameters, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedResources))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(CreatedResources)))
             {
                 writer.WritePropertyName("createdResources"u8);
-                writer.WriteObjectValue(CreatedResources, options);
+                writer.WriteObjectValue<CreatedResources>(CreatedResources, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -127,9 +127,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -138,37 +138,37 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IndexedSqlKnowledgeSourceParameters IJsonModel<IndexedSqlKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IndexedSqlKnowledgeSourceParameters IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IndexedSqlKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IndexedSqlKnowledgeSourceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIndexedSqlKnowledgeSourceParameters(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.IndexedSqlKnowledgeSourceParameters.DeserializeIndexedSqlKnowledgeSourceParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IndexedSqlKnowledgeSourceParameters DeserializeIndexedSqlKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string connectionString = default;
             string tableOrView = default;
             string highWaterMarkColumnName = default;
-            IList<ContentColumnMapping> contentColumns = default;
-            IList<EmbeddingColumnMapping> embeddingColumns = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping> contentColumns = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping> embeddingColumns = default;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
             CreatedResources createdResources = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("connectionString"u8))
@@ -188,61 +188,61 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("contentColumns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ContentColumnMapping> array = new List<ContentColumnMapping>();
+                    List<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping> array = new List<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContentColumnMapping.DeserializeContentColumnMapping(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping.DeserializeContentColumnMapping(item, options));
                     }
                     contentColumns = array;
                     continue;
                 }
                 if (prop.NameEquals("embeddingColumns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<EmbeddingColumnMapping> array = new List<EmbeddingColumnMapping>();
+                    List<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping> array = new List<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EmbeddingColumnMapping.DeserializeEmbeddingColumnMapping(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping.DeserializeEmbeddingColumnMapping(item, options));
                     }
                     embeddingColumns = array;
                     continue;
                 }
                 if (prop.NameEquals("ingestionParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
+                    ingestionParameters = global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createdResources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    createdResources = CreatedResources.DeserializeCreatedResources(prop.Value, options);
+                    createdResources = global::Azure.Search.Documents.Indexes.Models.CreatedResources.DeserializeCreatedResources(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new IndexedSqlKnowledgeSourceParameters(
                 connectionString,
                 tableOrView,
                 highWaterMarkColumnName,
-                contentColumns ?? new ChangeTrackingList<ContentColumnMapping>(),
-                embeddingColumns ?? new ChangeTrackingList<EmbeddingColumnMapping>(),
+                (contentColumns ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.ContentColumnMapping>()),
+                (embeddingColumns ?? new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.EmbeddingColumnMapping>()),
                 ingestionParameters,
                 createdResources,
                 additionalBinaryDataProperties);

@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseTextParamVerbosity value) => value switch
         {
-            ResponseTextParamVerbosity.Low => "low",
-            ResponseTextParamVerbosity.Medium => "medium",
-            ResponseTextParamVerbosity.High => "high",
+            global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.Medium => "medium",
+            global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.High => "high",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseTextParamVerbosity value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseTextParamVerbosity ToResponseTextParamVerbosity(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return ResponseTextParamVerbosity.Low;
+                return global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return ResponseTextParamVerbosity.Medium;
+                return global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return ResponseTextParamVerbosity.High;
+                return global::Azure.AI.Extensions.OpenAI.ResponseTextParamVerbosity.High;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseTextParamVerbosity value.");
         }

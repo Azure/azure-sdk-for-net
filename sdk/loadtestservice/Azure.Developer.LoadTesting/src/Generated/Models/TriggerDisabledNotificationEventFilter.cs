@@ -13,15 +13,15 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TriggerDisabled. </summary>
     public partial class TriggerDisabledNotificationEventFilter : TestsNotificationEventFilter
     {
-        /// <summary> Initializes a new instance of <see cref="TriggerDisabledNotificationEventFilter"/>. </summary>
-        public TriggerDisabledNotificationEventFilter() : base(NotificationEventType.TriggerDisabled)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter"/>. </summary>
+        public TriggerDisabledNotificationEventFilter() : base(global::Azure.Developer.LoadTesting.NotificationEventType.TriggerDisabled)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerDisabledNotificationEventFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerDisabledNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal TriggerDisabledNotificationEventFilter(NotificationEventType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

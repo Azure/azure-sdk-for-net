@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> A basic rectangle specifying a sub-region of the image. </summary>
-    public partial class ImageBoundingBox : IJsonModel<ImageBoundingBox>
+    public partial class ImageBoundingBox : IJsonModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>
     {
-        /// <summary> Initializes a new instance of <see cref="ImageBoundingBox"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox"/> for deserialization. </summary>
         internal ImageBoundingBox()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImageBoundingBox PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Vision.ImageAnalysis.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageBoundingBox(document.RootElement, options);
+                        return global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox.DeserializeImageBoundingBox(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageBoundingBox)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVisionImageAnalysisContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Vision.ImageAnalysis.AzureAIVisionImageAnalysisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageBoundingBox)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageBoundingBox>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageBoundingBox IPersistableModel<ImageBoundingBox>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageBoundingBox IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageBoundingBox>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageBoundingBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageBoundingBox)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
@@ -86,7 +86,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteNumberValue(Width);
             writer.WritePropertyName("h"u8);
             writer.WriteNumberValue(Height);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -94,9 +94,9 @@ namespace Azure.AI.Vision.ImageAnalysis
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -105,26 +105,26 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageBoundingBox IJsonModel<ImageBoundingBox>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageBoundingBox IJsonModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImageBoundingBox JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ImageBoundingBox)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageBoundingBox(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Vision.ImageAnalysis.ImageBoundingBox.DeserializeImageBoundingBox(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ImageBoundingBox DeserializeImageBoundingBox(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -132,7 +132,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             int y = default;
             int width = default;
             int height = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("x"u8))
@@ -155,9 +155,9 @@ namespace Azure.AI.Vision.ImageAnalysis
                     height = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ImageBoundingBox(x, y, width, height, additionalBinaryDataProperties);

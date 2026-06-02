@@ -19,7 +19,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         public static Goose Goose(int wingspan = default) => throw null;
 
-        public static Eagle Eagle(int wingspan = default, IEnumerable<Bird> friends = default, IDictionary<string, Bird> hate = default, Bird partner = default) => throw null;
+        public static Eagle Eagle(int wingspan = default, IEnumerable<global::_Type.Model.Inheritance.SingleDiscriminator.Bird> friends = default, IDictionary<string, global::_Type.Model.Inheritance.SingleDiscriminator.Bird> hate = default, Bird partner = default) => throw null;
 
         public static Dinosaur Dinosaur(string kind = default, int size = default) => throw null;
 

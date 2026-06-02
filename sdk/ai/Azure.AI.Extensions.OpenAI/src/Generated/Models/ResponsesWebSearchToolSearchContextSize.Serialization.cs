@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsesWebSearchToolSearchContextSize value) => value switch
         {
-            ResponsesWebSearchToolSearchContextSize.Low => "low",
-            ResponsesWebSearchToolSearchContextSize.Medium => "medium",
-            ResponsesWebSearchToolSearchContextSize.High => "high",
+            global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.Low => "low",
+            global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.Medium => "medium",
+            global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.High => "high",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesWebSearchToolSearchContextSize value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsesWebSearchToolSearchContextSize ToResponsesWebSearchToolSearchContextSize(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return ResponsesWebSearchToolSearchContextSize.Low;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.Low;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "medium"))
             {
-                return ResponsesWebSearchToolSearchContextSize.Medium;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.Medium;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return ResponsesWebSearchToolSearchContextSize.High;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize.High;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesWebSearchToolSearchContextSize value.");
         }

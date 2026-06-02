@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaTypeResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaTypeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaTypeResult"/>. </summary>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
@@ -29,13 +29,13 @@ namespace Azure.Analytics.Defender.Easm
             Difference = difference;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaTypeResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaTypeResult"/>. </summary>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Removed = removed;

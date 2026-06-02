@@ -11,14 +11,14 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJob"/>. </summary>
         internal OptimizationJob()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="progress"> Progress while in flight. Absent in terminal states. </param>
         /// <param name="dataset"> Metadata about the dataset used for this optimization job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJob(string id, JobStatus status, FoundryOpenAIError error, OptimizationJobResult result, OptimizationJobInputs inputs, DateTimeOffset createdAt, DateTimeOffset? updatedAt, OptimizationJobProgress progress, DatasetInfo dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJob(string id, JobStatus status, FoundryOpenAIError error, OptimizationJobResult result, OptimizationJobInputs inputs, DateTimeOffset createdAt, DateTimeOffset? updatedAt, OptimizationJobProgress progress, DatasetInfo dataset, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;

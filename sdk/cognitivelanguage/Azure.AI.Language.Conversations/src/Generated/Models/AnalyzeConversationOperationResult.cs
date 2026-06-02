@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Container for results of all tasks in the conversation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummarizationOperationResult"/>, <see cref="CustomSummarizationOperationResult"/>, and <see cref="ConversationPiiOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.SummarizationOperationResult"/>, <see cref="Azure.AI.Language.Conversations.Models.CustomSummarizationOperationResult"/>, and <see cref="Azure.AI.Language.Conversations.Models.ConversationPiiOperationResult"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> discriminator kind. </param>
@@ -30,13 +30,13 @@ namespace Azure.AI.Language.Conversations.Models
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;

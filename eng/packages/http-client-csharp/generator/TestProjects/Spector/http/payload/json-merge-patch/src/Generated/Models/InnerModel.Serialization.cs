@@ -11,23 +11,23 @@ using System.Text.Json;
 
 namespace Payload.JsonMergePatch
 {
-    public partial class InnerModel : IJsonModel<InnerModel>
+    public partial class InnerModel : IJsonModel<global::Payload.JsonMergePatch.InnerModel>
     {
         protected virtual InnerModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.JsonMergePatch.InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IPersistableModel<InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        InnerModel IPersistableModel<global::Payload.JsonMergePatch.InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.JsonMergePatch.InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Payload.JsonMergePatch.InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IJsonModel<InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        InnerModel IJsonModel<global::Payload.JsonMergePatch.InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual InnerModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

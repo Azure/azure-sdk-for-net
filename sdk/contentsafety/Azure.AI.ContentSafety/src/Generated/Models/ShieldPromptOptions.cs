@@ -14,19 +14,19 @@ namespace Azure.AI.ContentSafety
     public partial class ShieldPromptOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ShieldPromptOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ShieldPromptOptions"/>. </summary>
         public ShieldPromptOptions()
         {
             Documents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ShieldPromptOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ShieldPromptOptions"/>. </summary>
         /// <param name="userPrompt"> The user prompt to be analyzed, which may contain direct injection attacks. </param>
         /// <param name="documents"> The documents to be analyzed, which may contain direct or indirect injection attacks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShieldPromptOptions(string userPrompt, IList<string> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShieldPromptOptions(string userPrompt, IList<string> documents, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UserPrompt = userPrompt;
             Documents = documents;

@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the HNSW approximate nearest neighbors algorithm used during indexing and querying. The HNSW algorithm offers a tunable trade-off between search speed and accuracy. </summary>
     public partial class HnswAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.HnswAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public HnswAlgorithmConfiguration(string name) : base(name, VectorSearchAlgorithmKind.Hnsw)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public HnswAlgorithmConfiguration(string name) : base(name, global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmKind.Hnsw)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.HnswAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to HNSW algorithm. </param>
-        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, HnswParameters parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, HnswParameters parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

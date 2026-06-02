@@ -14,61 +14,61 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchDocumentsResult : IJsonModel<SearchDocumentsResult>
+    internal partial class SearchDocumentsResult : IJsonModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchDocumentsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchDocumentsResult(document.RootElement, options);
+                        return global::Azure.Search.Documents.Models.SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchDocumentsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchDocumentsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchDocumentsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchDocumentsResult IPersistableModel<SearchDocumentsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchDocumentsResult IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchDocumentsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchDocumentsResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Search.Documents.Models.SearchDocumentsResult"/> from. </param>
         public static explicit operator SearchDocumentsResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchDocumentsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Search.Documents.Models.SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement, global::Azure.Search.Documents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchDocumentsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,29 +76,29 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchDocumentsResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Count)))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Coverage))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(Coverage)))
             {
                 writer.WritePropertyName("@search.coverage"u8);
                 writer.WriteNumberValue(Coverage.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Facets))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(Facets)))
             {
                 writer.WritePropertyName("@search.facets"u8);
                 writer.WriteStartObject();
                 foreach (var item in Facets)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -106,63 +106,63 @@ namespace Azure.Search.Documents.Models
                     writer.WriteStartArray();
                     foreach (FacetResult item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        writer.WriteObjectValue<FacetResult>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Answers))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(Answers)))
             {
                 writer.WritePropertyName("@search.answers"u8);
                 writer.WriteStartArray();
                 foreach (QueryAnswerResult item in Answers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<QueryAnswerResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DebugInfo))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(DebugInfo)))
             {
                 writer.WritePropertyName("@search.debug"u8);
-                writer.WriteObjectValue(DebugInfo, options);
+                writer.WriteObjectValue<DebugInfo>(DebugInfo, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextPageParameters))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(NextPageParameters)))
             {
                 writer.WritePropertyName("@search.nextPageParameters"u8);
-                writer.WriteObjectValue(NextPageParameters, options);
+                writer.WriteObjectValue<SearchOptions>(NextPageParameters, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (SearchResult item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SearchResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(NextLink)))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(SemanticPartialResponseReason))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(SemanticPartialResponseReason)))
             {
                 writer.WritePropertyName("@search.semanticPartialResponseReason"u8);
                 writer.WriteStringValue(SemanticPartialResponseReason.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SemanticPartialResponseType))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(SemanticPartialResponseType)))
             {
                 writer.WritePropertyName("@search.semanticPartialResponseType"u8);
                 writer.WriteStringValue(SemanticPartialResponseType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SemanticQueryRewritesResultType))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(SemanticQueryRewritesResultType)))
             {
                 writer.WritePropertyName("@search.semanticQueryRewritesResultType"u8);
                 writer.WriteStringValue(SemanticQueryRewritesResultType.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -170,9 +170,9 @@ namespace Azure.Search.Documents.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -181,46 +181,46 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchDocumentsResult IJsonModel<SearchDocumentsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchDocumentsResult IJsonModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchDocumentsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SearchDocumentsResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchDocumentsResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Models.SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             long? count = default;
             double? coverage = default;
-            IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
-            IReadOnlyList<QueryAnswerResult> answers = default;
+            IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> facets = default;
+            IReadOnlyList<global::Azure.Search.Documents.Models.QueryAnswerResult> answers = default;
             DebugInfo debugInfo = default;
             SearchOptions nextPageParameters = default;
-            IReadOnlyList<SearchResult> results = default;
+            IReadOnlyList<global::Azure.Search.Documents.Models.SearchResult> results = default;
             string nextLink = default;
             SemanticErrorReason? semanticPartialResponseReason = default;
             SemanticSearchResultsType? semanticPartialResponseType = default;
             SemanticQueryRewritesResultType? semanticQueryRewritesResultType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,7 +229,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.coverage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -238,23 +238,23 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.facets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
+                    Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>> dictionary = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            List<FacetResult> array = new List<FacetResult>();
+                            List<global::Azure.Search.Documents.Models.FacetResult> array = new List<global::Azure.Search.Documents.Models.FacetResult>();
                             foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(FacetResult.DeserializeFacetResult(item, options));
+                                array.Add(global::Azure.Search.Documents.Models.FacetResult.DeserializeFacetResult(item, options));
                             }
                             dictionary.Add(prop0.Name, array);
                         }
@@ -264,43 +264,43 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.answers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<QueryAnswerResult> array = new List<QueryAnswerResult>();
+                    List<global::Azure.Search.Documents.Models.QueryAnswerResult> array = new List<global::Azure.Search.Documents.Models.QueryAnswerResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item, options));
+                        array.Add(global::Azure.Search.Documents.Models.QueryAnswerResult.DeserializeQueryAnswerResult(item, options));
                     }
                     answers = array;
                     continue;
                 }
                 if (prop.NameEquals("@search.debug"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         debugInfo = null;
                         continue;
                     }
-                    debugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, options);
+                    debugInfo = global::Azure.Search.Documents.Models.DebugInfo.DeserializeDebugInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@search.nextPageParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    nextPageParameters = SearchOptions.DeserializeSearchOptions(prop.Value, options);
+                    nextPageParameters = global::Azure.Search.Documents.SearchOptions.DeserializeSearchOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SearchResult> array = new List<SearchResult>();
+                    List<global::Azure.Search.Documents.Models.SearchResult> array = new List<global::Azure.Search.Documents.Models.SearchResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item, options));
+                        array.Add(global::Azure.Search.Documents.Models.SearchResult.DeserializeSearchResult(item, options));
                     }
                     results = array;
                     continue;
@@ -312,7 +312,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.semanticPartialResponseReason"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -321,7 +321,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.semanticPartialResponseType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -330,23 +330,23 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.semanticQueryRewritesResultType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     semanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SearchDocumentsResult(
                 count,
                 coverage,
-                facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
-                answers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                (facets ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.FacetResult>>()),
+                (answers ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryAnswerResult>()),
                 debugInfo,
                 nextPageParameters,
                 results,

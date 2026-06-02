@@ -15,25 +15,25 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeEndpointConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeEndpointConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeEndpointConfiguration"/>. </summary>
         /// <param name="inboundEndpoints"> The list of inbound endpoints that are accessible on the Compute Node. </param>
-        internal BatchNodeEndpointConfiguration(IEnumerable<InboundEndpoint> inboundEndpoints)
+        internal BatchNodeEndpointConfiguration(IEnumerable<global::Azure.Compute.Batch.InboundEndpoint> inboundEndpoints)
         {
             InboundEndpoints = inboundEndpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeEndpointConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeEndpointConfiguration"/>. </summary>
         /// <param name="inboundEndpoints"> The list of inbound endpoints that are accessible on the Compute Node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeEndpointConfiguration(IList<InboundEndpoint> inboundEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeEndpointConfiguration(IList<global::Azure.Compute.Batch.InboundEndpoint> inboundEndpoints, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             InboundEndpoints = inboundEndpoints;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of inbound endpoints that are accessible on the Compute Node. </summary>
-        public IList<InboundEndpoint> InboundEndpoints { get; }
+        public IList<global::Azure.Compute.Batch.InboundEndpoint> InboundEndpoints { get; }
     }
 }

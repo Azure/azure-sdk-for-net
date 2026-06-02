@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text Entity linking task result. </summary>
     public partial class AnalyzeTextEntityLinkingResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityLinkingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult"/>. </summary>
         /// <param name="results"> Entity linking result. </param>
-        internal AnalyzeTextEntityLinkingResult(EntityLinkingResult results) : base(AnalyzeTextResultsKind.EntityLinkingResults)
+        internal AnalyzeTextEntityLinkingResult(EntityLinkingResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.EntityLinkingResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityLinkingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Entity linking result. </param>
-        internal AnalyzeTextEntityLinkingResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityLinkingResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextEntityLinkingResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EntityLinkingResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

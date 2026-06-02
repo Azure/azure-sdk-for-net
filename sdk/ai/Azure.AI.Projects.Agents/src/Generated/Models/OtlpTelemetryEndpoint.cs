@@ -10,28 +10,28 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
     public partial class OtlpTelemetryEndpoint : TelemetryEndpoint
     {
-        /// <summary> Initializes a new instance of <see cref="OtlpTelemetryEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OtlpTelemetryEndpoint"/>. </summary>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportedDataTypes"/> or <paramref name="endpoint"/> is null. </exception>
-        public OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes, string endpoint, TelemetryTransportProtocol protocol) : base(TelemetryEndpointKind.OTLP, exportedDataTypes)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exportedDataTypes"/> or <paramref name="endpoint"/> is null. </exception>
+        public OtlpTelemetryEndpoint(IEnumerable<global::Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes, string endpoint, TelemetryTransportProtocol protocol) : base(global::Azure.AI.Projects.Agents.TelemetryEndpointKind.OTLP, exportedDataTypes)
         {
-            Argument.AssertNotNull(exportedDataTypes, nameof(exportedDataTypes));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(exportedDataTypes, nameof(exportedDataTypes));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
             Protocol = protocol;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OtlpTelemetryEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OtlpTelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties, string endpoint, TelemetryTransportProtocol protocol) : base(kind, exportedDataTypes, authentication, additionalBinaryDataProperties)
+        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<global::Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string endpoint, TelemetryTransportProtocol protocol) : base(kind, exportedDataTypes, authentication, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Protocol = protocol;

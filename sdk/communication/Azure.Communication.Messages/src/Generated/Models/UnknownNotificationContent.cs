@@ -12,12 +12,12 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(channelRegistrationId, to, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(channelRegistrationId, to, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

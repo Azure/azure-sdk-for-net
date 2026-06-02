@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithRenamedNestedModel : IPersistableModel<ModelWithRenamedNestedModel>, IXmlSerializable
+    public partial class ModelWithRenamedNestedModel : IPersistableModel<global::Payload.Xml.ModelWithRenamedNestedModel>, IXmlSerializable
     {
         internal ModelWithRenamedNestedModel() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithRenamedNestedModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithRenamedNestedModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithRenamedNestedModel IPersistableModel<ModelWithRenamedNestedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithRenamedNestedModel IPersistableModel<global::Payload.Xml.ModelWithRenamedNestedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithRenamedNestedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithRenamedNestedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithRenamedNestedModel"> The <see cref="ModelWithRenamedNestedModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithRenamedNestedModel"> The <see cref="global::Payload.Xml.ModelWithRenamedNestedModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRenamedNestedModel modelWithRenamedNestedModel) => throw null;
 
         public static explicit operator ModelWithRenamedNestedModel(Response response) => throw null;

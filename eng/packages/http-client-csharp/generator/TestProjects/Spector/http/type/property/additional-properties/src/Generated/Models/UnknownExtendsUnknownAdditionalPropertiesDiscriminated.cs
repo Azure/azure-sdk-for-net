@@ -12,6 +12,6 @@ namespace _Type.Property.AdditionalProperties
 {
     internal partial class UnknownExtendsUnknownAdditionalPropertiesDiscriminated : ExtendsUnknownAdditionalPropertiesDiscriminated
     {
-        internal UnknownExtendsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties) : base(name, kind ?? "unknown", additionalProperties) => throw null;
+        internal UnknownExtendsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, global::System.BinaryData> additionalProperties) : base(name, (kind ?? "unknown"), additionalProperties) => throw null;
     }
 }

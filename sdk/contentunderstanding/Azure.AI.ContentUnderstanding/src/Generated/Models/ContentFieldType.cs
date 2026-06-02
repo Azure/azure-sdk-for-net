@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Semantic data type of the field value. </summary>
-    public readonly partial struct ContentFieldType : IEquatable<ContentFieldType>
+    public readonly partial struct ContentFieldType : IEquatable<global::Azure.AI.ContentUnderstanding.ContentFieldType>
     {
         private readonly string _value;
         /// <summary> Plain text. </summary>
@@ -33,12 +33,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> JSON object. </summary>
         private const string JsonValue = "json";
 
-        /// <summary> Initializes a new instance of <see cref="ContentFieldType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContentFieldType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -70,34 +70,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> JSON object. </summary>
         public static ContentFieldType Json { get; } = new ContentFieldType(JsonValue);
 
-        /// <summary> Determines if two <see cref="ContentFieldType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentFieldType left, ContentFieldType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContentFieldType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentFieldType left, ContentFieldType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContentFieldType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContentFieldType(string value) => new ContentFieldType(value);
 
-        /// <summary> Converts a string to a <see cref="ContentFieldType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ContentFieldType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContentFieldType?(string value) => value == null ? null : new ContentFieldType(value);
+        public static implicit operator ContentFieldType?(string value) => (value == null) ? null : new ContentFieldType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContentFieldType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ContentFieldType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ContentFieldType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContentFieldType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Scalar
 {
-    public partial class AzureLocationModel : IJsonModel<AzureLocationModel>
+    public partial class AzureLocationModel : IJsonModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>
     {
         internal AzureLocationModel() => throw null;
 
@@ -21,22 +21,22 @@ namespace Specs.Azure.Core.Scalar
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<AzureLocationModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        AzureLocationModel IPersistableModel<AzureLocationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        AzureLocationModel IPersistableModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<AzureLocationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="azureLocationModel"> The <see cref="AzureLocationModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="azureLocationModel"> The <see cref="global::Specs.Azure.Core.Scalar.AzureLocationModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AzureLocationModel azureLocationModel) => throw null;
 
         public static explicit operator AzureLocationModel(Response response) => throw null;
 
-        void IJsonModel<AzureLocationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        AzureLocationModel IJsonModel<AzureLocationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        AzureLocationModel IJsonModel<global::Specs.Azure.Core.Scalar.AzureLocationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual AzureLocationModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

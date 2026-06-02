@@ -14,15 +14,15 @@ namespace Azure.Developer.LoadTesting
     public partial class TestInputArtifacts
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestInputArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestInputArtifacts"/>. </summary>
         internal TestInputArtifacts()
         {
-            AdditionalFileInfo = new ChangeTrackingList<TestFileInfo>();
+            AdditionalFileInfo = new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestFileInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestInputArtifacts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> The load test YAML file that contains the the test configuration. </param>
         /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
         /// <param name="userPropertyFileInfo"> The user properties file. </param>
@@ -30,7 +30,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestInputArtifacts(TestFileInfo configFileInfo, TestFileInfo testScriptFileInfo, TestFileInfo userPropertyFileInfo, TestFileInfo inputArtifactsZipFileInfo, TestFileInfo urlTestConfigFileInfo, IReadOnlyList<TestFileInfo> additionalFileInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestInputArtifacts(TestFileInfo configFileInfo, TestFileInfo testScriptFileInfo, TestFileInfo userPropertyFileInfo, TestFileInfo inputArtifactsZipFileInfo, TestFileInfo urlTestConfigFileInfo, IReadOnlyList<global::Azure.Developer.LoadTesting.TestFileInfo> additionalFileInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConfigFileInfo = configFileInfo;
             TestScriptFileInfo = testScriptFileInfo;
@@ -57,6 +57,6 @@ namespace Azure.Developer.LoadTesting
         public TestFileInfo UrlTestConfigFileInfo { get; }
 
         /// <summary> Additional supported files for the test run. </summary>
-        public IReadOnlyList<TestFileInfo> AdditionalFileInfo { get; }
+        public IReadOnlyList<global::Azure.Developer.LoadTesting.TestFileInfo> AdditionalFileInfo { get; }
     }
 }

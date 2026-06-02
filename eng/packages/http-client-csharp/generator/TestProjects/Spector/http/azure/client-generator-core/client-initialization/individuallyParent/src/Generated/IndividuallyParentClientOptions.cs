@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         public IndividuallyParentClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal IndividuallyParentClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -16,14 +16,14 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateResponseFunctionCallArgumentsDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the function call item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        internal SessionUpdateResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(ServerEventType.ResponseFunctionCallArgumentsDone)
+        internal SessionUpdateResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseFunctionCallArgumentsDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        internal SessionUpdateResponseFunctionCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseFunctionCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

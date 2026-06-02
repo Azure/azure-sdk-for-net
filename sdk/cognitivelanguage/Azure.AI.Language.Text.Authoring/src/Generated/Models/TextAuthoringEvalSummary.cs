@@ -12,14 +12,14 @@ namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Represents the summary for an evaluation operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntityRecognitionEvalSummary"/>, <see cref="CustomHealthcareEvalSummary"/>, <see cref="CustomMultiLabelClassificationEvalSummary"/>, <see cref="CustomSingleLabelClassificationEvalSummary"/>, and <see cref="CustomTextSentimentEvalSummary"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary"/>, <see cref="Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary"/>, and <see cref="Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary"/>.
     /// </summary>
     public abstract partial class TextAuthoringEvalSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         private protected TextAuthoringEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions)
@@ -28,11 +28,11 @@ namespace Azure.AI.Language.Text.Authoring
             EvaluationOptions = evaluationOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringEvalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringEvalSummary(TextAuthoringProjectKind projectKind, TextAuthoringEvaluationDetails evaluationOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             EvaluationOptions = evaluationOptions;

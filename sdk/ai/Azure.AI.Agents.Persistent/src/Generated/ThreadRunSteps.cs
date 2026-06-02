@@ -21,7 +21,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class ThreadRunSteps
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ThreadRunSteps for mocking. </summary>
@@ -34,7 +34,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ThreadRunSteps(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ThreadRunSteps(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -64,21 +64,21 @@ namespace Azure.AI.Agents.Persistent
         /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetRunStep(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
+        public virtual Response GetRunStep(string threadId, string runId, string stepId, IEnumerable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRunSteps.GetRunStep");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-                Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, include, context);
+                using HttpMessage message = this.CreateGetRunStepRequest(threadId, runId, stepId, include, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -104,21 +104,21 @@ namespace Azure.AI.Agents.Persistent
         /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRunSteps.GetRunStep");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-                Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-                using HttpMessage message = CreateGetRunStepRequest(threadId, runId, stepId, include, context);
+                using HttpMessage message = this.CreateGetRunStepRequest(threadId, runId, stepId, include, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -137,17 +137,17 @@ namespace Azure.AI.Agents.Persistent
         /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.RunStep> GetRunStep(string threadId, string runId, string stepId, IEnumerable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            Response result = GetRunStep(threadId, runId, stepId, include, cancellationToken.ToRequestContext());
-            return Response.FromValue((RunStep)result, result);
+            Response result = this.GetRunStep(threadId, runId, stepId, include, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RunStep)result), result);
         }
 
         /// <summary> Retrieves a single run step from a thread run. </summary>
@@ -159,17 +159,17 @@ namespace Azure.AI.Agents.Persistent
         /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, IEnumerable<global::Azure.AI.Agents.Persistent.RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            Response result = await GetRunStepAsync(threadId, runId, stepId, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RunStep)result, result);
+            Response result = await this.GetRunStepAsync(threadId, runId, stepId, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RunStep)result), result);
         }
     }
 }

@@ -31,14 +31,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -53,14 +53,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", contentType);
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -75,14 +75,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -94,14 +94,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -113,14 +113,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -135,14 +135,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -157,14 +157,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -176,14 +176,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -195,14 +195,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -212,14 +212,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -232,14 +232,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -252,14 +252,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -270,22 +270,22 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (sign != null)
+            if ((sign != null))
             {
                 uri.AppendQuery("sign", sign, true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -295,22 +295,22 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (sign != null)
+            if ((sign != null))
             {
                 uri.AppendQuery("sign", sign, true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -322,14 +322,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/partition-type", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -341,14 +341,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/partition-type", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -361,14 +361,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -383,14 +383,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -405,14 +405,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -424,14 +424,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -443,14 +443,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -462,14 +462,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/thumbnail", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
@@ -481,14 +481,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/tile-settings", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -500,14 +500,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/tile-settings", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -519,14 +519,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/conformance", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -536,14 +536,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -555,14 +555,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -577,14 +577,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -599,14 +599,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -619,14 +619,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -638,26 +638,26 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(limit), true);
             }
-            if (boundingBox != null && !(boundingBox is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((boundingBox != null) && !((boundingBox is ChangeTrackingList<string> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("bbox", boundingBox, ",", escape: true);
             }
-            if (datetime != null)
+            if ((datetime != null))
             {
                 uri.AppendQuery("datetime", datetime, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -670,14 +670,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/merge-patch+json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -691,14 +691,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -713,14 +713,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables/", false);
             uri.AppendPath(queryableName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -735,14 +735,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables/", false);
             uri.AppendPath(queryableName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -751,14 +751,14 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/queryables", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -770,14 +770,14 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -787,22 +787,22 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/search", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (sign != null)
+            if ((sign != null))
             {
                 uri.AppendQuery("sign", sign, true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

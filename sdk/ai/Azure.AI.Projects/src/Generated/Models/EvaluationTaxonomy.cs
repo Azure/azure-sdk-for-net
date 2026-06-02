@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluationTaxonomy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomy"/>. </summary>
         /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taxonomyInput"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="taxonomyInput"/> is null. </exception>
         public EvaluationTaxonomy(EvaluationTaxonomyInput taxonomyInput)
         {
-            Argument.AssertNotNull(taxonomyInput, nameof(taxonomyInput));
+            global::Azure.AI.Projects.Argument.AssertNotNull(taxonomyInput, nameof(taxonomyInput));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             TaxonomyInput = taxonomyInput;
-            TaxonomyCategories = new ChangeTrackingList<TaxonomyCategory>();
+            TaxonomyCategories = new ChangeTrackingList<global::Azure.AI.Projects.Evaluation.TaxonomyCategory>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationTaxonomy"/>. </summary>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="taxonomyCategories"> List of taxonomy categories. </param>
         /// <param name="properties"> Additional properties for the evaluation taxonomy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationTaxonomy(string id, string name, string version, string description, IDictionary<string, string> tags, EvaluationTaxonomyInput taxonomyInput, IList<TaxonomyCategory> taxonomyCategories, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationTaxonomy(string id, string name, string version, string description, IDictionary<string, string> tags, EvaluationTaxonomyInput taxonomyInput, IList<global::Azure.AI.Projects.Evaluation.TaxonomyCategory> taxonomyCategories, IDictionary<string, string> properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -69,7 +69,7 @@ namespace Azure.AI.Projects.Evaluation
         public EvaluationTaxonomyInput TaxonomyInput { get; set; }
 
         /// <summary> List of taxonomy categories. </summary>
-        public IList<TaxonomyCategory> TaxonomyCategories { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.TaxonomyCategory> TaxonomyCategories { get; }
 
         /// <summary> Additional properties for the evaluation taxonomy. </summary>
         public IDictionary<string, string> Properties { get; }

@@ -15,25 +15,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ObjectsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
-        internal ObjectsResult(IEnumerable<DetectedObject> values)
+        internal ObjectsResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedObject> values)
         {
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectsResult(IReadOnlyList<DetectedObject> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectsResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedObject> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of physical object detected in an image and their location. </summary>
-        public IReadOnlyList<DetectedObject> Values { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedObject> Values { get; }
     }
 }

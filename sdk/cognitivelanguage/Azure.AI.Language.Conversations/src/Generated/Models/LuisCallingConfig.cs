@@ -14,14 +14,14 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class LuisCallingConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LuisCallingConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.LuisCallingConfig"/>. </summary>
         public LuisCallingConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LuisCallingConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.LuisCallingConfig"/>. </summary>
         /// <param name="verbose"> Enable verbose response. </param>
         /// <param name="log"> Save log to add in training utterances later. </param>
         /// <param name="showAllIntents"> Set true to show all intents. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="spellCheck"> Enable spell checking. </param>
         /// <param name="bingSpellCheckSubscriptionKey"> The subscription key to use when enabling Bing spell check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LuisCallingConfig(bool? verbose, bool? log, bool? showAllIntents, int? timezoneOffset, bool? spellCheck, string bingSpellCheckSubscriptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LuisCallingConfig(bool? verbose, bool? log, bool? showAllIntents, int? timezoneOffset, bool? spellCheck, string bingSpellCheckSubscriptionKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Verbose = verbose;
             Log = log;

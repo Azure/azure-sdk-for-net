@@ -14,9 +14,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class DocumentBarcode
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         internal DocumentBarcode(DocumentBarcodeKind kind, string value)
@@ -25,14 +25,14 @@ namespace Azure.AI.ContentUnderstanding
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="source"> Encoded source that identifies the position of the barcode in the content. </param>
         /// <param name="span"> Span of the barcode in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the barcode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentBarcode(DocumentBarcodeKind kind, string value, string source, ContentSpan span, float? confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, string source, ContentSpan span, float? confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

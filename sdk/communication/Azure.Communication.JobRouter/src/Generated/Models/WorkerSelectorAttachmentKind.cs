@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Discriminators for supported worker selector attachment types. </summary>
-    public readonly partial struct WorkerSelectorAttachmentKind : IEquatable<WorkerSelectorAttachmentKind>
+    public readonly partial struct WorkerSelectorAttachmentKind : IEquatable<global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind>
     {
         private readonly string _value;
         /// <summary> Discriminator value for ConditionalWorkerSelectorAttachment. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for WeightedAllocationWorkerSelectorAttachment. </summary>
         private const string WeightedAllocationValue = "weightedAllocation";
 
-        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachmentKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkerSelectorAttachmentKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Discriminator value for WeightedAllocationWorkerSelectorAttachment. </summary>
         public static WorkerSelectorAttachmentKind WeightedAllocation { get; } = new WorkerSelectorAttachmentKind(WeightedAllocationValue);
 
-        /// <summary> Determines if two <see cref="WorkerSelectorAttachmentKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkerSelectorAttachmentKind left, WorkerSelectorAttachmentKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="WorkerSelectorAttachmentKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkerSelectorAttachmentKind left, WorkerSelectorAttachmentKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="WorkerSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator WorkerSelectorAttachmentKind(string value) => new WorkerSelectorAttachmentKind(value);
 
-        /// <summary> Converts a string to a <see cref="WorkerSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.WorkerSelectorAttachmentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkerSelectorAttachmentKind?(string value) => value == null ? null : new WorkerSelectorAttachmentKind(value);
+        public static implicit operator WorkerSelectorAttachmentKind?(string value) => (value == null) ? null : new WorkerSelectorAttachmentKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WorkerSelectorAttachmentKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is WorkerSelectorAttachmentKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(WorkerSelectorAttachmentKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WorkerSelectorAttachmentKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

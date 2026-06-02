@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document analysis features to enable. </summary>
-    public readonly partial struct DocumentAnalysisFeature : IEquatable<DocumentAnalysisFeature>
+    public readonly partial struct DocumentAnalysisFeature : IEquatable<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature>
     {
         private readonly string _value;
         /// <summary> Perform OCR at a higher resolution to handle documents with fine print. </summary>
@@ -29,12 +29,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Enable the extraction of additional fields via the queryFields query parameter. </summary>
         private const string QueryFieldsValue = "queryFields";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAnalysisFeature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentAnalysisFeature(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -60,34 +60,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Enable the extraction of additional fields via the queryFields query parameter. </summary>
         public static DocumentAnalysisFeature QueryFields { get; } = new DocumentAnalysisFeature(QueryFieldsValue);
 
-        /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentAnalysisFeature left, DocumentAnalysisFeature right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentAnalysisFeature left, DocumentAnalysisFeature right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentAnalysisFeature"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DocumentAnalysisFeature(string value) => new DocumentAnalysisFeature(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentAnalysisFeature"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentAnalysisFeature?(string value) => value == null ? null : new DocumentAnalysisFeature(value);
+        public static implicit operator DocumentAnalysisFeature?(string value) => (value == null) ? null : new DocumentAnalysisFeature(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentAnalysisFeature other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DocumentAnalysisFeature other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DocumentAnalysisFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DocumentAnalysisFeature other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

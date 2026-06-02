@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Clears the identity property of a datasource. </summary>
     public partial class AIServicesVisionVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesVisionVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
-        public AIServicesVisionVectorizer(string vectorizerName) : base(vectorizerName, VectorSearchVectorizerKind.AIServicesVision)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AIServicesVisionVectorizer(string vectorizerName) : base(vectorizerName, global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizerKind.AIServicesVision)
         {
-            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesVisionVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="aiServicesVisionParameters"> Contains the parameters specific to AI Services Vision embedding vectorization. </param>
-        internal AIServicesVisionVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AIServicesVisionParameters aiServicesVisionParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
+        internal AIServicesVisionVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AIServicesVisionParameters aiServicesVisionParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
             AiServicesVisionParameters = aiServicesVisionParameters;
         }

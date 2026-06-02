@@ -14,23 +14,23 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AssetUpdatePayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetUpdatePayload"/>. </summary>
         public AssetUpdatePayload()
         {
             Labels = new ChangeTrackingDictionary<string, bool>();
-            Remediations = new ChangeTrackingList<ObservationRemediationItem>();
+            Remediations = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservationRemediationItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetUpdatePayload"/>. </summary>
         /// <param name="state"> The state to update the asset to. </param>
         /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
         /// <param name="labels"> Any Labels to update the asset with. </param>
         /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
         /// <param name="remediations"> A list of observation remediations to apply to the asset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IList<ObservationRemediationItem> remediations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IList<global::Azure.Analytics.Defender.Easm.ObservationRemediationItem> remediations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ExternalId = externalId;
@@ -53,6 +53,6 @@ namespace Azure.Analytics.Defender.Easm
         public AssetUpdateTransfers? Transfers { get; set; }
 
         /// <summary> A list of observation remediations to apply to the asset. </summary>
-        public IList<ObservationRemediationItem> Remediations { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservationRemediationItem> Remediations { get; }
     }
 }

@@ -21,58 +21,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public static string ToString(DateTime value, string format) => value.Kind switch
         {
-            DateTimeKind.Utc => ToString((DateTimeOffset)value, format),
+            global::System.DateTimeKind.Utc => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToString(((DateTimeOffset)value), format),
             _ => throw new NotSupportedException($"DateTime {value} has a Kind of {value.Kind}. Generated clients require it to be UTC. You can call DateTime.SpecifyKind to change Kind property value to DateTimeKind.Utc.")
         };
 
         public static string ToString(DateTimeOffset value, string format) => format switch
         {
-            "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-            "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
-            "O" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
-            "o" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
-            "R" => value.ToString("r", CultureInfo.InvariantCulture),
-            _ => value.ToString(format, CultureInfo.InvariantCulture)
+            "D" => value.ToString("yyyy-MM-dd", global::System.Globalization.CultureInfo.InvariantCulture),
+            "U" => value.ToUnixTimeSeconds().ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+            "O" => value.ToUniversalTime().ToString(RoundtripZFormat, global::System.Globalization.CultureInfo.InvariantCulture),
+            "o" => value.ToUniversalTime().ToString(RoundtripZFormat, global::System.Globalization.CultureInfo.InvariantCulture),
+            "R" => value.ToString("r", global::System.Globalization.CultureInfo.InvariantCulture),
+            _ => value.ToString(format, global::System.Globalization.CultureInfo.InvariantCulture)
         };
 
         public static string ToString(TimeSpan value, string format) => format switch
         {
-            "P" => XmlConvert.ToString(value),
-            _ => value.ToString(format, CultureInfo.InvariantCulture)
+            "P" => global::System.Xml.XmlConvert.ToString(value),
+            _ => value.ToString(format, global::System.Globalization.CultureInfo.InvariantCulture)
         };
 
-        public static string ToString(byte[] value, string format) => format switch
+        public static string ToString(Byte[] value, string format) => format switch
         {
-            "U" => ToBase64UrlString(value),
-            "D" => Convert.ToBase64String(value),
+            "U" => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToBase64UrlString(value),
+            "D" => global::System.Convert.ToBase64String(value),
             _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
-        public static string ToBase64UrlString(byte[] value)
+        public static string ToBase64UrlString(Byte[] value)
         {
-            int numWholeOrPartialInputBlocks = checked (value.Length + 2) / 3;
+            int numWholeOrPartialInputBlocks = (checked (value.Length + 2) / 3);
             int size = checked (numWholeOrPartialInputBlocks * 4);
-            char[] output = new char[size];
+            Char[] output = new char[size];
 
-            int numBase64Chars = Convert.ToBase64CharArray(value, 0, value.Length, output, 0);
+            int numBase64Chars = global::System.Convert.ToBase64CharArray(value, 0, value.Length, output, 0);
 
             int i = 0;
-            for (; i < numBase64Chars; i++)
+            for (; (i < numBase64Chars); i++)
             {
                 char ch = output[i];
-                if (ch == '+')
+                if ((ch == '+'))
                 {
                     output[i] = '-';
                 }
                 else
                 {
-                    if (ch == '/')
+                    if ((ch == '/'))
                     {
                         output[i] = '_';
                     }
                     else
                     {
-                        if (ch == '=')
+                        if ((ch == '='))
                         {
                             break;
                         }
@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return new string(output, 0, i);
         }
 
-        public static byte[] FromBase64UrlString(string value)
+        public static Byte[] FromBase64UrlString(string value)
         {
             int paddingCharsToAdd = (value.Length % 4) switch
             {
@@ -92,18 +92,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 3 => 1,
                 _ => throw new InvalidOperationException("Malformed input")
             };
-            char[] output = new char[(value.Length + paddingCharsToAdd)];
+            Char[] output = new char[(value.Length + paddingCharsToAdd)];
             int i = 0;
-            for (; i < value.Length; i++)
+            for (; (i < value.Length); i++)
             {
                 char ch = value[i];
-                if (ch == '-')
+                if ((ch == '-'))
                 {
                     output[i] = '+';
                 }
                 else
                 {
-                    if (ch == '_')
+                    if ((ch == '_'))
                     {
                         output[i] = '/';
                     }
@@ -114,68 +114,68 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
-            for (; i < output.Length; i++)
+            for (; (i < output.Length); i++)
             {
                 output[i] = '=';
             }
 
-            return Convert.FromBase64CharArray(output, 0, output.Length);
+            return global::System.Convert.FromBase64CharArray(output, 0, output.Length);
         }
 
         public static DateTimeOffset ParseDateTimeOffset(string value, string format) => format switch
         {
-            "U" => DateTimeOffset.FromUnixTimeSeconds(long.Parse(value, CultureInfo.InvariantCulture)),
-            _ => DateTimeOffset.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal)
+            "U" => global::System.DateTimeOffset.FromUnixTimeSeconds(long.Parse(value, global::System.Globalization.CultureInfo.InvariantCulture)),
+            _ => global::System.DateTimeOffset.Parse(value, global::System.Globalization.CultureInfo.InvariantCulture, global::System.Globalization.DateTimeStyles.AssumeUniversal)
         };
 
         public static TimeSpan ParseTimeSpan(string value, string format) => format switch
         {
-            "P" => XmlConvert.ToTimeSpan(value),
-            _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
+            "P" => global::System.Xml.XmlConvert.ToTimeSpan(value),
+            _ => global::System.TimeSpan.ParseExact(value, format, global::System.Globalization.CultureInfo.InvariantCulture)
         };
 
         public static string ToFormatSpecifier(SerializationFormat format) => format switch
         {
-            SerializationFormat.DateTime_RFC1123 => "R",
-            SerializationFormat.DateTime_RFC3339 => "O",
-            SerializationFormat.DateTime_RFC7231 => "R",
-            SerializationFormat.DateTime_ISO8601 => "O",
-            SerializationFormat.Date_ISO8601 => "D",
-            SerializationFormat.DateTime_Unix => "U",
-            SerializationFormat.Bytes_Base64Url => "U",
-            SerializationFormat.Bytes_Base64 => "D",
-            SerializationFormat.Duration_ISO8601 => "P",
-            SerializationFormat.Duration_Constant => "c",
-            SerializationFormat.Duration_Seconds => "%s",
-            SerializationFormat.Duration_Seconds_Float => "s\\.FFF",
-            SerializationFormat.Duration_Seconds_Double => "s\\.FFFFFF",
-            SerializationFormat.Time_ISO8601 => "T",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.DateTime_RFC1123 => "R",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.DateTime_RFC3339 => "O",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.DateTime_RFC7231 => "R",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.DateTime_ISO8601 => "O",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Date_ISO8601 => "D",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.DateTime_Unix => "U",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Bytes_Base64Url => "U",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Bytes_Base64 => "D",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_ISO8601 => "P",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Constant => "c",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds => "%s",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds_Float => "s\\.FFF",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds_Double => "s\\.FFFFFF",
+            global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Time_ISO8601 => "T",
             _ => null
         };
 
-        public static string ConvertToString(object value, SerializationFormat format = SerializationFormat.Default)
+        public static string ConvertToString(object value, SerializationFormat format = global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Default)
         {
-            string formatSpecifier = ToFormatSpecifier(format);
+            string formatSpecifier = global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToFormatSpecifier(format);
 
             return value switch
             {
                 null => "null",
                 string s => s,
-                bool b => ToString(b),
-                int  or  float  or  double  or  long  or  decimal => ((IFormattable)value).ToString(DefaultNumberFormat, CultureInfo.InvariantCulture),
-                byte[] b0 when formatSpecifier != null => ToString(b0, formatSpecifier),
+                bool b => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToString(b),
+                (int  or  (float  or  (double  or  (long  or  decimal)))) => ((IFormattable)value).ToString(DefaultNumberFormat, global::System.Globalization.CultureInfo.InvariantCulture),
+                Byte[] b0 when (formatSpecifier != null) => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToString(b0, formatSpecifier),
                 IEnumerable<string> s0 => string.Join(",", s0),
-                DateTimeOffset dateTime when formatSpecifier != null => ToString(dateTime, formatSpecifier),
-                TimeSpan timeSpan when format == SerializationFormat.Duration_Seconds => Convert.ToInt32(Math.Round(timeSpan.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan0 when format == SerializationFormat.Duration_Seconds_Int64 => Convert.ToInt64(Math.Round(timeSpan0.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan1 when format == SerializationFormat.Duration_Seconds_Float || format == SerializationFormat.Duration_Seconds_Double => timeSpan1.TotalSeconds.ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan2 when format == SerializationFormat.Duration_Milliseconds => Convert.ToInt32(Math.Round(timeSpan2.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan3 when format == SerializationFormat.Duration_Milliseconds_Int64 => Convert.ToInt64(Math.Round(timeSpan3.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan4 when format == SerializationFormat.Duration_Milliseconds_Float || format == SerializationFormat.Duration_Milliseconds_Double => timeSpan4.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan5 when formatSpecifier != null => ToString(timeSpan5, formatSpecifier),
-                TimeSpan timeSpan6 => XmlConvert.ToString(timeSpan6),
+                DateTimeOffset dateTime when (formatSpecifier != null) => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToString(dateTime, formatSpecifier),
+                TimeSpan timeSpan when (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds) => global::System.Convert.ToInt32(global::System.Math.Round(timeSpan.TotalSeconds)).ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan0 when (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds_Int64) => global::System.Convert.ToInt64(global::System.Math.Round(timeSpan0.TotalSeconds)).ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan1 when ((format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds_Float) || (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Seconds_Double)) => timeSpan1.TotalSeconds.ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan2 when (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Milliseconds) => global::System.Convert.ToInt32(global::System.Math.Round(timeSpan2.TotalMilliseconds)).ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan3 when (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Milliseconds_Int64) => global::System.Convert.ToInt64(global::System.Math.Round(timeSpan3.TotalMilliseconds)).ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan4 when ((format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Milliseconds_Float) || (format == global::Azure.Monitor.OpenTelemetry.Exporter.SerializationFormat.Duration_Milliseconds_Double)) => timeSpan4.TotalMilliseconds.ToString(global::System.Globalization.CultureInfo.InvariantCulture),
+                TimeSpan timeSpan5 when (formatSpecifier != null) => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ToString(timeSpan5, formatSpecifier),
+                TimeSpan timeSpan6 => global::System.Xml.XmlConvert.ToString(timeSpan6),
                 Guid guid => guid.ToString(),
-                BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
+                BinaryData binaryData => global::Azure.Monitor.OpenTelemetry.Exporter.TypeFormatters.ConvertToString(binaryData.ToArray(), format),
                 _ => value.ToString()
             };
         }

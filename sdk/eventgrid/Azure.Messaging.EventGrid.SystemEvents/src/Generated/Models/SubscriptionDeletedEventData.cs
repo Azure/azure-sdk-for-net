@@ -17,19 +17,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class SubscriptionDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
         internal SubscriptionDeletedEventData(string eventSubscriptionId)
         {
             EventSubscriptionId = eventSubscriptionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionDeletedEventData(string eventSubscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionDeletedEventData(string eventSubscriptionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EventSubscriptionId = eventSubscriptionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

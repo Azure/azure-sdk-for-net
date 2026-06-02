@@ -11,21 +11,21 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputFidelity value) => value switch
         {
-            InputFidelity.High => "high",
-            InputFidelity.Low => "low",
+            global::OpenAI.InputFidelity.High => "high",
+            global::OpenAI.InputFidelity.Low => "low",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputFidelity value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputFidelity ToInputFidelity(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "high"))
             {
-                return InputFidelity.High;
+                return global::OpenAI.InputFidelity.High;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "low"))
             {
-                return InputFidelity.Low;
+                return global::OpenAI.InputFidelity.Low;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputFidelity value.");
         }

@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text SentimentAnalysis LRO task result. </summary>
     public partial class AnalyzeTextSentimentResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextSentimentResult"/>. </summary>
         /// <param name="results"> The sentiment analysis results. </param>
-        internal AnalyzeTextSentimentResult(SentimentResult results) : base(AnalyzeTextResultsKind.SentimentAnalysisResults)
+        internal AnalyzeTextSentimentResult(SentimentResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.SentimentAnalysisResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextSentimentResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        internal AnalyzeTextSentimentResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextSentimentResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, SentimentResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

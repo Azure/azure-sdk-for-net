@@ -10,20 +10,20 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalCodeInterpreterOutputImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        public InternalCodeInterpreterOutputImage(Uri url)
+        public InternalCodeInterpreterOutputImage(global::System.Uri url)
         {
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputImage"/>. </summary>
         /// <param name="type"> The type of the output. Always `image`. </param>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterOutputImage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCodeInterpreterOutputImage(string @type, global::System.Uri url, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;
@@ -34,6 +34,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; set; }
+        public global::System.Uri Url { get; set; }
     }
 }

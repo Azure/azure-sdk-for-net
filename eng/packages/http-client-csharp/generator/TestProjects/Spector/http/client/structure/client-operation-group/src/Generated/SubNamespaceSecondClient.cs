@@ -19,24 +19,24 @@ namespace Client.Structure.AnotherClientOperationGroup
     {
         protected SubNamespaceSecondClient() => throw null;
 
-        public SubNamespaceSecondClient(Uri endpoint, ClientType client) : this(endpoint, client, new SubNamespaceSecondClientOptions()) => throw null;
+        public SubNamespaceSecondClient(global::System.Uri endpoint, ClientType client) : this(endpoint, client, new SubNamespaceSecondClientOptions()) => throw null;
 
-        internal SubNamespaceSecondClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) => throw null;
+        internal SubNamespaceSecondClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) => throw null;
 
-        public SubNamespaceSecondClient(Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) : this(null, endpoint, client, options) => throw null;
+        public SubNamespaceSecondClient(global::System.Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) : this(null, endpoint, client, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public SubNamespaceSecondClient(SubNamespaceSecondClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public SubNamespaceSecondClient(SubNamespaceSecondClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, (settings?.Client ?? default), settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Five(RequestContext context) => throw null;
 
-        public virtual Task<Response> FiveAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FiveAsync(RequestContext context) => throw null;
 
         public virtual Response Five(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FiveAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FiveAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Group5 GetGroup5Client() => throw null;
     }

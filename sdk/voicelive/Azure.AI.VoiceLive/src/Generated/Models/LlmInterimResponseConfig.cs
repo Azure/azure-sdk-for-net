@@ -16,12 +16,12 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class LlmInterimResponseConfig : InterimResponseConfigBase
     {
-        /// <summary> Initializes a new instance of <see cref="LlmInterimResponseConfig"/>. </summary>
-        public LlmInterimResponseConfig() : base(InterimResponseConfigType.LlmInterimResponse)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.LlmInterimResponseConfig"/>. </summary>
+        public LlmInterimResponseConfig() : base(global::Azure.AI.VoiceLive.InterimResponseConfigType.LlmInterimResponse)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LlmInterimResponseConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.LlmInterimResponseConfig"/>. </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         /// <param name="triggers">
         /// List of triggers that can fire the interim response. Any trigger can activate it (OR logic).
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"> The model to use for LLM-based interim response generation. Default is gpt-4.1-mini. </param>
         /// <param name="instructions"> Custom instructions for generating interim responses. If not provided, a default prompt is used. </param>
         /// <param name="maxCompletionTokens"> Maximum number of tokens to generate for the interim response. </param>
-        internal LlmInterimResponseConfig(InterimResponseConfigType @type, IList<InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal LlmInterimResponseConfig(InterimResponseConfigType @type, IList<global::Azure.AI.VoiceLive.InterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;

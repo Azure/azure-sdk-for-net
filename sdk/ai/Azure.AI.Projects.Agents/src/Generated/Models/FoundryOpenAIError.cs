@@ -11,21 +11,21 @@ namespace Azure.AI.Projects.Agents
     internal partial class FoundryOpenAIError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal FoundryOpenAIError(string code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<FoundryOpenAIError>();
-            AdditionalInfo = new ChangeTrackingDictionary<string, BinaryData>();
-            DebugInfo = new ChangeTrackingDictionary<string, BinaryData>();
+            Details = new ChangeTrackingList<global::Azure.AI.Projects.Agents.FoundryOpenAIError>();
+            AdditionalInfo = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            DebugInfo = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <param name="param"></param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalInfo"></param>
         /// <param name="debugInfo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FoundryOpenAIError(string code, string message, string @param, string @type, IList<FoundryOpenAIError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FoundryOpenAIError(string code, string message, string @param, string @type, IList<global::Azure.AI.Projects.Agents.FoundryOpenAIError> details, IDictionary<string, global::System.BinaryData> additionalInfo, IDictionary<string, global::System.BinaryData> debugInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -59,12 +59,12 @@ namespace Azure.AI.Projects.Agents
         public string Type { get; }
 
         /// <summary> Gets the Details. </summary>
-        public IList<FoundryOpenAIError> Details { get; }
+        public IList<global::Azure.AI.Projects.Agents.FoundryOpenAIError> Details { get; }
 
         /// <summary>
         /// Gets the AdditionalInfo.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -87,12 +87,12 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> AdditionalInfo { get; }
+        public IDictionary<string, global::System.BinaryData> AdditionalInfo { get; }
 
         /// <summary>
         /// Gets the DebugInfo.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -115,6 +115,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> DebugInfo { get; }
+        public IDictionary<string, global::System.BinaryData> DebugInfo { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    public partial class Eagle : Bird, IJsonModel<Eagle>
+    public partial class Eagle : Bird, IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>
     {
         internal Eagle() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Eagle>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Eagle IPersistableModel<Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Eagle IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Eagle IJsonModel<Eagle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Eagle IJsonModel<global::_Type.Model.Inheritance.SingleDiscriminator.Eagle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

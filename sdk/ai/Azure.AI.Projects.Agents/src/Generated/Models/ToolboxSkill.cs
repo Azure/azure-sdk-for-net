@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A skill source included in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolboxSkillReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.ToolboxSkillReference"/>.
     /// </summary>
     public abstract partial class ToolboxSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxSkill"/>. </summary>
         /// <param name="type"> The type of skill source. </param>
         private protected ToolboxSkill(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxSkill"/>. </summary>
         /// <param name="type"> The type of skill source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxSkill(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxSkill(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

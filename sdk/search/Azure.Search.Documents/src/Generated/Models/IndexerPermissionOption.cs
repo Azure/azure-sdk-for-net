@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Options with various types of permission data to index. </summary>
-    public readonly partial struct IndexerPermissionOption : IEquatable<IndexerPermissionOption>
+    public readonly partial struct IndexerPermissionOption : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption>
     {
         private readonly string _value;
         /// <summary> Indexer to ingest ACL userIds from data source to index. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
         private const string RbacScopeValue = "rbacScope";
 
-        /// <summary> Initializes a new instance of <see cref="IndexerPermissionOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerPermissionOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
         public static IndexerPermissionOption RbacScope { get; } = new IndexerPermissionOption(RbacScopeValue);
 
-        /// <summary> Determines if two <see cref="IndexerPermissionOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerPermissionOption left, IndexerPermissionOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexerPermissionOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerPermissionOption left, IndexerPermissionOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexerPermissionOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexerPermissionOption(string value) => new IndexerPermissionOption(value);
 
-        /// <summary> Converts a string to a <see cref="IndexerPermissionOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexerPermissionOption?(string value) => value == null ? null : new IndexerPermissionOption(value);
+        public static implicit operator IndexerPermissionOption?(string value) => (value == null) ? null : new IndexerPermissionOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexerPermissionOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexerPermissionOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexerPermissionOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexerPermissionOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

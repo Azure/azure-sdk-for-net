@@ -14,14 +14,14 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeInfo"/>. </summary>
         internal BatchNodeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeInfo"/>. </summary>
         /// <param name="affinityId"> An identifier for the Node on which the Task ran, which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. </param>
         /// <param name="nodeUri"> The URL of the Compute Node on which the Task ran. </param>
         /// <param name="poolId"> The ID of the Pool on which the Task ran. </param>
@@ -29,7 +29,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskRootDirectory"> The root directory of the Task on the Compute Node. </param>
         /// <param name="taskRootDirectoryUri"> The URL to the root directory of the Task on the Compute Node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeInfo(string affinityId, Uri nodeUri, string poolId, string nodeId, string taskRootDirectory, Uri taskRootDirectoryUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeInfo(string affinityId, global::System.Uri nodeUri, string poolId, string nodeId, string taskRootDirectory, global::System.Uri taskRootDirectoryUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AffinityId = affinityId;
             NodeUri = nodeUri;
@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
         public string AffinityId { get; }
 
         /// <summary> The URL of the Compute Node on which the Task ran. </summary>
-        public Uri NodeUri { get; }
+        public global::System.Uri NodeUri { get; }
 
         /// <summary> The ID of the Pool on which the Task ran. </summary>
         public string PoolId { get; }
@@ -56,6 +56,6 @@ namespace Azure.Compute.Batch
         public string TaskRootDirectory { get; }
 
         /// <summary> The URL to the root directory of the Task on the Compute Node. </summary>
-        public Uri TaskRootDirectoryUri { get; }
+        public global::System.Uri TaskRootDirectoryUri { get; }
     }
 }

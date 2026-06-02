@@ -12,11 +12,11 @@ namespace Azure.AI.Language.Text
 {
     internal partial class UnknownAnalyzeTextOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.UnknownAnalyzeTextOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeTextOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeTextOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(name, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

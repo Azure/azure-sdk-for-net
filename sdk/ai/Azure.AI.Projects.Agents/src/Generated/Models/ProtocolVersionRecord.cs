@@ -11,25 +11,25 @@ namespace Azure.AI.Projects.Agents
     public partial class ProtocolVersionRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolVersionRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProtocolVersionRecord"/>. </summary>
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public ProtocolVersionRecord(ProjectsAgentProtocol protocol, string version)
         {
-            Argument.AssertNotNull(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(version, nameof(version));
 
             Protocol = protocol;
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolVersionRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProtocolVersionRecord"/>. </summary>
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolVersionRecord(ProjectsAgentProtocol protocol, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtocolVersionRecord(ProjectsAgentProtocol protocol, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Version = version;

@@ -12,22 +12,22 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class MCPApprovalResponseRequestItem : ConversationRequestItem
     {
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalResponseRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request. </param>
         /// <param name="approve"> Whether the tool call was approved. </param>
-        public MCPApprovalResponseRequestItem(string approvalRequestId, bool approve) : base(ItemType.McpApprovalResponse)
+        public MCPApprovalResponseRequestItem(string approvalRequestId, bool approve) : base(global::Azure.AI.VoiceLive.ItemType.McpApprovalResponse)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPApprovalResponseRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.MCPApprovalResponseRequestItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="approvalRequestId"> The ID of the approval request. </param>
         /// <param name="approve"> Whether the tool call was approved. </param>
-        internal MCPApprovalResponseRequestItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve) : base(@type, id, additionalBinaryDataProperties)
+        internal MCPApprovalResponseRequestItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve) : base(@type, id, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;

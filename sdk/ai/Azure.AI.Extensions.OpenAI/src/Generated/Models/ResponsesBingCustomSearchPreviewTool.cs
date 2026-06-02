@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
     public partial class ResponsesBingCustomSearchPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
-        public ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
+        public ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(global::Azure.AI.Extensions.OpenAI.ToolType.BingCustomSearchPreview)
         {
-            Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing custom search tool parameters. </summary>
         public ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get; set; }

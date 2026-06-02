@@ -14,54 +14,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information specific to semantic ranking requests. </summary>
-    public partial class SemanticDebugInfo : IJsonModel<SemanticDebugInfo>
+    public partial class SemanticDebugInfo : IJsonModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SemanticDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSemanticDebugInfo(document.RootElement, options);
+                        return global::Azure.Search.Documents.Models.SemanticDebugInfo.DeserializeSemanticDebugInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SemanticDebugInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SemanticDebugInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SemanticDebugInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticDebugInfo IPersistableModel<SemanticDebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SemanticDebugInfo IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SemanticDebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SemanticDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,42 +69,42 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SemanticDebugInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(TitleField))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(TitleField)))
             {
                 writer.WritePropertyName("titleField"u8);
-                writer.WriteObjectValue(TitleField, options);
+                writer.WriteObjectValue<QueryResultDocumentSemanticField>(TitleField, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ContentFields))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(ContentFields)))
             {
                 writer.WritePropertyName("contentFields"u8);
                 writer.WriteStartArray();
                 foreach (QueryResultDocumentSemanticField item in ContentFields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<QueryResultDocumentSemanticField>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(KeywordFields))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsCollectionDefined(KeywordFields)))
             {
                 writer.WritePropertyName("keywordFields"u8);
                 writer.WriteStartArray();
                 foreach (QueryResultDocumentSemanticField item in KeywordFields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<QueryResultDocumentSemanticField>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RerankerInput))
+            if (((options.Format != "W") && global::Azure.Search.Documents.Optional.IsDefined(RerankerInput)))
             {
                 writer.WritePropertyName("rerankerInput"u8);
-                writer.WriteObjectValue(RerankerInput, options);
+                writer.WriteObjectValue<QueryResultDocumentRerankerInput>(RerankerInput, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -112,9 +112,9 @@ namespace Azure.Search.Documents.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -123,88 +123,88 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticDebugInfo IJsonModel<SemanticDebugInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SemanticDebugInfo IJsonModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SemanticDebugInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Models.SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Models.SemanticDebugInfo)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSemanticDebugInfo(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Models.SemanticDebugInfo.DeserializeSemanticDebugInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SemanticDebugInfo DeserializeSemanticDebugInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             QueryResultDocumentSemanticField titleField = default;
-            IReadOnlyList<QueryResultDocumentSemanticField> contentFields = default;
-            IReadOnlyList<QueryResultDocumentSemanticField> keywordFields = default;
+            IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> contentFields = default;
+            IReadOnlyList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> keywordFields = default;
             QueryResultDocumentRerankerInput rerankerInput = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("titleField"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    titleField = QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(prop.Value, options);
+                    titleField = global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("contentFields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<QueryResultDocumentSemanticField> array = new List<QueryResultDocumentSemanticField>();
+                    List<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> array = new List<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item, options));
+                        array.Add(global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item, options));
                     }
                     contentFields = array;
                     continue;
                 }
                 if (prop.NameEquals("keywordFields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<QueryResultDocumentSemanticField> array = new List<QueryResultDocumentSemanticField>();
+                    List<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField> array = new List<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item, options));
+                        array.Add(global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item, options));
                     }
                     keywordFields = array;
                     continue;
                 }
                 if (prop.NameEquals("rerankerInput"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    rerankerInput = QueryResultDocumentRerankerInput.DeserializeQueryResultDocumentRerankerInput(prop.Value, options);
+                    rerankerInput = global::Azure.Search.Documents.Models.QueryResultDocumentRerankerInput.DeserializeQueryResultDocumentRerankerInput(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SemanticDebugInfo(titleField, contentFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), keywordFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), rerankerInput, additionalBinaryDataProperties);
+            return new SemanticDebugInfo(titleField, (contentFields ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>()), (keywordFields ?? new ChangeTrackingList<global::Azure.Search.Documents.Models.QueryResultDocumentSemanticField>()), rerankerInput, additionalBinaryDataProperties);
         }
     }
 }

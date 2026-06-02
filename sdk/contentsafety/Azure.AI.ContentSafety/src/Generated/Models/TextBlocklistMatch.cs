@@ -14,9 +14,9 @@ namespace Azure.AI.ContentSafety
     public partial class TextBlocklistMatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextBlocklistMatch"/>. </summary>
         /// <param name="blocklistName"> The name of the matched blocklist. </param>
         /// <param name="blocklistItemId"> The ID of the matched item. </param>
         /// <param name="blocklistItemText"> The content of the matched item. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.ContentSafety
             BlocklistItemText = blocklistItemText;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextBlocklistMatch"/>. </summary>
         /// <param name="blocklistName"> The name of the matched blocklist. </param>
         /// <param name="blocklistItemId"> The ID of the matched item. </param>
         /// <param name="blocklistItemText"> The content of the matched item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextBlocklistMatch(string blocklistName, string blocklistItemId, string blocklistItemText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextBlocklistMatch(string blocklistName, string blocklistItemId, string blocklistItemText, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistName = blocklistName;
             BlocklistItemId = blocklistItemId;

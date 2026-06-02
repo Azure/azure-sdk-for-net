@@ -11,21 +11,21 @@ namespace OpenAI
     internal partial class InternalAutoCodeInterpreterToolParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalAutoCodeInterpreterToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAutoCodeInterpreterToolParam"/>. </summary>
         public InternalAutoCodeInterpreterToolParam()
         {
             FileIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAutoCodeInterpreterToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAutoCodeInterpreterToolParam"/>. </summary>
         /// <param name="type"> Always `auto`. </param>
         /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
         /// <param name="memoryLimit"></param>
         /// <param name="networkPolicy"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAutoCodeInterpreterToolParam(string @type, IList<string> fileIds, ContainerMemoryLimit? memoryLimit, ContainerNetworkPolicyParam networkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAutoCodeInterpreterToolParam(string @type, IList<string> fileIds, ContainerMemoryLimit? memoryLimit, ContainerNetworkPolicyParam networkPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileIds = fileIds;

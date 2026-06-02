@@ -14,26 +14,26 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreConfigurations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfigurations"/>. </summary>
         /// <param name="storeName"> Name. </param>
         /// <param name="storeConfiguration"> Configurations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storeName"/> or <paramref name="storeConfiguration"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="storeName"/> or <paramref name="storeConfiguration"/> is null. </exception>
         public VectorStoreConfigurations(string storeName, VectorStoreConfiguration storeConfiguration)
         {
-            Argument.AssertNotNull(storeName, nameof(storeName));
-            Argument.AssertNotNull(storeConfiguration, nameof(storeConfiguration));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(storeName, nameof(storeName));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(storeConfiguration, nameof(storeConfiguration));
 
             StoreName = storeName;
             StoreConfiguration = storeConfiguration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfigurations"/>. </summary>
         /// <param name="storeName"> Name. </param>
         /// <param name="storeConfiguration"> Configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreConfigurations(string storeName, VectorStoreConfiguration storeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreConfigurations(string storeName, VectorStoreConfiguration storeConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StoreName = storeName;
             StoreConfiguration = storeConfiguration;

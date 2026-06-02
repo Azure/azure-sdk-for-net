@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The mutation response result of entity. </summary>
-    public partial class EntityMutationResult : IJsonModel<EntityMutationResult>
+    public partial class EntityMutationResult : IJsonModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EntityMutationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntityMutationResult(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.EntityMutationResult.DeserializeEntityMutationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityMutationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.EntityMutationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityMutationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.EntityMutationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntityMutationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityMutationResult IPersistableModel<EntityMutationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EntityMutationResult IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntityMutationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EntityMutationResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Purview.DataMap.EntityMutationResult"/> from. </param>
         public static explicit operator EntityMutationResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEntityMutationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Purview.DataMap.EntityMutationResult.DeserializeEntityMutationResult(document.RootElement, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntityMutationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,19 +76,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntityMutationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.EntityMutationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(GuidAssignments))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(GuidAssignments))
             {
                 writer.WritePropertyName("guidAssignments"u8);
                 writer.WriteStartObject();
                 foreach (var item in GuidAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -97,14 +97,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(MutatedEntities))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(MutatedEntities))
             {
                 writer.WritePropertyName("mutatedEntities"u8);
                 writer.WriteStartObject();
                 foreach (var item in MutatedEntities)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,23 +112,23 @@ namespace Azure.Analytics.Purview.DataMap
                     writer.WriteStartArray();
                     foreach (AtlasEntityHeader item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        writer.WriteObjectValue<AtlasEntityHeader>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PartialUpdatedEntities))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(PartialUpdatedEntities))
             {
                 writer.WritePropertyName("partialUpdatedEntities"u8);
                 writer.WriteStartArray();
                 foreach (AtlasEntityHeader item in PartialUpdatedEntities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AtlasEntityHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -136,9 +136,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -147,45 +147,45 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityMutationResult IJsonModel<EntityMutationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EntityMutationResult IJsonModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EntityMutationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.EntityMutationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntityMutationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.EntityMutationResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityMutationResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.EntityMutationResult.DeserializeEntityMutationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EntityMutationResult DeserializeEntityMutationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             IDictionary<string, string> guidAssignments = default;
-            IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = default;
-            IList<AtlasEntityHeader> partialUpdatedEntities = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> mutatedEntities = default;
+            IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> partialUpdatedEntities = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("guidAssignments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -199,23 +199,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("mutatedEntities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, IList<AtlasEntityHeader>> dictionary = new Dictionary<string, IList<AtlasEntityHeader>>();
+                    Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> dictionary = new Dictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            List<AtlasEntityHeader> array = new List<AtlasEntityHeader>();
+                            List<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
                             foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
+                                array.Add(global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
                             }
                             dictionary.Add(prop0.Name, array);
                         }
@@ -225,24 +225,24 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("partialUpdatedEntities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AtlasEntityHeader> array = new List<AtlasEntityHeader>();
+                    List<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> array = new List<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
                     }
                     partialUpdatedEntities = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityMutationResult(guidAssignments ?? new ChangeTrackingDictionary<string, string>(), mutatedEntities ?? new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>(), partialUpdatedEntities ?? new ChangeTrackingList<AtlasEntityHeader>(), additionalBinaryDataProperties);
+            return new EntityMutationResult((guidAssignments ?? new ChangeTrackingDictionary<string, string>()), (mutatedEntities ?? new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>>()), (partialUpdatedEntities ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>()), additionalBinaryDataProperties);
         }
     }
 }

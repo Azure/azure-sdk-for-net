@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithUnwrappedModelArray : IPersistableModel<ModelWithUnwrappedModelArray>, IXmlSerializable
+    public partial class ModelWithUnwrappedModelArray : IPersistableModel<global::Payload.Xml.ModelWithUnwrappedModelArray>, IXmlSerializable
     {
         internal ModelWithUnwrappedModelArray() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithUnwrappedModelArray>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithUnwrappedModelArray>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithUnwrappedModelArray IPersistableModel<ModelWithUnwrappedModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithUnwrappedModelArray IPersistableModel<global::Payload.Xml.ModelWithUnwrappedModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithUnwrappedModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithUnwrappedModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithUnwrappedModelArray"> The <see cref="ModelWithUnwrappedModelArray"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithUnwrappedModelArray"> The <see cref="global::Payload.Xml.ModelWithUnwrappedModelArray"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithUnwrappedModelArray modelWithUnwrappedModelArray) => throw null;
 
         public static explicit operator ModelWithUnwrappedModelArray(Response response) => throw null;

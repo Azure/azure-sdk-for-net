@@ -10,54 +10,54 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchTool : ProjectsAgentTool, IJsonModel<InternalWebSearchTool>
+    internal partial class InternalWebSearchTool : ProjectsAgentTool, IJsonModel<global::OpenAI.InternalWebSearchTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalWebSearchTool(document.RootElement, options);
+                        return global::OpenAI.InternalWebSearchTool.DeserializeInternalWebSearchTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalWebSearchTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalWebSearchTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalWebSearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalWebSearchTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchTool IPersistableModel<InternalWebSearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalWebSearchTool)PersistableModelCreateCore(data, options);
+        InternalWebSearchTool IPersistableModel<global::OpenAI.InternalWebSearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalWebSearchTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalWebSearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalWebSearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalWebSearchTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalWebSearchTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,88 +65,88 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalWebSearchTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Filters))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                writer.WriteObjectValue<WebSearchToolFilters>(Filters, options);
             }
-            if (Optional.IsDefined(UserLocation))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(UserLocation))
             {
                 writer.WritePropertyName("user_location"u8);
-                writer.WriteObjectValue(UserLocation, options);
+                writer.WriteObjectValue<WebSearchApproximateLocation>(UserLocation, options);
             }
-            if (Optional.IsDefined(SearchContextSize))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(CustomSearchConfiguration))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(CustomSearchConfiguration))
             {
                 writer.WritePropertyName("custom_search_configuration"u8);
-                writer.WriteObjectValue(CustomSearchConfiguration, options);
+                writer.WriteObjectValue<ProjectWebSearchConfiguration>(CustomSearchConfiguration, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchTool IJsonModel<InternalWebSearchTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalWebSearchTool)JsonModelCreateCore(ref reader, options);
+        InternalWebSearchTool IJsonModel<global::OpenAI.InternalWebSearchTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalWebSearchTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalWebSearchTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalWebSearchTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalWebSearchTool.DeserializeInternalWebSearchTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalWebSearchTool DeserializeInternalWebSearchTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             WebSearchToolFilters filters = default;
             WebSearchApproximateLocation userLocation = default;
             WebSearchToolSearchContextSize? searchContextSize = default;
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs = default;
             ProjectWebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,27 +157,27 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("filters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         filters = null;
                         continue;
                     }
-                    filters = WebSearchToolFilters.DeserializeWebSearchToolFilters(prop.Value, options);
+                    filters = global::OpenAI.WebSearchToolFilters.DeserializeWebSearchToolFilters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user_location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         userLocation = null;
                         continue;
                     }
-                    userLocation = WebSearchApproximateLocation.DeserializeWebSearchApproximateLocation(prop.Value, options);
+                    userLocation = global::OpenAI.WebSearchApproximateLocation.DeserializeWebSearchApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -196,30 +196,30 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Agents.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("custom_search_configuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    customSearchConfiguration = ProjectWebSearchConfiguration.DeserializeProjectWebSearchConfiguration(prop.Value, options);
+                    customSearchConfiguration = global::Azure.AI.Projects.Agents.ProjectWebSearchConfiguration.DeserializeProjectWebSearchConfiguration(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalWebSearchTool(
@@ -230,7 +230,7 @@ namespace OpenAI
                 searchContextSize,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>()),
                 customSearchConfiguration);
         }
     }

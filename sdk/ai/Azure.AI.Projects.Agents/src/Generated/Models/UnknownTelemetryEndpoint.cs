@@ -9,12 +9,12 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownTelemetryEndpoint : TelemetryEndpoint
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTelemetryEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownTelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", exportedDataTypes, authentication, additionalBinaryDataProperties)
+        internal UnknownTelemetryEndpoint(TelemetryEndpointKind kind, IList<global::Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", exportedDataTypes, authentication, additionalBinaryDataProperties)
         {
         }
     }

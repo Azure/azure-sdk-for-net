@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A list of delta detail type. </summary>
-    public readonly partial struct DeltaDetailType : IEquatable<DeltaDetailType>
+    public readonly partial struct DeltaDetailType : IEquatable<global::Azure.Analytics.Defender.Easm.DeltaDetailType>
     {
         private readonly string _value;
         /// <summary> added. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> removed. </summary>
         private const string RemovedValue = "removed";
 
-        /// <summary> Initializes a new instance of <see cref="DeltaDetailType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeltaDetailType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> removed. </summary>
         public static DeltaDetailType Removed { get; } = new DeltaDetailType(RemovedValue);
 
-        /// <summary> Determines if two <see cref="DeltaDetailType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeltaDetailType left, DeltaDetailType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DeltaDetailType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeltaDetailType left, DeltaDetailType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DeltaDetailType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DeltaDetailType(string value) => new DeltaDetailType(value);
 
-        /// <summary> Converts a string to a <see cref="DeltaDetailType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeltaDetailType?(string value) => value == null ? null : new DeltaDetailType(value);
+        public static implicit operator DeltaDetailType?(string value) => (value == null) ? null : new DeltaDetailType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DeltaDetailType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DeltaDetailType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DeltaDetailType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DeltaDetailType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -14,39 +14,39 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DomainAsset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DomainAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DomainAsset"/>. </summary>
         internal DomainAsset()
         {
-            RegistrarIanaIds = new ChangeTrackingList<ObservedInteger>();
-            RegistrantContacts = new ChangeTrackingList<ObservedString>();
-            RegistrantOrgs = new ChangeTrackingList<ObservedString>();
-            AdminContacts = new ChangeTrackingList<ObservedString>();
-            TechnicalContacts = new ChangeTrackingList<ObservedString>();
-            AlexaInfos = new ChangeTrackingList<AlexaInfo>();
-            NameServers = new ChangeTrackingList<ObservedString>();
-            MailServers = new ChangeTrackingList<ObservedString>();
-            WhoisServers = new ChangeTrackingList<ObservedString>();
-            DomainStatuses = new ChangeTrackingList<ObservedString>();
-            RegistrarCreatedAt = new ChangeTrackingList<ObservedLong>();
-            RegistrarUpdatedAt = new ChangeTrackingList<ObservedLong>();
-            RegistrarExpiresAt = new ChangeTrackingList<ObservedLong>();
-            SoaRecords = new ChangeTrackingList<SoaRecord>();
-            RegistrarNames = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            ParkedDomain = new ChangeTrackingList<ObservedBoolean>();
-            RegistrantNames = new ChangeTrackingList<ObservedString>();
-            AdminNames = new ChangeTrackingList<ObservedString>();
-            TechnicalNames = new ChangeTrackingList<ObservedString>();
-            AdminOrgs = new ChangeTrackingList<ObservedString>();
-            TechnicalOrgs = new ChangeTrackingList<ObservedString>();
-            RegistrantPhones = new ChangeTrackingList<ObservedString>();
-            AdminPhones = new ChangeTrackingList<ObservedString>();
-            TechnicalPhones = new ChangeTrackingList<ObservedString>();
+            RegistrarIanaIds = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            RegistrantContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrantOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AlexaInfos = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AlexaInfo>();
+            NameServers = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            MailServers = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            WhoisServers = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            DomainStatuses = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrarCreatedAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            RegistrarUpdatedAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            RegistrarExpiresAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            SoaRecords = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SoaRecord>();
+            RegistrarNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            ParkedDomain = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            RegistrantNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrantPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DomainAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DomainAsset"/>. </summary>
         /// <param name="domain"></param>
         /// <param name="whoisId"></param>
         /// <param name="registrarIanaIds"></param>
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainAsset(string domain, long? whoisId, IList<ObservedInteger> registrarIanaIds, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<AlexaInfo> alexaInfos, IList<ObservedString> nameServers, IList<ObservedString> mailServers, IList<ObservedString> whoisServers, IList<ObservedString> domainStatuses, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedLong> registrarExpiresAt, IList<SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisAt, IList<ObservedString> registrarNames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedBoolean> parkedDomain, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainAsset(string domain, long? whoisId, IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> registrarIanaIds, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts, IList<global::Azure.Analytics.Defender.Easm.AlexaInfo> alexaInfos, IList<global::Azure.Analytics.Defender.Easm.ObservedString> nameServers, IList<global::Azure.Analytics.Defender.Easm.ObservedString> mailServers, IList<global::Azure.Analytics.Defender.Easm.ObservedString> whoisServers, IList<global::Azure.Analytics.Defender.Easm.ObservedString> domainStatuses, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt, IList<global::Azure.Analytics.Defender.Easm.SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisAt, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrarNames, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> parkedDomain, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             WhoisId = whoisId;
@@ -122,55 +122,55 @@ namespace Azure.Analytics.Defender.Easm
         public long? WhoisId { get; }
 
         /// <summary> Gets the RegistrarIanaIds. </summary>
-        public IList<ObservedInteger> RegistrarIanaIds { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedInteger> RegistrarIanaIds { get; }
 
         /// <summary> Gets the RegistrantContacts. </summary>
-        public IList<ObservedString> RegistrantContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantContacts { get; }
 
         /// <summary> Gets the RegistrantOrgs. </summary>
-        public IList<ObservedString> RegistrantOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantOrgs { get; }
 
         /// <summary> Gets the AdminContacts. </summary>
-        public IList<ObservedString> AdminContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminContacts { get; }
 
         /// <summary> Gets the TechnicalContacts. </summary>
-        public IList<ObservedString> TechnicalContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalContacts { get; }
 
         /// <summary> Gets the AlexaInfos. </summary>
-        public IList<AlexaInfo> AlexaInfos { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.AlexaInfo> AlexaInfos { get; }
 
         /// <summary> Gets the NameServers. </summary>
-        public IList<ObservedString> NameServers { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> NameServers { get; }
 
         /// <summary> Gets the MailServers. </summary>
-        public IList<ObservedString> MailServers { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> MailServers { get; }
 
         /// <summary> Gets the WhoisServers. </summary>
-        public IList<ObservedString> WhoisServers { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> WhoisServers { get; }
 
         /// <summary> Gets the DomainStatuses. </summary>
-        public IList<ObservedString> DomainStatuses { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> DomainStatuses { get; }
 
         /// <summary> Gets the RegistrarCreatedAt. </summary>
-        public IList<ObservedLong> RegistrarCreatedAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarCreatedAt { get; }
 
         /// <summary> Gets the RegistrarUpdatedAt. </summary>
-        public IList<ObservedLong> RegistrarUpdatedAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarUpdatedAt { get; }
 
         /// <summary> Gets the RegistrarExpiresAt. </summary>
-        public IList<ObservedLong> RegistrarExpiresAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarExpiresAt { get; }
 
         /// <summary> Gets the SoaRecords. </summary>
-        public IList<SoaRecord> SoaRecords { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SoaRecord> SoaRecords { get; }
 
         /// <summary> Gets the DetailedFromWhoisAt. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
 
         /// <summary> Gets the RegistrarNames. </summary>
-        public IList<ObservedString> RegistrarNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrarNames { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
@@ -182,30 +182,30 @@ namespace Azure.Analytics.Defender.Easm
         public long? Count { get; }
 
         /// <summary> Gets the ParkedDomain. </summary>
-        public IList<ObservedBoolean> ParkedDomain { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ParkedDomain { get; }
 
         /// <summary> Gets the RegistrantNames. </summary>
-        public IList<ObservedString> RegistrantNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantNames { get; }
 
         /// <summary> Gets the AdminNames. </summary>
-        public IList<ObservedString> AdminNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminNames { get; }
 
         /// <summary> Gets the TechnicalNames. </summary>
-        public IList<ObservedString> TechnicalNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalNames { get; }
 
         /// <summary> Gets the AdminOrgs. </summary>
-        public IList<ObservedString> AdminOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminOrgs { get; }
 
         /// <summary> Gets the TechnicalOrgs. </summary>
-        public IList<ObservedString> TechnicalOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalOrgs { get; }
 
         /// <summary> Gets the RegistrantPhones. </summary>
-        public IList<ObservedString> RegistrantPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantPhones { get; }
 
         /// <summary> Gets the AdminPhones. </summary>
-        public IList<ObservedString> AdminPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminPhones { get; }
 
         /// <summary> Gets the TechnicalPhones. </summary>
-        public IList<ObservedString> TechnicalPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalPhones { get; }
     }
 }

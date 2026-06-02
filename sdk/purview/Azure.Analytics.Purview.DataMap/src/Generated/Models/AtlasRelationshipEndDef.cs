@@ -19,14 +19,14 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelationshipEndDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipEndDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef"/>. </summary>
         public AtlasRelationshipEndDef()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelationshipEndDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef"/>. </summary>
         /// <param name="cardinality"> single-valued attribute or multi-valued attribute. </param>
         /// <param name="description"> The description of the relationship end definition. </param>
         /// <param name="isContainer"> Determines if it is container. </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> The name of the relationship end definition. </param>
         /// <param name="type"> The type of the relationship end. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationshipEndDef(CardinalityValue? cardinality, string description, bool? isContainer, bool? isLegacyAttribute, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelationshipEndDef(CardinalityValue? cardinality, string description, bool? isContainer, bool? isLegacyAttribute, string name, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Cardinality = cardinality;
             Description = description;

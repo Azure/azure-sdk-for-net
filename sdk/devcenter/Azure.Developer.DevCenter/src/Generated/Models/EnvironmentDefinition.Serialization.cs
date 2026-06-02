@@ -15,9 +15,9 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An environment definition. </summary>
-    public partial class EnvironmentDefinition : IJsonModel<EnvironmentDefinition>
+    public partial class EnvironmentDefinition : IJsonModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinition"/> for deserialization. </summary>
         internal EnvironmentDefinition()
         {
         }
@@ -26,55 +26,55 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EnvironmentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEnvironmentDefinition(document.RootElement, options);
+                        return global::Azure.Developer.DevCenter.Models.EnvironmentDefinition.DeserializeEnvironmentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.EnvironmentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.EnvironmentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EnvironmentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EnvironmentDefinition IPersistableModel<EnvironmentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EnvironmentDefinition IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EnvironmentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnvironmentDefinition"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinition"/> from. </param>
         public static explicit operator EnvironmentDefinition(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEnvironmentDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.DevCenter.Models.EnvironmentDefinition.DeserializeEnvironmentDefinition(document.RootElement, global::Azure.Developer.DevCenter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EnvironmentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -82,46 +82,46 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.EnvironmentDefinition)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Developer.DevCenter.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (global::Azure.Developer.DevCenter.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (EnvironmentDefinitionParameter item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<EnvironmentDefinitionParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ParametersSchema))
+            if (global::Azure.Developer.DevCenter.Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteStringValue(ParametersSchema);
             }
-            if (Optional.IsDefined(TemplatePath))
+            if (global::Azure.Developer.DevCenter.Optional.IsDefined(TemplatePath))
             {
                 writer.WritePropertyName("templatePath"u8);
                 writer.WriteStringValue(TemplatePath);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -129,9 +129,9 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -140,26 +140,26 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EnvironmentDefinition IJsonModel<EnvironmentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EnvironmentDefinition IJsonModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EnvironmentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EnvironmentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.EnvironmentDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEnvironmentDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.DevCenter.Models.EnvironmentDefinition.DeserializeEnvironmentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EnvironmentDefinition DeserializeEnvironmentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -167,10 +167,10 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             string catalogName = default;
             string description = default;
-            IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
+            IReadOnlyList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter> parameters = default;
             string parametersSchema = default;
             string templatePath = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -195,14 +195,14 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<EnvironmentDefinitionParameter> array = new List<EnvironmentDefinitionParameter>();
+                    List<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter> array = new List<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item, options));
+                        array.Add(global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -217,9 +217,9 @@ namespace Azure.Developer.DevCenter.Models
                     templatePath = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EnvironmentDefinition(
@@ -227,7 +227,7 @@ namespace Azure.Developer.DevCenter.Models
                 name,
                 catalogName,
                 description,
-                parameters ?? new ChangeTrackingList<EnvironmentDefinitionParameter>(),
+                (parameters ?? new ChangeTrackingList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>()),
                 parametersSchema,
                 templatePath,
                 additionalBinaryDataProperties);

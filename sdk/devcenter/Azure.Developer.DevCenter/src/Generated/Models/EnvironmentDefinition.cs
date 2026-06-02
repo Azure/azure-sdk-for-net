@@ -15,19 +15,19 @@ namespace Azure.Developer.DevCenter.Models
     public partial class EnvironmentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         internal EnvironmentDefinition(string id, string catalogName)
         {
             Id = id;
             CatalogName = catalogName;
-            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
+            Parameters = new ChangeTrackingList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -61,7 +61,7 @@ namespace Azure.Developer.DevCenter.Models
         public string Description { get; }
 
         /// <summary> Input parameters passed to an environment. </summary>
-        public IReadOnlyList<EnvironmentDefinitionParameter> Parameters { get; }
+        public IReadOnlyList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter> Parameters { get; }
 
         /// <summary> JSON schema defining the parameters object passed to an environment. </summary>
         public string ParametersSchema { get; }

@@ -13,11 +13,11 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Represents the settings used to configure a <see cref="TextTranslationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class TextTranslationClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
-        public Uri Endpoint { get; set; }
+        public global::System.Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Region. </summary>
         public string Region { get; set; }
@@ -35,29 +35,29 @@ namespace Azure.AI.Translation.Text
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
+            if (global::System.Uri.TryCreate(section["Endpoint"], global::System.UriKind.Absolute, out global::System.Uri endpoint))
             {
-                Endpoint = endpoint;
+                this.Endpoint = endpoint;
             }
             string region = section["Region"];
             if (!string.IsNullOrEmpty(region))
             {
-                Region = region;
+                this.Region = region;
             }
             string tokenScope = section["TokenScope"];
             if (!string.IsNullOrEmpty(tokenScope))
             {
-                TokenScope = tokenScope;
+                this.TokenScope = tokenScope;
             }
             string resourceId = section["ResourceId"];
             if (!string.IsNullOrEmpty(resourceId))
             {
-                ResourceId = resourceId;
+                this.ResourceId = resourceId;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new TextTranslationClientOptions(optionsSection);
+                this.Options = new TextTranslationClientOptions(optionsSection);
             }
         }
     }

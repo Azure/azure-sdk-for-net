@@ -16,28 +16,28 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationalAIAnalysisInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput"/>. </summary>
         /// <param name="conversations"> List of multiple conversations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
-        public ConversationalAIAnalysisInput(IEnumerable<TextConversation> conversations)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
+        public ConversationalAIAnalysisInput(IEnumerable<global::Azure.AI.Language.Conversations.Models.TextConversation> conversations)
         {
-            Argument.AssertNotNull(conversations, nameof(conversations));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(conversations, nameof(conversations));
 
             Conversations = conversations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput"/>. </summary>
         /// <param name="conversations"> List of multiple conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIAnalysisInput(IList<TextConversation> conversations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalAIAnalysisInput(IList<global::Azure.AI.Language.Conversations.Models.TextConversation> conversations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of multiple conversations. </summary>
-        public IList<TextConversation> Conversations { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.TextConversation> Conversations { get; }
     }
 }

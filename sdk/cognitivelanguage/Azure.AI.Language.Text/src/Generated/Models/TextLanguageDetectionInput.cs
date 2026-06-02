@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the language detection document analysis task input. </summary>
     public partial class TextLanguageDetectionInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextLanguageDetectionInput"/>. </summary>
-        public TextLanguageDetectionInput() : base(AnalyzeTextInputKind.LanguageDetection)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextLanguageDetectionInput"/>. </summary>
+        public TextLanguageDetectionInput() : base(global::Azure.AI.Language.Text.AnalyzeTextInputKind.LanguageDetection)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextLanguageDetectionInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextLanguageDetectionInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Documents to be analyzed. </param>
         /// <param name="actionContent"> task parameters. </param>
-        internal TextLanguageDetectionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LanguageDetectionTextInput textInput, LanguageDetectionActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextLanguageDetectionInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, LanguageDetectionTextInput textInput, LanguageDetectionActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;

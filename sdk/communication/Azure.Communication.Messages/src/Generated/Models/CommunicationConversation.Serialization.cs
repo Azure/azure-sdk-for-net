@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Communication.Messages
 {
     /// <summary> A conversation. </summary>
-    public partial class CommunicationConversation : IJsonModel<CommunicationConversation>
+    public partial class CommunicationConversation : IJsonModel<global::Azure.Communication.Messages.CommunicationConversation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CommunicationConversation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommunicationConversation(document.RootElement, options);
+                        return global::Azure.Communication.Messages.CommunicationConversation.DeserializeCommunicationConversation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationConversation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.CommunicationConversation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationConversation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.CommunicationConversation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommunicationConversation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunicationConversation IPersistableModel<CommunicationConversation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommunicationConversation IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommunicationConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunicationConversation"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Communication.Messages.CommunicationConversation"/> from. </param>
         public static explicit operator CommunicationConversation(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCommunicationConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Communication.Messages.CommunicationConversation.DeserializeCommunicationConversation(document.RootElement, global::Azure.Communication.Messages.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommunicationConversation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.CommunicationConversation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,28 +76,28 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CommunicationConversation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.CommunicationConversation)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Topic))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
-            if (Optional.IsCollectionDefined(DeliveryChannelIds))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(DeliveryChannelIds))
             {
                 writer.WritePropertyName("deliveryChannelIds"u8);
                 writer.WriteStartArray();
                 foreach (string item in DeliveryChannelIds)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -106,22 +106,22 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutboundDeliveryStrategy))
+            if (global::Azure.Communication.Messages.Optional.IsDefined(OutboundDeliveryStrategy))
             {
                 writer.WritePropertyName("outboundDeliveryStrategy"u8);
                 writer.WriteStringValue(OutboundDeliveryStrategy.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Participants))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
                 foreach (ConversationParticipant item in Participants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ConversationParticipant>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -129,9 +129,9 @@ namespace Azure.Communication.Messages
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -140,26 +140,26 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunicationConversation IJsonModel<CommunicationConversation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommunicationConversation IJsonModel<global::Azure.Communication.Messages.CommunicationConversation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CommunicationConversation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.CommunicationConversation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CommunicationConversation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.CommunicationConversation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommunicationConversation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.CommunicationConversation.DeserializeCommunicationConversation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CommunicationConversation DeserializeCommunicationConversation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -167,8 +167,8 @@ namespace Azure.Communication.Messages
             string topic = default;
             IList<string> deliveryChannelIds = default;
             OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default;
-            IList<ConversationParticipant> participants = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Communication.Messages.ConversationParticipant> participants = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -183,14 +183,14 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("deliveryChannelIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -204,7 +204,7 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("outboundDeliveryStrategy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -213,29 +213,29 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("participants"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ConversationParticipant> array = new List<ConversationParticipant>();
+                    List<global::Azure.Communication.Messages.ConversationParticipant> array = new List<global::Azure.Communication.Messages.ConversationParticipant>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationParticipant.DeserializeConversationParticipant(item, options));
+                        array.Add(global::Azure.Communication.Messages.ConversationParticipant.DeserializeConversationParticipant(item, options));
                     }
                     participants = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CommunicationConversation(
                 id,
                 topic,
-                deliveryChannelIds ?? new ChangeTrackingList<string>(),
+                (deliveryChannelIds ?? new ChangeTrackingList<string>()),
                 outboundDeliveryStrategy,
-                participants ?? new ChangeTrackingList<ConversationParticipant>(),
+                (participants ?? new ChangeTrackingList<global::Azure.Communication.Messages.ConversationParticipant>()),
                 additionalBinaryDataProperties);
         }
     }

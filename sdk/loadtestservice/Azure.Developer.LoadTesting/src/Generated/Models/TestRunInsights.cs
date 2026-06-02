@@ -14,22 +14,22 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunInsights
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunInsights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunInsights"/>. </summary>
         public TestRunInsights()
         {
-            Columns = new ChangeTrackingList<TestRunInsightColumn>();
-            Rows = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
+            Columns = new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunInsightColumn>();
+            Rows = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunInsights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunInsights"/>. </summary>
         /// <param name="columns"> The columns of the insights. </param>
         /// <param name="rows"> The rows of the insights. </param>
         /// <param name="version"> The version of the insights. </param>
         /// <param name="status"> The status of the insights. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunInsights(IReadOnlyList<TestRunInsightColumn> columns, IDictionary<string, IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunInsights(IReadOnlyList<global::Azure.Developer.LoadTesting.TestRunInsightColumn> columns, IDictionary<string, global::System.Collections.Generic.IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
             Rows = rows;
@@ -39,10 +39,10 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> The columns of the insights. </summary>
-        public IReadOnlyList<TestRunInsightColumn> Columns { get; }
+        public IReadOnlyList<global::Azure.Developer.LoadTesting.TestRunInsightColumn> Columns { get; }
 
         /// <summary> The rows of the insights. </summary>
-        public IDictionary<string, IDictionary<string, string>> Rows { get; }
+        public IDictionary<string, global::System.Collections.Generic.IDictionary<string, string>> Rows { get; }
 
         /// <summary> The version of the insights. </summary>
         public long? Version { get; }

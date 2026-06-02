@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The date format. </summary>
-    public partial class AtlasDateFormat : IJsonModel<AtlasDateFormat>
+    public partial class AtlasDateFormat : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasDateFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasDateFormat(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasDateFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasDateFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasDateFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasDateFormat IPersistableModel<AtlasDateFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasDateFormat IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasDateFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasDateFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,18 +68,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasDateFormat)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(AvailableLocales))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(AvailableLocales))
             {
                 writer.WritePropertyName("availableLocales"u8);
                 writer.WriteStartArray();
                 foreach (string item in AvailableLocales)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -88,47 +88,47 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Calendar))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Calendar))
             {
                 writer.WritePropertyName("calendar"u8);
                 writer.WriteNumberValue(Calendar.Value);
             }
-            if (Optional.IsDefined(DateInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(DateInstance))
             {
                 writer.WritePropertyName("dateInstance"u8);
-                writer.WriteObjectValue(DateInstance, options);
+                writer.WriteObjectValue<AtlasDateFormat>(DateInstance, options);
             }
-            if (Optional.IsDefined(DateTimeInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(DateTimeInstance))
             {
                 writer.WritePropertyName("dateTimeInstance"u8);
-                writer.WriteObjectValue(DateTimeInstance, options);
+                writer.WriteObjectValue<AtlasDateFormat>(DateTimeInstance, options);
             }
-            if (Optional.IsDefined(Instance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance, options);
+                writer.WriteObjectValue<AtlasDateFormat>(Instance, options);
             }
-            if (Optional.IsDefined(Lenient))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Lenient))
             {
                 writer.WritePropertyName("lenient"u8);
                 writer.WriteBooleanValue(Lenient.Value);
             }
-            if (Optional.IsDefined(NumberFormat))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(NumberFormat))
             {
                 writer.WritePropertyName("numberFormat"u8);
-                writer.WriteObjectValue(NumberFormat, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(NumberFormat, options);
             }
-            if (Optional.IsDefined(TimeInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TimeInstance))
             {
                 writer.WritePropertyName("timeInstance"u8);
-                writer.WriteObjectValue(TimeInstance, options);
+                writer.WriteObjectValue<AtlasDateFormat>(TimeInstance, options);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteObjectValue(TimeZone, options);
+                writer.WriteObjectValue<AtlasTimeZone>(TimeZone, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -136,9 +136,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -147,26 +147,26 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasDateFormat IJsonModel<AtlasDateFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasDateFormat IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasDateFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasDateFormat)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasDateFormat(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasDateFormat DeserializeAtlasDateFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -179,19 +179,19 @@ namespace Azure.Analytics.Purview.DataMap
             AtlasNumberFormat numberFormat = default;
             AtlasDateFormat timeInstance = default;
             AtlasTimeZone timeZone = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("availableLocales"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -205,7 +205,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("calendar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -214,34 +214,34 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("dateInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dateInstance = DeserializeAtlasDateFormat(prop.Value, options);
+                    dateInstance = global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dateTimeInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dateTimeInstance = DeserializeAtlasDateFormat(prop.Value, options);
+                    dateTimeInstance = global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasDateFormat(prop.Value, options);
+                    instance = global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lenient"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -250,38 +250,38 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("numberFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    numberFormat = AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
+                    numberFormat = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    timeInstance = DeserializeAtlasDateFormat(prop.Value, options);
+                    timeInstance = global::Azure.Analytics.Purview.DataMap.AtlasDateFormat.DeserializeAtlasDateFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    timeZone = AtlasTimeZone.DeserializeAtlasTimeZone(prop.Value, options);
+                    timeZone = global::Azure.Analytics.Purview.DataMap.AtlasTimeZone.DeserializeAtlasTimeZone(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasDateFormat(
-                availableLocales ?? new ChangeTrackingList<string>(),
+                (availableLocales ?? new ChangeTrackingList<string>()),
                 calendar,
                 dateInstance,
                 dateTimeInstance,

@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, IEnumerable<AnalyzeOutputOption> output, RequestContext context)
+        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, IEnumerable<global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -33,42 +33,42 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":analyze", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (pages != null)
+            if ((pages != null))
             {
                 uri.AppendQuery("pages", pages, true);
             }
-            if (locale != null)
+            if ((locale != null))
             {
                 uri.AppendQuery("locale", locale, true);
             }
-            if (stringIndexType != null)
+            if ((stringIndexType != null))
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((features != null) && !((features is ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("features", features, ",", escape: true);
             }
-            if (queryFields != null && !(queryFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((queryFields != null) && !((queryFields is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", escape: true);
             }
-            if (outputContentFormat != null)
+            if ((outputContentFormat != null))
             {
                 uri.AppendQuery("outputContentFormat", outputContentFormat, true);
             }
-            if (output != null && !(output is ChangeTrackingList<AnalyzeOutputOption> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((output != null) && !((output is ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("output", output, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -84,14 +84,14 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId.ToString(), true);
             uri.AppendPath("/pdf", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/pdf");
             return message;
         }
@@ -107,14 +107,14 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(resultId.ToString(), true);
             uri.AppendPath("/figures/", false);
             uri.AppendPath(figureId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "image/png");
             return message;
         }
@@ -128,18 +128,18 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeBatchDocumentsRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, IEnumerable<AnalyzeOutputOption> output, RequestContext context)
+        internal HttpMessage CreateAnalyzeBatchDocumentsRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, IEnumerable<global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -147,42 +147,42 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":analyzeBatch", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (pages != null)
+            if ((pages != null))
             {
                 uri.AppendQuery("pages", pages, true);
             }
-            if (locale != null)
+            if ((locale != null))
             {
                 uri.AppendQuery("locale", locale, true);
             }
-            if (stringIndexType != null)
+            if ((stringIndexType != null))
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
+            if (((features != null) && !((features is ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> changeTrackingList) && changeTrackingList.IsUndefined)))
             {
                 uri.AppendQueryDelimited("features", features, ",", escape: true);
             }
-            if (queryFields != null && !(queryFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (((queryFields != null) && !((queryFields is ChangeTrackingList<string> changeTrackingList0) && changeTrackingList0.IsUndefined)))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", escape: true);
             }
-            if (outputContentFormat != null)
+            if ((outputContentFormat != null))
             {
                 uri.AppendQuery("outputContentFormat", outputContentFormat, true);
             }
-            if (output != null && !(output is ChangeTrackingList<AnalyzeOutputOption> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (((output != null) && !((output is ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzeOutputOption> changeTrackingList1) && changeTrackingList1.IsUndefined)))
             {
                 uri.AppendQueryDelimited("output", output, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -196,19 +196,19 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeBatchResults", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetAnalyzeBatchResultsRequest(Uri nextPage, string modelId, RequestContext context)
+        internal HttpMessage CreateNextGetAnalyzeBatchResultsRequest(global::System.Uri nextPage, string modelId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -217,16 +217,16 @@ namespace Azure.AI.DocumentIntelligence
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -240,14 +240,14 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeBatchResults/", false);
             uri.AppendPath(resultId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -260,14 +260,14 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeBatchResults/", false);
             uri.AppendPath(resultId.ToString(), true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -280,26 +280,26 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
             uri.AppendPath(":analyze", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (stringIndexType != null)
+            if ((stringIndexType != null))
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (split != null)
+            if ((split != null))
             {
                 uri.AppendQuery("split", split, true);
             }
-            if (pages != null)
+            if ((pages != null))
             {
                 uri.AppendQuery("pages", pages, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

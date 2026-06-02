@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The Azure Open AI model name that will be called. </summary>
-    public readonly partial struct AzureOpenAIModelName : IEquatable<AzureOpenAIModelName>
+    public readonly partial struct AzureOpenAIModelName : IEquatable<global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName>
     {
         private readonly string _value;
         /// <summary> TextEmbeddingAda002 model. </summary>
@@ -48,12 +48,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Gpt54Nano model. </summary>
         private const string Gpt54NanoValue = "gpt-5.4-nano";
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureOpenAIModelName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -106,34 +106,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Gpt54Nano model. </summary>
         public static AzureOpenAIModelName Gpt54Nano { get; } = new AzureOpenAIModelName(Gpt54NanoValue);
 
-        /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureOpenAIModelName left, AzureOpenAIModelName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureOpenAIModelName left, AzureOpenAIModelName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AzureOpenAIModelName(string value) => new AzureOpenAIModelName(value);
 
-        /// <summary> Converts a string to a <see cref="AzureOpenAIModelName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AzureOpenAIModelName?(string value) => value == null ? null : new AzureOpenAIModelName(value);
+        public static implicit operator AzureOpenAIModelName?(string value) => (value == null) ? null : new AzureOpenAIModelName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AzureOpenAIModelName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AzureOpenAIModelName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AzureOpenAIModelName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AzureOpenAIModelName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

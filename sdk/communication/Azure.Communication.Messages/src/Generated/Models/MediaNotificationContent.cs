@@ -13,27 +13,27 @@ namespace Azure.Communication.Messages
     /// <summary> @deprecated A request to send an image notification. </summary>
     public partial class MediaNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MediaNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
-        public MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to, CommunicationMessageKind.ImageV0)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
+        public MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, global::System.Uri mediaUri) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.ImageV0)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MediaNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Optional text content. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string content, global::System.Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             Content = content;
             MediaUri = mediaUri;
@@ -43,6 +43,6 @@ namespace Azure.Communication.Messages
         public string Content { get; set; }
 
         /// <summary> A media url for the file. Required if the type is one of the supported media types, e.g. image. </summary>
-        public Uri MediaUri { get; }
+        public global::System.Uri MediaUri { get; }
     }
 }

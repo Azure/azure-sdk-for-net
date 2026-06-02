@@ -14,19 +14,19 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class MetadataFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter"/>. </summary>
         public MetadataFilter()
         {
-            Metadata = new ChangeTrackingList<MetadataRecord>();
+            Metadata = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter"/>. </summary>
         /// <param name="metadata"> Dictionary of string. </param>
         /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetadataFilter(IList<global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord> metadata, LogicalOperationKind? logicalOperation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             LogicalOperation = logicalOperation;
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> Dictionary of string. </summary>
-        public IList<MetadataRecord> Metadata { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord> Metadata { get; }
 
         /// <summary> Operation used to join metadata filters. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }

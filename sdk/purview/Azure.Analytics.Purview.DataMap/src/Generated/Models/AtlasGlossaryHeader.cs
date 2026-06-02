@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasGlossaryHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader"/>. </summary>
         public AtlasGlossaryHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasGlossaryHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader"/>. </summary>
         /// <param name="displayText"> The display text. </param>
         /// <param name="glossaryGuid"> The GUID of the glossary. </param>
         /// <param name="relationGuid"> The GUID of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryHeader(string displayText, string glossaryGuid, string relationGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasGlossaryHeader(string displayText, string glossaryGuid, string relationGuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayText = displayText;
             GlossaryGuid = glossaryGuid;

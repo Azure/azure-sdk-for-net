@@ -14,18 +14,18 @@ namespace Azure.AI.Language.Text
     public partial class PiiActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiActionContent"/>. </summary>
         public PiiActionContent()
         {
-            PiiCategories = new ChangeTrackingList<PiiCategory>();
-            ExcludePiiCategories = new ChangeTrackingList<PiiCategoriesExclude>();
-            EntitySynonyms = new ChangeTrackingList<EntitySynonyms>();
-            RedactionPolicies = new ChangeTrackingList<BaseRedactionPolicy>();
+            PiiCategories = new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategory>();
+            ExcludePiiCategories = new ChangeTrackingList<global::Azure.AI.Language.Text.PiiCategoriesExclude>();
+            EntitySynonyms = new ChangeTrackingList<global::Azure.AI.Language.Text.EntitySynonyms>();
+            RedactionPolicies = new ChangeTrackingList<global::Azure.AI.Language.Text.BaseRedactionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="domain"> Domain for PII task. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
         /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExclude> excludePiiCategories, ValueExclusionPolicy valueExclusionPolicy, IList<EntitySynonyms> entitySynonyms, IList<BaseRedactionPolicy> redactionPolicies, ConfidenceScoreThreshold confidenceScoreThreshold, bool? disableEntityValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<global::Azure.AI.Language.Text.PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> excludePiiCategories, ValueExclusionPolicy valueExclusionPolicy, IList<global::Azure.AI.Language.Text.EntitySynonyms> entitySynonyms, IList<global::Azure.AI.Language.Text.BaseRedactionPolicy> redactionPolicies, ConfidenceScoreThreshold confidenceScoreThreshold, bool? disableEntityValidation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -64,22 +64,22 @@ namespace Azure.AI.Language.Text
         public PiiDomain? Domain { get; set; }
 
         /// <summary> Enumeration of PII categories to be returned in the response. </summary>
-        public IList<PiiCategory> PiiCategories { get; }
+        public IList<global::Azure.AI.Language.Text.PiiCategory> PiiCategories { get; }
 
         /// <summary> StringIndexType to be used for analysis. </summary>
         public StringIndexType? StringIndexType { get; set; }
 
         /// <summary> Enumeration of PII categories to be excluded in the response. </summary>
-        public IList<PiiCategoriesExclude> ExcludePiiCategories { get; }
+        public IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> ExcludePiiCategories { get; }
 
         /// <summary> Policy for specific words and terms that should be excluded from detection by the PII detection service. </summary>
         public ValueExclusionPolicy ValueExclusionPolicy { get; set; }
 
         /// <summary> (Optional) request parameter that allows the user to provide synonyms for context words that to enhance pii entity detection. </summary>
-        public IList<EntitySynonyms> EntitySynonyms { get; }
+        public IList<global::Azure.AI.Language.Text.EntitySynonyms> EntitySynonyms { get; }
 
         /// <summary> List of RedactionPolicies to be used on the input. </summary>
-        public IList<BaseRedactionPolicy> RedactionPolicies { get; }
+        public IList<global::Azure.AI.Language.Text.BaseRedactionPolicy> RedactionPolicies { get; }
 
         /// <summary> Confidence score threshold configuration for PII entity recognition. </summary>
         public ConfidenceScoreThreshold ConfidenceScoreThreshold { get; set; }

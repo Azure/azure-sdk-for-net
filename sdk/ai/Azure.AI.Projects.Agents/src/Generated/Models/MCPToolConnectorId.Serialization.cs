@@ -11,51 +11,51 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MCPToolConnectorId value) => value switch
         {
-            MCPToolConnectorId.ConnectorDropbox => "connector_dropbox",
-            MCPToolConnectorId.ConnectorGmail => "connector_gmail",
-            MCPToolConnectorId.ConnectorGooglecalendar => "connector_googlecalendar",
-            MCPToolConnectorId.ConnectorGoogledrive => "connector_googledrive",
-            MCPToolConnectorId.ConnectorMicrosoftteams => "connector_microsoftteams",
-            MCPToolConnectorId.ConnectorOutlookcalendar => "connector_outlookcalendar",
-            MCPToolConnectorId.ConnectorOutlookemail => "connector_outlookemail",
-            MCPToolConnectorId.ConnectorSharepoint => "connector_sharepoint",
+            global::OpenAI.MCPToolConnectorId.ConnectorDropbox => "connector_dropbox",
+            global::OpenAI.MCPToolConnectorId.ConnectorGmail => "connector_gmail",
+            global::OpenAI.MCPToolConnectorId.ConnectorGooglecalendar => "connector_googlecalendar",
+            global::OpenAI.MCPToolConnectorId.ConnectorGoogledrive => "connector_googledrive",
+            global::OpenAI.MCPToolConnectorId.ConnectorMicrosoftteams => "connector_microsoftteams",
+            global::OpenAI.MCPToolConnectorId.ConnectorOutlookcalendar => "connector_outlookcalendar",
+            global::OpenAI.MCPToolConnectorId.ConnectorOutlookemail => "connector_outlookemail",
+            global::OpenAI.MCPToolConnectorId.ConnectorSharepoint => "connector_sharepoint",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MCPToolConnectorId value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MCPToolConnectorId ToMCPToolConnectorId(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_dropbox"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_dropbox"))
             {
-                return MCPToolConnectorId.ConnectorDropbox;
+                return global::OpenAI.MCPToolConnectorId.ConnectorDropbox;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_gmail"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_gmail"))
             {
-                return MCPToolConnectorId.ConnectorGmail;
+                return global::OpenAI.MCPToolConnectorId.ConnectorGmail;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_googlecalendar"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_googlecalendar"))
             {
-                return MCPToolConnectorId.ConnectorGooglecalendar;
+                return global::OpenAI.MCPToolConnectorId.ConnectorGooglecalendar;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_googledrive"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_googledrive"))
             {
-                return MCPToolConnectorId.ConnectorGoogledrive;
+                return global::OpenAI.MCPToolConnectorId.ConnectorGoogledrive;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_microsoftteams"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_microsoftteams"))
             {
-                return MCPToolConnectorId.ConnectorMicrosoftteams;
+                return global::OpenAI.MCPToolConnectorId.ConnectorMicrosoftteams;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_outlookcalendar"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_outlookcalendar"))
             {
-                return MCPToolConnectorId.ConnectorOutlookcalendar;
+                return global::OpenAI.MCPToolConnectorId.ConnectorOutlookcalendar;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_outlookemail"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_outlookemail"))
             {
-                return MCPToolConnectorId.ConnectorOutlookemail;
+                return global::OpenAI.MCPToolConnectorId.ConnectorOutlookemail;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "connector_sharepoint"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "connector_sharepoint"))
             {
-                return MCPToolConnectorId.ConnectorSharepoint;
+                return global::OpenAI.MCPToolConnectorId.ConnectorSharepoint;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MCPToolConnectorId value.");
         }

@@ -14,7 +14,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Queryable data types for the queryables extension.
     /// These are the data types supported by Basic CQL2.
     /// </summary>
-    public readonly partial struct StacQueryableDefinitionDataType : IEquatable<StacQueryableDefinitionDataType>
+    public readonly partial struct StacQueryableDefinitionDataType : IEquatable<global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType>
     {
         private readonly string _value;
         /// <summary>
@@ -43,12 +43,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         private const string DateValue = "date";
 
-        /// <summary> Initializes a new instance of <see cref="StacQueryableDefinitionDataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StacQueryableDefinitionDataType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -83,34 +83,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         public static StacQueryableDefinitionDataType Date { get; } = new StacQueryableDefinitionDataType(DateValue);
 
-        /// <summary> Determines if two <see cref="StacQueryableDefinitionDataType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StacQueryableDefinitionDataType left, StacQueryableDefinitionDataType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StacQueryableDefinitionDataType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StacQueryableDefinitionDataType left, StacQueryableDefinitionDataType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StacQueryableDefinitionDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StacQueryableDefinitionDataType(string value) => new StacQueryableDefinitionDataType(value);
 
-        /// <summary> Converts a string to a <see cref="StacQueryableDefinitionDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StacQueryableDefinitionDataType?(string value) => value == null ? null : new StacQueryableDefinitionDataType(value);
+        public static implicit operator StacQueryableDefinitionDataType?(string value) => (value == null) ? null : new StacQueryableDefinitionDataType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StacQueryableDefinitionDataType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StacQueryableDefinitionDataType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StacQueryableDefinitionDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StacQueryableDefinitionDataType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

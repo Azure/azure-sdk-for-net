@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MoveToExistingSubClientHostExtensions
     {
         public static IClientBuilder AddMoveToExistingSubClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMoveToExistingSubClient(this IHostApplicationBuilder host, string sectionName, Action<MoveToExistingSubClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMoveToExistingSubClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient.MoveToExistingSubClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMoveToExistingSubClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMoveToExistingSubClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MoveToExistingSubClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMoveToExistingSubClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient.MoveToExistingSubClientSettings> configureSettings) => throw null;
     }
 }

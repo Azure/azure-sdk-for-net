@@ -15,9 +15,9 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeRemoteLoginSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRemoteLoginSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeRemoteLoginSettings"/>. </summary>
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort)
@@ -26,13 +26,13 @@ namespace Azure.Compute.Batch
             RemoteLoginPort = remoteLoginPort;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRemoteLoginSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeRemoteLoginSettings"/>. </summary>
         /// <param name="ipv6RemoteLoginIpAddress"> The IPv6 address used for remote login to the Compute Node. </param>
         /// <param name="ipv6RemoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoteLoginSettings(IPAddress ipv6RemoteLoginIpAddress, int? ipv6RemoteLoginPort, IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeRemoteLoginSettings(IPAddress ipv6RemoteLoginIpAddress, int? ipv6RemoteLoginPort, IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Ipv6RemoteLoginIpAddress = ipv6RemoteLoginIpAddress;
             Ipv6RemoteLoginPort = ipv6RemoteLoginPort;

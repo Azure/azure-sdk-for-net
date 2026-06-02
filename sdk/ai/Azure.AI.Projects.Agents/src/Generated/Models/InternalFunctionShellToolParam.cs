@@ -10,13 +10,13 @@ namespace OpenAI
 {
     internal partial class InternalFunctionShellToolParam : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
-        public InternalFunctionShellToolParam() : base(ToolType.Shell)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalFunctionShellToolParam"/>. </summary>
+        public InternalFunctionShellToolParam() : base(global::OpenAI.ToolType.Shell)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalFunctionShellToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
@@ -27,7 +27,7 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
             Name = name;
@@ -49,6 +49,6 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

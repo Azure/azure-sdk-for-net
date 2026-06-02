@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Client.Naming._UnionEnum
 {
-    public readonly partial struct ClientExtensibleEnum : IEquatable<ClientExtensibleEnum>
+    public readonly partial struct ClientExtensibleEnum : IEquatable<global::Client.Naming._UnionEnum.ClientExtensibleEnum>
     {
         public ClientExtensibleEnum(string value) => throw null;
 
@@ -20,20 +20,20 @@ namespace Client.Naming._UnionEnum
 
         public static bool operator !=(ClientExtensibleEnum left, ClientExtensibleEnum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ClientExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Client.Naming._UnionEnum.ClientExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ClientExtensibleEnum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ClientExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Client.Naming._UnionEnum.ClientExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ClientExtensibleEnum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(ClientExtensibleEnum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

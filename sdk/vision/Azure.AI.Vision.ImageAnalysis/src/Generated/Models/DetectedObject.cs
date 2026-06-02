@@ -15,22 +15,22 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DetectedObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
-        internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<DetectedTag> tags)
+        internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> tags)
         {
             BoundingBox = boundingBox;
             Tags = tags.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             Tags = tags;
@@ -41,6 +41,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         public ImageBoundingBox BoundingBox { get; }
 
         /// <summary> A single-item list containing the object information. </summary>
-        public IReadOnlyList<DetectedTag> Tags { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTag> Tags { get; }
     }
 }

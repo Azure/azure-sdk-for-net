@@ -11,20 +11,20 @@ namespace Azure.AI.Projects.Evaluation
     internal partial class PagedEvaluationRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PagedEvaluationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.PagedEvaluationRule"/>. </summary>
         /// <param name="value"> The EvaluationRule items on this page. </param>
-        internal PagedEvaluationRule(IEnumerable<EvaluationRule> value)
+        internal PagedEvaluationRule(IEnumerable<global::Azure.AI.Projects.Evaluation.EvaluationRule> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PagedEvaluationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.PagedEvaluationRule"/>. </summary>
         /// <param name="value"> The EvaluationRule items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedEvaluationRule(IList<EvaluationRule> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedEvaluationRule(IList<global::Azure.AI.Projects.Evaluation.EvaluationRule> value, global::System.Uri nextLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -32,9 +32,9 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> The EvaluationRule items on this page. </summary>
-        public IList<EvaluationRule> Value { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.EvaluationRule> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        public global::System.Uri NextLink { get; }
     }
 }

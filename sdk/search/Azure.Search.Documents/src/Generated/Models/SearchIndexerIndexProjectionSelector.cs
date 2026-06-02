@@ -16,20 +16,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerIndexProjectionSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector"/>. </summary>
         /// <param name="targetIndexName"> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </param>
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
         /// <param name="sourceContext"> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </param>
         /// <param name="mappings"> Mappings for the projection, or which source should be mapped to which field in the target index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetIndexName"/>, <paramref name="parentKeyFieldName"/>, <paramref name="sourceContext"/> or <paramref name="mappings"/> is null. </exception>
-        public SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IEnumerable<InputFieldMappingEntry> mappings)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="targetIndexName"/>, <paramref name="parentKeyFieldName"/>, <paramref name="sourceContext"/> or <paramref name="mappings"/> is null. </exception>
+        public SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> mappings)
         {
-            Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
-            Argument.AssertNotNull(parentKeyFieldName, nameof(parentKeyFieldName));
-            Argument.AssertNotNull(sourceContext, nameof(sourceContext));
-            Argument.AssertNotNull(mappings, nameof(mappings));
+            global::Azure.Search.Documents.Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(parentKeyFieldName, nameof(parentKeyFieldName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(sourceContext, nameof(sourceContext));
+            global::Azure.Search.Documents.Argument.AssertNotNull(mappings, nameof(mappings));
 
             TargetIndexName = targetIndexName;
             ParentKeyFieldName = parentKeyFieldName;
@@ -37,13 +37,13 @@ namespace Azure.Search.Documents.Indexes.Models
             Mappings = mappings.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector"/>. </summary>
         /// <param name="targetIndexName"> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </param>
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
         /// <param name="sourceContext"> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </param>
         /// <param name="mappings"> Mappings for the projection, or which source should be mapped to which field in the target index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IList<InputFieldMappingEntry> mappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> mappings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TargetIndexName = targetIndexName;
             ParentKeyFieldName = parentKeyFieldName;
@@ -62,6 +62,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string SourceContext { get; set; }
 
         /// <summary> Mappings for the projection, or which source should be mapped to which field in the target index. </summary>
-        public IList<InputFieldMappingEntry> Mappings { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Mappings { get; }
     }
 }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Model
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ModelClientHostExtensions
     {
         public static IClientBuilder AddModelClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddModelClient(this IHostApplicationBuilder host, string sectionName, Action<ModelClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddModelClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Model.ModelClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedModelClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedModelClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ModelClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedModelClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Model.ModelClientSettings> configureSettings) => throw null;
     }
 }

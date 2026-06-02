@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A scroll action. </summary>
     public partial class ScrollAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="ScrollAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ScrollAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
@@ -26,14 +26,14 @@ namespace Azure.AI.Agents.Persistent
             ScrollY = scrollY;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScrollAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ScrollAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal ScrollAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int x, int y, int scrollX, int scrollY) : base(@type, additionalBinaryDataProperties)
+        internal ScrollAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int x, int y, int scrollX, int scrollY) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class AnswerSpan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnswerSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnswerSpan"/>. </summary>
         internal AnswerSpan()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnswerSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnswerSpan"/>. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnswerSpan(string text, double? confidenceScore, int? offset, int? length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnswerSpan(string text, double? confidenceScore, int? offset, int? length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             ConfidenceScore = confidenceScore;

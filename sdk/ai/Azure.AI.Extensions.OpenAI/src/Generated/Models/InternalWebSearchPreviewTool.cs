@@ -10,19 +10,19 @@ namespace OpenAI
 {
     internal partial class InternalWebSearchPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
-        public InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchPreviewTool"/>. </summary>
+        public InternalWebSearchPreviewTool() : base(global::Azure.AI.Extensions.OpenAI.ToolType.WebSearchPreview)
         {
-            SearchContentTypes = new ChangeTrackingList<SearchContentType>();
+            SearchContentTypes = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.SearchContentType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalWebSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="searchContentTypes"></param>
-        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
+        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<global::Azure.AI.Extensions.OpenAI.SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
@@ -36,6 +36,6 @@ namespace OpenAI
         public SearchContextSize? SearchContextSize { get; set; }
 
         /// <summary> Gets the SearchContentTypes. </summary>
-        public IList<SearchContentType> SearchContentTypes { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.SearchContentType> SearchContentTypes { get; }
     }
 }

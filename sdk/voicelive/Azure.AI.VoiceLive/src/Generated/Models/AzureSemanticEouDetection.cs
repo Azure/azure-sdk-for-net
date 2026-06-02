@@ -13,17 +13,17 @@ namespace Azure.AI.VoiceLive
     /// <summary> Azure semantic end-of-utterance detection (default). </summary>
     public partial class AzureSemanticEouDetection : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetection"/>. </summary>
-        public AzureSemanticEouDetection() : base(EouDetectionModel.SemanticDetectionV1)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticEouDetection"/>. </summary>
+        public AzureSemanticEouDetection() : base(global::Azure.AI.VoiceLive.EouDetectionModel.SemanticDetectionV1)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
-        internal AzureSemanticEouDetection(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticEouDetection(EouDetectionModel model, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             ThresholdLevel = thresholdLevel;
             TimeoutMs = timeoutMs;

@@ -14,18 +14,18 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class DiagnosticDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail"/>. </summary>
         internal DiagnosticDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.DiagnosticDetail"/>. </summary>
         /// <param name="message"> A human-readable error message. </param>
         /// <param name="code"> The diagnostic error code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDetail(string message, DiagnosticCode code, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticDetail(string message, DiagnosticCode code, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             Code = code;

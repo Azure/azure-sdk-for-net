@@ -14,9 +14,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentBarcode
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="polygon">
@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

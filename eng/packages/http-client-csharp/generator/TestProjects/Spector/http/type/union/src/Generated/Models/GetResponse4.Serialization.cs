@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Type.Union
 {
-    public partial class GetResponse4 : IJsonModel<GetResponse4>
+    public partial class GetResponse4 : IJsonModel<global::_Type.Union.GetResponse4>
     {
         internal GetResponse4() => throw null;
 
@@ -20,19 +20,19 @@ namespace _Type.Union
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<GetResponse4>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Union.GetResponse4>.Write(ModelReaderWriterOptions options) => throw null;
 
-        GetResponse4 IPersistableModel<GetResponse4>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        GetResponse4 IPersistableModel<global::_Type.Union.GetResponse4>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<GetResponse4>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Union.GetResponse4>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator GetResponse4(Response response) => throw null;
 
-        void IJsonModel<GetResponse4>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Union.GetResponse4>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        GetResponse4 IJsonModel<GetResponse4>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        GetResponse4 IJsonModel<global::_Type.Union.GetResponse4>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual GetResponse4 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

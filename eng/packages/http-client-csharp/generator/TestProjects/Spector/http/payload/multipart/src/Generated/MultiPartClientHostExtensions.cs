@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.MultiPart
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MultiPartClientHostExtensions
     {
         public static IClientBuilder AddMultiPartClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMultiPartClient(this IHostApplicationBuilder host, string sectionName, Action<MultiPartClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMultiPartClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.MultiPart.MultiPartClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMultiPartClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMultiPartClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MultiPartClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMultiPartClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.MultiPart.MultiPartClientSettings> configureSettings) => throw null;
     }
 }

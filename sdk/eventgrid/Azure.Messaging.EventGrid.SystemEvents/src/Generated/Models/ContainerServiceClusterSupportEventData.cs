@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerServiceClusterSupportEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         internal ContainerServiceClusterSupportEventData(string kubernetesVersion)
         {
             KubernetesVersion = kubernetesVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceClusterSupportEventData(string kubernetesVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceClusterSupportEventData(string kubernetesVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

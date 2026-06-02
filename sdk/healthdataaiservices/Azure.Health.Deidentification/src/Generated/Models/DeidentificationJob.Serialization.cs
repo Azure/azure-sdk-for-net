@@ -16,9 +16,9 @@ using Azure.Core;
 namespace Azure.Health.Deidentification
 {
     /// <summary> A job containing a batch of documents to de-identify. </summary>
-    public partial class DeidentificationJob : IJsonModel<DeidentificationJob>
+    public partial class DeidentificationJob : IJsonModel<global::Azure.Health.Deidentification.DeidentificationJob>
     {
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/> for deserialization. </summary>
         internal DeidentificationJob()
         {
         }
@@ -27,65 +27,65 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeidentificationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Health.Deidentification.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeidentificationJob(document.RootElement, options);
+                        return global::Azure.Health.Deidentification.DeidentificationJob.DeserializeDeidentificationJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeidentificationJob)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationJob)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Health.Deidentification.AzureHealthDeidentificationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationJob)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeidentificationJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeidentificationJob IPersistableModel<DeidentificationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeidentificationJob IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeidentificationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="deidentificationJob"> The <see cref="DeidentificationJob"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="deidentificationJob"> The <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DeidentificationJob deidentificationJob)
         {
-            if (deidentificationJob == null)
+            if ((deidentificationJob == null))
             {
                 return null;
             }
-            return RequestContent.Create(deidentificationJob, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(deidentificationJob, global::Azure.Health.Deidentification.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationJob"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Health.Deidentification.DeidentificationJob"/> from. </param>
         public static explicit operator DeidentificationJob(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeidentificationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Health.Deidentification.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Health.Deidentification.DeidentificationJob.DeserializeDeidentificationJob(document.RootElement, global::Azure.Health.Deidentification.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeidentificationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Health.Deidentification.DeidentificationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -93,61 +93,61 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationJob)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(OperationType))
+            if (global::Azure.Health.Deidentification.Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
             writer.WritePropertyName("sourceLocation"u8);
-            writer.WriteObjectValue(SourceLocation, options);
+            writer.WriteObjectValue<SourceStorageLocation>(SourceLocation, options);
             writer.WritePropertyName("targetLocation"u8);
-            writer.WriteObjectValue(TargetLocation, options);
-            if (Optional.IsDefined(Customizations))
+            writer.WriteObjectValue<TargetStorageLocation>(TargetLocation, options);
+            if (global::Azure.Health.Deidentification.Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
-                writer.WriteObjectValue(Customizations, options);
+                writer.WriteObjectValue<DeidentificationJobCustomizationOptions>(Customizations, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (((options.Format != "W") && global::Azure.Health.Deidentification.Optional.IsDefined(Error)))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                ((IJsonModel<global::Azure.ResponseError>)Error).Write(writer, options);
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("lastUpdatedAt"u8);
                 writer.WriteStringValue(LastUpdatedAt, "O");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedAt))
+            if (((options.Format != "W") && global::Azure.Health.Deidentification.Optional.IsDefined(StartedAt)))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Summary))
+            if (((options.Format != "W") && global::Azure.Health.Deidentification.Optional.IsDefined(Summary)))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary, options);
+                writer.WriteObjectValue<DeidentificationJobSummary>(Summary, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -155,9 +155,9 @@ namespace Azure.Health.Deidentification
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -166,26 +166,26 @@ namespace Azure.Health.Deidentification
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeidentificationJob IJsonModel<DeidentificationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeidentificationJob IJsonModel<global::Azure.Health.Deidentification.DeidentificationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeidentificationJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Health.Deidentification.DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DeidentificationJob)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Health.Deidentification.DeidentificationJob)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeidentificationJob(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Health.Deidentification.DeidentificationJob.DeserializeDeidentificationJob(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DeidentificationJob DeserializeDeidentificationJob(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -200,7 +200,7 @@ namespace Azure.Health.Deidentification
             DateTimeOffset createdAt = default;
             DateTimeOffset? startedAt = default;
             DeidentificationJobSummary summary = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -210,7 +210,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("operation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -219,21 +219,21 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("sourceLocation"u8))
                 {
-                    sourceLocation = SourceStorageLocation.DeserializeSourceStorageLocation(prop.Value, options);
+                    sourceLocation = global::Azure.Health.Deidentification.SourceStorageLocation.DeserializeSourceStorageLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetLocation"u8))
                 {
-                    targetLocation = TargetStorageLocation.DeserializeTargetStorageLocation(prop.Value, options);
+                    targetLocation = global::Azure.Health.Deidentification.TargetStorageLocation.DeserializeTargetStorageLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    customizations = DeidentificationJobCustomizationOptions.DeserializeDeidentificationJobCustomizationOptions(prop.Value, options);
+                    customizations = global::Azure.Health.Deidentification.DeidentificationJobCustomizationOptions.DeserializeDeidentificationJobCustomizationOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -243,11 +243,11 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureHealthDeidentificationContext.Default);
+                    error = global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, global::Azure.Health.Deidentification.AzureHealthDeidentificationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedAt"u8))
@@ -262,7 +262,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("startedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -271,16 +271,16 @@ namespace Azure.Health.Deidentification
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    summary = DeidentificationJobSummary.DeserializeDeidentificationJobSummary(prop.Value, options);
+                    summary = global::Azure.Health.Deidentification.DeidentificationJobSummary.DeserializeDeidentificationJobSummary(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DeidentificationJob(

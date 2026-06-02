@@ -14,19 +14,19 @@ namespace Azure.AI.ContentSafety
     public partial class DetectTextProtectedMaterialResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectTextProtectedMaterialResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.DetectTextProtectedMaterialResult"/>. </summary>
         /// <param name="protectedMaterialAnalysis"> Analysis result for the given text. </param>
         internal DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis)
         {
             ProtectedMaterialAnalysis = protectedMaterialAnalysis;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectTextProtectedMaterialResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.DetectTextProtectedMaterialResult"/>. </summary>
         /// <param name="protectedMaterialAnalysis"> Analysis result for the given text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProtectedMaterialAnalysis = protectedMaterialAnalysis;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

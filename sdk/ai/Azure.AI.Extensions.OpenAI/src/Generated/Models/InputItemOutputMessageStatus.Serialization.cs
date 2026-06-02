@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemOutputMessageStatus value) => value switch
         {
-            InputItemOutputMessageStatus.InProgress => "in_progress",
-            InputItemOutputMessageStatus.Completed => "completed",
-            InputItemOutputMessageStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemOutputMessageStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemOutputMessageStatus ToInputItemOutputMessageStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemOutputMessageStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemOutputMessageStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemOutputMessageStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.InputItemOutputMessageStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemOutputMessageStatus value.");
         }

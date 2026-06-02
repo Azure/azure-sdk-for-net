@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     internal partial class UnknownKnowledgeBaseMessageContent : KnowledgeBaseMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.UnknownKnowledgeBaseMessageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

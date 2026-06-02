@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class VectorSearch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearch"/>. </summary>
         public VectorSearch()
         {
-            Profiles = new ChangeTrackingList<VectorSearchProfile>();
-            Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
-            Vectorizers = new ChangeTrackingList<VectorSearchVectorizer>();
-            Compressions = new ChangeTrackingList<VectorSearchCompression>();
+            Profiles = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile>();
+            Algorithms = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration>();
+            Vectorizers = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer>();
+            Compressions = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearch"/>. </summary>
         /// <param name="profiles"> Defines combinations of configurations to use with vector search. </param>
         /// <param name="algorithms"> Contains configuration options specific to the algorithm used during indexing or querying. </param>
         /// <param name="vectorizers"> Contains configuration options on how to vectorize text vector queries. </param>
         /// <param name="compressions"> Contains configuration options specific to the compression method used during indexing or querying. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompression> compressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorSearch(IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile> profiles, IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration> algorithms, IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer> vectorizers, IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression> compressions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Profiles = profiles;
             Algorithms = algorithms;
@@ -42,15 +42,15 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Defines combinations of configurations to use with vector search. </summary>
-        public IList<VectorSearchProfile> Profiles { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchProfile> Profiles { get; }
 
         /// <summary> Contains configuration options specific to the algorithm used during indexing or querying. </summary>
-        public IList<VectorSearchAlgorithmConfiguration> Algorithms { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmConfiguration> Algorithms { get; }
 
         /// <summary> Contains configuration options on how to vectorize text vector queries. </summary>
-        public IList<VectorSearchVectorizer> Vectorizers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer> Vectorizers { get; }
 
         /// <summary> Contains configuration options specific to the compression method used during indexing or querying. </summary>
-        public IList<VectorSearchCompression> Compressions { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompression> Compressions { get; }
     }
 }

@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAutoCodeInterpreterToolParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAutoCodeInterpreterToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAutoCodeInterpreterToolParam"/>. </summary>
         public ResponsesAutoCodeInterpreterToolParam()
         {
             FileIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAutoCodeInterpreterToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAutoCodeInterpreterToolParam"/>. </summary>
         /// <param name="kind"> Always `auto`. </param>
         /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
         /// <param name="memoryLimit"></param>
         /// <param name="networkPolicy"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAutoCodeInterpreterToolParam(string kind, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, ResponsesContainerNetworkPolicyParam networkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAutoCodeInterpreterToolParam(string kind, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, ResponsesContainerNetworkPolicyParam networkPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             FileIds = fileIds;

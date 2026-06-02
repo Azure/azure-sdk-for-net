@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
     public partial class ResponsesMicrosoftFabricPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagentPreview"/> is null. </exception>
-        public ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(ToolType.FabricDataagentPreview)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fabricDataagentPreview"/> is null. </exception>
+        public ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(global::Azure.AI.Extensions.OpenAI.ToolType.FabricDataagentPreview)
         {
-            Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
             FabricDataagentPreview = fabricDataagentPreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        internal ResponsesMicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesMicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs, ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The fabric data agent tool parameters. </summary>
         public ResponsesFabricDataAgentToolOptions FabricDataagentPreview { get; set; }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Structure.ClientOperationGroup
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class FirstClientHostExtensions
     {
         public static IClientBuilder AddFirstClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddFirstClient(this IHostApplicationBuilder host, string sectionName, Action<FirstClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddFirstClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Structure.ClientOperationGroup.FirstClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedFirstClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedFirstClient(this IHostApplicationBuilder host, string key, string sectionName, Action<FirstClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedFirstClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Structure.ClientOperationGroup.FirstClientSettings> configureSettings) => throw null;
     }
 }

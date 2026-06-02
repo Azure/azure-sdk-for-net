@@ -15,25 +15,25 @@ namespace Azure.Communication.JobRouter
     public partial class ExceptionRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
-        internal ExceptionRule(string id, ExceptionTrigger trigger, IEnumerable<ExceptionAction> actions)
+        internal ExceptionRule(string id, ExceptionTrigger trigger, IEnumerable<global::Azure.Communication.JobRouter.ExceptionAction> actions)
         {
             Id = id;
             Trigger = trigger;
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionRule(string id, ExceptionTrigger trigger, IList<ExceptionAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExceptionRule(string id, ExceptionTrigger trigger, IList<global::Azure.Communication.JobRouter.ExceptionAction> actions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Trigger = trigger;

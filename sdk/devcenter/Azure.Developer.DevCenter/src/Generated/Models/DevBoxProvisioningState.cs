@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates the provisioning state of the Dev Box. </summary>
-    public readonly partial struct DevBoxProvisioningState : IEquatable<DevBoxProvisioningState>
+    public readonly partial struct DevBoxProvisioningState : IEquatable<global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState>
     {
         private readonly string _value;
         /// <summary> Dev Box was successfully provisioned. </summary>
@@ -40,12 +40,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Dev Box is not provisioned. </summary>
         private const string NotProvisionedValue = "NotProvisioned";
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevBoxProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -86,34 +86,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Dev Box is not provisioned. </summary>
         public static DevBoxProvisioningState NotProvisioned { get; } = new DevBoxProvisioningState(NotProvisionedValue);
 
-        /// <summary> Determines if two <see cref="DevBoxProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevBoxProvisioningState left, DevBoxProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DevBoxProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevBoxProvisioningState left, DevBoxProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DevBoxProvisioningState(string value) => new DevBoxProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.DevBoxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevBoxProvisioningState?(string value) => value == null ? null : new DevBoxProvisioningState(value);
+        public static implicit operator DevBoxProvisioningState?(string value) => (value == null) ? null : new DevBoxProvisioningState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DevBoxProvisioningState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DevBoxProvisioningState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DevBoxProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DevBoxProvisioningState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

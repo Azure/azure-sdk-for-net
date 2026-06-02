@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by TextTranslationSkill. </summary>
-    public readonly partial struct TextTranslationSkillLanguage : IEquatable<TextTranslationSkillLanguage>
+    public readonly partial struct TextTranslationSkillLanguage : IEquatable<global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage>
     {
         private readonly string _value;
         /// <summary> Afrikaans. </summary>
@@ -160,12 +160,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Punjabi. </summary>
         private const string PaValue = "pa";
 
-        /// <summary> Initializes a new instance of <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextTranslationSkillLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -386,34 +386,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Punjabi. </summary>
         public static TextTranslationSkillLanguage Pa { get; } = new TextTranslationSkillLanguage(PaValue);
 
-        /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextTranslationSkillLanguage left, TextTranslationSkillLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextTranslationSkillLanguage left, TextTranslationSkillLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TextTranslationSkillLanguage(string value) => new TextTranslationSkillLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.TextTranslationSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TextTranslationSkillLanguage?(string value) => value == null ? null : new TextTranslationSkillLanguage(value);
+        public static implicit operator TextTranslationSkillLanguage?(string value) => (value == null) ? null : new TextTranslationSkillLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TextTranslationSkillLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TextTranslationSkillLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TextTranslationSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TextTranslationSkillLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

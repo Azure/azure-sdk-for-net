@@ -13,15 +13,15 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a code interpreter tool as used to configure an agent. </summary>
     public partial class CodeInterpreterToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/>. </summary>
         public CodeInterpreterToolDefinition() : base("code_interpreter")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CodeInterpreterToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal CodeInterpreterToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

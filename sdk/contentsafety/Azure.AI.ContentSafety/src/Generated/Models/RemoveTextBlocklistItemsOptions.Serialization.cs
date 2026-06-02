@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The request to remove blocklistItems from a text blocklist. </summary>
-    public partial class RemoveTextBlocklistItemsOptions : IJsonModel<RemoveTextBlocklistItemsOptions>
+    public partial class RemoveTextBlocklistItemsOptions : IJsonModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="RemoveTextBlocklistItemsOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions"/> for deserialization. </summary>
         internal RemoveTextBlocklistItemsOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RemoveTextBlocklistItemsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentSafety.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
+                        return global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions.DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentSafety.AzureAIContentSafetyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RemoveTextBlocklistItemsOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RemoveTextBlocklistItemsOptions IPersistableModel<RemoveTextBlocklistItemsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RemoveTextBlocklistItemsOptions IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RemoveTextBlocklistItemsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="removeTextBlocklistItemsOptions"> The <see cref="RemoveTextBlocklistItemsOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="removeTextBlocklistItemsOptions"> The <see cref="global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(RemoveTextBlocklistItemsOptions removeTextBlocklistItemsOptions)
         {
-            if (removeTextBlocklistItemsOptions == null)
+            if ((removeTextBlocklistItemsOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(removeTextBlocklistItemsOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(removeTextBlocklistItemsOptions, global::Azure.AI.ContentSafety.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RemoveTextBlocklistItemsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,16 +84,16 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("blocklistItemIds"u8);
             writer.WriteStartArray();
             foreach (string item in BlocklistItemIds)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.AI.ContentSafety
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,31 +120,31 @@ namespace Azure.AI.ContentSafety
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RemoveTextBlocklistItemsOptions IJsonModel<RemoveTextBlocklistItemsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RemoveTextBlocklistItemsOptions IJsonModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RemoveTextBlocklistItemsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions.DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RemoveTextBlocklistItemsOptions DeserializeRemoveTextBlocklistItemsOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             IList<string> blocklistItemIds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blocklistItemIds"u8))
@@ -152,7 +152,7 @@ namespace Azure.AI.ContentSafety
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -164,9 +164,9 @@ namespace Azure.AI.ContentSafety
                     blocklistItemIds = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RemoveTextBlocklistItemsOptions(blocklistItemIds, additionalBinaryDataProperties);

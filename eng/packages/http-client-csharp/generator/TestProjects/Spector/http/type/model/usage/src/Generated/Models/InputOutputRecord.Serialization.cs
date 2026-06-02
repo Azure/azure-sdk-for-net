@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Usage
 {
-    public partial class InputOutputRecord : IJsonModel<InputOutputRecord>
+    public partial class InputOutputRecord : IJsonModel<global::_Type.Model.Usage.InputOutputRecord>
     {
         internal InputOutputRecord() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Model.Usage
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<InputOutputRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Usage.InputOutputRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        InputOutputRecord IPersistableModel<InputOutputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        InputOutputRecord IPersistableModel<global::_Type.Model.Usage.InputOutputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<InputOutputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Usage.InputOutputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="inputOutputRecord"> The <see cref="InputOutputRecord"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="inputOutputRecord"> The <see cref="global::_Type.Model.Usage.InputOutputRecord"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(InputOutputRecord inputOutputRecord) => throw null;
 
         public static explicit operator InputOutputRecord(Response response) => throw null;
 
-        void IJsonModel<InputOutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Usage.InputOutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        InputOutputRecord IJsonModel<InputOutputRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        InputOutputRecord IJsonModel<global::_Type.Model.Usage.InputOutputRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual InputOutputRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

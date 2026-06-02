@@ -14,19 +14,19 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RoleAssignmentListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentListResult"/>. </summary>
         internal RoleAssignmentListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultRoleAssignment>();
+            Value = new ChangeTrackingList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.RoleAssignmentListResult"/>. </summary>
         /// <param name="value"> Role assignment list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentListResult(IList<KeyVaultRoleAssignment> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentListResult(IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> value, string nextLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Role assignment list. </summary>
-        public IList<KeyVaultRoleAssignment> Value { get; }
+        public IList<global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> Value { get; }
 
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }

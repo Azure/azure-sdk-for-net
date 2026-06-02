@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all text normalizers supported by the search engine. </summary>
-    public readonly partial struct LexicalNormalizerName : IEquatable<LexicalNormalizerName>
+    public readonly partial struct LexicalNormalizerName : IEquatable<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName>
     {
         private readonly string _value;
         /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
@@ -26,12 +26,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Normalizes token text to uppercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         private const string UppercaseValue = "uppercase";
 
-        /// <summary> Initializes a new instance of <see cref="LexicalNormalizerName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalNormalizerName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -51,34 +51,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Normalizes token text to uppercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         public static LexicalNormalizerName Uppercase { get; } = new LexicalNormalizerName(UppercaseValue);
 
-        /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LexicalNormalizerName left, LexicalNormalizerName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LexicalNormalizerName left, LexicalNormalizerName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LexicalNormalizerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LexicalNormalizerName(string value) => new LexicalNormalizerName(value);
 
-        /// <summary> Converts a string to a <see cref="LexicalNormalizerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalNormalizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalNormalizerName?(string value) => value == null ? null : new LexicalNormalizerName(value);
+        public static implicit operator LexicalNormalizerName?(string value) => (value == null) ? null : new LexicalNormalizerName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LexicalNormalizerName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LexicalNormalizerName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LexicalNormalizerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LexicalNormalizerName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

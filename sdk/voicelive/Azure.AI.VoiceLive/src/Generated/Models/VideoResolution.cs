@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class VideoResolution
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoResolution"/>. </summary>
         /// <param name="width"> Width of the video in pixels. Must be greater than 0. </param>
         /// <param name="height"> Height of the video in pixels. Must be greater than 0. </param>
         public VideoResolution(int width, int height)
@@ -25,11 +25,11 @@ namespace Azure.AI.VoiceLive
             Height = height;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoResolution"/>. </summary>
         /// <param name="width"> Width of the video in pixels. Must be greater than 0. </param>
         /// <param name="height"> Height of the video in pixels. Must be greater than 0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoResolution(int width, int height, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoResolution(int width, int height, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Width = width;
             Height = height;

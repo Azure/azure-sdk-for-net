@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.Core.Basic
 {
-    public partial class UserList : IJsonModel<UserList>
+    public partial class UserList : IJsonModel<global::Specs.Azure.Core.Basic.UserList>
     {
         internal UserList() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.Core.Basic
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<UserList>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Basic.UserList>.Write(ModelReaderWriterOptions options) => throw null;
 
-        UserList IPersistableModel<UserList>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UserList IPersistableModel<global::Specs.Azure.Core.Basic.UserList>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<UserList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Basic.UserList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator UserList(Response response) => throw null;
 
-        void IJsonModel<UserList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Basic.UserList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        UserList IJsonModel<UserList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        UserList IJsonModel<global::Specs.Azure.Core.Basic.UserList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UserList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -14,23 +14,23 @@ namespace Azure.AI.Language.Text
     public partial class EntitySynonym
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntitySynonym"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntitySynonym"/>. </summary>
         /// <param name="synonym"> The synonym to be used for context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonym"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonym"/> is null. </exception>
         public EntitySynonym(string synonym)
         {
-            Argument.AssertNotNull(synonym, nameof(synonym));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(synonym, nameof(synonym));
 
             Synonym = synonym;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitySynonym"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntitySynonym"/>. </summary>
         /// <param name="synonym"> The synonym to be used for context. </param>
         /// <param name="language"> The 2 letter ISO 639-1 language the synonym. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySynonym(string synonym, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySynonym(string synonym, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Synonym = synonym;
             Language = language;

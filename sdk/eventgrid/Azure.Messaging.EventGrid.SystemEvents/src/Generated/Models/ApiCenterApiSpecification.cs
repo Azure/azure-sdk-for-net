@@ -14,20 +14,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiCenterApiSpecification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiSpecification"/>. </summary>
         /// <param name="name"> Specification name. </param>
         internal ApiCenterApiSpecification(string name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiCenterApiSpecification"/>. </summary>
         /// <param name="name"> Specification name. </param>
         /// <param name="version"> Specification version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterApiSpecification(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterApiSpecification(string name, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

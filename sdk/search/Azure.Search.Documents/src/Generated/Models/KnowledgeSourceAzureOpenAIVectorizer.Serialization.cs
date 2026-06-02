@@ -15,54 +15,54 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
-    public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer, IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>
+    public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer, IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSourceVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer.DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceAzureOpenAIVectorizer IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeSourceAzureOpenAIVectorizer)PersistableModelCreateCore(data, options);
+        KnowledgeSourceAzureOpenAIVectorizer IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => ((KnowledgeSourceAzureOpenAIVectorizer)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,46 +70,46 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AzureOpenAIParameters))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AzureOpenAIParameters))
             {
                 writer.WritePropertyName("azureOpenAIParameters"u8);
-                writer.WriteObjectValue(AzureOpenAIParameters, options);
+                writer.WriteObjectValue<AzureOpenAIVectorizerParameters>(AzureOpenAIParameters, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSourceAzureOpenAIVectorizer IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeSourceAzureOpenAIVectorizer)JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceAzureOpenAIVectorizer IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((KnowledgeSourceAzureOpenAIVectorizer)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSourceVectorizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceAzureOpenAIVectorizer.DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeSourceAzureOpenAIVectorizer DeserializeKnowledgeSourceAzureOpenAIVectorizer(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             VectorSearchVectorizerKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             AzureOpenAIVectorizerParameters azureOpenAIParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,16 +120,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("azureOpenAIParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    azureOpenAIParameters = AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(prop.Value, options);
+                    azureOpenAIParameters = global::Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeSourceAzureOpenAIVectorizer(kind, additionalBinaryDataProperties, azureOpenAIParameters);

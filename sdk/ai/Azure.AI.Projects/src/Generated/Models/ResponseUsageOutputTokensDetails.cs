@@ -11,19 +11,19 @@ namespace Azure.AI.Projects
     public partial class ResponseUsageOutputTokensDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseUsageOutputTokensDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ResponseUsageOutputTokensDetails"/>. </summary>
         /// <param name="reasoningTokens"></param>
         internal ResponseUsageOutputTokensDetails(long reasoningTokens)
         {
             ReasoningTokens = reasoningTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseUsageOutputTokensDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ResponseUsageOutputTokensDetails"/>. </summary>
         /// <param name="reasoningTokens"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseUsageOutputTokensDetails(long reasoningTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseUsageOutputTokensDetails(long reasoningTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReasoningTokens = reasoningTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

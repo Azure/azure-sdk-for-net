@@ -17,17 +17,17 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an input tool definition that an agent can use.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.CodeInterpreterToolDefinition"/>, <see cref="Persistent.FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="Persistent.BingGroundingToolDefinition"/>, <see cref="Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Persistent.SharepointToolDefinition"/>, <see cref="Persistent.AzureAISearchToolDefinition"/>, <see cref="Persistent.OpenApiToolDefinition"/>, <see cref="Persistent.BingCustomSearchToolDefinition"/>, <see cref="Persistent.ConnectedAgentToolDefinition"/>, <see cref="Persistent.DeepResearchToolDefinition"/>, <see cref="Persistent.MCPToolDefinition"/>, <see cref="Persistent.ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="Persistent.BrowserAutomationToolDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.FileSearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.FunctionToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.BingGroundingToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.SharepointToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.AzureAISearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.OpenApiToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.BingCustomSearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.DeepResearchToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.MCPToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.ComputerUseToolDefinition"/>, <see cref="Azure.AI.Agents.Persistent.AzureFunctionToolDefinition"/>, and <see cref="Azure.AI.Agents.Persistent.BrowserAutomationToolDefinition"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.ToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ToolDefinition"/> instance for mocking. </returns>
         public static ToolDefinition ToolDefinition(string @type = default)
         {
             return new UnknownToolDefinition(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for a code interpreter tool as used to configure an agent. </summary>
-        /// <returns> A new <see cref="Persistent.CodeInterpreterToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/> instance for mocking. </returns>
         public static CodeInterpreterToolDefinition CodeInterpreterToolDefinition()
         {
             return new CodeInterpreterToolDefinition("code_interpreter", additionalBinaryDataProperties: null);
@@ -35,7 +35,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a file search tool as used to configure an agent. </summary>
         /// <param name="fileSearch"> Options overrides for the file search tool. </param>
-        /// <returns> A new <see cref="Persistent.FileSearchToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinition"/> instance for mocking. </returns>
         public static FileSearchToolDefinition FileSearchToolDefinition(FileSearchToolDefinitionDetails fileSearch = default)
         {
             return new FileSearchToolDefinition("file_search", additionalBinaryDataProperties: null, fileSearch);
@@ -47,7 +47,7 @@ namespace Azure.AI.Agents.Persistent
         /// Note that the file search tool may output fewer than `max_num_results` results. See the file search tool documentation for more information.
         /// </param>
         /// <param name="rankingOptions"> Ranking options for file search. </param>
-        /// <returns> A new <see cref="Persistent.FileSearchToolDefinitionDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinitionDetails"/> instance for mocking. </returns>
         public static FileSearchToolDefinitionDetails FileSearchToolDefinitionDetails(int? maxNumResults = default, FileSearchRankingOptions rankingOptions = default)
         {
             return new FileSearchToolDefinitionDetails(maxNumResults, rankingOptions, additionalBinaryDataProperties: null);
@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Ranking options for file search. </summary>
         /// <param name="ranker"> File search ranker. </param>
         /// <param name="scoreThreshold"> Ranker search threshold. </param>
-        /// <returns> A new <see cref="Persistent.FileSearchRankingOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FileSearchRankingOptions"/> instance for mocking. </returns>
         public static FileSearchRankingOptions FileSearchRankingOptions(string ranker = default, float scoreThreshold = default)
         {
             return new FileSearchRankingOptions(ranker, scoreThreshold, additionalBinaryDataProperties: null);
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.BingGroundingToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingGroundingToolDefinition"/> instance for mocking. </returns>
         public static BingGroundingToolDefinition BingGroundingToolDefinition(BingGroundingSearchToolParameters bingGrounding = default)
         {
             return new BingGroundingToolDefinition("bing_grounding", additionalBinaryDataProperties: null, bingGrounding);
@@ -75,10 +75,10 @@ namespace Azure.AI.Agents.Persistent
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="Persistent.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
-        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(IEnumerable<global::Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration> searchConfigurations = default)
         {
-            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
+            searchConfigurations ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration>();
 
             return new BingGroundingSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
@@ -103,7 +103,7 @@ namespace Azure.AI.Agents.Persistent
         /// Filter search results by the following case-insensitive age values:
         /// <list type="bullet"><item><description>Day: Return webpages that Bing discovered within the last 24 hours.</description></item><item><description>Week: Return webpages that Bing discovered within the last 7 days.</description></item><item><description>Month: Return webpages that Bing discovered within the last 30 days. To get articles discovered by Bing during a specific timeframe, specify a date range in the form: `YYYY-MM-DD..YYYY-MM-DD`. For example, `freshness=2019-02-01..2019-05-30. To limit the results to a single date, set this parameter to a specific date. For example, freshness=2019-02-04`.</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Persistent.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
         public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string connectionId = default, string market = default, string setLang = default, long? count = default, string freshness = default)
         {
             return new BingGroundingSearchConfiguration(
@@ -117,7 +117,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
         /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.MicrosoftFabricToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MicrosoftFabricToolDefinition"/> instance for mocking. </returns>
         public static MicrosoftFabricToolDefinition MicrosoftFabricToolDefinition(FabricDataAgentToolParameters fabricDataagent = default)
         {
             return new MicrosoftFabricToolDefinition("fabric_dataagent", additionalBinaryDataProperties: null, fabricDataagent);
@@ -128,17 +128,17 @@ namespace Azure.AI.Agents.Persistent
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="Persistent.FabricDataAgentToolParameters"/> instance for mocking. </returns>
-        public static FabricDataAgentToolParameters FabricDataAgentToolParameters(IEnumerable<ToolConnection> connectionList = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FabricDataAgentToolParameters"/> instance for mocking. </returns>
+        public static FabricDataAgentToolParameters FabricDataAgentToolParameters(IEnumerable<global::Azure.AI.Agents.Persistent.ToolConnection> connectionList = default)
         {
-            connectionList ??= new ChangeTrackingList<ToolConnection>();
+            connectionList ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolConnection>();
 
             return new FabricDataAgentToolParameters(connectionList.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A connection resource. </summary>
         /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
-        /// <returns> A new <see cref="Persistent.ToolConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ToolConnection"/> instance for mocking. </returns>
         public static ToolConnection ToolConnection(string connectionId = default)
         {
             return new ToolConnection(connectionId, additionalBinaryDataProperties: null);
@@ -146,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
         /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.SharepointToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.SharepointToolDefinition"/> instance for mocking. </returns>
         public static SharepointToolDefinition SharepointToolDefinition(SharepointGroundingToolParameters sharepointGrounding = default)
         {
             return new SharepointToolDefinition("sharepoint_grounding", additionalBinaryDataProperties: null, sharepointGrounding);
@@ -157,16 +157,16 @@ namespace Azure.AI.Agents.Persistent
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="Persistent.SharepointGroundingToolParameters"/> instance for mocking. </returns>
-        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(IEnumerable<ToolConnection> connectionList = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.SharepointGroundingToolParameters"/> instance for mocking. </returns>
+        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(IEnumerable<global::Azure.AI.Agents.Persistent.ToolConnection> connectionList = default)
         {
-            connectionList ??= new ChangeTrackingList<ToolConnection>();
+            connectionList ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolConnection>();
 
             return new SharepointGroundingToolParameters(connectionList.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-        /// <returns> A new <see cref="Persistent.AzureAISearchToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolDefinition"/> instance for mocking. </returns>
         public static AzureAISearchToolDefinition AzureAISearchToolDefinition()
         {
             return new AzureAISearchToolDefinition("azure_ai_search", additionalBinaryDataProperties: null);
@@ -174,7 +174,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
         /// <param name="openapi"> The openapi function definition. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiToolDefinition"/> instance for mocking. </returns>
         public static OpenApiToolDefinition OpenApiToolDefinition(OpenApiFunctionDefinition openapi = default)
         {
             return new OpenApiToolDefinition("openapi", additionalBinaryDataProperties: null, openapi);
@@ -182,33 +182,33 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.OpenApiAnonymousAuthDetails"/>, <see cref="Persistent.OpenApiConnectionAuthDetails"/>, and <see cref="Persistent.OpenApiManagedAuthDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.OpenApiAnonymousAuthDetails"/>, <see cref="Azure.AI.Agents.Persistent.OpenApiConnectionAuthDetails"/>, and <see cref="Azure.AI.Agents.Persistent.OpenApiManagedAuthDetails"/>.
         /// </summary>
         /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiAuthDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiAuthDetails"/> instance for mocking. </returns>
         public static OpenApiAuthDetails OpenApiAuthDetails(string @type = default)
         {
             return new UnknownOpenApiAuthDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi anonymous authentication. </summary>
-        /// <returns> A new <see cref="Persistent.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
         public static OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails()
         {
-            return new OpenApiAnonymousAuthDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+            return new OpenApiAnonymousAuthDetails(global::Azure.AI.Agents.Persistent.OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi connection authentication. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiConnectionAuthDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionAuthDetails"/> instance for mocking. </returns>
         public static OpenApiConnectionAuthDetails OpenApiConnectionAuthDetails(OpenApiConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenApiConnectionAuthDetails(OpenApiAuthType.Connection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiConnectionAuthDetails(global::Azure.AI.Agents.Persistent.OpenApiAuthType.Connection, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
         /// <param name="connectionId"> Connection id for Connection auth type. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiConnectionSecurityScheme"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionSecurityScheme"/> instance for mocking. </returns>
         public static OpenApiConnectionSecurityScheme OpenApiConnectionSecurityScheme(string connectionId = default)
         {
             return new OpenApiConnectionSecurityScheme(connectionId, additionalBinaryDataProperties: null);
@@ -216,15 +216,15 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Security details for OpenApi managed_identity authentication. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
         public static OpenApiManagedAuthDetails OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme = default)
         {
-            return new OpenApiManagedAuthDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiManagedAuthDetails(global::Azure.AI.Agents.Persistent.OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <returns> A new <see cref="Persistent.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
         public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
         {
             return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
@@ -232,7 +232,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
         /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.BingCustomSearchToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolDefinition"/> instance for mocking. </returns>
         public static BingCustomSearchToolDefinition BingCustomSearchToolDefinition(BingCustomSearchToolParameters bingCustomSearch = default)
         {
             return new BingCustomSearchToolDefinition("bing_custom_search", additionalBinaryDataProperties: null, bingCustomSearch);
@@ -243,10 +243,10 @@ namespace Azure.AI.Agents.Persistent
         /// The connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="Persistent.BingCustomSearchToolParameters"/> instance for mocking. </returns>
-        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchToolParameters"/> instance for mocking. </returns>
+        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> searchConfigurations = default)
         {
-            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
+            searchConfigurations ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration>();
 
             return new BingCustomSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
@@ -272,7 +272,7 @@ namespace Azure.AI.Agents.Persistent
         /// Filter search results by the following case-insensitive age values:
         /// <list type="bullet"><item><description>Day: Return webpages that Bing discovered within the last 24 hours.</description></item><item><description>Week: Return webpages that Bing discovered within the last 7 days.</description></item><item><description>Month: Return webpages that Bing discovered within the last 30 days. To get articles discovered by Bing during a specific timeframe, specify a date range in the form: `YYYY-MM-DD..YYYY-MM-DD`. For example, `freshness=2019-02-01..2019-05-30. To limit the results to a single date, set this parameter to a specific date. For example, freshness=2019-02-04`.</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Persistent.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration"/> instance for mocking. </returns>
         public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string connectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
         {
             return new BingCustomSearchConfiguration(
@@ -287,7 +287,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a connected agent tool which defines a domain specific sub-agent. </summary>
         /// <param name="connectedAgent"> The sub-agent to connect. </param>
-        /// <returns> A new <see cref="Persistent.ConnectedAgentToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition"/> instance for mocking. </returns>
         public static ConnectedAgentToolDefinition ConnectedAgentToolDefinition(ConnectedAgentDetails connectedAgent = default)
         {
             return new ConnectedAgentToolDefinition("connected_agent", additionalBinaryDataProperties: null, connectedAgent);
@@ -297,7 +297,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The identifier of the child agent. </param>
         /// <param name="name"> The name of the agent to be called. </param>
         /// <param name="description"> A description of what the agent does, used by the model to choose when and how to call the agent. </param>
-        /// <returns> A new <see cref="Persistent.ConnectedAgentDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentDetails"/> instance for mocking. </returns>
         public static ConnectedAgentDetails ConnectedAgentDetails(string id = default, string name = default, string description = default)
         {
             return new ConnectedAgentDetails(id, name, description, additionalBinaryDataProperties: null);
@@ -305,7 +305,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a Deep Research tool as used to configure an agent. </summary>
         /// <param name="deepResearch"> The deep_research tool definition configuration. </param>
-        /// <returns> A new <see cref="Persistent.DeepResearchToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.DeepResearchToolDefinition"/> instance for mocking. </returns>
         public static DeepResearchToolDefinition DeepResearchToolDefinition(DeepResearchDetails deepResearch = default)
         {
             return new DeepResearchToolDefinition("deep_research", additionalBinaryDataProperties: null, deepResearch);
@@ -314,17 +314,17 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The details of the Deep Research tool. </summary>
         /// <param name="model"> The deep research model deployment name. </param>
         /// <param name="bingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
-        /// <returns> A new <see cref="Persistent.DeepResearchDetails"/> instance for mocking. </returns>
-        public static DeepResearchDetails DeepResearchDetails(string model = default, IEnumerable<DeepResearchBingGroundingConnection> bingGroundingConnections = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.DeepResearchDetails"/> instance for mocking. </returns>
+        public static DeepResearchDetails DeepResearchDetails(string model = default, IEnumerable<global::Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> bingGroundingConnections = default)
         {
-            bingGroundingConnections ??= new ChangeTrackingList<DeepResearchBingGroundingConnection>();
+            bingGroundingConnections ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>();
 
             return new DeepResearchDetails(model, bingGroundingConnections.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The connection resource ID for the Bing grounding resource . </summary>
         /// <param name="connectionId"> The connection ID for the Bing grounding connection. </param>
-        /// <returns> A new <see cref="Persistent.DeepResearchBingGroundingConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection"/> instance for mocking. </returns>
         public static DeepResearchBingGroundingConnection DeepResearchBingGroundingConnection(string connectionId = default)
         {
             return new DeepResearchBingGroundingConnection(connectionId, additionalBinaryDataProperties: null);
@@ -334,7 +334,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="serverUrl"> The endpoint for the MCP server. </param>
         /// <param name="allowedTools"> List of allowed tools for MCP server. </param>
-        /// <returns> A new <see cref="Persistent.MCPToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MCPToolDefinition"/> instance for mocking. </returns>
         public static MCPToolDefinition MCPToolDefinition(string serverLabel = default, string serverUrl = default, IEnumerable<string> allowedTools = default)
         {
             allowedTools ??= new ChangeTrackingList<string>();
@@ -344,7 +344,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a Computer Use tool as used to configure an agent. </summary>
         /// <param name="computerUsePreview"> The computer use tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.ComputerUseToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolDefinition"/> instance for mocking. </returns>
         public static ComputerUseToolDefinition ComputerUseToolDefinition(ComputerUseToolParameters computerUsePreview = default)
         {
             return new ComputerUseToolDefinition("computer_use_preview", additionalBinaryDataProperties: null, computerUsePreview);
@@ -354,7 +354,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="displayWidth"> The display width for the computer use tool. </param>
         /// <param name="displayHeight"> The display height for the computer use tool. </param>
         /// <param name="environment"> The environment for the computer use tool. </param>
-        /// <returns> A new <see cref="Persistent.ComputerUseToolParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ComputerUseToolParameters"/> instance for mocking. </returns>
         public static ComputerUseToolParameters ComputerUseToolParameters(int displayWidth = default, int displayHeight = default, ComputerUseEnvironment environment = default)
         {
             return new ComputerUseToolParameters(displayWidth, displayHeight, environment, additionalBinaryDataProperties: null);
@@ -362,7 +362,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The structure for keeping storage queue name and URI. </summary>
         /// <param name="storageQueue"> Storage queue. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
         public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
         {
             return new AzureFunctionBinding("AzureFunctionBindingType.StorageQueue", storageQueue, additionalBinaryDataProperties: null);
@@ -371,7 +371,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The structure for keeping storage queue name and URI. </summary>
         /// <param name="storageServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionStorageQueue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionStorageQueue"/> instance for mocking. </returns>
         public static AzureFunctionStorageQueue AzureFunctionStorageQueue(string storageServiceEndpoint = default, string queueName = default)
         {
             return new AzureFunctionStorageQueue(storageServiceEndpoint, queueName, additionalBinaryDataProperties: null);
@@ -379,7 +379,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
         /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
-        /// <returns> A new <see cref="Persistent.BrowserAutomationToolDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolDefinition"/> instance for mocking. </returns>
         public static BrowserAutomationToolDefinition BrowserAutomationToolDefinition(BrowserAutomationToolParameters browserAutomation = default)
         {
             return new BrowserAutomationToolDefinition("browser_automation", additionalBinaryDataProperties: null, browserAutomation);
@@ -387,7 +387,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The connection parameters associated with the Browser Automation Tool. </param>
-        /// <returns> A new <see cref="Persistent.BrowserAutomationToolParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolParameters"/> instance for mocking. </returns>
         public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
         {
             return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
@@ -395,7 +395,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
         /// <param name="id"> The ID of the connection to your Azure Playwright resource. </param>
-        /// <returns> A new <see cref="Persistent.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
         public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string id = default)
         {
             return new BrowserAutomationToolConnectionParameters(id, additionalBinaryDataProperties: null);
@@ -410,10 +410,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
         /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="mcp"> Resources to be used by the `mcp` tool consisting of a server label and headers. </param>
-        /// <returns> A new <see cref="Persistent.ToolResources"/> instance for mocking. </returns>
-        public static ToolResources ToolResources(CodeInterpreterToolResource codeInterpreter = default, FileSearchToolResource fileSearch = default, AzureAISearchToolResource azureAISearch = default, IEnumerable<MCPToolResource> mcp = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ToolResources"/> instance for mocking. </returns>
+        public static ToolResources ToolResources(CodeInterpreterToolResource codeInterpreter = default, FileSearchToolResource fileSearch = default, AzureAISearchToolResource azureAISearch = default, IEnumerable<global::Azure.AI.Agents.Persistent.MCPToolResource> mcp = default)
         {
-            mcp ??= new ChangeTrackingList<MCPToolResource>();
+            mcp ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MCPToolResource>();
 
             return new ToolResources(codeInterpreter, fileSearch, azureAISearch, mcp.ToList(), additionalBinaryDataProperties: null);
         }
@@ -424,11 +424,11 @@ namespace Azure.AI.Agents.Persistent
         /// associated with the tool.
         /// </param>
         /// <param name="dataSources"> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </param>
-        /// <returns> A new <see cref="Persistent.CodeInterpreterToolResource"/> instance for mocking. </returns>
-        public static CodeInterpreterToolResource CodeInterpreterToolResource(IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolResource"/> instance for mocking. </returns>
+        public static CodeInterpreterToolResource CodeInterpreterToolResource(IEnumerable<string> fileIds = default, IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = default)
         {
             fileIds ??= new ChangeTrackingList<string>();
-            dataSources ??= new ChangeTrackingList<VectorStoreDataSource>();
+            dataSources ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource>();
 
             return new CodeInterpreterToolResource(fileIds.ToList(), dataSources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -439,7 +439,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="assetIdentifier"> Asset URI. </param>
         /// <param name="assetType"> The asset type. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreDataSource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreDataSource"/> instance for mocking. </returns>
         public static VectorStoreDataSource VectorStoreDataSource(string assetIdentifier = default, VectorStoreDataSourceAssetType assetType = default)
         {
             return new VectorStoreDataSource(assetIdentifier, assetType, additionalBinaryDataProperties: null);
@@ -455,11 +455,11 @@ namespace Azure.AI.Agents.Persistent
         /// This list is limited to one element.
         /// The only element of this list contains the list of azure asset IDs used by the search tool.
         /// </param>
-        /// <returns> A new <see cref="Persistent.FileSearchToolResource"/> instance for mocking. </returns>
-        public static FileSearchToolResource FileSearchToolResource(IEnumerable<string> vectorStoreIds = default, IEnumerable<VectorStoreConfigurations> vectorStores = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolResource"/> instance for mocking. </returns>
+        public static FileSearchToolResource FileSearchToolResource(IEnumerable<string> vectorStoreIds = default, IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreConfigurations> vectorStores = default)
         {
             vectorStoreIds ??= new ChangeTrackingList<string>();
-            vectorStores ??= new ChangeTrackingList<VectorStoreConfigurations>();
+            vectorStores ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreConfigurations>();
 
             return new FileSearchToolResource(vectorStoreIds.ToList(), vectorStores.ToList(), additionalBinaryDataProperties: null);
         }
@@ -467,7 +467,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The structure, containing the list of vector storage configurations i.e. the list of azure asset IDs. </summary>
         /// <param name="storeName"> Name. </param>
         /// <param name="storeConfiguration"> Configurations. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreConfigurations"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfigurations"/> instance for mocking. </returns>
         public static VectorStoreConfigurations VectorStoreConfigurations(string storeName = default, VectorStoreConfiguration storeConfiguration = default)
         {
             return new VectorStoreConfigurations(storeName, storeConfiguration, additionalBinaryDataProperties: null);
@@ -478,10 +478,10 @@ namespace Azure.AI.Agents.Persistent
         /// files can be used for the enterprise file search.
         /// </summary>
         /// <param name="dataSources"> Data sources. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreConfiguration"/> instance for mocking. </returns>
-        public static VectorStoreConfiguration VectorStoreConfiguration(IEnumerable<VectorStoreDataSource> dataSources = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfiguration"/> instance for mocking. </returns>
+        public static VectorStoreConfiguration VectorStoreConfiguration(IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = default)
         {
-            dataSources ??= new ChangeTrackingList<VectorStoreDataSource>();
+            dataSources ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource>();
 
             return new VectorStoreConfiguration(dataSources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -491,10 +491,10 @@ namespace Azure.AI.Agents.Persistent
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <returns> A new <see cref="Persistent.AzureAISearchToolResource"/> instance for mocking. </returns>
-        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<AISearchIndexResource> indexList = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AzureAISearchToolResource"/> instance for mocking. </returns>
+        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<global::Azure.AI.Agents.Persistent.AISearchIndexResource> indexList = default)
         {
-            indexList ??= new ChangeTrackingList<AISearchIndexResource>();
+            indexList ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.AISearchIndexResource>();
 
             return new AzureAISearchToolResource(indexList.ToList(), additionalBinaryDataProperties: null);
         }
@@ -506,7 +506,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> filter string for search resource. </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
-        /// <returns> A new <see cref="Persistent.AISearchIndexResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AISearchIndexResource"/> instance for mocking. </returns>
         public static AISearchIndexResource AISearchIndexResource(string indexConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
             return new AISearchIndexResource(
@@ -523,7 +523,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="headers"> The headers for the MCP server updates. </param>
         /// <param name="requireApprovalInternal"> Does MCP server require approval. </param>
-        /// <returns> A new <see cref="Persistent.MCPToolResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MCPToolResource"/> instance for mocking. </returns>
         public static MCPToolResource MCPToolResource(string serverLabel = default, IDictionary<string, string> headers = default, BinaryData requireApprovalInternal = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
@@ -534,7 +534,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Customized MCP approval object, listing tools requiring and not requiring approvals. </summary>
         /// <param name="never"> The list of tools, not requiring approval. </param>
         /// <param name="always"> The list of tools, always requiring approval. </param>
-        /// <returns> A new <see cref="Persistent.MCPApprovalPerTool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MCPApprovalPerTool"/> instance for mocking. </returns>
         public static MCPApprovalPerTool MCPApprovalPerTool(MCPToolList never = default, MCPToolList always = default)
         {
             return new MCPApprovalPerTool(never, always, additionalBinaryDataProperties: null);
@@ -542,7 +542,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The object, containing list of tools for approvals. </summary>
         /// <param name="toolNames"> The list of tools for approval. </param>
-        /// <returns> A new <see cref="Persistent.MCPToolList"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MCPToolList"/> instance for mocking. </returns>
         public static MCPToolList MCPToolList(IEnumerable<string> toolNames = default)
         {
             toolNames ??= new ChangeTrackingList<string>();
@@ -552,7 +552,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The type of response format being defined: `json_schema`. </summary>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
-        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
         public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchema jsonSchema = default)
         {
             return new ResponseFormatJsonSchemaType("ResponseFormatJsonSchemaTypeType.JsonSchema", jsonSchema, additionalBinaryDataProperties: null);
@@ -562,7 +562,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="description"> A description of what the response format is for, used by the model to determine how to respond in the format. </param>
         /// <param name="name"> The name of a schema. </param>
         /// <param name="schema"> The JSON schema object, describing the response format. </param>
-        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchema"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchema"/> instance for mocking. </returns>
         public static ResponseFormatJsonSchema ResponseFormatJsonSchema(string description = default, string name = default, BinaryData schema = default)
         {
             return new ResponseFormatJsonSchema(description, name, schema, additionalBinaryDataProperties: null);
@@ -591,10 +591,10 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgent"/> instance for mocking. </returns>
-        public static PersistentAgent PersistentAgent(string id = default, DateTimeOffset createdAt = default, string name = default, string description = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgent"/> instance for mocking. </returns>
+        public static PersistentAgent PersistentAgent(string id = default, DateTimeOffset createdAt = default, string name = default, string description = default, string model = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default)
         {
-            tools ??= new ChangeTrackingList<ToolDefinition>();
+            tools ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new PersistentAgent(
@@ -622,10 +622,10 @@ namespace Azure.AI.Agents.Persistent
         /// a list of vector store IDs.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentThreadCreationOptions"/> instance for mocking. </returns>
-        public static PersistentAgentThreadCreationOptions PersistentAgentThreadCreationOptions(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentThreadCreationOptions"/> instance for mocking. </returns>
+        public static PersistentAgentThreadCreationOptions PersistentAgentThreadCreationOptions(IEnumerable<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default)
         {
-            messages ??= new ChangeTrackingList<ThreadMessageOptions>();
+            messages ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new PersistentAgentThreadCreationOptions(messages.ToList(), toolResources, metadata, additionalBinaryDataProperties: null);
@@ -649,10 +649,10 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.ThreadMessageOptions"/> instance for mocking. </returns>
-        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, BinaryData content = default, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ThreadMessageOptions"/> instance for mocking. </returns>
+        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, BinaryData content = default, IEnumerable<global::Azure.AI.Agents.Persistent.MessageAttachment> attachments = default, IDictionary<string, string> metadata = default)
         {
-            attachments ??= new ChangeTrackingList<MessageAttachment>();
+            attachments ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageAttachment>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ThreadMessageOptions(role, content, attachments.ToList(), metadata, additionalBinaryDataProperties: null);
@@ -660,10 +660,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageInputTextBlock"/>, <see cref="Persistent.MessageInputImageFileBlock"/>, and <see cref="Persistent.MessageInputImageUriBlock"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageInputTextBlock"/>, <see cref="Azure.AI.Agents.Persistent.MessageInputImageFileBlock"/>, and <see cref="Azure.AI.Agents.Persistent.MessageInputImageUriBlock"/>.
         /// </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
-        /// <returns> A new <see cref="Persistent.MessageInputContentBlock"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageInputContentBlock"/> instance for mocking. </returns>
         public static MessageInputContentBlock MessageInputContentBlock(string @type = default)
         {
             return new UnknownMessageInputContentBlock(new MessageBlockType(@type), additionalBinaryDataProperties: null);
@@ -671,24 +671,24 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A text block in a new message, containing plain text content. </summary>
         /// <param name="text"> The plain text content for this block. </param>
-        /// <returns> A new <see cref="Persistent.MessageInputTextBlock"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageInputTextBlock"/> instance for mocking. </returns>
         public static MessageInputTextBlock MessageInputTextBlock(string text = default)
         {
-            return new MessageInputTextBlock(MessageBlockType.Text, additionalBinaryDataProperties: null, text);
+            return new MessageInputTextBlock(global::Azure.AI.Agents.Persistent.MessageBlockType.Text, additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> An image-file block in a new message, referencing an internally uploaded image by file ID. </summary>
         /// <param name="imageFile"> Information about the referenced image file, including file ID and optional detail level. </param>
-        /// <returns> A new <see cref="Persistent.MessageInputImageFileBlock"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageFileBlock"/> instance for mocking. </returns>
         public static MessageInputImageFileBlock MessageInputImageFileBlock(MessageImageFileParam imageFile = default)
         {
-            return new MessageInputImageFileBlock(MessageBlockType.ImageFile, additionalBinaryDataProperties: null, imageFile);
+            return new MessageInputImageFileBlock(global::Azure.AI.Agents.Persistent.MessageBlockType.ImageFile, additionalBinaryDataProperties: null, imageFile);
         }
 
         /// <summary> Defines how an internally uploaded image file is referenced when creating an image-file block. </summary>
         /// <param name="fileId"> The ID of the previously uploaded image file. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). </param>
-        /// <returns> A new <see cref="Persistent.MessageImageFileParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageImageFileParam"/> instance for mocking. </returns>
         public static MessageImageFileParam MessageImageFileParam(string fileId = default, ImageDetailLevel? detail = default)
         {
             return new MessageImageFileParam(fileId, detail, additionalBinaryDataProperties: null);
@@ -696,16 +696,16 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> An image-URL block in a new message, referencing an external image by URL. </summary>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
-        /// <returns> A new <see cref="Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
         public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = default)
         {
-            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, additionalBinaryDataProperties: null, imageUrl);
+            return new MessageInputImageUriBlock(global::Azure.AI.Agents.Persistent.MessageBlockType.ImageUrl, additionalBinaryDataProperties: null, imageUrl);
         }
 
         /// <summary> Defines how an external image URL is referenced when creating an image-URL block. </summary>
         /// <param name="uri"> The publicly accessible URL of the external image. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
-        /// <returns> A new <see cref="Persistent.MessageImageUriParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageImageUriParam"/> instance for mocking. </returns>
         public static MessageImageUriParam MessageImageUriParam(string uri = default, ImageDetailLevel? detail = default)
         {
             return new MessageImageUriParam(uri, detail, additionalBinaryDataProperties: null);
@@ -715,10 +715,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="fileId"> The ID of the file to attach to the message. </param>
         /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="tools"> The tools to add to this file. </param>
-        /// <returns> A new <see cref="Persistent.MessageAttachment"/> instance for mocking. </returns>
-        public static MessageAttachment MessageAttachment(string fileId = default, VectorStoreDataSource dataSource = default, IEnumerable<BinaryData> tools = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageAttachment"/> instance for mocking. </returns>
+        public static MessageAttachment MessageAttachment(string fileId = default, VectorStoreDataSource dataSource = default, IEnumerable<global::System.BinaryData> tools = default)
         {
-            tools ??= new ChangeTrackingList<BinaryData>();
+            tools ??= new ChangeTrackingList<global::System.BinaryData>();
 
             return new MessageAttachment(fileId, dataSource, tools.ToList(), additionalBinaryDataProperties: null);
         }
@@ -733,7 +733,7 @@ namespace Azure.AI.Agents.Persistent
         /// will be dropped to fit the context length of the model, `max_prompt_tokens`.
         /// </param>
         /// <param name="lastMessages"> The number of most recent messages from the thread when constructing the context for the run. </param>
-        /// <returns> A new <see cref="Persistent.Truncation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.Truncation"/> instance for mocking. </returns>
         public static Truncation Truncation(TruncationStrategy @type = default, int? lastMessages = default)
         {
             return new Truncation(@type, lastMessages, additionalBinaryDataProperties: null);
@@ -742,7 +742,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Specifies a tool the model should use. Use to force the model to call a specific tool. </summary>
         /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
         /// <param name="function"> The name of the function to call. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentsNamedToolChoice"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/> instance for mocking. </returns>
         public static PersistentAgentsNamedToolChoice PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type = default, PersistentAgentsFunctionName function = default)
         {
             return new PersistentAgentsNamedToolChoice(@type, function, additionalBinaryDataProperties: null);
@@ -750,7 +750,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The function name that will be used, if using the `function` tool. </summary>
         /// <param name="name"> The name of the function to call. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentsFunctionName"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsFunctionName"/> instance for mocking. </returns>
         public static PersistentAgentsFunctionName PersistentAgentsFunctionName(string name = default)
         {
             return new PersistentAgentsFunctionName(name, additionalBinaryDataProperties: null);
@@ -784,10 +784,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
-        /// <returns> A new <see cref="Persistent.ThreadRun"/> instance for mocking. </returns>
-        public static ThreadRun ThreadRun(string id = default, string threadId = default, string assistantId = default, RunStatus status = default, RequiredAction requiredAction = default, RunError lastError = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default, ToolResources toolResources = default, bool parallelToolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ThreadRun"/> instance for mocking. </returns>
+        public static ThreadRun ThreadRun(string id = default, string threadId = default, string assistantId = default, RunStatus status = default, RequiredAction requiredAction = default, RunError lastError = default, string model = default, string instructions = default, IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default, ToolResources toolResources = default, bool parallelToolCalls = default)
         {
-            tools ??= new ChangeTrackingList<ToolDefinition>();
+            tools ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ThreadRun(
@@ -824,10 +824,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a required action for an agent thread run to continue.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="Persistent.SubmitToolApprovalAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.SubmitToolOutputsAction"/> and <see cref="Azure.AI.Agents.Persistent.SubmitToolApprovalAction"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.RequiredAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RequiredAction"/> instance for mocking. </returns>
         public static RequiredAction RequiredAction(string @type = default)
         {
             return new UnknownRequiredAction(@type, additionalBinaryDataProperties: null);
@@ -835,11 +835,11 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a tool invocation needed by the model to continue a run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="Persistent.RequiredMcpToolCall"/>, and <see cref="Persistent.RequiredComputerUseToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RequiredFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RequiredMcpToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <returns> A new <see cref="Persistent.RequiredToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RequiredToolCall"/> instance for mocking. </returns>
         public static RequiredToolCall RequiredToolCall(string @type = default, string id = default)
         {
             return new UnknownRequiredToolCall(@type, additionalBinaryDataProperties: null, id);
@@ -850,7 +850,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="arguments"> The arguments to use when invoking the mcp tool, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         /// <param name="name"> The name of the function used on the MCP server. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
-        /// <returns> A new <see cref="Persistent.RequiredMcpToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RequiredMcpToolCall"/> instance for mocking. </returns>
         public static RequiredMcpToolCall RequiredMcpToolCall(string id = default, string arguments = default, string name = default, string serverLabel = default)
         {
             return new RequiredMcpToolCall(
@@ -865,7 +865,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
-        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/> instance for mocking. </returns>
         public static RequiredComputerUseToolCall RequiredComputerUseToolCall(string id = default, RequiredComputerUseToolCallDetails computerUsePreview = default)
         {
             return new RequiredComputerUseToolCall(default, additionalBinaryDataProperties: null, id, computerUsePreview);
@@ -874,20 +874,20 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The detailed information for a computer use tool invocation. </summary>
         /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
-        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCallDetails"/> instance for mocking. </returns>
-        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCallDetails"/> instance for mocking. </returns>
+        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks = default)
         {
-            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            pendingSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
 
             return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// An abstract representation of a computer use action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="Persistent.ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/>, and <see cref="Persistent.WaitAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.ClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DoubleClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DragAction"/>, <see cref="Azure.AI.Agents.Persistent.KeyPressAction"/>, <see cref="Azure.AI.Agents.Persistent.MoveAction"/>, <see cref="Azure.AI.Agents.Persistent.ScreenshotAction"/>, <see cref="Azure.AI.Agents.Persistent.ScrollAction"/>, <see cref="Azure.AI.Agents.Persistent.TypeAction"/>, and <see cref="Azure.AI.Agents.Persistent.WaitAction"/>.
         /// </summary>
         /// <param name="type"> The type of computer use action. </param>
-        /// <returns> A new <see cref="Persistent.ComputerUseAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ComputerUseAction"/> instance for mocking. </returns>
         public static ComputerUseAction ComputerUseAction(string @type = default)
         {
             return new UnknownComputerUseAction(@type, additionalBinaryDataProperties: null);
@@ -897,7 +897,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
         /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
-        /// <returns> A new <see cref="Persistent.ClickAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ClickAction"/> instance for mocking. </returns>
         public static ClickAction ClickAction(int x = default, int y = default, MouseButton button = default)
         {
             return new ClickAction("click", additionalBinaryDataProperties: null, x, y, button);
@@ -906,7 +906,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A double click action. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        /// <returns> A new <see cref="Persistent.DoubleClickAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.DoubleClickAction"/> instance for mocking. </returns>
         public static DoubleClickAction DoubleClickAction(int x = default, int y = default)
         {
             return new DoubleClickAction("double_click", additionalBinaryDataProperties: null, x, y);
@@ -914,10 +914,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A drag action. </summary>
         /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
-        /// <returns> A new <see cref="Persistent.DragAction"/> instance for mocking. </returns>
-        public static DragAction DragAction(IEnumerable<CoordinatePoint> path = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.DragAction"/> instance for mocking. </returns>
+        public static DragAction DragAction(IEnumerable<global::Azure.AI.Agents.Persistent.CoordinatePoint> path = default)
         {
-            path ??= new ChangeTrackingList<CoordinatePoint>();
+            path ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.CoordinatePoint>();
 
             return new DragAction("drag", additionalBinaryDataProperties: null, path.ToList());
         }
@@ -925,7 +925,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A coordinate point with x and y values. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
-        /// <returns> A new <see cref="Persistent.CoordinatePoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.CoordinatePoint"/> instance for mocking. </returns>
         public static CoordinatePoint CoordinatePoint(int x = default, int y = default)
         {
             return new CoordinatePoint(x, y, additionalBinaryDataProperties: null);
@@ -933,7 +933,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A collection of keypresses the model would like to perform. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        /// <returns> A new <see cref="Persistent.KeyPressAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.KeyPressAction"/> instance for mocking. </returns>
         public static KeyPressAction KeyPressAction(IEnumerable<string> keys = default)
         {
             keys ??= new ChangeTrackingList<string>();
@@ -944,14 +944,14 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A mouse move action. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        /// <returns> A new <see cref="Persistent.MoveAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MoveAction"/> instance for mocking. </returns>
         public static MoveAction MoveAction(int x = default, int y = default)
         {
             return new MoveAction("move", additionalBinaryDataProperties: null, x, y);
         }
 
         /// <summary> A screenshot action. </summary>
-        /// <returns> A new <see cref="Persistent.ScreenshotAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ScreenshotAction"/> instance for mocking. </returns>
         public static ScreenshotAction ScreenshotAction()
         {
             return new ScreenshotAction("screenshot", additionalBinaryDataProperties: null);
@@ -962,7 +962,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        /// <returns> A new <see cref="Persistent.ScrollAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ScrollAction"/> instance for mocking. </returns>
         public static ScrollAction ScrollAction(int x = default, int y = default, int scrollX = default, int scrollY = default)
         {
             return new ScrollAction(
@@ -976,14 +976,14 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> An action to type in text. </summary>
         /// <param name="text"> The text to type. </param>
-        /// <returns> A new <see cref="Persistent.TypeAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.TypeAction"/> instance for mocking. </returns>
         public static TypeAction TypeAction(string text = default)
         {
             return new TypeAction("type", additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> A wait action. </summary>
-        /// <returns> A new <see cref="Persistent.WaitAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.WaitAction"/> instance for mocking. </returns>
         public static WaitAction WaitAction()
         {
             return new WaitAction("wait", additionalBinaryDataProperties: null);
@@ -993,7 +993,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the pending safety check. </param>
         /// <param name="code"> The type of the pending safety check. </param>
         /// <param name="message"> Details about the pending safety check. </param>
-        /// <returns> A new <see cref="Persistent.SafetyCheck"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.SafetyCheck"/> instance for mocking. </returns>
         public static SafetyCheck SafetyCheck(string id = default, string code = default, string message = default)
         {
             return new SafetyCheck(id, code, message, additionalBinaryDataProperties: null);
@@ -1001,7 +1001,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The details for required tool call approval that must be submitted for an agent thread run to continue. </summary>
         /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
-        /// <returns> A new <see cref="Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
         public static SubmitToolApprovalAction SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval = default)
         {
             return new SubmitToolApprovalAction("submit_tool_approval", additionalBinaryDataProperties: null, submitToolApproval);
@@ -1009,10 +1009,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The details describing tools that should be approved. </summary>
         /// <param name="toolCalls"> The list of tool calls that must be approved for the agent thread run to continue. </param>
-        /// <returns> A new <see cref="Persistent.SubmitToolApprovalDetails"/> instance for mocking. </returns>
-        public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.SubmitToolApprovalDetails"/> instance for mocking. </returns>
+        public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RequiredToolCall> toolCalls = default)
         {
-            toolCalls ??= new ChangeTrackingList<RequiredToolCall>();
+            toolCalls ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RequiredToolCall>();
 
             return new SubmitToolApprovalDetails(toolCalls.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1020,7 +1020,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The details of an error as encountered by an agent thread run. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
-        /// <returns> A new <see cref="Persistent.RunError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunError"/> instance for mocking. </returns>
         public static RunError RunError(string code = default, string message = default)
         {
             return new RunError(code, message, additionalBinaryDataProperties: null);
@@ -1028,7 +1028,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </summary>
         /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
-        /// <returns> A new <see cref="Persistent.IncompleteRunDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.IncompleteRunDetails"/> instance for mocking. </returns>
         public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
         {
             return new IncompleteRunDetails(reason, additionalBinaryDataProperties: null);
@@ -1038,7 +1038,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
-        /// <returns> A new <see cref="Persistent.RunCompletionUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunCompletionUsage"/> instance for mocking. </returns>
         public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -1053,7 +1053,7 @@ namespace Azure.AI.Agents.Persistent
         /// of vector store IDs.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentThread"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentThread"/> instance for mocking. </returns>
         public static PersistentAgentThread PersistentAgentThread(string id = default, DateTimeOffset createdAt = default, ToolResources toolResources = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1081,11 +1081,11 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentThreadMessage"/> instance for mocking. </returns>
-        public static PersistentThreadMessage PersistentThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, MessageRole role = default, IEnumerable<MessageContent> contentItems = default, string assistantId = default, string runId = default, IEnumerable<MessageAttachment> attachments = default, IReadOnlyDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentThreadMessage"/> instance for mocking. </returns>
+        public static PersistentThreadMessage PersistentThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, MessageRole role = default, IEnumerable<global::Azure.AI.Agents.Persistent.MessageContent> contentItems = default, string assistantId = default, string runId = default, IEnumerable<global::Azure.AI.Agents.Persistent.MessageAttachment> attachments = default, IReadOnlyDictionary<string, string> metadata = default)
         {
-            contentItems ??= new ChangeTrackingList<MessageContent>();
-            attachments ??= new ChangeTrackingList<MessageAttachment>();
+            contentItems ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageContent>();
+            attachments ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageAttachment>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new PersistentThreadMessage(
@@ -1108,7 +1108,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Information providing additional detail about a message entering an incomplete status. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
-        /// <returns> A new <see cref="Persistent.MessageIncompleteDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageIncompleteDetails"/> instance for mocking. </returns>
         public static MessageIncompleteDetails MessageIncompleteDetails(MessageIncompleteDetailsReason reason = default)
         {
             return new MessageIncompleteDetails(reason, additionalBinaryDataProperties: null);
@@ -1116,10 +1116,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a single item of thread message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageTextContent"/> and <see cref="Azure.AI.Agents.Persistent.MessageImageFileContent"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.MessageContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageContent"/> instance for mocking. </returns>
         public static MessageContent MessageContent(string @type = default)
         {
             return new UnknownMessageContent(@type, additionalBinaryDataProperties: null);
@@ -1127,11 +1127,11 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an annotation to text thread message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <returns> A new <see cref="Persistent.MessageTextAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageTextAnnotation"/> instance for mocking. </returns>
         public static MessageTextAnnotation MessageTextAnnotation(string @type = default, string text = default)
         {
             return new UnknownMessageTextAnnotation(@type, text, additionalBinaryDataProperties: null);
@@ -1142,7 +1142,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageTextUriCitationAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageTextUriCitationAnnotation"/> instance for mocking. </returns>
         public static MessageTextUriCitationAnnotation MessageTextUriCitationAnnotation(string text = default, MessageTextUriCitationDetails uriCitation = default, int? startIndex = default, int? endIndex = default)
         {
             return new MessageTextUriCitationAnnotation(
@@ -1157,7 +1157,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A representation of a URL citation, as used in text thread message content. </summary>
         /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
-        /// <returns> A new <see cref="Persistent.MessageTextUriCitationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageTextUriCitationDetails"/> instance for mocking. </returns>
         public static MessageTextUriCitationDetails MessageTextUriCitationDetails(string uri = default, string title = default)
         {
             return new MessageTextUriCitationDetails(uri, title, additionalBinaryDataProperties: null);
@@ -1165,11 +1165,11 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ToolOutput"/> and <see cref="Persistent.ComputerToolOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.ToolOutput"/> and <see cref="Azure.AI.Agents.Persistent.ComputerToolOutput"/>.
         /// </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
-        /// <returns> A new <see cref="Persistent.StructuredToolOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.StructuredToolOutput"/> instance for mocking. </returns>
         public static StructuredToolOutput StructuredToolOutput(string @type = default, string toolCallId = default)
         {
             return new UnknownStructuredToolOutput(@type, toolCallId, additionalBinaryDataProperties: null);
@@ -1178,7 +1178,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The output from a function tool to be submitted. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="output"> The output from the function tool to be submitted. </param>
-        /// <returns> A new <see cref="Persistent.ToolOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ToolOutput"/> instance for mocking. </returns>
         public static ToolOutput ToolOutput(string toolCallId = default, string output = default)
         {
             return new ToolOutput("function_call_output", toolCallId, additionalBinaryDataProperties: null, output);
@@ -1188,10 +1188,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
-        /// <returns> A new <see cref="Persistent.ComputerToolOutput"/> instance for mocking. </returns>
-        public static ComputerToolOutput ComputerToolOutput(string toolCallId = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ComputerToolOutput"/> instance for mocking. </returns>
+        public static ComputerToolOutput ComputerToolOutput(string toolCallId = default, ComputerScreenshot output = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks = default)
         {
-            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
 
             return new ComputerToolOutput("computer_call_output", toolCallId, additionalBinaryDataProperties: null, output, acknowledgedSafetyChecks.ToList());
         }
@@ -1199,7 +1199,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The output from a computer use tool representing a screenshot. </summary>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="imageUrl"> The URL of the screenshot image. </param>
-        /// <returns> A new <see cref="Persistent.ComputerScreenshot"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ComputerScreenshot"/> instance for mocking. </returns>
         public static ComputerScreenshot ComputerScreenshot(string fileId = default, string imageUrl = default)
         {
             return new ComputerScreenshot("computer_screenshot", fileId, imageUrl, additionalBinaryDataProperties: null);
@@ -1209,7 +1209,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="approve"> The approval boolean value to be submitted. </param>
         /// <param name="headers"> Headers to be attached to the approval. </param>
-        /// <returns> A new <see cref="Persistent.ToolApproval"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ToolApproval"/> instance for mocking. </returns>
         public static ToolApproval ToolApproval(string toolCallId = default, bool approve = default, IDictionary<string, string> headers = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
@@ -1233,7 +1233,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
         /// <param name="usage"> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.RunStep"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStep"/> instance for mocking. </returns>
         public static RunStep RunStep(string id = default, RunStepType @type = default, string assistantId = default, string threadId = default, string runId = default, RunStepStatus status = default, RunStepDetails stepDetails = default, RunStepError lastError = default, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, RunStepCompletionUsage usage = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1260,10 +1260,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of the details for a run step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepMessageCreationDetails"/>, <see cref="Persistent.RunStepToolCallDetails"/>, and <see cref="Persistent.RunStepActivityDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepMessageCreationDetails"/>, <see cref="Azure.AI.Agents.Persistent.RunStepToolCallDetails"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepActivityDetails"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDetails"/> instance for mocking. </returns>
         public static RunStepDetails RunStepDetails(string @type = default)
         {
             return new UnknownRunStepDetails(new RunStepType(@type), additionalBinaryDataProperties: null);
@@ -1271,15 +1271,15 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The detailed information associated with a message creation run step. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMessageCreationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepMessageCreationDetails"/> instance for mocking. </returns>
         public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = default)
         {
-            return new RunStepMessageCreationDetails(RunStepType.MessageCreation, additionalBinaryDataProperties: null, messageCreation);
+            return new RunStepMessageCreationDetails(global::Azure.AI.Agents.Persistent.RunStepType.MessageCreation, additionalBinaryDataProperties: null, messageCreation);
         }
 
         /// <summary> The details of a message created as a part of a run step. </summary>
         /// <param name="messageId"> The ID of the message created by this run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMessageCreationReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepMessageCreationReference"/> instance for mocking. </returns>
         public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = default)
         {
             return new RunStepMessageCreationReference(messageId, additionalBinaryDataProperties: null);
@@ -1287,21 +1287,21 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The detailed information associated with a run step calling tools. </summary>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
+        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepToolCall> toolCalls = default)
         {
-            toolCalls ??= new ChangeTrackingList<RunStepToolCall>();
+            toolCalls ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepToolCall>();
 
-            return new RunStepToolCallDetails(RunStepType.ToolCalls, additionalBinaryDataProperties: null, toolCalls.ToList());
+            return new RunStepToolCallDetails(global::Azure.AI.Agents.Persistent.RunStepType.ToolCalls, additionalBinaryDataProperties: null, toolCalls.ToList());
         }
 
         /// <summary>
         /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepSharepointToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Persistent.RunStepConnectedAgentToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <returns> A new <see cref="Persistent.RunStepToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepToolCall"/> instance for mocking. </returns>
         public static RunStepToolCall RunStepToolCall(string @type = default, string id = default)
         {
             return new UnknownRunStepToolCall(@type, id, additionalBinaryDataProperties: null);
@@ -1309,10 +1309,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an emitted output from a code interpreter tool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepCodeInterpreterImageOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput"/> and <see cref="Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageOutput"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterToolCallOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterToolCallOutput RunStepCodeInterpreterToolCallOutput(string @type = default)
         {
             return new UnknownRunStepCodeInterpreterToolCallOutput(@type, additionalBinaryDataProperties: null);
@@ -1320,7 +1320,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A representation of a log output emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = default)
         {
             return new RunStepCodeInterpreterLogOutput("logs", additionalBinaryDataProperties: null, logs);
@@ -1328,7 +1328,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A representation of an image output emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = default)
         {
             return new RunStepCodeInterpreterImageOutput("image", additionalBinaryDataProperties: null, image);
@@ -1336,7 +1336,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> An image reference emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
-        /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = default)
         {
             return new RunStepCodeInterpreterImageReference(fileId, additionalBinaryDataProperties: null);
@@ -1348,7 +1348,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="fileSearch"> For now, this is always going to be an empty object. </param>
-        /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/> instance for mocking. </returns>
         public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = default, RunStepFileSearchToolCallResults fileSearch = default)
         {
             return new RunStepFileSearchToolCall("file_search", additionalBinaryDataProperties: null, id, fileSearch);
@@ -1357,10 +1357,10 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The results of the file search. </summary>
         /// <param name="rankingOptions"> Ranking options for file search. </param>
         /// <param name="results"> The array of a file search results. </param>
-        /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCallResults"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCallResults RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions = default, IEnumerable<RunStepFileSearchToolCallResult> results = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults"/> instance for mocking. </returns>
+        public static RunStepFileSearchToolCallResults RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions = default, IEnumerable<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> results = default)
         {
-            results ??= new ChangeTrackingList<RunStepFileSearchToolCallResult>();
+            results ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult>();
 
             return new RunStepFileSearchToolCallResults(rankingOptions, results.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1370,17 +1370,17 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="fileName"> The name of the file that result was found in. </param>
         /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
         /// <param name="content"> The content of the result that was found. The content is only included if requested via the include query parameter. </param>
-        /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCallResult"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = default, string fileName = default, float score = default, IEnumerable<FileSearchToolCallContent> content = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult"/> instance for mocking. </returns>
+        public static RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = default, string fileName = default, float score = default, IEnumerable<global::Azure.AI.Agents.Persistent.FileSearchToolCallContent> content = default)
         {
-            content ??= new ChangeTrackingList<FileSearchToolCallContent>();
+            content ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.FileSearchToolCallContent>();
 
             return new RunStepFileSearchToolCallResult(fileId, fileName, score, content.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The file search result content object. </summary>
         /// <param name="text"> The text content of the file. </param>
-        /// <returns> A new <see cref="Persistent.FileSearchToolCallContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolCallContent"/> instance for mocking. </returns>
         public static FileSearchToolCallContent FileSearchToolCallContent(string text = default)
         {
             return new FileSearchToolCallContent("FileSearchToolCallContentType.Text", text, additionalBinaryDataProperties: null);
@@ -1392,7 +1392,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
         public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = default, IReadOnlyDictionary<string, string> bingGrounding = default)
         {
             bingGrounding ??= new ChangeTrackingDictionary<string, string>();
@@ -1406,7 +1406,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepAzureAISearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall"/> instance for mocking. </returns>
         public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = default, IReadOnlyDictionary<string, string> azureAISearch = default)
         {
             azureAISearch ??= new ChangeTrackingDictionary<string, string>();
@@ -1417,7 +1417,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="browserAutomation"> Details of the browser automation tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepBrowserAutomationToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepBrowserAutomationToolCall"/> instance for mocking. </returns>
         public static RunStepBrowserAutomationToolCall RunStepBrowserAutomationToolCall(string id = default, BrowserAutomationToolCallDetails browserAutomation = default)
         {
             return new RunStepBrowserAutomationToolCall("browser_automation", id, additionalBinaryDataProperties: null, browserAutomation);
@@ -1427,10 +1427,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="input"> The input provided to the Browser Automation tool. </param>
         /// <param name="output"> The output returned by the Browser Automation tool. </param>
         /// <param name="steps"> The steps the Browser Automation tool executed. </param>
-        /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallDetails"/> instance for mocking. </returns>
-        public static BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = default, string output = default, IEnumerable<BrowserAutomationToolCallStep> steps = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallDetails"/> instance for mocking. </returns>
+        public static BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = default, string output = default, IEnumerable<global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep> steps = default)
         {
-            steps ??= new ChangeTrackingList<BrowserAutomationToolCallStep>();
+            steps ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep>();
 
             return new BrowserAutomationToolCallDetails(input, output, steps.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1439,7 +1439,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastStepResult"> The result of the last step executed with the Browser. </param>
         /// <param name="currentState"> The current state of execution with the Browser. </param>
         /// <param name="nextStep"> The next step to execute with the Browser. </param>
-        /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallStep"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep"/> instance for mocking. </returns>
         public static BrowserAutomationToolCallStep BrowserAutomationToolCallStep(string lastStepResult = default, string currentState = default, string nextStep = default)
         {
             return new BrowserAutomationToolCallStep(lastStepResult, currentState, nextStep, additionalBinaryDataProperties: null);
@@ -1454,7 +1454,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="name"> Name of the function used on the MCP server. </param>
         /// <param name="output"> Output of the MCP tool call. </param>
         /// <param name="serverLabel"> The label for the MCP server. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMcpToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepMcpToolCall"/> instance for mocking. </returns>
         public static RunStepMcpToolCall RunStepMcpToolCall(string id = default, string arguments = default, string name = default, string output = default, string serverLabel = default)
         {
             return new RunStepMcpToolCall(
@@ -1473,7 +1473,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="computerUsePreview"> The detailed information about the computer use tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCall"/> instance for mocking. </returns>
         public static RunStepComputerUseToolCall RunStepComputerUseToolCall(string id = default, RunStepComputerUseToolCallDetails computerUsePreview = default)
         {
             return new RunStepComputerUseToolCall("computer_use_preview", id, additionalBinaryDataProperties: null, computerUsePreview);
@@ -1484,11 +1484,11 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
-        /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepComputerUseToolCallDetails RunStepComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails"/> instance for mocking. </returns>
+        public static RunStepComputerUseToolCallDetails RunStepComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks = default)
         {
-            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
-            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            pendingSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
 
             return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks.ToList(), output, acknowledgedSafetyChecks.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="sharePoint"> SharePoint tool input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
         public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = default, IDictionary<string, string> sharePoint = default)
         {
             sharePoint ??= new ChangeTrackingDictionary<string, string>();
@@ -1513,7 +1513,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
         public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = default, IDictionary<string, string> microsoftFabric = default)
         {
             microsoftFabric ??= new ChangeTrackingDictionary<string, string>();
@@ -1527,7 +1527,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
         public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = default, IDictionary<string, string> bingCustomSearch = default)
         {
             bingCustomSearch ??= new ChangeTrackingDictionary<string, string>();
@@ -1538,7 +1538,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A record of a call to an Azure Function tool. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureFunction"> The description of an Azure function call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepAzureFunctionToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/> instance for mocking. </returns>
         public static RunStepAzureFunctionToolCall RunStepAzureFunctionToolCall(string id = default, AzureFunctionToolCallDetails azureFunction = default)
         {
             return new RunStepAzureFunctionToolCall("azure_function", id, additionalBinaryDataProperties: null, azureFunction);
@@ -1551,7 +1551,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="name"> The Azure function name. </param>
         /// <param name="arguments"> JSON serialized function arguments. </param>
         /// <param name="output"> The function output. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionToolCallDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.AzureFunctionToolCallDetails"/> instance for mocking. </returns>
         public static AzureFunctionToolCallDetails AzureFunctionToolCallDetails(string name = default, string arguments = default, string output = default)
         {
             return new AzureFunctionToolCallDetails(name, arguments, output, additionalBinaryDataProperties: null);
@@ -1563,7 +1563,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
         public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = default, IReadOnlyDictionary<string, string> openAPI = default)
         {
             openAPI ??= new ChangeTrackingDictionary<string, string>();
@@ -1577,7 +1577,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="deepResearch"> The detailed information about the automated browser tasks performed by the model. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall"/> instance for mocking. </returns>
         public static RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = default, RunStepDeepResearchToolCallDetails deepResearch = default)
         {
             return new RunStepDeepResearchToolCall("deep_research", id, additionalBinaryDataProperties: null, deepResearch);
@@ -1586,7 +1586,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The detailed information about the deep research tasks performed by the model. </summary>
         /// <param name="input"> The input provided by the model to the deep research tool. </param>
         /// <param name="output"> The final output for the deep research tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCallDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails"/> instance for mocking. </returns>
         public static RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = default, string output = default)
         {
             return new RunStepDeepResearchToolCallDetails(input, output, additionalBinaryDataProperties: null);
@@ -1595,7 +1595,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A record of a call to the connected agent. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="connectedAgent"> The connected agent step information. </param>
-        /// <returns> A new <see cref="Persistent.RunStepConnectedAgentToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/> instance for mocking. </returns>
         public static RunStepConnectedAgentToolCall RunStepConnectedAgentToolCall(string id = default, RunStepConnectedAgent connectedAgent = default)
         {
             return new RunStepConnectedAgentToolCall("connected_agent", id, additionalBinaryDataProperties: null, connectedAgent);
@@ -1608,7 +1608,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="runId"> The run ID used by the connected agent. </param>
         /// <param name="threadId"> The thread ID used by the connected agent. </param>
         /// <param name="agentId"> The ID of a connected agent. </param>
-        /// <returns> A new <see cref="Persistent.RunStepConnectedAgent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgent"/> instance for mocking. </returns>
         public static RunStepConnectedAgent RunStepConnectedAgent(string name = default, string arguments = default, string output = default, string runId = default, string threadId = default, string agentId = default)
         {
             return new RunStepConnectedAgent(
@@ -1623,22 +1623,22 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The detailed information associated with a run step activities. </summary>
         /// <param name="activities"> A list of activities for this run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
-        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
+        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDetailsActivity> activities = default)
         {
-            activities ??= new ChangeTrackingList<RunStepDetailsActivity>();
+            activities ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDetailsActivity>();
 
-            return new RunStepActivityDetails(RunStepType.Activities, additionalBinaryDataProperties: null, activities.ToList());
+            return new RunStepActivityDetails(global::Azure.AI.Agents.Persistent.RunStepType.Activities, additionalBinaryDataProperties: null, activities.ToList());
         }
 
         /// <summary> Represents the list of activities, associated with the given step. </summary>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
-        public static RunStepDetailsActivity RunStepDetailsActivity(string id = default, string serverLabel = default, IDictionary<string, ActivityFunctionDefinition> tools = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
+        public static RunStepDetailsActivity RunStepDetailsActivity(string id = default, string serverLabel = default, IDictionary<string, global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition> tools = default)
         {
-            tools ??= new ChangeTrackingDictionary<string, ActivityFunctionDefinition>();
+            tools ??= new ChangeTrackingDictionary<string, global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition>();
 
             return new RunStepDetailsActivity("mcp_list_tools", id, serverLabel, tools, additionalBinaryDataProperties: null);
         }
@@ -1646,7 +1646,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The activity definition information for a function. </summary>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Persistent.ActivityFunctionDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionDefinition"/> instance for mocking. </returns>
         public static ActivityFunctionDefinition ActivityFunctionDefinition(string description = default, ActivityFunctionParameters parameters = default)
         {
             return new ActivityFunctionDefinition(description, parameters, additionalBinaryDataProperties: null);
@@ -1656,10 +1656,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
         /// <param name="additionalProperties"> If true the function has additional parameters. </param>
-        /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
-        public static ActivityFunctionParameters ActivityFunctionParameters(IDictionary<string, FunctionArgument> properties = default, IEnumerable<string> @required = default, bool? additionalProperties = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
+        public static ActivityFunctionParameters ActivityFunctionParameters(IDictionary<string, global::Azure.AI.Agents.Persistent.FunctionArgument> properties = default, IEnumerable<string> @required = default, bool? additionalProperties = default)
         {
-            properties ??= new ChangeTrackingDictionary<string, FunctionArgument>();
+            properties ??= new ChangeTrackingDictionary<string, global::Azure.AI.Agents.Persistent.FunctionArgument>();
             @required ??= new ChangeTrackingList<string>();
 
             return new ActivityFunctionParameters("object", properties, @required.ToList(), additionalProperties, additionalBinaryDataProperties: null);
@@ -1668,7 +1668,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The function argument and description. </summary>
         /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <param name="description"> The argument description. </param>
-        /// <returns> A new <see cref="Persistent.FunctionArgument"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.FunctionArgument"/> instance for mocking. </returns>
         public static FunctionArgument FunctionArgument(string @type = default, string description = default)
         {
             return new FunctionArgument(@type, description, additionalBinaryDataProperties: null);
@@ -1677,7 +1677,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The error information associated with a failed run step. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>
-        /// <returns> A new <see cref="Persistent.RunStepError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepError"/> instance for mocking. </returns>
         public static RunStepError RunStepError(RunStepErrorCode code = default, string message = default)
         {
             return new RunStepError(code, message, additionalBinaryDataProperties: null);
@@ -1687,7 +1687,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run step. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run step. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
-        /// <returns> A new <see cref="Persistent.RunStepCompletionUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepCompletionUsage"/> instance for mocking. </returns>
         public static RunStepCompletionUsage RunStepCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -1701,7 +1701,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="purpose"> The intended purpose of a file. </param>
         /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
         /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentFileInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/> instance for mocking. </returns>
         public static PersistentAgentFileInfo PersistentAgentFileInfo(string id = default, int size = default, string filename = default, DateTimeOffset createdAt = default, PersistentAgentFilePurpose purpose = default, FileState? status = default, string statusDetails = default)
         {
             return new PersistentAgentFileInfo(
@@ -1727,7 +1727,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="expiresAt"> The Unix timestamp (in seconds) for when the vector store will expire. </param>
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
         public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = default, DateTimeOffset createdAt = default, string name = default, int usageBytes = default, VectorStoreFileCount fileCounts = default, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = default, DateTimeOffset? expiresAt = default, DateTimeOffset? lastActiveAt = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1753,7 +1753,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="failed"> The number of files that have failed to process. </param>
         /// <param name="cancelled"> The number of files that were cancelled. </param>
         /// <param name="total"> The total number of files. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileCount"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileCount"/> instance for mocking. </returns>
         public static VectorStoreFileCount VectorStoreFileCount(int inProgress = default, int completed = default, int failed = default, int cancelled = default, int total = default)
         {
             return new VectorStoreFileCount(
@@ -1768,7 +1768,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The expiration policy for a vector store. </summary>
         /// <param name="anchor"> Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`. </param>
         /// <param name="days"> The anchor timestamp after which the expiration policy applies. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreExpirationPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy"/> instance for mocking. </returns>
         public static VectorStoreExpirationPolicy VectorStoreExpirationPolicy(VectorStoreExpirationPolicyAnchor anchor = default, int days = default)
         {
             return new VectorStoreExpirationPolicy(anchor, days, additionalBinaryDataProperties: null);
@@ -1776,28 +1776,28 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a vector store chunking strategy configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.VectorStoreAutoChunkingStrategy"/> and <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategy"/> and <see cref="Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyRequest"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreChunkingStrategy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy"/> instance for mocking. </returns>
         public static VectorStoreChunkingStrategy VectorStoreChunkingStrategy(string @type = default)
         {
             return new UnknownVectorStoreChunkingStrategy(new VectorStoreChunkingStrategyRequestType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The default strategy. This strategy currently uses a max_chunk_size_tokens of 800 and chunk_overlap_tokens of 400. </summary>
-        /// <returns> A new <see cref="Persistent.VectorStoreAutoChunkingStrategy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategy"/> instance for mocking. </returns>
         public static VectorStoreAutoChunkingStrategy VectorStoreAutoChunkingStrategy()
         {
-            return new VectorStoreAutoChunkingStrategy(VectorStoreChunkingStrategyRequestType.Auto, additionalBinaryDataProperties: null);
+            return new VectorStoreAutoChunkingStrategy(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyRequestType.Auto, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A statically configured chunking strategy. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
         public static VectorStoreStaticChunkingStrategyRequest VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static = default)
         {
-            return new VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType.Static, additionalBinaryDataProperties: null, @static);
+            return new VectorStoreStaticChunkingStrategyRequest(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyRequestType.Static, additionalBinaryDataProperties: null, @static);
         }
 
         /// <summary> Options to configure a vector store static chunking strategy. </summary>
@@ -1806,7 +1806,7 @@ namespace Azure.AI.Agents.Persistent
         /// The number of tokens that overlap between chunks. The default value is 400.
         /// Note that the overlap must not exceed half of max_chunk_size_tokens.
         /// </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyOptions"/> instance for mocking. </returns>
         public static VectorStoreStaticChunkingStrategyOptions VectorStoreStaticChunkingStrategyOptions(int maxChunkSizeTokens = default, int chunkOverlapTokens = default)
         {
             return new VectorStoreStaticChunkingStrategyOptions(maxChunkSizeTokens, chunkOverlapTokens, additionalBinaryDataProperties: null);
@@ -1823,7 +1823,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The status of the vector store file, which can be either `in_progress`, `completed`, `cancelled`, or `failed`. The status `completed` indicates that the vector store file is ready for use. </param>
         /// <param name="lastError"> The last error associated with this vector store file. Will be `null` if there are no errors. </param>
         /// <param name="chunkingStrategy"> The strategy used to chunk the file. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFile"/> instance for mocking. </returns>
         public static VectorStoreFile VectorStoreFile(string id = default, int usageBytes = default, DateTimeOffset createdAt = default, string vectorStoreId = default, VectorStoreFileStatus status = default, VectorStoreFileError lastError = default, VectorStoreChunkingStrategyResponse chunkingStrategy = default)
         {
             return new VectorStoreFile(
@@ -1841,7 +1841,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Details on the error that may have occurred while processing a file for this vector store. </summary>
         /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
         /// <param name="message"> A human-readable description of the error. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileError"/> instance for mocking. </returns>
         public static VectorStoreFileError VectorStoreFileError(VectorStoreFileErrorCode code = default, string message = default)
         {
             return new VectorStoreFileError(code, message, additionalBinaryDataProperties: null);
@@ -1849,28 +1849,28 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a vector store chunking strategy configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreChunkingStrategyResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse"/> instance for mocking. </returns>
         public static VectorStoreChunkingStrategyResponse VectorStoreChunkingStrategyResponse(string @type = default)
         {
             return new UnknownVectorStoreChunkingStrategyResponse(new VectorStoreChunkingStrategyResponseType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the chunking_strategy concept was introduced in the API. </summary>
-        /// <returns> A new <see cref="Persistent.VectorStoreAutoChunkingStrategyResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse"/> instance for mocking. </returns>
         public static VectorStoreAutoChunkingStrategyResponse VectorStoreAutoChunkingStrategyResponse()
         {
-            return new VectorStoreAutoChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Other, additionalBinaryDataProperties: null);
+            return new VectorStoreAutoChunkingStrategyResponse(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponseType.Other, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A statically configured chunking strategy. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
         public static VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static = default)
         {
-            return new VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Static, additionalBinaryDataProperties: null, @static);
+            return new VectorStoreStaticChunkingStrategyResponse(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponseType.Static, additionalBinaryDataProperties: null, @static);
         }
 
         /// <summary> A batch of files attached to a vector store. </summary>
@@ -1879,7 +1879,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
         /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
         /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileBatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatch"/> instance for mocking. </returns>
         public static VectorStoreFileBatch VectorStoreFileBatch(string id = default, DateTimeOffset createdAt = default, string vectorStoreId = default, VectorStoreFileBatchStatus status = default, VectorStoreFileCount fileCounts = default)
         {
             return new VectorStoreFileBatch(
@@ -1894,7 +1894,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents the 'image_file' payload within streaming image file content. </summary>
         /// <param name="fileId"> The file ID of the image in the message content. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
         public static MessageDeltaImageFileContentObject MessageDeltaImageFileContentObject(string fileId = default)
         {
             return new MessageDeltaImageFileContentObject(fileId, additionalBinaryDataProperties: null);
@@ -1903,7 +1903,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a streamed image file content part within a streaming message delta chunk. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="imageFile"> The image_file data. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaImageFileContent"/> instance for mocking. </returns>
         public static MessageDeltaImageFileContent MessageDeltaImageFileContent(int index = default, MessageDeltaImageFileContentObject imageFile = default)
         {
             return new MessageDeltaImageFileContent(index, "image_file", additionalBinaryDataProperties: null, imageFile);
@@ -1911,11 +1911,11 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The abstract base representation of a partial streamed message content payload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaImageFileContent"/> and <see cref="Persistent.MessageDeltaTextContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageDeltaImageFileContent"/> and <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextContent"/>.
         /// </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaContent"/> instance for mocking. </returns>
         public static MessageDeltaContent MessageDeltaContent(int index = default, string @type = default)
         {
             return new UnknownMessageDeltaContent(index, @type, additionalBinaryDataProperties: null);
@@ -1924,7 +1924,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a streamed text content part within a streaming message delta chunk. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="text"> The text content details. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextContent"/> instance for mocking. </returns>
         public static MessageDeltaTextContent MessageDeltaTextContent(int index = default, MessageDeltaTextContentObject text = default)
         {
             return new MessageDeltaTextContent(index, "text", additionalBinaryDataProperties: null, text);
@@ -1933,21 +1933,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents the data of a streamed text content part within a streaming message delta chunk. </summary>
         /// <param name="value"> The data that makes up the text. </param>
         /// <param name="annotations"> Annotations for the text. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextContentObject"/> instance for mocking. </returns>
-        public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = default, IEnumerable<MessageDeltaTextAnnotation> annotations = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextContentObject"/> instance for mocking. </returns>
+        public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = default, IEnumerable<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation> annotations = default)
         {
-            annotations ??= new ChangeTrackingList<MessageDeltaTextAnnotation>();
+            annotations ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>();
 
             return new MessageDeltaTextContentObject(value, annotations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// The abstract base representation of a streamed text content part's text annotation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/>.
         /// </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string @type = default)
         {
             return new UnknownMessageDeltaTextAnnotation(index, @type, additionalBinaryDataProperties: null);
@@ -1958,7 +1958,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextUriCitationAnnotation MessageDeltaTextUriCitationAnnotation(int index = default, MessageDeltaTextUriCitationDetails uriCitation = default, int? startIndex = default, int? endIndex = default)
         {
             return new MessageDeltaTextUriCitationAnnotation(
@@ -1973,7 +1973,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A representation of a URL citation, as used in text thread message content. </summary>
         /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationDetails"/> instance for mocking. </returns>
         public static MessageDeltaTextUriCitationDetails MessageDeltaTextUriCitationDetails(string uri = default, string title = default)
         {
             return new MessageDeltaTextUriCitationDetails(uri, title, additionalBinaryDataProperties: null);
@@ -1985,7 +1985,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextFileCitationAnnotation MessageDeltaTextFileCitationAnnotation(int index = default, MessageDeltaTextFileCitationAnnotationObject fileCitation = default, string text = default, int? startIndex = default, int? endIndex = default)
         {
             return new MessageDeltaTextFileCitationAnnotation(
@@ -2001,7 +2001,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents the data of a streamed file citation as applied to a streaming text content part. </summary>
         /// <param name="fileId"> The ID of the specific file the citation is from. </param>
         /// <param name="quote"> The specific quote in the cited file. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
         public static MessageDeltaTextFileCitationAnnotationObject MessageDeltaTextFileCitationAnnotationObject(string fileId = default, string quote = default)
         {
             return new MessageDeltaTextFileCitationAnnotationObject(fileId, quote, additionalBinaryDataProperties: null);
@@ -2013,7 +2013,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextFilePathAnnotation MessageDeltaTextFilePathAnnotation(int index = default, MessageDeltaTextFilePathAnnotationObject filePath = default, int? startIndex = default, int? endIndex = default, string text = default)
         {
             return new MessageDeltaTextFilePathAnnotation(
@@ -2028,7 +2028,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents the data of a streamed file path annotation as applied to a streaming text content part. </summary>
         /// <param name="fileId"> The file ID for the annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
         public static MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = default)
         {
             return new MessageDeltaTextFilePathAnnotationObject(fileId, additionalBinaryDataProperties: null);
@@ -2037,10 +2037,10 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents the typed 'delta' payload within a streaming message delta chunk. </summary>
         /// <param name="role"> The entity that produced the message. </param>
         /// <param name="content"> The content of the message as an array of text and/or images. </param>
-        /// <returns> A new <see cref="Persistent.MessageDelta"/> instance for mocking. </returns>
-        public static MessageDelta MessageDelta(MessageRole role = default, IEnumerable<MessageDeltaContent> content = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDelta"/> instance for mocking. </returns>
+        public static MessageDelta MessageDelta(MessageRole role = default, IEnumerable<global::Azure.AI.Agents.Persistent.MessageDeltaContent> content = default)
         {
-            content ??= new ChangeTrackingList<MessageDeltaContent>();
+            content ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageDeltaContent>();
 
             return new MessageDelta(role, content.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2048,7 +2048,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a message delta i.e. any changed fields on a message during streaming. </summary>
         /// <param name="id"> The identifier of the message, which can be referenced in API endpoints. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaChunk"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaChunk"/> instance for mocking. </returns>
         public static MessageDeltaChunk MessageDeltaChunk(string id = default, MessageDelta delta = default)
         {
             return new MessageDeltaChunk(id, "MessageDeltaChunkObject.ThreadMessageDelta", delta, additionalBinaryDataProperties: null);
@@ -2056,7 +2056,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents the data within a streaming run step message creation response object. </summary>
         /// <param name="messageId"> The ID of the newly-created message. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
         public static RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = default)
         {
             return new RunStepDeltaMessageCreationObject(messageId, additionalBinaryDataProperties: null);
@@ -2066,7 +2066,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments passed to the function as input. </param>
         /// <param name="output"> The output of the function, null if outputs have not yet been submitted. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFunction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaFunction"/> instance for mocking. </returns>
         public static RunStepDeltaFunction RunStepDeltaFunction(string name = default, string arguments = default, string output = default)
         {
             return new RunStepDeltaFunction(name, arguments, output, additionalBinaryDataProperties: null);
@@ -2075,7 +2075,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a log output as produced by the Code Interpreter tool and as represented in a streaming run step's delta tool calls collection. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="logs"> The text output from the Code Interpreter tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = default, string logs = default)
         {
             return new RunStepDeltaCodeInterpreterLogOutput(index, "logs", additionalBinaryDataProperties: null, logs);
@@ -2083,11 +2083,11 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The abstract base representation of a streaming run step tool call's Code Interpreter tool output.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterImageOutput"/>.
         /// </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = default, string @type = default)
         {
             return new UnknownRunStepDeltaCodeInterpreterOutput(index, @type, additionalBinaryDataProperties: null);
@@ -2096,7 +2096,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents an image output as produced the Code interpreter tool and as represented in a streaming run step's delta tool calls collection. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="image"> The image data for the Code Interpreter tool call output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterImageOutput RunStepDeltaCodeInterpreterImageOutput(int index = default, RunStepDeltaCodeInterpreterImageOutputObject image = default)
         {
             return new RunStepDeltaCodeInterpreterImageOutput(index, "image", additionalBinaryDataProperties: null, image);
@@ -2104,7 +2104,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents the data for a streaming run step's Code Interpreter tool call image output. </summary>
         /// <param name="fileId"> The file ID for the image. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterImageOutputObject RunStepDeltaCodeInterpreterImageOutputObject(string fileId = default)
         {
             return new RunStepDeltaCodeInterpreterImageOutputObject(fileId, additionalBinaryDataProperties: null);
@@ -2113,7 +2113,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Represents a run step delta i.e. any changed fields on a run step during streaming. </summary>
         /// <param name="id"> The identifier of the run step, which can be referenced in API endpoints. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaChunk"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaChunk"/> instance for mocking. </returns>
         public static RunStepDeltaChunk RunStepDeltaChunk(string id = default, RunStepDelta delta = default)
         {
             return new RunStepDeltaChunk(id, "RunStepDeltaChunkObject.ThreadRunStepDelta", delta, additionalBinaryDataProperties: null);
@@ -2121,7 +2121,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents the delta payload in a streaming run step delta chunk. </summary>
         /// <param name="stepDetails"> The details of the run step. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDelta"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDelta"/> instance for mocking. </returns>
         public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = default)
         {
             return new RunStepDelta(stepDetails, additionalBinaryDataProperties: null);
@@ -2129,10 +2129,10 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// Represents a single run step detail item in a streaming run step's delta payload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaToolCallObject"/>, <see cref="Persistent.RunStepDeltaMCPObject"/>, and <see cref="Persistent.RunStepDeltaOpenAPIObject"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/>.
         /// </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaDetail"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaDetail"/> instance for mocking. </returns>
         public static RunStepDeltaDetail RunStepDeltaDetail(string @type = default)
         {
             return new UnknownRunStepDeltaDetail(@type, additionalBinaryDataProperties: null);
@@ -2140,7 +2140,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents a message creation within a streaming run step delta. </summary>
         /// <param name="messageCreation"> The message creation data. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
         public static RunStepDeltaMessageCreation RunStepDeltaMessageCreation(RunStepDeltaMessageCreationObject messageCreation = default)
         {
             return new RunStepDeltaMessageCreation("message_creation", additionalBinaryDataProperties: null, messageCreation);
@@ -2148,22 +2148,22 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents an invocation of tool calls as part of a streaming run step. </summary>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
-        public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
+        public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall> toolCalls = default)
         {
-            toolCalls ??= new ChangeTrackingList<RunStepDeltaToolCall>();
+            toolCalls ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall>();
 
             return new RunStepDeltaToolCallObject("tool_calls", additionalBinaryDataProperties: null, toolCalls.ToList());
         }
 
         /// <summary>
         /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Azure.AI.Agents.Persistent.RunStepDeltaSharepointToolCall"/>.
         /// </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaToolCall RunStepDeltaToolCall(int index = default, string id = default, string @type = default)
         {
             return new UnknownRunStepDeltaToolCall(index, id, @type, additionalBinaryDataProperties: null);
@@ -2173,7 +2173,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="index"> The index of a response. </param>
         /// <param name="arguments"> The arguments for MCP call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(string id = default, int index = default, string arguments = default)
         {
             return new RunStepDeltaMcpToolCall(id, "mcp", additionalBinaryDataProperties: null, index, arguments);
@@ -2183,7 +2183,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = default, string id = default, IDictionary<string, string> openAPI = default)
         {
             openAPI ??= new ChangeTrackingDictionary<string, string>();
@@ -2195,7 +2195,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="connectedAgent"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaConnectedAgentToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaConnectedAgentToolCall RunStepDeltaConnectedAgentToolCall(int index = default, string id = default, RunStepConnectedAgent connectedAgent = default)
         {
             return new RunStepDeltaConnectedAgentToolCall(index, id, "connected_agent", additionalBinaryDataProperties: null, connectedAgent);
@@ -2205,7 +2205,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="function"> The function data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = default, string id = default, RunStepDeltaFunction function = default)
         {
             return new RunStepDeltaFunctionToolCall(index, id, "function", additionalBinaryDataProperties: null, function);
@@ -2215,7 +2215,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = default, RunStepFileSearchToolCallResults fileSearch = default)
         {
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", additionalBinaryDataProperties: null, fileSearch);
@@ -2225,7 +2225,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="codeInterpreter"> The Code Interpreter data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = default, string id = default, RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = default)
         {
             return new RunStepDeltaCodeInterpreterToolCall(index, id, "code_interpreter", additionalBinaryDataProperties: null, codeInterpreter);
@@ -2238,10 +2238,10 @@ namespace Azure.AI.Agents.Persistent
         /// items, including text (`logs`) or images (`image`). Each of these are represented by a
         /// different object type.
         /// </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = default, IEnumerable<RunStepDeltaCodeInterpreterOutput> outputs = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = default, IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput> outputs = default)
         {
-            outputs ??= new ChangeTrackingList<RunStepDeltaCodeInterpreterOutput>();
+            outputs ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput>();
 
             return new RunStepDeltaCodeInterpreterDetailItemObject(input, outputs.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2250,7 +2250,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaBingGroundingToolCall RunStepDeltaBingGroundingToolCall(int index = default, string id = default, IDictionary<string, string> bingGrounding = default)
         {
             bingGrounding ??= new ChangeTrackingDictionary<string, string>();
@@ -2262,7 +2262,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCustomBingGroundingToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaCustomBingGroundingToolCall RunStepDeltaCustomBingGroundingToolCall(int index = default, string id = default, IDictionary<string, string> bingCustomSearch = default)
         {
             bingCustomSearch ??= new ChangeTrackingDictionary<string, string>();
@@ -2274,7 +2274,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="azureFunction"> Partial description of an Azure function call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaAzureFunctionToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaAzureFunctionToolCall RunStepDeltaAzureFunctionToolCall(int index = default, string id = default, AzureFunctionToolCallDetails azureFunction = default)
         {
             return new RunStepDeltaAzureFunctionToolCall(index, id, "azure_function", additionalBinaryDataProperties: null, azureFunction);
@@ -2284,7 +2284,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="deepResearch"> The details of DeepResearch tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaDeepResearchToolCall RunStepDeltaDeepResearchToolCall(int index = default, string id = default, RunStepDeepResearchToolCallDetails deepResearch = default)
         {
             return new RunStepDeltaDeepResearchToolCall(index, id, "deep_research", additionalBinaryDataProperties: null, deepResearch);
@@ -2294,7 +2294,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaAzureAISearchToolCall RunStepDeltaAzureAISearchToolCall(int index = default, string id = default, IDictionary<string, string> azureAISearch = default)
         {
             azureAISearch ??= new ChangeTrackingDictionary<string, string>();
@@ -2306,7 +2306,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="computerUsePreview"> The computer use data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaComputerUseToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaComputerUseToolCall RunStepDeltaComputerUseToolCall(int index = default, string id = default, RunStepDeltaComputerUseDetails computerUsePreview = default)
         {
             return new RunStepDeltaComputerUseToolCall(index, id, "computer_use_preview", additionalBinaryDataProperties: null, computerUsePreview);
@@ -2317,11 +2317,11 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="output"> The output from the computer use tool, null if outputs have not yet been submitted. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer, null if outputs have not yet been submitted. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseDetails"/> instance for mocking. </returns>
-        public static RunStepDeltaComputerUseDetails RunStepDeltaComputerUseDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaComputerUseDetails"/> instance for mocking. </returns>
+        public static RunStepDeltaComputerUseDetails RunStepDeltaComputerUseDetails(ComputerUseAction action = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks = default)
         {
-            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
-            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            pendingSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>();
 
             return new RunStepDeltaComputerUseDetails(action, pendingSafetyChecks.ToList(), output, acknowledgedSafetyChecks.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2330,7 +2330,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMicrosoftFabricToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaMicrosoftFabricToolCall RunStepDeltaMicrosoftFabricToolCall(int index = default, string id = default, IDictionary<string, string> microsoftFabric = default)
         {
             microsoftFabric ??= new ChangeTrackingDictionary<string, string>();
@@ -2342,7 +2342,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="sharepointGrounding"> SharePoint tool input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaSharepointToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaSharepointToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaSharepointToolCall RunStepDeltaSharepointToolCall(int index = default, string id = default, IDictionary<string, string> sharepointGrounding = default)
         {
             sharepointGrounding ??= new ChangeTrackingDictionary<string, string>();
@@ -2352,20 +2352,20 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Represents an invocation of mcp as part of a streaming run step. </summary>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMCPObject"/> instance for mocking. </returns>
-        public static RunStepDeltaMCPObject RunStepDeltaMCPObject(IEnumerable<RunStepDeltaMcpToolCall> toolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMCPObject"/> instance for mocking. </returns>
+        public static RunStepDeltaMCPObject RunStepDeltaMCPObject(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall> toolCalls = default)
         {
-            toolCalls ??= new ChangeTrackingList<RunStepDeltaMcpToolCall>();
+            toolCalls ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall>();
 
             return new RunStepDeltaMCPObject("mcp", additionalBinaryDataProperties: null, toolCalls.ToList());
         }
 
         /// <summary> Represents an invocation of openapi as part of a streaming run step. </summary>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIObject"/> instance for mocking. </returns>
-        public static RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(IEnumerable<RunStepDeltaOpenAPIToolCall> toolCalls = default)
+        /// <returns> A new <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject"/> instance for mocking. </returns>
+        public static RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> toolCalls = default)
         {
-            toolCalls ??= new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>();
+            toolCalls ??= new ChangeTrackingList<global::Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>();
 
             return new RunStepDeltaOpenAPIObject("openapi", additionalBinaryDataProperties: null, toolCalls.ToList());
         }

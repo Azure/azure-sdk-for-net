@@ -13,12 +13,12 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the conversation message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="VideoConversationMessageContent"/>, <see cref="AudioConversationMessageContent"/>, and <see cref="TemplateConversationMessageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.TextConversationMessageContent"/>, <see cref="Azure.Communication.Messages.ImageConversationMessageContent"/>, <see cref="Azure.Communication.Messages.DocumentConversationMessageContent"/>, <see cref="Azure.Communication.Messages.VideoConversationMessageContent"/>, <see cref="Azure.Communication.Messages.AudioConversationMessageContent"/>, and <see cref="Azure.Communication.Messages.TemplateConversationMessageContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownConversationMessageContent))]
-    public abstract partial class ConversationMessageContent : IJsonModel<ConversationMessageContent>
+    [PersistableModelProxyAttribute(typeof(UnknownConversationMessageContent))]
+    public abstract partial class ConversationMessageContent : IJsonModel<global::Azure.Communication.Messages.ConversationMessageContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationMessageContent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessageContent"/> for deserialization. </summary>
         internal ConversationMessageContent()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConversationMessageContent(document.RootElement, options);
+                        return global::Azure.Communication.Messages.ConversationMessageContent.DeserializeConversationMessageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationMessageContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ConversationMessageContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationMessageContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ConversationMessageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationMessageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationMessageContent IPersistableModel<ConversationMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConversationMessageContent IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConversationMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.ConversationMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,14 +76,14 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationMessageContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ConversationMessageContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -91,9 +91,9 @@ namespace Azure.Communication.Messages
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -102,26 +102,26 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationMessageContent IJsonModel<ConversationMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConversationMessageContent IJsonModel<global::Azure.Communication.Messages.ConversationMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConversationMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.ConversationMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConversationMessageContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.ConversationMessageContent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationMessageContent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.ConversationMessageContent.DeserializeConversationMessageContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConversationMessageContent DeserializeConversationMessageContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -130,20 +130,20 @@ namespace Azure.Communication.Messages
                 switch (discriminator.GetString())
                 {
                     case "text":
-                        return TextConversationMessageContent.DeserializeTextConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.TextConversationMessageContent.DeserializeTextConversationMessageContent(element, options);
                     case "image":
-                        return ImageConversationMessageContent.DeserializeImageConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.ImageConversationMessageContent.DeserializeImageConversationMessageContent(element, options);
                     case "document":
-                        return DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.DocumentConversationMessageContent.DeserializeDocumentConversationMessageContent(element, options);
                     case "video":
-                        return VideoConversationMessageContent.DeserializeVideoConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.VideoConversationMessageContent.DeserializeVideoConversationMessageContent(element, options);
                     case "audio":
-                        return AudioConversationMessageContent.DeserializeAudioConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.AudioConversationMessageContent.DeserializeAudioConversationMessageContent(element, options);
                     case "template":
-                        return TemplateConversationMessageContent.DeserializeTemplateConversationMessageContent(element, options);
+                        return global::Azure.Communication.Messages.TemplateConversationMessageContent.DeserializeTemplateConversationMessageContent(element, options);
                 }
             }
-            return UnknownConversationMessageContent.DeserializeUnknownConversationMessageContent(element, options);
+            return global::Azure.Communication.Messages.UnknownConversationMessageContent.DeserializeUnknownConversationMessageContent(element, options);
         }
     }
 }

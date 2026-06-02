@@ -18,24 +18,24 @@ namespace Routes
 {
     public partial class RoutesClient
     {
-        public RoutesClient() : this(new Uri("http://localhost:3000"), new RoutesClientOptions()) => throw null;
+        public RoutesClient() : this(new global::System.Uri("http://localhost:3000"), new RoutesClientOptions()) => throw null;
 
-        internal RoutesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RoutesClientOptions options) => throw null;
+        internal RoutesClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, RoutesClientOptions options) => throw null;
 
-        public RoutesClient(Uri endpoint, RoutesClientOptions options) : this(null, endpoint, options) => throw null;
+        public RoutesClient(global::System.Uri endpoint, RoutesClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public RoutesClient(RoutesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public RoutesClient(RoutesClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Fixed(RequestContext context) => throw null;
 
-        public virtual Task<Response> FixedAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FixedAsync(RequestContext context) => throw null;
 
         public virtual Response Fixed(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FixedAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FixedAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual PathParameters GetPathParametersClient() => throw null;
 

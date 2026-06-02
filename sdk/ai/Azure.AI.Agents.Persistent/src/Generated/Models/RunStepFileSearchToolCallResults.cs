@@ -15,20 +15,20 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepFileSearchToolCallResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults"/>. </summary>
         /// <param name="results"> The array of a file search results. </param>
-        internal RunStepFileSearchToolCallResults(IEnumerable<RunStepFileSearchToolCallResult> results)
+        internal RunStepFileSearchToolCallResults(IEnumerable<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> results)
         {
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults"/>. </summary>
         /// <param name="rankingOptions"> Ranking options for file search. </param>
         /// <param name="results"> The array of a file search results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions, IReadOnlyList<RunStepFileSearchToolCallResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions, IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> results, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RankingOptions = rankingOptions;
             Results = results;
@@ -39,6 +39,6 @@ namespace Azure.AI.Agents.Persistent
         public FileSearchRankingOptions RankingOptions { get; }
 
         /// <summary> The array of a file search results. </summary>
-        public IReadOnlyList<RunStepFileSearchToolCallResult> Results { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult> Results { get; }
     }
 }

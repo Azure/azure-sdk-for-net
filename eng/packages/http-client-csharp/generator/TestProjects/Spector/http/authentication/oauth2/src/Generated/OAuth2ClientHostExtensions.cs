@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Authentication.OAuth2
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class OAuth2ClientHostExtensions
     {
         public static IClientBuilder AddOAuth2Client(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddOAuth2Client(this IHostApplicationBuilder host, string sectionName, Action<OAuth2ClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddOAuth2Client(this IHostApplicationBuilder host, string sectionName, Action<global::Authentication.OAuth2.OAuth2ClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedOAuth2Client(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedOAuth2Client(this IHostApplicationBuilder host, string key, string sectionName, Action<OAuth2ClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedOAuth2Client(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Authentication.OAuth2.OAuth2ClientSettings> configureSettings) => throw null;
     }
 }

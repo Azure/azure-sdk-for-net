@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class AzureAISearchTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="options"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions options) : base(@type, additionalBinaryDataProperties)
+        internal AzureAISearchTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, AzureAISearchToolOptions options) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -41,6 +41,6 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

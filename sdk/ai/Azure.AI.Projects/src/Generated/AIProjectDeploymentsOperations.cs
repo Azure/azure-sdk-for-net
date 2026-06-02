@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// <summary> The AIProjectDeploymentsOperations sub-client. </summary>
     public partial class AIProjectDeploymentsOperations
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AIProjectDeploymentsOperations for mocking. </summary>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectDeploymentsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectDeploymentsOperations(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -45,16 +45,16 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetDeployment(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetDeploymentRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -67,44 +67,44 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetDeploymentAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetDeploymentAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetDeploymentRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AIProjectDeployment> GetDeployment(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.AIProjectDeployment> GetDeployment(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetDeployment(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
+            ClientResult result = this.GetDeployment(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((AIProjectDeployment)result), result.GetRawResponse());
         }
 
         /// <summary> Get a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AIProjectDeployment>> GetDeploymentAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.AIProjectDeployment>> GetDeploymentAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetDeploymentAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
+            ClientResult result = await this.GetDeploymentAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((AIProjectDeployment)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
@@ -150,8 +150,8 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AIProjectDeployment> GetDeployments(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.AIProjectDeployment> GetDeployments(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
         {
             return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT(this, modelPublisher, modelName, deploymentType?.ToString(), cancellationToken.ToRequestOptions());
         }
@@ -161,8 +161,8 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AIProjectDeployment> GetDeploymentsAsync(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.AIProjectDeployment> GetDeploymentsAsync(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
         {
             return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResultOfT(this, modelPublisher, modelName, deploymentType?.ToString(), cancellationToken.ToRequestOptions());
         }

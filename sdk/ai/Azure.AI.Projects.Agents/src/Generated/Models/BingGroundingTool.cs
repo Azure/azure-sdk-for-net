@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
     public partial class BingGroundingTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BingGroundingTool"/>. </summary>
         /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchToolOptions"/> is null. </exception>
-        public BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions) : base(ToolType.BingGrounding)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchToolOptions"/> is null. </exception>
+        public BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions) : base(global::OpenAI.ToolType.BingGrounding)
         {
-            Argument.AssertNotNull(searchToolOptions, nameof(searchToolOptions));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(searchToolOptions, nameof(searchToolOptions));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
             SearchToolOptions = searchToolOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BingGroundingTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
-        internal BingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolOptions searchToolOptions) : base(@type, additionalBinaryDataProperties)
+        internal BingGroundingTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, BingGroundingSearchToolOptions searchToolOptions) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
         public BingGroundingSearchToolOptions SearchToolOptions { get; set; }

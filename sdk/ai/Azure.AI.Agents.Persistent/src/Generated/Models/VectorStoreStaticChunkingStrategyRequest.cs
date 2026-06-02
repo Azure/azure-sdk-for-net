@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A statically configured chunking strategy. </summary>
     public partial class VectorStoreStaticChunkingStrategyRequest : VectorStoreChunkingStrategy
     {
-        /// <summary> Initializes a new instance of <see cref="VectorStoreStaticChunkingStrategyRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyRequest"/>. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="static"/> is null. </exception>
-        public VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static) : base(VectorStoreChunkingStrategyRequestType.Static)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="static"/> is null. </exception>
+        public VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static) : base(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyRequestType.Static)
         {
-            Argument.AssertNotNull(@static, nameof(@static));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(@static, nameof(@static));
 
             Static = @static;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreStaticChunkingStrategyRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyRequest"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        internal VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VectorStoreStaticChunkingStrategyOptions @static) : base(@type, additionalBinaryDataProperties)
+        internal VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, VectorStoreStaticChunkingStrategyOptions @static) : base(@type, additionalBinaryDataProperties)
         {
             Static = @static;
         }

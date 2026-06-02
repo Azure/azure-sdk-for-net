@@ -15,18 +15,18 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ImageParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ImageParameters"/>. </summary>
         /// <param name="cql"> Cql. </param>
         /// <param name="renderParameters"> JSON-encoded visualization parameters. </param>
         /// <param name="columns"> Width of the output image in pixels. </param>
         /// <param name="rows"> Height of the output image in pixels. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cql"/> or <paramref name="renderParameters"/> is null. </exception>
-        public ImageParameters(IDictionary<string, BinaryData> cql, string renderParameters, int columns, int rows)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="cql"/> or <paramref name="renderParameters"/> is null. </exception>
+        public ImageParameters(IDictionary<string, global::System.BinaryData> cql, string renderParameters, int columns, int rows)
         {
-            Argument.AssertNotNull(cql, nameof(cql));
-            Argument.AssertNotNull(renderParameters, nameof(renderParameters));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(cql, nameof(cql));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(renderParameters, nameof(renderParameters));
 
             Cql = cql;
             RenderParameters = renderParameters;
@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Rows = rows;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ImageParameters"/>. </summary>
         /// <param name="cql"> Cql. </param>
         /// <param name="zoom"> Zoom. </param>
         /// <param name="geometry"> Geometry. </param>
@@ -44,7 +44,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="showBranding"> Whether to include branding on the output image. </param>
         /// <param name="imageSize"> Image size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageParameters(IDictionary<string, BinaryData> cql, float? zoom, GeoJsonGeometry geometry, string renderParameters, int columns, int rows, bool? showBranding, string imageSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageParameters(IDictionary<string, global::System.BinaryData> cql, float? zoom, GeoJsonGeometry geometry, string renderParameters, int columns, int rows, bool? showBranding, string imageSize, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Cql = cql;
             Zoom = zoom;
@@ -59,8 +59,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Cql
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -83,7 +83,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Cql { get; }
+        public IDictionary<string, global::System.BinaryData> Cql { get; }
 
         /// <summary> Zoom. </summary>
         public float? Zoom { get; set; }

@@ -13,15 +13,15 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ContactAsset. </summary>
     public partial class ContactAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="ContactAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ContactAsset"/>. </summary>
         internal ContactAsset()
         {
-            Names = new ChangeTrackingList<ObservedString>();
-            Organizations = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Names = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Organizations = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContactAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ContactAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="email"></param>
         /// <param name="names"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
-        internal ContactAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string email, IList<ObservedString> names, IList<ObservedString> organizations, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count) : base(additionalBinaryDataProperties)
+        internal ContactAsset(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string email, IList<global::Azure.Analytics.Defender.Easm.ObservedString> names, IList<global::Azure.Analytics.Defender.Easm.ObservedString> organizations, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count) : base(additionalBinaryDataProperties)
         {
             Email = email;
             Names = names;
@@ -45,13 +45,13 @@ namespace Azure.Analytics.Defender.Easm
         public string Email { get; }
 
         /// <summary> Gets the Names. </summary>
-        public IList<ObservedString> Names { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Names { get; }
 
         /// <summary> Gets the Organizations. </summary>
-        public IList<ObservedString> Organizations { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Organizations { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }

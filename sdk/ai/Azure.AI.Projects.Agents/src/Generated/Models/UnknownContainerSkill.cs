@@ -9,10 +9,10 @@ namespace OpenAI
 {
     internal partial class UnknownContainerSkill : ContainerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownContainerSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.UnknownContainerSkill"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownContainerSkill(ContainerSkillType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownContainerSkill(ContainerSkillType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

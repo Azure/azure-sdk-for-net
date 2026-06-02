@@ -12,7 +12,7 @@ using Azure;
 
 namespace _Type.Property.Nullable
 {
-    public partial class CollectionsModelProperty : IJsonModel<CollectionsModelProperty>
+    public partial class CollectionsModelProperty : IJsonModel<global::_Type.Property.Nullable.CollectionsModelProperty>
     {
         internal CollectionsModelProperty() => throw null;
 
@@ -20,19 +20,19 @@ namespace _Type.Property.Nullable
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<CollectionsModelProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.Nullable.CollectionsModelProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        CollectionsModelProperty IPersistableModel<CollectionsModelProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        CollectionsModelProperty IPersistableModel<global::_Type.Property.Nullable.CollectionsModelProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<CollectionsModelProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.Nullable.CollectionsModelProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator CollectionsModelProperty(Response response) => throw null;
 
-        void IJsonModel<CollectionsModelProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.Nullable.CollectionsModelProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        CollectionsModelProperty IJsonModel<CollectionsModelProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        CollectionsModelProperty IJsonModel<global::_Type.Property.Nullable.CollectionsModelProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CollectionsModelProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -14,24 +14,24 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class ReceiveResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReceiveResult"/>. </summary>
         internal ReceiveResult()
         {
-            Details = new ChangeTrackingList<ReceiveDetails>();
+            Details = new ChangeTrackingList<global::Azure.Messaging.EventGrid.Namespaces.ReceiveDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.ReceiveResult"/>. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveResult(IReadOnlyList<ReceiveDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReceiveResult(IReadOnlyList<global::Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> details, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of receive responses, one per cloud event. </summary>
-        public IReadOnlyList<ReceiveDetails> Details { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> Details { get; }
     }
 }

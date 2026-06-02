@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class LogProbProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogProbProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.LogProbProperties"/>. </summary>
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.VoiceLive
             Bytes = bytes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogProbProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.LogProbProperties"/>. </summary>
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogProbProperties(string token, float logprob, BinaryData bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogProbProperties(string token, float logprob, BinaryData bytes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             Logprob = logprob;

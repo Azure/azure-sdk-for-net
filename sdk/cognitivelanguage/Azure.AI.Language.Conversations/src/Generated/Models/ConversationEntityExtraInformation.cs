@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base object for entity extra information.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntitySubtype"/>, <see cref="ListKey"/>, and <see cref="RegexKey"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.EntitySubtype"/>, <see cref="Azure.AI.Language.Conversations.Models.ListKey"/>, and <see cref="Azure.AI.Language.Conversations.Models.RegexKey"/>.
     /// </summary>
     public abstract partial class ConversationEntityExtraInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationEntityExtraInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
         private protected ConversationEntityExtraInformation(ExtraInformationKind extraInformationKind)
         {
             ExtraInformationKind = extraInformationKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationEntityExtraInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExtraInformationKind = extraInformationKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

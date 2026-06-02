@@ -15,25 +15,25 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricDefinitions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricDefinitions"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        internal MetricDefinitions(IEnumerable<MetricDefinition> value)
+        internal MetricDefinitions(IEnumerable<global::Azure.Developer.LoadTesting.MetricDefinition> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricDefinitions"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinitions(IList<MetricDefinition> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricDefinitions(IList<global::Azure.Developer.LoadTesting.MetricDefinition> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the values for the metric definitions. </summary>
-        public IList<MetricDefinition> Value { get; }
+        public IList<global::Azure.Developer.LoadTesting.MetricDefinition> Value { get; }
     }
 }

@@ -10,24 +10,24 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ToolboxSearchPreviewTool"/>, and <see cref="ToolSearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.BingGroundingTool"/>, <see cref="Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.SharepointPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.AzureAISearchTool"/>, <see cref="Azure.AI.Projects.Agents.OpenAPITool"/>, <see cref="Azure.AI.Projects.Agents.BingCustomSearchPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.BrowserAutomationPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.AzureFunctionTool"/>, <see cref="Azure.AI.Projects.Agents.CaptureStructuredOutputsTool"/>, <see cref="Azure.AI.Projects.Agents.A2APreviewTool"/>, <see cref="Azure.AI.Projects.Agents.WorkIQPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.FabricIQPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.MemorySearchPreviewTool"/>, <see cref="Azure.AI.Projects.Agents.ToolboxSearchPreviewTool"/>, and <see cref="Azure.AI.Projects.Agents.ToolSearchTool"/>.
     /// </summary>
     public abstract partial class ProjectsAgentTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentTool"/>. </summary>
         /// <param name="type"></param>
         private protected ProjectsAgentTool(ToolType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectsAgentTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectsAgentTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -13,17 +13,17 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The output from a function tool to be submitted. </summary>
     public partial class ToolOutput : StructuredToolOutput
     {
-        /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolOutput"/>. </summary>
         public ToolOutput() : base("function_call_output")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolOutput"/>. </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The output from the function tool to be submitted. </param>
-        internal ToolOutput(string @type, string toolCallId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output) : base(@type, toolCallId, additionalBinaryDataProperties)
+        internal ToolOutput(string @type, string toolCallId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string output) : base(@type, toolCallId, additionalBinaryDataProperties)
         {
             Output = output;
         }

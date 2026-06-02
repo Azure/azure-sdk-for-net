@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Lro.Rpc
 {
-    [ModelReaderWriterBuildable(typeof(GenerationOptions))]
-    [ModelReaderWriterBuildable(typeof(GenerationResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(GenerationOptions))]
+    [ModelReaderWriterBuildableAttribute(typeof(GenerationResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
     public partial class SpecsAzureCoreLroRpcContext : ModelReaderWriterContext
     {
     }

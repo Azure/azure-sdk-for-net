@@ -18,14 +18,14 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacLandingPage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacLandingPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacLandingPage"/>. </summary>
         /// <param name="id"> Unique identifier for the STAC catalog. </param>
         /// <param name="description"> Detailed description of the STAC catalog. </param>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
-        internal StacLandingPage(string id, string description, IEnumerable<Uri> conformsTo, IEnumerable<StacLink> links)
+        internal StacLandingPage(string id, string description, IEnumerable<global::System.Uri> conformsTo, IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacLink> links)
         {
             StacExtensions = new ChangeTrackingList<string>();
             Id = id;
@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Links = links.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacLandingPage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacLandingPage"/>. </summary>
         /// <param name="createdOn"> MSFT Created. </param>
         /// <param name="updatedOn"> MSFT Updated. </param>
         /// <param name="shortDescription"> MSFT Short Description. </param>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="type"> Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacLandingPage(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string title, string stacVersion, IList<Uri> conformsTo, IList<StacLink> links, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacLandingPage(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string title, string stacVersion, IList<global::System.Uri> conformsTo, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -88,10 +88,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public string StacVersion { get; }
 
         /// <summary> List of OGC API conformance classes implemented by this API. </summary>
-        public IList<Uri> ConformsTo { get; }
+        public IList<global::System.Uri> ConformsTo { get; }
 
         /// <summary> Links to related resources and endpoints. </summary>
-        public IList<StacLink> Links { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacLink> Links { get; }
 
         /// <summary> Type. </summary>
         public string Type { get; }

@@ -15,25 +15,25 @@ namespace Azure.AI.ContentSafety
     public partial class AddOrUpdateTextBlocklistItemsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
-        internal AddOrUpdateTextBlocklistItemsResult(IEnumerable<TextBlocklistItem> blocklistItems)
+        internal AddOrUpdateTextBlocklistItemsResult(IEnumerable<global::Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems)
         {
             BlocklistItems = blocklistItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddOrUpdateTextBlocklistItemsResult(IReadOnlyList<TextBlocklistItem> blocklistItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddOrUpdateTextBlocklistItemsResult(IReadOnlyList<global::Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistItems = blocklistItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of blocklistItems have been added. </summary>
-        public IReadOnlyList<TextBlocklistItem> BlocklistItems { get; }
+        public IReadOnlyList<global::Azure.AI.ContentSafety.TextBlocklistItem> BlocklistItems { get; }
     }
 }

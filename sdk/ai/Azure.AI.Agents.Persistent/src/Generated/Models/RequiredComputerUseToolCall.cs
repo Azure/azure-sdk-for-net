@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
     public partial class RequiredComputerUseToolCall : RequiredToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
         internal RequiredComputerUseToolCall(string id, RequiredComputerUseToolCallDetails computerUsePreview) : base(id)
@@ -21,12 +21,12 @@ namespace Azure.AI.Agents.Persistent
             ComputerUsePreview = computerUsePreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
-        internal RequiredComputerUseToolCall(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, RequiredComputerUseToolCallDetails computerUsePreview) : base(@type, additionalBinaryDataProperties, id)
+        internal RequiredComputerUseToolCall(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id, RequiredComputerUseToolCallDetails computerUsePreview) : base(@type, additionalBinaryDataProperties, id)
         {
             ComputerUsePreview = computerUsePreview;
         }

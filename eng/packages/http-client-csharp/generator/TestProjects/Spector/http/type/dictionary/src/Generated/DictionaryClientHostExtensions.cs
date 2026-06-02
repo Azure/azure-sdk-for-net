@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Dictionary
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class DictionaryClientHostExtensions
     {
         public static IClientBuilder AddDictionaryClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddDictionaryClient(this IHostApplicationBuilder host, string sectionName, Action<DictionaryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddDictionaryClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Dictionary.DictionaryClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedDictionaryClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedDictionaryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<DictionaryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedDictionaryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Dictionary.DictionaryClientSettings> configureSettings) => throw null;
     }
 }

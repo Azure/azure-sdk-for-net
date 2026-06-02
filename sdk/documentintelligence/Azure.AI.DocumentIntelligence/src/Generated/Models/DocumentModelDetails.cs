@@ -14,19 +14,19 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentModelDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         internal DocumentModelDetails(string modelId)
         {
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
-            DocumentTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
-            Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
+            DocumentTypes = new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails>();
+            Warnings = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> documentTypes, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -112,10 +112,10 @@ namespace Azure.AI.DocumentIntelligence
         public SplitMode? Split { get; }
 
         /// <summary> Supported document types. </summary>
-        public IReadOnlyDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
+        public IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> DocumentTypes { get; }
 
         /// <summary> List of warnings encountered while building the model. </summary>
-        public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get; }
 
         /// <summary> Number of V100-equivalent GPU hours consumed for model training. </summary>
         public float? TrainingHours { get; }

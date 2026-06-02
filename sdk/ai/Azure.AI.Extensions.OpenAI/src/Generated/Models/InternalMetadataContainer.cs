@@ -10,19 +10,19 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalMetadataContainer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
         private IDictionary<string, string> _additionalStringProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer"/>. </summary>
         public InternalMetadataContainer()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer"/>. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMetadataContainer(IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMetadataContainer(IDictionary<string, string> additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalStringProperties = additionalProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

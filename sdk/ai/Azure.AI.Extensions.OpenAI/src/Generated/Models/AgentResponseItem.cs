@@ -9,28 +9,28 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="MemorySearchToolCall"/>, <see cref="MemoryCommandToolCall"/>, <see cref="MemoryCommandToolCallOutput"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemCustomToolCallOutputResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem"/>, <see cref="Azure.AI.Extensions.OpenAI.BingGroundingToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.AzureAISearchToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.AzureAISearchToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.BingCustomSearchToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OpenApiToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.AzureFunctionToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.A2AToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.A2AToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.MemorySearchToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.MemoryCommandToolCall"/>, <see cref="Azure.AI.Extensions.OpenAI.MemoryCommandToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemFunctionToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemToolSearchCall"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemLocalShellToolCallOutput"/>, <see cref="Azure.AI.Extensions.OpenAI.OutputItemMcpApprovalResponseResource"/>, and <see cref="Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource"/>.
     /// </summary>
     public abstract partial class AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
         private protected string _id;
 
-        /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentResponseItem"/>. </summary>
         /// <param name="type"></param>
         private protected AgentResponseItem(AgentResponseItemKind @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.AgentResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;

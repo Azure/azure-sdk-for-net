@@ -14,17 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryEventActor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor"/>. </summary>
         internal ContainerRegistryEventActor()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor"/>. </summary>
         /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryEventActor(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryEventActor(string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

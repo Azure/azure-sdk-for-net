@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class HealthcareEntityLink
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntityLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareEntityLink"/>. </summary>
         /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="id"> Entity id in the given source catalog. </param>
         internal HealthcareEntityLink(string dataSource, string id)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntityLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareEntityLink"/>. </summary>
         /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="id"> Entity id in the given source catalog. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareEntityLink(string dataSource, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareEntityLink(string dataSource, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             Id = id;

@@ -17,9 +17,9 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms. The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/overview"&gt;https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/overview&lt;/a&gt;. </summary>
     public partial class TextAnalysisAuthoringClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient for mocking. </summary>
         protected TextAnalysisAuthoringClient()
@@ -29,16 +29,16 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new TextAnalysisAuthoringClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextAnalysisAuthoringClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new TextAnalysisAuthoringClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new TextAnalysisAuthoringClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextAnalysisAuthoringClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new TextAnalysisAuthoringClientOptions())
         {
         }
 
@@ -46,20 +46,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal TextAnalysisAuthoringClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TextAnalysisAuthoringClientOptions options)
+        internal TextAnalysisAuthoringClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, TextAnalysisAuthoringClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TextAnalysisAuthoringClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -68,14 +68,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextAnalysisAuthoringClient(global::System.Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient from a <see cref="TextAnalysisAuthoringClientSettings"/>. </summary>
         /// <param name="settings"> The settings for TextAnalysisAuthoringClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public TextAnalysisAuthoringClient(TextAnalysisAuthoringClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -98,9 +98,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetProjectsCollectionResult(
                 this,
@@ -123,9 +123,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResult(
                 this,
@@ -141,8 +141,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetProjectsCollectionResultOfT(
                 this,
@@ -158,8 +158,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResultOfT(
                 this,
@@ -183,13 +183,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentsCollectionResult(
                 this,
@@ -214,13 +214,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentsAsyncCollectionResult(
                 this,
@@ -238,12 +238,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringProjectDeployment> GetDeployments(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment> GetDeployments(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentsCollectionResultOfT(
                 this,
@@ -261,12 +261,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentsAsyncCollectionResultOfT(
                 this,
@@ -291,13 +291,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetExportedModels(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetExportedModels(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetExportedModelsCollectionResult(
                 this,
@@ -322,13 +322,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetExportedModelsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetExportedModelsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetExportedModelsAsyncCollectionResult(
                 this,
@@ -346,12 +346,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringExportedTrainedModel> GetExportedModels(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel> GetExportedModels(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetExportedModelsCollectionResultOfT(
                 this,
@@ -369,12 +369,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringExportedTrainedModel> GetExportedModelsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel> GetExportedModelsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetExportedModelsAsyncCollectionResultOfT(
                 this,
@@ -399,13 +399,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTrainedModels(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainedModelsCollectionResult(
                 this,
@@ -430,13 +430,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTrainedModelsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainedModelsAsyncCollectionResult(
                 this,
@@ -454,12 +454,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainedModelsCollectionResultOfT(
                 this,
@@ -477,12 +477,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainedModelsAsyncCollectionResultOfT(
                 this,
@@ -507,13 +507,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResult(
                 this,
@@ -538,13 +538,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentResourcesAsyncCollectionResult(
                 this,
@@ -562,12 +562,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT(
                 this,
@@ -585,12 +585,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetDeploymentResourcesAsyncCollectionResultOfT(
                 this,
@@ -615,13 +615,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTrainingJobs(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainingJobsCollectionResult(
                 this,
@@ -646,13 +646,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTrainingJobsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainingJobsAsyncCollectionResult(
                 this,
@@ -670,12 +670,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringTrainingState> GetTrainingJobs(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState> GetTrainingJobs(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainingJobsCollectionResultOfT(
                 this,
@@ -693,12 +693,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringTrainingState> GetTrainingJobsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState> GetTrainingJobsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new TextAnalysisAuthoringClientGetTrainingJobsAsyncCollectionResultOfT(
                 this,
@@ -722,9 +722,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResult(
                 this,
@@ -747,9 +747,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResult(
                 this,
@@ -765,8 +765,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResultOfT(
                 this,
@@ -782,8 +782,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(
                 this,
@@ -807,9 +807,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSupportedLanguages(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetSupportedLanguagesCollectionResult(
                 this,
@@ -834,9 +834,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSupportedLanguagesAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetSupportedLanguagesAsyncCollectionResult(
                 this,
@@ -854,8 +854,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringSupportedLanguage> GetSupportedLanguages(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage> GetSupportedLanguages(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetSupportedLanguagesCollectionResultOfT(
                 this,
@@ -873,8 +873,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringSupportedLanguage> GetSupportedLanguagesAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage> GetSupportedLanguagesAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetSupportedLanguagesAsyncCollectionResultOfT(
                 this,
@@ -895,9 +895,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetSupportedPrebuiltEntities(RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
@@ -911,25 +911,25 @@ namespace Azure.AI.Language.Text.Authoring
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetSupportedPrebuiltEntitiesAsync(RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
@@ -947,9 +947,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTrainingConfigVersions(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResult(
                 this,
@@ -974,9 +974,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResult(
                 this,
@@ -994,8 +994,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringTrainingConfigVersion> GetTrainingConfigVersions(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion> GetTrainingConfigVersions(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResultOfT(
                 this,
@@ -1013,8 +1013,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringTrainingConfigVersion> GetTrainingConfigVersionsAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion> GetTrainingConfigVersionsAsync(TextAuthoringProjectKind? projectKind = default, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new TextAnalysisAuthoringClientGetTrainingConfigVersionsAsyncCollectionResultOfT(
                 this,

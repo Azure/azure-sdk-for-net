@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.TypeChangedFrom
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class TypeChangedFromClientHostExtensions
     {
         public static IClientBuilder AddTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName, Action<TypeChangedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddTypeChangedFromClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.TypeChangedFrom.TypeChangedFromClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<TypeChangedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedTypeChangedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.TypeChangedFrom.TypeChangedFromClientSettings> configureSettings) => throw null;
     }
 }

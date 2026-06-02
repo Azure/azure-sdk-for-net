@@ -18,7 +18,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The items in the current page of results.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AsAssetResource"/>, <see cref="Easm.ContactAssetResource"/>, <see cref="Easm.DomainAssetResource"/>, <see cref="Easm.HostAssetResource"/>, <see cref="Easm.IpAddressAssetResource"/>, <see cref="Easm.IpBlockAssetResource"/>, <see cref="Easm.PageAssetResource"/>, and <see cref="Easm.SslCertAssetResource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.AsAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.ContactAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.DomainAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.HostAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpAddressAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.IpBlockAssetResource"/>, <see cref="Azure.Analytics.Defender.Easm.PageAssetResource"/>, and <see cref="Azure.Analytics.Defender.Easm.SslCertAssetResource"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for AssetResource. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
@@ -34,11 +34,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
-        /// <returns> A new <see cref="Easm.AssetResource"/> instance for mocking. </returns>
-        public static AssetResource AssetResource(string kind = default, string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetResource"/> instance for mocking. </returns>
+        public static AssetResource AssetResource(string kind = default, string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new UnknownAssetResource(
                 kind,
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="reason"> An explanation of why this audit trail node was discovered from the previous node. </param>
-        /// <returns> A new <see cref="Easm.AuditTrailItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItem"/> instance for mocking. </returns>
         public static AuditTrailItem AuditTrailItem(string id = default, string name = default, string displayName = default, AuditTrailItemKind? kind = default, string reason = default)
         {
             return new AuditTrailItem(
@@ -91,11 +91,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.AsAssetResource"/> instance for mocking. </returns>
-        public static AsAssetResource AsAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, AsAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AsAssetResource"/> instance for mocking. </returns>
+        public static AsAssetResource AsAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, AsAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new AsAssetResource(
                 "as",
@@ -142,29 +142,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <param name="detailedFromWhoisAt"></param>
-        /// <returns> A new <see cref="Easm.AsAsset"/> instance for mocking. </returns>
-        public static AsAsset AsAsset(long? asn = default, IEnumerable<ObservedString> asNames = default, IEnumerable<ObservedString> orgNames = default, IEnumerable<ObservedString> orgIds = default, IEnumerable<ObservedString> countries = default, IEnumerable<ObservedString> registries = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, DateTimeOffset? detailedFromWhoisAt = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AsAsset"/> instance for mocking. </returns>
+        public static AsAsset AsAsset(long? asn = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> asNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> orgNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> orgIds = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> countries = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registries = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrarNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones = default, DateTimeOffset? detailedFromWhoisAt = default)
         {
-            asNames ??= new ChangeTrackingList<ObservedString>();
-            orgNames ??= new ChangeTrackingList<ObservedString>();
-            orgIds ??= new ChangeTrackingList<ObservedString>();
-            countries ??= new ChangeTrackingList<ObservedString>();
-            registries ??= new ChangeTrackingList<ObservedString>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            registrarCreatedAt ??= new ChangeTrackingList<ObservedLong>();
-            registrarUpdatedAt ??= new ChangeTrackingList<ObservedLong>();
-            registrantContacts ??= new ChangeTrackingList<ObservedString>();
-            adminContacts ??= new ChangeTrackingList<ObservedString>();
-            technicalContacts ??= new ChangeTrackingList<ObservedString>();
-            registrarNames ??= new ChangeTrackingList<ObservedString>();
-            registrantNames ??= new ChangeTrackingList<ObservedString>();
-            adminNames ??= new ChangeTrackingList<ObservedString>();
-            technicalNames ??= new ChangeTrackingList<ObservedString>();
-            adminOrgs ??= new ChangeTrackingList<ObservedString>();
-            technicalOrgs ??= new ChangeTrackingList<ObservedString>();
-            registrantPhones ??= new ChangeTrackingList<ObservedString>();
-            adminPhones ??= new ChangeTrackingList<ObservedString>();
-            technicalPhones ??= new ChangeTrackingList<ObservedString>();
+            asNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            orgNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            orgIds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            countries ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registries ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            registrarCreatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrarUpdatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrantContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrarNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
 
             return new AsAsset(
                 additionalBinaryDataProperties: null,
@@ -202,10 +202,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedString"/> instance for mocking. </returns>
-        public static ObservedString ObservedString(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, string value = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedString"/> instance for mocking. </returns>
+        public static ObservedString ObservedString(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, string value = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedString(
                 firstSeen,
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="reason"></param>
-        /// <returns> A new <see cref="Easm.SourceDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SourceDetails"/> instance for mocking. </returns>
         public static SourceDetails SourceDetails(string sourceName = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string reason = default)
         {
             return new SourceDetails(
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedValue"/> instance for mocking. </returns>
         public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
         {
             return new ObservedValue(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties: null);
@@ -253,10 +253,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedLong"/> instance for mocking. </returns>
-        public static ObservedLong ObservedLong(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, long? value = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedLong"/> instance for mocking. </returns>
+        public static ObservedLong ObservedLong(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, long? value = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedLong(
                 firstSeen,
@@ -269,7 +269,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> A inventory base model created for swagger documentation purpose. </summary>
-        /// <returns> A new <see cref="Easm.InventoryAsset"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.InventoryAsset"/> instance for mocking. </returns>
         public static InventoryAsset InventoryAsset()
         {
             return new InventoryAsset(additionalBinaryDataProperties: null);
@@ -290,11 +290,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.ContactAssetResource"/> instance for mocking. </returns>
-        public static ContactAssetResource ContactAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, ContactAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ContactAssetResource"/> instance for mocking. </returns>
+        public static ContactAssetResource ContactAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, ContactAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new ContactAssetResource(
                 "contact",
@@ -323,12 +323,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
-        /// <returns> A new <see cref="Easm.ContactAsset"/> instance for mocking. </returns>
-        public static ContactAsset ContactAsset(string email = default, IEnumerable<ObservedString> names = default, IEnumerable<ObservedString> organizations = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ContactAsset"/> instance for mocking. </returns>
+        public static ContactAsset ContactAsset(string email = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> names = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> organizations = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default)
         {
-            names ??= new ChangeTrackingList<ObservedString>();
-            organizations ??= new ChangeTrackingList<ObservedString>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            names ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            organizations ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ContactAsset(
                 additionalBinaryDataProperties: null,
@@ -356,11 +356,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.DomainAssetResource"/> instance for mocking. </returns>
-        public static DomainAssetResource DomainAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, DomainAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DomainAssetResource"/> instance for mocking. </returns>
+        public static DomainAssetResource DomainAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, DomainAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new DomainAssetResource(
                 "domain",
@@ -413,34 +413,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <returns> A new <see cref="Easm.DomainAsset"/> instance for mocking. </returns>
-        public static DomainAsset DomainAsset(string domain = default, long? whoisId = default, IEnumerable<ObservedInteger> registrarIanaIds = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<AlexaInfo> alexaInfos = default, IEnumerable<ObservedString> nameServers = default, IEnumerable<ObservedString> mailServers = default, IEnumerable<ObservedString> whoisServers = default, IEnumerable<ObservedString> domainStatuses = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<SoaRecord> soaRecords = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedBoolean> parkedDomain = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DomainAsset"/> instance for mocking. </returns>
+        public static DomainAsset DomainAsset(string domain = default, long? whoisId = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedInteger> registrarIanaIds = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AlexaInfo> alexaInfos = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> nameServers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> mailServers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> whoisServers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> domainStatuses = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SoaRecord> soaRecords = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrarNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> parkedDomain = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones = default)
         {
-            registrarIanaIds ??= new ChangeTrackingList<ObservedInteger>();
-            registrantContacts ??= new ChangeTrackingList<ObservedString>();
-            registrantOrgs ??= new ChangeTrackingList<ObservedString>();
-            adminContacts ??= new ChangeTrackingList<ObservedString>();
-            technicalContacts ??= new ChangeTrackingList<ObservedString>();
-            alexaInfos ??= new ChangeTrackingList<AlexaInfo>();
-            nameServers ??= new ChangeTrackingList<ObservedString>();
-            mailServers ??= new ChangeTrackingList<ObservedString>();
-            whoisServers ??= new ChangeTrackingList<ObservedString>();
-            domainStatuses ??= new ChangeTrackingList<ObservedString>();
-            registrarCreatedAt ??= new ChangeTrackingList<ObservedLong>();
-            registrarUpdatedAt ??= new ChangeTrackingList<ObservedLong>();
-            registrarExpiresAt ??= new ChangeTrackingList<ObservedLong>();
-            soaRecords ??= new ChangeTrackingList<SoaRecord>();
-            registrarNames ??= new ChangeTrackingList<ObservedString>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            parkedDomain ??= new ChangeTrackingList<ObservedBoolean>();
-            registrantNames ??= new ChangeTrackingList<ObservedString>();
-            adminNames ??= new ChangeTrackingList<ObservedString>();
-            technicalNames ??= new ChangeTrackingList<ObservedString>();
-            adminOrgs ??= new ChangeTrackingList<ObservedString>();
-            technicalOrgs ??= new ChangeTrackingList<ObservedString>();
-            registrantPhones ??= new ChangeTrackingList<ObservedString>();
-            adminPhones ??= new ChangeTrackingList<ObservedString>();
-            technicalPhones ??= new ChangeTrackingList<ObservedString>();
+            registrarIanaIds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            registrantContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            alexaInfos ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AlexaInfo>();
+            nameServers ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            mailServers ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            whoisServers ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            domainStatuses ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrarCreatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrarUpdatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrarExpiresAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            soaRecords ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SoaRecord>();
+            registrarNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            parkedDomain ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            registrantNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
 
             return new DomainAsset(
                 domain,
@@ -484,10 +484,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedInteger"/> instance for mocking. </returns>
-        public static ObservedInteger ObservedInteger(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, int? value = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedInteger"/> instance for mocking. </returns>
+        public static ObservedInteger ObservedInteger(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, int? value = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedInteger(
                 firstSeen,
@@ -506,7 +506,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.AlexaInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AlexaInfo"/> instance for mocking. </returns>
         public static AlexaInfo AlexaInfo(long? alexaRank = default, string category = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
         {
             return new AlexaInfo(
@@ -527,7 +527,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="serialNumber"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.SoaRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SoaRecord"/> instance for mocking. </returns>
         public static SoaRecord SoaRecord(string nameServer = default, string email = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, long? serialNumber = default, bool? recent = default)
         {
             return new SoaRecord(
@@ -548,10 +548,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedBoolean"/> instance for mocking. </returns>
-        public static ObservedBoolean ObservedBoolean(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, bool? value = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedBoolean"/> instance for mocking. </returns>
+        public static ObservedBoolean ObservedBoolean(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, bool? value = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedBoolean(
                 firstSeen,
@@ -578,11 +578,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.HostAssetResource"/> instance for mocking. </returns>
-        public static HostAssetResource HostAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, HostAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.HostAssetResource"/> instance for mocking. </returns>
+        public static HostAssetResource HostAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, HostAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new HostAssetResource(
                 "host",
@@ -637,35 +637,35 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="banners"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <returns> A new <see cref="Easm.HostAsset"/> instance for mocking. </returns>
-        public static HostAsset HostAsset(string host = default, string domain = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<ObservedString> parentHosts = default, IEnumerable<ObservedString> childHosts = default, HostCore hostCore = default, IEnumerable<AssetService> services = default, IEnumerable<ObservedString> cnames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IpBlock> ipBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedBoolean> webserver = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<ObservedBoolean> isWildcard = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ObservedBoolean> ipv4 = default, IEnumerable<ObservedBoolean> ipv6 = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.HostAsset"/> instance for mocking. </returns>
+        public static HostAsset HostAsset(string host = default, string domain = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> ipAddresses = default, IEnumerable<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedHeader> headers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> parentHosts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> childHosts = default, HostCore hostCore = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetService> services = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> cnames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ResourceUri> resourceUrls = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> asns = default, IEnumerable<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> responseBodies = default, DomainAsset domainAsset = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> webserver = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLocation> location = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> isWildcard = default, IEnumerable<global::Azure.Analytics.Defender.Easm.BannerDetails> banners = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv4 = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv6 = default)
         {
-            ipAddresses ??= new ChangeTrackingList<ObservedString>();
-            webComponents ??= new ChangeTrackingList<WebComponent>();
-            headers ??= new ChangeTrackingList<ObservedHeader>();
-            attributes ??= new ChangeTrackingList<AttributeDetails>();
-            cookies ??= new ChangeTrackingList<CookieDetails>();
-            sslCerts ??= new ChangeTrackingList<SslCertAsset>();
-            parentHosts ??= new ChangeTrackingList<ObservedString>();
-            childHosts ??= new ChangeTrackingList<ObservedString>();
-            services ??= new ChangeTrackingList<AssetService>();
-            cnames ??= new ChangeTrackingList<ObservedString>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            resourceUrls ??= new ChangeTrackingList<ResourceUri>();
-            scanMetadata ??= new ChangeTrackingList<ScanMetadata>();
-            asns ??= new ChangeTrackingList<ObservedLong>();
-            ipBlocks ??= new ChangeTrackingList<IpBlock>();
-            responseBodies ??= new ChangeTrackingList<ObservedString>();
-            nsRecord ??= new ChangeTrackingList<ObservedBoolean>();
-            mxRecord ??= new ChangeTrackingList<ObservedBoolean>();
-            webserver ??= new ChangeTrackingList<ObservedBoolean>();
-            location ??= new ChangeTrackingList<ObservedLocation>();
-            nxdomain ??= new ChangeTrackingList<ObservedBoolean>();
-            sslServerConfig ??= new ChangeTrackingList<SslServerConfig>();
-            isWildcard ??= new ChangeTrackingList<ObservedBoolean>();
-            banners ??= new ChangeTrackingList<BannerDetails>();
-            ipv4 ??= new ChangeTrackingList<ObservedBoolean>();
-            ipv6 ??= new ChangeTrackingList<ObservedBoolean>();
+            ipAddresses ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            webComponents ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            headers ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
+            attributes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
+            cookies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>();
+            sslCerts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            parentHosts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            childHosts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            services ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>();
+            cnames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            resourceUrls ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ResourceUri>();
+            scanMetadata ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ScanMetadata>();
+            asns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            ipBlocks ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            responseBodies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            nsRecord ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            mxRecord ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            webserver ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            location ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            nxdomain ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            sslServerConfig ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
+            isWildcard ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            banners ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.BannerDetails>();
+            ipv4 ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            ipv6 ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
 
             return new HostAsset(
                 additionalBinaryDataProperties: null,
@@ -718,13 +718,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="ports"></param>
         /// <param name="sources"></param>
         /// <param name="service"></param>
-        /// <returns> A new <see cref="Easm.WebComponent"/> instance for mocking. </returns>
-        public static WebComponent WebComponent(string name = default, string @type = default, string version = default, IEnumerable<string> ruleId = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<CveDetails> cve = default, long? endOfLife = default, bool? recent = default, IEnumerable<PortDetails> ports = default, IEnumerable<SourceDetails> sources = default, string service = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.WebComponent"/> instance for mocking. </returns>
+        public static WebComponent WebComponent(string name = default, string @type = default, string version = default, IEnumerable<string> ruleId = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.CveDetails> cve = default, long? endOfLife = default, bool? recent = default, IEnumerable<global::Azure.Analytics.Defender.Easm.PortDetails> ports = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, string service = default)
         {
             ruleId ??= new ChangeTrackingList<string>();
-            cve ??= new ChangeTrackingList<CveDetails>();
-            ports ??= new ChangeTrackingList<PortDetails>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            cve ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CveDetails>();
+            ports ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.PortDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new WebComponent(
                 name,
@@ -748,7 +748,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cweId"></param>
         /// <param name="cvssScore"></param>
         /// <param name="cvss3Summary"></param>
-        /// <returns> A new <see cref="Easm.CveDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.CveDetails"/> instance for mocking. </returns>
         public static CveDetails CveDetails(string name = default, string cweId = default, float? cvssScore = default, Cvss3Summary cvss3Summary = default)
         {
             return new CveDetails(name, cweId, cvssScore, cvss3Summary, additionalBinaryDataProperties: null);
@@ -772,7 +772,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reportConfidence"></param>
         /// <param name="exploitabilityScore"></param>
         /// <param name="impactScore"></param>
-        /// <returns> A new <see cref="Easm.Cvss3Summary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.Cvss3Summary"/> instance for mocking. </returns>
         public static Cvss3Summary Cvss3Summary(string version = default, string vectorString = default, string attackVector = default, string attackComplexity = default, string privilegesRequired = default, string userInteraction = default, string scope = default, string confidentialityImpact = default, string integrityImpact = default, string availabilityImpact = default, float? baseScore = default, string baseSeverity = default, string exploitCodeMaturity = default, string remediationLevel = default, string reportConfidence = default, float? exploitabilityScore = default, float? impactScore = default)
         {
             return new Cvss3Summary(
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
-        /// <returns> A new <see cref="Easm.PortDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.PortDetails"/> instance for mocking. </returns>
         public static PortDetails PortDetails(int? portName = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default)
         {
             return new PortDetails(portName, firstSeen, lastSeen, count, additionalBinaryDataProperties: null);
@@ -814,7 +814,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="headerName"></param>
         /// <param name="headerValue"></param>
-        /// <returns> A new <see cref="Easm.ObservedHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedHeader"/> instance for mocking. </returns>
         public static ObservedHeader ObservedHeader(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, string headerName = default, string headerValue = default)
         {
             return new ObservedHeader(
@@ -835,10 +835,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.AttributeDetails"/> instance for mocking. </returns>
-        public static AttributeDetails AttributeDetails(string attributeType = default, string attributeValue = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AttributeDetails"/> instance for mocking. </returns>
+        public static AttributeDetails AttributeDetails(string attributeType = default, string attributeValue = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new AttributeDetails(
                 attributeType,
@@ -859,7 +859,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="cookieExpiryDate"></param>
-        /// <returns> A new <see cref="Easm.CookieDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.CookieDetails"/> instance for mocking. </returns>
         public static CookieDetails CookieDetails(string cookieName = default, string cookieDomain = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, DateTimeOffset? cookieExpiryDate = default)
         {
             return new CookieDetails(
@@ -907,8 +907,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sigAlgOid"></param>
         /// <param name="recent"></param>
         /// <param name="validationType"></param>
-        /// <returns> A new <see cref="Easm.SslCertAsset"/> instance for mocking. </returns>
-        public static SslCertAsset SslCertAsset(string sha1 = default, IEnumerable<string> subjectCommonNames = default, IEnumerable<string> organizations = default, IEnumerable<string> organizationalUnits = default, IEnumerable<string> issuerCommonNames = default, string sigAlgName = default, DateTimeOffset? invalidAfter = default, string serialNumber = default, IEnumerable<string> subjectAlternativeNames = default, IEnumerable<string> issuerAlternativeNames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, DateTimeOffset? invalidBefore = default, int? keySize = default, string keyAlgorithm = default, IEnumerable<string> subjectLocality = default, IEnumerable<string> subjectState = default, IEnumerable<string> subjectCountry = default, IEnumerable<string> issuerLocality = default, IEnumerable<string> issuerState = default, IEnumerable<string> issuerCountry = default, IEnumerable<string> subjectOrganizations = default, IEnumerable<string> subjectOrganizationalUnits = default, IEnumerable<string> issuerOrganizations = default, IEnumerable<string> issuerOrganizationalUnits = default, int? version = default, bool? certificateAuthority = default, bool? selfSigned = default, string sigAlgOid = default, bool? recent = default, SslCertAssetValidationType? validationType = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SslCertAsset"/> instance for mocking. </returns>
+        public static SslCertAsset SslCertAsset(string sha1 = default, IEnumerable<string> subjectCommonNames = default, IEnumerable<string> organizations = default, IEnumerable<string> organizationalUnits = default, IEnumerable<string> issuerCommonNames = default, string sigAlgName = default, DateTimeOffset? invalidAfter = default, string serialNumber = default, IEnumerable<string> subjectAlternativeNames = default, IEnumerable<string> issuerAlternativeNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, DateTimeOffset? invalidBefore = default, int? keySize = default, string keyAlgorithm = default, IEnumerable<string> subjectLocality = default, IEnumerable<string> subjectState = default, IEnumerable<string> subjectCountry = default, IEnumerable<string> issuerLocality = default, IEnumerable<string> issuerState = default, IEnumerable<string> issuerCountry = default, IEnumerable<string> subjectOrganizations = default, IEnumerable<string> subjectOrganizationalUnits = default, IEnumerable<string> issuerOrganizations = default, IEnumerable<string> issuerOrganizationalUnits = default, int? version = default, bool? certificateAuthority = default, bool? selfSigned = default, string sigAlgOid = default, bool? recent = default, SslCertAssetValidationType? validationType = default)
         {
             subjectCommonNames ??= new ChangeTrackingList<string>();
             organizations ??= new ChangeTrackingList<string>();
@@ -916,7 +916,7 @@ namespace Azure.Analytics.Defender.Easm
             issuerCommonNames ??= new ChangeTrackingList<string>();
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
             issuerAlternativeNames ??= new ChangeTrackingList<string>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
             subjectLocality ??= new ChangeTrackingList<string>();
             subjectState ??= new ChangeTrackingList<string>();
             subjectCountry ??= new ChangeTrackingList<string>();
@@ -1004,7 +1004,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="domainSpamReputationScore"></param>
         /// <param name="domainScamReputationScore"></param>
         /// <param name="uuid"></param>
-        /// <returns> A new <see cref="Easm.HostCore"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.HostCore"/> instance for mocking. </returns>
         public static HostCore HostCore(string host = default, string domain = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, DateTimeOffset? blacklistCauseFirstSeen = default, DateTimeOffset? blacklistCauseLastSeen = default, long? blacklistCauseCount = default, DateTimeOffset? blacklistResourceFirstSeen = default, DateTimeOffset? blacklistResourceLastSeen = default, long? blacklistResourceCount = default, DateTimeOffset? blacklistSequenceFirstSeen = default, DateTimeOffset? blacklistSequenceLastSeen = default, long? blacklistSequenceCount = default, long? phishCauseCount = default, long? malwareCauseCount = default, long? spamCauseCount = default, long? scamCauseCount = default, long? phishResourceCount = default, long? malwareResourceCount = default, long? spamResourceCount = default, long? scamResourceCount = default, long? phishSequenceCount = default, long? malwareSequenceCount = default, long? spamSequenceCount = default, long? scamSequenceCount = default, int? alexaRank = default, int? hostReputationScore = default, int? hostPhishReputationScore = default, int? hostMalwareReputationScore = default, int? hostSpamReputationScore = default, int? hostScamReputationScore = default, int? domainReputationScore = default, int? domainPhishReputationScore = default, int? domainMalwareReputationScore = default, int? domainSpamReputationScore = default, int? domainScamReputationScore = default, string uuid = default)
         {
             return new HostCore(
@@ -1061,14 +1061,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="portStates"></param>
-        /// <returns> A new <see cref="Easm.AssetService"/> instance for mocking. </returns>
-        public static AssetService AssetService(string scheme = default, int? port = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<ObservedString> exceptions = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<ObservedPortState> portStates = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetService"/> instance for mocking. </returns>
+        public static AssetService AssetService(string scheme = default, int? port = default, IEnumerable<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> exceptions = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedPortState> portStates = default)
         {
-            webComponents ??= new ChangeTrackingList<WebComponent>();
-            sslCerts ??= new ChangeTrackingList<SslCertAsset>();
-            exceptions ??= new ChangeTrackingList<ObservedString>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            portStates ??= new ChangeTrackingList<ObservedPortState>();
+            webComponents ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            sslCerts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            exceptions ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            portStates ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedPortState>();
 
             return new AssetService(
                 scheme,
@@ -1092,7 +1092,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="port"></param>
-        /// <returns> A new <see cref="Easm.ObservedPortState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedPortState"/> instance for mocking. </returns>
         public static ObservedPortState ObservedPortState(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, ObservedPortStateValue? value = default, int? port = default)
         {
             return new ObservedPortState(
@@ -1112,10 +1112,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ResourceUri"/> instance for mocking. </returns>
-        public static ResourceUri ResourceUri(Uri url = default, IEnumerable<DependentResource> resources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ResourceUri"/> instance for mocking. </returns>
+        public static ResourceUri ResourceUri(global::System.Uri url = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DependentResource> resources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
         {
-            resources ??= new ChangeTrackingList<DependentResource>();
+            resources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DependentResource>();
 
             return new ResourceUri(
                 url,
@@ -1152,11 +1152,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastObservedValidation"></param>
         /// <param name="lastObservedActualSriHash"></param>
         /// <param name="lastObservedExpectedSriHash"></param>
-        /// <returns> A new <see cref="Easm.DependentResource"/> instance for mocking. </returns>
-        public static DependentResource DependentResource(string md5 = default, long? responseBodySize = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string firstSeenCrawlGuid = default, string firstSeenPageGuid = default, string firstSeenResourceGuid = default, string lastSeenCrawlGuid = default, string lastSeenPageGuid = default, string lastSeenResourceGuid = default, IEnumerable<int> responseBodyMinhash = default, string contentType = default, string sha256 = default, string sha384 = default, string sha512 = default, Uri url = default, bool? cached = default, IEnumerable<SubResourceIntegrityCheck> sriChecks = default, string host = default, DateTimeOffset? lastObservedViolation = default, DateTimeOffset? lastObservedValidation = default, string lastObservedActualSriHash = default, string lastObservedExpectedSriHash = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DependentResource"/> instance for mocking. </returns>
+        public static DependentResource DependentResource(string md5 = default, long? responseBodySize = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string firstSeenCrawlGuid = default, string firstSeenPageGuid = default, string firstSeenResourceGuid = default, string lastSeenCrawlGuid = default, string lastSeenPageGuid = default, string lastSeenResourceGuid = default, IEnumerable<int> responseBodyMinhash = default, string contentType = default, string sha256 = default, string sha384 = default, string sha512 = default, global::System.Uri url = default, bool? cached = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> sriChecks = default, string host = default, DateTimeOffset? lastObservedViolation = default, DateTimeOffset? lastObservedValidation = default, string lastObservedActualSriHash = default, string lastObservedExpectedSriHash = default)
         {
             responseBodyMinhash ??= new ChangeTrackingList<int>();
-            sriChecks ??= new ChangeTrackingList<SubResourceIntegrityCheck>();
+            sriChecks ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>();
 
             return new DependentResource(
                 md5,
@@ -1196,7 +1196,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="pageGuid"></param>
         /// <param name="resourceGuid"></param>
         /// <param name="expectedHash"></param>
-        /// <returns> A new <see cref="Easm.SubResourceIntegrityCheck"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck"/> instance for mocking. </returns>
         public static SubResourceIntegrityCheck SubResourceIntegrityCheck(bool? violation = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string causePageUrl = default, string crawlGuid = default, string pageGuid = default, string resourceGuid = default, string expectedHash = default)
         {
             return new SubResourceIntegrityCheck(
@@ -1217,7 +1217,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="bannerMetadata"></param>
         /// <param name="startScan"></param>
         /// <param name="endScan"></param>
-        /// <returns> A new <see cref="Easm.ScanMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ScanMetadata"/> instance for mocking. </returns>
         public static ScanMetadata ScanMetadata(int? port = default, string bannerMetadata = default, DateTimeOffset? startScan = default, DateTimeOffset? endScan = default)
         {
             return new ScanMetadata(port, bannerMetadata, startScan, endScan, additionalBinaryDataProperties: null);
@@ -1230,10 +1230,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.IpBlock"/> instance for mocking. </returns>
-        public static IpBlock IpBlock(string ipBlockName = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.IpBlock"/> instance for mocking. </returns>
+        public static IpBlock IpBlock(string ipBlockName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new IpBlock(
                 ipBlockName,
@@ -1252,10 +1252,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedLocation"/> instance for mocking. </returns>
-        public static ObservedLocation ObservedLocation(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, ObservedLocationDetails value = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocation"/> instance for mocking. </returns>
+        public static ObservedLocation ObservedLocation(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, ObservedLocationDetails value = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedLocation(
                 firstSeen,
@@ -1279,7 +1279,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="longitude"></param>
         /// <param name="dmaCode"></param>
         /// <param name="metroCodeId"></param>
-        /// <returns> A new <see cref="Easm.ObservedLocationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocationDetails"/> instance for mocking. </returns>
         public static ObservedLocationDetails ObservedLocationDetails(string countryCode = default, string countryName = default, string region = default, string regionName = default, string city = default, int? areaCode = default, string postalCode = default, float? latitude = default, float? longitude = default, int? dmaCode = default, int? metroCodeId = default)
         {
             return new ObservedLocationDetails(
@@ -1304,12 +1304,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.SslServerConfig"/> instance for mocking. </returns>
-        public static SslServerConfig SslServerConfig(IEnumerable<string> tlsVersions = default, IEnumerable<string> cipherSuites = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SslServerConfig"/> instance for mocking. </returns>
+        public static SslServerConfig SslServerConfig(IEnumerable<string> tlsVersions = default, IEnumerable<string> cipherSuites = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
             tlsVersions ??= new ChangeTrackingList<string>();
             cipherSuites ??= new ChangeTrackingList<string>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new SslServerConfig(
                 tlsVersions.ToList(),
@@ -1332,10 +1332,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="sha256"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.BannerDetails"/> instance for mocking. </returns>
-        public static BannerDetails BannerDetails(int? port = default, string bannerName = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string scanType = default, string bannerMetadata = default, bool? recent = default, string sha256 = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.BannerDetails"/> instance for mocking. </returns>
+        public static BannerDetails BannerDetails(int? port = default, string bannerName = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, string scanType = default, string bannerMetadata = default, bool? recent = default, string sha256 = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new BannerDetails(
                 port,
@@ -1366,11 +1366,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.IpAddressAssetResource"/> instance for mocking. </returns>
-        public static IpAddressAssetResource IpAddressAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IpAddressAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.IpAddressAssetResource"/> instance for mocking. </returns>
+        public static IpAddressAssetResource IpAddressAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, IpAddressAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new IpAddressAssetResource(
                 "ipAddress",
@@ -1417,28 +1417,28 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <returns> A new <see cref="Easm.IpAddressAsset"/> instance for mocking. </returns>
-        public static IpAddressAsset IpAddressAsset(string ipAddress = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ReputationDetails> reputations = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedString> netRanges = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<AssetService> services = default, IEnumerable<IpBlock> ipBlocks = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedString> hosts = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, bool? ipv4 = default, bool? ipv6 = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.IpAddressAsset"/> instance for mocking. </returns>
+        public static IpAddressAsset IpAddressAsset(string ipAddress = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> asns = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ReputationDetails> reputations = default, IEnumerable<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> netRanges = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedHeader> headers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetService> services = default, IEnumerable<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.BannerDetails> banners = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLocation> location = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> hosts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = default, bool? ipv4 = default, bool? ipv6 = default)
         {
-            asns ??= new ChangeTrackingList<ObservedLong>();
-            reputations ??= new ChangeTrackingList<ReputationDetails>();
-            webComponents ??= new ChangeTrackingList<WebComponent>();
-            netRanges ??= new ChangeTrackingList<ObservedString>();
-            headers ??= new ChangeTrackingList<ObservedHeader>();
-            attributes ??= new ChangeTrackingList<AttributeDetails>();
-            cookies ??= new ChangeTrackingList<CookieDetails>();
-            sslCerts ??= new ChangeTrackingList<SslCertAsset>();
-            services ??= new ChangeTrackingList<AssetService>();
-            ipBlocks ??= new ChangeTrackingList<IpBlock>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            banners ??= new ChangeTrackingList<BannerDetails>();
-            scanMetadata ??= new ChangeTrackingList<ScanMetadata>();
-            nsRecord ??= new ChangeTrackingList<ObservedBoolean>();
-            mxRecord ??= new ChangeTrackingList<ObservedBoolean>();
-            location ??= new ChangeTrackingList<ObservedLocation>();
-            hosts ??= new ChangeTrackingList<ObservedString>();
-            nxdomain ??= new ChangeTrackingList<ObservedBoolean>();
-            sslServerConfig ??= new ChangeTrackingList<SslServerConfig>();
+            asns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            reputations ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReputationDetails>();
+            webComponents ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            netRanges ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            headers ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
+            attributes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
+            cookies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>();
+            sslCerts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            services ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>();
+            ipBlocks ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            banners ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.BannerDetails>();
+            scanMetadata ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ScanMetadata>();
+            nsRecord ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            mxRecord ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            location ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            hosts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            nxdomain ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            sslServerConfig ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
 
             return new IpAddressAsset(
                 additionalBinaryDataProperties: null,
@@ -1478,7 +1478,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="listUpdatedAt"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ReputationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReputationDetails"/> instance for mocking. </returns>
         public static ReputationDetails ReputationDetails(string listName = default, string threatType = default, bool? trusted = default, string cidr = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, DateTimeOffset? listUpdatedAt = default, bool? recent = default)
         {
             return new ReputationDetails(
@@ -1508,11 +1508,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.IpBlockAssetResource"/> instance for mocking. </returns>
-        public static IpBlockAssetResource IpBlockAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IpBlockAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.IpBlockAssetResource"/> instance for mocking. </returns>
+        public static IpBlockAssetResource IpBlockAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, IpBlockAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new IpBlockAssetResource(
                 "ipBlock",
@@ -1565,31 +1565,31 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <returns> A new <see cref="Easm.IpBlockAsset"/> instance for mocking. </returns>
-        public static IpBlockAsset IpBlockAsset(string ipBlock = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ObservedString> bgpPrefixes = default, IEnumerable<ObservedString> netNames = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> netRanges = default, string startIp = default, string endIp = default, IEnumerable<ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, bool? ipv4 = default, bool? ipv6 = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.IpBlockAsset"/> instance for mocking. </returns>
+        public static IpBlockAsset IpBlockAsset(string ipBlock = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> asns = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> bgpPrefixes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> netNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> netRanges = default, string startIp = default, string endIp = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLocation> location = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones = default, bool? ipv4 = default, bool? ipv6 = default)
         {
-            asns ??= new ChangeTrackingList<ObservedLong>();
-            bgpPrefixes ??= new ChangeTrackingList<ObservedString>();
-            netNames ??= new ChangeTrackingList<ObservedString>();
-            registrantContacts ??= new ChangeTrackingList<ObservedString>();
-            registrantOrgs ??= new ChangeTrackingList<ObservedString>();
-            adminContacts ??= new ChangeTrackingList<ObservedString>();
-            technicalContacts ??= new ChangeTrackingList<ObservedString>();
-            registrarCreatedAt ??= new ChangeTrackingList<ObservedLong>();
-            registrarUpdatedAt ??= new ChangeTrackingList<ObservedLong>();
-            netRanges ??= new ChangeTrackingList<ObservedString>();
-            reputations ??= new ChangeTrackingList<ReputationDetails>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            location ??= new ChangeTrackingList<ObservedLocation>();
-            registrarExpiresAt ??= new ChangeTrackingList<ObservedLong>();
-            registrantNames ??= new ChangeTrackingList<ObservedString>();
-            adminNames ??= new ChangeTrackingList<ObservedString>();
-            technicalNames ??= new ChangeTrackingList<ObservedString>();
-            adminOrgs ??= new ChangeTrackingList<ObservedString>();
-            technicalOrgs ??= new ChangeTrackingList<ObservedString>();
-            registrantPhones ??= new ChangeTrackingList<ObservedString>();
-            adminPhones ??= new ChangeTrackingList<ObservedString>();
-            technicalPhones ??= new ChangeTrackingList<ObservedString>();
+            asns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            bgpPrefixes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            netNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalContacts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrarCreatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrarUpdatedAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            netRanges ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            reputations ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReputationDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            location ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            registrarExpiresAt ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            registrantNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalOrgs ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            registrantPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            adminPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            technicalPhones ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
 
             return new IpBlockAsset(
                 additionalBinaryDataProperties: null,
@@ -1641,11 +1641,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.PageAssetResource"/> instance for mocking. </returns>
-        public static PageAssetResource PageAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, PageAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.PageAssetResource"/> instance for mocking. </returns>
+        public static PageAssetResource PageAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, PageAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new PageAssetResource(
                 "page",
@@ -1728,55 +1728,55 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <returns> A new <see cref="Easm.PageAsset"/> instance for mocking. </returns>
-        public static PageAsset PageAsset(Uri url = default, string httpMethod = default, string service = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<ObservedBoolean> successful = default, IEnumerable<ObservedInteger> httpResponseCodes = default, IEnumerable<ObservedString> httpResponseMessages = default, IEnumerable<ObservedLong> responseTimes = default, IEnumerable<ObservedBoolean> frames = default, IEnumerable<ObservedBoolean> windows = default, IEnumerable<ObservedBoolean> nonHtmlFrames = default, IEnumerable<ObservedBoolean> undirectedContent = default, IEnumerable<ObservedString> contentTypes = default, IEnumerable<ObservedLong> contentLengths = default, IEnumerable<ObservedString> windowNames = default, IEnumerable<ObservedString> charsets = default, IEnumerable<ObservedString> titles = default, IEnumerable<ObservedString> languages = default, IEnumerable<ObservedHeader> responseHeaders = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<AssetSecurityPolicy> assetSecurityPolicies = default, IEnumerable<ObservedIntegers> responseBodyMinhashSignatures = default, IEnumerable<ObservedIntegers> fullDomMinhashSignatures = default, IEnumerable<ObservedString> responseBodyHashSignatures = default, IEnumerable<ObservedString> errors = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, PageCause cause = default, string referrer = default, IEnumerable<ObservedString> redirectUrls = default, PageAssetRedirectType? redirectType = default, IEnumerable<ObservedString> finalUrls = default, IEnumerable<ObservedInteger> finalResponseCodes = default, IEnumerable<ObservedBoolean> parkedPage = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<GuidPair> guids = default, IEnumerable<ObservedString> finalIpAddresses = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IpBlock> ipBlocks = default, IEnumerable<ObservedLong> finalAsns = default, IEnumerable<IpBlock> finalIpBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, ObservedBoolean rootUrl = default, bool? isRootUrl = default, IEnumerable<ObservedLocation> location = default, IEnumerable<AssetService> services = default, string siteStatus = default, IEnumerable<ObservedString> cnames = default, IEnumerable<ObservedString> cdns = default, string host = default, string domain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<AssetSecurityPolicy> gdprAssetSecurityPolicies = default, IEnumerable<ObservedBoolean> ipv4 = default, IEnumerable<ObservedBoolean> ipv6 = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.PageAsset"/> instance for mocking. </returns>
+        public static PageAsset PageAsset(global::System.Uri url = default, string httpMethod = default, string service = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> ipAddresses = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> successful = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedInteger> httpResponseCodes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> httpResponseMessages = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> responseTimes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> frames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> windows = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nonHtmlFrames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> undirectedContent = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> contentTypes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> contentLengths = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> windowNames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> charsets = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> titles = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> languages = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedHeader> responseHeaders = default, IEnumerable<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies = default, IEnumerable<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> assetSecurityPolicies = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedIntegers> responseBodyMinhashSignatures = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedIntegers> fullDomMinhashSignatures = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> responseBodyHashSignatures = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> errors = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, PageCause cause = default, string referrer = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> redirectUrls = default, PageAssetRedirectType? redirectType = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> finalUrls = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedInteger> finalResponseCodes = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> parkedPage = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ResourceUri> resourceUrls = default, IEnumerable<global::Azure.Analytics.Defender.Easm.GuidPair> guids = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> finalIpAddresses = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> asns = default, IEnumerable<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLong> finalAsns = default, IEnumerable<global::Azure.Analytics.Defender.Easm.IpBlock> finalIpBlocks = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> responseBodies = default, DomainAsset domainAsset = default, ObservedBoolean rootUrl = default, bool? isRootUrl = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedLocation> location = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetService> services = default, string siteStatus = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> cnames = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedString> cdns = default, string host = default, string domain = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy> gdprAssetSecurityPolicies = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv4 = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservedBoolean> ipv6 = default)
         {
-            ipAddresses ??= new ChangeTrackingList<ObservedString>();
-            successful ??= new ChangeTrackingList<ObservedBoolean>();
-            httpResponseCodes ??= new ChangeTrackingList<ObservedInteger>();
-            httpResponseMessages ??= new ChangeTrackingList<ObservedString>();
-            responseTimes ??= new ChangeTrackingList<ObservedLong>();
-            frames ??= new ChangeTrackingList<ObservedBoolean>();
-            windows ??= new ChangeTrackingList<ObservedBoolean>();
-            nonHtmlFrames ??= new ChangeTrackingList<ObservedBoolean>();
-            undirectedContent ??= new ChangeTrackingList<ObservedBoolean>();
-            contentTypes ??= new ChangeTrackingList<ObservedString>();
-            contentLengths ??= new ChangeTrackingList<ObservedLong>();
-            windowNames ??= new ChangeTrackingList<ObservedString>();
-            charsets ??= new ChangeTrackingList<ObservedString>();
-            titles ??= new ChangeTrackingList<ObservedString>();
-            languages ??= new ChangeTrackingList<ObservedString>();
-            responseHeaders ??= new ChangeTrackingList<ObservedHeader>();
-            cookies ??= new ChangeTrackingList<CookieDetails>();
-            webComponents ??= new ChangeTrackingList<WebComponent>();
-            attributes ??= new ChangeTrackingList<AttributeDetails>();
-            assetSecurityPolicies ??= new ChangeTrackingList<AssetSecurityPolicy>();
-            responseBodyMinhashSignatures ??= new ChangeTrackingList<ObservedIntegers>();
-            fullDomMinhashSignatures ??= new ChangeTrackingList<ObservedIntegers>();
-            responseBodyHashSignatures ??= new ChangeTrackingList<ObservedString>();
-            errors ??= new ChangeTrackingList<ObservedString>();
-            sslCerts ??= new ChangeTrackingList<SslCertAsset>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
-            redirectUrls ??= new ChangeTrackingList<ObservedString>();
-            finalUrls ??= new ChangeTrackingList<ObservedString>();
-            finalResponseCodes ??= new ChangeTrackingList<ObservedInteger>();
-            parkedPage ??= new ChangeTrackingList<ObservedBoolean>();
-            resourceUrls ??= new ChangeTrackingList<ResourceUri>();
-            guids ??= new ChangeTrackingList<GuidPair>();
-            finalIpAddresses ??= new ChangeTrackingList<ObservedString>();
-            asns ??= new ChangeTrackingList<ObservedLong>();
-            ipBlocks ??= new ChangeTrackingList<IpBlock>();
-            finalAsns ??= new ChangeTrackingList<ObservedLong>();
-            finalIpBlocks ??= new ChangeTrackingList<IpBlock>();
-            responseBodies ??= new ChangeTrackingList<ObservedString>();
-            location ??= new ChangeTrackingList<ObservedLocation>();
-            services ??= new ChangeTrackingList<AssetService>();
-            cnames ??= new ChangeTrackingList<ObservedString>();
-            cdns ??= new ChangeTrackingList<ObservedString>();
-            sslServerConfig ??= new ChangeTrackingList<SslServerConfig>();
-            gdprAssetSecurityPolicies ??= new ChangeTrackingList<AssetSecurityPolicy>();
-            ipv4 ??= new ChangeTrackingList<ObservedBoolean>();
-            ipv6 ??= new ChangeTrackingList<ObservedBoolean>();
+            ipAddresses ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            successful ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            httpResponseCodes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            httpResponseMessages ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            responseTimes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            frames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            windows ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            nonHtmlFrames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            undirectedContent ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            contentTypes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            contentLengths ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            windowNames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            charsets ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            titles ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            languages ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            responseHeaders ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
+            cookies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>();
+            webComponents ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            attributes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
+            assetSecurityPolicies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy>();
+            responseBodyMinhashSignatures ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedIntegers>();
+            fullDomMinhashSignatures ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedIntegers>();
+            responseBodyHashSignatures ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            errors ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sslCerts ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            redirectUrls ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            finalUrls ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            finalResponseCodes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedInteger>();
+            parkedPage ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            resourceUrls ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ResourceUri>();
+            guids ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.GuidPair>();
+            finalIpAddresses ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            asns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            ipBlocks ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            finalAsns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            finalIpBlocks ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>();
+            responseBodies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            location ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            services ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>();
+            cnames ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            cdns ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            sslServerConfig ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
+            gdprAssetSecurityPolicies ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy>();
+            ipv4 ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
+            ipv6 ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
 
             return new PageAsset(
                 additionalBinaryDataProperties: null,
@@ -1852,10 +1852,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.AssetSecurityPolicy"/> instance for mocking. </returns>
-        public static AssetSecurityPolicy AssetSecurityPolicy(string policyName = default, bool? isAffected = default, string description = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetSecurityPolicy"/> instance for mocking. </returns>
+        public static AssetSecurityPolicy AssetSecurityPolicy(string policyName = default, bool? isAffected = default, string description = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new AssetSecurityPolicy(
                 policyName,
@@ -1876,11 +1876,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="values"></param>
         /// <param name="sources"></param>
-        /// <returns> A new <see cref="Easm.ObservedIntegers"/> instance for mocking. </returns>
-        public static ObservedIntegers ObservedIntegers(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<int> values = default, IEnumerable<SourceDetails> sources = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservedIntegers"/> instance for mocking. </returns>
+        public static ObservedIntegers ObservedIntegers(DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, IEnumerable<int> values = default, IEnumerable<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default)
         {
             values ??= new ChangeTrackingList<int>();
-            sources ??= new ChangeTrackingList<SourceDetails>();
+            sources ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
 
             return new ObservedIntegers(
                 firstSeen,
@@ -1900,7 +1900,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="loopDetected"></param>
         /// <param name="version"></param>
         /// <param name="domChangeIndex"></param>
-        /// <returns> A new <see cref="Easm.PageCause"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.PageCause"/> instance for mocking. </returns>
         public static PageCause PageCause(string cause = default, string causeElementXPath = default, string location = default, int? possibleMatches = default, bool? loopDetected = default, int? version = default, int? domChangeIndex = default)
         {
             return new PageCause(
@@ -1919,7 +1919,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="crawlStateGuid"></param>
         /// <param name="loadDate"></param>
         /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.GuidPair"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.GuidPair"/> instance for mocking. </returns>
         public static GuidPair GuidPair(string pageGuid = default, string crawlStateGuid = default, DateTimeOffset? loadDate = default, bool? recent = default)
         {
             return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, additionalBinaryDataProperties: null);
@@ -1940,11 +1940,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
-        /// <returns> A new <see cref="Easm.SslCertAssetResource"/> instance for mocking. </returns>
-        public static SslCertAssetResource SslCertAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, SslCertAsset asset = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SslCertAssetResource"/> instance for mocking. </returns>
+        public static SslCertAssetResource SslCertAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = default, string reason = default, SslCertAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
-            auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
+            auditTrail ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AuditTrailItem>();
 
             return new SslCertAssetResource(
                 "sslCert",
@@ -1968,7 +1968,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A response containing error details. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="errorCode"> String error code indicating what went wrong. </param>
-        /// <returns> A new <see cref="Easm.ErrorResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ErrorResponse"/> instance for mocking. </returns>
         public static ErrorResponse ErrorResponse(ResponseError error = default, string errorCode = default)
         {
             return new ErrorResponse(error, errorCode, additionalBinaryDataProperties: null);
@@ -1980,11 +1980,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="labels"> Any Labels to update the asset with. </param>
         /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
         /// <param name="remediations"> A list of observation remediations to apply to the asset. </param>
-        /// <returns> A new <see cref="Easm.AssetUpdatePayload"/> instance for mocking. </returns>
-        public static AssetUpdatePayload AssetUpdatePayload(AssetUpdateState? state = default, string externalId = default, IDictionary<string, bool> labels = default, AssetUpdateTransfers? transfers = default, IEnumerable<ObservationRemediationItem> remediations = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetUpdatePayload"/> instance for mocking. </returns>
+        public static AssetUpdatePayload AssetUpdatePayload(AssetUpdateState? state = default, string externalId = default, IDictionary<string, bool> labels = default, AssetUpdateTransfers? transfers = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservationRemediationItem> remediations = default)
         {
             labels ??= new ChangeTrackingDictionary<string, bool>();
-            remediations ??= new ChangeTrackingList<ObservationRemediationItem>();
+            remediations ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservationRemediationItem>();
 
             return new AssetUpdatePayload(
                 state,
@@ -1999,7 +1999,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="kind"> The kind of the observation to remediate. </param>
         /// <param name="name"> The name of the observation to remediate. </param>
         /// <param name="state"> The state to which to update the observation. </param>
-        /// <returns> A new <see cref="Easm.ObservationRemediationItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservationRemediationItem"/> instance for mocking. </returns>
         public static ObservationRemediationItem ObservationRemediationItem(ObservationType kind = default, string name = default, ObservationRemediationState state = default)
         {
             return new ObservationRemediationItem(kind, name, state, additionalBinaryDataProperties: null);
@@ -2014,10 +2014,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="phase"> The phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
-        /// <returns> A new <see cref="Easm.TaskResource"/> instance for mocking. </returns>
-        public static TaskResource TaskResource(string id = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? lastPolledAt = default, TaskResourceState? state = default, TaskResourcePhase? phase = default, string reason = default, IDictionary<string, BinaryData> metadata = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.TaskResource"/> instance for mocking. </returns>
+        public static TaskResource TaskResource(string id = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? lastPolledAt = default, TaskResourceState? state = default, TaskResourcePhase? phase = default, string reason = default, IDictionary<string, global::System.BinaryData> metadata = default)
         {
-            metadata ??= new ChangeTrackingDictionary<string, BinaryData>();
+            metadata ??= new ChangeTrackingDictionary<string, global::System.BinaryData>();
 
             return new TaskResource(
                 id,
@@ -2034,7 +2034,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A request body used to export an asset. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
-        /// <returns> A new <see cref="Easm.AssetsExportRequestContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetsExportRequestContent"/> instance for mocking. </returns>
         public static AssetsExportRequestContent AssetsExportRequestContent(string fileName = default, IEnumerable<string> columns = default)
         {
             columns ??= new ChangeTrackingList<string>();
@@ -2046,11 +2046,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="totalElements"> The total number of elements. </param>
         /// <param name="prioritySummary"> The summary of observation counts by priority. </param>
         /// <param name="value"> The list of observation results. </param>
-        /// <returns> A new <see cref="Easm.ObservationPageResult"/> instance for mocking. </returns>
-        public static ObservationPageResult ObservationPageResult(long totalElements = default, IDictionary<string, int> prioritySummary = default, IEnumerable<ObservationResult> value = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservationPageResult"/> instance for mocking. </returns>
+        public static ObservationPageResult ObservationPageResult(long totalElements = default, IDictionary<string, int> prioritySummary = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservationResult> value = default)
         {
             prioritySummary ??= new ChangeTrackingDictionary<string, int>();
-            value ??= new ChangeTrackingList<ObservationResult>();
+            value ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservationResult>();
 
             return new ObservationPageResult(totalElements, prioritySummary, value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2063,10 +2063,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cvssScoreV3"> The CVSS v3 score. </param>
         /// <param name="remediationState"> The remediation state of the observation. </param>
         /// <param name="remediationSource"> The source of the remediation state of the observation. </param>
-        /// <returns> A new <see cref="Easm.ObservationResult"/> instance for mocking. </returns>
-        public static ObservationResult ObservationResult(string name = default, IEnumerable<ObservationType> types = default, ObservationPriority priority = default, double cvssScoreV2 = default, double cvssScoreV3 = default, ObservationRemediationState remediationState = default, ObservationRemediationSource remediationSource = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ObservationResult"/> instance for mocking. </returns>
+        public static ObservationResult ObservationResult(string name = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservationType> types = default, ObservationPriority priority = default, double cvssScoreV2 = default, double cvssScoreV3 = default, ObservationRemediationState remediationState = default, ObservationRemediationSource remediationSource = default)
         {
-            types ??= new ChangeTrackingList<ObservationType>();
+            types ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservationType>();
 
             return new ObservationResult(
                 name,
@@ -2084,7 +2084,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="kind"> The type of asset. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
-        /// <returns> A new <see cref="Easm.DeltaDetailsRequestContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaDetailsRequestContent"/> instance for mocking. </returns>
         public static DeltaDetailsRequestContent DeltaDetailsRequestContent(DeltaDetailType deltaDetailType = default, int? priorDays = default, GlobalAssetType kind = default, string date = default)
         {
             return new DeltaDetailsRequestContent(deltaDetailType, priorDays, kind, date, additionalBinaryDataProperties: null);
@@ -2096,7 +2096,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="createdAt"> Shows the date when the asset was originally created. </param>
         /// <param name="updatedAt"> Shows the date when the asset was last updated, usually the date the we trying to pull up the results for. </param>
         /// <param name="state"> Shows the inventory state. </param>
-        /// <returns> A new <see cref="Easm.DeltaResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaResult"/> instance for mocking. </returns>
         public static DeltaResult DeltaResult(GlobalAssetType kind = default, string name = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, GlobalInventoryState state = default)
         {
             return new DeltaResult(
@@ -2111,7 +2111,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A request body used to retrieve a delta summary. </summary>
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
-        /// <returns> A new <see cref="Easm.DeltaSummaryRequestContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryRequestContent"/> instance for mocking. </returns>
         public static DeltaSummaryRequestContent DeltaSummaryRequestContent(int? priorDays = default, string date = default)
         {
             return new DeltaSummaryRequestContent(priorDays, date, additionalBinaryDataProperties: null);
@@ -2120,10 +2120,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Define response body for getting delta summary. </summary>
         /// <param name="summary"> Contains added, removed, and difference values for the whole range either 7 or 30 days. </param>
         /// <param name="daily"> Contains added, removed, count, and difference values for each day. </param>
-        /// <returns> A new <see cref="Easm.DeltaSummaryResult"/> instance for mocking. </returns>
-        public static DeltaSummaryResult DeltaSummaryResult(DeltaRangeResult summary = default, IEnumerable<DeltaDateResult> daily = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryResult"/> instance for mocking. </returns>
+        public static DeltaSummaryResult DeltaSummaryResult(DeltaRangeResult summary = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DeltaDateResult> daily = default)
         {
-            daily ??= new ChangeTrackingList<DeltaDateResult>();
+            daily ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DeltaDateResult>();
 
             return new DeltaSummaryResult(summary, daily.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2134,10 +2134,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="added"> The total amount of assets added over a date range. </param>
         /// <param name="difference"> The total amount of assets changed removed over a date range. </param>
         /// <param name="kindSummaries"> A list of summary changes per asset kind. </param>
-        /// <returns> A new <see cref="Easm.DeltaRangeResult"/> instance for mocking. </returns>
-        public static DeltaRangeResult DeltaRangeResult(long range = default, long removed = default, long added = default, long difference = default, IEnumerable<DeltaTypeResult> kindSummaries = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaRangeResult"/> instance for mocking. </returns>
+        public static DeltaRangeResult DeltaRangeResult(long range = default, long removed = default, long added = default, long difference = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DeltaTypeResult> kindSummaries = default)
         {
-            kindSummaries ??= new ChangeTrackingList<DeltaTypeResult>();
+            kindSummaries ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DeltaTypeResult>();
 
             return new DeltaRangeResult(
                 range,
@@ -2153,7 +2153,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
-        /// <returns> A new <see cref="Easm.DeltaTypeResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaTypeResult"/> instance for mocking. </returns>
         public static DeltaTypeResult DeltaTypeResult(GlobalAssetType kind = default, long removed = default, long added = default, long difference = default)
         {
             return new DeltaTypeResult(kind, removed, added, difference, additionalBinaryDataProperties: null);
@@ -2162,10 +2162,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Date information for the delta response. </summary>
         /// <param name="date"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
-        /// <returns> A new <see cref="Easm.DeltaDateResult"/> instance for mocking. </returns>
-        public static DeltaDateResult DeltaDateResult(DateTimeOffset date = default, IEnumerable<DailyDeltaTypeResult> deltas = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DeltaDateResult"/> instance for mocking. </returns>
+        public static DeltaDateResult DeltaDateResult(DateTimeOffset date = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult> deltas = default)
         {
-            deltas ??= new ChangeTrackingList<DailyDeltaTypeResult>();
+            deltas ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult>();
 
             return new DeltaDateResult(date, deltas.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2176,7 +2176,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
         /// <param name="count"> The current number of assets for one asset kind. </param>
-        /// <returns> A new <see cref="Easm.DailyDeltaTypeResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DailyDeltaTypeResult"/> instance for mocking. </returns>
         public static DailyDeltaTypeResult DailyDeltaTypeResult(GlobalAssetType kind = default, long removed = default, long added = default, long difference = default, long count = default)
         {
             return new DailyDeltaTypeResult(
@@ -2190,7 +2190,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnection.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnection"/> and <see cref="Easm.AzureDataExplorerDataConnection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/> and <see cref="Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
@@ -2204,7 +2204,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
-        /// <returns> A new <see cref="Easm.DataConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DataConnection"/> instance for mocking. </returns>
         public static DataConnection DataConnection(string kind = default, string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default)
         {
             return new UnknownDataConnection(
@@ -2236,7 +2236,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/> instance for mocking. </returns>
         public static LogAnalyticsDataConnection LogAnalyticsDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default, LogAnalyticsDataConnectionProperties properties = default)
         {
             return new LogAnalyticsDataConnection(
@@ -2259,14 +2259,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> The LogAnalyticsDataConnectionProperties. </summary>
         /// <param name="apiKey"> log analytics api key. </param>
         /// <param name="workspaceId"> log analytics workspace id. </param>
-        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties"/> instance for mocking. </returns>
         public static LogAnalyticsDataConnectionProperties LogAnalyticsDataConnectionProperties(string apiKey = default, string workspaceId = default)
         {
             return new LogAnalyticsDataConnectionProperties(additionalBinaryDataProperties: null, apiKey, workspaceId);
         }
 
         /// <summary> The properties required to establish connection to a particular service. </summary>
-        /// <returns> A new <see cref="Easm.DataConnectionProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionProperties"/> instance for mocking. </returns>
         public static DataConnectionProperties DataConnectionProperties()
         {
             return new DataConnectionProperties(additionalBinaryDataProperties: null);
@@ -2285,7 +2285,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection"/> instance for mocking. </returns>
         public static AzureDataExplorerDataConnection AzureDataExplorerDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default, AzureDataExplorerDataConnectionProperties properties = default)
         {
             return new AzureDataExplorerDataConnection(
@@ -2309,7 +2309,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="clusterName"> The azure data explorer cluster name. </param>
         /// <param name="region"> The azure data explorer region. </param>
         /// <param name="databaseName"> The azure data explorer database name. </param>
-        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties"/> instance for mocking. </returns>
         public static AzureDataExplorerDataConnectionProperties AzureDataExplorerDataConnectionProperties(string clusterName = default, string region = default, string databaseName = default)
         {
             return new AzureDataExplorerDataConnectionProperties(additionalBinaryDataProperties: null, clusterName, region, databaseName);
@@ -2317,14 +2317,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnectionPayload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnectionPayload"/> and <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload"/> and <see cref="Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <returns> A new <see cref="Easm.DataConnectionPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DataConnectionPayload"/> instance for mocking. </returns>
         public static DataConnectionPayload DataConnectionPayload(string kind = default, string name = default, DataConnectionContent? content = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default)
         {
             return new UnknownDataConnectionPayload(
@@ -2342,7 +2342,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
         public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = default, DataConnectionContent? content = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, LogAnalyticsDataConnectionProperties properties = default)
         {
             return new LogAnalyticsDataConnectionPayload(
@@ -2361,7 +2361,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="properties"> properties. </param>
-        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
         public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = default, DataConnectionContent? content = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, AzureDataExplorerDataConnectionProperties properties = default)
         {
             return new AzureDataExplorerDataConnectionPayload(
@@ -2376,7 +2376,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Validate result for validate action endpoints. </summary>
         /// <param name="error"> This is the top-level error object whose code matches the x-ms-error-code response header. </param>
-        /// <returns> A new <see cref="Easm.ValidateResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ValidateResult"/> instance for mocking. </returns>
         public static ValidateResult ValidateResult(ErrorDetail error = default)
         {
             return new ValidateResult(error, additionalBinaryDataProperties: null);
@@ -2388,10 +2388,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="target"> This is the error target. </param>
         /// <param name="details"> This is an array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> This is an object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Easm.ErrorDetail"/> instance for mocking. </returns>
-        public static ErrorDetail ErrorDetail(string code = default, string message = default, string target = default, IEnumerable<ErrorDetail> details = default, InnerError innererror = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ErrorDetail"/> instance for mocking. </returns>
+        public static ErrorDetail ErrorDetail(string code = default, string message = default, string target = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ErrorDetail> details = default, InnerError innererror = default)
         {
-            details ??= new ChangeTrackingList<ErrorDetail>();
+            details ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ErrorDetail>();
 
             return new ErrorDetail(
                 code,
@@ -2405,7 +2405,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> This is an object containing more specific information than the current object about the error. </summary>
         /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
         /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
-        /// <returns> A new <see cref="Easm.InnerError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.InnerError"/> instance for mocking. </returns>
         public static InnerError InnerError(string code = default, BinaryData value = default)
         {
             return new InnerError(code, value, additionalBinaryDataProperties: null);
@@ -2424,12 +2424,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="latestRun"> The latest run of this disco group with some limited information, null if the group has never been run. </param>
         /// <param name="createdDate"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
-        /// <returns> A new <see cref="Easm.DiscoveryGroup"/> instance for mocking. </returns>
-        public static DiscoveryGroup DiscoveryGroup(string id = default, string name = default, string displayName = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<DiscoverySource> excludes = default, DiscoveryRunResult latestRun = default, DateTimeOffset? createdDate = default, string templateId = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroup"/> instance for mocking. </returns>
+        public static DiscoveryGroup DiscoveryGroup(string id = default, string name = default, string displayName = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes = default, DiscoveryRunResult latestRun = default, DateTimeOffset? createdDate = default, string templateId = default)
         {
-            seeds ??= new ChangeTrackingList<DiscoverySource>();
+            seeds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
-            excludes ??= new ChangeTrackingList<DiscoverySource>();
+            excludes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
 
             return new DiscoveryGroup(
                 id,
@@ -2450,7 +2450,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Source entity used to drive discovery. </summary>
         /// <param name="kind"> The kind of disco source. </param>
         /// <param name="name"> The name for the disco source. </param>
-        /// <returns> A new <see cref="Easm.DiscoverySource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoverySource"/> instance for mocking. </returns>
         public static DiscoverySource DiscoverySource(DiscoverySourceKind? kind = default, string name = default)
         {
             return new DiscoverySource(kind, name, additionalBinaryDataProperties: null);
@@ -2466,11 +2466,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="seeds"> The list of seeds used for the disco run. </param>
         /// <param name="excludes"> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="names"> The list of names used for the disco run. </param>
-        /// <returns> A new <see cref="Easm.DiscoveryRunResult"/> instance for mocking. </returns>
-        public static DiscoveryRunResult DiscoveryRunResult(DateTimeOffset? submittedDate = default, DateTimeOffset? startedDate = default, DateTimeOffset? completedDate = default, string tier = default, DiscoRunState? state = default, long? totalAssetsFoundCount = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<DiscoverySource> excludes = default, IEnumerable<string> names = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryRunResult"/> instance for mocking. </returns>
+        public static DiscoveryRunResult DiscoveryRunResult(DateTimeOffset? submittedDate = default, DateTimeOffset? startedDate = default, DateTimeOffset? completedDate = default, string tier = default, DiscoRunState? state = default, long? totalAssetsFoundCount = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes = default, IEnumerable<string> names = default)
         {
-            seeds ??= new ChangeTrackingList<DiscoverySource>();
-            excludes ??= new ChangeTrackingList<DiscoverySource>();
+            seeds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
+            excludes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
 
             return new DiscoveryRunResult(
@@ -2495,12 +2495,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="names"> The list of names used for the disco group runs. </param>
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
-        /// <returns> A new <see cref="Easm.DiscoveryGroupPayload"/> instance for mocking. </returns>
-        public static DiscoveryGroupPayload DiscoveryGroupPayload(string name = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<DiscoverySource> excludes = default, string templateId = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupPayload"/> instance for mocking. </returns>
+        public static DiscoveryGroupPayload DiscoveryGroupPayload(string name = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes = default, string templateId = default)
         {
-            seeds ??= new ChangeTrackingList<DiscoverySource>();
+            seeds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
-            excludes ??= new ChangeTrackingList<DiscoverySource>();
+            excludes ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
 
             return new DiscoveryGroupPayload(
                 name,
@@ -2517,7 +2517,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
         /// <param name="sourceIds"> A collection of asset chain source ids. </param>
-        /// <returns> A new <see cref="Easm.AssetChainRequestContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetChainRequestContent"/> instance for mocking. </returns>
         public static AssetChainRequestContent AssetChainRequestContent(AssetChainSource assetChainSource = default, IEnumerable<string> sourceIds = default)
         {
             sourceIds ??= new ChangeTrackingList<string>();
@@ -2529,12 +2529,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedAssetsSummary"> A list of asset chain summaries per asset kind. </param>
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
-        /// <returns> A new <see cref="Easm.AssetChainSummaryResult"/> instance for mocking. </returns>
-        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<ErrorResponse> errors = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetChainSummaryResult"/> instance for mocking. </returns>
+        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ErrorResponse> errors = default)
         {
-            affectedAssetsSummary ??= new ChangeTrackingList<AssetChainKindSummaryResult>();
-            affectedGroupsSummary ??= new ChangeTrackingList<DiscoveryGroupSummaryResult>();
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            affectedAssetsSummary ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult>();
+            affectedGroupsSummary ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult>();
+            errors ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ErrorResponse>();
 
             return new AssetChainSummaryResult(affectedAssetsSummary.ToList(), affectedGroupsSummary.ToList(), errors.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2542,7 +2542,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A list of asset chain summaries per asset kind. </summary>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="affectedCount"> The amount of assets affected for a given asset kind. </param>
-        /// <returns> A new <see cref="Easm.AssetChainKindSummaryResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetChainKindSummaryResult"/> instance for mocking. </returns>
         public static AssetChainKindSummaryResult AssetChainKindSummaryResult(AssetKind kind = default, long affectedCount = default)
         {
             return new AssetChainKindSummaryResult(kind, affectedCount, additionalBinaryDataProperties: null);
@@ -2552,7 +2552,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <returns> A new <see cref="Easm.DiscoveryGroupSummaryResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroupSummaryResult"/> instance for mocking. </returns>
         public static DiscoveryGroupSummaryResult DiscoveryGroupSummaryResult(string id = default, string name = default, string displayName = default)
         {
             return new DiscoveryGroupSummaryResult(id, name, displayName, additionalBinaryDataProperties: null);
@@ -2569,10 +2569,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="city"> The name of the city. </param>
         /// <param name="seeds"> The list of disco template seeds. </param>
         /// <param name="names"> The list of disco template names. </param>
-        /// <returns> A new <see cref="Easm.DiscoveryTemplate"/> instance for mocking. </returns>
-        public static DiscoveryTemplate DiscoveryTemplate(string id = default, string name = default, string displayName = default, string industry = default, string region = default, string countryCode = default, string stateCode = default, string city = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<string> names = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryTemplate"/> instance for mocking. </returns>
+        public static DiscoveryTemplate DiscoveryTemplate(string id = default, string name = default, string displayName = default, string industry = default, string region = default, string countryCode = default, string stateCode = default, string city = default, IEnumerable<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds = default, IEnumerable<string> names = default)
         {
-            seeds ??= new ChangeTrackingList<DiscoverySource>();
+            seeds ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
 
             return new DiscoveryTemplate(
@@ -2591,10 +2591,10 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> The ReportBillableAssetSummaryResult. </summary>
         /// <param name="assetSummaries"></param>
-        /// <returns> A new <see cref="Easm.ReportBillableAssetSummaryResult"/> instance for mocking. </returns>
-        public static ReportBillableAssetSummaryResult ReportBillableAssetSummaryResult(IEnumerable<ReportBillableAssetSnapshotResult> assetSummaries = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult"/> instance for mocking. </returns>
+        public static ReportBillableAssetSummaryResult ReportBillableAssetSummaryResult(IEnumerable<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult> assetSummaries = default)
         {
-            assetSummaries ??= new ChangeTrackingList<ReportBillableAssetSnapshotResult>();
+            assetSummaries ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>();
 
             return new ReportBillableAssetSummaryResult(assetSummaries.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2603,10 +2603,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="date"> The date these assets were billed on. </param>
         /// <param name="total"> The total number of billable assets for this date. </param>
         /// <param name="assetBreakdown"> The breakdown of billable asset counts for each asset type. </param>
-        /// <returns> A new <see cref="Easm.ReportBillableAssetSnapshotResult"/> instance for mocking. </returns>
-        public static ReportBillableAssetSnapshotResult ReportBillableAssetSnapshotResult(DateTimeOffset? date = default, long? total = default, IEnumerable<ReportBillableAssetBreakdown> assetBreakdown = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult"/> instance for mocking. </returns>
+        public static ReportBillableAssetSnapshotResult ReportBillableAssetSnapshotResult(DateTimeOffset? date = default, long? total = default, IEnumerable<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> assetBreakdown = default)
         {
-            assetBreakdown ??= new ChangeTrackingList<ReportBillableAssetBreakdown>();
+            assetBreakdown ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>();
 
             return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2614,7 +2614,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> The breakdown of billable asset counts for each asset type. </summary>
         /// <param name="kind"> The kind of billable asset. </param>
         /// <param name="count"> The number of assets of this type. </param>
-        /// <returns> A new <see cref="Easm.ReportBillableAssetBreakdown"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown"/> instance for mocking. </returns>
         public static ReportBillableAssetBreakdown ReportBillableAssetBreakdown(ReportBillableAssetBreakdownKind? kind = default, long? count = default)
         {
             return new ReportBillableAssetBreakdown(kind, count, additionalBinaryDataProperties: null);
@@ -2625,7 +2625,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
         /// <param name="size"> The number of assets per page. </param>
         /// <param name="page"> The page to retrieve. </param>
-        /// <returns> A new <see cref="Easm.ReportAssetSnapshotPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload"/> instance for mocking. </returns>
         public static ReportAssetSnapshotPayload ReportAssetSnapshotPayload(string metric = default, string labelName = default, int? size = default, int? page = default)
         {
             return new ReportAssetSnapshotPayload(metric, labelName, size, page, additionalBinaryDataProperties: null);
@@ -2638,7 +2638,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="updatedAt"> The last time this asset data was updated on this metric. </param>
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
-        /// <returns> A new <see cref="Easm.ReportAssetSnapshotResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult"/> instance for mocking. </returns>
         public static ReportAssetSnapshotResult ReportAssetSnapshotResult(string displayName = default, string metric = default, string labelName = default, DateTimeOffset? updatedAt = default, string description = default, AssetPageResult assets = default)
         {
             return new ReportAssetSnapshotResult(
@@ -2656,10 +2656,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="mark"> The cursor mark to be used on the next request.  Not set if using paging. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Easm.AssetPageResult"/> instance for mocking. </returns>
-        public static AssetPageResult AssetPageResult(long? totalElements = default, string mark = default, string nextLink = default, IEnumerable<AssetResource> value = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetPageResult"/> instance for mocking. </returns>
+        public static AssetPageResult AssetPageResult(long? totalElements = default, string mark = default, string nextLink = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetResource> value = default)
         {
-            value ??= new ChangeTrackingList<AssetResource>();
+            value ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetResource>();
 
             return new AssetPageResult(totalElements, mark, nextLink, value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2671,7 +2671,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="groupBy"> A parameter to group the assets by (first level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="labelName"> Currently unused. </param>
-        /// <returns> A new <see cref="Easm.ReportAssetSummaryPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload"/> instance for mocking. </returns>
         public static ReportAssetSummaryPayload ReportAssetSummaryPayload(IEnumerable<string> metricCategories = default, IEnumerable<string> metrics = default, IEnumerable<string> filters = default, string groupBy = default, string segmentBy = default, string labelName = default)
         {
             metricCategories ??= new ChangeTrackingList<string>();
@@ -2690,10 +2690,10 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> The ReportAssetSummaryResult. </summary>
         /// <param name="assetSummaries"> The collection of asset summaries. </param>
-        /// <returns> A new <see cref="Easm.ReportAssetSummaryResult"/> instance for mocking. </returns>
-        public static ReportAssetSummaryResult ReportAssetSummaryResult(IEnumerable<AssetSummaryResult> assetSummaries = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSummaryResult"/> instance for mocking. </returns>
+        public static ReportAssetSummaryResult ReportAssetSummaryResult(IEnumerable<global::Azure.Analytics.Defender.Easm.AssetSummaryResult> assetSummaries = default)
         {
-            assetSummaries ??= new ChangeTrackingList<AssetSummaryResult>();
+            assetSummaries ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSummaryResult>();
 
             return new ReportAssetSummaryResult(assetSummaries.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2709,10 +2709,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"> The count of assets matching the request parameters. </param>
         /// <param name="link"> The link to the corresponding asset details. </param>
         /// <param name="children"> The corresponding child entities.  For metric categories this will contain metrics.  For filters with groupBy and segmentBy this will contain facets. </param>
-        /// <returns> A new <see cref="Easm.AssetSummaryResult"/> instance for mocking. </returns>
-        public static AssetSummaryResult AssetSummaryResult(string displayName = default, string description = default, DateTimeOffset? updatedAt = default, string metricCategory = default, string metric = default, string filter = default, string labelName = default, long? count = default, string link = default, IEnumerable<AssetSummaryResult> children = default)
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.AssetSummaryResult"/> instance for mocking. </returns>
+        public static AssetSummaryResult AssetSummaryResult(string displayName = default, string description = default, DateTimeOffset? updatedAt = default, string metricCategory = default, string metric = default, string filter = default, string labelName = default, long? count = default, string link = default, IEnumerable<global::Azure.Analytics.Defender.Easm.AssetSummaryResult> children = default)
         {
-            children ??= new ChangeTrackingList<AssetSummaryResult>();
+            children ??= new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetSummaryResult>();
 
             return new AssetSummaryResult(
                 displayName,
@@ -2732,7 +2732,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="metric"> The metric to retrieve a snapshot for. </param>
         /// <param name="fileName"> The filename of the exported file. </param>
         /// <param name="columns"> The columns to include in the export. </param>
-        /// <returns> A new <see cref="Easm.ReportAssetSnapshotExportPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ReportAssetSnapshotExportPayload"/> instance for mocking. </returns>
         public static ReportAssetSnapshotExportPayload ReportAssetSnapshotExportPayload(string metric = default, string fileName = default, IEnumerable<string> columns = default)
         {
             columns ??= new ChangeTrackingList<string>();
@@ -2746,7 +2746,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="filter"></param>
         /// <param name="description"></param>
-        /// <returns> A new <see cref="Easm.SavedFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SavedFilter"/> instance for mocking. </returns>
         public static SavedFilter SavedFilter(string id = default, string name = default, string displayName = default, string filter = default, string description = default)
         {
             return new SavedFilter(
@@ -2761,7 +2761,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A request body used to create a saved filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
         /// <param name="description"> A human readable description of the saved filter. </param>
-        /// <returns> A new <see cref="Easm.SavedFilterPayload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.SavedFilterPayload"/> instance for mocking. </returns>
         public static SavedFilterPayload SavedFilterPayload(string filter = default, string description = default)
         {
             return new SavedFilterPayload(filter, description, additionalBinaryDataProperties: null);
@@ -2779,7 +2779,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="dueDate"> The date the required action is due in the format YYYY-MM-DD. </param>
         /// <param name="updatedAt"> The date the vulnerability was updated. </param>
         /// <param name="count"> The number of assets affected by the vulnerability. </param>
-        /// <returns> A new <see cref="Easm.CisaCveResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.CisaCveResult"/> instance for mocking. </returns>
         public static CisaCveResult CisaCveResult(string cveId = default, string vendorProject = default, string product = default, string vulnerabilityName = default, string shortDescription = default, string requiredAction = default, string notes = default, DateTimeOffset dateAdded = default, DateTimeOffset dueDate = default, DateTimeOffset updatedAt = default, long count = default)
         {
             return new CisaCveResult(
@@ -2809,7 +2809,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="createdDate"> The date this policy was created, in RFC3339 format. </param>
         /// <param name="updatedDate"> The date this policy was last updated, in RFC3339 format. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
-        /// <returns> A new <see cref="Easm.EasmPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.EasmPolicy"/> instance for mocking. </returns>
         public static EasmPolicy EasmPolicy(string id = default, string name = default, string displayName = default, string description = default, string filterName = default, PolicyAction action = default, long? updatedAssetsCount = default, string user = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, ActionParametersContent actionParameters = default)
         {
             return new EasmPolicy(
@@ -2833,7 +2833,7 @@ namespace Azure.Analytics.Defender.Easm
         /// for further information please refer to documentation here:
         /// https://learn.microsoft.com/en-us/azure/external-attack-surface-management/policy-engine
         /// </param>
-        /// <returns> A new <see cref="Easm.ActionParametersContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Analytics.Defender.Easm.ActionParametersContent"/> instance for mocking. </returns>
         public static ActionParametersContent ActionParametersContent(string value = default)
         {
             return new ActionParametersContent(value, additionalBinaryDataProperties: null);

@@ -10,21 +10,21 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Computer tool call output. </summary>
     public partial class OutputItemComputerToolCallOutput : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemComputerToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="output"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public OutputItemComputerToolCallOutput(string callId, ComputerScreenshotImage output) : base(AgentResponseItemKind.ComputerCallOutput)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
+        public OutputItemComputerToolCallOutput(string callId, ComputerScreenshotImage output) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.ComputerCallOutput)
         {
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(output, nameof(output));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(callId, nameof(callId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(output, nameof(output));
 
             CallId = callId;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam>();
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputItemComputerToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal OutputItemComputerToolCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemFieldComputerToolCallOutputStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemComputerToolCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, IList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemFieldComputerToolCallOutputStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;
@@ -55,7 +55,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The safety checks reported by the API that have been acknowledged by the
         ///   developer.
         /// </summary>
-        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; }
 
         /// <summary> Gets or sets the Output. </summary>
         public ComputerScreenshotImage Output { get; set; }

@@ -14,31 +14,31 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexActionType value) => value switch
         {
-            IndexActionType.Upload => "upload",
-            IndexActionType.Merge => "merge",
-            IndexActionType.MergeOrUpload => "mergeOrUpload",
-            IndexActionType.Delete => "delete",
+            global::Azure.Search.Documents.Models.IndexActionType.Upload => "upload",
+            global::Azure.Search.Documents.Models.IndexActionType.Merge => "merge",
+            global::Azure.Search.Documents.Models.IndexActionType.MergeOrUpload => "mergeOrUpload",
+            global::Azure.Search.Documents.Models.IndexActionType.Delete => "delete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static IndexActionType ToIndexActionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "upload"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "upload"))
             {
-                return IndexActionType.Upload;
+                return global::Azure.Search.Documents.Models.IndexActionType.Upload;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "merge"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "merge"))
             {
-                return IndexActionType.Merge;
+                return global::Azure.Search.Documents.Models.IndexActionType.Merge;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mergeOrUpload"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "mergeOrUpload"))
             {
-                return IndexActionType.MergeOrUpload;
+                return global::Azure.Search.Documents.Models.IndexActionType.MergeOrUpload;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "delete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "delete"))
             {
-                return IndexActionType.Delete;
+                return global::Azure.Search.Documents.Models.IndexActionType.Delete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.");
         }

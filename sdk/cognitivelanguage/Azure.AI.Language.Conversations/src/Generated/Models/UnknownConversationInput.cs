@@ -12,13 +12,13 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownConversationInput : ConversationInput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownConversationInput"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationInput(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, language, modality != default ? modality : "unknown", domain, additionalBinaryDataProperties)
+        internal UnknownConversationInput(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, language, (modality != default) ? modality : "unknown", domain, additionalBinaryDataProperties)
         {
         }
     }

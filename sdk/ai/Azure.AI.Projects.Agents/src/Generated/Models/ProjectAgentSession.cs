@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectAgentSession
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectAgentSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectAgentSession"/>. </summary>
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectAgentSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectAgentSession"/>. </summary>
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdAt, DateTimeOffset lastAccessedAt, DateTimeOffset expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdAt, DateTimeOffset lastAccessedAt, DateTimeOffset expiresAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AgentSessionId = agentSessionId;
             VersionIndicator = versionIndicator;

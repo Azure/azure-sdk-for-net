@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchContentType value) => value switch
         {
-            SearchContentType.Text => "text",
-            SearchContentType.Image => "image",
+            global::Azure.AI.Extensions.OpenAI.SearchContentType.Text => "text",
+            global::Azure.AI.Extensions.OpenAI.SearchContentType.Image => "image",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchContentType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SearchContentType ToSearchContentType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "text"))
             {
-                return SearchContentType.Text;
+                return global::Azure.AI.Extensions.OpenAI.SearchContentType.Text;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "image"))
             {
-                return SearchContentType.Image;
+                return global::Azure.AI.Extensions.OpenAI.SearchContentType.Image;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchContentType value.");
         }

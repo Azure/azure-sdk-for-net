@@ -13,14 +13,14 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The LogAnalyticsDataConnection. </summary>
     public partial class LogAnalyticsDataConnection : DataConnection
     {
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/>. </summary>
         /// <param name="properties"> properties. </param>
         internal LogAnalyticsDataConnection(LogAnalyticsDataConnectionProperties properties) : base("logAnalytics")
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, additionalBinaryDataProperties)
+        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

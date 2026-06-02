@@ -14,14 +14,14 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelatedTermHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedTermHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader"/>. </summary>
         public AtlasRelatedTermHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedTermHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader"/>. </summary>
         /// <param name="description"> The description of the related term. </param>
         /// <param name="displayText"> The display text. </param>
         /// <param name="expression"> The expression of the term. </param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="steward"> The steward of the term. </param>
         /// <param name="termGuid"> The GUID of the term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelatedTermHeader(string description, string displayText, string expression, string relationGuid, AtlasTermRelationshipStatus? status, string steward, string termGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelatedTermHeader(string description, string displayText, string expression, string relationGuid, AtlasTermRelationshipStatus? status, string steward, string termGuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayText = displayText;

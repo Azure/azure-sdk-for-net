@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageLifecyclePolicyRunSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyRunSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary"/>. </summary>
         /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
         internal StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus)
         {
             CompletionStatus = completionStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyRunSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary"/>. </summary>
         /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CompletionStatus = completionStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

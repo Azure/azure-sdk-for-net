@@ -13,11 +13,11 @@ namespace Versioning.MadeOptional
 {
     public partial class MadeOptionalClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2;
+        private const global::Versioning.MadeOptional.MadeOptionalClientOptions.ServiceVersion LatestVersion = global::Versioning.MadeOptional.MadeOptionalClientOptions.ServiceVersion.V2;
 
-        public MadeOptionalClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public MadeOptionalClientOptions(global::Versioning.MadeOptional.MadeOptionalClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MadeOptionalClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

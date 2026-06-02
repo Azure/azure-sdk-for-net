@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationActions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActions"/>. </summary>
         /// <param name="completed"> Count of tasks that finished successfully. </param>
         /// <param name="failed"> Count of tasks that failed. </param>
         /// <param name="inProgress"> Count of tasks that are currently in progress. </param>
@@ -28,17 +28,17 @@ namespace Azure.AI.Language.Conversations.Models
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeConversationOperationResult>();
+            Items = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActions"/>. </summary>
         /// <param name="completed"> Count of tasks that finished successfully. </param>
         /// <param name="failed"> Count of tasks that failed. </param>
         /// <param name="inProgress"> Count of tasks that are currently in progress. </param>
         /// <param name="total"> Total count of tasks submitted as part of the job. </param>
         /// <param name="items"> List of results from tasks (if available). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationActions(int completed, int failed, int inProgress, int total, IList<AnalyzeConversationOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationActions(int completed, int failed, int inProgress, int total, IList<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult> items, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;
@@ -61,6 +61,6 @@ namespace Azure.AI.Language.Conversations.Models
         public int Total { get; }
 
         /// <summary> List of results from tasks (if available). </summary>
-        public IList<AnalyzeConversationOperationResult> Items { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult> Items { get; }
     }
 }

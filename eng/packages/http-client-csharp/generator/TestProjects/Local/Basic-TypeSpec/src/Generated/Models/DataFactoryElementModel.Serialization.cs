@@ -16,9 +16,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace BasicTypeSpec
 {
     /// <summary> Model with DataFactoryElement properties. </summary>
-    public partial class DataFactoryElementModel : IJsonModel<DataFactoryElementModel>
+    public partial class DataFactoryElementModel : IJsonModel<global::BasicTypeSpec.DataFactoryElementModel>
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryElementModel"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.DataFactoryElementModel"/> for deserialization. </summary>
         internal DataFactoryElementModel()
         {
         }
@@ -27,65 +27,65 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryElementModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataFactoryElementModel(document.RootElement, options);
+                        return global::BasicTypeSpec.DataFactoryElementModel.DeserializeDataFactoryElementModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.DataFactoryElementModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.DataFactoryElementModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataFactoryElementModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataFactoryElementModel IPersistableModel<DataFactoryElementModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataFactoryElementModel IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataFactoryElementModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dataFactoryElementModel"> The <see cref="DataFactoryElementModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="dataFactoryElementModel"> The <see cref="global::BasicTypeSpec.DataFactoryElementModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(DataFactoryElementModel dataFactoryElementModel)
         {
-            if (dataFactoryElementModel == null)
+            if ((dataFactoryElementModel == null))
             {
                 return null;
             }
-            return RequestContent.Create(dataFactoryElementModel, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(dataFactoryElementModel, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataFactoryElementModel"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::BasicTypeSpec.DataFactoryElementModel"/> from. </param>
         public static explicit operator DataFactoryElementModel(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataFactoryElementModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::BasicTypeSpec.DataFactoryElementModel.DeserializeDataFactoryElementModel(document.RootElement, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataFactoryElementModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::BasicTypeSpec.DataFactoryElementModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -93,20 +93,20 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.DataFactoryElementModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("stringProperty"u8);
-            writer.WriteObjectValue(StringProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(StringProperty, options);
             writer.WritePropertyName("intProperty"u8);
-            writer.WriteObjectValue(IntProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<int>>(IntProperty, options);
             writer.WritePropertyName("boolProperty"u8);
-            writer.WriteObjectValue(BoolProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<bool>>(BoolProperty, options);
             writer.WritePropertyName("stringArrayProperty"u8);
-            writer.WriteObjectValue(StringArrayProperty, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteObjectValue<DataFactoryElement<global::System.Collections.Generic.IList<string>>>(StringArrayProperty, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace BasicTypeSpec
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,59 +125,59 @@ namespace BasicTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataFactoryElementModel IJsonModel<DataFactoryElementModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataFactoryElementModel IJsonModel<global::BasicTypeSpec.DataFactoryElementModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryElementModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.DataFactoryElementModel>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.DataFactoryElementModel)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFactoryElementModel(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::BasicTypeSpec.DataFactoryElementModel.DeserializeDataFactoryElementModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DataFactoryElementModel DeserializeDataFactoryElementModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             DataFactoryElement<string> stringProperty = default;
             DataFactoryElement<int> intProperty = default;
             DataFactoryElement<bool> boolProperty = default;
-            DataFactoryElement<IList<string>> stringArrayProperty = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryElement<global::System.Collections.Generic.IList<string>> stringArrayProperty = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("stringProperty"u8))
                 {
-                    stringProperty = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringProperty = global::System.ClientModel.Primitives.ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("intProperty"u8))
                 {
-                    intProperty = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    intProperty = global::System.ClientModel.Primitives.ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolProperty"u8))
                 {
-                    boolProperty = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    boolProperty = global::System.ClientModel.Primitives.ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("stringArrayProperty"u8))
                 {
-                    stringArrayProperty = ModelReaderWriter.Read<DataFactoryElement<IList<string>>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringArrayProperty = global::System.ClientModel.Primitives.ModelReaderWriter.Read<DataFactoryElement<global::System.Collections.Generic.IList<string>>>(prop.Value.GetUtf8Bytes(), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties);

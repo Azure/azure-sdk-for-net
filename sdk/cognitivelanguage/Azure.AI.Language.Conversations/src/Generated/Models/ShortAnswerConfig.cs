@@ -14,19 +14,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ShortAnswerConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ShortAnswerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ShortAnswerConfig"/>. </summary>
         public ShortAnswerConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ShortAnswerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ShortAnswerConfig"/>. </summary>
         /// <param name="enable"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
         /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShortAnswerConfig(bool? enable, double? confidenceThreshold, int? top, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShortAnswerConfig(bool? enable, double? confidenceThreshold, int? top, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Enable = enable;
             ConfidenceThreshold = confidenceThreshold;

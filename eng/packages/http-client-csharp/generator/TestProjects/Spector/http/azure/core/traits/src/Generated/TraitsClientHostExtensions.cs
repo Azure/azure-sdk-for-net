@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Traits
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class TraitsClientHostExtensions
     {
         public static IClientBuilder AddTraitsClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddTraitsClient(this IHostApplicationBuilder host, string sectionName, Action<TraitsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddTraitsClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Traits.TraitsClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedTraitsClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedTraitsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<TraitsClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedTraitsClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Traits.TraitsClientSettings> configureSettings) => throw null;
     }
 }

@@ -15,39 +15,39 @@ namespace Azure.Communication.Messages
     /// <summary> Client options for clients in this library. </summary>
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01_Preview;
+        private const global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion LatestVersion = global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_09_01_Preview;
 
         /// <summary> Initializes a new instance of NotificationMessagesClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public CommunicationMessagesClientOptions(ServiceVersion version = LatestVersion)
+        public CommunicationMessagesClientOptions(global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_02_01 => "2024-02-01",
-                ServiceVersion.V2024_08_30 => "2024-08-30",
-                ServiceVersion.V2025_01_15_Preview => "2025-01-15-preview",
-                ServiceVersion.V2025_04_01_Preview => "2025-04-01-preview",
-                ServiceVersion.V2025_09_01_Preview => "2025-09-01-preview",
+                global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2024_02_01 => "2024-02-01",
+                global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2024_08_30 => "2024-08-30",
+                global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_01_15_Preview => "2025-01-15-preview",
+                global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_04_01_Preview => "2025-04-01-preview",
+                global::Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_09_01_Preview => "2025-09-01-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of NotificationMessagesClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal CommunicationMessagesClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-09-01-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

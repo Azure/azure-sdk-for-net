@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SoaRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SoaRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SoaRecord"/>. </summary>
         internal SoaRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SoaRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SoaRecord"/>. </summary>
         /// <param name="nameServer"></param>
         /// <param name="email"></param>
         /// <param name="firstSeen"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="serialNumber"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoaRecord(string nameServer, string email, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, long? serialNumber, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoaRecord(string nameServer, string email, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, long? serialNumber, bool? recent, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NameServer = nameServer;
             Email = email;

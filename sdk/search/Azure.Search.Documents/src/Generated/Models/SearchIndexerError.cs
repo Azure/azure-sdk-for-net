@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerError"/>. </summary>
         internal SearchIndexerError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerError"/>. </summary>
         /// <param name="key"> The key of the item for which indexing failed. </param>
         /// <param name="errorMessage"> The message describing the error that occurred while processing the item. </param>
         /// <param name="statusCode"> The status code indicating why the indexing operation failed. Possible values include: 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="details"> Additional, verbose details about the error to assist in debugging the indexer. This may not be always available. </param>
         /// <param name="documentationLink"> A link to a troubleshooting guide for these classes of errors. This may not be always available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             ErrorMessage = errorMessage;

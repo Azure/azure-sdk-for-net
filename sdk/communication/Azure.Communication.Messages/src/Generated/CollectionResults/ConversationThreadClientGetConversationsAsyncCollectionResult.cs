@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class ConversationThreadClientGetConversationsAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class ConversationThreadClientGetConversationsAsyncCollectionResult : AsyncPageable<global::System.BinaryData>
     {
         private readonly ConversationThreadClient _client;
         private readonly int? _maxPageSize;
@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConversationThreadClientGetConversationsAsyncCollectionResult(ConversationThreadClient client, int? maxPageSize, string participantId, Guid? channelId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConversationThreadClientGetConversationsAsyncCollectionResult(ConversationThreadClient client, int? maxPageSize, string participantId, Guid? channelId, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxPageSize = maxPageSize;
@@ -45,25 +45,25 @@ namespace Azure.Communication.Messages
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConversationThreadClientGetConversationsAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedConversation result = (PagedConversation)response;
-                List<BinaryData> items = new List<BinaryData>();
+                PagedConversation result = ((PagedConversation)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureCommunicationMessagesContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Azure.Communication.Messages.ModelSerializationExtensions.WireOptions, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return global::Azure.Page<BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -73,9 +73,9 @@ namespace Azure.Communication.Messages
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetConversationsRequest(nextLink, _maxPageSize, _participantId, _channelId, _context) : _client.CreateGetConversationsRequest(_maxPageSize, _participantId, _channelId, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetConversationsRequest(nextLink, _maxPageSize, _participantId, _channelId, _context) : _client.CreateGetConversationsRequest(_maxPageSize, _participantId, _channelId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

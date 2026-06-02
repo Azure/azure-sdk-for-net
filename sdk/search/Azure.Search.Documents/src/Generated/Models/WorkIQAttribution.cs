@@ -14,23 +14,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class WorkIQAttribution
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkIQAttribution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQAttribution"/>. </summary>
         internal WorkIQAttribution()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkIQAttribution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.WorkIQAttribution"/>. </summary>
         /// <param name="seeMoreWebUrl"> The URL for the attribution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkIQAttribution(Uri seeMoreWebUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkIQAttribution(global::System.Uri seeMoreWebUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SeeMoreWebUrl = seeMoreWebUrl;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL for the attribution. </summary>
-        public Uri SeeMoreWebUrl { get; }
+        public global::System.Uri SeeMoreWebUrl { get; }
     }
 }

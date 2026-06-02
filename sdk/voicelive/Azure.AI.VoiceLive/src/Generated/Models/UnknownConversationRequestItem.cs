@@ -12,11 +12,11 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownConversationRequestItem : ConversationRequestItem
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationRequestItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownConversationRequestItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationRequestItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, additionalBinaryDataProperties)
+        internal UnknownConversationRequestItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", id, additionalBinaryDataProperties)
         {
         }
     }

@@ -12,14 +12,14 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOpenAIVectorizer"/>, <see cref="WebApiVectorizer"/>, <see cref="AIServicesVisionVectorizer"/>, and <see cref="AzureMachineLearningVectorizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizer"/>, <see cref="Azure.Search.Documents.Indexes.Models.WebApiVectorizer"/>, <see cref="Azure.Search.Documents.Indexes.Models.AIServicesVisionVectorizer"/>, and <see cref="Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer"/>.
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         private protected VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind)
@@ -28,11 +28,11 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VectorizerName = vectorizerName;
             Kind = kind;

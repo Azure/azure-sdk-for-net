@@ -17,22 +17,22 @@ namespace Azure.Compute.Batch
     public partial class ServiceArtifactReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ServiceArtifactReference"/>. </summary>
         /// <param name="id"> The service artifact reference id of ServiceArtifactReference. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ServiceArtifactReference(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ServiceArtifactReference"/>. </summary>
         /// <param name="id"> The service artifact reference id of ServiceArtifactReference. The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceArtifactReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceArtifactReference(string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

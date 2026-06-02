@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Def : IJsonModel<Def>
+    public partial class Def : IJsonModel<global::SpecialWords._Models.Def>
     {
         internal Def() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Def>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Def>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Def IPersistableModel<Def>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Def IPersistableModel<global::SpecialWords._Models.Def>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Def>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Def>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="def"> The <see cref="Def"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="def"> The <see cref="global::SpecialWords._Models.Def"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Def def) => throw null;
 
-        void IJsonModel<Def>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Def>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Def IJsonModel<Def>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Def IJsonModel<global::SpecialWords._Models.Def>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Def JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

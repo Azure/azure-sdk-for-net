@@ -15,24 +15,24 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentTableCell
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
-        internal DocumentTableCell(int rowIndex, int columnIndex, string content, IEnumerable<DocumentSpan> spans)
+        internal DocumentTableCell(int rowIndex, int columnIndex, string content, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Content = content;
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTableCell"/>. </summary>
         /// <param name="kind"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RowIndex = rowIndex;
@@ -76,10 +76,10 @@ namespace Azure.AI.DocumentIntelligence
         public string Content { get; }
 
         /// <summary> Bounding regions covering the table cell. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the table cell in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Child elements of the table cell. </summary>
         public IReadOnlyList<string> Elements { get; }

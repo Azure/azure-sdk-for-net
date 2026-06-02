@@ -17,28 +17,28 @@ namespace Azure.Compute.Batch
     public partial class ExitCodeRangeMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExitCodeRangeMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitCodeRangeMapping"/>. </summary>
         /// <param name="start"> The first exit code in the range. </param>
         /// <param name="end"> The last exit code in the range. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with an exit code in the range start to end (inclusive). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exitOptions"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exitOptions"/> is null. </exception>
         public ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions)
         {
-            Argument.AssertNotNull(exitOptions, nameof(exitOptions));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(exitOptions, nameof(exitOptions));
 
             Start = start;
             End = end;
             ExitOptions = exitOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExitCodeRangeMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ExitCodeRangeMapping"/>. </summary>
         /// <param name="start"> The first exit code in the range. </param>
         /// <param name="end"> The last exit code in the range. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with an exit code in the range start to end (inclusive). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Start = start;
             End = end;

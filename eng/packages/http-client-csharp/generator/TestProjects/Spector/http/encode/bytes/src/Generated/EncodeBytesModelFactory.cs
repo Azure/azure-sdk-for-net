@@ -18,6 +18,6 @@ namespace Encode.Bytes
 
         public static Base64urlBytesProperty Base64urlBytesProperty(BinaryData value = default) => throw null;
 
-        public static Base64urlArrayBytesProperty Base64urlArrayBytesProperty(IEnumerable<BinaryData> value = default) => throw null;
+        public static Base64urlArrayBytesProperty Base64urlArrayBytesProperty(IEnumerable<global::System.BinaryData> value = default) => throw null;
     }
 }

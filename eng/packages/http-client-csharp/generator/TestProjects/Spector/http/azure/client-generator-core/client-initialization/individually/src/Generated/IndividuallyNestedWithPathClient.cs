@@ -18,41 +18,41 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithPathClient() => throw null;
 
-        public IndividuallyNestedWithPathClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
+        public IndividuallyNestedWithPathClient(string blobName) : this(new global::System.Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithPathClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public IndividuallyNestedWithPathClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new global::System.Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyNestedWithPathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
+        internal IndividuallyNestedWithPathClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithPathClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public IndividuallyNestedWithPathClient(global::System.Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public IndividuallyNestedWithPathClient(IndividuallyNestedWithPathClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public IndividuallyNestedWithPathClient(IndividuallyNestedWithPathClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithQuery(string format, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string format, RequestContext context) => throw null;
 
         public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetStandalone(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetStandaloneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetStandaloneAsync(RequestContext context) => throw null;
 
-        public virtual Response<BlobProperties> GetStandalone(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.BlobProperties> GetStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BlobProperties>> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.BlobProperties>> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response DeleteStandalone(RequestContext context) => throw null;
 
-        public virtual Task<Response> DeleteStandaloneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DeleteStandaloneAsync(RequestContext context) => throw null;
 
         public virtual Response DeleteStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

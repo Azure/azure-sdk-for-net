@@ -17,26 +17,26 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacProvider"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacProvider"/>. </summary>
         /// <param name="name"> Name of the provider organization or individual. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StacProvider(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Roles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacProvider"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacProvider"/>. </summary>
         /// <param name="name"> Name of the provider organization or individual. </param>
         /// <param name="description"> Description of the provider. </param>
         /// <param name="roles"> Roles played by the provider (e.g., producer, processor, host). </param>
         /// <param name="url"> URL to the provider's website. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacProvider(string name, string description, IList<string> roles, string url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacProvider(string name, string description, IList<string> roles, string url, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

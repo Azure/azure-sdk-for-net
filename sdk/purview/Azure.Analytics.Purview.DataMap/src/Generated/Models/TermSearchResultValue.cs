@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class TermSearchResultValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TermSearchResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TermSearchResultValue"/>. </summary>
         internal TermSearchResultValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TermSearchResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TermSearchResultValue"/>. </summary>
         /// <param name="name"> The name of the term. </param>
         /// <param name="glossaryName"> The name of the glossary which contains the term. </param>
         /// <param name="guid"> The GUID of the term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TermSearchResultValue(string name, string glossaryName, string guid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TermSearchResultValue(string name, string glossaryName, string guid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             GlossaryName = glossaryName;

@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     public partial class DeclineJobOfferOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.DeclineJobOfferOptions"/>. </summary>
         /// <param name="retryOfferAt"> If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeclineJobOfferOptions(DateTimeOffset? retryOfferAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeclineJobOfferOptions(DateTimeOffset? retryOfferAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RetryOfferAt = retryOfferAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -10,15 +10,15 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The EntraIsolationKeySource. </summary>
     public partial class EntraIsolationKeySource : IsolationKeySource
     {
-        /// <summary> Initializes a new instance of <see cref="EntraIsolationKeySource"/>. </summary>
-        public EntraIsolationKeySource() : base(IsolationKeySourceKind.Entra)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.EntraIsolationKeySource"/>. </summary>
+        public EntraIsolationKeySource() : base(global::Azure.AI.Projects.Agents.IsolationKeySourceKind.Entra)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntraIsolationKeySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.EntraIsolationKeySource"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntraIsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal EntraIsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

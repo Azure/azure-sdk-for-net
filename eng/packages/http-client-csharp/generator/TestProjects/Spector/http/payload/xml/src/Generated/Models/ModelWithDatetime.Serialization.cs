@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithDatetime : IPersistableModel<ModelWithDatetime>, IXmlSerializable
+    public partial class ModelWithDatetime : IPersistableModel<global::Payload.Xml.ModelWithDatetime>, IXmlSerializable
     {
         internal ModelWithDatetime() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithDatetime>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithDatetime>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithDatetime IPersistableModel<ModelWithDatetime>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithDatetime IPersistableModel<global::Payload.Xml.ModelWithDatetime>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithDatetime>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithDatetime>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithDatetime"> The <see cref="ModelWithDatetime"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithDatetime"> The <see cref="global::Payload.Xml.ModelWithDatetime"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithDatetime modelWithDatetime) => throw null;
 
         public static explicit operator ModelWithDatetime(Response response) => throw null;

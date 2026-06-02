@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class OrchestrationExportedIntent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent"/>. </summary>
         /// <param name="category"> The intent category. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public OrchestrationExportedIntent(string category)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent"/>. </summary>
         /// <param name="orchestration"> Specifies the behavior of this intent in the orchestration flow. </param>
         /// <param name="category"> The intent category. </param>
         /// <param name="description"> The intent description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration, string category, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration, string category, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Orchestration = orchestration;
             Category = category;

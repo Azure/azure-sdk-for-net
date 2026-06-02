@@ -13,11 +13,11 @@ using Microsoft.Extensions.Configuration;
 namespace BasicTypeSpec
 {
     /// <summary> Represents the settings used to configure a <see cref="BasicTypeSpecClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class BasicTypeSpecClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the BasicTypeSpecUrl. </summary>
-        public Uri BasicTypeSpecUrl { get; set; }
+        public global::System.Uri BasicTypeSpecUrl { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public BasicTypeSpecClientOptions Options { get; set; }
@@ -26,14 +26,14 @@ namespace BasicTypeSpec
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            if (Uri.TryCreate(section["BasicTypeSpecUrl"], UriKind.Absolute, out Uri basicTypeSpecUrl))
+            if (global::System.Uri.TryCreate(section["BasicTypeSpecUrl"], global::System.UriKind.Absolute, out global::System.Uri basicTypeSpecUrl))
             {
-                BasicTypeSpecUrl = basicTypeSpecUrl;
+                this.BasicTypeSpecUrl = basicTypeSpecUrl;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new BasicTypeSpecClientOptions(optionsSection);
+                this.Options = new BasicTypeSpecClientOptions(optionsSection);
             }
         }
     }

@@ -12,25 +12,25 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Base class for a long-running conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="SummarizationOperationAction"/>, and <see cref="PiiOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.CustomSummarizationOperationAction"/>, <see cref="Azure.AI.Language.Conversations.Models.SummarizationOperationAction"/>, and <see cref="Azure.AI.Language.Conversations.Models.PiiOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationOperationAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction"/>. </summary>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         private protected AnalyzeConversationOperationAction(AnalyzeConversationOperationActionKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Kind = kind;

@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ScanMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScanMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ScanMetadata"/>. </summary>
         internal ScanMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScanMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ScanMetadata"/>. </summary>
         /// <param name="port"></param>
         /// <param name="bannerMetadata"></param>
         /// <param name="startScan"></param>
         /// <param name="endScan"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScanMetadata(int? port, string bannerMetadata, DateTimeOffset? startScan, DateTimeOffset? endScan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScanMetadata(int? port, string bannerMetadata, DateTimeOffset? startScan, DateTimeOffset? endScan, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             BannerMetadata = bannerMetadata;

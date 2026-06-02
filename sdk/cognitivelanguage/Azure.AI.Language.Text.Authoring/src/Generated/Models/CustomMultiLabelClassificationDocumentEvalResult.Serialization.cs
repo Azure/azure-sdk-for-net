@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the document evaluation result for a custom multi-label classification project. </summary>
-    public partial class CustomMultiLabelClassificationDocumentEvalResult : TextAuthoringDocumentEvalResult, IJsonModel<CustomMultiLabelClassificationDocumentEvalResult>
+    public partial class CustomMultiLabelClassificationDocumentEvalResult : TextAuthoringDocumentEvalResult, IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationDocumentEvalResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult"/> for deserialization. </summary>
         internal CustomMultiLabelClassificationDocumentEvalResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringDocumentEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomMultiLabelClassificationDocumentEvalResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult.DeserializeCustomMultiLabelClassificationDocumentEvalResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationDocumentEvalResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomMultiLabelClassificationDocumentEvalResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomMultiLabelClassificationDocumentEvalResult IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomMultiLabelClassificationDocumentEvalResult)PersistableModelCreateCore(data, options);
+        CustomMultiLabelClassificationDocumentEvalResult IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => ((CustomMultiLabelClassificationDocumentEvalResult)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomMultiLabelClassificationDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,45 +73,45 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomMultiLabelClassificationDocumentEvalResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customMultiLabelClassificationResult"u8);
-            writer.WriteObjectValue(CustomMultiLabelClassificationResult, options);
+            writer.WriteObjectValue<DocumentMultiLabelClassificationEvalResult>(CustomMultiLabelClassificationResult, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomMultiLabelClassificationDocumentEvalResult IJsonModel<CustomMultiLabelClassificationDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomMultiLabelClassificationDocumentEvalResult)JsonModelCreateCore(ref reader, options);
+        CustomMultiLabelClassificationDocumentEvalResult IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((CustomMultiLabelClassificationDocumentEvalResult)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringDocumentEvalResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomMultiLabelClassificationDocumentEvalResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomMultiLabelClassificationDocumentEvalResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult.DeserializeCustomMultiLabelClassificationDocumentEvalResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CustomMultiLabelClassificationDocumentEvalResult DeserializeCustomMultiLabelClassificationDocumentEvalResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TextAuthoringProjectKind projectKind = default;
             string location = default;
             string language = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DocumentMultiLabelClassificationEvalResult customMultiLabelClassificationResult = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +132,12 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("customMultiLabelClassificationResult"u8))
                 {
-                    customMultiLabelClassificationResult = DocumentMultiLabelClassificationEvalResult.DeserializeDocumentMultiLabelClassificationEvalResult(prop.Value, options);
+                    customMultiLabelClassificationResult = global::Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult.DeserializeDocumentMultiLabelClassificationEvalResult(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CustomMultiLabelClassificationDocumentEvalResult(projectKind, location, language, additionalBinaryDataProperties, customMultiLabelClassificationResult);

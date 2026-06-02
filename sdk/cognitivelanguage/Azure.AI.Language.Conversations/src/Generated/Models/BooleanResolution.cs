@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> A resolution for boolean expressions. </summary>
     public partial class BooleanResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="BooleanResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.BooleanResolution"/>. </summary>
         /// <param name="value"> A resolution for boolean expressions. </param>
-        internal BooleanResolution(bool value) : base(ResolutionKind.BooleanResolution)
+        internal BooleanResolution(bool value) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.BooleanResolution)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BooleanResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.BooleanResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> A resolution for boolean expressions. </param>
-        internal BooleanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool value) : base(resolutionKind, additionalBinaryDataProperties)
+        internal BooleanResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool value) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
         }

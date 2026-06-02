@@ -14,33 +14,33 @@ namespace Azure.Compute.Batch
     public partial class BatchJobScheduleCreateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="schedule"> The schedule according to which Jobs will be created. All times are fixed respective to UTC and are not impacted by daylight saving time. </param>
         /// <param name="jobSpecification"> The details of the Jobs to be created on this schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="schedule"/> or <paramref name="jobSpecification"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="schedule"/> or <paramref name="jobSpecification"/> is null. </exception>
         public BatchJobScheduleCreateOptions(string id, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(schedule, nameof(schedule));
-            Argument.AssertNotNull(jobSpecification, nameof(jobSpecification));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(schedule, nameof(schedule));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(jobSpecification, nameof(jobSpecification));
 
             Id = id;
             Schedule = schedule;
             JobSpecification = jobSpecification;
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobScheduleCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the schedule. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="schedule"> The schedule according to which Jobs will be created. All times are fixed respective to UTC and are not impacted by daylight saving time. </param>
         /// <param name="jobSpecification"> The details of the Jobs to be created on this schedule. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobScheduleCreateOptions(string id, string displayName, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobScheduleCreateOptions(string id, string displayName, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -63,6 +63,6 @@ namespace Azure.Compute.Batch
         public BatchJobSpecification JobSpecification { get; }
 
         /// <summary> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
     }
 }

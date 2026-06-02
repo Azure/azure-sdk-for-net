@@ -11,36 +11,36 @@ namespace Azure.AI.Projects.Agents
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InternalAgentObjectType value) => value switch
         {
-            InternalAgentObjectType.Agent => "agent",
-            InternalAgentObjectType.AgentVersion => "agent.version",
-            InternalAgentObjectType.AgentDeleted => "agent.deleted",
-            InternalAgentObjectType.AgentVersionDeleted => "agent.version.deleted",
-            InternalAgentObjectType.AgentContainer => "agent.container",
+            global::Azure.AI.Projects.Agents.InternalAgentObjectType.Agent => "agent",
+            global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentVersion => "agent.version",
+            global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentDeleted => "agent.deleted",
+            global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentVersionDeleted => "agent.version.deleted",
+            global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentContainer => "agent.container",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalAgentObjectType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InternalAgentObjectType ToInternalAgentObjectType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agent"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "agent"))
             {
-                return InternalAgentObjectType.Agent;
+                return global::Azure.AI.Projects.Agents.InternalAgentObjectType.Agent;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agent.version"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "agent.version"))
             {
-                return InternalAgentObjectType.AgentVersion;
+                return global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentVersion;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agent.deleted"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "agent.deleted"))
             {
-                return InternalAgentObjectType.AgentDeleted;
+                return global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentDeleted;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agent.version.deleted"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "agent.version.deleted"))
             {
-                return InternalAgentObjectType.AgentVersionDeleted;
+                return global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentVersionDeleted;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "agent.container"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "agent.container"))
             {
-                return InternalAgentObjectType.AgentContainer;
+                return global::Azure.AI.Projects.Agents.InternalAgentObjectType.AgentContainer;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalAgentObjectType value.");
         }

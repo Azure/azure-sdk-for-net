@@ -14,7 +14,7 @@ using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
-    internal partial class DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT : Pageable<EnvironmentDefinition>
+    internal partial class DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT : Pageable<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>
     {
         private readonly DeploymentEnvironmentsClient _client;
         private readonly string _projectName;
@@ -26,7 +26,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT(DeploymentEnvironmentsClient client, string projectName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT(DeploymentEnvironmentsClient client, string projectName, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _projectName = projectName;
@@ -38,20 +38,20 @@ namespace Azure.Developer.DevCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EnvironmentDefinition>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedEnvironmentDefinition result = (PagedEnvironmentDefinition)response;
-                yield return Page<EnvironmentDefinition>.FromValues((IReadOnlyList<EnvironmentDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedEnvironmentDefinition result = ((PagedEnvironmentDefinition)response);
+                yield return global::Azure.Page<EnvironmentDefinition>.FromValues(((IReadOnlyList<global::Azure.Developer.DevCenter.Models.EnvironmentDefinition>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -61,9 +61,9 @@ namespace Azure.Developer.DevCenter
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetEnvironmentDefinitionsRequest(nextLink, _projectName, _context) : _client.CreateGetEnvironmentDefinitionsRequest(_projectName, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetEnvironmentDefinitionsRequest(nextLink, _projectName, _context) : _client.CreateGetEnvironmentDefinitionsRequest(_projectName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

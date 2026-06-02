@@ -16,25 +16,25 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class CustomConversationSummarizationActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomConversationSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CustomConversationSummarizationActionContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="summaryAspects"/> is null. </exception>
-        public CustomConversationSummarizationActionContent(string projectName, string deploymentName, IEnumerable<SummaryAspect> summaryAspects)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="summaryAspects"/> is null. </exception>
+        public CustomConversationSummarizationActionContent(string projectName, string deploymentName, IEnumerable<global::Azure.AI.Language.Conversations.Models.SummaryAspect> summaryAspects)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(summaryAspects, nameof(summaryAspects));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(summaryAspects, nameof(summaryAspects));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
             SummaryAspects = summaryAspects.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomConversationSummarizationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.CustomConversationSummarizationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="summaryLength"> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomConversationSummarizationActionContent(bool? loggingOptOut, string projectName, string deploymentName, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomConversationSummarizationActionContent(bool? loggingOptOut, string projectName, string deploymentName, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<global::Azure.AI.Language.Conversations.Models.SummaryAspect> summaryAspects, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;
@@ -74,6 +74,6 @@ namespace Azure.AI.Language.Conversations.Models
         public SummaryLengthBucket? SummaryLength { get; set; }
 
         /// <summary> Array of Summary Aspects. </summary>
-        public IList<SummaryAspect> SummaryAspects { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.SummaryAspect> SummaryAspects { get; }
     }
 }

@@ -12,15 +12,15 @@ namespace BasicTypeSpec
     /// <summary> An item model for XML array testing. </summary>
     public partial class XmlItem
     {
-        /// <summary> Initializes a new instance of <see cref="XmlItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.XmlItem"/>. </summary>
         /// <param name="itemName"> The item name. </param>
         /// <param name="itemValue"> The item value. </param>
         /// <param name="itemId"> Item ID as attribute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="itemName"/> or <paramref name="itemId"/> is null. </exception>
         public XmlItem(string itemName, int itemValue, string itemId)
         {
-            Argument.AssertNotNull(itemName, nameof(itemName));
-            Argument.AssertNotNull(itemId, nameof(itemId));
+            global::BasicTypeSpec.Argument.AssertNotNull(itemName, nameof(itemName));
+            global::BasicTypeSpec.Argument.AssertNotNull(itemId, nameof(itemId));
 
             ItemName = itemName;
             ItemValue = itemValue;

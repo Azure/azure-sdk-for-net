@@ -9,10 +9,10 @@ namespace OpenAI
 {
     internal partial class UnknownInternalToolChoiceParam : InternalToolChoiceParam
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInternalToolChoiceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.UnknownInternalToolChoiceParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInternalToolChoiceParam(ToolChoiceParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownInternalToolChoiceParam(ToolChoiceParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

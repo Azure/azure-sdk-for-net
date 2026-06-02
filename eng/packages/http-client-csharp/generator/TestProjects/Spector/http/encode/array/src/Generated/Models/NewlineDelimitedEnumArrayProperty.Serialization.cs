@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode._Array
 {
-    public partial class NewlineDelimitedEnumArrayProperty : IJsonModel<NewlineDelimitedEnumArrayProperty>
+    public partial class NewlineDelimitedEnumArrayProperty : IJsonModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>
     {
         internal NewlineDelimitedEnumArrayProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode._Array
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<NewlineDelimitedEnumArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        NewlineDelimitedEnumArrayProperty IPersistableModel<NewlineDelimitedEnumArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        NewlineDelimitedEnumArrayProperty IPersistableModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<NewlineDelimitedEnumArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="newlineDelimitedEnumArrayProperty"> The <see cref="NewlineDelimitedEnumArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="newlineDelimitedEnumArrayProperty"> The <see cref="global::Encode._Array.NewlineDelimitedEnumArrayProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(NewlineDelimitedEnumArrayProperty newlineDelimitedEnumArrayProperty) => throw null;
 
         public static explicit operator NewlineDelimitedEnumArrayProperty(Response response) => throw null;
 
-        void IJsonModel<NewlineDelimitedEnumArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        NewlineDelimitedEnumArrayProperty IJsonModel<NewlineDelimitedEnumArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        NewlineDelimitedEnumArrayProperty IJsonModel<global::Encode._Array.NewlineDelimitedEnumArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual NewlineDelimitedEnumArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

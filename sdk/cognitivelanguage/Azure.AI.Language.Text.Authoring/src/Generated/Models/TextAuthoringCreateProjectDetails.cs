@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringCreateProjectDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringCreateProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringCreateProjectDetails(TextAuthoringProjectKind projectKind, string storageInputContainerName, TextAuthoringProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringCreateProjectDetails(TextAuthoringProjectKind projectKind, string storageInputContainerName, TextAuthoringProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;

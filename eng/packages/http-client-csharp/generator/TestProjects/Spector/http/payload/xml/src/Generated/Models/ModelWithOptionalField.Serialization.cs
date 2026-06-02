@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithOptionalField : IPersistableModel<ModelWithOptionalField>, IXmlSerializable
+    public partial class ModelWithOptionalField : IPersistableModel<global::Payload.Xml.ModelWithOptionalField>, IXmlSerializable
     {
         internal ModelWithOptionalField() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithOptionalField>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithOptionalField>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithOptionalField IPersistableModel<ModelWithOptionalField>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithOptionalField IPersistableModel<global::Payload.Xml.ModelWithOptionalField>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithOptionalField>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithOptionalField>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithOptionalField"> The <see cref="ModelWithOptionalField"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithOptionalField"> The <see cref="global::Payload.Xml.ModelWithOptionalField"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithOptionalField modelWithOptionalField) => throw null;
 
         public static explicit operator ModelWithOptionalField(Response response) => throw null;

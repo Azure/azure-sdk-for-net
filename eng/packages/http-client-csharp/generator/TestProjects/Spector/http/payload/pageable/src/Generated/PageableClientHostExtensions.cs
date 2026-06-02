@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.Pageable
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PageableClientHostExtensions
     {
         public static IClientBuilder AddPageableClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddPageableClient(this IHostApplicationBuilder host, string sectionName, Action<PageableClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddPageableClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.Pageable.PageableClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedPageableClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedPageableClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PageableClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedPageableClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.Pageable.PageableClientSettings> configureSettings) => throw null;
     }
 }

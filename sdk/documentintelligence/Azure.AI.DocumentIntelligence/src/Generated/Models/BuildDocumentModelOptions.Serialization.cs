@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to build a new custom document model. </summary>
-    public partial class BuildDocumentModelOptions : IJsonModel<BuildDocumentModelOptions>
+    public partial class BuildDocumentModelOptions : IJsonModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions"/> for deserialization. </summary>
         internal BuildDocumentModelOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BuildDocumentModelOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBuildDocumentModelOptions(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions.DeserializeBuildDocumentModelOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentModelOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentModelOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BuildDocumentModelOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BuildDocumentModelOptions IPersistableModel<BuildDocumentModelOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BuildDocumentModelOptions IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BuildDocumentModelOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="buildDocumentModelOptions"> The <see cref="BuildDocumentModelOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="buildDocumentModelOptions"> The <see cref="global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BuildDocumentModelOptions buildDocumentModelOptions)
         {
-            if (buildDocumentModelOptions == null)
+            if ((buildDocumentModelOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(buildDocumentModelOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(buildDocumentModelOptions, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BuildDocumentModelOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,38 +84,38 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BuildDocumentModelOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("buildMode"u8);
             writer.WriteStringValue(BuildMode.ToString());
-            if (Optional.IsDefined(BlobSource))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(BlobSource, options);
+                writer.WriteObjectValue<BlobContentSource>(BlobSource, options);
             }
-            if (Optional.IsDefined(BlobFileListSource))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(BlobFileListSource, options);
+                writer.WriteObjectValue<BlobFileListContentSource>(BlobFileListSource, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -124,17 +124,17 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MaxTrainingHours))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(MaxTrainingHours))
             {
                 writer.WritePropertyName("maxTrainingHours"u8);
                 writer.WriteNumberValue(MaxTrainingHours.Value);
             }
-            if (Optional.IsDefined(AllowOverwrite))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(AllowOverwrite))
             {
                 writer.WritePropertyName("allowOverwrite"u8);
                 writer.WriteBooleanValue(AllowOverwrite.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -142,9 +142,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -153,26 +153,26 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BuildDocumentModelOptions IJsonModel<BuildDocumentModelOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BuildDocumentModelOptions IJsonModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BuildDocumentModelOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BuildDocumentModelOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBuildDocumentModelOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions.DeserializeBuildDocumentModelOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BuildDocumentModelOptions DeserializeBuildDocumentModelOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -184,7 +184,7 @@ namespace Azure.AI.DocumentIntelligence
             IDictionary<string, string> tags = default;
             float? maxTrainingHours = default;
             bool? allowOverwrite = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("modelId"u8))
@@ -204,32 +204,32 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("azureBlobSource"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    blobSource = BlobContentSource.DeserializeBlobContentSource(prop.Value, options);
+                    blobSource = global::Azure.AI.DocumentIntelligence.BlobContentSource.DeserializeBlobContentSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlobFileListSource"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    blobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(prop.Value, options);
+                    blobFileListSource = global::Azure.AI.DocumentIntelligence.BlobFileListContentSource.DeserializeBlobFileListContentSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -243,7 +243,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("maxTrainingHours"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -252,16 +252,16 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("allowOverwrite"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     allowOverwrite = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BuildDocumentModelOptions(
@@ -270,7 +270,7 @@ namespace Azure.AI.DocumentIntelligence
                 buildMode,
                 blobSource,
                 blobFileListSource,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (tags ?? new ChangeTrackingDictionary<string, string>()),
                 maxTrainingHours,
                 allowOverwrite,
                 additionalBinaryDataProperties);

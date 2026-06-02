@@ -17,79 +17,79 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 {
     public partial class EnumDiscriminatorClient
     {
-        public EnumDiscriminatorClient() : this(new Uri("http://localhost:3000"), new EnumDiscriminatorClientOptions()) => throw null;
+        public EnumDiscriminatorClient() : this(new global::System.Uri("http://localhost:3000"), new EnumDiscriminatorClientOptions()) => throw null;
 
-        internal EnumDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EnumDiscriminatorClientOptions options) => throw null;
+        internal EnumDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, EnumDiscriminatorClientOptions options) => throw null;
 
-        public EnumDiscriminatorClient(Uri endpoint, EnumDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
+        public EnumDiscriminatorClient(global::System.Uri endpoint, EnumDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public EnumDiscriminatorClient(EnumDiscriminatorClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public EnumDiscriminatorClient(EnumDiscriminatorClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetExtensibleModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetExtensibleModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetExtensibleModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Dog> GetExtensibleModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog> GetExtensibleModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Dog>> GetExtensibleModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>> GetExtensibleModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutExtensibleModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutExtensibleModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutExtensibleModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutExtensibleModel(Dog input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutExtensibleModelAsync(Dog input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutExtensibleModelAsync(Dog input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetExtensibleModelMissingDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetExtensibleModelMissingDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetExtensibleModelMissingDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Dog> GetExtensibleModelMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog> GetExtensibleModelMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Dog>> GetExtensibleModelMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>> GetExtensibleModelMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetExtensibleModelWrongDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetExtensibleModelWrongDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetExtensibleModelWrongDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Dog> GetExtensibleModelWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog> GetExtensibleModelWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Dog>> GetExtensibleModelWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Dog>> GetExtensibleModelWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetFixedModel(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetFixedModelAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetFixedModelAsync(RequestContext context) => throw null;
 
-        public virtual Response<Snake> GetFixedModel(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake> GetFixedModel(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Snake>> GetFixedModelAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake>> GetFixedModelAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutFixedModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutFixedModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutFixedModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PutFixedModel(Snake input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutFixedModelAsync(Snake input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutFixedModelAsync(Snake input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetFixedModelMissingDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetFixedModelMissingDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetFixedModelMissingDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Snake> GetFixedModelMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake> GetFixedModelMissingDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Snake>> GetFixedModelMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake>> GetFixedModelMissingDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetFixedModelWrongDiscriminator(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetFixedModelWrongDiscriminatorAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetFixedModelWrongDiscriminatorAsync(RequestContext context) => throw null;
 
-        public virtual Response<Snake> GetFixedModelWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake> GetFixedModelWrongDiscriminator(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Snake>> GetFixedModelWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Inheritance.EnumDiscriminator.Snake>> GetFixedModelWrongDiscriminatorAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

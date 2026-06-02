@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The similarity metric to use for vector comparisons. It is recommended to choose the same similarity metric as the embedding model was trained on. </summary>
-    public readonly partial struct VectorSearchAlgorithmMetric : IEquatable<VectorSearchAlgorithmMetric>
+    public readonly partial struct VectorSearchAlgorithmMetric : IEquatable<global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric>
     {
         private readonly string _value;
         /// <summary> Measures the angle between vectors to quantify their similarity, disregarding magnitude. The smaller the angle, the closer the similarity. </summary>
@@ -24,12 +24,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Only applicable to bit-packed binary data types. Determines dissimilarity by counting differing positions in binary vectors. The fewer differences, the closer the similarity. </summary>
         private const string HammingValue = "hamming";
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorSearchAlgorithmMetric(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -46,34 +46,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Only applicable to bit-packed binary data types. Determines dissimilarity by counting differing positions in binary vectors. The fewer differences, the closer the similarity. </summary>
         public static VectorSearchAlgorithmMetric Hamming { get; } = new VectorSearchAlgorithmMetric(HammingValue);
 
-        /// <summary> Determines if two <see cref="VectorSearchAlgorithmMetric"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorSearchAlgorithmMetric left, VectorSearchAlgorithmMetric right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorSearchAlgorithmMetric"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorSearchAlgorithmMetric left, VectorSearchAlgorithmMetric right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorSearchAlgorithmMetric"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorSearchAlgorithmMetric(string value) => new VectorSearchAlgorithmMetric(value);
 
-        /// <summary> Converts a string to a <see cref="VectorSearchAlgorithmMetric"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorSearchAlgorithmMetric?(string value) => value == null ? null : new VectorSearchAlgorithmMetric(value);
+        public static implicit operator VectorSearchAlgorithmMetric?(string value) => (value == null) ? null : new VectorSearchAlgorithmMetric(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorSearchAlgorithmMetric other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorSearchAlgorithmMetric other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorSearchAlgorithmMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorSearchAlgorithmMetric other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

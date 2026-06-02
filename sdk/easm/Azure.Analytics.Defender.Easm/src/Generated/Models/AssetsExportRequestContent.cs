@@ -15,26 +15,26 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AssetsExportRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetsExportRequestContent"/>. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="columns"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileName"/> or <paramref name="columns"/> is null. </exception>
         public AssetsExportRequestContent(string fileName, IEnumerable<string> columns)
         {
-            Argument.AssertNotNull(fileName, nameof(fileName));
-            Argument.AssertNotNull(columns, nameof(columns));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(fileName, nameof(fileName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(columns, nameof(columns));
 
             FileName = fileName;
             Columns = columns.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetsExportRequestContent"/>. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetsExportRequestContent(string fileName, IList<string> columns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetsExportRequestContent(string fileName, IList<string> columns, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileName = fileName;
             Columns = columns;

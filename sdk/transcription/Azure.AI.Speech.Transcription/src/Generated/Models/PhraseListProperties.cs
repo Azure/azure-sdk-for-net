@@ -11,19 +11,19 @@ namespace Azure.AI.Speech.Transcription
     public partial class PhraseListProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PhraseListProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.PhraseListProperties"/>. </summary>
         public PhraseListProperties()
         {
             Phrases = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhraseListProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.PhraseListProperties"/>. </summary>
         /// <param name="phrases"> List of phrases for recognition. </param>
         /// <param name="biasingWeight"> Biasing weight for phrase list (0.0-2.0). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhraseListProperties(IList<string> phrases, float? biasingWeight, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhraseListProperties(IList<string> phrases, float? biasingWeight, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Phrases = phrases;
             BiasingWeight = biasingWeight;

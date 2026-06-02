@@ -14,30 +14,30 @@ namespace Azure.Communication.Messages
     public partial class ActionGroupItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroupItem"/>. </summary>
         /// <param name="id"> Id of the Item. </param>
         /// <param name="title"> Title of the Item. </param>
         /// <param name="description"> Description of the Item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="title"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="title"/> or <paramref name="description"/> is null. </exception>
         public ActionGroupItem(string id, string title, string description)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(description, nameof(description));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(title, nameof(title));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(description, nameof(description));
 
             Id = id;
             Title = title;
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ActionGroupItem"/>. </summary>
         /// <param name="id"> Id of the Item. </param>
         /// <param name="title"> Title of the Item. </param>
         /// <param name="description"> Description of the Item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroupItem(string id, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionGroupItem(string id, string title, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Title = title;

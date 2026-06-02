@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class HostCore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HostCore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.HostCore"/>. </summary>
         internal HostCore()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostCore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.HostCore"/>. </summary>
         /// <param name="host"></param>
         /// <param name="domain"></param>
         /// <param name="firstSeen"></param>
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="domainScamReputationScore"></param>
         /// <param name="uuid"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Domain = domain;

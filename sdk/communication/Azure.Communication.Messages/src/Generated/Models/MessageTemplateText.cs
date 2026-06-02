@@ -13,24 +13,24 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's text value information. </summary>
     public partial class MessageTemplateText : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateText"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The text value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="text"/> is null. </exception>
-        public MessageTemplateText(string name, string text) : base(name, MessageTemplateValueKind.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="text"/> is null. </exception>
+        public MessageTemplateText(string name, string text) : base(name, global::Azure.Communication.Messages.MessageTemplateValueKind.Text)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplateText"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal MessageTemplateText(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(name, kind, additionalBinaryDataProperties)
+        internal MessageTemplateText(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(name, kind, additionalBinaryDataProperties)
         {
             Text = text;
         }

@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDoc
     {
         public ClientDocClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ClientDocClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

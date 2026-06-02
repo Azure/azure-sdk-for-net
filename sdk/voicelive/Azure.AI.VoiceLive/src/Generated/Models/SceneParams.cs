@@ -14,14 +14,14 @@ namespace Azure.AI.VoiceLive
     public partial class SceneParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SceneParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SceneParams"/>. </summary>
         public SceneParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SceneParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SceneParams"/>. </summary>
         /// <param name="zoom"> Zoom level of the avatar. Range is (0, +∞). Values less than 1 zoom out, values greater than 1 zoom in. </param>
         /// <param name="positionX"> Horizontal position of the avatar. Range is [-1, 1], as a proportion of frame width. Negative values move left, positive values move right. </param>
         /// <param name="positionY"> Vertical position of the avatar. Range is [-1, 1], as a proportion of frame height. Negative values move up, positive values move down. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="rotationZ"> Rotation around the Z-axis (roll). Range is [-π, π] in radians. Negative values rotate anticlockwise, positive values rotate clockwise. </param>
         /// <param name="amplitude"> Amplitude of the avatar movement. Range is (0, 1]. Values in (0, 1) mean reduced amplitude, 1 means full amplitude. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SceneParams(float? zoom, float? positionX, float? positionY, float? rotationX, float? rotationY, float? rotationZ, float? amplitude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SceneParams(float? zoom, float? positionX, float? positionY, float? rotationX, float? rotationY, float? rotationZ, float? amplitude, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Zoom = zoom;
             PositionX = positionX;

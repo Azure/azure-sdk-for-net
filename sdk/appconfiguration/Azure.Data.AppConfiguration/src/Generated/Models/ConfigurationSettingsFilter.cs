@@ -17,25 +17,25 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSettingsFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public ConfigurationSettingsFilter(string key)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSettingsFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <param name="label"> Filters key-values by their label field. </param>
         /// <param name="tags"> Filters key-values by their tags field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSettingsFilter(string key, string label, IList<string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSettingsFilter(string key, string label, IList<string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;

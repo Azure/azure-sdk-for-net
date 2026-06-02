@@ -12,19 +12,19 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class NGramTokenFilterV2 : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="NGramTokenFilterV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.NGramTokenFilterV2"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         public NGramTokenFilterV2(string name) : base("#Microsoft.Azure.Search.NGramTokenFilterV2", name)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGramTokenFilterV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.NGramTokenFilterV2"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
-        internal NGramTokenFilterV2(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram) : base(odataType, name, additionalBinaryDataProperties)
+        internal NGramTokenFilterV2(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram) : base(odataType, name, additionalBinaryDataProperties)
         {
             MinGram = minGram;
             MaxGram = maxGram;

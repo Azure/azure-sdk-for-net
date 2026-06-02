@@ -12,7 +12,7 @@ namespace _Type.Union
 {
     public partial class MixedTypesCases
     {
-        public MixedTypesCases(BinaryData model, BinaryData literal, BinaryData @int, BinaryData boolean, IEnumerable<BinaryData> array) => throw null;
+        public MixedTypesCases(BinaryData model, BinaryData literal, BinaryData @int, BinaryData boolean, IEnumerable<global::System.BinaryData> array) => throw null;
 
         public BinaryData Model
         {
@@ -38,6 +38,6 @@ namespace _Type.Union
             set => throw null;
         }
 
-        public IList<BinaryData> Array => throw null;
+        public IList<global::System.BinaryData> Array => throw null;
     }
 }

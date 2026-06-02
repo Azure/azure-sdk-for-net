@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationPiiResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiResults"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
-        internal ConversationPiiResults(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<ConversationalPiiResult> conversations)
+        internal ConversationPiiResults(IEnumerable<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, string modelVersion, IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationalPiiResult> conversations)
         {
             Errors = errors.ToList();
             ModelVersion = modelVersion;
             Conversations = conversations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationPiiResults"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiResults(IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<ConversationalPiiResult> conversations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationPiiResults(IList<global::Azure.AI.Language.Conversations.Models.DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<global::Azure.AI.Language.Conversations.Models.ConversationalPiiResult> conversations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<DocumentError> Errors { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.DocumentError> Errors { get; }
 
         /// <summary> statistics. </summary>
         public RequestStatistics Statistics { get; }
@@ -53,6 +53,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string ModelVersion { get; }
 
         /// <summary> array of conversations. </summary>
-        public IList<ConversationalPiiResult> Conversations { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationalPiiResult> Conversations { get; }
     }
 }

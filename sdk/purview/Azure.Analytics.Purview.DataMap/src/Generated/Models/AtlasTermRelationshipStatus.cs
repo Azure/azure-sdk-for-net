@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Status for atlas term relationship. </summary>
-    public readonly partial struct AtlasTermRelationshipStatus : IEquatable<AtlasTermRelationshipStatus>
+    public readonly partial struct AtlasTermRelationshipStatus : IEquatable<global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus>
     {
         private readonly string _value;
         /// <summary> draft. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> other. </summary>
         private const string OtherValue = "OTHER";
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTermRelationshipStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AtlasTermRelationshipStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> other. </summary>
         public static AtlasTermRelationshipStatus Other { get; } = new AtlasTermRelationshipStatus(OtherValue);
 
-        /// <summary> Determines if two <see cref="AtlasTermRelationshipStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AtlasTermRelationshipStatus left, AtlasTermRelationshipStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AtlasTermRelationshipStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AtlasTermRelationshipStatus left, AtlasTermRelationshipStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AtlasTermRelationshipStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AtlasTermRelationshipStatus(string value) => new AtlasTermRelationshipStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AtlasTermRelationshipStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AtlasTermRelationshipStatus?(string value) => value == null ? null : new AtlasTermRelationshipStatus(value);
+        public static implicit operator AtlasTermRelationshipStatus?(string value) => (value == null) ? null : new AtlasTermRelationshipStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AtlasTermRelationshipStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AtlasTermRelationshipStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AtlasTermRelationshipStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AtlasTermRelationshipStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

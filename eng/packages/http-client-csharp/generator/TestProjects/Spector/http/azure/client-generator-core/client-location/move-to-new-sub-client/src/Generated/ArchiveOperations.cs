@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
     {
         protected ArchiveOperations() => throw null;
 
-        internal ArchiveOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ArchiveOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ArchiveProduct(RequestContext context) => throw null;
 
-        public virtual Task<Response> ArchiveProductAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ArchiveProductAsync(RequestContext context) => throw null;
 
         public virtual Response ArchiveProduct(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ArchiveProductAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ArchiveProductAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

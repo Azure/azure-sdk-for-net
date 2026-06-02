@@ -15,14 +15,14 @@ namespace Azure.AI.Language.Text
     public partial class PiiResultWithDetectedLanguage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PiiResultWithDetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiResultWithDetectedLanguage"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal PiiResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<PiiEntity> entities)
+        internal PiiResultWithDetectedLanguage(string id, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings, string redactedText, IEnumerable<global::Azure.AI.Language.Text.PiiEntity> entities)
         {
             Id = id;
             Warnings = warnings.ToList();
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiResultWithDetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiResultWithDetectedLanguage"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PiiResultWithDetectedLanguage(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IList<PiiEntity> entities, DetectedLanguage detectedLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PiiResultWithDetectedLanguage(string id, IList<global::Azure.AI.Language.Text.DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IList<global::Azure.AI.Language.Text.PiiEntity> entities, DetectedLanguage detectedLanguage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text
         public string Id { get; }
 
         /// <summary> Warnings encountered while processing document. </summary>
-        public IList<DocumentWarning> Warnings { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentWarning> Warnings { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
         public string RedactedText { get; }
 
         /// <summary> Recognized entities in the document. </summary>
-        public IList<PiiEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.PiiEntity> Entities { get; }
 
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
         public DetectedLanguage DetectedLanguage { get; }

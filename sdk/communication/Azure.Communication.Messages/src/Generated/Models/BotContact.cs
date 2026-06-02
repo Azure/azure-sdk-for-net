@@ -13,24 +13,24 @@ namespace Azure.Communication.Messages
     /// <summary> Bot Contact. </summary>
     public partial class BotContact : ConversationContact
     {
-        /// <summary> Initializes a new instance of <see cref="BotContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.BotContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="botAppId"> Bot App Id of the Bot Contact. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="botAppId"/> is null. </exception>
-        public BotContact(string id, string botAppId) : base(id, MessagePlatformKind.Bot)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="botAppId"/> is null. </exception>
+        public BotContact(string id, string botAppId) : base(id, global::Azure.Communication.Messages.MessagePlatformKind.Bot)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(botAppId, nameof(botAppId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(botAppId, nameof(botAppId));
 
             BotAppId = botAppId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BotContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.BotContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="botAppId"> Bot App Id of the Bot Contact. </param>
-        internal BotContact(string id, MessagePlatformKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string botAppId) : base(id, kind, additionalBinaryDataProperties)
+        internal BotContact(string id, MessagePlatformKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string botAppId) : base(id, kind, additionalBinaryDataProperties)
         {
             BotAppId = botAppId;
         }

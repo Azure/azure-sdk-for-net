@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Client options for <see cref="AnomalyDetectorClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.AnomalyDetector.AnomalyDetectorClient"/>. </summary>
     public partial class AnomalyDetectorClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_1;
+        private const global::Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion LatestVersion = global::Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1;
 
         /// <summary> Initializes a new instance of AnomalyDetectorClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AnomalyDetectorClientOptions(ServiceVersion version = LatestVersion)
+        public AnomalyDetectorClientOptions(global::Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V1_1 => "v1.1",
+                global::Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1 => "v1.1",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal AnomalyDetectorClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "v1.1";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

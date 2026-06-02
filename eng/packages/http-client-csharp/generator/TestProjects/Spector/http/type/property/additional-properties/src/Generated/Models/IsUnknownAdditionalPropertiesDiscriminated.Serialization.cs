@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    [PersistableModelProxy(typeof(UnknownIsUnknownAdditionalPropertiesDiscriminated))]
-    public abstract partial class IsUnknownAdditionalPropertiesDiscriminated : IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>
+    [PersistableModelProxyAttribute(typeof(UnknownIsUnknownAdditionalPropertiesDiscriminated))]
+    public abstract partial class IsUnknownAdditionalPropertiesDiscriminated : IJsonModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>
     {
         internal IsUnknownAdditionalPropertiesDiscriminated() => throw null;
 
@@ -22,22 +22,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<IsUnknownAdditionalPropertiesDiscriminated>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>.Write(ModelReaderWriterOptions options) => throw null;
 
-        IsUnknownAdditionalPropertiesDiscriminated IPersistableModel<IsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        IsUnknownAdditionalPropertiesDiscriminated IPersistableModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<IsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="isUnknownAdditionalPropertiesDiscriminated"> The <see cref="IsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="isUnknownAdditionalPropertiesDiscriminated"> The <see cref="global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(IsUnknownAdditionalPropertiesDiscriminated isUnknownAdditionalPropertiesDiscriminated) => throw null;
 
         public static explicit operator IsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
 
-        void IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        IsUnknownAdditionalPropertiesDiscriminated IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        IsUnknownAdditionalPropertiesDiscriminated IJsonModel<global::_Type.Property.AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual IsUnknownAdditionalPropertiesDiscriminated JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateGetDeploymentRequest(string name, RequestOptions options)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -37,19 +37,19 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deployments", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (modelPublisher != null)
+            if ((modelPublisher != null))
             {
                 uri.AppendQuery("modelPublisher", modelPublisher, true);
             }
-            if (modelName != null)
+            if ((modelName != null))
             {
                 uri.AppendQuery("modelName", modelName, true);
             }
-            if (deploymentType != null)
+            if ((deploymentType != null))
             {
                 uri.AppendQuery("deploymentType", deploymentType, true);
             }
@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetDeploymentsRequest(Uri nextPage, string modelPublisher, string modelName, string deploymentType, RequestOptions options)
+        internal PipelineMessage CreateNextGetDeploymentsRequest(global::System.Uri nextPage, string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -70,9 +70,9 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }

@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
     /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
     public partial class SessionUpdateResponseAudioTimestampDelta : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
-        internal SessionUpdateResponseAudioTimestampDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
+        internal SessionUpdateResponseAudioTimestampDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAudioTimestampDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
-        internal SessionUpdateResponseAudioTimestampDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAudioTimestampDelta(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

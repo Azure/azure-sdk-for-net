@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class BooleanProperty : IJsonModel<BooleanProperty>
+    public partial class BooleanProperty : IJsonModel<global::_Type.Property.ValueTypes.BooleanProperty>
     {
         internal BooleanProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<BooleanProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.BooleanProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BooleanProperty IPersistableModel<BooleanProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BooleanProperty IPersistableModel<global::_Type.Property.ValueTypes.BooleanProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<BooleanProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.BooleanProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="booleanProperty"> The <see cref="BooleanProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="booleanProperty"> The <see cref="global::_Type.Property.ValueTypes.BooleanProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BooleanProperty booleanProperty) => throw null;
 
         public static explicit operator BooleanProperty(Response response) => throw null;
 
-        void IJsonModel<BooleanProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.BooleanProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        BooleanProperty IJsonModel<BooleanProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        BooleanProperty IJsonModel<global::_Type.Property.ValueTypes.BooleanProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BooleanProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

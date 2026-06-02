@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class SkillVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkillVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SkillVersion"/>. </summary>
         /// <param name="id"> The unique identifier of the skill version. </param>
         /// <param name="skillId"> The identifier of the parent skill. </param>
         /// <param name="name"> The name of the skill version. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
             CreatedAt = createdAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkillVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SkillVersion"/>. </summary>
         /// <param name="id"> The unique identifier of the skill version. </param>
         /// <param name="skillId"> The identifier of the parent skill. </param>
         /// <param name="name"> The name of the skill version. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the skill version. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SkillId = skillId;

@@ -14,9 +14,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxSchedule"/>. </summary>
         /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
         /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -29,14 +29,14 @@ namespace Azure.Developer.DevCenter.Models
             TimeZone = timeZone;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxSchedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
         /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxSchedule(string name, ScheduleType scheduleType, ScheduleFrequency scheduleFrequency, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxSchedule(string name, ScheduleType scheduleType, ScheduleFrequency scheduleFrequency, string time, string timeZone, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ScheduleType = scheduleType;

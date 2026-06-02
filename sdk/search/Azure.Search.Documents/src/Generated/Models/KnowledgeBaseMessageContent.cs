@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Specifies the type of the message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBaseMessageImageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> and <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
         private protected KnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseMessageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

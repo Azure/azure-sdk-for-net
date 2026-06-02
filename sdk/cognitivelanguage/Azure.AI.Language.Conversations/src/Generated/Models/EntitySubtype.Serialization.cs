@@ -14,54 +14,54 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The concrete entity Subtype model of extra information. </summary>
-    public partial class EntitySubtype : ConversationEntityExtraInformation, IJsonModel<EntitySubtype>
+    public partial class EntitySubtype : ConversationEntityExtraInformation, IJsonModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationEntityExtraInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntitySubtype(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.EntitySubtype.DeserializeEntitySubtype(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntitySubtype)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.EntitySubtype)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntitySubtype)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.EntitySubtype)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntitySubtype>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySubtype IPersistableModel<EntitySubtype>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntitySubtype)PersistableModelCreateCore(data, options);
+        EntitySubtype IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>.Create(BinaryData data, ModelReaderWriterOptions options) => ((EntitySubtype)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntitySubtype>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntitySubtype>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,24 +69,24 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntitySubtype)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.EntitySubtype)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Value))
+            if (global::Azure.AI.Language.Conversations.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.AI.Language.Conversations.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
                 foreach (EntityTag item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<EntityTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,33 +94,33 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySubtype IJsonModel<EntitySubtype>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntitySubtype)JsonModelCreateCore(ref reader, options);
+        EntitySubtype IJsonModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((EntitySubtype)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ConversationEntityExtraInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.EntitySubtype>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntitySubtype)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.EntitySubtype)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntitySubtype(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.EntitySubtype.DeserializeEntitySubtype(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EntitySubtype DeserializeEntitySubtype(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ExtraInformationKind extraInformationKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string value = default;
-            IList<EntityTag> tags = default;
+            IList<global::Azure.AI.Language.Conversations.Models.EntityTag> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("extraInformationKind"u8))
@@ -135,24 +135,24 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<EntityTag> array = new List<EntityTag>();
+                    List<global::Azure.AI.Language.Conversations.Models.EntityTag> array = new List<global::Azure.AI.Language.Conversations.Models.EntityTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EntityTag.DeserializeEntityTag(item, options));
+                        array.Add(global::Azure.AI.Language.Conversations.Models.EntityTag.DeserializeEntityTag(item, options));
                     }
                     tags = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntitySubtype(extraInformationKind, additionalBinaryDataProperties, value, tags ?? new ChangeTrackingList<EntityTag>());
+            return new EntitySubtype(extraInformationKind, additionalBinaryDataProperties, value, (tags ?? new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.EntityTag>()));
         }
     }
 }

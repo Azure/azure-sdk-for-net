@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The environment types supported by the computer use tool. </summary>
-    public readonly partial struct ComputerUseEnvironment : IEquatable<ComputerUseEnvironment>
+    public readonly partial struct ComputerUseEnvironment : IEquatable<global::Azure.AI.Agents.Persistent.ComputerUseEnvironment>
     {
         private readonly string _value;
         /// <summary> Windows environment. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Browser environment. </summary>
         private const string BrowserValue = "browser";
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputerUseEnvironment(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Browser environment. </summary>
         public static ComputerUseEnvironment Browser { get; } = new ComputerUseEnvironment(BrowserValue);
 
-        /// <summary> Determines if two <see cref="ComputerUseEnvironment"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ComputerUseEnvironment"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputerUseEnvironment left, ComputerUseEnvironment right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputerUseEnvironment"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.ComputerUseEnvironment"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputerUseEnvironment left, ComputerUseEnvironment right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputerUseEnvironment"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ComputerUseEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ComputerUseEnvironment(string value) => new ComputerUseEnvironment(value);
 
-        /// <summary> Converts a string to a <see cref="ComputerUseEnvironment"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.ComputerUseEnvironment"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputerUseEnvironment?(string value) => value == null ? null : new ComputerUseEnvironment(value);
+        public static implicit operator ComputerUseEnvironment?(string value) => (value == null) ? null : new ComputerUseEnvironment(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputerUseEnvironment other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ComputerUseEnvironment other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ComputerUseEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputerUseEnvironment other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

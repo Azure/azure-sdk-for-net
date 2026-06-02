@@ -24,9 +24,9 @@ namespace _Type.Property.Optional
 
         public static PlainTimeProperty PlainTimeProperty(TimeSpan? @property = default) => throw null;
 
-        public static CollectionsByteProperty CollectionsByteProperty(IEnumerable<BinaryData> @property = default) => throw null;
+        public static CollectionsByteProperty CollectionsByteProperty(IEnumerable<global::System.BinaryData> @property = default) => throw null;
 
-        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<StringProperty> @property = default) => throw null;
+        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<global::_Type.Property.Optional.StringProperty> @property = default) => throw null;
 
         public static StringLiteralProperty StringLiteralProperty(StringLiteralPropertyProperty? @property = default) => throw null;
 

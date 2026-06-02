@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Generation method. </summary>
-    public readonly partial struct GenerationMethod : IEquatable<GenerationMethod>
+    public readonly partial struct GenerationMethod : IEquatable<global::Azure.AI.ContentUnderstanding.GenerationMethod>
     {
         private readonly string _value;
         /// <summary> Values are generated freely based on the content. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Values are classified against a predefined set of categories. </summary>
         private const string ClassifyValue = "classify";
 
-        /// <summary> Initializes a new instance of <see cref="GenerationMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.GenerationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GenerationMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Values are classified against a predefined set of categories. </summary>
         public static GenerationMethod Classify { get; } = new GenerationMethod(ClassifyValue);
 
-        /// <summary> Determines if two <see cref="GenerationMethod"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.GenerationMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GenerationMethod left, GenerationMethod right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="GenerationMethod"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.GenerationMethod"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GenerationMethod left, GenerationMethod right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="GenerationMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.GenerationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator GenerationMethod(string value) => new GenerationMethod(value);
 
-        /// <summary> Converts a string to a <see cref="GenerationMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.GenerationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GenerationMethod?(string value) => value == null ? null : new GenerationMethod(value);
+        public static implicit operator GenerationMethod?(string value) => (value == null) ? null : new GenerationMethod(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is GenerationMethod other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is GenerationMethod other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(GenerationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(GenerationMethod other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

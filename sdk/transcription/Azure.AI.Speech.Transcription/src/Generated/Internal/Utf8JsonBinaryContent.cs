@@ -18,7 +18,7 @@ namespace Azure.AI.Speech.Transcription
         public Utf8JsonBinaryContent()
         {
             _stream = new MemoryStream();
-            _content = Create(_stream);
+            _content = global::System.ClientModel.BinaryContent.Create(_stream);
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
@@ -44,7 +44,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
-            length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+            length = (JsonWriter.BytesCommitted + JsonWriter.BytesPending);
             return true;
         }
 

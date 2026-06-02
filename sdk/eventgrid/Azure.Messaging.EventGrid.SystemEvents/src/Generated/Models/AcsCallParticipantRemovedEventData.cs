@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallParticipantRemoved event. </summary>
     public partial class AcsCallParticipantRemovedEventData : AcsCallParticipantEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantRemovedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantRemovedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantRemovedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantRemovedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="displayName"> The display name of the participant. </param>
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
-        internal AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, @group, room, isTwoParty, correlationId, isRoomsCall, additionalBinaryDataProperties, user, displayName, participantId, userAgent)
+        internal AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, @group, room, isTwoParty, correlationId, isRoomsCall, additionalBinaryDataProperties, user, displayName, participantId, userAgent)
         {
         }
     }

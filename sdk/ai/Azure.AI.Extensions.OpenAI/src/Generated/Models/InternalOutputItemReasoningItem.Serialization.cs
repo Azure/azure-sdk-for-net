@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalOutputItemReasoningItem : AgentResponseItem, IJsonModel<InternalOutputItemReasoningItem>
+    internal partial class InternalOutputItemReasoningItem : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemReasoningItem"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem"/> for deserialization. </summary>
         internal InternalOutputItemReasoningItem()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalOutputItemReasoningItem(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem.DeserializeInternalOutputItemReasoningItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemReasoningItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemReasoningItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalOutputItemReasoningItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemReasoningItem IPersistableModel<InternalOutputItemReasoningItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemReasoningItem)PersistableModelCreateCore(data, options);
+        InternalOutputItemReasoningItem IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalOutputItemReasoningItem)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalOutputItemReasoningItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalOutputItemReasoningItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,13 +69,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemReasoningItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(EncryptedContent))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(EncryptedContent))
             {
                 writer.WritePropertyName("encrypted_content"u8);
                 writer.WriteStringValue(EncryptedContent);
@@ -84,20 +84,20 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStartArray();
             foreach (InternalSummaryTextObject item in Summary)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<InternalSummaryTextObject>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Content))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStartArray();
                 foreach (ReasoningTextContent item in Content)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ReasoningTextContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -106,26 +106,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalOutputItemReasoningItem IJsonModel<InternalOutputItemReasoningItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalOutputItemReasoningItem)JsonModelCreateCore(ref reader, options);
+        InternalOutputItemReasoningItem IJsonModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalOutputItemReasoningItem)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalOutputItemReasoningItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalOutputItemReasoningItem(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.InternalOutputItemReasoningItem.DeserializeInternalOutputItemReasoningItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalOutputItemReasoningItem DeserializeInternalOutputItemReasoningItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -133,10 +133,10 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string encryptedContent = default;
-            IList<InternalSummaryTextObject> summary = default;
-            IList<ReasoningTextContent> content = default;
+            IList<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject> summary = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent> content = default;
             InputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,11 +152,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -166,7 +166,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("encrypted_content"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         encryptedContent = null;
                         continue;
@@ -176,40 +176,40 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<InternalSummaryTextObject> array = new List<InternalSummaryTextObject>();
+                    List<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject> array = new List<global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
                     }
                     summary = array;
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ReasoningTextContent> array = new List<ReasoningTextContent>();
+                    List<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent> array = new List<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReasoningTextContent.DeserializeReasoningTextContent(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ReasoningTextContent.DeserializeReasoningTextContent(item, options));
                     }
                     content = array;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     status = prop.Value.GetString().ToInputItemReasoningItemStatus();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalOutputItemReasoningItem(
@@ -220,7 +220,7 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 encryptedContent,
                 summary,
-                content ?? new ChangeTrackingList<ReasoningTextContent>(),
+                (content ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ReasoningTextContent>()),
                 status);
         }
     }

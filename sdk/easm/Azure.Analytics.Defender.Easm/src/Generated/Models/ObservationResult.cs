@@ -15,9 +15,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ObservationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObservationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationResult"/>. </summary>
         /// <param name="name"> The name of the observation. </param>
         /// <param name="types"> The list of applicable types. </param>
         /// <param name="priority"> The priority of the observation. </param>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cvssScoreV3"> The CVSS v3 score. </param>
         /// <param name="remediationState"> The remediation state of the observation. </param>
         /// <param name="remediationSource"> The source of the remediation state of the observation. </param>
-        internal ObservationResult(string name, IEnumerable<ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource)
+        internal ObservationResult(string name, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource)
         {
             Name = name;
             Types = types.ToList();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
             RemediationSource = remediationSource;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationResult"/>. </summary>
         /// <param name="name"> The name of the observation. </param>
         /// <param name="types"> The list of applicable types. </param>
         /// <param name="priority"> The priority of the observation. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="remediationState"> The remediation state of the observation. </param>
         /// <param name="remediationSource"> The source of the remediation state of the observation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObservationResult(string name, IList<ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObservationResult(string name, IList<global::Azure.Analytics.Defender.Easm.ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Types = types;
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Name { get; }
 
         /// <summary> The list of applicable types. </summary>
-        public IList<ObservationType> Types { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservationType> Types { get; }
 
         /// <summary> The priority of the observation. </summary>
         public ObservationPriority Priority { get; }

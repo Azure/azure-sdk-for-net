@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class BrokerProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         internal BrokerProperties(string lockToken, int deliveryCount)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             DeliveryCount = deliveryCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.Namespaces.BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerProperties(string lockToken, int deliveryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrokerProperties(string lockToken, int deliveryCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
             DeliveryCount = deliveryCount;

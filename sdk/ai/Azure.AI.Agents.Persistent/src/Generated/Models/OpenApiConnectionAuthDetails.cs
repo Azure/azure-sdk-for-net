@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Security details for OpenApi connection authentication. </summary>
     public partial class OpenApiConnectionAuthDetails : OpenApiAuthDetails
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiConnectionAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenApiConnectionAuthDetails(OpenApiConnectionSecurityScheme securityScheme) : base(OpenApiAuthType.Connection)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
+        public OpenApiConnectionAuthDetails(OpenApiConnectionSecurityScheme securityScheme) : base(global::Azure.AI.Agents.Persistent.OpenApiAuthType.Connection)
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
             SecurityScheme = securityScheme;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiConnectionAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiConnectionAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal OpenApiConnectionAuthDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiConnectionSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        internal OpenApiConnectionAuthDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OpenApiConnectionSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }

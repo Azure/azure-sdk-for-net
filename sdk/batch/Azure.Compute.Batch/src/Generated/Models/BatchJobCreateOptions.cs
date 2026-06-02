@@ -14,24 +14,24 @@ namespace Azure.Compute.Batch
     public partial class BatchJobCreateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Job's Tasks. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="poolInfo"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="poolInfo"/> is null. </exception>
         public BatchJobCreateOptions(string id, BatchPoolInfo poolInfo)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(poolInfo, nameof(poolInfo));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(poolInfo, nameof(poolInfo));
 
             Id = id;
-            CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
+            CommonEnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
             PoolInfo = poolInfo;
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Job. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="usesTaskDependencies"> Whether Tasks in the Job can define dependencies on each other. The default is false. </param>
@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkConfiguration"> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobCreateOptions(string id, string displayName, bool? usesTaskDependencies, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobCreateOptions(string id, string displayName, bool? usesTaskDependencies, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<global::Azure.Compute.Batch.EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -101,7 +101,7 @@ namespace Azure.Compute.Batch
         public BatchJobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary> The list of common environment variable settings. These environment variables are set for all Tasks in the Job (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </summary>
-        public IList<EnvironmentSetting> CommonEnvironmentSettings { get; }
+        public IList<global::Azure.Compute.Batch.EnvironmentSetting> CommonEnvironmentSettings { get; }
 
         /// <summary> The Pool on which the Batch service runs the Job's Tasks. </summary>
         public BatchPoolInfo PoolInfo { get; }
@@ -116,6 +116,6 @@ namespace Azure.Compute.Batch
         public BatchJobNetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
     }
 }

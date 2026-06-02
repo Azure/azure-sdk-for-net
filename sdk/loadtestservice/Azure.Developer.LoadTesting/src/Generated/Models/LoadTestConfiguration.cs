@@ -14,15 +14,15 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestConfiguration"/>. </summary>
         public LoadTestConfiguration()
         {
-            RegionalLoadTestConfiguration = new ChangeTrackingList<RegionalConfiguration>();
+            RegionalLoadTestConfiguration = new ChangeTrackingList<global::Azure.Developer.LoadTesting.RegionalConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTestConfiguration"/>. </summary>
         /// <param name="engineInstances"> The number of engine instances to execute load test. Supported values are in range of 1-400. Required for creating a new test. </param>
         /// <param name="splitAllCsvs">
         /// If false, Azure Load Testing copies and processes your input files unmodified
@@ -37,7 +37,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="optionalLoadTestConfiguration"> Configuration for quick load test. </param>
         /// <param name="regionalLoadTestConfiguration"> Region distribution configuration for the load test. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfiguration, IList<RegionalConfiguration> regionalLoadTestConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfiguration, IList<global::Azure.Developer.LoadTesting.RegionalConfiguration> regionalLoadTestConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EngineInstances = engineInstances;
             SplitAllCsvs = splitAllCsvs;
@@ -68,6 +68,6 @@ namespace Azure.Developer.LoadTesting
         public OptionalLoadTestConfiguration OptionalLoadTestConfiguration { get; set; }
 
         /// <summary> Region distribution configuration for the load test. </summary>
-        public IList<RegionalConfiguration> RegionalLoadTestConfiguration { get; }
+        public IList<global::Azure.Developer.LoadTesting.RegionalConfiguration> RegionalLoadTestConfiguration { get; }
     }
 }

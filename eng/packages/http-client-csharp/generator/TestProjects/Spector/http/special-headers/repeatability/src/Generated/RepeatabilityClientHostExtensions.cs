@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace SpecialHeaders.Repeatability
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RepeatabilityClientHostExtensions
     {
         public static IClientBuilder AddRepeatabilityClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRepeatabilityClient(this IHostApplicationBuilder host, string sectionName, Action<RepeatabilityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRepeatabilityClient(this IHostApplicationBuilder host, string sectionName, Action<global::SpecialHeaders.Repeatability.RepeatabilityClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRepeatabilityClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRepeatabilityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RepeatabilityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRepeatabilityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::SpecialHeaders.Repeatability.RepeatabilityClientSettings> configureSettings) => throw null;
     }
 }

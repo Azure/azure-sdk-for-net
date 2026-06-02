@@ -13,16 +13,16 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a file search tool as used to configure an agent. </summary>
     public partial class FileSearchToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinition"/>. </summary>
         public FileSearchToolDefinition() : base("file_search")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSearchToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileSearch"> Options overrides for the file search tool. </param>
-        internal FileSearchToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileSearchToolDefinitionDetails fileSearch) : base(@type, additionalBinaryDataProperties)
+        internal FileSearchToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, FileSearchToolDefinitionDetails fileSearch) : base(@type, additionalBinaryDataProperties)
         {
             FileSearch = fileSearch;
         }

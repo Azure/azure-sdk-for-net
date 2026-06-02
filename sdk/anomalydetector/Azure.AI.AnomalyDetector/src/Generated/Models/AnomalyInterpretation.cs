@@ -14,14 +14,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyInterpretation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyInterpretation"/>. </summary>
         internal AnomalyInterpretation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.AnomalyInterpretation"/>. </summary>
         /// <param name="variable"> Variable. </param>
         /// <param name="contributionScore">
         /// This score shows the percentage that contributes to the anomalous time stamp. It's a
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="correlationChanges"> Correlation changes among the anomalous variables. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyInterpretation(string variable, float? contributionScore, CorrelationChanges correlationChanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyInterpretation(string variable, float? contributionScore, CorrelationChanges correlationChanges, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Variable = variable;
             ContributionScore = contributionScore;

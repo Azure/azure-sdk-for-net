@@ -19,25 +19,25 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateConversationItemTruncated : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemTruncated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemTruncated"/>. </summary>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>
         /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        internal SessionUpdateConversationItemTruncated(string itemId, int contentIndex, int audioEndMs) : base(ServerEventType.ConversationItemTruncated)
+        internal SessionUpdateConversationItemTruncated(string itemId, int contentIndex, int audioEndMs) : base(global::Azure.AI.VoiceLive.ServerEventType.ConversationItemTruncated)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemTruncated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemTruncated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>
         /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        internal SessionUpdateConversationItemTruncated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemTruncated(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;

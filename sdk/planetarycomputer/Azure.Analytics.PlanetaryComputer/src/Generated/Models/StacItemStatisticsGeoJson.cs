@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemStatisticsGeoJson
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type)
@@ -25,12 +25,12 @@ namespace Azure.Analytics.PlanetaryComputer
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <param name="properties"> Feature properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type, StacItemStatisticsGeoJsonProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type, StacItemStatisticsGeoJsonProperties properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Type = @type;

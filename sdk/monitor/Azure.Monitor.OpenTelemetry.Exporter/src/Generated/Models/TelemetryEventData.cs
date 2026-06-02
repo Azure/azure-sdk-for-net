@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryEventData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="TelemetryEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryEventData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         public TelemetryEventData(int version, string name) : base(version)
@@ -23,14 +23,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryEventData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal TelemetryEventData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, string name, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
+        internal TelemetryEventData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, string name, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Name = name;
             Properties = properties;

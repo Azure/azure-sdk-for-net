@@ -11,9 +11,9 @@ namespace Azure.AI.Projects
     public partial class ModelPendingUploadResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelPendingUploadResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ModelPendingUploadResponse"/>. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         internal ModelPendingUploadResponse(AIProjectBlobReference blobReference, string pendingUploadId)
@@ -22,13 +22,13 @@ namespace Azure.AI.Projects
             PendingUploadId = pendingUploadId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelPendingUploadResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.ModelPendingUploadResponse"/>. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <param name="pendingUploadType"> The type of pending upload. Only TemporaryBlobReference is supported for models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelPendingUploadResponse(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelPendingUploadResponse(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlobReference = blobReference;
             PendingUploadId = pendingUploadId;

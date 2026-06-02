@@ -14,9 +14,9 @@ namespace Azure.Monitor.Query.Logs.Models
     internal partial class BatchQueryRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.BatchQueryRequest"/>. </summary>
         /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
         /// <param name="body">
         /// The Analytics query. Learn more about the
@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Logs.Models
             Workspace = workspace;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Logs.Models.BatchQueryRequest"/>. </summary>
         /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
         /// <param name="headers">
         /// Headers of the request. Can use prefer header to set server timeout and to
@@ -51,7 +51,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// blade in the Azure portal.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string @method, string workspace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string @method, string workspace, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Headers = headers;

@@ -9,10 +9,10 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    [PersistableModelProxy(typeof(UnknownComputerAction))]
-    internal abstract partial class InternalComputerAction : IJsonModel<InternalComputerAction>
+    [PersistableModelProxyAttribute(typeof(UnknownComputerAction))]
+    internal abstract partial class InternalComputerAction : IJsonModel<global::OpenAI.InternalComputerAction>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalComputerAction"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalComputerAction"/> for deserialization. </summary>
         internal InternalComputerAction()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalComputerAction(document.RootElement, options);
+                        return global::OpenAI.InternalComputerAction.DeserializeInternalComputerAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalComputerAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalComputerAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalComputerAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalComputerAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalComputerAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalComputerAction>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalComputerAction IPersistableModel<InternalComputerAction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalComputerAction IPersistableModel<global::OpenAI.InternalComputerAction>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalComputerAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalComputerAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalComputerAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalComputerAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalComputerAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalComputerAction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -85,9 +85,9 @@ namespace OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -96,26 +96,26 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalComputerAction IJsonModel<InternalComputerAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalComputerAction IJsonModel<global::OpenAI.InternalComputerAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalComputerAction>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalComputerAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalComputerAction)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalComputerAction(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalComputerAction.DeserializeInternalComputerAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalComputerAction DeserializeInternalComputerAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -124,26 +124,26 @@ namespace OpenAI
                 switch (discriminator.GetString())
                 {
                     case "click":
-                        return ClickParam.DeserializeClickParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ClickParam.DeserializeClickParam(element, options);
                     case "double_click":
-                        return DoubleClickAction.DeserializeDoubleClickAction(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.DoubleClickAction.DeserializeDoubleClickAction(element, options);
                     case "drag":
-                        return DragParam.DeserializeDragParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.DragParam.DeserializeDragParam(element, options);
                     case "keypress":
-                        return KeyPressAction.DeserializeKeyPressAction(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.KeyPressAction.DeserializeKeyPressAction(element, options);
                     case "move":
-                        return MoveParam.DeserializeMoveParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.MoveParam.DeserializeMoveParam(element, options);
                     case "screenshot":
-                        return ScreenshotParam.DeserializeScreenshotParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ScreenshotParam.DeserializeScreenshotParam(element, options);
                     case "scroll":
-                        return ScrollParam.DeserializeScrollParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.ScrollParam.DeserializeScrollParam(element, options);
                     case "type":
-                        return TypeParam.DeserializeTypeParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.TypeParam.DeserializeTypeParam(element, options);
                     case "wait":
-                        return WaitParam.DeserializeWaitParam(element, options);
+                        return global::Azure.AI.Extensions.OpenAI.WaitParam.DeserializeWaitParam(element, options);
                 }
             }
-            return UnknownComputerAction.DeserializeUnknownComputerAction(element, options);
+            return global::Azure.AI.Extensions.OpenAI.UnknownComputerAction.DeserializeUnknownComputerAction(element, options);
         }
     }
 }

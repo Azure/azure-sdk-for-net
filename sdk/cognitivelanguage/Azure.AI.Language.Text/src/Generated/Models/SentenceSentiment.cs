@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class SentenceSentiment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -29,11 +29,11 @@ namespace Azure.AI.Language.Text
             ConfidenceScores = confidenceScores;
             Offset = offset;
             Length = length;
-            Targets = new ChangeTrackingList<SentenceTarget>();
-            Assessments = new ChangeTrackingList<SentenceAssessment>();
+            Targets = new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceTarget>();
+            Assessments = new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceAssessment>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentenceSentiment(string text, SentenceSentimentValue sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IList<SentenceTarget> targets, IList<SentenceAssessment> assessments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentenceSentiment(string text, SentenceSentimentValue sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IList<global::Azure.AI.Language.Text.SentenceTarget> targets, IList<global::Azure.AI.Language.Text.SentenceAssessment> assessments, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Sentiment = sentiment;
@@ -70,9 +70,9 @@ namespace Azure.AI.Language.Text
         public int Length { get; }
 
         /// <summary> The array of sentence targets for the sentence. </summary>
-        public IList<SentenceTarget> Targets { get; }
+        public IList<global::Azure.AI.Language.Text.SentenceTarget> Targets { get; }
 
         /// <summary> The array of assessments for the sentence. </summary>
-        public IList<SentenceAssessment> Assessments { get; }
+        public IList<global::Azure.AI.Language.Text.SentenceAssessment> Assessments { get; }
     }
 }

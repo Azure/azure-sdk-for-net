@@ -13,11 +13,11 @@ namespace Client.AlternateApiVersion.Service.Path
 {
     public partial class PathClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
+        private const global::Client.AlternateApiVersion.Service.Path.PathClientOptions.ServiceVersion LatestVersion = global::Client.AlternateApiVersion.Service.Path.PathClientOptions.ServiceVersion.V2025_01_01;
 
-        public PathClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public PathClientOptions(global::Client.AlternateApiVersion.Service.Path.PathClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal PathClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

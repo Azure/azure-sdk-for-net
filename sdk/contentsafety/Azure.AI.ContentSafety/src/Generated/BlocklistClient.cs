@@ -18,9 +18,9 @@ namespace Azure.AI.ContentSafety
     /// <summary> The BlocklistClient. </summary>
     public partial class BlocklistClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of BlocklistClient for mocking. </summary>
@@ -31,16 +31,16 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of BlocklistClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BlocklistClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of BlocklistClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BlocklistClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
@@ -48,20 +48,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal BlocklistClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ContentSafetyClientOptions options)
+        internal BlocklistClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new ContentSafetyClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,8 +71,8 @@ namespace Azure.AI.ContentSafety
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BlocklistClient(global::System.Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -80,14 +80,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BlocklistClient(global::System.Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of BlocklistClient from a <see cref="BlocklistClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BlocklistClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public BlocklistClient(BlocklistClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -109,9 +109,9 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddOrUpdateBlocklistItems(string name, RequestContent content, RequestContext context = null)
         {
@@ -119,10 +119,10 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBlocklistItemsRequest(name, content, context);
+                using HttpMessage message = this.CreateAddOrUpdateBlocklistItemsRequest(name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -143,20 +143,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddOrUpdateBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AddOrUpdateBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.AddOrUpdateBlocklistItems");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAddOrUpdateBlocklistItemsRequest(name, content, context);
+                using HttpMessage message = this.CreateAddOrUpdateBlocklistItemsRequest(name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -170,32 +170,32 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="options"> Options for adding or updating blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AddOrUpdateTextBlocklistItemsResult> AddOrUpdateBlocklistItems(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult> AddOrUpdateBlocklistItems(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = AddOrUpdateBlocklistItems(name, options, cancellationToken.ToRequestContext());
-            return Response.FromValue((AddOrUpdateTextBlocklistItemsResult)result, result);
+            Response result = this.AddOrUpdateBlocklistItems(name, options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AddOrUpdateTextBlocklistItemsResult)result), result);
         }
 
         /// <summary> Add or update blocklistItems to a text blocklist. You can add or update at most 100 blocklistItems in one request. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="options"> Options for adding or updating blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AddOrUpdateTextBlocklistItemsResult>> AddOrUpdateBlocklistItemsAsync(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult>> AddOrUpdateBlocklistItemsAsync(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await AddOrUpdateBlocklistItemsAsync(name, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AddOrUpdateTextBlocklistItemsResult)result, result);
+            Response result = await this.AddOrUpdateBlocklistItemsAsync(name, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AddOrUpdateTextBlocklistItemsResult)result), result);
         }
 
         /// <summary>
@@ -209,9 +209,9 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateTextBlocklist(string name, RequestContent content, RequestContext context = null)
         {
@@ -219,10 +219,10 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateTextBlocklistRequest(name, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTextBlocklistRequest(name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -243,20 +243,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateTextBlocklistAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrUpdateTextBlocklistAsync(string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.CreateOrUpdateTextBlocklist");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateTextBlocklistRequest(name, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTextBlocklistRequest(name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -276,9 +276,9 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTextBlocklist(string name, RequestContext context)
         {
@@ -286,9 +286,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-                using HttpMessage message = CreateDeleteTextBlocklistRequest(name, context);
+                using HttpMessage message = this.CreateDeleteTextBlocklistRequest(name, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -308,19 +308,19 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTextBlocklistAsync(string name, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteTextBlocklistAsync(string name, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.DeleteTextBlocklist");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-                using HttpMessage message = CreateDeleteTextBlocklistRequest(name, context);
+                using HttpMessage message = this.CreateDeleteTextBlocklistRequest(name, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -333,27 +333,27 @@ namespace Azure.AI.ContentSafety
         /// <summary> Deletes a text blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTextBlocklist(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return DeleteTextBlocklist(name, cancellationToken.ToRequestContext());
+            return this.DeleteTextBlocklist(name, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a text blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTextBlocklistAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTextBlocklistAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await DeleteTextBlocklistAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteTextBlocklistAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -366,9 +366,9 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTextBlocklist(string name, RequestContext context)
         {
@@ -376,9 +376,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-                using HttpMessage message = CreateGetTextBlocklistRequest(name, context);
+                using HttpMessage message = this.CreateGetTextBlocklistRequest(name, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -398,19 +398,19 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTextBlocklistAsync(string name, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTextBlocklistAsync(string name, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklist");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-                using HttpMessage message = CreateGetTextBlocklistRequest(name, context);
+                using HttpMessage message = this.CreateGetTextBlocklistRequest(name, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -423,29 +423,29 @@ namespace Azure.AI.ContentSafety
         /// <summary> Returns text blocklist details. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TextBlocklist> GetTextBlocklist(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.TextBlocklist> GetTextBlocklist(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Response result = GetTextBlocklist(name, cancellationToken.ToRequestContext());
-            return Response.FromValue((TextBlocklist)result, result);
+            Response result = this.GetTextBlocklist(name, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TextBlocklist)result), result);
         }
 
         /// <summary> Returns text blocklist details. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TextBlocklist>> GetTextBlocklistAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.TextBlocklist>> GetTextBlocklistAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Response result = await GetTextBlocklistAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TextBlocklist)result, result);
+            Response result = await this.GetTextBlocklistAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TextBlocklist)result), result);
         }
 
         /// <summary>
@@ -459,9 +459,9 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTextBlocklistItem(string name, string blocklistItemId, RequestContext context)
         {
@@ -469,10 +469,10 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
 
-                using HttpMessage message = CreateGetTextBlocklistItemRequest(name, blocklistItemId, context);
+                using HttpMessage message = this.CreateGetTextBlocklistItemRequest(name, blocklistItemId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -493,20 +493,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTextBlocklistItemAsync(string name, string blocklistItemId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTextBlocklistItemAsync(string name, string blocklistItemId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklistItem");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
 
-                using HttpMessage message = CreateGetTextBlocklistItemRequest(name, blocklistItemId, context);
+                using HttpMessage message = this.CreateGetTextBlocklistItemRequest(name, blocklistItemId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -520,32 +520,32 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TextBlocklistItem> GetTextBlocklistItem(string name, string blocklistItemId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.TextBlocklistItem> GetTextBlocklistItem(string name, string blocklistItemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
 
-            Response result = GetTextBlocklistItem(name, blocklistItemId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TextBlocklistItem)result, result);
+            Response result = this.GetTextBlocklistItem(name, blocklistItemId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TextBlocklistItem)result), result);
         }
 
         /// <summary> Get blocklistItem by blocklistName and blocklistItemId from a text blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TextBlocklistItem>> GetTextBlocklistItemAsync(string name, string blocklistItemId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="blocklistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.TextBlocklistItem>> GetTextBlocklistItemAsync(string name, string blocklistItemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
 
-            Response result = await GetTextBlocklistItemAsync(name, blocklistItemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TextBlocklistItem)result, result);
+            Response result = await this.GetTextBlocklistItemAsync(name, blocklistItemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TextBlocklistItem)result), result);
         }
 
         /// <summary>
@@ -561,13 +561,13 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTextBlocklistItems(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTextBlocklistItems(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsCollectionResult(
                 this,
@@ -592,13 +592,13 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTextBlocklistItemsAsync(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResult(
                 this,
@@ -616,12 +616,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextBlocklistItem> GetTextBlocklistItems(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.ContentSafety.TextBlocklistItem> GetTextBlocklistItems(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsCollectionResultOfT(
                 this,
@@ -639,12 +639,12 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextBlocklistItem> GetTextBlocklistItemsAsync(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.ContentSafety.TextBlocklistItem> GetTextBlocklistItemsAsync(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResultOfT(
                 this,
@@ -665,9 +665,9 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTextBlocklists(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTextBlocklists(RequestContext context)
         {
             return new BlocklistClientGetTextBlocklistsCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
         }
@@ -681,25 +681,25 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTextBlocklistsAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTextBlocklistsAsync(RequestContext context)
         {
             return new BlocklistClientGetTextBlocklistsAsyncCollectionResult(this, context, "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary> Get all text blocklists details. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextBlocklist> GetTextBlocklists(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.ContentSafety.TextBlocklist> GetTextBlocklists(CancellationToken cancellationToken = default)
         {
             return new BlocklistClientGetTextBlocklistsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
         }
 
         /// <summary> Get all text blocklists details. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextBlocklist> GetTextBlocklistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.ContentSafety.TextBlocklist> GetTextBlocklistsAsync(CancellationToken cancellationToken = default)
         {
             return new BlocklistClientGetTextBlocklistsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "BlocklistClient.GetTextBlocklists");
         }
@@ -715,9 +715,9 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveBlocklistItems(string name, RequestContent content, RequestContext context = null)
         {
@@ -725,10 +725,10 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBlocklistItemsRequest(name, content, context);
+                using HttpMessage message = this.CreateRemoveBlocklistItemsRequest(name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -749,20 +749,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> RemoveBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlocklistClient.RemoveBlocklistItems");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRemoveBlocklistItemsRequest(name, content, context);
+                using HttpMessage message = this.CreateRemoveBlocklistItemsRequest(name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -776,30 +776,30 @@ namespace Azure.AI.ContentSafety
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="options"> Options for removing blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RemoveBlocklistItems(string name, RemoveTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            return RemoveBlocklistItems(name, options, cancellationToken.ToRequestContext());
+            return this.RemoveBlocklistItems(name, options, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Remove blocklistItems from a text blocklist. You can remove at most 100 BlocklistItems in one request. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="options"> Options for removing blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveBlocklistItemsAsync(string name, RemoveTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> RemoveBlocklistItemsAsync(string name, RemoveTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            return await RemoveBlocklistItemsAsync(name, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.RemoveBlocklistItemsAsync(name, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    public partial class GoblinShark : Shark, IJsonModel<GoblinShark>
+    public partial class GoblinShark : Shark, IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>
     {
         internal GoblinShark() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<GoblinShark>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>.Write(ModelReaderWriterOptions options) => throw null;
 
-        GoblinShark IPersistableModel<GoblinShark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        GoblinShark IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<GoblinShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<GoblinShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        GoblinShark IJsonModel<GoblinShark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        GoblinShark IJsonModel<global::_Type.Model.Inheritance.NestedDiscriminator.GoblinShark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

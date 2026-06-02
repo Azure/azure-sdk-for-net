@@ -14,9 +14,9 @@ namespace Azure.Analytics.Defender.Easm
     public partial class CisaCveResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CisaCveResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.CisaCveResult"/>. </summary>
         /// <param name="vendorProject"> The vendor or project name for the vulnerability. </param>
         /// <param name="product"> The vulnerability product. </param>
         /// <param name="vulnerabilityName"> The name of the vulnerability. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CisaCveResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.CisaCveResult"/>. </summary>
         /// <param name="cveId"> The CVE ID of the vulnerability in the format CVE-YYYY-NNNN, note that the number portion can have more than 4 digits. </param>
         /// <param name="vendorProject"> The vendor or project name for the vulnerability. </param>
         /// <param name="product"> The vulnerability product. </param>
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="updatedAt"> The date the vulnerability was updated. </param>
         /// <param name="count"> The number of assets affected by the vulnerability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CisaCveResult(string cveId, string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueDate, DateTimeOffset updatedAt, long count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CisaCveResult(string cveId, string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueDate, DateTimeOffset updatedAt, long count, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CveId = cveId;
             VendorProject = vendorProject;

@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LocalShellCallStatus value) => value switch
         {
-            LocalShellCallStatus.InProgress => "in_progress",
-            LocalShellCallStatus.Completed => "completed",
-            LocalShellCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LocalShellCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static LocalShellCallStatus ToLocalShellCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return LocalShellCallStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return LocalShellCallStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return LocalShellCallStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.LocalShellCallStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LocalShellCallStatus value.");
         }

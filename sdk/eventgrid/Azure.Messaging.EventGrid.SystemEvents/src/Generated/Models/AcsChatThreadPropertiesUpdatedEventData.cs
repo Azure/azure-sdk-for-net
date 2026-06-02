@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdated event. </summary>
     public partial class AcsChatThreadPropertiesUpdatedEventData : AcsChatThreadEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="properties"> The updated thread properties. </param>
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="retentionPolicy"> The retention policy for the chat. </param>
-        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, AcsChatRetentionPolicy retentionPolicy) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, AcsChatRetentionPolicy retentionPolicy) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;

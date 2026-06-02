@@ -10,21 +10,21 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
     public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam : ResponsesFunctionShellToolParamEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
-        public ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
+        public ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(global::Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType.ContainerReference)
         {
-            Argument.AssertNotNull(containerId, nameof(containerId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(containerId, nameof(containerId));
 
             ContainerId = containerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string containerId) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string containerId) : base(@type, additionalBinaryDataProperties)
         {
             ContainerId = containerId;
         }

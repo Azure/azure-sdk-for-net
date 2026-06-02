@@ -15,22 +15,22 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateLastDetectionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
-        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="variables"/> is null. </exception>
+        public MultivariateLastDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.VariableValues> variables)
         {
-            Argument.AssertNotNull(variables, nameof(variables));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
         /// 10.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateLastDetectionOptions(IList<global::Azure.AI.AnomalyDetector.VariableValues> variables, int? topContributorCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Variables = variables;
             TopContributorCount = topContributorCount;
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
         /// </summary>
-        public IList<VariableValues> Variables { get; }
+        public IList<global::Azure.AI.AnomalyDetector.VariableValues> Variables { get; }
 
         /// <summary>
         /// Number of top contributed

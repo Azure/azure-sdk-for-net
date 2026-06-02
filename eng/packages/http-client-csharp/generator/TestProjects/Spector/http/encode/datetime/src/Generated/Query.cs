@@ -18,48 +18,48 @@ namespace Encode.Datetime._Query
     {
         protected Query() => throw null;
 
-        internal Query(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Query(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(DateTimeOffset value, RequestContext context) => throw null;
 
-        public virtual Task<Response> DefaultAsync(DateTimeOffset value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(DateTimeOffset value, RequestContext context) => throw null;
 
         public virtual Response Default(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DefaultAsync(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc3339(DateTimeOffset value, RequestContext context) => throw null;
 
-        public virtual Task<Response> Rfc3339Async(DateTimeOffset value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Rfc3339Async(DateTimeOffset value, RequestContext context) => throw null;
 
         public virtual Response Rfc3339(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Rfc3339Async(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Rfc3339Async(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc7231(DateTimeOffset value, RequestContext context) => throw null;
 
-        public virtual Task<Response> Rfc7231Async(DateTimeOffset value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Rfc7231Async(DateTimeOffset value, RequestContext context) => throw null;
 
         public virtual Response Rfc7231(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> Rfc7231Async(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> Rfc7231Async(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UnixTimestamp(DateTimeOffset value, RequestContext context) => throw null;
 
-        public virtual Task<Response> UnixTimestampAsync(DateTimeOffset value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampAsync(DateTimeOffset value, RequestContext context) => throw null;
 
         public virtual Response UnixTimestamp(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> UnixTimestampAsync(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampAsync(DateTimeOffset value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response UnixTimestampArray(IEnumerable<DateTimeOffset> value, RequestContext context) => throw null;
+        public virtual Response UnixTimestampArray(IEnumerable<global::System.DateTimeOffset> value, RequestContext context) => throw null;
 
-        public virtual Task<Response> UnixTimestampArrayAsync(IEnumerable<DateTimeOffset> value, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampArrayAsync(IEnumerable<global::System.DateTimeOffset> value, RequestContext context) => throw null;
 
-        public virtual Response UnixTimestampArray(IEnumerable<DateTimeOffset> value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response UnixTimestampArray(IEnumerable<global::System.DateTimeOffset> value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> UnixTimestampArrayAsync(IEnumerable<DateTimeOffset> value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampArrayAsync(IEnumerable<global::System.DateTimeOffset> value, CancellationToken cancellationToken = default) => throw null;
     }
 }

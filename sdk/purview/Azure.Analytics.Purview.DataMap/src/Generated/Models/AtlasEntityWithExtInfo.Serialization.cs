@@ -18,71 +18,71 @@ namespace Azure.Analytics.Purview.DataMap
     /// An instance of an entity along with extended info - like hive_table,
     /// hive_database.
     /// </summary>
-    public partial class AtlasEntityWithExtInfo : IJsonModel<AtlasEntityWithExtInfo>
+    public partial class AtlasEntityWithExtInfo : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasEntityWithExtInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasEntityWithExtInfo(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo.DeserializeAtlasEntityWithExtInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasEntityWithExtInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasEntityWithExtInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasEntityWithExtInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntityWithExtInfo IPersistableModel<AtlasEntityWithExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasEntityWithExtInfo IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasEntityWithExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="atlasEntityWithExtInfo"> The <see cref="AtlasEntityWithExtInfo"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="atlasEntityWithExtInfo"> The <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AtlasEntityWithExtInfo atlasEntityWithExtInfo)
         {
-            if (atlasEntityWithExtInfo == null)
+            if ((atlasEntityWithExtInfo == null))
             {
                 return null;
             }
-            return RequestContent.Create(atlasEntityWithExtInfo, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(atlasEntityWithExtInfo, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasEntityWithExtInfo"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo"/> from. </param>
         public static explicit operator AtlasEntityWithExtInfo(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasEntityWithExtInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo.DeserializeAtlasEntityWithExtInfo(document.RootElement, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasEntityWithExtInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -90,28 +90,28 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasEntityWithExtInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ReferredEntities))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(ReferredEntities))
             {
                 writer.WritePropertyName("referredEntities"u8);
                 writer.WriteStartObject();
                 foreach (var item in ReferredEntities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<AtlasEntity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Entity))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Entity))
             {
                 writer.WritePropertyName("entity"u8);
-                writer.WriteObjectValue(Entity, options);
+                writer.WriteObjectValue<AtlasEntity>(Entity, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -119,9 +119,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -130,63 +130,63 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntityWithExtInfo IJsonModel<AtlasEntityWithExtInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasEntityWithExtInfo IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasEntityWithExtInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasEntityWithExtInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasEntityWithExtInfo(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo.DeserializeAtlasEntityWithExtInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasEntityWithExtInfo DeserializeAtlasEntityWithExtInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, AtlasEntity> referredEntities = default;
+            IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> referredEntities = default;
             AtlasEntity entity = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("referredEntities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, AtlasEntity> dictionary = new Dictionary<string, AtlasEntity>();
+                    Dictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity> dictionary = new Dictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, AtlasEntity.DeserializeAtlasEntity(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Analytics.Purview.DataMap.AtlasEntity.DeserializeAtlasEntity(prop0.Value, options));
                     }
                     referredEntities = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("entity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    entity = AtlasEntity.DeserializeAtlasEntity(prop.Value, options);
+                    entity = global::Azure.Analytics.Purview.DataMap.AtlasEntity.DeserializeAtlasEntity(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AtlasEntityWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entity, additionalBinaryDataProperties);
+            return new AtlasEntityWithExtInfo((referredEntities ?? new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntity>()), entity, additionalBinaryDataProperties);
         }
     }
 }

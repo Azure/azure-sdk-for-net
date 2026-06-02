@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a streamed image file content part within a streaming message delta chunk. </summary>
     public partial class MessageDeltaImageFileContent : MessageDeltaContent
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaImageFileContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaImageFileContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         internal MessageDeltaImageFileContent(int index) : base(index, "image_file")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaImageFileContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaImageFileContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageFile"> The image_file data. </param>
-        internal MessageDeltaImageFileContent(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageDeltaImageFileContentObject imageFile) : base(index, @type, additionalBinaryDataProperties)
+        internal MessageDeltaImageFileContent(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageDeltaImageFileContentObject imageFile) : base(index, @type, additionalBinaryDataProperties)
         {
             ImageFile = imageFile;
         }

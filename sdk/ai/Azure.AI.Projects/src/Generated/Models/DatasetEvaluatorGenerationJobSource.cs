@@ -10,23 +10,23 @@ namespace Azure.AI.Projects
     /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
     public partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="name"> The name of the dataset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DatasetEvaluatorGenerationJobSource(string name) : base(EvaluatorGenerationJobSourceType.Dataset)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public DatasetEvaluatorGenerationJobSource(string name) : base(global::Azure.AI.Projects.EvaluatorGenerationJobSourceType.Dataset)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetEvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
         /// <param name="name"> The name of the dataset. </param>
         /// <param name="version"> The version of the dataset. If not specified, the latest version is used. </param>
-        internal DatasetEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string name, string version) : base(@type, additionalBinaryDataProperties)
+        internal DatasetEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string description, string name, string version) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             Name = name;

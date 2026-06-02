@@ -10,19 +10,19 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> MCP approval response. </summary>
     public partial class OutputItemMcpApprovalResponseResource : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemMcpApprovalResponseResource"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="approvalRequestId"/> is null. </exception>
-        public OutputItemMcpApprovalResponseResource(string approvalRequestId, bool approve) : base(AgentResponseItemKind.McpApprovalResponse)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="approvalRequestId"/> is null. </exception>
+        public OutputItemMcpApprovalResponseResource(string approvalRequestId, bool approve) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.McpApprovalResponse)
         {
-            Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
 
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemMcpApprovalResponseResource"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal OutputItemMcpApprovalResponseResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemMcpApprovalResponseResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;

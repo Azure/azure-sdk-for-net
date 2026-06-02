@@ -12,7 +12,7 @@ using Azure;
 
 namespace Client.Clientnamespace.First
 {
-    public partial class FirstClientResult : IJsonModel<FirstClientResult>
+    public partial class FirstClientResult : IJsonModel<global::Client.Clientnamespace.First.FirstClientResult>
     {
         internal FirstClientResult() => throw null;
 
@@ -20,19 +20,19 @@ namespace Client.Clientnamespace.First
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<FirstClientResult>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Clientnamespace.First.FirstClientResult>.Write(ModelReaderWriterOptions options) => throw null;
 
-        FirstClientResult IPersistableModel<FirstClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        FirstClientResult IPersistableModel<global::Client.Clientnamespace.First.FirstClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<FirstClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Clientnamespace.First.FirstClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator FirstClientResult(Response response) => throw null;
 
-        void IJsonModel<FirstClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Clientnamespace.First.FirstClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        FirstClientResult IJsonModel<FirstClientResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        FirstClientResult IJsonModel<global::Client.Clientnamespace.First.FirstClientResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual FirstClientResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithAttributes : IPersistableModel<ModelWithAttributes>, IXmlSerializable
+    public partial class ModelWithAttributes : IPersistableModel<global::Payload.Xml.ModelWithAttributes>, IXmlSerializable
     {
         internal ModelWithAttributes() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithAttributes>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithAttributes>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithAttributes IPersistableModel<ModelWithAttributes>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithAttributes IPersistableModel<global::Payload.Xml.ModelWithAttributes>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithAttributes"> The <see cref="ModelWithAttributes"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithAttributes"> The <see cref="global::Payload.Xml.ModelWithAttributes"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithAttributes modelWithAttributes) => throw null;
 
         public static explicit operator ModelWithAttributes(Response response) => throw null;

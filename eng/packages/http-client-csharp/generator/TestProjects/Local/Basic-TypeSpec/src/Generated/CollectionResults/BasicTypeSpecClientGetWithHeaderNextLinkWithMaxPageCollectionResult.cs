@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult : Pageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult : Pageable<global::System.BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly int _numElements;
@@ -26,7 +26,7 @@ namespace BasicTypeSpec
         /// <param name="numElements"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(BasicTypeSpecClient client, int numElements, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(BasicTypeSpecClient client, int numElements, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _numElements = numElements;
@@ -38,26 +38,26 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkWithMaxPageResponse result = (ListWithHeaderNextLinkWithMaxPageResponse)response;
-                List<BinaryData> items = new List<BinaryData>();
+                ListWithHeaderNextLinkWithMaxPageResponse result = ((ListWithHeaderNextLinkWithMaxPageResponse)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, global::BasicTypeSpec.BasicTypeSpecContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
+                yield return global::Azure.Page<BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if ((response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value)))
                 {
-                    nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
+                    nextPage = new global::System.Uri(value, global::System.UriKind.RelativeOrAbsolute);
                 }
                 else
                 {
@@ -69,10 +69,10 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -14,25 +14,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ImageResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ImageResponse"/>. </summary>
         /// <param name="url"> URL of the exported image. </param>
-        internal ImageResponse(Uri url)
+        internal ImageResponse(global::System.Uri url)
         {
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ImageResponse"/>. </summary>
         /// <param name="url"> URL of the exported image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageResponse(Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageResponse(global::System.Uri url, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Url = url;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL of the exported image. </summary>
-        public Uri Url { get; }
+        public global::System.Uri Url { get; }
     }
 }

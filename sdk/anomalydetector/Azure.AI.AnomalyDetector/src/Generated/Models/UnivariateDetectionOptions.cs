@@ -15,24 +15,24 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateDetectionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted
         /// correctly or there's a duplicated time stamp, the API won't work. In such
         /// a case, an error message is returned.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
-        public UnivariateDetectionOptions(IEnumerable<TimeSeriesPoint> series)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="series"/> is null. </exception>
+        public UnivariateDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series)
         {
-            Argument.AssertNotNull(series, nameof(series));
+            global::Azure.AI.AnomalyDetector.Argument.AssertNotNull(series, nameof(series));
 
             Series = series.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted
@@ -68,7 +68,7 @@ namespace Azure.AI.AnomalyDetector
         /// and imputeMode is "fixed".
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnivariateDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnivariateDetectionOptions(IList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Series = series;
             Granularity = granularity;
@@ -87,7 +87,7 @@ namespace Azure.AI.AnomalyDetector
         /// correctly or there's a duplicated time stamp, the API won't work. In such
         /// a case, an error message is returned.
         /// </summary>
-        public IList<TimeSeriesPoint> Series { get; }
+        public IList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> Series { get; }
 
         /// <summary>
         /// Argument that indicates time granularity. If granularity is not present, the value

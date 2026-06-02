@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Memory
     /// <summary> Default memory store implementation. </summary>
     public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition"/>. </summary>
         /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
         /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatModel"/> or <paramref name="embeddingModel"/> is null. </exception>
-        public MemoryStoreDefaultDefinition(string chatModel, string embeddingModel) : base(MemoryStoreKind.Default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="chatModel"/> or <paramref name="embeddingModel"/> is null. </exception>
+        public MemoryStoreDefaultDefinition(string chatModel, string embeddingModel) : base(global::Azure.AI.Projects.Memory.MemoryStoreKind.Default)
         {
-            Argument.AssertNotNull(chatModel, nameof(chatModel));
-            Argument.AssertNotNull(embeddingModel, nameof(embeddingModel));
+            global::Azure.AI.Projects.Argument.AssertNotNull(chatModel, nameof(chatModel));
+            global::Azure.AI.Projects.Argument.AssertNotNull(embeddingModel, nameof(embeddingModel));
 
             ChatModel = chatModel;
             EmbeddingModel = embeddingModel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition"/>. </summary>
         /// <param name="kind"> The kind of the memory store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
         /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
         /// <param name="options"> Default memory store options. </param>
-        internal MemoryStoreDefaultDefinition(MemoryStoreKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string chatModel, string embeddingModel, MemoryStoreDefaultOptions options) : base(kind, additionalBinaryDataProperties)
+        internal MemoryStoreDefaultDefinition(MemoryStoreKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string chatModel, string embeddingModel, MemoryStoreDefaultOptions options) : base(kind, additionalBinaryDataProperties)
         {
             ChatModel = chatModel;
             EmbeddingModel = embeddingModel;

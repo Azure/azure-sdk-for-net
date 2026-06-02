@@ -14,19 +14,19 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class TimeBoundary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TimeBoundary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TimeBoundary"/>. </summary>
         public TimeBoundary()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeBoundary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TimeBoundary"/>. </summary>
         /// <param name="endTime"> The end of the time boundary. </param>
         /// <param name="startTime"> The start of the time boundary. </param>
         /// <param name="timeZone"> The timezone of the time boundary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimeBoundary(string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TimeBoundary(string endTime, string startTime, string timeZone, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EndTime = endTime;
             StartTime = startTime;

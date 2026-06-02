@@ -14,21 +14,21 @@ namespace Azure.AI.Translation.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProfanityMarker value) => value switch
         {
-            ProfanityMarker.Asterisk => "Asterisk",
-            ProfanityMarker.Tag => "Tag",
+            global::Azure.AI.Translation.Text.ProfanityMarker.Asterisk => "Asterisk",
+            global::Azure.AI.Translation.Text.ProfanityMarker.Tag => "Tag",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarker value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ProfanityMarker ToProfanityMarker(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk"))
             {
-                return ProfanityMarker.Asterisk;
+                return global::Azure.AI.Translation.Text.ProfanityMarker.Asterisk;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "Tag"))
             {
-                return ProfanityMarker.Tag;
+                return global::Azure.AI.Translation.Text.ProfanityMarker.Tag;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarker value.");
         }

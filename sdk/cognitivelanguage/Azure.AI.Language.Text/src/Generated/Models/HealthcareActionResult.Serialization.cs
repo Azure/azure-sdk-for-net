@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Result object for the processed Healthcare document with detected language. </summary>
-    public partial class HealthcareActionResult : IJsonModel<HealthcareActionResult>
+    public partial class HealthcareActionResult : IJsonModel<global::Azure.AI.Language.Text.HealthcareActionResult>
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareActionResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareActionResult"/> for deserialization. </summary>
         internal HealthcareActionResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HealthcareActionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealthcareActionResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.HealthcareActionResult.DeserializeHealthcareActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareActionResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareActionResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthcareActionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareActionResult IPersistableModel<HealthcareActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HealthcareActionResult IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthcareActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HealthcareActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.HealthcareActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HealthcareActionResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareActionResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -84,39 +84,39 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (DocumentWarning item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentWarning>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<DocumentStatistics>(Statistics, options);
             }
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (HealthcareEntity item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<HealthcareEntity>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("relations"u8);
             writer.WriteStartArray();
             foreach (HealthcareRelation item in Relations)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<HealthcareRelation>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FhirBundle))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(FhirBundle))
             {
                 writer.WritePropertyName("fhirBundle"u8);
-                writer.WriteObjectValue(FhirBundle, options);
+                writer.WriteObjectValue<FhirBundle>(FhirBundle, options);
             }
-            if (Optional.IsDefined(DetectedLanguage))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -124,9 +124,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -135,37 +135,37 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareActionResult IJsonModel<HealthcareActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HealthcareActionResult IJsonModel<global::Azure.AI.Language.Text.HealthcareActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HealthcareActionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.HealthcareActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HealthcareActionResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.HealthcareActionResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareActionResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.HealthcareActionResult.DeserializeHealthcareActionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static HealthcareActionResult DeserializeHealthcareActionResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string id = default;
-            IList<DocumentWarning> warnings = default;
+            IList<global::Azure.AI.Language.Text.DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IList<HealthcareEntity> entities = default;
-            IList<HealthcareRelation> relations = default;
+            IList<global::Azure.AI.Language.Text.HealthcareEntity> entities = default;
+            IList<global::Azure.AI.Language.Text.HealthcareRelation> relations = default;
             FhirBundle fhirBundle = default;
             DetectedLanguage detectedLanguage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -175,64 +175,64 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("warnings"u8))
                 {
-                    List<DocumentWarning> array = new List<DocumentWarning>();
+                    List<global::Azure.AI.Language.Text.DocumentWarning> array = new List<global::Azure.AI.Language.Text.DocumentWarning>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWarning.DeserializeDocumentWarning(item, options));
+                        array.Add(global::Azure.AI.Language.Text.DocumentWarning.DeserializeDocumentWarning(item, options));
                     }
                     warnings = array;
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(prop.Value, options);
+                    statistics = global::Azure.AI.Language.Text.DocumentStatistics.DeserializeDocumentStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    List<HealthcareEntity> array = new List<HealthcareEntity>();
+                    List<global::Azure.AI.Language.Text.HealthcareEntity> array = new List<global::Azure.AI.Language.Text.HealthcareEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntity.DeserializeHealthcareEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Text.HealthcareEntity.DeserializeHealthcareEntity(item, options));
                     }
                     entities = array;
                     continue;
                 }
                 if (prop.NameEquals("relations"u8))
                 {
-                    List<HealthcareRelation> array = new List<HealthcareRelation>();
+                    List<global::Azure.AI.Language.Text.HealthcareRelation> array = new List<global::Azure.AI.Language.Text.HealthcareRelation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareRelation.DeserializeHealthcareRelation(item, options));
+                        array.Add(global::Azure.AI.Language.Text.HealthcareRelation.DeserializeHealthcareRelation(item, options));
                     }
                     relations = array;
                     continue;
                 }
                 if (prop.NameEquals("fhirBundle"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    fhirBundle = FhirBundle.DeserializeFhirBundle(prop.Value, options);
+                    fhirBundle = global::Azure.AI.Language.Text.FhirBundle.DeserializeFhirBundle(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("detectedLanguage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(prop.Value, options);
+                    detectedLanguage = global::Azure.AI.Language.Text.DetectedLanguage.DeserializeDetectedLanguage(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new HealthcareActionResult(

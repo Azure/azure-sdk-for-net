@@ -10,13 +10,13 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Shell tool. </summary>
     public partial class ResponsesFunctionShellToolParam : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParam"/>. </summary>
-        public ResponsesFunctionShellToolParam() : base(ToolType.Shell)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam"/>. </summary>
+        public ResponsesFunctionShellToolParam() : base(global::Azure.AI.Extensions.OpenAI.ToolType.Shell)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFunctionShellToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesFunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
             Name = name;
@@ -49,6 +49,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
     }
 }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Usage
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class UsageClientHostExtensions
     {
         public static IClientBuilder AddUsageClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddUsageClient(this IHostApplicationBuilder host, string sectionName, Action<UsageClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddUsageClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Usage.UsageClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedUsageClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedUsageClient(this IHostApplicationBuilder host, string key, string sectionName, Action<UsageClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedUsageClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Usage.UsageClientSettings> configureSettings) => throw null;
     }
 }

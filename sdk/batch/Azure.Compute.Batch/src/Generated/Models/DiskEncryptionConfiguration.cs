@@ -18,19 +18,19 @@ namespace Azure.Compute.Batch
     public partial class DiskEncryptionConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.DiskEncryptionConfiguration"/>. </summary>
         public DiskEncryptionConfiguration()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
+            Targets = new ChangeTrackingList<global::Azure.Compute.Batch.DiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.DiskEncryptionConfiguration"/>. </summary>
         /// <param name="customerManagedKey"> The Customer Managed Key reference to encrypt the OS Disk. Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(DiskCustomerManagedKey customerManagedKey, IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryptionConfiguration(DiskCustomerManagedKey customerManagedKey, IList<global::Azure.Compute.Batch.DiskEncryptionTarget> targets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CustomerManagedKey = customerManagedKey;
             Targets = targets;
@@ -41,6 +41,6 @@ namespace Azure.Compute.Batch
         public DiskCustomerManagedKey CustomerManagedKey { get; set; }
 
         /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        public IList<global::Azure.Compute.Batch.DiskEncryptionTarget> Targets { get; }
     }
 }

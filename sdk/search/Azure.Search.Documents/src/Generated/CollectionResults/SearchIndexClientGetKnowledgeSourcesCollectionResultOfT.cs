@@ -14,7 +14,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetKnowledgeSourcesCollectionResultOfT : Pageable<KnowledgeSource>
+    internal partial class SearchIndexClientGetKnowledgeSourcesCollectionResultOfT : Pageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource>
     {
         private readonly SearchIndexClient _client;
         private readonly RequestContext _context;
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="client"> The SearchIndexClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetKnowledgeSourcesCollectionResultOfT(SearchIndexClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetKnowledgeSourcesCollectionResultOfT(SearchIndexClient client, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
@@ -35,11 +35,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetKnowledgeSourcesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KnowledgeSource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            ListKnowledgeSourcesResult result = (ListKnowledgeSourcesResult)response;
-            yield return Page<KnowledgeSource>.FromValues((IReadOnlyList<KnowledgeSource>)result.Value, null, response);
+            Response response = this.GetNextResponse(pageSizeHint, null);
+            ListKnowledgeSourcesResult result = ((ListKnowledgeSourcesResult)response);
+            yield return global::Azure.Page<KnowledgeSource>.FromValues(((IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource>)result.Value), null, response);
         }
 
         /// <summary> Get next page. </summary>

@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a single item of thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageTextContent"/> and <see cref="Azure.AI.Agents.Persistent.MessageImageFileContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         private protected MessageContent(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageContent(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageContent(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

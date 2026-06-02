@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsEventBaseProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsSmsEventBaseProperties(string messageId, string @from, string to, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsSmsEventBaseProperties(string messageId, string @from, string to, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             From = @from;

@@ -11,24 +11,24 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesInlineSkillSourceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillSourceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesInlineSkillSourceParam"/>. </summary>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public ResponsesInlineSkillSourceParam(string data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(data, nameof(data));
 
             Data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillSourceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesInlineSkillSourceParam"/>. </summary>
         /// <param name="type"> The type of the inline skill source. Must be `base64`. </param>
         /// <param name="mediaType"> The media type of the inline skill payload. Must be `application/zip`. </param>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesInlineSkillSourceParam(string @type, string mediaType, string data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesInlineSkillSourceParam(string @type, string mediaType, string data, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             MediaType = mediaType;

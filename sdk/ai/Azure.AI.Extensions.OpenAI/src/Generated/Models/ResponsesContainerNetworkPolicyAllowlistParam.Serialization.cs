@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesContainerNetworkPolicyAllowlistParam. </summary>
-    public partial class ResponsesContainerNetworkPolicyAllowlistParam : ResponsesContainerNetworkPolicyParam, IJsonModel<ResponsesContainerNetworkPolicyAllowlistParam>
+    public partial class ResponsesContainerNetworkPolicyAllowlistParam : ResponsesContainerNetworkPolicyParam, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam"/> for deserialization. </summary>
         internal ResponsesContainerNetworkPolicyAllowlistParam()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesContainerNetworkPolicyAllowlistParam(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam.DeserializeResponsesContainerNetworkPolicyAllowlistParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyAllowlistParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyAllowlistParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerNetworkPolicyAllowlistParam IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesContainerNetworkPolicyAllowlistParam)PersistableModelCreateCore(data, options);
+        ResponsesContainerNetworkPolicyAllowlistParam IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesContainerNetworkPolicyAllowlistParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesContainerNetworkPolicyAllowlistParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,17 +70,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyAllowlistParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("allowed_domains"u8);
             writer.WriteStartArray();
             foreach (string item in AllowedDomains)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -88,13 +88,13 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(DomainSecrets))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(DomainSecrets))
             {
                 writer.WritePropertyName("domain_secrets"u8);
                 writer.WriteStartArray();
                 foreach (ResponsesContainerNetworkPolicyDomainSecretParam item in DomainSecrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ResponsesContainerNetworkPolicyDomainSecretParam>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,33 +102,33 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerNetworkPolicyAllowlistParam IJsonModel<ResponsesContainerNetworkPolicyAllowlistParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesContainerNetworkPolicyAllowlistParam)JsonModelCreateCore(ref reader, options);
+        ResponsesContainerNetworkPolicyAllowlistParam IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesContainerNetworkPolicyAllowlistParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyAllowlistParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesContainerNetworkPolicyAllowlistParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam.DeserializeResponsesContainerNetworkPolicyAllowlistParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesContainerNetworkPolicyAllowlistParam DeserializeResponsesContainerNetworkPolicyAllowlistParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContainerNetworkPolicyParamType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IList<string> allowedDomains = default;
-            IList<ResponsesContainerNetworkPolicyDomainSecretParam> domainSecrets = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam> domainSecrets = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -155,24 +155,24 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("domain_secrets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResponsesContainerNetworkPolicyDomainSecretParam> array = new List<ResponsesContainerNetworkPolicyDomainSecretParam>();
+                    List<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam> array = new List<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesContainerNetworkPolicyDomainSecretParam.DeserializeResponsesContainerNetworkPolicyDomainSecretParam(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam.DeserializeResponsesContainerNetworkPolicyDomainSecretParam(item, options));
                     }
                     domainSecrets = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains, domainSecrets ?? new ChangeTrackingList<ResponsesContainerNetworkPolicyDomainSecretParam>());
+            return new ResponsesContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains, (domainSecrets ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam>()));
         }
     }
 }

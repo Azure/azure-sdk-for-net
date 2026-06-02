@@ -12,11 +12,11 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.UnknownTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", name, additionalBinaryDataProperties)
+        internal UnknownTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((odataType ?? "unknown"), name, additionalBinaryDataProperties)
         {
         }
     }

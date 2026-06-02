@@ -14,20 +14,20 @@ namespace Azure.AI.ContentUnderstanding
     public partial class SupportedModels
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.SupportedModels"/>. </summary>
         internal SupportedModels()
         {
             Completion = new ChangeTrackingList<string>();
             Embedding = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.SupportedModels"/>. </summary>
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedModels(IList<string> completion, IList<string> embedding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedModels(IList<string> completion, IList<string> embedding, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Completion = completion;
             Embedding = embedding;

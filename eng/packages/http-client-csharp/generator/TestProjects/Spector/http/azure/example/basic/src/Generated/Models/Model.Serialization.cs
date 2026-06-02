@@ -11,23 +11,23 @@ using System.Text.Json;
 
 namespace Specs.Azure.Example.Basic
 {
-    public partial class Model : IJsonModel<Model>
+    public partial class Model : IJsonModel<global::Specs.Azure.Example.Basic.Model>
     {
         protected virtual Model PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Model>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Example.Basic.Model>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Model IPersistableModel<Model>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Model IPersistableModel<global::Specs.Azure.Example.Basic.Model>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Model>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Example.Basic.Model>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Model>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Example.Basic.Model>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Model IJsonModel<Model>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Model IJsonModel<global::Specs.Azure.Example.Basic.Model>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Model JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

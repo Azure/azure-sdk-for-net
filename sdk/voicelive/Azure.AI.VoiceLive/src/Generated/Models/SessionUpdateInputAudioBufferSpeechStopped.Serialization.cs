@@ -17,9 +17,9 @@ namespace Azure.AI.VoiceLive
     /// the audio buffer. The server will also send an `conversation.item.created`
     /// event with the user message item that is created from the audio buffer.
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferSpeechStopped : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferSpeechStopped>
+    public partial class SessionUpdateInputAudioBufferSpeechStopped : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStopped"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/> for deserialization. </summary>
         internal SessionUpdateInputAudioBufferSpeechStopped()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateInputAudioBufferSpeechStopped(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateInputAudioBufferSpeechStopped)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateInputAudioBufferSpeechStopped)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateInputAudioBufferSpeechStopped IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateInputAudioBufferSpeechStopped)PersistableModelCreateCore(data, options);
+        SessionUpdateInputAudioBufferSpeechStopped IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateInputAudioBufferSpeechStopped)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateInputAudioBufferSpeechStopped>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,10 +77,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateInputAudioBufferSpeechStopped)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("audio_end_ms"u8);
@@ -91,32 +91,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateInputAudioBufferSpeechStopped IJsonModel<SessionUpdateInputAudioBufferSpeechStopped>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateInputAudioBufferSpeechStopped)JsonModelCreateCore(ref reader, options);
+        SessionUpdateInputAudioBufferSpeechStopped IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateInputAudioBufferSpeechStopped)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateInputAudioBufferSpeechStopped)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateInputAudioBufferSpeechStopped(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateInputAudioBufferSpeechStopped DeserializeSessionUpdateInputAudioBufferSpeechStopped(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             int audioEndMs = default;
             string itemId = default;
             foreach (var prop in element.EnumerateObject())
@@ -141,9 +141,9 @@ namespace Azure.AI.VoiceLive
                     itemId = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateInputAudioBufferSpeechStopped(@type, eventId, additionalBinaryDataProperties, audioEndMs, itemId);

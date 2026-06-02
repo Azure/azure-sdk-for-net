@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class MoveToExistingSubClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

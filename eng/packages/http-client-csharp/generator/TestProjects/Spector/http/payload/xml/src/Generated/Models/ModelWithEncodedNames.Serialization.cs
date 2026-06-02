@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithEncodedNames : IPersistableModel<ModelWithEncodedNames>, IXmlSerializable
+    public partial class ModelWithEncodedNames : IPersistableModel<global::Payload.Xml.ModelWithEncodedNames>, IXmlSerializable
     {
         internal ModelWithEncodedNames() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithEncodedNames>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithEncodedNames>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithEncodedNames IPersistableModel<ModelWithEncodedNames>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithEncodedNames IPersistableModel<global::Payload.Xml.ModelWithEncodedNames>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithEncodedNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithEncodedNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithEncodedNames"> The <see cref="ModelWithEncodedNames"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithEncodedNames"> The <see cref="global::Payload.Xml.ModelWithEncodedNames"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithEncodedNames modelWithEncodedNames) => throw null;
 
         public static explicit operator ModelWithEncodedNames(Response response) => throw null;

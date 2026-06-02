@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill for merging two or more strings into a single unified string, with an optional user-defined delimiter separating each component part. </summary>
     public partial class MergeSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="MergeSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MergeSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public MergeSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.MergeSkill", inputs, outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public MergeSkill(IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.MergeSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="MergeSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MergeSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="insertPreTag"> The tag indicates the start of the merged text. By default, the tag is an empty space. </param>
         /// <param name="insertPostTag"> The tag indicates the end of the merged text. By default, the tag is an empty space. </param>
-        internal MergeSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string insertPreTag, string insertPostTag) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal MergeSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string insertPreTag, string insertPostTag) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             InsertPreTag = insertPreTag;
             InsertPostTag = insertPostTag;

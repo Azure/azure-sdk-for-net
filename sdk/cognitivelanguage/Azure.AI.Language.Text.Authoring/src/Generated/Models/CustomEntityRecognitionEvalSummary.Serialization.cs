@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom entity recognition project. </summary>
-    public partial class CustomEntityRecognitionEvalSummary : TextAuthoringEvalSummary, IJsonModel<CustomEntityRecognitionEvalSummary>
+    public partial class CustomEntityRecognitionEvalSummary : TextAuthoringEvalSummary, IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionEvalSummary"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary"/> for deserialization. </summary>
         internal CustomEntityRecognitionEvalSummary()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringEvalSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomEntityRecognitionEvalSummary(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary.DeserializeCustomEntityRecognitionEvalSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntityRecognitionEvalSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntityRecognitionEvalSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomEntityRecognitionEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomEntityRecognitionEvalSummary IPersistableModel<CustomEntityRecognitionEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomEntityRecognitionEvalSummary)PersistableModelCreateCore(data, options);
+        CustomEntityRecognitionEvalSummary IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => ((CustomEntityRecognitionEvalSummary)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomEntityRecognitionEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomEntityRecognitionEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,44 +73,44 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomEntityRecognitionEvalSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customEntityRecognitionEvaluation"u8);
-            writer.WriteObjectValue(CustomEntityRecognitionEvaluation, options);
+            writer.WriteObjectValue<EntityRecognitionEvalSummary>(CustomEntityRecognitionEvaluation, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomEntityRecognitionEvalSummary IJsonModel<CustomEntityRecognitionEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomEntityRecognitionEvalSummary)JsonModelCreateCore(ref reader, options);
+        CustomEntityRecognitionEvalSummary IJsonModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((CustomEntityRecognitionEvalSummary)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringEvalSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(CustomEntityRecognitionEvalSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomEntityRecognitionEvalSummary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary.DeserializeCustomEntityRecognitionEvalSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static CustomEntityRecognitionEvalSummary DeserializeCustomEntityRecognitionEvalSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TextAuthoringProjectKind projectKind = default;
             TextAuthoringEvaluationDetails evaluationOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             EntityRecognitionEvalSummary customEntityRecognitionEvaluation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,17 +121,17 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(prop.Value, options);
+                    evaluationOptions = global::Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customEntityRecognitionEvaluation"u8))
                 {
-                    customEntityRecognitionEvaluation = EntityRecognitionEvalSummary.DeserializeEntityRecognitionEvalSummary(prop.Value, options);
+                    customEntityRecognitionEvaluation = global::Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary.DeserializeEntityRecognitionEvalSummary(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CustomEntityRecognitionEvalSummary(projectKind, evaluationOptions, additionalBinaryDataProperties, customEntityRecognitionEvaluation);

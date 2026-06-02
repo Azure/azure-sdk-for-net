@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class AnalyzeConversationAuthoringDataGenerationConnectionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringDataGenerationConnectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo"/>. </summary>
         /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure OpenAI. </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public AnalyzeConversationAuthoringDataGenerationConnectionInfo(AnalyzeConversationAuthoringDataGenerationConnectionKind kind, string deploymentName)
         {
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             Kind = kind;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringDataGenerationConnectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo"/>. </summary>
         /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure OpenAI. </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
         /// <param name="resourceId">
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{resourceName}".
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringDataGenerationConnectionInfo(AnalyzeConversationAuthoringDataGenerationConnectionKind kind, string deploymentName, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationAuthoringDataGenerationConnectionInfo(AnalyzeConversationAuthoringDataGenerationConnectionKind kind, string deploymentName, string resourceId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             DeploymentName = deploymentName;

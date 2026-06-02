@@ -13,19 +13,19 @@ namespace Azure.AI.VoiceLive
     /// <summary> MCP list tools in progress message. </summary>
     public partial class SessionUpdateMcpListToolsInProgress : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsInProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsInProgress"/>. </summary>
         /// <param name="itemId"> The item ID. </param>
-        internal SessionUpdateMcpListToolsInProgress(string itemId) : base(ServerEventType.McpListToolsInProgress)
+        internal SessionUpdateMcpListToolsInProgress(string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.McpListToolsInProgress)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsInProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateMcpListToolsInProgress"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The item ID. </param>
-        internal SessionUpdateMcpListToolsInProgress(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateMcpListToolsInProgress(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }

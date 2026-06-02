@@ -10,15 +10,15 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Hourly recurrence schedule. </summary>
     public partial class HourlyRecurrenceSchedule : RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of <see cref="HourlyRecurrenceSchedule"/>. </summary>
-        public HourlyRecurrenceSchedule() : base(RecurrenceType.Hourly)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule"/>. </summary>
+        public HourlyRecurrenceSchedule() : base(global::Azure.AI.Projects.Evaluation.RecurrenceType.Hourly)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HourlyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HourlyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal HourlyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

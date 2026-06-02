@@ -14,20 +14,20 @@ namespace Azure.Analytics.Defender.Easm
     public partial class CveDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CveDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.CveDetails"/>. </summary>
         internal CveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CveDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.CveDetails"/>. </summary>
         /// <param name="name"></param>
         /// <param name="cweId"></param>
         /// <param name="cvssScore"></param>
         /// <param name="cvss3Summary"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CveDetails(string name, string cweId, float? cvssScore, Cvss3Summary cvss3Summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CveDetails(string name, string cweId, float? cvssScore, Cvss3Summary cvss3Summary, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             CweId = cweId;

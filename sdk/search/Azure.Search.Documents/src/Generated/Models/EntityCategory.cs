@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating what entity categories to return. </summary>
-    public readonly partial struct EntityCategory : IEquatable<EntityCategory>
+    public readonly partial struct EntityCategory : IEquatable<global::Azure.Search.Documents.Indexes.Models.EntityCategory>
     {
         private readonly string _value;
         /// <summary> Entities describing a physical location. </summary>
@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Entities describing an email address. </summary>
         private const string EmailValue = "email";
 
-        /// <summary> Initializes a new instance of <see cref="EntityCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.EntityCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -61,34 +61,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Entities describing an email address. </summary>
         public static EntityCategory Email { get; } = new EntityCategory(EmailValue);
 
-        /// <summary> Determines if two <see cref="EntityCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.EntityCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityCategory left, EntityCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EntityCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.EntityCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityCategory left, EntityCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EntityCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.EntityCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EntityCategory(string value) => new EntityCategory(value);
 
-        /// <summary> Converts a string to a <see cref="EntityCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.EntityCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityCategory?(string value) => value == null ? null : new EntityCategory(value);
+        public static implicit operator EntityCategory?(string value) => (value == null) ? null : new EntityCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EntityCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EntityCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EntityCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EntityCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

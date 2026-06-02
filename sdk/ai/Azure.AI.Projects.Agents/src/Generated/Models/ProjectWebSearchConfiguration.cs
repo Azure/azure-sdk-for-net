@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectWebSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectWebSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectWebSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
         public ProjectWebSearchConfiguration(string projectConnectionId, string instanceName)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-            Argument.AssertNotNull(instanceName, nameof(instanceName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(instanceName, nameof(instanceName));
 
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectWebSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ProjectWebSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectWebSearchConfiguration(string projectConnectionId, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectWebSearchConfiguration(string projectConnectionId, string instanceName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;

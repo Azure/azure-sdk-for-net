@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedLuisOrchestration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestration"/>. </summary>
         /// <param name="appId"> The LUIS application ID. </param>
         public ExportedLuisOrchestration(Guid appId)
         {
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestration"/>. </summary>
         /// <param name="appId"> The LUIS application ID. </param>
         /// <param name="appVersion"> The targeted version Id. </param>
         /// <param name="slotName"> The targeted slot name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedLuisOrchestration(Guid appId, string appVersion, string slotName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedLuisOrchestration(Guid appId, string appVersion, string slotName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AppId = appId;
             AppVersion = appVersion;

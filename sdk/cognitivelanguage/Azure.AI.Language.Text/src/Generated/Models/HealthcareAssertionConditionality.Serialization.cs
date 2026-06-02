@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareAssertionConditionality value) => value switch
         {
-            HealthcareAssertionConditionality.Hypothetical => "hypothetical",
-            HealthcareAssertionConditionality.Conditional => "conditional",
+            global::Azure.AI.Language.Text.HealthcareAssertionConditionality.Hypothetical => "hypothetical",
+            global::Azure.AI.Language.Text.HealthcareAssertionConditionality.Conditional => "conditional",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionConditionality value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static HealthcareAssertionConditionality ToHealthcareAssertionConditionality(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hypothetical"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hypothetical"))
             {
-                return HealthcareAssertionConditionality.Hypothetical;
+                return global::Azure.AI.Language.Text.HealthcareAssertionConditionality.Hypothetical;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "conditional"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "conditional"))
             {
-                return HealthcareAssertionConditionality.Conditional;
+                return global::Azure.AI.Language.Text.HealthcareAssertionConditionality.Conditional;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionConditionality value.");
         }

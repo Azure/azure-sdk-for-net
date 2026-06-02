@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class CifsMountConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CifsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.CifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="password"> The password to use for authentication against the CIFS file system. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/>, <paramref name="source"/>, <paramref name="relativeMountPath"/> or <paramref name="password"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="username"/>, <paramref name="source"/>, <paramref name="relativeMountPath"/> or <paramref name="password"/> is null. </exception>
         public CifsMountConfiguration(string username, string source, string relativeMountPath, string password)
         {
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
-            Argument.AssertNotNull(password, nameof(password));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(username, nameof(username));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(source, nameof(source));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(password, nameof(password));
 
             Username = username;
             Source = source;
@@ -35,14 +35,14 @@ namespace Azure.Compute.Batch
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CifsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.CifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="password"> The password to use for authentication against the CIFS file system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Source = source;

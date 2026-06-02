@@ -15,25 +15,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DetectedTextBlock
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTextBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock"/>. </summary>
         /// <param name="lines"> A list of text lines in this block. </param>
-        internal DetectedTextBlock(IEnumerable<DetectedTextLine> lines)
+        internal DetectedTextBlock(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine> lines)
         {
             Lines = lines.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedTextBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock"/>. </summary>
         /// <param name="lines"> A list of text lines in this block. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextBlock(IReadOnlyList<DetectedTextLine> lines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTextBlock(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine> lines, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Lines = lines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of text lines in this block. </summary>
-        public IReadOnlyList<DetectedTextLine> Lines { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextLine> Lines { get; }
     }
 }

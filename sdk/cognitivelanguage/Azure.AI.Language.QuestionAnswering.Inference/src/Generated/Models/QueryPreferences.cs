@@ -14,18 +14,18 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class QueryPreferences
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences"/>. </summary>
         public QueryPreferences()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences"/>. </summary>
         /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
         /// <param name="matchingPolicy"> Policy for controling exact query match behavior. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryPreferences(Scorer? scorer, MatchingPolicy matchingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryPreferences(Scorer? scorer, MatchingPolicy matchingPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scorer = scorer;
             MatchingPolicy = matchingPolicy;

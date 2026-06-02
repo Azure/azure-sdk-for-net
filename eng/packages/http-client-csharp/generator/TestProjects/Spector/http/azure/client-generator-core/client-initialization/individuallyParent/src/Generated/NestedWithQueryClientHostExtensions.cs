@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NestedWithQueryClientHostExtensions
     {
         public static IClientBuilder AddNestedWithQueryClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNestedWithQueryClient(this IHostApplicationBuilder host, string sectionName, Action<NestedWithQueryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNestedWithQueryClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithQueryClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNestedWithQueryClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNestedWithQueryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NestedWithQueryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNestedWithQueryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithQueryClientSettings> configureSettings) => throw null;
     }
 }

@@ -13,20 +13,20 @@ namespace Azure.AI.VoiceLive
     /// <summary> Azure personal voice configuration. </summary>
     public partial class AzurePersonalVoice : AzureVoice
     {
-        /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzurePersonalVoice"/>. </summary>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzurePersonalVoice(string name, PersonalVoiceModels model) : base(AzureVoiceType.AzurePersonal)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public AzurePersonalVoice(string name, PersonalVoiceModels model) : base(global::Azure.AI.VoiceLive.AzureVoiceType.AzurePersonal)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Model = model;
             PreferLocales = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzurePersonalVoice"/>. </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Voice name cannot be empty. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="pitch"></param>
         /// <param name="rate"></param>
         /// <param name="volume"></param>
-        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;

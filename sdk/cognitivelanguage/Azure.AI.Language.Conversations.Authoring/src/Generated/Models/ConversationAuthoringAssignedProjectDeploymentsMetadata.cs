@@ -15,20 +15,20 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringAssignedProjectDeploymentsMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(IEnumerable<ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata)
+        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(IEnumerable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata)
         {
             DeploymentsMetadata = deploymentsMetadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
         /// <param name="projectName"> Represents the project name. </param>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(string projectName, IList<ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringAssignedProjectDeploymentsMetadata(string projectName, IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             DeploymentsMetadata = deploymentsMetadata;
@@ -39,6 +39,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string ProjectName { get; }
 
         /// <summary> Represents the resource region. </summary>
-        public IList<ConversationAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get; }
     }
 }

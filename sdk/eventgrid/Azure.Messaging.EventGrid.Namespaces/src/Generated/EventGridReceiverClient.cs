@@ -19,10 +19,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> The EventGridReceiverClient. </summary>
     public partial class EventGridReceiverClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of EventGridReceiverClient for mocking. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Receive(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
+                using HttpMessage message = this.CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -80,15 +80,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
+        internal virtual async Task<global::Azure.Response> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
+                using HttpMessage message = this.CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -104,11 +104,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
         {
-            Response result = Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext());
-            return Response.FromValue((ReceiveResult)result, result);
+            Response result = this.Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReceiveResult)result), result);
         }
 
         /// <summary> Receive a batch of Cloud Events from a subscription. </summary>
@@ -117,11 +117,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
         {
-            Response result = await ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReceiveResult)result, result);
+            Response result = await this.ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReceiveResult)result), result);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Acknowledge(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -166,15 +166,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AcknowledgeAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> AcknowledgeAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -189,12 +189,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((AcknowledgeResult)result, result);
+            AcknowledgeRequest spreadModel = new AcknowledgeRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = this.Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AcknowledgeResult)result), result);
         }
 
         /// <summary> Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer. </summary>
@@ -202,12 +202,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AcknowledgeResult)result, result);
+            AcknowledgeRequest spreadModel = new AcknowledgeRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = await this.AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AcknowledgeResult)result), result);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Release(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
         {
@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                using HttpMessage message = this.CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -254,15 +254,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReleaseAsync(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> ReleaseAsync(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                using HttpMessage message = this.CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -278,12 +278,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((ReleaseResult)result, result);
+            ReleaseRequest spreadModel = new ReleaseRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = this.Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ReleaseResult)result), result);
         }
 
         /// <summary> Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers. </summary>
@@ -292,12 +292,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReleaseResult)result, result);
+            ReleaseRequest spreadModel = new ReleaseRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = await this.ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ReleaseResult)result), result);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Reject(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateRejectRequest(topicName, eventSubscriptionName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -342,15 +342,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RejectAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> RejectAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateRejectRequest(topicName, eventSubscriptionName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -365,12 +365,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((RejectResult)result, result);
+            RejectRequest spreadModel = new RejectRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = this.Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RejectResult)result), result);
         }
 
         /// <summary> Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer. </summary>
@@ -378,12 +378,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RejectResult)result, result);
+            RejectRequest spreadModel = new RejectRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = await this.RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RejectResult)result), result);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response RenewLocks(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
@@ -406,7 +406,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -428,15 +428,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RenewLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> RenewLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = this.CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -451,12 +451,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Messaging.EventGrid.Namespaces.RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((RenewLocksResult)result, result);
+            RenewLocksRequest spreadModel = new RenewLocksRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = this.RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RenewLocksResult)result), result);
         }
 
         /// <summary> Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock. </summary>
@@ -464,12 +464,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RenewLocksResult)result, result);
+            RenewLocksRequest spreadModel = new RenewLocksRequest((lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>()), default);
+            Response result = await this.RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RenewLocksResult)result), result);
         }
     }
 }

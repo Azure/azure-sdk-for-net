@@ -10,15 +10,15 @@ namespace Azure.AI.Projects
     /// <summary> Agentic identity credential definition. </summary>
     public partial class AgenticIdentityPreviewCredentials : AIProjectConnectionBaseCredential
     {
-        /// <summary> Initializes a new instance of <see cref="AgenticIdentityPreviewCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AgenticIdentityPreviewCredentials"/>. </summary>
         internal AgenticIdentityPreviewCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgenticIdentityPreviewCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AgenticIdentityPreviewCredentials"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgenticIdentityPreviewCredentials(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal AgenticIdentityPreviewCredentials(CredentialType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

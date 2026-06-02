@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
 {
-    [ModelReaderWriterBuildable(typeof(ModelWithDefaultValues))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelWithDefaultValues))]
     public partial class SpecsAzureClientGeneratorCoreClientDefaultValueContext : ModelReaderWriterContext
     {
     }

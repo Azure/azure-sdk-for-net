@@ -15,9 +15,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class EnvironmentDefinitionParameter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Models
             Allowed = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
@@ -48,7 +48,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IReadOnlyList<string> allowed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

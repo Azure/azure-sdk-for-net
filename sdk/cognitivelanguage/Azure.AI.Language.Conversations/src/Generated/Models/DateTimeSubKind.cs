@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The Datetime SubKind. </summary>
-    public readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
+    public readonly partial struct DateTimeSubKind : IEquatable<global::Azure.AI.Language.Conversations.Models.DateTimeSubKind>
     {
         private readonly string _value;
         /// <summary> Time subkind. </summary>
@@ -26,12 +26,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Set subkind. </summary>
         private const string SetValue = "Set";
 
-        /// <summary> Initializes a new instance of <see cref="DateTimeSubKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeSubKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DateTimeSubKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -51,34 +51,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Set subkind. </summary>
         public static DateTimeSubKind Set { get; } = new DateTimeSubKind(SetValue);
 
-        /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeSubKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DateTimeSubKind left, DateTimeSubKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeSubKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DateTimeSubKind left, DateTimeSubKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeSubKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DateTimeSubKind(string value) => new DateTimeSubKind(value);
 
-        /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeSubKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DateTimeSubKind?(string value) => value == null ? null : new DateTimeSubKind(value);
+        public static implicit operator DateTimeSubKind?(string value) => (value == null) ? null : new DateTimeSubKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DateTimeSubKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DateTimeSubKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DateTimeSubKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DateTimeSubKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

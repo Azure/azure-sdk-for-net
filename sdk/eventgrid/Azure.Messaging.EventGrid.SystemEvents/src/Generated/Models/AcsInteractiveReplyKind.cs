@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Interactive reply kind. </summary>
-    public readonly partial struct AcsInteractiveReplyKind : IEquatable<AcsInteractiveReplyKind>
+    public readonly partial struct AcsInteractiveReplyKind : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind>
     {
         private readonly string _value;
         /// <summary> Messaged interactive reply type is ButtonReply. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Messaged interactive reply type is Unknown. </summary>
         private const string UnknownValue = "unknown";
 
-        /// <summary> Initializes a new instance of <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsInteractiveReplyKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Messaged interactive reply type is Unknown. </summary>
         public static AcsInteractiveReplyKind Unknown { get; } = new AcsInteractiveReplyKind(UnknownValue);
 
-        /// <summary> Determines if two <see cref="AcsInteractiveReplyKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsInteractiveReplyKind left, AcsInteractiveReplyKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsInteractiveReplyKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsInteractiveReplyKind left, AcsInteractiveReplyKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsInteractiveReplyKind(string value) => new AcsInteractiveReplyKind(value);
 
-        /// <summary> Converts a string to a <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsInteractiveReplyKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsInteractiveReplyKind?(string value) => value == null ? null : new AcsInteractiveReplyKind(value);
+        public static implicit operator AcsInteractiveReplyKind?(string value) => (value == null) ? null : new AcsInteractiveReplyKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsInteractiveReplyKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsInteractiveReplyKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsInteractiveReplyKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsInteractiveReplyKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

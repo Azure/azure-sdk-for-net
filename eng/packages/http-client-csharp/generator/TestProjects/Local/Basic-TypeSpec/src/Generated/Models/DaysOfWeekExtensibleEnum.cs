@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace BasicTypeSpec
 {
     /// <summary></summary>
-    public readonly partial struct DaysOfWeekExtensibleEnum : IEquatable<DaysOfWeekExtensibleEnum>
+    public readonly partial struct DaysOfWeekExtensibleEnum : IEquatable<global::BasicTypeSpec.DaysOfWeekExtensibleEnum>
     {
         private readonly string _value;
         private const string MondayValue = "Monday";
@@ -22,12 +22,12 @@ namespace BasicTypeSpec
         private const string SaturdayValue = "Saturday";
         private const string SundayValue = "Sunday";
 
-        /// <summary> Initializes a new instance of <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DaysOfWeekExtensibleEnum(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::BasicTypeSpec.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -53,34 +53,34 @@ namespace BasicTypeSpec
         /// <summary> Gets the Sunday. </summary>
         public static DaysOfWeekExtensibleEnum Sunday { get; } = new DaysOfWeekExtensibleEnum(SundayValue);
 
-        /// <summary> Determines if two <see cref="DaysOfWeekExtensibleEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.DaysOfWeekExtensibleEnum"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DaysOfWeekExtensibleEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::BasicTypeSpec.DaysOfWeekExtensibleEnum"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::BasicTypeSpec.DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DaysOfWeekExtensibleEnum(string value) => new DaysOfWeekExtensibleEnum(value);
 
-        /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::BasicTypeSpec.DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaysOfWeekExtensibleEnum?(string value) => value == null ? null : new DaysOfWeekExtensibleEnum(value);
+        public static implicit operator DaysOfWeekExtensibleEnum?(string value) => (value == null) ? null : new DaysOfWeekExtensibleEnum(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DaysOfWeekExtensibleEnum other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DaysOfWeekExtensibleEnum other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DaysOfWeekExtensibleEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DaysOfWeekExtensibleEnum other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

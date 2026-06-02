@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseIncompleteDetailsReason value) => value switch
         {
-            ResponseIncompleteDetailsReason.MaxOutputTokens => "max_output_tokens",
-            ResponseIncompleteDetailsReason.ContentFilter => "content_filter",
+            global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetailsReason.MaxOutputTokens => "max_output_tokens",
+            global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetailsReason.ContentFilter => "content_filter",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseIncompleteDetailsReason value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseIncompleteDetailsReason ToResponseIncompleteDetailsReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max_output_tokens"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "max_output_tokens"))
             {
-                return ResponseIncompleteDetailsReason.MaxOutputTokens;
+                return global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetailsReason.MaxOutputTokens;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "content_filter"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "content_filter"))
             {
-                return ResponseIncompleteDetailsReason.ContentFilter;
+                return global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetailsReason.ContentFilter;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseIncompleteDetailsReason value.");
         }

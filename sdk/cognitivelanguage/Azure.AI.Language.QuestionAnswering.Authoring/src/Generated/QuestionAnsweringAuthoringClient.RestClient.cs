@@ -33,31 +33,31 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetProjectsRequest(Uri nextPage, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetProjectsRequest(global::System.Uri nextPage, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -66,16 +66,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -87,14 +87,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -106,14 +106,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -127,14 +127,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Method = global::Azure.Core.RequestMethod.Delete;
             return message;
         }
 
@@ -145,14 +145,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -165,22 +165,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (format != null)
+            if ((format != null))
             {
                 uri.AppendQuery("format", format, true);
             }
-            if (assetKind != null)
+            if ((assetKind != null))
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
 
@@ -193,14 +193,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -213,23 +213,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (format != null)
+            if ((format != null))
             {
                 uri.AppendQuery("format", format, true);
             }
-            if (assetKind != null)
+            if ((assetKind != null))
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            if ((content != null))
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -245,18 +245,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (assetKind != null)
+            if ((assetKind != null))
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
             request.Content = content;
             return message;
@@ -271,14 +271,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -292,14 +292,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             return message;
         }
 
@@ -314,14 +314,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -334,31 +334,31 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsRequest(Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsRequest(global::System.Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -367,16 +367,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -389,31 +389,31 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSynonymsRequest(Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetSynonymsRequest(global::System.Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -422,16 +422,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -444,14 +444,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = global::Azure.Core.RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -465,31 +465,31 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetSourcesRequest(Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetSourcesRequest(global::System.Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -498,16 +498,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -520,14 +520,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -541,14 +541,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", contentType);
             request.Content = content;
             return message;
@@ -563,14 +563,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -583,35 +583,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxCount != null)
+            if ((maxCount != null))
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (skip != null)
+            if ((skip != null))
             {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+                uri.AppendQuery("skip", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if ((maxpagesize != null))
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", global::Azure.AI.Language.QuestionAnswering.Authoring.TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (source != null)
+            if ((source != null))
             {
                 uri.AppendQuery("source", source, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetQnasRequest(Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
+        internal HttpMessage CreateNextGetQnasRequest(global::System.Uri nextPage, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -620,16 +620,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -642,14 +642,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = global::Azure.Core.RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -664,14 +664,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -684,14 +684,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/feedback", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

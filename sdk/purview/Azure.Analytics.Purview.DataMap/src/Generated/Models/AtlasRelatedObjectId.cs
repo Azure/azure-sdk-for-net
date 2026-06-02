@@ -18,15 +18,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasRelatedObjectId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedObjectId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId"/>. </summary>
         public AtlasRelatedObjectId()
         {
-            UniqueAttributes = new ChangeTrackingDictionary<string, BinaryData>();
+            UniqueAttributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasRelatedObjectId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId"/>. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipGuid"> The GUID of the relationship. </param>
         /// <param name="relationshipStatus"> The enum of relationship status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string displayText, EntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, global::System.BinaryData> uniqueAttributes, string displayText, EntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             TypeName = typeName;
@@ -65,8 +65,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The unique attributes of the object.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> UniqueAttributes { get; }
+        public IDictionary<string, global::System.BinaryData> UniqueAttributes { get; }
 
         /// <summary> The display text. </summary>
         public string DisplayText { get; set; }

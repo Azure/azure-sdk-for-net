@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerState"/>. </summary>
         internal IndexerState()
         {
             ResetDocumentKeys = new ChangeTrackingList<string>();
             ResetDataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerState"/>. </summary>
         /// <param name="mode"> The mode the indexer is running in. </param>
         /// <param name="allDocsInitialTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
         /// <param name="allDocsFinalTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
         /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, string resyncInitialTrackingState, string resyncFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, string resyncInitialTrackingState, string resyncFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             AllDocsInitialTrackingState = allDocsInitialTrackingState;

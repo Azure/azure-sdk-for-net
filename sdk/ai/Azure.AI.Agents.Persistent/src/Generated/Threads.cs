@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A collection of thread operations under `/threads`. </summary>
     public partial class Threads
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Threads for mocking. </summary>
@@ -32,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Threads(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Threads(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -55,12 +55,12 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentThread> CreateThread(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread> CreateThread(IEnumerable<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadRequest spreadModel = new CreateThreadRequest(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = CreateThread(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentThread)result, result);
+            CreateThreadRequest spreadModel = new CreateThreadRequest((messages?.ToList() as IList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions>()), toolResources, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = this.CreateThread(spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by agents. </summary>
@@ -72,12 +72,12 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread>> CreateThreadAsync(IEnumerable<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadRequest spreadModel = new CreateThreadRequest(messages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await CreateThreadAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentThread)result, result);
+            CreateThreadRequest spreadModel = new CreateThreadRequest((messages?.ToList() as IList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions> ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.ThreadMessageOptions>()), toolResources, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = await this.CreateThreadAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary>
@@ -90,9 +90,9 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetThread(string threadId, RequestContext context)
         {
@@ -100,9 +100,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-                using HttpMessage message = CreateGetThreadRequest(threadId, context);
+                using HttpMessage message = this.CreateGetThreadRequest(threadId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -122,19 +122,19 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetThreadAsync(string threadId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetThreadAsync(string threadId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Threads.GetThread");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-                using HttpMessage message = CreateGetThreadRequest(threadId, context);
+                using HttpMessage message = this.CreateGetThreadRequest(threadId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -147,29 +147,29 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Gets information about an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentThread> GetThread(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread> GetThread(string threadId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            Response result = GetThread(threadId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentThread)result, result);
+            Response result = this.GetThread(threadId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary> Gets information about an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentThread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            Response result = await GetThreadAsync(threadId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentThread)result, result);
+            Response result = await this.GetThreadAsync(threadId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary>
@@ -183,9 +183,9 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="threadId"> The ID of the thread to modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateThread(string threadId, RequestContent content, RequestContext context = null)
         {
@@ -193,10 +193,10 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
+                using HttpMessage message = this.CreateUpdateThreadRequest(threadId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -217,20 +217,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="threadId"> The ID of the thread to modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Threads.UpdateThread");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
+                using HttpMessage message = this.CreateUpdateThreadRequest(threadId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -249,16 +249,16 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentThread> UpdateThread(string threadId, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread> UpdateThread(string threadId, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = UpdateThread(threadId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentThread)result, result);
+            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = this.UpdateThread(threadId, spreadModel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary> Modifies an existing thread. </summary>
@@ -270,16 +270,16 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentThread>> UpdateThreadAsync(string threadId, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentThread>> UpdateThreadAsync(string threadId, ToolResources toolResources = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await UpdateThreadAsync(threadId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentThread)result, result);
+            UpdateThreadRequest spreadModel = new UpdateThreadRequest(toolResources, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            Response result = await this.UpdateThreadAsync(threadId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentThread)result), result);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteThread(string threadId, RequestContext context)
         {
@@ -300,7 +300,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteThreadRequest(threadId, context);
+                using HttpMessage message = this.CreateInternalDeleteThreadRequest(threadId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -320,15 +320,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteThreadAsync(string threadId, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalDeleteThreadAsync(string threadId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Threads.InternalDeleteThread");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteThreadRequest(threadId, context);
+                using HttpMessage message = this.CreateInternalDeleteThreadRequest(threadId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -341,21 +341,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Deletes an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ThreadDeletionStatus> InternalDeleteThread(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.ThreadDeletionStatus> InternalDeleteThread(string threadId, CancellationToken cancellationToken = default)
         {
-            Response result = InternalDeleteThread(threadId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadDeletionStatus)result, result);
+            Response result = this.InternalDeleteThread(threadId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ThreadDeletionStatus)result), result);
         }
 
         /// <summary> Deletes an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ThreadDeletionStatus>> InternalDeleteThreadAsync(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.ThreadDeletionStatus>> InternalDeleteThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalDeleteThreadAsync(threadId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadDeletionStatus)result, result);
+            Response result = await this.InternalDeleteThreadAsync(threadId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ThreadDeletionStatus)result), result);
         }
     }
 }

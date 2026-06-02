@@ -14,24 +14,24 @@ namespace Azure.Analytics.Defender.Easm
     public partial class EasmPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EasmPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.EasmPolicy"/>. </summary>
         /// <param name="filterName"> Name of the saved filter query to be used to select assets that are to be updated by a given policy. </param>
         /// <param name="action"> Action specifying what the policy should do. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="actionParameters"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="filterName"/> or <paramref name="actionParameters"/> is null. </exception>
         public EasmPolicy(string filterName, PolicyAction action, ActionParametersContent actionParameters)
         {
-            Argument.AssertNotNull(filterName, nameof(filterName));
-            Argument.AssertNotNull(actionParameters, nameof(actionParameters));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(filterName, nameof(filterName));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(actionParameters, nameof(actionParameters));
 
             FilterName = filterName;
             Action = action;
             ActionParameters = actionParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.EasmPolicy"/>. </summary>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="updatedDate"> The date this policy was last updated, in RFC3339 format. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, ActionParametersContent actionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, ActionParametersContent actionParameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

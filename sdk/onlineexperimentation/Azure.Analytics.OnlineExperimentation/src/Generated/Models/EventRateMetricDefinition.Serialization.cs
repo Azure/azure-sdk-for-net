@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> The definition of an EventRate metric definition. Calculates the percentage of events satisfying a specified condition. </summary>
-    public partial class EventRateMetricDefinition : ExperimentMetricDefinition, IJsonModel<EventRateMetricDefinition>
+    public partial class EventRateMetricDefinition : ExperimentMetricDefinition, IJsonModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="EventRateMetricDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition"/> for deserialization. </summary>
         internal EventRateMetricDefinition()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.OnlineExperimentation.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEventRateMetricDefinition(document.RootElement, options);
+                        return global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition.DeserializeEventRateMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventRateMetricDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.OnlineExperimentation.AzureAnalyticsOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EventRateMetricDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventRateMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventRateMetricDefinition IPersistableModel<EventRateMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventRateMetricDefinition)PersistableModelCreateCore(data, options);
+        EventRateMetricDefinition IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((EventRateMetricDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventRateMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EventRateMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,45 +73,45 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EventRateMetricDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("event"u8);
-            writer.WriteObjectValue(Event, options);
+            writer.WriteObjectValue<ObservedEvent>(Event, options);
             writer.WritePropertyName("rateCondition"u8);
             writer.WriteStringValue(RateCondition);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventRateMetricDefinition IJsonModel<EventRateMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventRateMetricDefinition)JsonModelCreateCore(ref reader, options);
+        EventRateMetricDefinition IJsonModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((EventRateMetricDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EventRateMetricDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventRateMetricDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition.DeserializeEventRateMetricDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EventRateMetricDefinition DeserializeEventRateMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ExperimentMetricType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ObservedEvent @event = default;
             string rateCondition = default;
             foreach (var prop in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("event"u8))
                 {
-                    @event = ObservedEvent.DeserializeObservedEvent(prop.Value, options);
+                    @event = global::Azure.Analytics.OnlineExperimentation.ObservedEvent.DeserializeObservedEvent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rateCondition"u8))
@@ -131,9 +131,9 @@ namespace Azure.Analytics.OnlineExperimentation
                     rateCondition = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EventRateMetricDefinition(@type, additionalBinaryDataProperties, @event, rateCondition);

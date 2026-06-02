@@ -11,9 +11,9 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ProjectConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ProjectConversation"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
             CreatedAt = createdAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ProjectConversation"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="object"> The object type, which is always `conversation`. </param>
         /// <param name="metadata">
@@ -36,10 +36,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversation(string id, string @object, IDictionary<string, string> metadata, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversation(string id, string @object, IDictionary<string, string> metadata, DateTimeOffset createdAt, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             Metadata = metadata;
             CreatedAt = createdAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

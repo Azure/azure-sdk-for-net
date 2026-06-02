@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Agent source for evaluator generation jobs — references an agent to fetch instructions and metadata from. </summary>
-    public partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<AgentEvaluatorGenerationJobSource>
+    public partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentEvaluatorGenerationJobSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource"/> for deserialization. </summary>
         internal AgentEvaluatorGenerationJobSource()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorGenerationJobSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentEvaluatorGenerationJobSource(document.RootElement, options);
+                        return global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource.DeserializeAgentEvaluatorGenerationJobSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentEvaluatorGenerationJobSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentEvaluatorGenerationJobSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentEvaluatorGenerationJobSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentEvaluatorGenerationJobSource IPersistableModel<AgentEvaluatorGenerationJobSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgentEvaluatorGenerationJobSource)PersistableModelCreateCore(data, options);
+        AgentEvaluatorGenerationJobSource IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AgentEvaluatorGenerationJobSource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentEvaluatorGenerationJobSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentEvaluatorGenerationJobSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,20 +70,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentEvaluatorGenerationJobSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("agent_name"u8);
             writer.WriteStringValue(AgentName);
-            if (Optional.IsDefined(AgentVersion))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agent_version"u8);
                 writer.WriteStringValue(AgentVersion);
@@ -92,31 +92,31 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentEvaluatorGenerationJobSource IJsonModel<AgentEvaluatorGenerationJobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentEvaluatorGenerationJobSource)JsonModelCreateCore(ref reader, options);
+        AgentEvaluatorGenerationJobSource IJsonModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AgentEvaluatorGenerationJobSource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorGenerationJobSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AgentEvaluatorGenerationJobSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentEvaluatorGenerationJobSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource.DeserializeAgentEvaluatorGenerationJobSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AgentEvaluatorGenerationJobSource DeserializeAgentEvaluatorGenerationJobSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             EvaluatorGenerationJobSourceType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string description = default;
             string agentName = default;
             string agentVersion = default;
@@ -142,9 +142,9 @@ namespace Azure.AI.Projects
                     agentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AgentEvaluatorGenerationJobSource(@type, additionalBinaryDataProperties, description, agentName, agentVersion);

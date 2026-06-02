@@ -12,27 +12,27 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentCard
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentCard"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentCard"/>. </summary>
         /// <param name="version"> The version of the agent card. </param>
         /// <param name="skills"> The set of skills that an agent can perform. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="skills"/> is null. </exception>
-        public AgentCard(string version, IEnumerable<AgentCardSkill> skills)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="version"/> or <paramref name="skills"/> is null. </exception>
+        public AgentCard(string version, IEnumerable<global::Azure.AI.Projects.Agents.AgentCardSkill> skills)
         {
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(skills, nameof(skills));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(version, nameof(version));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(skills, nameof(skills));
 
             Version = version;
             Skills = skills.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentCard"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentCard"/>. </summary>
         /// <param name="version"> The version of the agent card. </param>
         /// <param name="description"> The description of the agent card. </param>
         /// <param name="skills"> The set of skills that an agent can perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentCard(string version, string description, IList<AgentCardSkill> skills, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentCard(string version, string description, IList<global::Azure.AI.Projects.Agents.AgentCardSkill> skills, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Description = description;
@@ -47,6 +47,6 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; set; }
 
         /// <summary> The set of skills that an agent can perform. </summary>
-        public IList<AgentCardSkill> Skills { get; }
+        public IList<global::Azure.AI.Projects.Agents.AgentCardSkill> Skills { get; }
     }
 }

@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Parse the output as a JSON document using the configured JSON parameters. </summary>
     public partial class McpServerJsonOutputParsing : McpServerOutputParsing
     {
-        /// <summary> Initializes a new instance of <see cref="McpServerJsonOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerJsonOutputParsing"/>. </summary>
         /// <param name="jsonParameters"> Parameters for JSON output parsing. Required when kind is 'json'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jsonParameters"/> is null. </exception>
-        public McpServerJsonOutputParsing(McpServerOutputParsingJsonParameters jsonParameters) : base(McpServerOutputParsingKind.Json)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="jsonParameters"/> is null. </exception>
+        public McpServerJsonOutputParsing(McpServerOutputParsingJsonParameters jsonParameters) : base(global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingKind.Json)
         {
-            Argument.AssertNotNull(jsonParameters, nameof(jsonParameters));
+            global::Azure.Search.Documents.Argument.AssertNotNull(jsonParameters, nameof(jsonParameters));
 
             JsonParameters = jsonParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerJsonOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerJsonOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jsonParameters"> Parameters for JSON output parsing. Required when kind is 'json'. </param>
-        internal McpServerJsonOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, McpServerOutputParsingJsonParameters jsonParameters) : base(kind, additionalBinaryDataProperties)
+        internal McpServerJsonOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, McpServerOutputParsingJsonParameters jsonParameters) : base(kind, additionalBinaryDataProperties)
         {
             JsonParameters = jsonParameters;
         }

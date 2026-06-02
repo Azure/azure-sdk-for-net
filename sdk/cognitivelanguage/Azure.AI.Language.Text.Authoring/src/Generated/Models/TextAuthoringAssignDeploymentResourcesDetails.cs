@@ -15,28 +15,28 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringAssignDeploymentResourcesDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesMetadata"/> is null. </exception>
-        public TextAuthoringAssignDeploymentResourcesDetails(IEnumerable<TextAuthoringResourceMetadata> resourcesMetadata)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourcesMetadata"/> is null. </exception>
+        public TextAuthoringAssignDeploymentResourcesDetails(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> resourcesMetadata)
         {
-            Argument.AssertNotNull(resourcesMetadata, nameof(resourcesMetadata));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(resourcesMetadata, nameof(resourcesMetadata));
 
             ResourcesMetadata = resourcesMetadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignDeploymentResourcesDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringAssignDeploymentResourcesDetails(IList<TextAuthoringResourceMetadata> resourcesMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringAssignDeploymentResourcesDetails(IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> resourcesMetadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourcesMetadata = resourcesMetadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the metadata for the resources to be assigned. </summary>
-        public IList<TextAuthoringResourceMetadata> ResourcesMetadata { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> ResourcesMetadata { get; }
     }
 }

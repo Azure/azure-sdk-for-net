@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The states that a Virtual Machine Scale Set Lifecycle Hook event can be in. This is not settable by the customer. It is set only by the platform. </summary>
-    public readonly partial struct VirtualMachineScaleSetLifecycleHookEventState : IEquatable<VirtualMachineScaleSetLifecycleHookEventState>
+    public readonly partial struct VirtualMachineScaleSetLifecycleHookEventState : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState>
     {
         private readonly string _value;
         /// <summary> The Lifecycle Hook event is active. E.g., waiting on a response from the customer. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Lifecycle Hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
         private const string CompletedValue = "Completed";
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineScaleSetLifecycleHookEventState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Lifecycle Hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
         public static VirtualMachineScaleSetLifecycleHookEventState Completed { get; } = new VirtualMachineScaleSetLifecycleHookEventState(CompletedValue);
 
-        /// <summary> Determines if two <see cref="VirtualMachineScaleSetLifecycleHookEventState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineScaleSetLifecycleHookEventState left, VirtualMachineScaleSetLifecycleHookEventState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VirtualMachineScaleSetLifecycleHookEventState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineScaleSetLifecycleHookEventState left, VirtualMachineScaleSetLifecycleHookEventState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineScaleSetLifecycleHookEventState(string value) => new VirtualMachineScaleSetLifecycleHookEventState(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState?(string value) => value == null ? null : new VirtualMachineScaleSetLifecycleHookEventState(value);
+        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState?(string value) => (value == null) ? null : new VirtualMachineScaleSetLifecycleHookEventState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VirtualMachineScaleSetLifecycleHookEventState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VirtualMachineScaleSetLifecycleHookEventState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VirtualMachineScaleSetLifecycleHookEventState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualMachineScaleSetLifecycleHookEventState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

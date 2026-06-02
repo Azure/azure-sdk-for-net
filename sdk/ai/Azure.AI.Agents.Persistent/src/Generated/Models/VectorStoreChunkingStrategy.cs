@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a vector store chunking strategy configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorStoreAutoChunkingStrategy"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategy"/> and <see cref="Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyRequest"/>.
     /// </summary>
     public abstract partial class VectorStoreChunkingStrategy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreChunkingStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy"/>. </summary>
         /// <param name="type"> The object type. </param>
         private protected VectorStoreChunkingStrategy(VectorStoreChunkingStrategyRequestType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreChunkingStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreChunkingStrategy(VectorStoreChunkingStrategyRequestType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreChunkingStrategy(VectorStoreChunkingStrategyRequestType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

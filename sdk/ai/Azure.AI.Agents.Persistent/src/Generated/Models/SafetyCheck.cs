@@ -14,24 +14,24 @@ namespace Azure.AI.Agents.Persistent
     public partial class SafetyCheck
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SafetyCheck"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SafetyCheck"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SafetyCheck(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SafetyCheck"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.SafetyCheck"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
         /// <param name="code"> The type of the pending safety check. </param>
         /// <param name="message"> Details about the pending safety check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SafetyCheck(string id, string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SafetyCheck(string id, string code, string message, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Code = code;

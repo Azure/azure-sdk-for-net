@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a set of queue selectors that will be attached if the given condition resolves to true. </summary>
-    public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment, IJsonModel<ConditionalQueueSelectorAttachment>
+    public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment, IJsonModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>
     {
-        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment"/> for deserialization. </summary>
         internal ConditionalQueueSelectorAttachment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override QueueSelectorAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.JobRouter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConditionalQueueSelectorAttachment(document.RootElement, options);
+                        return global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment.DeserializeConditionalQueueSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConditionalQueueSelectorAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConditionalQueueSelectorAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConditionalQueueSelectorAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConditionalQueueSelectorAttachment IPersistableModel<ConditionalQueueSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConditionalQueueSelectorAttachment)PersistableModelCreateCore(data, options);
+        ConditionalQueueSelectorAttachment IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ConditionalQueueSelectorAttachment)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConditionalQueueSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConditionalQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,52 +73,52 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConditionalQueueSelectorAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            writer.WriteObjectValue<RouterRule>(Condition, options);
             writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
             foreach (RouterQueueSelector item in QueueSelectors)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<RouterQueueSelector>(item, options);
             }
             writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConditionalQueueSelectorAttachment IJsonModel<ConditionalQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConditionalQueueSelectorAttachment)JsonModelCreateCore(ref reader, options);
+        ConditionalQueueSelectorAttachment IJsonModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ConditionalQueueSelectorAttachment)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override QueueSelectorAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConditionalQueueSelectorAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConditionalQueueSelectorAttachment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.JobRouter.ConditionalQueueSelectorAttachment.DeserializeConditionalQueueSelectorAttachment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConditionalQueueSelectorAttachment DeserializeConditionalQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             QueueSelectorAttachmentKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             RouterRule condition = default;
-            IList<RouterQueueSelector> queueSelectors = default;
+            IList<global::Azure.Communication.JobRouter.RouterQueueSelector> queueSelectors = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -128,22 +128,22 @@ namespace Azure.Communication.JobRouter
                 }
                 if (prop.NameEquals("condition"u8))
                 {
-                    condition = RouterRule.DeserializeRouterRule(prop.Value, options);
+                    condition = global::Azure.Communication.JobRouter.RouterRule.DeserializeRouterRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("queueSelectors"u8))
                 {
-                    List<RouterQueueSelector> array = new List<RouterQueueSelector>();
+                    List<global::Azure.Communication.JobRouter.RouterQueueSelector> array = new List<global::Azure.Communication.JobRouter.RouterQueueSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item, options));
+                        array.Add(global::Azure.Communication.JobRouter.RouterQueueSelector.DeserializeRouterQueueSelector(item, options));
                     }
                     queueSelectors = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConditionalQueueSelectorAttachment(kind, additionalBinaryDataProperties, condition, queueSelectors);

@@ -16,24 +16,24 @@ namespace Specs.Azure.Core.Page
     {
         protected TwoModelsAsPageItem() => throw null;
 
-        internal TwoModelsAsPageItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal TwoModelsAsPageItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetFirstItem(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetFirstItem(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetFirstItemAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetFirstItemAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<FirstItem> GetFirstItem(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.FirstItem> GetFirstItem(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<FirstItem> GetFirstItemAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.FirstItem> GetFirstItemAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetSecondItem(RequestContext context) => throw null;
+        public virtual Pageable<global::System.BinaryData> GetSecondItem(RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetSecondItemAsync(RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> GetSecondItemAsync(RequestContext context) => throw null;
 
-        public virtual Pageable<SecondItem> GetSecondItem(CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<global::Specs.Azure.Core.Page.SecondItem> GetSecondItem(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<SecondItem> GetSecondItemAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Specs.Azure.Core.Page.SecondItem> GetSecondItemAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -13,9 +13,9 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalRunStepFunctionToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
         internal InternalRunStepFunctionToolCallDetails(string name, string arguments)
@@ -24,11 +24,11 @@ namespace Azure.AI.Agents.Persistent
             Arguments = arguments;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Arguments = arguments;

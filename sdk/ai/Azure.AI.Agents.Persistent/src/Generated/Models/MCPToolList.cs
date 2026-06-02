@@ -15,22 +15,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class MCPToolList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolList"/>. </summary>
         /// <param name="toolNames"> The list of tools for approval. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolNames"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="toolNames"/> is null. </exception>
         public MCPToolList(IEnumerable<string> toolNames)
         {
-            Argument.AssertNotNull(toolNames, nameof(toolNames));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(toolNames, nameof(toolNames));
 
             ToolNames = toolNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MCPToolList"/>. </summary>
         /// <param name="toolNames"> The list of tools for approval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCPToolList(IList<string> toolNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MCPToolList(IList<string> toolNames, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToolNames = toolNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

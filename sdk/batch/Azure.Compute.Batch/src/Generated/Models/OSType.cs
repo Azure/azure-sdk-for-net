@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> OSType enums. </summary>
-    public readonly partial struct OSType : IEquatable<OSType>
+    public readonly partial struct OSType : IEquatable<global::Azure.Compute.Batch.OSType>
     {
         private readonly string _value;
         /// <summary> The Linux operating system. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> The Windows operating system. </summary>
         private const string WindowsValue = "windows";
 
-        /// <summary> Initializes a new instance of <see cref="OSType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OSType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> The Windows operating system. </summary>
         public static OSType Windows { get; } = new OSType(WindowsValue);
 
-        /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.OSType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.OSType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OSType left, OSType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.OSType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OSType(string value) => new OSType(value);
 
-        /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.OSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OSType?(string value) => value == null ? null : new OSType(value);
+        public static implicit operator OSType?(string value) => (value == null) ? null : new OSType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OSType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OSType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OSType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

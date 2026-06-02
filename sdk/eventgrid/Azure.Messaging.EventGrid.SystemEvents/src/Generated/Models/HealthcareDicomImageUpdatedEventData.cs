@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class HealthcareDicomImageUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageUpdatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ServiceHostName = serviceHostName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageUpdatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation, updation and deletion within the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;

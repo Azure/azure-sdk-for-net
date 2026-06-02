@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the Age entity Metadata model. </summary>
     public partial class AgeMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="AgeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AgeMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for age. </param>
-        internal AgeMetadata(double value, AgeUnit unit) : base(MetadataKind.AgeMetadata)
+        internal AgeMetadata(double value, AgeUnit unit) : base(global::Azure.AI.Language.Text.MetadataKind.AgeMetadata)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AgeMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for age. </param>
-        internal AgeMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, AgeUnit unit) : base(metadataKind, additionalBinaryDataProperties)
+        internal AgeMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, AgeUnit unit) : base(metadataKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

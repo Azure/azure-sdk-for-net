@@ -11,9 +11,9 @@ using Azure.AI.Projects.Evaluation;
 namespace Azure.AI.Projects
 {
     /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
-    public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>
+    public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.RubricBasedEvaluatorDefinition"/> for deserialization. </summary>
         internal RubricBasedEvaluatorDefinition()
         {
         }
@@ -22,48 +22,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRubricBasedEvaluatorDefinition(document.RootElement, options);
+                        return global::Azure.AI.Projects.RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RubricBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RubricBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RubricBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RubricBasedEvaluatorDefinition IPersistableModel<RubricBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (RubricBasedEvaluatorDefinition)PersistableModelCreateCore(data, options);
+        RubricBasedEvaluatorDefinition IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RubricBasedEvaluatorDefinition)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RubricBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RubricBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,20 +71,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RubricBasedEvaluatorDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("dimensions"u8);
             writer.WriteStartArray();
             foreach (EvaluationsDimension item in Dimensions)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<EvaluationsDimension>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PassThreshold))
+            if (global::Azure.AI.Projects.Optional.IsDefined(PassThreshold))
             {
                 writer.WritePropertyName("pass_threshold"u8);
                 writer.WriteNumberValue(PassThreshold.Value);
@@ -93,35 +93,35 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RubricBasedEvaluatorDefinition IJsonModel<RubricBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RubricBasedEvaluatorDefinition)JsonModelCreateCore(ref reader, options);
+        RubricBasedEvaluatorDefinition IJsonModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RubricBasedEvaluatorDefinition)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.RubricBasedEvaluatorDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRubricBasedEvaluatorDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RubricBasedEvaluatorDefinition DeserializeRubricBasedEvaluatorDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             EvaluatorDefinitionType @type = default;
             BinaryData initParameters = default;
             BinaryData dataSchema = default;
-            IDictionary<string, EvaluatorMetric> metrics = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<EvaluationsDimension> dimensions = default;
+            IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions = default;
             float? passThreshold = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,65 +132,65 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("init_parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    initParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    initParameters = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("data_schema"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dataSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    dataSchema = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, EvaluatorMetric> dictionary = new Dictionary<string, EvaluatorMetric>();
+                    Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> dictionary = new Dictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.Evaluation.EvaluatorMetric.DeserializeEvaluatorMetric(prop0.Value, options));
                     }
                     metrics = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("dimensions"u8))
                 {
-                    List<EvaluationsDimension> array = new List<EvaluationsDimension>();
+                    List<global::Azure.AI.Projects.Evaluation.EvaluationsDimension> array = new List<global::Azure.AI.Projects.Evaluation.EvaluationsDimension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EvaluationsDimension.DeserializeEvaluationsDimension(item, options));
+                        array.Add(global::Azure.AI.Projects.Evaluation.EvaluationsDimension.DeserializeEvaluationsDimension(item, options));
                     }
                     dimensions = array;
                     continue;
                 }
                 if (prop.NameEquals("pass_threshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     passThreshold = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RubricBasedEvaluatorDefinition(
                 @type,
                 initParameters,
                 dataSchema,
-                metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
+                (metrics ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric>()),
                 additionalBinaryDataProperties,
                 dimensions,
                 passThreshold);

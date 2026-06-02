@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class InternalContainerNetworkPolicyAllowlistParam : InternalContainerNetworkPolicyParam, IJsonModel<InternalContainerNetworkPolicyAllowlistParam>
+    internal partial class InternalContainerNetworkPolicyAllowlistParam : InternalContainerNetworkPolicyParam, IJsonModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyAllowlistParam"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam"/> for deserialization. </summary>
         internal InternalContainerNetworkPolicyAllowlistParam()
         {
         }
@@ -20,48 +20,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalContainerNetworkPolicyAllowlistParam(document.RootElement, options);
+                        return global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam.DeserializeInternalContainerNetworkPolicyAllowlistParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalContainerNetworkPolicyAllowlistParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalContainerNetworkPolicyAllowlistParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalContainerNetworkPolicyAllowlistParam IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalContainerNetworkPolicyAllowlistParam)PersistableModelCreateCore(data, options);
+        InternalContainerNetworkPolicyAllowlistParam IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalContainerNetworkPolicyAllowlistParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalContainerNetworkPolicyAllowlistParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,17 +69,17 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalContainerNetworkPolicyAllowlistParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("allowed_domains"u8);
             writer.WriteStartArray();
             foreach (string item in AllowedDomains)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -87,13 +87,13 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(DomainSecrets))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(DomainSecrets))
             {
                 writer.WritePropertyName("domain_secrets"u8);
                 writer.WriteStartArray();
                 foreach (InternalContainerNetworkPolicyDomainSecretParam item in DomainSecrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<InternalContainerNetworkPolicyDomainSecretParam>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,33 +101,33 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalContainerNetworkPolicyAllowlistParam IJsonModel<InternalContainerNetworkPolicyAllowlistParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalContainerNetworkPolicyAllowlistParam)JsonModelCreateCore(ref reader, options);
+        InternalContainerNetworkPolicyAllowlistParam IJsonModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalContainerNetworkPolicyAllowlistParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalContainerNetworkPolicyAllowlistParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalContainerNetworkPolicyAllowlistParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam.DeserializeInternalContainerNetworkPolicyAllowlistParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalContainerNetworkPolicyAllowlistParam DeserializeInternalContainerNetworkPolicyAllowlistParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ContainerNetworkPolicyParamType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IList<string> allowedDomains = default;
-            IList<InternalContainerNetworkPolicyDomainSecretParam> domainSecrets = default;
+            IList<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam> domainSecrets = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -154,24 +154,24 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("domain_secrets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<InternalContainerNetworkPolicyDomainSecretParam> array = new List<InternalContainerNetworkPolicyDomainSecretParam>();
+                    List<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam> array = new List<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalContainerNetworkPolicyDomainSecretParam.DeserializeInternalContainerNetworkPolicyDomainSecretParam(item, options));
+                        array.Add(global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam.DeserializeInternalContainerNetworkPolicyDomainSecretParam(item, options));
                     }
                     domainSecrets = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains, domainSecrets ?? new ChangeTrackingList<InternalContainerNetworkPolicyDomainSecretParam>());
+            return new InternalContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains, (domainSecrets ?? new ChangeTrackingList<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam>()));
         }
     }
 }

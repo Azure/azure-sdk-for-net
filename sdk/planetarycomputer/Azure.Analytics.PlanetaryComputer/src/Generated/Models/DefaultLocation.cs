@@ -15,25 +15,25 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class DefaultLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DefaultLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.DefaultLocation"/>. </summary>
         /// <param name="zoom"> Default zoom level for the map. </param>
         /// <param name="coordinates"> Default center coordinates [latitude, longitude] for the map. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public DefaultLocation(int zoom, IEnumerable<float> coordinates)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Zoom = zoom;
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefaultLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.DefaultLocation"/>. </summary>
         /// <param name="zoom"> Default zoom level for the map. </param>
         /// <param name="coordinates"> Default center coordinates [latitude, longitude] for the map. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultLocation(int zoom, IList<float> coordinates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultLocation(int zoom, IList<float> coordinates, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Zoom = zoom;
             Coordinates = coordinates;

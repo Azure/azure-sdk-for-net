@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.JsonMergePatch
 {
-    public partial class Resource : IJsonModel<Resource>
+    public partial class Resource : IJsonModel<global::Payload.JsonMergePatch.Resource>
     {
         internal Resource() => throw null;
 
@@ -21,22 +21,22 @@ namespace Payload.JsonMergePatch
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Resource>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.JsonMergePatch.Resource>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Resource IPersistableModel<global::Payload.JsonMergePatch.Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.JsonMergePatch.Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="resource"> The <see cref="Resource"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="resource"> The <see cref="global::Payload.JsonMergePatch.Resource"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Resource resource) => throw null;
 
         public static explicit operator Resource(Response response) => throw null;
 
-        void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Payload.JsonMergePatch.Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Resource IJsonModel<Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Resource IJsonModel<global::Payload.JsonMergePatch.Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

@@ -18,47 +18,47 @@ namespace Server.Versions.Versioned
     {
         protected VersionedClient() => throw null;
 
-        public VersionedClient(Uri endpoint) : this(endpoint, new VersionedClientOptions()) => throw null;
+        public VersionedClient(global::System.Uri endpoint) : this(endpoint, new VersionedClientOptions()) => throw null;
 
-        internal VersionedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, VersionedClientOptions options) => throw null;
+        internal VersionedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, VersionedClientOptions options) => throw null;
 
-        public VersionedClient(Uri endpoint, VersionedClientOptions options) : this(null, endpoint, options) => throw null;
+        public VersionedClient(global::System.Uri endpoint, VersionedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public VersionedClient(VersionedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public VersionedClient(VersionedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithoutApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithoutApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithoutApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response WithoutApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithQueryApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response WithQueryApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithPathApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithPathApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithPathApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response WithPathApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithPathApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithPathApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithQueryOldApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryOldApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryOldApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response WithQueryOldApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryOldApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryOldApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

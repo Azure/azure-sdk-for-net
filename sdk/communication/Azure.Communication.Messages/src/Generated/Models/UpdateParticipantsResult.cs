@@ -15,20 +15,20 @@ namespace Azure.Communication.Messages
     public partial class UpdateParticipantsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UpdateParticipantsResult"/>. </summary>
         /// <param name="id"> Participant User Id. </param>
         internal UpdateParticipantsResult(string id)
         {
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UpdateParticipantsResult"/>. </summary>
         /// <param name="id"> Participant User Id. </param>
         /// <param name="error"> Error of the participant operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateParticipantsResult(string id, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateParticipantsResult(string id, ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Error = error;

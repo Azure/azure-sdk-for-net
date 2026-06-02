@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Supported modalities for the session. </summary>
-    public readonly partial struct InteractionModality : IEquatable<InteractionModality>
+    public readonly partial struct InteractionModality : IEquatable<global::Azure.AI.VoiceLive.InteractionModality>
     {
         private readonly string _value;
         /// <summary> Text modality. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Avatar modality. </summary>
         private const string AvatarValue = "avatar";
 
-        /// <summary> Initializes a new instance of <see cref="InteractionModality"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InteractionModality(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Avatar modality. </summary>
         public static InteractionModality Avatar { get; } = new InteractionModality(AvatarValue);
 
-        /// <summary> Determines if two <see cref="InteractionModality"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InteractionModality"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InteractionModality left, InteractionModality right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InteractionModality"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.InteractionModality"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InteractionModality left, InteractionModality right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InteractionModality"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InteractionModality(string value) => new InteractionModality(value);
 
-        /// <summary> Converts a string to a <see cref="InteractionModality"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.InteractionModality"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InteractionModality?(string value) => value == null ? null : new InteractionModality(value);
+        public static implicit operator InteractionModality?(string value) => (value == null) ? null : new InteractionModality(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InteractionModality other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InteractionModality other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InteractionModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InteractionModality other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

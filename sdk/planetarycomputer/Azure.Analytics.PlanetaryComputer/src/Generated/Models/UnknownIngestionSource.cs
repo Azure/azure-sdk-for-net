@@ -12,12 +12,12 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     internal partial class UnknownIngestionSource : IngestionSource
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownIngestionSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.UnknownIngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, created, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, created, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

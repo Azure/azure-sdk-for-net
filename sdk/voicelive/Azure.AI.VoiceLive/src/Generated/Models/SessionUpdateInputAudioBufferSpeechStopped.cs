@@ -17,20 +17,20 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateInputAudioBufferSpeechStopped : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>. </summary>
         /// <param name="audioEndMs">
         /// Milliseconds since the session started when speech stopped. This will
         /// correspond to the end of audio sent to the model, and thus includes the
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal SessionUpdateInputAudioBufferSpeechStopped(int audioEndMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStopped)
+        internal SessionUpdateInputAudioBufferSpeechStopped(int audioEndMs, string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.InputAudioBufferSpeechStopped)
         {
             AudioEndMs = audioEndMs;
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal SessionUpdateInputAudioBufferSpeechStopped(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioEndMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateInputAudioBufferSpeechStopped(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int audioEndMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioEndMs = audioEndMs;
             ItemId = itemId;

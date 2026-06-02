@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class DetectedLanguage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DetectedLanguage"/>. </summary>
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
@@ -27,14 +27,14 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DetectedLanguage"/>. </summary>
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
         /// <param name="scriptName"> Identifies the script name of the input document according to the ISO 15924 standard. </param>
         /// <param name="scriptIso15924Code"> Identifies the script code of the input document according to the ISO 15924 standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind? scriptName, ScriptCode? scriptIso15924Code, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind? scriptName, ScriptCode? scriptIso15924Code, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Iso6391Name = iso6391Name;

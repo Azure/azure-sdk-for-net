@@ -30,7 +30,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastModifiedDateTime"> Represents the project last modified date-time. </param>
         /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
         /// <param name="configureSemanticRanking"> Represents if semantic ranking is configured. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringProject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject"/> instance for mocking. </returns>
         public static QuestionAnsweringProject QuestionAnsweringProject(string projectName = default, string description = default, string language = default, bool? multilingualResource = default, ProjectSettings settings = default, DateTimeOffset? createdDateTime = default, DateTimeOffset? lastModifiedDateTime = default, DateTimeOffset? lastDeployedDateTime = default, bool? configureSemanticRanking = default)
         {
             return new QuestionAnsweringProject(
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Configurable settings of the Project. </summary>
         /// <param name="defaultAnswer"> Default Answer response when no good match is found in the knowledge base. </param>
-        /// <returns> A new <see cref="Authoring.ProjectSettings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings"/> instance for mocking. </returns>
         public static ProjectSettings ProjectSettings(string defaultAnswer = default)
         {
             return new ProjectSettings(defaultAnswer, additionalBinaryDataProperties: null);
@@ -61,10 +61,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeletionJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringProjectDeletionJobState(
                 createdDateTime,
@@ -84,10 +84,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringExportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default, string resultUrl = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default, string resultUrl = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringExportJobState(
                 createdDateTime,
@@ -104,8 +104,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="metadata"> Parameters needed to create the project. </param>
         /// <param name="assets"> All assets for this project. </param>
         /// <param name="fileUri"> Import data File URI. </param>
-        /// <returns> A new <see cref="Authoring.ImportJobOptions"/> instance for mocking. </returns>
-        public static ImportJobOptions ImportJobOptions(QuestionAnsweringProject metadata = default, QuestionAnsweringAuthoringAssets assets = default, Uri fileUri = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions"/> instance for mocking. </returns>
+        public static ImportJobOptions ImportJobOptions(QuestionAnsweringProject metadata = default, QuestionAnsweringAuthoringAssets assets = default, global::System.Uri fileUri = default)
         {
             return new ImportJobOptions(metadata, assets, fileUri, additionalBinaryDataProperties: null);
         }
@@ -113,18 +113,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> All assets for this project. </summary>
         /// <param name="synonyms"> Collection of synonyms. </param>
         /// <param name="qnas"> List of QnA records to import. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringAssets"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringAssets QuestionAnsweringAuthoringAssets(IEnumerable<WordAlterations> synonyms = default, IEnumerable<ImportQnaRecord> qnas = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringAssets QuestionAnsweringAuthoringAssets(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> synonyms = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> qnas = default)
         {
-            synonyms ??= new ChangeTrackingList<WordAlterations>();
-            qnas ??= new ChangeTrackingList<ImportQnaRecord>();
+            synonyms ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>();
+            qnas ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord>();
 
             return new QuestionAnsweringAuthoringAssets(synonyms.ToList(), qnas.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Collection of word alterations. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
-        /// <returns> A new <see cref="Authoring.WordAlterations"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations"/> instance for mocking. </returns>
         public static WordAlterations WordAlterations(IEnumerable<string> alterations = default)
         {
             alterations ??= new ChangeTrackingList<string>();
@@ -148,12 +148,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="sourceDisplayName"> Friendly name of the Source. </param>
-        /// <returns> A new <see cref="Authoring.ImportQnaRecord"/> instance for mocking. </returns>
-        public static ImportQnaRecord ImportQnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<SuggestedQuestionsCluster> activeLearningSuggestions = default, DateTimeOffset? lastUpdatedDateTime = default, string sourceDisplayName = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord"/> instance for mocking. </returns>
+        public static ImportQnaRecord ImportQnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = default, DateTimeOffset? lastUpdatedDateTime = default, string sourceDisplayName = default)
         {
             questions ??= new ChangeTrackingList<string>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
-            activeLearningSuggestions ??= new ChangeTrackingList<SuggestedQuestionsCluster>();
+            activeLearningSuggestions ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster>();
 
             return new ImportQnaRecord(
                 id,
@@ -175,10 +175,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// ignores context and includes this QnA in answers.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Authoring.QnaDialog"/> instance for mocking. </returns>
-        public static QnaDialog QnaDialog(bool? isContextOnly = default, IEnumerable<QnaPrompt> prompts = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog"/> instance for mocking. </returns>
+        public static QnaDialog QnaDialog(bool? isContextOnly = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt> prompts = default)
         {
-            prompts ??= new ChangeTrackingList<QnaPrompt>();
+            prompts ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt>();
 
             return new QnaDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
         }
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="qnaId"> ID of the QnA corresponding to the prompt. </param>
         /// <param name="qna"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Authoring.QnaPrompt"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt"/> instance for mocking. </returns>
         public static QnaPrompt QnaPrompt(int? displayOrder = default, int? qnaId = default, QnaRecord qna = default, string displayText = default)
         {
             return new QnaPrompt(displayOrder, qnaId, qna, displayText, additionalBinaryDataProperties: null);
@@ -208,12 +208,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </param>
         /// <param name="dialog"> Context of a QnA. </param>
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
-        /// <returns> A new <see cref="Authoring.QnaRecord"/> instance for mocking. </returns>
-        public static QnaRecord QnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<SuggestedQuestionsCluster> activeLearningSuggestions = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord"/> instance for mocking. </returns>
+        public static QnaRecord QnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = default)
         {
             questions ??= new ChangeTrackingList<string>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
-            activeLearningSuggestions ??= new ChangeTrackingList<SuggestedQuestionsCluster>();
+            activeLearningSuggestions ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster>();
 
             return new QnaRecord(
                 id,
@@ -232,10 +232,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// clustering algorithm.
         /// </param>
         /// <param name="suggestedQuestions"> List of all suggested questions for the QnA. </param>
-        /// <returns> A new <see cref="Authoring.SuggestedQuestionsCluster"/> instance for mocking. </returns>
-        public static SuggestedQuestionsCluster SuggestedQuestionsCluster(string clusterHead = default, IEnumerable<SuggestedQuestion> suggestedQuestions = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster"/> instance for mocking. </returns>
+        public static SuggestedQuestionsCluster SuggestedQuestionsCluster(string clusterHead = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion> suggestedQuestions = default)
         {
-            suggestedQuestions ??= new ChangeTrackingList<SuggestedQuestion>();
+            suggestedQuestions ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion>();
 
             return new SuggestedQuestionsCluster(clusterHead, suggestedQuestions.ToList(), additionalBinaryDataProperties: null);
         }
@@ -247,7 +247,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// The number of times the question was suggested automatically by the Active
         /// Learning algorithm.
         /// </param>
-        /// <returns> A new <see cref="Authoring.SuggestedQuestion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion"/> instance for mocking. </returns>
         public static SuggestedQuestion SuggestedQuestion(string question = default, int? userSuggestedCount = default, int? autoSuggestedCount = default)
         {
             return new SuggestedQuestion(question, userSuggestedCount, autoSuggestedCount, additionalBinaryDataProperties: null);
@@ -260,10 +260,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringImportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringImportJobState(
                 createdDateTime,
@@ -282,10 +282,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringProjectDeploymentJobState(
                 createdDateTime,
@@ -300,7 +300,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Project deployment details. </summary>
         /// <param name="deploymentName"> Name of the deployment. </param>
         /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
-        /// <returns> A new <see cref="Authoring.ProjectDeployment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment"/> instance for mocking. </returns>
         public static ProjectDeployment ProjectDeployment(string deploymentName = default, DateTimeOffset? lastDeployedDateTime = default)
         {
             return new ProjectDeployment(deploymentName, lastDeployedDateTime, additionalBinaryDataProperties: null);
@@ -309,10 +309,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Request payload for updating synonyms. </summary>
         /// <param name="value"> The WordAlterations items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Authoring.SynonymAssets"/> instance for mocking. </returns>
-        public static SynonymAssets SynonymAssets(IEnumerable<WordAlterations> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets"/> instance for mocking. </returns>
+        public static SynonymAssets SynonymAssets(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> value = default, global::System.Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<WordAlterations>();
+            value ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>();
 
             return new SynonymAssets(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
@@ -327,8 +327,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="sourceKind"> Supported source types. </param>
         /// <param name="contentStructureKind"> Content structure type for sources. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
-        /// <returns> A new <see cref="Authoring.QnaSourceRecord"/> instance for mocking. </returns>
-        public static QnaSourceRecord QnaSourceRecord(string displayName = default, string source = default, Uri sourceUri = default, SourceKind sourceKind = default, SourceContentStructureKind? contentStructureKind = default, DateTimeOffset? lastUpdatedDateTime = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord"/> instance for mocking. </returns>
+        public static QnaSourceRecord QnaSourceRecord(string displayName = default, string source = default, global::System.Uri sourceUri = default, SourceKind sourceKind = default, SourceContentStructureKind? contentStructureKind = default, DateTimeOffset? lastUpdatedDateTime = default)
         {
             return new QnaSourceRecord(
                 displayName,
@@ -347,10 +347,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringUpdateSourcesJobState(
                 createdDateTime,
@@ -377,12 +377,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="dialog"> Context of a QnA. </param>
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
-        /// <returns> A new <see cref="Authoring.RetrieveQnaRecord"/> instance for mocking. </returns>
-        public static RetrieveQnaRecord RetrieveQnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<SuggestedQuestionsCluster> activeLearningSuggestions = default, DateTimeOffset? lastUpdatedDateTime = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord"/> instance for mocking. </returns>
+        public static RetrieveQnaRecord RetrieveQnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = default, DateTimeOffset? lastUpdatedDateTime = default)
         {
             questions ??= new ChangeTrackingList<string>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
-            activeLearningSuggestions ??= new ChangeTrackingList<SuggestedQuestionsCluster>();
+            activeLearningSuggestions ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster>();
 
             return new RetrieveQnaRecord(
                 id,
@@ -403,10 +403,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, string jobId = default, DateTimeOffset lastUpdatedDateTime = default, JobStatus status = default, IEnumerable<global::Azure.ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<global::Azure.ResponseError>();
 
             return new QuestionAnsweringAuthoringUpdateQnasJobState(
                 createdDateTime,
@@ -420,10 +420,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Feedback for Active Learning. </summary>
         /// <param name="records"> A list of Feedback Records for Active Learning. </param>
-        /// <returns> A new <see cref="Authoring.ActiveLearningFeedback"/> instance for mocking. </returns>
-        public static ActiveLearningFeedback ActiveLearningFeedback(IEnumerable<FeedbackRecord> records = default)
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ActiveLearningFeedback"/> instance for mocking. </returns>
+        public static ActiveLearningFeedback ActiveLearningFeedback(IEnumerable<global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord> records = default)
         {
-            records ??= new ChangeTrackingList<FeedbackRecord>();
+            records ??= new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord>();
 
             return new ActiveLearningFeedback(records.ToList(), additionalBinaryDataProperties: null);
         }
@@ -432,7 +432,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="userId"> Unique identifier of the user. </param>
         /// <param name="userQuestion"> User suggested question for the QnA. </param>
         /// <param name="qnaId"> Unique ID of the QnA. </param>
-        /// <returns> A new <see cref="Authoring.FeedbackRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord"/> instance for mocking. </returns>
         public static FeedbackRecord FeedbackRecord(string userId = default, string userQuestion = default, int? qnaId = default)
         {
             return new FeedbackRecord(userId, userQuestion, qnaId, additionalBinaryDataProperties: null);

@@ -14,54 +14,54 @@ using Azure.Communication.Messages;
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings for WhatsApp. </summary>
-    public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings, IJsonModel<WhatsAppMessageTemplateBindings>
+    public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings, IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTemplateBindings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings.DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WhatsAppMessageTemplateBindings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppMessageTemplateBindings IPersistableModel<WhatsAppMessageTemplateBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => (WhatsAppMessageTemplateBindings)PersistableModelCreateCore(data, options);
+        WhatsAppMessageTemplateBindings IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WhatsAppMessageTemplateBindings)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WhatsAppMessageTemplateBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WhatsAppMessageTemplateBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -69,49 +69,49 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Header))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartArray();
                 foreach (WhatsAppMessageTemplateBindingsComponent item in Header)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Body))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStartArray();
                 foreach (WhatsAppMessageTemplateBindingsComponent item in Body)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Footer))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
                 writer.WriteStartArray();
                 foreach (WhatsAppMessageTemplateBindingsComponent item in Footer)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Buttons))
+            if (global::Azure.Communication.Messages.Optional.IsCollectionDefined(Buttons))
             {
                 writer.WritePropertyName("buttons"u8);
                 writer.WriteStartArray();
                 foreach (WhatsAppMessageTemplateBindingsButton item in Buttons)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WhatsAppMessageTemplateBindingsButton>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,35 +119,35 @@ namespace Azure.Communication.Messages.Models.Channels
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppMessageTemplateBindings IJsonModel<WhatsAppMessageTemplateBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WhatsAppMessageTemplateBindings)JsonModelCreateCore(ref reader, options);
+        WhatsAppMessageTemplateBindings IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WhatsAppMessageTemplateBindings)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MessageTemplateBindings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings.DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WhatsAppMessageTemplateBindings DeserializeWhatsAppMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MessageTemplateBindingsKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<WhatsAppMessageTemplateBindingsComponent> header = default;
-            IList<WhatsAppMessageTemplateBindingsComponent> body = default;
-            IList<WhatsAppMessageTemplateBindingsComponent> footer = default;
-            IList<WhatsAppMessageTemplateBindingsButton> buttons = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> header = default;
+            IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> body = default;
+            IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> footer = default;
+            IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> buttons = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -157,72 +157,72 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 if (prop.NameEquals("header"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
+                    List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> array = new List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
+                        array.Add(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     header = array;
                     continue;
                 }
                 if (prop.NameEquals("body"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
+                    List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> array = new List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
+                        array.Add(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     body = array;
                     continue;
                 }
                 if (prop.NameEquals("footer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
+                    List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> array = new List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
+                        array.Add(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     footer = array;
                     continue;
                 }
                 if (prop.NameEquals("buttons"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WhatsAppMessageTemplateBindingsButton> array = new List<WhatsAppMessageTemplateBindingsButton>();
+                    List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> array = new List<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item, options));
+                        array.Add(global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item, options));
                     }
                     buttons = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WhatsAppMessageTemplateBindings(
                 kind,
                 additionalBinaryDataProperties,
-                header ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
-                body ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
-                footer ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
-                buttons ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>());
+                (header ?? new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>()),
+                (body ?? new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>()),
+                (footer ?? new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>()),
+                (buttons ?? new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>()));
         }
     }
 }

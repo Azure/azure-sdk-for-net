@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Specifies the types of render options for map visualization. </summary>
-    public readonly partial struct RenderOptionType : IEquatable<RenderOptionType>
+    public readonly partial struct RenderOptionType : IEquatable<global::Azure.Analytics.PlanetaryComputer.RenderOptionType>
     {
         private readonly string _value;
         /// <summary> Raster tile rendering type. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Vector tile line rendering type. </summary>
         private const string VtLineValue = "vt-line";
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RenderOptionType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Vector tile line rendering type. </summary>
         public static RenderOptionType VtLine { get; } = new RenderOptionType(VtLineValue);
 
-        /// <summary> Determines if two <see cref="RenderOptionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RenderOptionType left, RenderOptionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RenderOptionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RenderOptionType left, RenderOptionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RenderOptionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RenderOptionType(string value) => new RenderOptionType(value);
 
-        /// <summary> Converts a string to a <see cref="RenderOptionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RenderOptionType?(string value) => value == null ? null : new RenderOptionType(value);
+        public static implicit operator RenderOptionType?(string value) => (value == null) ? null : new RenderOptionType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RenderOptionType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RenderOptionType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RenderOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RenderOptionType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

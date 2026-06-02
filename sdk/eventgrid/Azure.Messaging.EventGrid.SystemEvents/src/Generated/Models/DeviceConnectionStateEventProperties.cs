@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceConnectionStateEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceConnectionStateEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
@@ -27,13 +27,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DeviceConnectionStateEventInfo = deviceConnectionStateEventInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceConnectionStateEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceConnectionStateEventProperties(string deviceId, string moduleId, string hubName, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceConnectionStateEventProperties(string deviceId, string moduleId, string hubName, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             ModuleId = moduleId;

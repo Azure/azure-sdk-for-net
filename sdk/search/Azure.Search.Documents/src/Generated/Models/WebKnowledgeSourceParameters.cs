@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceParameters"/>. </summary>
         public WebKnowledgeSourceParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WebKnowledgeSourceParameters"/>. </summary>
         /// <param name="domains"> Domain allow/block configuration for web results. </param>
         /// <param name="language"> The default language for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="market"> The default market for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="count"> The default number of web results to return. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="freshness"> The default freshness filter for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains, string language, string market, int? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains, string language, string market, int? count, string freshness, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Domains = domains;
             Language = language;

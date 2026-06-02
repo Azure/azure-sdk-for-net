@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class MoveToRootClientHostExtensions
     {
         public static IClientBuilder AddMoveToRootClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddMoveToRootClient(this IHostApplicationBuilder host, string sectionName, Action<MoveToRootClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddMoveToRootClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient.MoveToRootClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedMoveToRootClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedMoveToRootClient(this IHostApplicationBuilder host, string key, string sectionName, Action<MoveToRootClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedMoveToRootClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient.MoveToRootClientSettings> configureSettings) => throw null;
     }
 }

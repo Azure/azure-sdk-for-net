@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Content and layout elements extracted from a page from the input. </summary>
-    public partial class DocumentPage : IJsonModel<DocumentPage>
+    public partial class DocumentPage : IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentPage>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentPage"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentPage"/> for deserialization. </summary>
         internal DocumentPage()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentPage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentPage(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentPage.DeserializeDocumentPage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentPage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentPage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentPage IPersistableModel<DocumentPage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentPage IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentPage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentPage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentPage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,29 +73,29 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentPage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("pageNumber"u8);
             writer.WriteNumberValue(PageNumber);
-            if (Optional.IsDefined(Angle))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Angle))
             {
                 writer.WritePropertyName("angle"u8);
                 writer.WriteNumberValue(Angle.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Optional.IsDefined(Height))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -104,60 +104,60 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (DocumentSpan item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Words))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Words))
             {
                 writer.WritePropertyName("words"u8);
                 writer.WriteStartArray();
                 foreach (DocumentWord item in Words)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentWord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SelectionMarks))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(SelectionMarks))
             {
                 writer.WritePropertyName("selectionMarks"u8);
                 writer.WriteStartArray();
                 foreach (DocumentSelectionMark item in SelectionMarks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentSelectionMark>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Lines))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Lines))
             {
                 writer.WritePropertyName("lines"u8);
                 writer.WriteStartArray();
                 foreach (DocumentLine item in Lines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentLine>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Barcodes))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Barcodes))
             {
                 writer.WritePropertyName("barcodes"u8);
                 writer.WriteStartArray();
                 foreach (DocumentBarcode item in Barcodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentBarcode>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Formulas))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsCollectionDefined(Formulas))
             {
                 writer.WritePropertyName("formulas"u8);
                 writer.WriteStartArray();
                 foreach (DocumentFormula item in Formulas)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DocumentFormula>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -165,9 +165,9 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -176,26 +176,26 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentPage IJsonModel<DocumentPage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentPage IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentPage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentPage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentPage)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentPage(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.DocumentPage.DeserializeDocumentPage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentPage DeserializeDocumentPage(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -204,13 +204,13 @@ namespace Azure.AI.DocumentIntelligence
             float? width = default;
             float? height = default;
             LengthUnit? unit = default;
-            IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<DocumentWord> words = default;
-            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
-            IReadOnlyList<DocumentLine> lines = default;
-            IReadOnlyList<DocumentBarcode> barcodes = default;
-            IReadOnlyList<DocumentFormula> formulas = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentWord> words = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentLine> lines = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentBarcode> barcodes = default;
+            IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentFormula> formulas = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("pageNumber"u8))
@@ -220,7 +220,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("angle"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,7 +229,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("width"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -238,7 +238,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("height"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -247,7 +247,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("unit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -256,87 +256,87 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("spans"u8))
                 {
-                    List<DocumentSpan> array = new List<DocumentSpan>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentSpan> array = new List<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
                 }
                 if (prop.NameEquals("words"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentWord> array = new List<DocumentWord>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentWord> array = new List<global::Azure.AI.DocumentIntelligence.DocumentWord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWord.DeserializeDocumentWord(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentWord.DeserializeDocumentWord(item, options));
                     }
                     words = array;
                     continue;
                 }
                 if (prop.NameEquals("selectionMarks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark> array = new List<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentSelectionMark.DeserializeDocumentSelectionMark(item, options));
                     }
                     selectionMarks = array;
                     continue;
                 }
                 if (prop.NameEquals("lines"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentLine> array = new List<DocumentLine>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentLine> array = new List<global::Azure.AI.DocumentIntelligence.DocumentLine>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLine.DeserializeDocumentLine(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentLine.DeserializeDocumentLine(item, options));
                     }
                     lines = array;
                     continue;
                 }
                 if (prop.NameEquals("barcodes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentBarcode> array = new List<DocumentBarcode>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentBarcode> array = new List<global::Azure.AI.DocumentIntelligence.DocumentBarcode>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentBarcode.DeserializeDocumentBarcode(item, options));
                     }
                     barcodes = array;
                     continue;
                 }
                 if (prop.NameEquals("formulas"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DocumentFormula> array = new List<DocumentFormula>();
+                    List<global::Azure.AI.DocumentIntelligence.DocumentFormula> array = new List<global::Azure.AI.DocumentIntelligence.DocumentFormula>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFormula.DeserializeDocumentFormula(item, options));
+                        array.Add(global::Azure.AI.DocumentIntelligence.DocumentFormula.DeserializeDocumentFormula(item, options));
                     }
                     formulas = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentPage(
@@ -346,11 +346,11 @@ namespace Azure.AI.DocumentIntelligence
                 height,
                 unit,
                 spans,
-                words ?? new ChangeTrackingList<DocumentWord>(),
-                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
-                lines ?? new ChangeTrackingList<DocumentLine>(),
-                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
-                formulas ?? new ChangeTrackingList<DocumentFormula>(),
+                (words ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentWord>()),
+                (selectionMarks ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark>()),
+                (lines ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentLine>()),
+                (barcodes ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentBarcode>()),
+                (formulas ?? new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFormula>()),
                 additionalBinaryDataProperties);
         }
     }

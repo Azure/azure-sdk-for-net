@@ -14,14 +14,14 @@ namespace Azure.Communication.JobRouter
     public partial class CloseJobOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.CloseJobOptions"/>. </summary>
         /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
         /// <param name="closeAt"> If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC. </param>
         /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloseJobOptions(string dispositionCode, DateTimeOffset closeAt, string note, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloseJobOptions(string dispositionCode, DateTimeOffset closeAt, string note, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DispositionCode = dispositionCode;
             CloseAt = closeAt;

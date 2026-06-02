@@ -13,34 +13,34 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The IpBlockAsset. </summary>
     public partial class IpBlockAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpBlockAsset"/>. </summary>
         internal IpBlockAsset()
         {
-            Asns = new ChangeTrackingList<ObservedLong>();
-            BgpPrefixes = new ChangeTrackingList<ObservedString>();
-            NetNames = new ChangeTrackingList<ObservedString>();
-            RegistrantContacts = new ChangeTrackingList<ObservedString>();
-            RegistrantOrgs = new ChangeTrackingList<ObservedString>();
-            AdminContacts = new ChangeTrackingList<ObservedString>();
-            TechnicalContacts = new ChangeTrackingList<ObservedString>();
-            RegistrarCreatedAt = new ChangeTrackingList<ObservedLong>();
-            RegistrarUpdatedAt = new ChangeTrackingList<ObservedLong>();
-            NetRanges = new ChangeTrackingList<ObservedString>();
-            Reputations = new ChangeTrackingList<ReputationDetails>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            Location = new ChangeTrackingList<ObservedLocation>();
-            RegistrarExpiresAt = new ChangeTrackingList<ObservedLong>();
-            RegistrantNames = new ChangeTrackingList<ObservedString>();
-            AdminNames = new ChangeTrackingList<ObservedString>();
-            TechnicalNames = new ChangeTrackingList<ObservedString>();
-            AdminOrgs = new ChangeTrackingList<ObservedString>();
-            TechnicalOrgs = new ChangeTrackingList<ObservedString>();
-            RegistrantPhones = new ChangeTrackingList<ObservedString>();
-            AdminPhones = new ChangeTrackingList<ObservedString>();
-            TechnicalPhones = new ChangeTrackingList<ObservedString>();
+            Asns = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            BgpPrefixes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            NetNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrantContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrantOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalContacts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrarCreatedAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            RegistrarUpdatedAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            NetRanges = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Reputations = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReputationDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            Location = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
+            RegistrarExpiresAt = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>();
+            RegistrantNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalNames = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalOrgs = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            RegistrantPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            AdminPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            TechnicalPhones = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.IpBlockAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipBlock"></param>
         /// <param name="asns"></param>
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIp, string endIp, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        internal IpBlockAsset(IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string ipBlock, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> asns, IList<global::Azure.Analytics.Defender.Easm.ObservedString> bgpPrefixes, IList<global::Azure.Analytics.Defender.Easm.ObservedString> netNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantContacts, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminContacts, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalContacts, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarCreatedAt, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarUpdatedAt, IList<global::Azure.Analytics.Defender.Easm.ObservedString> netRanges, string startIp, string endIp, IList<global::Azure.Analytics.Defender.Easm.ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> location, IList<global::Azure.Analytics.Defender.Easm.ObservedLong> registrarExpiresAt, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalNames, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalOrgs, IList<global::Azure.Analytics.Defender.Easm.ObservedString> registrantPhones, IList<global::Azure.Analytics.Defender.Easm.ObservedString> adminPhones, IList<global::Azure.Analytics.Defender.Easm.ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IpBlock = ipBlock;
             Asns = asns;
@@ -112,34 +112,34 @@ namespace Azure.Analytics.Defender.Easm
         public string IpBlock { get; }
 
         /// <summary> Gets the Asns. </summary>
-        public IList<ObservedLong> Asns { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> Asns { get; }
 
         /// <summary> Gets the BgpPrefixes. </summary>
-        public IList<ObservedString> BgpPrefixes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> BgpPrefixes { get; }
 
         /// <summary> Gets the NetNames. </summary>
-        public IList<ObservedString> NetNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> NetNames { get; }
 
         /// <summary> Gets the RegistrantContacts. </summary>
-        public IList<ObservedString> RegistrantContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantContacts { get; }
 
         /// <summary> Gets the RegistrantOrgs. </summary>
-        public IList<ObservedString> RegistrantOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantOrgs { get; }
 
         /// <summary> Gets the AdminContacts. </summary>
-        public IList<ObservedString> AdminContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminContacts { get; }
 
         /// <summary> Gets the TechnicalContacts. </summary>
-        public IList<ObservedString> TechnicalContacts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalContacts { get; }
 
         /// <summary> Gets the RegistrarCreatedAt. </summary>
-        public IList<ObservedLong> RegistrarCreatedAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarCreatedAt { get; }
 
         /// <summary> Gets the RegistrarUpdatedAt. </summary>
-        public IList<ObservedLong> RegistrarUpdatedAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarUpdatedAt { get; }
 
         /// <summary> Gets the NetRanges. </summary>
-        public IList<ObservedString> NetRanges { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> NetRanges { get; }
 
         /// <summary> Gets the StartIp. </summary>
         public string StartIp { get; }
@@ -148,13 +148,13 @@ namespace Azure.Analytics.Defender.Easm
         public string EndIp { get; }
 
         /// <summary> Gets the Reputations. </summary>
-        public IList<ReputationDetails> Reputations { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ReputationDetails> Reputations { get; }
 
         /// <summary> Gets the DetailedFromWhoisAt. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
@@ -166,34 +166,34 @@ namespace Azure.Analytics.Defender.Easm
         public long? Count { get; }
 
         /// <summary> Gets the Location. </summary>
-        public IList<ObservedLocation> Location { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> Location { get; }
 
         /// <summary> Gets the RegistrarExpiresAt. </summary>
-        public IList<ObservedLong> RegistrarExpiresAt { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedLong> RegistrarExpiresAt { get; }
 
         /// <summary> Gets the RegistrantNames. </summary>
-        public IList<ObservedString> RegistrantNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantNames { get; }
 
         /// <summary> Gets the AdminNames. </summary>
-        public IList<ObservedString> AdminNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminNames { get; }
 
         /// <summary> Gets the TechnicalNames. </summary>
-        public IList<ObservedString> TechnicalNames { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalNames { get; }
 
         /// <summary> Gets the AdminOrgs. </summary>
-        public IList<ObservedString> AdminOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminOrgs { get; }
 
         /// <summary> Gets the TechnicalOrgs. </summary>
-        public IList<ObservedString> TechnicalOrgs { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalOrgs { get; }
 
         /// <summary> Gets the RegistrantPhones. </summary>
-        public IList<ObservedString> RegistrantPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> RegistrantPhones { get; }
 
         /// <summary> Gets the AdminPhones. </summary>
-        public IList<ObservedString> AdminPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> AdminPhones { get; }
 
         /// <summary> Gets the TechnicalPhones. </summary>
-        public IList<ObservedString> TechnicalPhones { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> TechnicalPhones { get; }
 
         /// <summary> Gets the Ipv4. </summary>
         public bool? Ipv4 { get; }

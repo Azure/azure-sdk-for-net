@@ -18,24 +18,24 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     {
         protected PetOperations() => throw null;
 
-        internal PetOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PetOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response UpdatePetAsPet(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdatePetAsPetAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdatePetAsPetAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Pet> UpdatePetAsPet(Pet pet, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet> UpdatePetAsPet(Pet pet, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Pet>> UpdatePetAsPetAsync(Pet pet, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>> UpdatePetAsPetAsync(Pet pet, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UpdateDogAsPet(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateDogAsPetAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdateDogAsPetAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Pet> UpdateDogAsPet(Pet pet, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet> UpdateDogAsPet(Pet pet, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Pet>> UpdateDogAsPetAsync(Pet pet, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.Pet>> UpdateDogAsPetAsync(Pet pet, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -15,26 +15,26 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateBindingsButton
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subType"/> or <paramref name="refValue"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="subType"/> or <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
         {
-            Argument.AssertNotNull(subType, nameof(subType));
-            Argument.AssertNotNull(refValue, nameof(refValue));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(subType, nameof(subType));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(refValue, nameof(refValue));
 
             SubType = subType;
             RefValue = refValue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SubType = subType;
             RefValue = refValue;

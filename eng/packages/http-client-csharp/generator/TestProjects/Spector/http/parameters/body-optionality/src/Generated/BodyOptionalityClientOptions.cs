@@ -15,7 +15,7 @@ namespace Parameters.BodyOptionality
     {
         public BodyOptionalityClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal BodyOptionalityClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

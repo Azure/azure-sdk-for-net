@@ -13,12 +13,12 @@ namespace Service.MultiService.Combined
 {
     public partial class CombinedClientOptions : ClientOptions
     {
-        private const ServiceAServiceVersion LatestServiceAVersion = ServiceAServiceVersion.Vav2;
-        private const ServiceBServiceVersion LatestServiceBVersion = ServiceBServiceVersion.Vbv2;
+        private const global::Service.MultiService.Combined.CombinedClientOptions.ServiceAServiceVersion LatestServiceAVersion = global::Service.MultiService.Combined.CombinedClientOptions.ServiceAServiceVersion.Vav2;
+        private const global::Service.MultiService.Combined.CombinedClientOptions.ServiceBServiceVersion LatestServiceBVersion = global::Service.MultiService.Combined.CombinedClientOptions.ServiceBServiceVersion.Vbv2;
 
-        public CombinedClientOptions(ServiceAServiceVersion serviceAServiceVersion = LatestServiceAVersion, ServiceBServiceVersion serviceBServiceVersion = LatestServiceBVersion) => throw null;
+        public CombinedClientOptions(global::Service.MultiService.Combined.CombinedClientOptions.ServiceAServiceVersion serviceAServiceVersion = LatestServiceAVersion, global::Service.MultiService.Combined.CombinedClientOptions.ServiceBServiceVersion serviceBServiceVersion = LatestServiceBVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal CombinedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceAServiceVersion

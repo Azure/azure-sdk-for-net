@@ -18,32 +18,32 @@ namespace Client.Structure.RenamedOperation
     {
         protected Group() => throw null;
 
-        internal Group(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal Group(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RenamedTwo(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedTwoAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedTwoAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedTwo(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedTwoAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedTwoAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RenamedFour(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedFourAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedFourAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedFour(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedFourAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedFourAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RenamedSix(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedSixAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedSixAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedSix(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedSixAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedSixAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

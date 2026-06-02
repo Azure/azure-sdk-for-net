@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchTaskExecutionResult enums. </summary>
-    public readonly partial struct BatchTaskExecutionResult : IEquatable<BatchTaskExecutionResult>
+    public readonly partial struct BatchTaskExecutionResult : IEquatable<global::Azure.Compute.Batch.BatchTaskExecutionResult>
     {
         private readonly string _value;
         /// <summary> The Task ran successfully. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> There was an error during processing of the Task. The failure may have occurred before the Task process was launched, while the Task process was executing, or after the Task process exited. </summary>
         private const string FailureValue = "failure";
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskExecutionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskExecutionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchTaskExecutionResult(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> There was an error during processing of the Task. The failure may have occurred before the Task process was launched, while the Task process was executing, or after the Task process exited. </summary>
         public static BatchTaskExecutionResult Failure { get; } = new BatchTaskExecutionResult(FailureValue);
 
-        /// <summary> Determines if two <see cref="BatchTaskExecutionResult"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchTaskExecutionResult"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchTaskExecutionResult left, BatchTaskExecutionResult right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchTaskExecutionResult"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchTaskExecutionResult"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchTaskExecutionResult left, BatchTaskExecutionResult right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchTaskExecutionResult"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchTaskExecutionResult"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchTaskExecutionResult(string value) => new BatchTaskExecutionResult(value);
 
-        /// <summary> Converts a string to a <see cref="BatchTaskExecutionResult"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchTaskExecutionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchTaskExecutionResult?(string value) => value == null ? null : new BatchTaskExecutionResult(value);
+        public static implicit operator BatchTaskExecutionResult?(string value) => (value == null) ? null : new BatchTaskExecutionResult(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchTaskExecutionResult other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchTaskExecutionResult other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchTaskExecutionResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchTaskExecutionResult other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

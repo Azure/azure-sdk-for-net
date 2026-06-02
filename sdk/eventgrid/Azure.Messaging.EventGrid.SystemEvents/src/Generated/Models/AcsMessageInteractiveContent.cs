@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageInteractiveContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent"/>. </summary>
         internal AcsMessageInteractiveContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveContent"/>. </summary>
         /// <param name="replyKind"> The Message interactive reply type. </param>
         /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
         /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind, AcsMessageInteractiveButtonReplyContent buttonReply, AcsMessageInteractiveListReplyContent listReply, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind, AcsMessageInteractiveButtonReplyContent buttonReply, AcsMessageInteractiveListReplyContent listReply, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReplyKind = replyKind;
             ButtonReply = buttonReply;

@@ -15,9 +15,9 @@ namespace Azure.Search.Documents
     public partial class SearchOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.SearchOptions"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, IList<string> semanticFields, IList<global::Azure.Search.Documents.Models.VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;

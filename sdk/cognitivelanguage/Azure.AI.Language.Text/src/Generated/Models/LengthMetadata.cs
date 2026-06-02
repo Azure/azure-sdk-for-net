@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the Length entity Metadata model. </summary>
     public partial class LengthMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="LengthMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LengthMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for length. </param>
-        internal LengthMetadata(double value, LengthUnit unit) : base(MetadataKind.LengthMetadata)
+        internal LengthMetadata(double value, LengthUnit unit) : base(global::Azure.AI.Language.Text.MetadataKind.LengthMetadata)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LengthMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LengthMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for length. </param>
-        internal LengthMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, LengthUnit unit) : base(metadataKind, additionalBinaryDataProperties)
+        internal LengthMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, LengthUnit unit) : base(metadataKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

@@ -12,26 +12,26 @@ namespace Azure.AI.Projects.Agents
     public partial class CreateAgentFromCodeOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CreateAgentFromCodeOptions"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
         public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code)
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
-            Argument.AssertNotNull(code, nameof(code));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(metadata, nameof(metadata));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(code, nameof(code));
 
             Metadata = metadata;
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CreateAgentFromCodeOptions"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Code = code;
@@ -43,8 +43,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The code zip file (max 250 MB).
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

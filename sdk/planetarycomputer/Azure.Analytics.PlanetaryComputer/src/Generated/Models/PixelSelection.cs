@@ -16,7 +16,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// Represents the method used to select or compute pixels when creating
     /// composites from multiple sources
     /// </summary>
-    public readonly partial struct PixelSelection : IEquatable<PixelSelection>
+    public readonly partial struct PixelSelection : IEquatable<global::Azure.Analytics.PlanetaryComputer.PixelSelection>
     {
         private readonly string _value;
         /// <summary> Select pixel from the first available image. </summary>
@@ -36,12 +36,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Select image with highest value in the last band. </summary>
         private const string LastBandHighValue = "lastbandhigh";
 
-        /// <summary> Initializes a new instance of <see cref="PixelSelection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PixelSelection(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -70,34 +70,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Select image with highest value in the last band. </summary>
         public static PixelSelection LastBandHigh { get; } = new PixelSelection(LastBandHighValue);
 
-        /// <summary> Determines if two <see cref="PixelSelection"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.PixelSelection"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PixelSelection left, PixelSelection right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PixelSelection"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.PixelSelection"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PixelSelection left, PixelSelection right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PixelSelection"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PixelSelection(string value) => new PixelSelection(value);
 
-        /// <summary> Converts a string to a <see cref="PixelSelection"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PixelSelection?(string value) => value == null ? null : new PixelSelection(value);
+        public static implicit operator PixelSelection?(string value) => (value == null) ? null : new PixelSelection(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PixelSelection other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PixelSelection other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PixelSelection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PixelSelection other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

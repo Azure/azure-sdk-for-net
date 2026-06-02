@@ -16,9 +16,9 @@ namespace Azure.Compute.Batch
     /// A reference to the Azure Virtual Machines Marketplace Image and additional
     /// information about the Image.
     /// </summary>
-    public partial class BatchSupportedImage : IJsonModel<BatchSupportedImage>
+    public partial class BatchSupportedImage : IJsonModel<global::Azure.Compute.Batch.BatchSupportedImage>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchSupportedImage"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSupportedImage"/> for deserialization. </summary>
         internal BatchSupportedImage()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchSupportedImage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchSupportedImage(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchSupportedImage.DeserializeBatchSupportedImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchSupportedImage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchSupportedImage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchSupportedImage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchSupportedImage IPersistableModel<BatchSupportedImage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchSupportedImage IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchSupportedImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchSupportedImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchSupportedImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,24 +76,24 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchSupportedImage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference, options);
+            writer.WriteObjectValue<BatchVmImageReference>(ImageReference, options);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OsType.ToString());
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (string item in Capabilities)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -102,14 +102,14 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BatchSupportEndOfLife))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(BatchSupportEndOfLife))
             {
                 writer.WritePropertyName("batchSupportEndOfLife"u8);
                 writer.WriteStringValue(BatchSupportEndOfLife.Value, "O");
             }
             writer.WritePropertyName("verificationType"u8);
             writer.WriteStringValue(VerificationType.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -117,9 +117,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -128,26 +128,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchSupportedImage IJsonModel<BatchSupportedImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchSupportedImage IJsonModel<global::Azure.Compute.Batch.BatchSupportedImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchSupportedImage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchSupportedImage)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchSupportedImage(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchSupportedImage.DeserializeBatchSupportedImage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchSupportedImage DeserializeBatchSupportedImage(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -157,7 +157,7 @@ namespace Azure.Compute.Batch
             IList<string> capabilities = default;
             DateTimeOffset? batchSupportEndOfLife = default;
             ImageVerificationType verificationType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nodeAgentSKUId"u8))
@@ -167,7 +167,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
+                    imageReference = global::Azure.Compute.Batch.BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -177,14 +177,14 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("capabilities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("batchSupportEndOfLife"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -210,16 +210,16 @@ namespace Azure.Compute.Batch
                     verificationType = new ImageVerificationType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchSupportedImage(
                 nodeAgentSkuId,
                 imageReference,
                 osType,
-                capabilities ?? new ChangeTrackingList<string>(),
+                (capabilities ?? new ChangeTrackingList<string>()),
                 batchSupportEndOfLife,
                 verificationType,
                 additionalBinaryDataProperties);

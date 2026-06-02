@@ -14,7 +14,7 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
     {
         private protected Snake(SnakeKind kind, int length) => throw null;
 
-        internal Snake(SnakeKind kind, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+        internal Snake(SnakeKind kind, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) => throw null;
 
         internal SnakeKind Kind
         {

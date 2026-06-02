@@ -16,18 +16,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// </summary>
     public partial class ResourceNotificationsResourceManagementDeletedEventData : ResourceNotificationsResourceDeletedEventData
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails) : base(resourceDetails, operationalDetails)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, additionalBinaryDataProperties)
+        internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, additionalBinaryDataProperties)
         {
         }
     }

@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Text
     public partial class SentimentAnalysisActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentAnalysisActionContent"/>. </summary>
         public SentimentAnalysisActionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentimentAnalysisActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="opinionMining"> Whether to use opinion mining in the request or not. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SentimentAnalysisActionContent(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SentimentAnalysisActionContent(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

@@ -16,28 +16,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexedSharePointKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexedSharePointKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> SharePoint connection string with format: SharePointOnlineEndpoint=[SharePoint site url];ApplicationId=[Azure AD App ID];ApplicationSecret=[Azure AD App client secret];TenantId=[SharePoint site tenant id]. </param>
         /// <param name="containerName"> Specifies which SharePoint libraries to access. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public IndexedSharePointKnowledgeSourceParameters(string connectionString, IndexedSharePointContainerName containerName)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            global::Azure.Search.Documents.Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexedSharePointKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> SharePoint connection string with format: SharePointOnlineEndpoint=[SharePoint site url];ApplicationId=[Azure AD App ID];ApplicationSecret=[Azure AD App client secret];TenantId=[SharePoint site tenant id]. </param>
         /// <param name="containerName"> Specifies which SharePoint libraries to access. </param>
         /// <param name="query"> Optional query to filter SharePoint content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexedSharePointKnowledgeSourceParameters(string connectionString, IndexedSharePointContainerName containerName, string query, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexedSharePointKnowledgeSourceParameters(string connectionString, IndexedSharePointContainerName containerName, string query, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;

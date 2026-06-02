@@ -13,12 +13,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClosed event. </summary>
     public partial class AcsRouterJobClosedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClosedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClosedEventData"/>. </summary>
         internal AcsRouterJobClosedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClosedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClosedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="assignmentId"> Router Job Closed Assignment Id. </param>
         /// <param name="workerId"> Router Job Closed Worker Id. </param>
         /// <param name="dispositionCode"> Router Job Closed Disposition Code. </param>
-        internal AcsRouterJobClosedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string assignmentId, string workerId, string dispositionCode) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobClosedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string assignmentId, string workerId, string dispositionCode) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             AssignmentId = assignmentId;
             WorkerId = workerId;

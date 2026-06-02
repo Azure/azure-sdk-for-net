@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Memory
     /// <summary> The AIProjectMemoryStores sub-client. </summary>
     public partial class AIProjectMemoryStores
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AIProjectMemoryStores for mocking. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectMemoryStores(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectMemoryStores(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -47,15 +47,15 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemoryStore(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateMemoryStoreRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -68,15 +68,15 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateMemoryStoreAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateMemoryStoreAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateMemoryStoreRequest(content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a memory store. </summary>
@@ -85,17 +85,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, (metadata ?? new ChangeTrackingDictionary<string, string>()), definition, default);
+            ClientResult result = this.CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary> Create a memory store. </summary>
@@ -104,17 +104,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, (metadata ?? new ChangeTrackingDictionary<string, string>()), definition, default);
+            ClientResult result = await this.CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -128,17 +128,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemoryStore(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateMemoryStoreRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -152,17 +152,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateMemoryStoreAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateMemoryStoreAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateMemoryStoreRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Update a memory store. </summary>
@@ -170,16 +170,16 @@ namespace Azure.AI.Projects.Memory
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStore> UpdateMemoryStore(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryStore> UpdateMemoryStore(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            ClientResult result = UpdateMemoryStore(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            ClientResult result = this.UpdateMemoryStore(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary> Update a memory store. </summary>
@@ -187,16 +187,16 @@ namespace Azure.AI.Projects.Memory
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStore>> UpdateMemoryStoreAsync(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryStore>> UpdateMemoryStoreAsync(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            ClientResult result = await UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, (metadata ?? new ChangeTrackingDictionary<string, string>()), default);
+            ClientResult result = await this.UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -209,16 +209,16 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetMemoryStoreRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -231,44 +231,44 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetMemoryStoreAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetMemoryStoreRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieve a memory store. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStore> GetMemoryStore(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryStore> GetMemoryStore(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetMemoryStore(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            ClientResult result = this.GetMemoryStore(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieve a memory store. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStore>> GetMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryStore>> GetMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+            ClientResult result = await this.GetMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStore)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -281,16 +281,16 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteMemoryStoreRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -303,44 +303,44 @@ namespace Azure.AI.Projects.Memory
         /// </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteMemoryStoreAsync(string name, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteMemoryStoreRequest(name, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteMemoryStoreResponse> DeleteMemoryStore(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.DeleteMemoryStoreResponse> DeleteMemoryStore(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = DeleteMemoryStore(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
+            ClientResult result = this.DeleteMemoryStore(name, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteMemoryStoreResponse)result), result.GetRawResponse());
         }
 
         /// <summary> Delete a memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteMemoryStoreResponse>> DeleteMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.DeleteMemoryStoreResponse>> DeleteMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await DeleteMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
+            ClientResult result = await this.DeleteMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteMemoryStoreResponse)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -354,17 +354,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to search. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult SearchMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateSearchMemoriesRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -378,17 +378,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to search. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> SearchMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> SearchMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateSearchMemoriesRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -402,17 +402,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateMemoriesRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -426,17 +426,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateMemoriesRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -450,17 +450,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetUpdateResult(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetUpdateResultRequest(name, updateId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -474,49 +474,49 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetUpdateResultAsync(string name, string updateId, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetUpdateResultAsync(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetUpdateResultRequest(name, updateId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get memory store update result. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryUpdateResult> GetUpdateResult(string name, string updateId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryUpdateResult> GetUpdateResult(string name, string updateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            ClientResult result = GetUpdateResult(name, updateId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
+            ClientResult result = this.GetUpdateResult(name, updateId, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryUpdateResult)result), result.GetRawResponse());
         }
 
         /// <summary> Get memory store update result. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryUpdateResult>> GetUpdateResultAsync(string name, string updateId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="updateId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="updateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryUpdateResult>> GetUpdateResultAsync(string name, string updateId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            ClientResult result = await GetUpdateResultAsync(name, updateId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
+            ClientResult result = await this.GetUpdateResultAsync(name, updateId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryUpdateResult)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -530,17 +530,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteScope(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteScopeRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -554,51 +554,51 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteScopeAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteScopeAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteScopeRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStoreDeleteScopeResponse> DeleteScope(string name, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse> DeleteScope(string name, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             DeleteScopeRequest spreadModel = new DeleteScopeRequest(scope, default);
-            ClientResult result = DeleteScope(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
+            ClientResult result = this.DeleteScope(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStoreDeleteScopeResponse)result), result.GetRawResponse());
         }
 
         /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStoreDeleteScopeResponse>> DeleteScopeAsync(string name, string scope, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse>> DeleteScopeAsync(string name, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             DeleteScopeRequest spreadModel = new DeleteScopeRequest(scope, default);
-            ClientResult result = await DeleteScopeAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
+            ClientResult result = await this.DeleteScopeAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryStoreDeleteScopeResponse)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -612,17 +612,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemory(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateMemoryRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -636,17 +636,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateMemoryAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateMemoryAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateMemoryRequest(name, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a memory item in a memory store. </summary>
@@ -655,18 +655,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryItem> CreateMemory(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryItem> CreateMemory(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(content, nameof(content));
 
             CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
-            ClientResult result = CreateMemory(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = this.CreateMemory(name, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary> Create a memory item in a memory store. </summary>
@@ -675,18 +675,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryItem>> CreateMemoryAsync(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryItem>> CreateMemoryAsync(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(content, nameof(content));
 
             CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
-            ClientResult result = await CreateMemoryAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = await this.CreateMemoryAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -701,18 +701,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemory(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateUpdateMemoryRequest(name, memoryId, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -727,18 +727,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateMemoryAsync(string name, string memoryId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> UpdateMemoryAsync(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateUpdateMemoryRequest(name, memoryId, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Update a memory item in a memory store. </summary>
@@ -746,18 +746,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryItem> UpdateMemory(string name, string memoryId, string content, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryItem> UpdateMemory(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(content, nameof(content));
 
             UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
-            ClientResult result = UpdateMemory(name, memoryId, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = this.UpdateMemory(name, memoryId, spreadModel, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary> Update a memory item in a memory store. </summary>
@@ -765,18 +765,18 @@ namespace Azure.AI.Projects.Memory
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryItem>> UpdateMemoryAsync(string name, string memoryId, string content, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryItem>> UpdateMemoryAsync(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(content, nameof(content));
 
             UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
-            ClientResult result = await UpdateMemoryAsync(name, memoryId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = await this.UpdateMemoryAsync(name, memoryId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -790,17 +790,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetMemoryRequest(name, memoryId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -814,49 +814,49 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetMemoryAsync(string name, string memoryId, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetMemoryRequest(name, memoryId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieve a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryItem> GetMemory(string name, string memoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Memory.MemoryItem> GetMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            ClientResult result = GetMemory(name, memoryId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = this.GetMemory(name, memoryId, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary> Retrieve a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryItem>> GetMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Memory.MemoryItem>> GetMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            ClientResult result = await GetMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
+            ClientResult result = await this.GetMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((MemoryItem)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -889,14 +889,14 @@ namespace Azure.AI.Projects.Memory
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetMemoriesAsync(string name, BinaryContent content, string kind = default, int? limit = default, string order = default, string after = default, string before = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
             return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
                 this,
@@ -921,17 +921,17 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteMemoryRequest(name, memoryId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -945,49 +945,49 @@ namespace Azure.AI.Projects.Memory
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteMemoryAsync(string name, string memoryId, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteMemoryRequest(name, memoryId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteMemoryResponse> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.DeleteMemoryResponse> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            ClientResult result = DeleteMemory(name, memoryId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteMemoryResponse)result, result.GetRawResponse());
+            ClientResult result = this.DeleteMemory(name, memoryId, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteMemoryResponse)result), result.GetRawResponse());
         }
 
         /// <summary> Delete a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteMemoryResponse>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.DeleteMemoryResponse>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            ClientResult result = await DeleteMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteMemoryResponse)result, result.GetRawResponse());
+            ClientResult result = await this.DeleteMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((DeleteMemoryResponse)result), result.GetRawResponse());
         }
     }
 }

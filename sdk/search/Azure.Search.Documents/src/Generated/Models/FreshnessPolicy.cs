@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class FreshnessPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.FreshnessPolicy"/>. </summary>
         public FreshnessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreshnessPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.FreshnessPolicy"/>. </summary>
         /// <param name="boostingDuration"> ISO 8601 duration for the freshness boosting window (e.g. 'P90D' for 90 days). Documents newer than this duration receive a ranking boost during retrieval. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FreshnessPolicy(string boostingDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FreshnessPolicy(string boostingDuration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoostingDuration = boostingDuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

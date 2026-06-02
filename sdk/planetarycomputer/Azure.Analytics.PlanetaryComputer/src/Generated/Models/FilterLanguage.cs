@@ -18,7 +18,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// but is not included in the spec above.
     /// Defines the supported filter languages for STAC API queries.
     /// </summary>
-    public readonly partial struct FilterLanguage : IEquatable<FilterLanguage>
+    public readonly partial struct FilterLanguage : IEquatable<global::Azure.Analytics.PlanetaryComputer.FilterLanguage>
     {
         private readonly string _value;
         /// <summary> Common Query Language in JSON format. </summary>
@@ -28,12 +28,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Common Query Language 2 in text format. </summary>
         private const string Cql2TextValue = "cql2-text";
 
-        /// <summary> Initializes a new instance of <see cref="FilterLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.FilterLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FilterLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -47,34 +47,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Common Query Language 2 in text format. </summary>
         public static FilterLanguage Cql2Text { get; } = new FilterLanguage(Cql2TextValue);
 
-        /// <summary> Determines if two <see cref="FilterLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.FilterLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FilterLanguage left, FilterLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FilterLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.FilterLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FilterLanguage left, FilterLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FilterLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.FilterLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator FilterLanguage(string value) => new FilterLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="FilterLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.FilterLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FilterLanguage?(string value) => value == null ? null : new FilterLanguage(value);
+        public static implicit operator FilterLanguage?(string value) => (value == null) ? null : new FilterLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FilterLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is FilterLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(FilterLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FilterLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

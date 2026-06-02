@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Union
 {
-    public partial class MixedLiteralsCases : IJsonModel<MixedLiteralsCases>
+    public partial class MixedLiteralsCases : IJsonModel<global::_Type.Union.MixedLiteralsCases>
     {
         internal MixedLiteralsCases() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Union
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<MixedLiteralsCases>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Union.MixedLiteralsCases>.Write(ModelReaderWriterOptions options) => throw null;
 
-        MixedLiteralsCases IPersistableModel<MixedLiteralsCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        MixedLiteralsCases IPersistableModel<global::_Type.Union.MixedLiteralsCases>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<MixedLiteralsCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Union.MixedLiteralsCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<MixedLiteralsCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Union.MixedLiteralsCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        MixedLiteralsCases IJsonModel<MixedLiteralsCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        MixedLiteralsCases IJsonModel<global::_Type.Union.MixedLiteralsCases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual MixedLiteralsCases JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

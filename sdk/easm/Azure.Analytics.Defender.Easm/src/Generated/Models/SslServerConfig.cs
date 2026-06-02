@@ -14,17 +14,17 @@ namespace Azure.Analytics.Defender.Easm
     public partial class SslServerConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SslServerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslServerConfig"/>. </summary>
         internal SslServerConfig()
         {
             TlsVersions = new ChangeTrackingList<string>();
             CipherSuites = new ChangeTrackingList<string>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SslServerConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.SslServerConfig"/>. </summary>
         /// <param name="tlsVersions"></param>
         /// <param name="cipherSuites"></param>
         /// <param name="firstSeen"></param>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="sources"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SslServerConfig(IList<string> tlsVersions, IList<string> cipherSuites, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<SourceDetails> sources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SslServerConfig(IList<string> tlsVersions, IList<string> cipherSuites, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TlsVersions = tlsVersions;
             CipherSuites = cipherSuites;
@@ -59,6 +59,6 @@ namespace Azure.Analytics.Defender.Easm
         public long? Count { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
     }
 }

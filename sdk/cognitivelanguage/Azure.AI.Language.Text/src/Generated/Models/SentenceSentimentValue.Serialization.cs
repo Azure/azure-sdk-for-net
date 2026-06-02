@@ -14,26 +14,26 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SentenceSentimentValue value) => value switch
         {
-            SentenceSentimentValue.Positive => "positive",
-            SentenceSentimentValue.Neutral => "neutral",
-            SentenceSentimentValue.Negative => "negative",
+            global::Azure.AI.Language.Text.SentenceSentimentValue.Positive => "positive",
+            global::Azure.AI.Language.Text.SentenceSentimentValue.Neutral => "neutral",
+            global::Azure.AI.Language.Text.SentenceSentimentValue.Negative => "negative",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SentenceSentimentValue value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SentenceSentimentValue ToSentenceSentimentValue(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "positive"))
             {
-                return SentenceSentimentValue.Positive;
+                return global::Azure.AI.Language.Text.SentenceSentimentValue.Positive;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutral"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "neutral"))
             {
-                return SentenceSentimentValue.Neutral;
+                return global::Azure.AI.Language.Text.SentenceSentimentValue.Neutral;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "negative"))
             {
-                return SentenceSentimentValue.Negative;
+                return global::Azure.AI.Language.Text.SentenceSentimentValue.Negative;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SentenceSentimentValue value.");
         }

@@ -11,36 +11,36 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ClickButtonType value) => value switch
         {
-            ClickButtonType.Left => "left",
-            ClickButtonType.Right => "right",
-            ClickButtonType.Wheel => "wheel",
-            ClickButtonType.Back => "back",
-            ClickButtonType.Forward => "forward",
+            global::Azure.AI.Projects.ClickButtonType.Left => "left",
+            global::Azure.AI.Projects.ClickButtonType.Right => "right",
+            global::Azure.AI.Projects.ClickButtonType.Wheel => "wheel",
+            global::Azure.AI.Projects.ClickButtonType.Back => "back",
+            global::Azure.AI.Projects.ClickButtonType.Forward => "forward",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ClickButtonType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ClickButtonType ToClickButtonType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "left"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "left"))
             {
-                return ClickButtonType.Left;
+                return global::Azure.AI.Projects.ClickButtonType.Left;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "right"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "right"))
             {
-                return ClickButtonType.Right;
+                return global::Azure.AI.Projects.ClickButtonType.Right;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "wheel"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "wheel"))
             {
-                return ClickButtonType.Wheel;
+                return global::Azure.AI.Projects.ClickButtonType.Wheel;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "back"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "back"))
             {
-                return ClickButtonType.Back;
+                return global::Azure.AI.Projects.ClickButtonType.Back;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "forward"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "forward"))
             {
-                return ClickButtonType.Forward;
+                return global::Azure.AI.Projects.ClickButtonType.Forward;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ClickButtonType value.");
         }

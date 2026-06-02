@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Version indicator determining which agent version backs the session.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionRefIndicator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.VersionRefIndicator"/>.
     /// </summary>
     public abstract partial class VersionIndicator
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VersionIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionIndicator"/>. </summary>
         /// <param name="type"> The type of version indicator. </param>
         private protected VersionIndicator(VersionIndicatorType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionIndicator"/>. </summary>
         /// <param name="type"> The type of version indicator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VersionIndicator(VersionIndicatorType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VersionIndicator(VersionIndicatorType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

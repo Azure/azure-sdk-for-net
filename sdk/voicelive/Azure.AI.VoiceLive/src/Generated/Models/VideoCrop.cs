@@ -15,26 +15,26 @@ namespace Azure.AI.VoiceLive
     public partial class VideoCrop
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoCrop"/>. </summary>
         /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topLeftInternal"/> or <paramref name="bottomRightInternal"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="topLeftInternal"/> or <paramref name="bottomRightInternal"/> is null. </exception>
         public VideoCrop(IEnumerable<int> topLeftInternal, IEnumerable<int> bottomRightInternal)
         {
-            Argument.AssertNotNull(topLeftInternal, nameof(topLeftInternal));
-            Argument.AssertNotNull(bottomRightInternal, nameof(bottomRightInternal));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(topLeftInternal, nameof(topLeftInternal));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(bottomRightInternal, nameof(bottomRightInternal));
 
             TopLeftInternal = topLeftInternal.ToList();
             BottomRightInternal = bottomRightInternal.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VideoCrop"/>. </summary>
         /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoCrop(IList<int> topLeftInternal, IList<int> bottomRightInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoCrop(IList<int> topLeftInternal, IList<int> bottomRightInternal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TopLeftInternal = topLeftInternal;
             BottomRightInternal = bottomRightInternal;

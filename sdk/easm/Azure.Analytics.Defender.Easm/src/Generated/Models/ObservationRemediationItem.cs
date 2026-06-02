@@ -14,28 +14,28 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ObservationRemediationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObservationRemediationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationRemediationItem"/>. </summary>
         /// <param name="kind"> The kind of the observation to remediate. </param>
         /// <param name="name"> The name of the observation to remediate. </param>
         /// <param name="state"> The state to which to update the observation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ObservationRemediationItem(ObservationType kind, string name, ObservationRemediationState state)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(name, nameof(name));
 
             Kind = kind;
             Name = name;
             State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservationRemediationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationRemediationItem"/>. </summary>
         /// <param name="kind"> The kind of the observation to remediate. </param>
         /// <param name="name"> The name of the observation to remediate. </param>
         /// <param name="state"> The state to which to update the observation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObservationRemediationItem(ObservationType kind, string name, ObservationRemediationState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObservationRemediationItem(ObservationType kind, string name, ObservationRemediationState state, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;

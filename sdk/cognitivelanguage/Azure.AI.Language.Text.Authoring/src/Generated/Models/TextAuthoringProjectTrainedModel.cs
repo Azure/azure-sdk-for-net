@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringProjectTrainedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringProjectTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel"/>. </summary>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastTrainingDurationInSeconds"> The duration of the model's last training request in seconds. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text.Authoring
             HasSnapshot = hasSnapshot;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringProjectTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringProjectTrainedModel(string label, string modelId, DateTimeOffset lastTrainedOn, int lastTrainingDurationInSeconds, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, bool hasSnapshot, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringProjectTrainedModel(string label, string modelId, DateTimeOffset lastTrainedOn, int lastTrainingDurationInSeconds, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, bool hasSnapshot, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Label = label;
             ModelId = modelId;

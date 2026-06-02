@@ -20,6 +20,6 @@ namespace _Type.Property.AdditionalProperties
             set => throw null;
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => throw null;
     }
 }

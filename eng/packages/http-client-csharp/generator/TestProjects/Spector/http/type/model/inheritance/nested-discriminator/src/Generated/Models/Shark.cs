@@ -14,7 +14,7 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
     {
         public Shark(int age, string sharktype) : base("shark", age) => throw null;
 
-        internal Shark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties) => throw null;
+        internal Shark(string kind, int age, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties) => throw null;
 
         internal string Sharktype
         {

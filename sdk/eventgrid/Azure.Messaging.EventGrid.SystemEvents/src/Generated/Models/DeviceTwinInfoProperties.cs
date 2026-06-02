@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceTwinInfoProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
         internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Reported = reported;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Desired = desired;
             Reported = reported;

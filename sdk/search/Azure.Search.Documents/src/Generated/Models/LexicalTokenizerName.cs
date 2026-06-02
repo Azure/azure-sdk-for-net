@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all tokenizers supported by the search engine. </summary>
-    public readonly partial struct LexicalTokenizerName : IEquatable<LexicalTokenizerName>
+    public readonly partial struct LexicalTokenizerName : IEquatable<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName>
     {
         private readonly string _value;
         /// <summary> Grammar-based tokenizer that is suitable for processing most European-language documents. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html. </summary>
@@ -42,12 +42,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Divides text at whitespace. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html. </summary>
         private const string WhitespaceValue = "whitespace";
 
-        /// <summary> Initializes a new instance of <see cref="LexicalTokenizerName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalTokenizerName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -91,34 +91,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Divides text at whitespace. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceTokenizer.html. </summary>
         public static LexicalTokenizerName Whitespace { get; } = new LexicalTokenizerName(WhitespaceValue);
 
-        /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LexicalTokenizerName left, LexicalTokenizerName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LexicalTokenizerName left, LexicalTokenizerName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LexicalTokenizerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LexicalTokenizerName(string value) => new LexicalTokenizerName(value);
 
-        /// <summary> Converts a string to a <see cref="LexicalTokenizerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalTokenizerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LexicalTokenizerName?(string value) => value == null ? null : new LexicalTokenizerName(value);
+        public static implicit operator LexicalTokenizerName?(string value) => (value == null) ? null : new LexicalTokenizerName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LexicalTokenizerName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LexicalTokenizerName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LexicalTokenizerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LexicalTokenizerName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

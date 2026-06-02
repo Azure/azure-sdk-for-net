@@ -14,19 +14,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class ImportJobOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions"/>. </summary>
         public ImportJobOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions"/>. </summary>
         /// <param name="metadata"> Parameters needed to create the project. </param>
         /// <param name="assets"> All assets for this project. </param>
         /// <param name="fileUri"> Import data File URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportJobOptions(QuestionAnsweringProject metadata, QuestionAnsweringAuthoringAssets assets, Uri fileUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportJobOptions(QuestionAnsweringProject metadata, QuestionAnsweringAuthoringAssets assets, global::System.Uri fileUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Assets = assets;

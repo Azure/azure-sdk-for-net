@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Compute.Batch
 {
-    internal partial class BatchClientGetNodesAsyncCollectionResultOfT : AsyncPageable<BatchNode>
+    internal partial class BatchClientGetNodesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Compute.Batch.BatchNode>
     {
         private readonly BatchClient _client;
         private readonly string _poolId;
@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetNodesAsyncCollectionResultOfT(BatchClient client, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetNodesAsyncCollectionResultOfT(BatchClient client, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _poolId = poolId;
@@ -63,20 +63,20 @@ namespace Azure.Compute.Batch
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BatchClientGetNodesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BatchNode>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Compute.Batch.BatchNode>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                BatchNodeListResult result = (BatchNodeListResult)response;
-                yield return Page<BatchNode>.FromValues((IReadOnlyList<BatchNode>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                BatchNodeListResult result = ((BatchNodeListResult)response);
+                yield return global::Azure.Page<BatchNode>.FromValues(((IReadOnlyList<global::Azure.Compute.Batch.BatchNode>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -86,9 +86,9 @@ namespace Azure.Compute.Batch
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNodesRequest(nextLink, _poolId, _timeout, _requestDate, _maxResults, _filter, _select, _context) : _client.CreateGetNodesRequest(_poolId, _timeout, _requestDate, _maxResults, _filter, _select, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetNodesRequest(nextLink, _poolId, _timeout, _requestDate, _maxResults, _filter, _select, _context) : _client.CreateGetNodesRequest(_poolId, _timeout, _requestDate, _maxResults, _filter, _select, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

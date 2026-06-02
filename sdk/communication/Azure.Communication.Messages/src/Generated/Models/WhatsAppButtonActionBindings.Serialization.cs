@@ -14,9 +14,9 @@ using Azure.Communication.Messages;
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp Binding actions to the interactive message. </summary>
-    public partial class WhatsAppButtonActionBindings : ActionBindings, IJsonModel<WhatsAppButtonActionBindings>
+    public partial class WhatsAppButtonActionBindings : ActionBindings, IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppButtonActionBindings"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings"/> for deserialization. </summary>
         internal WhatsAppButtonActionBindings()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ActionBindings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Communication.Messages.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWhatsAppButtonActionBindings(document.RootElement, options);
+                        return global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings.DeserializeWhatsAppButtonActionBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppButtonActionBindings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Communication.Messages.AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppButtonActionBindings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WhatsAppButtonActionBindings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppButtonActionBindings IPersistableModel<WhatsAppButtonActionBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => (WhatsAppButtonActionBindings)PersistableModelCreateCore(data, options);
+        WhatsAppButtonActionBindings IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WhatsAppButtonActionBindings)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WhatsAppButtonActionBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WhatsAppButtonActionBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,43 +74,43 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppButtonActionBindings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            writer.WriteObjectValue<ButtonSetContent>(Content, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WhatsAppButtonActionBindings IJsonModel<WhatsAppButtonActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WhatsAppButtonActionBindings)JsonModelCreateCore(ref reader, options);
+        WhatsAppButtonActionBindings IJsonModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WhatsAppButtonActionBindings)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ActionBindings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WhatsAppButtonActionBindings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWhatsAppButtonActionBindings(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings.DeserializeWhatsAppButtonActionBindings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WhatsAppButtonActionBindings DeserializeWhatsAppButtonActionBindings(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             MessageActionBindingKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ButtonSetContent content = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,12 +121,12 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    content = ButtonSetContent.DeserializeButtonSetContent(prop.Value, options);
+                    content = global::Azure.Communication.Messages.ButtonSetContent.DeserializeButtonSetContent(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WhatsAppButtonActionBindings(kind, additionalBinaryDataProperties, content);

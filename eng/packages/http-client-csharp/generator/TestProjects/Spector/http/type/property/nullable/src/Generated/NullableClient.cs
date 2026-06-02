@@ -13,14 +13,14 @@ namespace _Type.Property.Nullable
 {
     public partial class NullableClient
     {
-        public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
+        public NullableClient() : this(new global::System.Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
 
-        internal NullableClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NullableClientOptions options) => throw null;
+        internal NullableClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NullableClientOptions options) => throw null;
 
-        public NullableClient(Uri endpoint, NullableClientOptions options) : this(null, endpoint, options) => throw null;
+        public NullableClient(global::System.Uri endpoint, NullableClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NullableClient(NullableClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NullableClient(NullableClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

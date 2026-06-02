@@ -14,46 +14,46 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Extension methods to add <see cref="DocumentIntelligenceAdministrationClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
-    [Experimental("SCME0002")]
+    /// <summary> Extension methods to add <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient"/> to an <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>. </summary>
+    [ExperimentalAttribute("SCME0002")]
     public static partial class DocumentIntelligenceAdministrationClientHostExtensions
     {
-        /// <summary> Adds a singleton <see cref="DocumentIntelligenceAdministrationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <summary> Adds a singleton <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string sectionName)
         {
             return host.AddAzureClient<DocumentIntelligenceAdministrationClient, DocumentIntelligenceAdministrationClientSettings>(sectionName);
         }
 
-        /// <summary> Adds a singleton <see cref="DocumentIntelligenceAdministrationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="DocumentIntelligenceAdministrationClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string sectionName, Action<DocumentIntelligenceAdministrationClientSettings> configureSettings)
+        /// <summary> Adds a singleton <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string sectionName, Action<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings)
         {
             return host.AddAzureClient<DocumentIntelligenceAdministrationClient, DocumentIntelligenceAdministrationClientSettings>(sectionName, configureSettings);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="DocumentIntelligenceAdministrationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
         public static IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string key, string sectionName)
         {
             return host.AddKeyedAzureClient<DocumentIntelligenceAdministrationClient, DocumentIntelligenceAdministrationClientSettings>(key, sectionName);
         }
 
-        /// <summary> Adds a keyed singleton <see cref="DocumentIntelligenceAdministrationClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <summary> Adds a keyed singleton <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient"/> to the <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="global::Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> to add to. </param>
         /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="DocumentIntelligenceAdministrationClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<DocumentIntelligenceAdministrationClientSettings> configureSettings)
+        /// <param name="sectionName"> The section of <see cref="global::Microsoft.Extensions.Configuration.IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="global::System.ClientModel.Primitives.IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings)
         {
             return host.AddKeyedAzureClient<DocumentIntelligenceAdministrationClient, DocumentIntelligenceAdministrationClientSettings>(key, sectionName, configureSettings);
         }

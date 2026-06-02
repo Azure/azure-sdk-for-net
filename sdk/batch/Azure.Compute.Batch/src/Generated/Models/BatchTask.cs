@@ -25,18 +25,18 @@ namespace Azure.Compute.Batch
     public partial class BatchTask
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTask"/>. </summary>
         public BatchTask()
         {
-            ResourceFiles = new ChangeTrackingList<ResourceFile>();
-            OutputFiles = new ChangeTrackingList<OutputFile>();
-            EnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
+            ResourceFiles = new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>();
+            OutputFiles = new ChangeTrackingList<global::Azure.Compute.Batch.OutputFile>();
+            EnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. </param>
         /// <param name="displayName"> A display name for the Task. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="uri"> The URL of the Task. </param>
@@ -64,7 +64,7 @@ namespace Azure.Compute.Batch
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTask(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, ExitConditions exitConditions, BatchTaskState state, DateTimeOffset stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTask(string id, string displayName, global::System.Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, ExitConditions exitConditions, BatchTaskState state, DateTimeOffset stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<global::Azure.Compute.Batch.ResourceFile> resourceFiles, IReadOnlyList<global::Azure.Compute.Batch.OutputFile> outputFiles, IReadOnlyList<global::Azure.Compute.Batch.EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
         public string DisplayName { get; }
 
         /// <summary> The URL of the Task. </summary>
-        public Uri Uri { get; }
+        public global::System.Uri Uri { get; }
 
         /// <summary> The ETag of the Task. This is an opaque string. You can use it to detect whether the Task has changed between requests. In particular, you can be pass the ETag when updating a Task to specify that your changes should take effect only if nobody else has modified the Task in the meantime. </summary>
         public ETag ETag { get; }
@@ -135,13 +135,13 @@ namespace Azure.Compute.Batch
         public BatchTaskContainerSettings ContainerSettings { get; }
 
         /// <summary> A list of files that the Batch service will download to the Compute Node before running the command line. For multi-instance Tasks, the resource files will only be downloaded to the Compute Node on which the primary Task is executed. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
-        public IReadOnlyList<ResourceFile> ResourceFiles { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.ResourceFile> ResourceFiles { get; }
 
         /// <summary> A list of files that the Batch service will upload from the Compute Node after running the command line. For multi-instance Tasks, the files will only be uploaded from the Compute Node on which the primary Task is executed. </summary>
-        public IReadOnlyList<OutputFile> OutputFiles { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.OutputFile> OutputFiles { get; }
 
         /// <summary> A list of environment variable settings for the Task. </summary>
-        public IReadOnlyList<EnvironmentSetting> EnvironmentSettings { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.EnvironmentSetting> EnvironmentSettings { get; }
 
         /// <summary> A locality hint that can be used by the Batch service to select a Compute Node on which to start the new Task. </summary>
         public BatchAffinityInfo AffinityInfo { get; }
@@ -171,6 +171,6 @@ namespace Azure.Compute.Batch
         public BatchTaskDependencies DependsOn { get; }
 
         /// <summary> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </summary>
-        public IReadOnlyList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IReadOnlyList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
     }
 }

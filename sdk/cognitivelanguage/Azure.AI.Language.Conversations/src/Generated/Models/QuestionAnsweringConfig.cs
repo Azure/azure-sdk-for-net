@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
     public partial class QuestionAnsweringConfig : AnalysisConfig
     {
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringConfig"/>. </summary>
-        public QuestionAnsweringConfig() : base(TargetProjectKind.QuestionAnswering)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig"/>. </summary>
+        public QuestionAnsweringConfig() : base(global::Azure.AI.Language.Conversations.Models.TargetProjectKind.QuestionAnswering)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig"/>. </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callingOptions"> The options sent to a Question Answering KB. </param>
-        internal QuestionAnsweringConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuestionAnswersConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
+        internal QuestionAnsweringConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, QuestionAnswersConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
         {
             CallingOptions = callingOptions;
         }

@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the pre-built Abstractive Summarization results of each document. </summary>
-    public partial class AbstractiveSummarizationResult : IJsonModel<AbstractiveSummarizationResult>
+    public partial class AbstractiveSummarizationResult : IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AbstractiveSummarizationResult"/> for deserialization. </summary>
         internal AbstractiveSummarizationResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AbstractiveSummarizationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAbstractiveSummarizationResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.AbstractiveSummarizationResult.DeserializeAbstractiveSummarizationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummarizationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummarizationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AbstractiveSummarizationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AbstractiveSummarizationResult IPersistableModel<AbstractiveSummarizationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AbstractiveSummarizationResult IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AbstractiveSummarizationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AbstractiveSummarizationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,22 +73,22 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummarizationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (DocumentError item in Errors)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentError>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (global::Azure.AI.Language.Text.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                writer.WriteObjectValue<RequestStatistics>(Statistics, options);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -96,10 +96,10 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (AbstractiveSummaryActionResult item in Documents)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<AbstractiveSummaryActionResult>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,53 +118,53 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AbstractiveSummarizationResult IJsonModel<AbstractiveSummarizationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AbstractiveSummarizationResult IJsonModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AbstractiveSummarizationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.AbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummarizationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.AbstractiveSummarizationResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAbstractiveSummarizationResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.AbstractiveSummarizationResult.DeserializeAbstractiveSummarizationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AbstractiveSummarizationResult DeserializeAbstractiveSummarizationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<DocumentError> errors = default;
+            IList<global::Azure.AI.Language.Text.DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IList<AbstractiveSummaryActionResult> documents = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.AbstractiveSummaryActionResult> documents = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("errors"u8))
                 {
-                    List<DocumentError> array = new List<DocumentError>();
+                    List<global::Azure.AI.Language.Text.DocumentError> array = new List<global::Azure.AI.Language.Text.DocumentError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item, options));
+                        array.Add(global::Azure.AI.Language.Text.DocumentError.DeserializeDocumentError(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
+                    statistics = global::Azure.AI.Language.Text.RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modelVersion"u8))
@@ -174,17 +174,17 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("documents"u8))
                 {
-                    List<AbstractiveSummaryActionResult> array = new List<AbstractiveSummaryActionResult>();
+                    List<global::Azure.AI.Language.Text.AbstractiveSummaryActionResult> array = new List<global::Azure.AI.Language.Text.AbstractiveSummaryActionResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryActionResult.DeserializeAbstractiveSummaryActionResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.AbstractiveSummaryActionResult.DeserializeAbstractiveSummaryActionResult(item, options));
                     }
                     documents = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AbstractiveSummarizationResult(errors, statistics, modelVersion, documents, additionalBinaryDataProperties);

@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FunctionShellCallItemStatus value) => value switch
         {
-            FunctionShellCallItemStatus.InProgress => "in_progress",
-            FunctionShellCallItemStatus.Completed => "completed",
-            FunctionShellCallItemStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FunctionShellCallItemStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FunctionShellCallItemStatus ToFunctionShellCallItemStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return FunctionShellCallItemStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return FunctionShellCallItemStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return FunctionShellCallItemStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FunctionShellCallItemStatus value.");
         }

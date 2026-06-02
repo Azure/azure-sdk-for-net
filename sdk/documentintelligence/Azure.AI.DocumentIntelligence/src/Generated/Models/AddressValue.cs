@@ -14,14 +14,14 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AddressValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AddressValue"/>. </summary>
         internal AddressValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AddressValue"/>. </summary>
         /// <param name="houseNumber"> House or building number. </param>
         /// <param name="poBox"> Post office box number. </param>
         /// <param name="road"> Street name. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="house"> Build name, such as World Trade Center. </param>
         /// <param name="level"> Floor number, such as 3F. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress, string unit, string cityDistrict, string stateDistrict, string suburb, string house, string level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress, string unit, string cityDistrict, string stateDistrict, string suburb, string house, string level, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             HouseNumber = houseNumber;
             PoBox = poBox;

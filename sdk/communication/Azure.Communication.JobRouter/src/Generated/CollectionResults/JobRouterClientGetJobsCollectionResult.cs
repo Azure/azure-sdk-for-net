@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class JobRouterClientGetJobsCollectionResult : Pageable<BinaryData>
+    internal partial class JobRouterClientGetJobsCollectionResult : Pageable<global::System.BinaryData>
     {
         private readonly JobRouterClient _client;
         private readonly int? _maxpagesize;
@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobRouterClientGetJobsCollectionResult(JobRouterClient client, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobRouterClientGetJobsCollectionResult(JobRouterClient client, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxpagesize = maxpagesize;
@@ -56,25 +56,25 @@ namespace Azure.Communication.JobRouter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of JobRouterClientGetJobsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedRouterJob result = (PagedRouterJob)response;
-                List<BinaryData> items = new List<BinaryData>();
+                PagedRouterJob result = ((PagedRouterJob)response);
+                List<global::System.BinaryData> items = new List<global::System.BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureCommunicationJobRouterContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Azure.Communication.JobRouter.ModelSerializationExtensions.WireOptions, global::Azure.Communication.JobRouter.AzureCommunicationJobRouterContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return global::Azure.Page<BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -84,10 +84,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsRequest(nextLink, pageSize, _context) : _client.CreateGetJobsRequest(pageSize, _status, _queueId, _channelId, _classificationPolicyId, _scheduledBefore, _scheduledAfter, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetJobsRequest(nextLink, pageSize, _context) : _client.CreateGetJobsRequest(pageSize, _status, _queueId, _channelId, _classificationPolicyId, _scheduledBefore, _scheduledAfter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

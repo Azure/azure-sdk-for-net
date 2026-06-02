@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Raise : IJsonModel<Raise>
+    public partial class Raise : IJsonModel<global::SpecialWords._Models.Raise>
     {
         internal Raise() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Raise>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Raise>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Raise IPersistableModel<Raise>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Raise IPersistableModel<global::SpecialWords._Models.Raise>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Raise>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Raise>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="raise"> The <see cref="Raise"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="raise"> The <see cref="global::SpecialWords._Models.Raise"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Raise raise) => throw null;
 
-        void IJsonModel<Raise>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Raise>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Raise IJsonModel<Raise>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Raise IJsonModel<global::SpecialWords._Models.Raise>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Raise JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

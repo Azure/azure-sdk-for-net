@@ -14,9 +14,9 @@ using Azure.Core;
 namespace Azure.Compute.Batch
 {
     /// <summary> Parameters for creating an Azure Batch Task. </summary>
-    public partial class BatchTaskCreateOptions : IJsonModel<BatchTaskCreateOptions>
+    public partial class BatchTaskCreateOptions : IJsonModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCreateOptions"/> for deserialization. </summary>
         internal BatchTaskCreateOptions()
         {
         }
@@ -25,58 +25,58 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchTaskCreateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchTaskCreateOptions(document.RootElement, options);
+                        return global::Azure.Compute.Batch.BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchTaskCreateOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchTaskCreateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchTaskCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchTaskCreateOptions IPersistableModel<BatchTaskCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchTaskCreateOptions IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchTaskCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="batchTaskCreateOptions"> The <see cref="BatchTaskCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="batchTaskCreateOptions"> The <see cref="global::Azure.Compute.Batch.BatchTaskCreateOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(BatchTaskCreateOptions batchTaskCreateOptions)
         {
-            if (batchTaskCreateOptions == null)
+            if ((batchTaskCreateOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(batchTaskCreateOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(batchTaskCreateOptions, global::Azure.Compute.Batch.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchTaskCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,101 +84,101 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchTaskCreateOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ExitConditions))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(ExitConditions))
             {
                 writer.WritePropertyName("exitConditions"u8);
-                writer.WriteObjectValue(ExitConditions, options);
+                writer.WriteObjectValue<ExitConditions>(ExitConditions, options);
             }
             writer.WritePropertyName("commandLine"u8);
             writer.WriteStringValue(CommandLine);
-            if (Optional.IsDefined(ContainerSettings))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
             }
-            if (Optional.IsCollectionDefined(ResourceFiles))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(ResourceFiles))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
                 foreach (ResourceFile item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ResourceFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutputFiles))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
                 foreach (OutputFile item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<OutputFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentSettings))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(EnvironmentSettings))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
                 foreach (EnvironmentSetting item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<EnvironmentSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AffinityInfo))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(AffinityInfo))
             {
                 writer.WritePropertyName("affinityInfo"u8);
-                writer.WriteObjectValue(AffinityInfo, options);
+                writer.WriteObjectValue<BatchAffinityInfo>(AffinityInfo, options);
             }
-            if (Optional.IsDefined(Constraints))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints, options);
+                writer.WriteObjectValue<BatchTaskConstraints>(Constraints, options);
             }
-            if (Optional.IsDefined(RequiredSlots))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(RequiredSlots))
             {
                 writer.WritePropertyName("requiredSlots"u8);
                 writer.WriteNumberValue(RequiredSlots.Value);
             }
-            if (Optional.IsDefined(UserIdentity))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity, options);
+                writer.WriteObjectValue<UserIdentity>(UserIdentity, options);
             }
-            if (Optional.IsDefined(MultiInstanceSettings))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(MultiInstanceSettings))
             {
                 writer.WritePropertyName("multiInstanceSettings"u8);
-                writer.WriteObjectValue(MultiInstanceSettings, options);
+                writer.WriteObjectValue<MultiInstanceSettings>(MultiInstanceSettings, options);
             }
-            if (Optional.IsDefined(DependsOn))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
-                writer.WriteObjectValue(DependsOn, options);
+                writer.WriteObjectValue<BatchTaskDependencies>(DependsOn, options);
             }
-            if (Optional.IsCollectionDefined(ApplicationPackageReferences))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
                 writer.WriteStartArray();
                 foreach (BatchApplicationPackageReference item in ApplicationPackageReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -186,9 +186,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -197,26 +197,26 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchTaskCreateOptions IJsonModel<BatchTaskCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchTaskCreateOptions IJsonModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchTaskCreateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.BatchTaskCreateOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchTaskCreateOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static BatchTaskCreateOptions DeserializeBatchTaskCreateOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -225,17 +225,17 @@ namespace Azure.Compute.Batch
             ExitConditions exitConditions = default;
             string commandLine = default;
             BatchTaskContainerSettings containerSettings = default;
-            IList<ResourceFile> resourceFiles = default;
-            IList<OutputFile> outputFiles = default;
-            IList<EnvironmentSetting> environmentSettings = default;
+            IList<global::Azure.Compute.Batch.ResourceFile> resourceFiles = default;
+            IList<global::Azure.Compute.Batch.OutputFile> outputFiles = default;
+            IList<global::Azure.Compute.Batch.EnvironmentSetting> environmentSettings = default;
             BatchAffinityInfo affinityInfo = default;
             BatchTaskConstraints constraints = default;
             int? requiredSlots = default;
             UserIdentity userIdentity = default;
             MultiInstanceSettings multiInstanceSettings = default;
             BatchTaskDependencies dependsOn = default;
-            IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -250,11 +250,11 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("exitConditions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    exitConditions = ExitConditions.DeserializeExitConditions(prop.Value, options);
+                    exitConditions = global::Azure.Compute.Batch.ExitConditions.DeserializeExitConditions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("commandLine"u8))
@@ -264,76 +264,76 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("containerSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(prop.Value, options);
+                    containerSettings = global::Azure.Compute.Batch.BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceFiles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResourceFile> array = new List<ResourceFile>();
+                    List<global::Azure.Compute.Batch.ResourceFile> array = new List<global::Azure.Compute.Batch.ResourceFile>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceFile.DeserializeResourceFile(item, options));
+                        array.Add(global::Azure.Compute.Batch.ResourceFile.DeserializeResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
                 }
                 if (prop.NameEquals("outputFiles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<OutputFile> array = new List<OutputFile>();
+                    List<global::Azure.Compute.Batch.OutputFile> array = new List<global::Azure.Compute.Batch.OutputFile>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFile.DeserializeOutputFile(item, options));
+                        array.Add(global::Azure.Compute.Batch.OutputFile.DeserializeOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
                 }
                 if (prop.NameEquals("environmentSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<EnvironmentSetting> array = new List<EnvironmentSetting>();
+                    List<global::Azure.Compute.Batch.EnvironmentSetting> array = new List<global::Azure.Compute.Batch.EnvironmentSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
+                        array.Add(global::Azure.Compute.Batch.EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("affinityInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    affinityInfo = BatchAffinityInfo.DeserializeBatchAffinityInfo(prop.Value, options);
+                    affinityInfo = global::Azure.Compute.Batch.BatchAffinityInfo.DeserializeBatchAffinityInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("constraints"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    constraints = BatchTaskConstraints.DeserializeBatchTaskConstraints(prop.Value, options);
+                    constraints = global::Azure.Compute.Batch.BatchTaskConstraints.DeserializeBatchTaskConstraints(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requiredSlots"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -342,48 +342,48 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("userIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    userIdentity = UserIdentity.DeserializeUserIdentity(prop.Value, options);
+                    userIdentity = global::Azure.Compute.Batch.UserIdentity.DeserializeUserIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("multiInstanceSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    multiInstanceSettings = MultiInstanceSettings.DeserializeMultiInstanceSettings(prop.Value, options);
+                    multiInstanceSettings = global::Azure.Compute.Batch.MultiInstanceSettings.DeserializeMultiInstanceSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dependsOn"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    dependsOn = BatchTaskDependencies.DeserializeBatchTaskDependencies(prop.Value, options);
+                    dependsOn = global::Azure.Compute.Batch.BatchTaskDependencies.DeserializeBatchTaskDependencies(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("applicationPackageReferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
+                    List<global::Azure.Compute.Batch.BatchApplicationPackageReference> array = new List<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
+                        array.Add(global::Azure.Compute.Batch.BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new BatchTaskCreateOptions(
@@ -392,16 +392,16 @@ namespace Azure.Compute.Batch
                 exitConditions,
                 commandLine,
                 containerSettings,
-                resourceFiles ?? new ChangeTrackingList<ResourceFile>(),
-                outputFiles ?? new ChangeTrackingList<OutputFile>(),
-                environmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
+                (resourceFiles ?? new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>()),
+                (outputFiles ?? new ChangeTrackingList<global::Azure.Compute.Batch.OutputFile>()),
+                (environmentSettings ?? new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>()),
                 affinityInfo,
                 constraints,
                 requiredSlots,
                 userIdentity,
                 multiInstanceSettings,
                 dependsOn,
-                applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
+                (applicationPackageReferences ?? new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>()),
                 additionalBinaryDataProperties);
         }
     }

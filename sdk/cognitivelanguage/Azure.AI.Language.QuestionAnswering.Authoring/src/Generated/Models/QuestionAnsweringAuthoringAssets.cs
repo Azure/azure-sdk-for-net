@@ -14,20 +14,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringAssets
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringAssets"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets"/>. </summary>
         public QuestionAnsweringAuthoringAssets()
         {
-            Synonyms = new ChangeTrackingList<WordAlterations>();
-            Qnas = new ChangeTrackingList<ImportQnaRecord>();
+            Synonyms = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>();
+            Qnas = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringAssets"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets"/>. </summary>
         /// <param name="synonyms"> Collection of synonyms. </param>
         /// <param name="qnas"> List of QnA records to import. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringAssets(IList<WordAlterations> synonyms, IList<ImportQnaRecord> qnas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringAssets(IList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> synonyms, IList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> qnas, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Synonyms = synonyms;
             Qnas = qnas;
@@ -35,9 +35,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Collection of synonyms. </summary>
-        public IList<WordAlterations> Synonyms { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> Synonyms { get; }
 
         /// <summary> List of QnA records to import. </summary>
-        public IList<ImportQnaRecord> Qnas { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> Qnas { get; }
     }
 }

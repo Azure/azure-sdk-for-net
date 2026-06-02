@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Representation format of charts in analyze result markdown. </summary>
-    public readonly partial struct ChartFormat : IEquatable<ChartFormat>
+    public readonly partial struct ChartFormat : IEquatable<global::Azure.AI.ContentUnderstanding.ChartFormat>
     {
         private readonly string _value;
         /// <summary> Represent charts as Chart.js code blocks. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent charts as markdown tables. </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="ChartFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ChartFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChartFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent charts as markdown tables. </summary>
         public static ChartFormat Markdown { get; } = new ChartFormat(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="ChartFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ChartFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChartFormat left, ChartFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ChartFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.ChartFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChartFormat left, ChartFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ChartFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ChartFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ChartFormat(string value) => new ChartFormat(value);
 
-        /// <summary> Converts a string to a <see cref="ChartFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.ChartFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChartFormat?(string value) => value == null ? null : new ChartFormat(value);
+        public static implicit operator ChartFormat?(string value) => (value == null) ? null : new ChartFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ChartFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ChartFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ChartFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ChartFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

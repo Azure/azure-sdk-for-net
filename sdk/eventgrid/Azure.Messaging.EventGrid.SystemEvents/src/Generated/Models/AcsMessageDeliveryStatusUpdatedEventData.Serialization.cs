@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageDeliveryStatusUpdated event. </summary>
-    [JsonConverter(typeof(AcsMessageDeliveryStatusUpdatedEventDataConverter))]
-    public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData, IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData.AcsMessageDeliveryStatusUpdatedEventDataConverter))]
+    public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData"/> for deserialization. </summary>
         internal AcsMessageDeliveryStatusUpdatedEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsMessageEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData.DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)PersistableModelCreateCore(data, options);
+        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AcsMessageDeliveryStatusUpdatedEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,28 +75,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MessageId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(ToBsuid))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ToBsuid))
             {
                 writer.WritePropertyName("toBSUID"u8);
                 writer.WriteStringValue(ToBsuid);
             }
-            if (Optional.IsDefined(Status))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ChannelKind))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ChannelKind))
             {
                 writer.WritePropertyName("channelType"u8);
                 writer.WriteStringValue(ChannelKind.Value.ToString());
@@ -105,26 +105,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageDeliveryStatusUpdatedEventData IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)JsonModelCreateCore(ref reader, options);
+        AcsMessageDeliveryStatusUpdatedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AcsMessageDeliveryStatusUpdatedEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AcsMessageEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData.DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AcsMessageDeliveryStatusUpdatedEventData DeserializeAcsMessageDeliveryStatusUpdatedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string to = default;
             DateTimeOffset? receivedTimestamp = default;
             AcsMessageChannelEventError errorInternal = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string messageId = default;
             string toBsuid = default;
             AcsMessageDeliveryStatus? status = default;
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("receivedTimeStamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -160,11 +160,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    errorInternal = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(prop.Value, options);
+                    errorInternal = global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("messageId"u8))
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -188,16 +188,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("channelType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     channelKind = new AcsMessageChannelKind(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AcsMessageDeliveryStatusUpdatedEventData(
@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelKind);
         }
 
-        internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsMessageDeliveryStatusUpdatedEventData>
+        internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsMessageDeliveryStatusUpdatedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageDeliveryStatusUpdatedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -229,8 +229,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override AcsMessageDeliveryStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedEntityList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntityList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList"/>. </summary>
         public TextAuthoringExportedEntityList()
         {
-            Sublists = new ChangeTrackingList<TextAuthoringExportedEntitySublist>();
+            Sublists = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedEntityList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList"/>. </summary>
         /// <param name="sublists"> The sub-lists of the list component. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedEntityList(IList<TextAuthoringExportedEntitySublist> sublists, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedEntityList(IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist> sublists, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Sublists = sublists;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The sub-lists of the list component. </summary>
-        public IList<TextAuthoringExportedEntitySublist> Sublists { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist> Sublists { get; }
     }
 }

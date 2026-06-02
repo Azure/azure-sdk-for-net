@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Splits words into subwords and performs optional transformations on subword groups. This token filter is implemented using Apache Lucene. </summary>
-    public partial class WordDelimiterTokenFilter : TokenFilter, IJsonModel<WordDelimiterTokenFilter>
+    public partial class WordDelimiterTokenFilter : TokenFilter, IJsonModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter"/> for deserialization. </summary>
         internal WordDelimiterTokenFilter()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWordDelimiterTokenFilter(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter.DeserializeWordDelimiterTokenFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WordDelimiterTokenFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WordDelimiterTokenFilter IPersistableModel<WordDelimiterTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (WordDelimiterTokenFilter)PersistableModelCreateCore(data, options);
+        WordDelimiterTokenFilter IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => ((WordDelimiterTokenFilter)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WordDelimiterTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WordDelimiterTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,64 +74,64 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(GenerateWordParts))
+            if (global::Azure.Search.Documents.Optional.IsDefined(GenerateWordParts))
             {
                 writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
-            if (Optional.IsDefined(GenerateNumberParts))
+            if (global::Azure.Search.Documents.Optional.IsDefined(GenerateNumberParts))
             {
                 writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
-            if (Optional.IsDefined(CatenateWords))
+            if (global::Azure.Search.Documents.Optional.IsDefined(CatenateWords))
             {
                 writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
-            if (Optional.IsDefined(CatenateNumbers))
+            if (global::Azure.Search.Documents.Optional.IsDefined(CatenateNumbers))
             {
                 writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
-            if (Optional.IsDefined(CatenateAll))
+            if (global::Azure.Search.Documents.Optional.IsDefined(CatenateAll))
             {
                 writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
-            if (Optional.IsDefined(SplitOnCaseChange))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SplitOnCaseChange))
             {
                 writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
-            if (Optional.IsDefined(PreserveOriginal))
+            if (global::Azure.Search.Documents.Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
-            if (Optional.IsDefined(SplitOnNumerics))
+            if (global::Azure.Search.Documents.Optional.IsDefined(SplitOnNumerics))
             {
                 writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
-            if (Optional.IsDefined(StemEnglishPossessive))
+            if (global::Azure.Search.Documents.Optional.IsDefined(StemEnglishPossessive))
             {
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (Optional.IsCollectionDefined(ProtectedWords))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(ProtectedWords))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
                 foreach (string item in ProtectedWords)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -144,32 +144,32 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WordDelimiterTokenFilter IJsonModel<WordDelimiterTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WordDelimiterTokenFilter)JsonModelCreateCore(ref reader, options);
+        WordDelimiterTokenFilter IJsonModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((WordDelimiterTokenFilter)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TokenFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWordDelimiterTokenFilter(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter.DeserializeWordDelimiterTokenFilter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string odataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             bool? generateWordParts = default;
             bool? generateNumberParts = default;
             bool? catenateWords = default;
@@ -194,7 +194,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("generateWordParts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("generateNumberParts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -212,7 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("catenateWords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -221,7 +221,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("catenateNumbers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -230,7 +230,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("catenateAll"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("splitOnCaseChange"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -248,7 +248,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("preserveOriginal"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -257,7 +257,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("splitOnNumerics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -266,7 +266,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("stemEnglishPossessive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -275,14 +275,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("protectedWords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -294,9 +294,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     protectedWords = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WordDelimiterTokenFilter(
@@ -312,7 +312,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 preserveOriginal,
                 splitOnNumerics,
                 stemEnglishPossessive,
-                protectedWords ?? new ChangeTrackingList<string>());
+                (protectedWords ?? new ChangeTrackingList<string>()));
         }
     }
 }

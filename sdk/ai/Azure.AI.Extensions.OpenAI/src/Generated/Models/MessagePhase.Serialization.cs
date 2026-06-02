@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MessagePhase value) => value switch
         {
-            MessagePhase.Commentary => "commentary",
-            MessagePhase.FinalAnswer => "final_answer",
+            global::Azure.AI.Extensions.OpenAI.MessagePhase.Commentary => "commentary",
+            global::Azure.AI.Extensions.OpenAI.MessagePhase.FinalAnswer => "final_answer",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MessagePhase value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MessagePhase ToMessagePhase(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "commentary"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "commentary"))
             {
-                return MessagePhase.Commentary;
+                return global::Azure.AI.Extensions.OpenAI.MessagePhase.Commentary;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "final_answer"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "final_answer"))
             {
-                return MessagePhase.FinalAnswer;
+                return global::Azure.AI.Extensions.OpenAI.MessagePhase.FinalAnswer;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MessagePhase value.");
         }

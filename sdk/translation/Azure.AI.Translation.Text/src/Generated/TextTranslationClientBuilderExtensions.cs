@@ -12,57 +12,57 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class TextTranslationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Text.TextTranslationClient, global::Azure.AI.Translation.Text.TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(endpoint, options));
         }
 
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Text.TextTranslationClient, global::Azure.AI.Translation.Text.TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>((options, credential) => new TextTranslationClient(credential, options));
         }
 
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="credential"></param>
         /// <param name="endpoint"></param>
         /// <param name="tokenScope"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, Uri endpoint, string tokenScope = "https://cognitiveservices.azure.com/.default")
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Text.TextTranslationClient, global::Azure.AI.Translation.Text.TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, global::System.Uri endpoint, string tokenScope = "https://cognitiveservices.azure.com/.default")
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(credential, endpoint, tokenScope, options));
         }
 
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="credential"></param>
         /// <param name="resourceId"></param>
         /// <param name="region"></param>
         /// <param name="tokenScope"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, string resourceId, string region = "global", string tokenScope = "https://cognitiveservices.azure.com/.default")
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Text.TextTranslationClient, global::Azure.AI.Translation.Text.TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, string resourceId, string region = "global", string tokenScope = "https://cognitiveservices.azure.com/.default")
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(credential, resourceId, region, tokenScope, options));
         }
 
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="credential"></param>
         /// <param name="endpoint"></param>
         /// <param name="resourceId"></param>
         /// <param name="region"></param>
         /// <param name="tokenScope"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, Uri endpoint, string resourceId, string region = "global", string tokenScope = "https://cognitiveservices.azure.com/.default")
+        public static IAzureClientBuilder<global::Azure.AI.Translation.Text.TextTranslationClient, global::Azure.AI.Translation.Text.TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, TokenCredential credential, global::System.Uri endpoint, string resourceId, string region = "global", string tokenScope = "https://cognitiveservices.azure.com/.default")
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(

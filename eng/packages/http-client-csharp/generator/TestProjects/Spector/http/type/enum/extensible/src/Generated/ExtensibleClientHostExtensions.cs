@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type._Enum.Extensible
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ExtensibleClientHostExtensions
     {
         public static IClientBuilder AddExtensibleClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddExtensibleClient(this IHostApplicationBuilder host, string sectionName, Action<ExtensibleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddExtensibleClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type._Enum.Extensible.ExtensibleClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedExtensibleClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedExtensibleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ExtensibleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedExtensibleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type._Enum.Extensible.ExtensibleClientSettings> configureSettings) => throw null;
     }
 }

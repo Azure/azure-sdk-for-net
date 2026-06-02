@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A representation of an image output emitted by a code interpreter tool in response to a tool call by the model. </summary>
     public partial class RunStepCodeInterpreterImageOutput : RunStepCodeInterpreterToolCallOutput
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageOutput"/>. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>
         internal RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image) : base("image")
         {
             Image = image;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterImageOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="image"> Referential information for the image associated with this output. </param>
-        internal RunStepCodeInterpreterImageOutput(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepCodeInterpreterImageReference image) : base(@type, additionalBinaryDataProperties)
+        internal RunStepCodeInterpreterImageOutput(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepCodeInterpreterImageReference image) : base(@type, additionalBinaryDataProperties)
         {
             Image = image;
         }

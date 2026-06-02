@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a CustomHealthcare project. </summary>
-    public partial class ExportedCustomHealthcareProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomHealthcareProjectAsset>
+    public partial class ExportedCustomHealthcareProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringExportedProjectAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExportedCustomHealthcareProjectAsset(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset.DeserializeExportedCustomHealthcareProjectAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomHealthcareProjectAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportedCustomHealthcareProjectAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedCustomHealthcareProjectAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomHealthcareProjectAsset IPersistableModel<ExportedCustomHealthcareProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportedCustomHealthcareProjectAsset)PersistableModelCreateCore(data, options);
+        ExportedCustomHealthcareProjectAsset IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ExportedCustomHealthcareProjectAsset)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedCustomHealthcareProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExportedCustomHealthcareProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,29 +68,29 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomHealthcareProjectAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Entities))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
                 foreach (TextAuthoringExportedCompositeEntity item in Entities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TextAuthoringExportedCompositeEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Documents))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();
                 foreach (ExportedCustomHealthcareDocument item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ExportedCustomHealthcareDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,33 +98,33 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomHealthcareProjectAsset IJsonModel<ExportedCustomHealthcareProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExportedCustomHealthcareProjectAsset)JsonModelCreateCore(ref reader, options);
+        ExportedCustomHealthcareProjectAsset IJsonModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ExportedCustomHealthcareProjectAsset)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TextAuthoringExportedProjectAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExportedCustomHealthcareProjectAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedCustomHealthcareProjectAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset.DeserializeExportedCustomHealthcareProjectAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExportedCustomHealthcareProjectAsset DeserializeExportedCustomHealthcareProjectAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TextAuthoringProjectKind projectKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<TextAuthoringExportedCompositeEntity> entities = default;
-            IList<ExportedCustomHealthcareDocument> documents = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> entities = default;
+            IList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> documents = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("projectKind"u8))
@@ -134,38 +134,38 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TextAuthoringExportedCompositeEntity> array = new List<TextAuthoringExportedCompositeEntity>();
+                    List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> array = new List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TextAuthoringExportedCompositeEntity.DeserializeTextAuthoringExportedCompositeEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity.DeserializeTextAuthoringExportedCompositeEntity(item, options));
                     }
                     entities = array;
                     continue;
                 }
                 if (prop.NameEquals("documents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ExportedCustomHealthcareDocument> array = new List<ExportedCustomHealthcareDocument>();
+                    List<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> array = new List<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExportedCustomHealthcareDocument.DeserializeExportedCustomHealthcareDocument(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument.DeserializeExportedCustomHealthcareDocument(item, options));
                     }
                     documents = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportedCustomHealthcareProjectAsset(projectKind, additionalBinaryDataProperties, entities ?? new ChangeTrackingList<TextAuthoringExportedCompositeEntity>(), documents ?? new ChangeTrackingList<ExportedCustomHealthcareDocument>());
+            return new ExportedCustomHealthcareProjectAsset(projectKind, additionalBinaryDataProperties, (entities ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>()), (documents ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>()));
         }
     }
 }

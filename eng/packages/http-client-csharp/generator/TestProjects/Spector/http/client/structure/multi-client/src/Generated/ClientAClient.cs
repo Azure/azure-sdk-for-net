@@ -19,39 +19,39 @@ namespace Client.Structure.MultiClient
     {
         protected ClientAClient() => throw null;
 
-        public ClientAClient(Uri endpoint, ClientType client) : this(endpoint, client, new ClientAClientOptions()) => throw null;
+        public ClientAClient(global::System.Uri endpoint, ClientType client) : this(endpoint, client, new ClientAClientOptions()) => throw null;
 
-        internal ClientAClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, ClientAClientOptions options) => throw null;
+        internal ClientAClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientType client, ClientAClientOptions options) => throw null;
 
-        public ClientAClient(Uri endpoint, ClientType client, ClientAClientOptions options) : this(null, endpoint, client, options) => throw null;
+        public ClientAClient(global::System.Uri endpoint, ClientType client, ClientAClientOptions options) : this(null, endpoint, client, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ClientAClient(ClientAClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ClientAClient(ClientAClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, (settings?.Client ?? default), settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RenamedOne(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedOneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedOneAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedOne(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedOneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedOneAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RenamedThree(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedThreeAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedThreeAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedThree(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedThreeAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedThreeAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response RenamedFive(RequestContext context) => throw null;
 
-        public virtual Task<Response> RenamedFiveAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> RenamedFiveAsync(RequestContext context) => throw null;
 
         public virtual Response RenamedFive(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> RenamedFiveAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> RenamedFiveAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

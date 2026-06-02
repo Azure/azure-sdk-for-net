@@ -18,9 +18,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Azure Translator is a cloud-based, multilingual, neural machine translation service. The Text Translation API enables robust and scalable translation capabilities suitable for diverse applications. </summary>
     public partial class TextTranslationClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of TextTranslationClient for mocking. </summary>
@@ -32,20 +32,20 @@ namespace Azure.AI.Translation.Text
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal TextTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TextTranslationClientOptions options)
+        internal TextTranslationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, TextTranslationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Translation.Text.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TextTranslationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -53,8 +53,8 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of TextTranslationClient from a <see cref="TextTranslationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for TextTranslationClient. </param>
-        [Experimental("SCME0002")]
-        public TextTranslationClient(TextTranslationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public TextTranslationClient(TextTranslationClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSupportedLanguages(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Text
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+                using HttpMessage message = this.CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -140,15 +140,15 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetSupportedLanguages");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+                using HttpMessage message = this.CreateGetSupportedLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -180,11 +180,11 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = default, string scope = default, string acceptLanguage = default, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Translation.Text.GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = default, string scope = default, string acceptLanguage = default, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSupportedLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((GetSupportedLanguagesResult)result, result);
+            Response result = this.GetSupportedLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((GetSupportedLanguagesResult)result), result);
         }
 
         /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
@@ -209,11 +209,11 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = default, string scope = default, string acceptLanguage = default, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Translation.Text.GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = default, string scope = default, string acceptLanguage = default, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSupportedLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((GetSupportedLanguagesResult)result, result);
+            Response result = await this.GetSupportedLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((GetSupportedLanguagesResult)result), result);
         }
 
         /// <summary>
@@ -227,8 +227,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Translate(RequestContent content, string clientTraceId = default, RequestContext context = null)
         {
@@ -236,9 +236,9 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTranslateRequest(content, clientTraceId, context);
+                using HttpMessage message = this.CreateTranslateRequest(content, clientTraceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -259,18 +259,18 @@ namespace Azure.AI.Translation.Text
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TranslateAsync(RequestContent content, string clientTraceId = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> TranslateAsync(RequestContent content, string clientTraceId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextTranslationClient.Translate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTranslateRequest(content, clientTraceId, context);
+                using HttpMessage message = this.CreateTranslateRequest(content, clientTraceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -304,9 +304,9 @@ namespace Azure.AI.Translation.Text
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="language"/>, <paramref name="fromScript"/> or <paramref name="toScript"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="language"/>, <paramref name="fromScript"/> or <paramref name="toScript"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = default, RequestContext context = null)
         {
@@ -314,12 +314,12 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(language, nameof(language));
-                Argument.AssertNotNullOrEmpty(fromScript, nameof(fromScript));
-                Argument.AssertNotNullOrEmpty(toScript, nameof(toScript));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(language, nameof(language));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(fromScript, nameof(fromScript));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(toScript, nameof(toScript));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                using HttpMessage message = this.CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -353,22 +353,22 @@ namespace Azure.AI.Translation.Text
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="language"/>, <paramref name="fromScript"/> or <paramref name="toScript"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="language"/>, <paramref name="fromScript"/> or <paramref name="toScript"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(language, nameof(language));
-                Argument.AssertNotNullOrEmpty(fromScript, nameof(fromScript));
-                Argument.AssertNotNullOrEmpty(toScript, nameof(toScript));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(language, nameof(language));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(fromScript, nameof(fromScript));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNullOrEmpty(toScript, nameof(toScript));
+                global::Azure.AI.Translation.Text.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                using HttpMessage message = this.CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

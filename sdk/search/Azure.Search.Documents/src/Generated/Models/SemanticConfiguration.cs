@@ -15,28 +15,28 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SemanticConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>
         public SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(prioritizedFields, nameof(prioritizedFields));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(prioritizedFields, nameof(prioritizedFields));
 
             Name = name;
             PrioritizedFields = prioritizedFields;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
         /// <param name="rankingOrder"> Specifies the score type to be used for the sort order of the search results. </param>
         /// <param name="flightingOptIn"> Determines which semantic or query rewrite models to use during model flighting/upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, bool? flightingOptIn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, bool? flightingOptIn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PrioritizedFields = prioritizedFields;

@@ -13,57 +13,57 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a vector store chunking strategy configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="VectorStoreStaticChunkingStrategyResponse"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownVectorStoreChunkingStrategyResponse))]
-    public abstract partial class VectorStoreChunkingStrategyResponse : IJsonModel<VectorStoreChunkingStrategyResponse>
+    [PersistableModelProxyAttribute(typeof(UnknownVectorStoreChunkingStrategyResponse))]
+    public abstract partial class VectorStoreChunkingStrategyResponse : IJsonModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VectorStoreChunkingStrategyResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVectorStoreChunkingStrategyResponse(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse.DeserializeVectorStoreChunkingStrategyResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VectorStoreChunkingStrategyResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VectorStoreChunkingStrategyResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VectorStoreChunkingStrategyResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VectorStoreChunkingStrategyResponse IPersistableModel<VectorStoreChunkingStrategyResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VectorStoreChunkingStrategyResponse IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VectorStoreChunkingStrategyResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VectorStoreChunkingStrategyResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -71,14 +71,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VectorStoreChunkingStrategyResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -86,9 +86,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -97,26 +97,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VectorStoreChunkingStrategyResponse IJsonModel<VectorStoreChunkingStrategyResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VectorStoreChunkingStrategyResponse IJsonModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VectorStoreChunkingStrategyResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VectorStoreChunkingStrategyResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorStoreChunkingStrategyResponse(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponse.DeserializeVectorStoreChunkingStrategyResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VectorStoreChunkingStrategyResponse DeserializeVectorStoreChunkingStrategyResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -125,12 +125,12 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "other":
-                        return VectorStoreAutoChunkingStrategyResponse.DeserializeVectorStoreAutoChunkingStrategyResponse(element, options);
+                        return global::Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse.DeserializeVectorStoreAutoChunkingStrategyResponse(element, options);
                     case "static":
-                        return VectorStoreStaticChunkingStrategyResponse.DeserializeVectorStoreStaticChunkingStrategyResponse(element, options);
+                        return global::Azure.AI.Agents.Persistent.VectorStoreStaticChunkingStrategyResponse.DeserializeVectorStoreStaticChunkingStrategyResponse(element, options);
                 }
             }
-            return UnknownVectorStoreChunkingStrategyResponse.DeserializeUnknownVectorStoreChunkingStrategyResponse(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownVectorStoreChunkingStrategyResponse.DeserializeUnknownVectorStoreChunkingStrategyResponse(element, options);
         }
     }
 }

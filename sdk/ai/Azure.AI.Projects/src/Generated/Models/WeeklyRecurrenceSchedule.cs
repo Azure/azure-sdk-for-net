@@ -12,26 +12,26 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Weekly recurrence schedule. </summary>
     public partial class WeeklyRecurrenceSchedule : RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule"/>. </summary>
         /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
-        public WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek) : base(RecurrenceType.Weekly)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
+        public WeeklyRecurrenceSchedule(IEnumerable<global::System.DayOfWeek> daysOfWeek) : base(global::Azure.AI.Projects.Evaluation.RecurrenceType.Weekly)
         {
-            Argument.AssertNotNull(daysOfWeek, nameof(daysOfWeek));
+            global::Azure.AI.Projects.Argument.AssertNotNull(daysOfWeek, nameof(daysOfWeek));
 
             DaysOfWeek = daysOfWeek.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeeklyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
-        internal WeeklyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DayOfWeek> daysOfWeek) : base(@type, additionalBinaryDataProperties)
+        internal WeeklyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::System.DayOfWeek> daysOfWeek) : base(@type, additionalBinaryDataProperties)
         {
             DaysOfWeek = daysOfWeek;
         }
 
         /// <summary> Days of the week for the recurrence schedule. </summary>
-        public IList<DayOfWeek> DaysOfWeek { get; }
+        public IList<global::System.DayOfWeek> DaysOfWeek { get; }
     }
 }

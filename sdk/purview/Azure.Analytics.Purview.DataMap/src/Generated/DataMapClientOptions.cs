@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    /// <summary> Client options for <see cref="DataMapClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Analytics.Purview.DataMap.DataMapClient"/>. </summary>
     public partial class DataMapClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_09_01;
+        private const global::Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion LatestVersion = global::Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion.V2023_09_01;
 
         /// <summary> Initializes a new instance of DataMapClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public DataMapClientOptions(ServiceVersion version = LatestVersion)
+        public DataMapClientOptions(global::Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_09_01 => "2023-09-01",
+                global::Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion.V2023_09_01 => "2023-09-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of DataMapClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal DataMapClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2023-09-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

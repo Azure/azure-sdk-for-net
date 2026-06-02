@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Configuration settings for an analyzer. </summary>
-    public partial class ContentAnalyzerConfig : IJsonModel<ContentAnalyzerConfig>
+    public partial class ContentAnalyzerConfig : IJsonModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContentAnalyzerConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContentAnalyzerConfig(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig.DeserializeContentAnalyzerConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentAnalyzerConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentAnalyzerConfig IPersistableModel<ContentAnalyzerConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContentAnalyzerConfig IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentAnalyzerConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContentAnalyzerConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,23 +68,23 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ShouldReturnDetails))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(ShouldReturnDetails))
             {
                 writer.WritePropertyName("returnDetails"u8);
                 writer.WriteBooleanValue(ShouldReturnDetails.Value);
             }
-            if (Optional.IsCollectionDefined(Locales))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Locales))
             {
                 writer.WritePropertyName("locales"u8);
                 writer.WriteStartArray();
                 foreach (string item in Locales)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -93,83 +93,83 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableOcr))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableOcr))
             {
                 writer.WritePropertyName("enableOcr"u8);
                 writer.WriteBooleanValue(EnableOcr.Value);
             }
-            if (Optional.IsDefined(EnableLayout))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableLayout))
             {
                 writer.WritePropertyName("enableLayout"u8);
                 writer.WriteBooleanValue(EnableLayout.Value);
             }
-            if (Optional.IsDefined(EnableFigureDescription))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableFigureDescription))
             {
                 writer.WritePropertyName("enableFigureDescription"u8);
                 writer.WriteBooleanValue(EnableFigureDescription.Value);
             }
-            if (Optional.IsDefined(EnableFigureAnalysis))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableFigureAnalysis))
             {
                 writer.WritePropertyName("enableFigureAnalysis"u8);
                 writer.WriteBooleanValue(EnableFigureAnalysis.Value);
             }
-            if (Optional.IsDefined(EnableFormula))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableFormula))
             {
                 writer.WritePropertyName("enableFormula"u8);
                 writer.WriteBooleanValue(EnableFormula.Value);
             }
-            if (Optional.IsDefined(TableFormat))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(TableFormat))
             {
                 writer.WritePropertyName("tableFormat"u8);
                 writer.WriteStringValue(TableFormat.Value.ToString());
             }
-            if (Optional.IsDefined(ChartFormat))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(ChartFormat))
             {
                 writer.WritePropertyName("chartFormat"u8);
                 writer.WriteStringValue(ChartFormat.Value.ToString());
             }
-            if (Optional.IsDefined(AnnotationFormat))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(AnnotationFormat))
             {
                 writer.WritePropertyName("annotationFormat"u8);
                 writer.WriteStringValue(AnnotationFormat.Value.ToString());
             }
-            if (Optional.IsDefined(DisableFaceBlurring))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(DisableFaceBlurring))
             {
                 writer.WritePropertyName("disableFaceBlurring"u8);
                 writer.WriteBooleanValue(DisableFaceBlurring.Value);
             }
-            if (Optional.IsDefined(EstimateFieldSourceAndConfidence))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EstimateFieldSourceAndConfidence))
             {
                 writer.WritePropertyName("estimateFieldSourceAndConfidence"u8);
                 writer.WriteBooleanValue(EstimateFieldSourceAndConfidence.Value);
             }
-            if (Optional.IsCollectionDefined(ContentCategories))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(ContentCategories))
             {
                 writer.WritePropertyName("contentCategories"u8);
                 writer.WriteStartObject();
                 foreach (var item in ContentCategories)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ContentCategoryDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EnableSegment))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(EnableSegment))
             {
                 writer.WritePropertyName("enableSegment"u8);
                 writer.WriteBooleanValue(EnableSegment.Value);
             }
-            if (Optional.IsDefined(SegmentPerPage))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(SegmentPerPage))
             {
                 writer.WritePropertyName("segmentPerPage"u8);
                 writer.WriteBooleanValue(SegmentPerPage.Value);
             }
-            if (Optional.IsDefined(ShouldOmitContent))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(ShouldOmitContent))
             {
                 writer.WritePropertyName("omitContent"u8);
                 writer.WriteBooleanValue(ShouldOmitContent.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -177,9 +177,9 @@ namespace Azure.AI.ContentUnderstanding
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -188,26 +188,26 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentAnalyzerConfig IJsonModel<ContentAnalyzerConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContentAnalyzerConfig IJsonModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContentAnalyzerConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentAnalyzerConfig(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.ContentAnalyzerConfig.DeserializeContentAnalyzerConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentAnalyzerConfig DeserializeContentAnalyzerConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -223,16 +223,16 @@ namespace Azure.AI.ContentUnderstanding
             AnnotationFormat? annotationFormat = default;
             bool? disableFaceBlurring = default;
             bool? estimateFieldSourceAndConfidence = default;
-            IDictionary<string, ContentCategoryDefinition> contentCategories = default;
+            IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = default;
             bool? enableSegment = default;
             bool? segmentPerPage = default;
             bool? shouldOmitContent = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("returnDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -241,14 +241,14 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("locales"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -262,7 +262,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("enableOcr"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -271,7 +271,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("enableLayout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -280,7 +280,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("enableFigureDescription"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -289,7 +289,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("enableFigureAnalysis"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -298,7 +298,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("enableFormula"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -307,7 +307,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("tableFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -316,7 +316,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("chartFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -325,7 +325,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("annotationFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -334,7 +334,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("disableFaceBlurring"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -343,7 +343,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("estimateFieldSourceAndConfidence"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -352,21 +352,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("contentCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ContentCategoryDefinition> dictionary = new Dictionary<string, ContentCategoryDefinition>();
+                    Dictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition> dictionary = new Dictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ContentCategoryDefinition.DeserializeContentCategoryDefinition(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition.DeserializeContentCategoryDefinition(prop0.Value, options));
                     }
                     contentCategories = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("enableSegment"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -375,7 +375,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("segmentPerPage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -384,21 +384,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("omitContent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     shouldOmitContent = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ContentAnalyzerConfig(
                 shouldReturnDetails,
-                locales ?? new ChangeTrackingList<string>(),
+                (locales ?? new ChangeTrackingList<string>()),
                 enableOcr,
                 enableLayout,
                 enableFigureDescription,
@@ -409,7 +409,7 @@ namespace Azure.AI.ContentUnderstanding
                 annotationFormat,
                 disableFaceBlurring,
                 estimateFieldSourceAndConfidence,
-                contentCategories ?? new ChangeTrackingDictionary<string, ContentCategoryDefinition>(),
+                (contentCategories ?? new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentCategoryDefinition>()),
                 enableSegment,
                 segmentPerPage,
                 shouldOmitContent,

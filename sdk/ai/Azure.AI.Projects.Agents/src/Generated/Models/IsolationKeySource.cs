@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The IsolationKeySource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraIsolationKeySource"/> and <see cref="HeaderIsolationKeySource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.EntraIsolationKeySource"/> and <see cref="Azure.AI.Projects.Agents.HeaderIsolationKeySource"/>.
     /// </summary>
     public abstract partial class IsolationKeySource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IsolationKeySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.IsolationKeySource"/>. </summary>
         /// <param name="kind"></param>
         private protected IsolationKeySource(IsolationKeySourceKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsolationKeySource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.IsolationKeySource"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IsolationKeySource(IsolationKeySourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

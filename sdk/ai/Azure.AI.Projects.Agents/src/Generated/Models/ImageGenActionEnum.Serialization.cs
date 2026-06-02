@@ -11,26 +11,26 @@ namespace OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ImageGenActionEnum value) => value switch
         {
-            ImageGenActionEnum.Generate => "generate",
-            ImageGenActionEnum.Edit => "edit",
-            ImageGenActionEnum.Auto => "auto",
+            global::OpenAI.ImageGenActionEnum.Generate => "generate",
+            global::OpenAI.ImageGenActionEnum.Edit => "edit",
+            global::OpenAI.ImageGenActionEnum.Auto => "auto",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageGenActionEnum value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ImageGenActionEnum ToImageGenActionEnum(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "generate"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "generate"))
             {
-                return ImageGenActionEnum.Generate;
+                return global::OpenAI.ImageGenActionEnum.Generate;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "edit"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "edit"))
             {
-                return ImageGenActionEnum.Edit;
+                return global::OpenAI.ImageGenActionEnum.Edit;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ImageGenActionEnum.Auto;
+                return global::OpenAI.ImageGenActionEnum.Auto;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageGenActionEnum value.");
         }

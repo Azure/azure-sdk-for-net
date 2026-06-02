@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RequestData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="RequestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.RequestData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="id">
         /// Identifier of a request call instance. Used for correlation between request and
@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.RequestData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="url"> Request URL with all query string parameters. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal RequestData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, string id, string name, string duration, bool success, string responseCode, string source, string url, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
+        internal RequestData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, string id, string name, string duration, bool success, string responseCode, string source, string url, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Id = id;
             Name = name;

@@ -18,27 +18,27 @@ namespace Azure.Analytics.PlanetaryComputer
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetSignRequest(Uri href, int? durationInMinutes, RequestContext context)
+        internal HttpMessage CreateGetSignRequest(global::System.Uri href, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/sign", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (href != null)
+            if ((href != null))
             {
-                uri.AppendQuery("href", TypeFormatters.ConvertToString(href), true);
+                uri.AppendQuery("href", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(href), true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -49,18 +49,18 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/token/", false);
             uri.AppendPath(collectionId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -70,18 +70,18 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/token/revoke", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (durationInMinutes != null)
+            if ((durationInMinutes != null))
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+                uri.AppendQuery("duration", global::Azure.Analytics.PlanetaryComputer.TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             return message;
         }
     }

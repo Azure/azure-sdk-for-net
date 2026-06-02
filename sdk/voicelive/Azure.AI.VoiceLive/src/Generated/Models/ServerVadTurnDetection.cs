@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     /// <summary> Base model for VAD-based turn detection. </summary>
     public partial class ServerVadTurnDetection : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="ServerVadTurnDetection"/>. </summary>
-        public ServerVadTurnDetection() : base(TurnDetectionType.ServerVad)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerVadTurnDetection"/>. </summary>
+        public ServerVadTurnDetection() : base(global::Azure.AI.VoiceLive.TurnDetectionType.ServerVad)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerVadTurnDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ServerVadTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="autoTruncate"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
-        internal ServerVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
+        internal ServerVadTurnDetection(TurnDetectionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;

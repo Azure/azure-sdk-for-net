@@ -12,21 +12,21 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Monthly recurrence schedule. </summary>
     public partial class MonthlyRecurrenceSchedule : RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.MonthlyRecurrenceSchedule"/>. </summary>
         /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="daysOfMonth"/> is null. </exception>
-        public MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth) : base(RecurrenceType.Monthly)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="daysOfMonth"/> is null. </exception>
+        public MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth) : base(global::Azure.AI.Projects.Evaluation.RecurrenceType.Monthly)
         {
-            Argument.AssertNotNull(daysOfMonth, nameof(daysOfMonth));
+            global::Azure.AI.Projects.Argument.AssertNotNull(daysOfMonth, nameof(daysOfMonth));
 
             DaysOfMonth = daysOfMonth.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.MonthlyRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
-        internal MonthlyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(@type, additionalBinaryDataProperties)
+        internal MonthlyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<int> daysOfMonth) : base(@type, additionalBinaryDataProperties)
         {
             DaysOfMonth = daysOfMonth;
         }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.Head
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class HeadClientHostExtensions
     {
         public static IClientBuilder AddHeadClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddHeadClient(this IHostApplicationBuilder host, string sectionName, Action<HeadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddHeadClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.Head.HeadClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedHeadClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedHeadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<HeadClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedHeadClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.Head.HeadClientSettings> configureSettings) => throw null;
     }
 }

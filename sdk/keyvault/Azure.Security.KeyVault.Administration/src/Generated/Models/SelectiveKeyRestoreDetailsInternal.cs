@@ -13,14 +13,14 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class SelectiveKeyRestoreDetailsInternal
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreDetailsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal"/>. </summary>
         internal SelectiveKeyRestoreDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreDetailsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.SelectiveKeyRestoreDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the restore operation. </param>
         /// <param name="statusDetails"> The status details of restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the selective key restore operation. </param>
@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SelectiveKeyRestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SelectiveKeyRestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;

@@ -13,14 +13,14 @@ namespace Parameters.Query
 {
     public partial class QueryClient
     {
-        public QueryClient() : this(new Uri("http://localhost:3000"), new QueryClientOptions()) => throw null;
+        public QueryClient() : this(new global::System.Uri("http://localhost:3000"), new QueryClientOptions()) => throw null;
 
-        internal QueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, QueryClientOptions options) => throw null;
+        internal QueryClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, QueryClientOptions options) => throw null;
 
-        public QueryClient(Uri endpoint, QueryClientOptions options) : this(null, endpoint, options) => throw null;
+        public QueryClient(global::System.Uri endpoint, QueryClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public QueryClient(QueryClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public QueryClient(QueryClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

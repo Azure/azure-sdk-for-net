@@ -14,14 +14,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class AnswersOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnswersOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions"/>. </summary>
         public AnswersOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnswersOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions"/>. </summary>
         /// <param name="qnaId">
         /// Exact QnA ID to fetch from the knowledge base, this field takes priority over
         /// question.
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
         /// <param name="queryPreferences"> To fine tune query results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources, QueryPreferences queryPreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources, QueryPreferences queryPreferences, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QnaId = qnaId;
             Question = question;

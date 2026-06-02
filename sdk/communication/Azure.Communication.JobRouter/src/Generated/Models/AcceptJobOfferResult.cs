@@ -14,9 +14,9 @@ namespace Azure.Communication.JobRouter
     public partial class AcceptJobOfferResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
@@ -27,12 +27,12 @@ namespace Azure.Communication.JobRouter
             WorkerId = workerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssignmentId = assignmentId;
             JobId = jobId;

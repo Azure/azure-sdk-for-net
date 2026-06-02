@@ -11,8 +11,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class CollectionsModelProperty
     {
-        public CollectionsModelProperty(IEnumerable<InnerModel> @property) => throw null;
+        public CollectionsModelProperty(IEnumerable<global::_Type.Property.ValueTypes.InnerModel> @property) => throw null;
 
-        public IList<InnerModel> Property => throw null;
+        public IList<global::_Type.Property.ValueTypes.InnerModel> Property => throw null;
     }
 }

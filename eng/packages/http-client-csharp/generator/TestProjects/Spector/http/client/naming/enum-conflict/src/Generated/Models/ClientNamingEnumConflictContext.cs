@@ -11,8 +11,8 @@ using Client.Naming.EnumConflict.SecondNamespace;
 
 namespace Client.Naming.EnumConflict
 {
-    [ModelReaderWriterBuildable(typeof(FirstModel))]
-    [ModelReaderWriterBuildable(typeof(SecondModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(FirstModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(SecondModel))]
     public partial class ClientNamingEnumConflictContext : ModelReaderWriterContext
     {
     }

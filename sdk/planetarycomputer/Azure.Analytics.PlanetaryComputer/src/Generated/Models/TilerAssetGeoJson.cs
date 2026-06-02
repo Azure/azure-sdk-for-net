@@ -15,26 +15,26 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TilerAssetGeoJson
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TilerAssetGeoJson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson"/>. </summary>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="assets"> Assets. </param>
-        internal TilerAssetGeoJson(string id, IEnumerable<float> boundingBox, IDictionary<string, StacAsset> assets)
+        internal TilerAssetGeoJson(string id, IEnumerable<float> boundingBox, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets)
         {
             Id = id;
             BoundingBox = boundingBox.ToList();
             Assets = assets;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TilerAssetGeoJson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson"/>. </summary>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="collection"> ID of the STAC collection this item belongs to. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="assets"> Assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerAssetGeoJson(string id, string collection, IList<float> boundingBox, IDictionary<string, StacAsset> assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerAssetGeoJson(string id, string collection, IList<float> boundingBox, IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> assets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Collection = collection;
@@ -53,6 +53,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<float> BoundingBox { get; }
 
         /// <summary> Assets. </summary>
-        public IDictionary<string, StacAsset> Assets { get; }
+        public IDictionary<string, global::Azure.Analytics.PlanetaryComputer.StacAsset> Assets { get; }
     }
 }

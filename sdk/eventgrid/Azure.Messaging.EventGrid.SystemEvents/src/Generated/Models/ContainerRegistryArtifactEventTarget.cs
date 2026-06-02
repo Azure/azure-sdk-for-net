@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryArtifactEventTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="repository"> The repository name of the artifact. </param>
         internal ContainerRegistryArtifactEventTarget(string mediaType, string repository)
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Repository = repository;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="size"> The size in bytes of the artifact. </param>
         /// <param name="digest"> The digest of the artifact. </param>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MediaType = mediaType;
             Size = size;

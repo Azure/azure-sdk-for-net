@@ -18,43 +18,43 @@ namespace Authentication.Union
     public partial class UnionClient
     {
         private const string AuthorizationHeader = "x-ms-api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://security.microsoft.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://security.microsoft.com/.default" };
 
         protected UnionClient() => throw null;
 
-        public UnionClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
+        public UnionClient(AzureKeyCredential credential) : this(new global::System.Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
 
-        public UnionClient(AzureKeyCredential credential, UnionClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+        public UnionClient(AzureKeyCredential credential, UnionClientOptions options) : this(new global::System.Uri("http://localhost:3000"), credential, options) => throw null;
 
-        public UnionClient(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
+        public UnionClient(TokenCredential credential) : this(new global::System.Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
 
-        public UnionClient(TokenCredential credential, UnionClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+        public UnionClient(TokenCredential credential, UnionClientOptions options) : this(new global::System.Uri("http://localhost:3000"), credential, options) => throw null;
 
-        internal UnionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UnionClientOptions options) => throw null;
+        internal UnionClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, UnionClientOptions options) => throw null;
 
-        public UnionClient(Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options) => throw null;
+        public UnionClient(global::System.Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options) => throw null;
 
-        public UnionClient(Uri endpoint, TokenCredential credential, UnionClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
+        public UnionClient(global::System.Uri endpoint, TokenCredential credential, UnionClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public UnionClient(UnionClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ValidKey(RequestContext context) => throw null;
 
-        public virtual Task<Response> ValidKeyAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ValidKeyAsync(RequestContext context) => throw null;
 
         public virtual Response ValidKey(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ValidKeyAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ValidKeyAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ValidToken(RequestContext context) => throw null;
 
-        public virtual Task<Response> ValidTokenAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ValidTokenAsync(RequestContext context) => throw null;
 
         public virtual Response ValidToken(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ValidTokenAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ValidTokenAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

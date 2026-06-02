@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text KeyPhraseExtraction task input. </summary>
     public partial class TextKeyPhraseExtractionInput : AnalyzeTextInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextKeyPhraseExtractionInput"/>. </summary>
-        public TextKeyPhraseExtractionInput() : base(AnalyzeTextInputKind.KeyPhraseExtraction)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextKeyPhraseExtractionInput"/>. </summary>
+        public TextKeyPhraseExtractionInput() : base(global::Azure.AI.Language.Text.AnalyzeTextInputKind.KeyPhraseExtraction)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextKeyPhraseExtractionInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TextKeyPhraseExtractionInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Key phrase extraction task parameters. </param>
-        internal TextKeyPhraseExtractionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, KeyPhraseActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextKeyPhraseExtractionInput(AnalyzeTextInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, KeyPhraseActionContent actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;

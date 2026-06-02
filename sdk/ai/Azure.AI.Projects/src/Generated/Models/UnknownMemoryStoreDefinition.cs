@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Memory
 {
     internal partial class UnknownMemoryStoreDefinition : MemoryStoreDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMemoryStoreDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.UnknownMemoryStoreDefinition"/>. </summary>
         /// <param name="kind"> The kind of the memory store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMemoryStoreDefinition(MemoryStoreKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMemoryStoreDefinition(MemoryStoreKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

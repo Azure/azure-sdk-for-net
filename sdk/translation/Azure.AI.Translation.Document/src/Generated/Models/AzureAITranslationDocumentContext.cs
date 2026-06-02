@@ -14,22 +14,22 @@ namespace Azure.AI.Translation.Document
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(BatchOptions))]
-    [ModelReaderWriterBuildable(typeof(DocumentFilter))]
-    [ModelReaderWriterBuildable(typeof(DocumentsStatus))]
-    [ModelReaderWriterBuildable(typeof(DocumentStatusResult))]
-    [ModelReaderWriterBuildable(typeof(DocumentTranslateContent))]
-    [ModelReaderWriterBuildable(typeof(DocumentTranslationFileFormat))]
-    [ModelReaderWriterBuildable(typeof(DocumentTranslationInput))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SupportedFileFormats))]
-    [ModelReaderWriterBuildable(typeof(TranslationBatch))]
-    [ModelReaderWriterBuildable(typeof(TranslationGlossary))]
-    [ModelReaderWriterBuildable(typeof(TranslationSource))]
-    [ModelReaderWriterBuildable(typeof(TranslationsStatus))]
-    [ModelReaderWriterBuildable(typeof(TranslationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(TranslationStatusSummary))]
-    [ModelReaderWriterBuildable(typeof(TranslationTarget))]
+    [ModelReaderWriterBuildableAttribute(typeof(BatchOptions))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentFilter))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentsStatus))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentStatusResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentTranslateContent))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentTranslationFileFormat))]
+    [ModelReaderWriterBuildableAttribute(typeof(DocumentTranslationInput))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(SupportedFileFormats))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationBatch))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationGlossary))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationSource))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationsStatus))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationStatusResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationStatusSummary))]
+    [ModelReaderWriterBuildableAttribute(typeof(TranslationTarget))]
     public partial class AzureAITranslationDocumentContext : ModelReaderWriterContext
     {
     }

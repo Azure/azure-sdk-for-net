@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Dictionary
 {
-    [ModelReaderWriterBuildable(typeof(InnerModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(InnerModel))]
     public partial class _TypeDictionaryContext : ModelReaderWriterContext
     {
     }

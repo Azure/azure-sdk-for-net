@@ -11,30 +11,30 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesContainerNetworkPolicyDomainSecretParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDomainSecretParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam"/>. </summary>
         /// <param name="domain"> The domain associated with the secret. </param>
         /// <param name="name"> The name of the secret to inject for the domain. </param>
         /// <param name="value"> The secret value to inject for the domain. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="name"/> or <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="domain"/>, <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public ResponsesContainerNetworkPolicyDomainSecretParam(string domain, string name, string value)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(domain, nameof(domain));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(value, nameof(value));
 
             Domain = domain;
             Name = name;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDomainSecretParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam"/>. </summary>
         /// <param name="domain"> The domain associated with the secret. </param>
         /// <param name="name"> The name of the secret to inject for the domain. </param>
         /// <param name="value"> The secret value to inject for the domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesContainerNetworkPolicyDomainSecretParam(string domain, string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesContainerNetworkPolicyDomainSecretParam(string domain, string name, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             Name = name;

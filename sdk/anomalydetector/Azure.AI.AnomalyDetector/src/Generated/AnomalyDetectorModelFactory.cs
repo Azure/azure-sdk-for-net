@@ -49,10 +49,10 @@ namespace Azure.AI.AnomalyDetector
         /// Specifies the value to fill. It's used when granularity is not "none"
         /// and imputeMode is "fixed".
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateDetectionOptions"/> instance for mocking. </returns>
-        public static UnivariateDetectionOptions UnivariateDetectionOptions(IEnumerable<TimeSeriesPoint> series = default, TimeGranularity? granularity = default, int? customInterval = default, int? period = default, float? maxAnomalyRatio = default, int? sensitivity = default, ImputeMode? imputeMode = default, float? imputeFixedValue = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.UnivariateDetectionOptions"/> instance for mocking. </returns>
+        public static UnivariateDetectionOptions UnivariateDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series = default, TimeGranularity? granularity = default, int? customInterval = default, int? period = default, float? maxAnomalyRatio = default, int? sensitivity = default, ImputeMode? imputeMode = default, float? imputeFixedValue = default)
         {
-            series ??= new ChangeTrackingList<TimeSeriesPoint>();
+            series ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint>();
 
             return new UnivariateDetectionOptions(
                 series.ToList(),
@@ -69,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Definition of input time series points. </summary>
         /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
-        /// <returns> A new <see cref="AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
         public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? timestamp = default, float value = default)
         {
             return new TimeSeriesPoint(timestamp, value, additionalBinaryDataProperties: null);
@@ -109,7 +109,7 @@ namespace Azure.AI.AnomalyDetector
         /// Severity score for the last input point. The larger the value is, the more
         /// severe the anomaly is. For normal points, the severity is always 0.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
         public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = default)
         {
             return new UnivariateLastDetectionResult(
@@ -149,10 +149,10 @@ namespace Azure.AI.AnomalyDetector
         /// value is, the larger the trend error is, which means less change point will
         /// be accepted.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/> instance for mocking. </returns>
-        public static UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series = default, TimeGranularity granularity = default, int? customInterval = default, int? period = default, int? stableTrendWindow = default, float? threshold = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions"/> instance for mocking. </returns>
+        public static UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.TimeSeriesPoint> series = default, TimeGranularity granularity = default, int? customInterval = default, int? period = default, int? stableTrendWindow = default, float? threshold = default)
         {
-            series ??= new ChangeTrackingList<TimeSeriesPoint>();
+            series ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.TimeSeriesPoint>();
 
             return new UnivariateChangePointDetectionOptions(
                 series.ToList(),
@@ -175,7 +175,7 @@ namespace Azure.AI.AnomalyDetector
         /// array is consistent with the input series.
         /// </param>
         /// <param name="confidenceScores"> Change point confidence of each point. </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
         public static UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = default, IEnumerable<bool> isChangePoint = default, IEnumerable<float> confidenceScores = default)
         {
             isChangePoint ??= new ChangeTrackingList<bool>();
@@ -188,10 +188,10 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateDetectionResult"/> instance for mocking. </returns>
-        public static MultivariateDetectionResult MultivariateDetectionResult(Guid resultId = default, MultivariateBatchDetectionResultSummary summary = default, IEnumerable<AnomalyState> results = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.MultivariateDetectionResult"/> instance for mocking. </returns>
+        public static MultivariateDetectionResult MultivariateDetectionResult(Guid resultId = default, MultivariateBatchDetectionResultSummary summary = default, IEnumerable<global::Azure.AI.AnomalyDetector.AnomalyState> results = default)
         {
-            results ??= new ChangeTrackingList<AnomalyState>();
+            results ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyState>();
 
             return new MultivariateDetectionResult(resultId, summary, results.ToList(), additionalBinaryDataProperties: null);
         }
@@ -204,11 +204,11 @@ namespace Azure.AI.AnomalyDetector
         /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/> instance for mocking. </returns>
-        public static MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status = default, IEnumerable<ErrorResponse> errors = default, IEnumerable<VariableState> variableStates = default, MultivariateBatchDetectionOptions setupInfo = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary"/> instance for mocking. </returns>
+        public static MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status = default, IEnumerable<global::Azure.AI.AnomalyDetector.ErrorResponse> errors = default, IEnumerable<global::Azure.AI.AnomalyDetector.VariableState> variableStates = default, MultivariateBatchDetectionOptions setupInfo = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
-            variableStates ??= new ChangeTrackingList<VariableState>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
+            variableStates ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
 
             return new MultivariateBatchDetectionResultSummary(status, errors.ToList(), variableStates.ToList(), setupInfo, additionalBinaryDataProperties: null);
         }
@@ -216,7 +216,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Error information that the API returned. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
-        /// <returns> A new <see cref="AnomalyDetector.ErrorResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.ErrorResponse"/> instance for mocking. </returns>
         public static ErrorResponse ErrorResponse(string code = default, string message = default)
         {
             return new ErrorResponse(code, message, additionalBinaryDataProperties: null);
@@ -228,7 +228,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
         /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
         /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
-        /// <returns> A new <see cref="AnomalyDetector.VariableState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.VariableState"/> instance for mocking. </returns>
         public static VariableState VariableState(string variable = default, float? filledNARatio = default, int? effectiveCount = default, DateTimeOffset? firstTimestamp = default, DateTimeOffset? lastTimestamp = default)
         {
             return new VariableState(
@@ -261,8 +261,8 @@ namespace Azure.AI.AnomalyDetector
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionOptions"/> instance for mocking. </returns>
-        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions"/> instance for mocking. </returns>
+        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(global::System.Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default)
         {
             return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime, additionalBinaryDataProperties: null);
         }
@@ -271,10 +271,10 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
-        public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = default, IEnumerable<ErrorResponse> errors = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
+        public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = default, IEnumerable<global::Azure.AI.AnomalyDetector.ErrorResponse> errors = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
 
             return new AnomalyState(timestamp, value, errors.ToList(), additionalBinaryDataProperties: null);
         }
@@ -287,10 +287,10 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="score"> Raw anomaly score of severity, to help indicate the degree of abnormality. </param>
         /// <param name="interpretation"> Interpretation of this anomalous time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyValue"/> instance for mocking. </returns>
-        public static AnomalyValue AnomalyValue(bool isAnomaly = default, float severity = default, float score = default, IEnumerable<AnomalyInterpretation> interpretation = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.AnomalyValue"/> instance for mocking. </returns>
+        public static AnomalyValue AnomalyValue(bool isAnomaly = default, float severity = default, float score = default, IEnumerable<global::Azure.AI.AnomalyDetector.AnomalyInterpretation> interpretation = default)
         {
-            interpretation ??= new ChangeTrackingList<AnomalyInterpretation>();
+            interpretation ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyInterpretation>();
 
             return new AnomalyValue(isAnomaly, severity, score, interpretation.ToList(), additionalBinaryDataProperties: null);
         }
@@ -302,7 +302,7 @@ namespace Azure.AI.AnomalyDetector
         /// number between 0 and 1.
         /// </param>
         /// <param name="correlationChanges"> Correlation changes among the anomalous variables. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
         public static AnomalyInterpretation AnomalyInterpretation(string variable = default, float? contributionScore = default, CorrelationChanges correlationChanges = default)
         {
             return new AnomalyInterpretation(variable, contributionScore, correlationChanges, additionalBinaryDataProperties: null);
@@ -310,7 +310,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Correlation changes among the anomalous variables. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
-        /// <returns> A new <see cref="AnomalyDetector.CorrelationChanges"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.CorrelationChanges"/> instance for mocking. </returns>
         public static CorrelationChanges CorrelationChanges(IEnumerable<string> changedVariables = default)
         {
             changedVariables ??= new ChangeTrackingList<string>();
@@ -351,10 +351,10 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"> Model status. </param>
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
-        /// <returns> A new <see cref="AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
-        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
+        public static ModelInfo ModelInfo(global::System.Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<global::Azure.AI.AnomalyDetector.ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
 
             return new ModelInfo(
                 dataSource,
@@ -377,7 +377,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
         /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AlignPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.AlignPolicy"/> instance for mocking. </returns>
         public static AlignPolicy AlignPolicy(AlignMode? alignMode = default, FillNAMethod? fillNAMethod = default, float? paddingValue = default)
         {
             return new AlignPolicy(alignMode, fillNAMethod, paddingValue, additionalBinaryDataProperties: null);
@@ -386,10 +386,10 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
         /// <param name="modelState"> Model status. </param>
         /// <param name="variableStates"> Variable status. </param>
-        /// <returns> A new <see cref="AnomalyDetector.DiagnosticsInfo"/> instance for mocking. </returns>
-        public static DiagnosticsInfo DiagnosticsInfo(ModelState modelState = default, IEnumerable<VariableState> variableStates = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.DiagnosticsInfo"/> instance for mocking. </returns>
+        public static DiagnosticsInfo DiagnosticsInfo(ModelState modelState = default, IEnumerable<global::Azure.AI.AnomalyDetector.VariableState> variableStates = default)
         {
-            variableStates ??= new ChangeTrackingList<VariableState>();
+            variableStates ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
 
             return new DiagnosticsInfo(modelState, variableStates.ToList(), additionalBinaryDataProperties: null);
         }
@@ -408,7 +408,7 @@ namespace Azure.AI.AnomalyDetector
         /// epoch.
         /// </param>
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
-        /// <returns> A new <see cref="AnomalyDetector.ModelState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.ModelState"/> instance for mocking. </returns>
         public static ModelState ModelState(IEnumerable<int> epochIds = default, IEnumerable<float> trainLosses = default, IEnumerable<float> validationLosses = default, IEnumerable<float> latenciesInSeconds = default)
         {
             epochIds ??= new ChangeTrackingList<int>();
@@ -427,7 +427,7 @@ namespace Azure.AI.AnomalyDetector
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
         public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = default)
         {
             return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, additionalBinaryDataProperties: null);
@@ -443,10 +443,10 @@ namespace Azure.AI.AnomalyDetector
         /// variables for one anomalous time stamp in the response. The default is
         /// 10.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateLastDetectionOptions"/> instance for mocking. </returns>
-        public static MultivariateLastDetectionOptions MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables = default, int? topContributorCount = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions"/> instance for mocking. </returns>
+        public static MultivariateLastDetectionOptions MultivariateLastDetectionOptions(IEnumerable<global::Azure.AI.AnomalyDetector.VariableValues> variables = default, int? topContributorCount = default)
         {
-            variables ??= new ChangeTrackingList<VariableValues>();
+            variables ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableValues>();
 
             return new MultivariateLastDetectionOptions(variables.ToList(), topContributorCount, additionalBinaryDataProperties: null);
         }
@@ -455,7 +455,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
-        /// <returns> A new <see cref="AnomalyDetector.VariableValues"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.VariableValues"/> instance for mocking. </returns>
         public static VariableValues VariableValues(string variable = default, IEnumerable<string> timestamps = default, IEnumerable<float> values = default)
         {
             timestamps ??= new ChangeTrackingList<string>();
@@ -467,11 +467,11 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Results of the last detection. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateLastDetectionResult"/> instance for mocking. </returns>
-        public static MultivariateLastDetectionResult MultivariateLastDetectionResult(IEnumerable<VariableState> variableStates = default, IEnumerable<AnomalyState> results = default)
+        /// <returns> A new <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult"/> instance for mocking. </returns>
+        public static MultivariateLastDetectionResult MultivariateLastDetectionResult(IEnumerable<global::Azure.AI.AnomalyDetector.VariableState> variableStates = default, IEnumerable<global::Azure.AI.AnomalyDetector.AnomalyState> results = default)
         {
-            variableStates ??= new ChangeTrackingList<VariableState>();
-            results ??= new ChangeTrackingList<AnomalyState>();
+            variableStates ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
+            results ??= new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyState>();
 
             return new MultivariateLastDetectionResult(variableStates.ToList(), results.ToList(), additionalBinaryDataProperties: null);
         }

@@ -14,20 +14,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class DeviceTwinProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties"/>. </summary>
         /// <param name="metadata"> Metadata information for the properties JSON document. </param>
         internal DeviceTwinProperties(DeviceTwinMetadata metadata)
         {
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties"/>. </summary>
         /// <param name="metadata"> Metadata information for the properties JSON document. </param>
         /// <param name="version"> Version of device twin properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTwinProperties(DeviceTwinMetadata metadata, float? version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTwinProperties(DeviceTwinMetadata metadata, float? version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Version = version;

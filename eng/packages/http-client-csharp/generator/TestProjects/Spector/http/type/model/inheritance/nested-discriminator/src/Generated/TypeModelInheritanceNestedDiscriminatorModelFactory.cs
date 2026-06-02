@@ -19,6 +19,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         public static GoblinShark GoblinShark(int age = default) => throw null;
 
-        public static Salmon Salmon(int age = default, IEnumerable<Fish> friends = default, IDictionary<string, Fish> hate = default, Fish partner = default) => throw null;
+        public static Salmon Salmon(int age = default, IEnumerable<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> friends = default, IDictionary<string, global::_Type.Model.Inheritance.NestedDiscriminator.Fish> hate = default, Fish partner = default) => throw null;
     }
 }

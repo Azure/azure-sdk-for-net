@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Cardinality. </summary>
-    public readonly partial struct CardinalityValue : IEquatable<CardinalityValue>
+    public readonly partial struct CardinalityValue : IEquatable<global::Azure.Analytics.Purview.DataMap.CardinalityValue>
     {
         private readonly string _value;
         /// <summary> single. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> set. </summary>
         private const string SetValue = "SET";
 
-        /// <summary> Initializes a new instance of <see cref="CardinalityValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.CardinalityValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CardinalityValue(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> set. </summary>
         public static CardinalityValue Set { get; } = new CardinalityValue(SetValue);
 
-        /// <summary> Determines if two <see cref="CardinalityValue"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.CardinalityValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CardinalityValue left, CardinalityValue right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CardinalityValue"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Purview.DataMap.CardinalityValue"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CardinalityValue left, CardinalityValue right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.CardinalityValue"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CardinalityValue(string value) => new CardinalityValue(value);
 
-        /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Purview.DataMap.CardinalityValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CardinalityValue?(string value) => value == null ? null : new CardinalityValue(value);
+        public static implicit operator CardinalityValue?(string value) => (value == null) ? null : new CardinalityValue(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CardinalityValue other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CardinalityValue other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CardinalityValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CardinalityValue other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

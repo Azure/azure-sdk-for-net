@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalFileListResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFileListResponse"/>. </summary>
         /// <param name="data"> The files returned for the request. </param>
-        internal InternalFileListResponse(IEnumerable<PersistentAgentFileInfo> data)
+        internal InternalFileListResponse(IEnumerable<global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo> data)
         {
             Data = data.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFileListResponse"/>. </summary>
         /// <param name="object"> The object type, which is always 'list'. </param>
         /// <param name="data"> The files returned for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileListResponse(string @object, IList<PersistentAgentFileInfo> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFileListResponse(string @object, IList<global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo> data, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             Data = data;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,6 +38,6 @@ namespace Azure.AI.Agents.Persistent
         public string Object { get; } = "list";
 
         /// <summary> The files returned for the request. </summary>
-        public IList<PersistentAgentFileInfo> Data { get; }
+        public IList<global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo> Data { get; }
     }
 }

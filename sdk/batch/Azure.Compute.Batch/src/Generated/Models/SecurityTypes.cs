@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </summary>
-    public readonly partial struct SecurityTypes : IEquatable<SecurityTypes>
+    public readonly partial struct SecurityTypes : IEquatable<global::Azure.Compute.Batch.SecurityTypes>
     {
         private readonly string _value;
         /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
         private const string ConfidentialVMValue = "confidentialvm";
 
-        /// <summary> Initializes a new instance of <see cref="SecurityTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.SecurityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityTypes(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
         public static SecurityTypes ConfidentialVM { get; } = new SecurityTypes(ConfidentialVMValue);
 
-        /// <summary> Determines if two <see cref="SecurityTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.SecurityTypes"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityTypes left, SecurityTypes right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SecurityTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.SecurityTypes"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityTypes left, SecurityTypes right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SecurityTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.SecurityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SecurityTypes(string value) => new SecurityTypes(value);
 
-        /// <summary> Converts a string to a <see cref="SecurityTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.SecurityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecurityTypes?(string value) => value == null ? null : new SecurityTypes(value);
+        public static implicit operator SecurityTypes?(string value) => (value == null) ? null : new SecurityTypes(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SecurityTypes other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SecurityTypes other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SecurityTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityTypes other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

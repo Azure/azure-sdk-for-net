@@ -14,31 +14,31 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringFunctionInterpolation value) => value switch
         {
-            ScoringFunctionInterpolation.Linear => "linear",
-            ScoringFunctionInterpolation.Constant => "constant",
-            ScoringFunctionInterpolation.Quadratic => "quadratic",
-            ScoringFunctionInterpolation.Logarithmic => "logarithmic",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Linear => "linear",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Constant => "constant",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Quadratic => "quadratic",
+            global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Logarithmic => "logarithmic",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionInterpolation value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ScoringFunctionInterpolation ToScoringFunctionInterpolation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "linear"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "linear"))
             {
-                return ScoringFunctionInterpolation.Linear;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Linear;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "constant"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "constant"))
             {
-                return ScoringFunctionInterpolation.Constant;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Constant;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "quadratic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "quadratic"))
             {
-                return ScoringFunctionInterpolation.Quadratic;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Quadratic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "logarithmic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "logarithmic"))
             {
-                return ScoringFunctionInterpolation.Logarithmic;
+                return global::Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation.Logarithmic;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionInterpolation value.");
         }

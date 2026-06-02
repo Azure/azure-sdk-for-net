@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.WebKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.WorkIQKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.McpServerKnowledgeSourceParams"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.FileKnowledgeSourceParams"/>, and <see cref="Azure.Search.Documents.KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         private protected KnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind)
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             IncludeReferences = includeReferences;

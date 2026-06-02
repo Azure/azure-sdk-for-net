@@ -13,15 +13,15 @@ namespace Azure.AI.VoiceLive
     /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
     public partial class SessionUpdateConversationItemInputAudioTranscriptionDelta : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="itemId"> The ID of the item. </param>
-        internal SessionUpdateConversationItemInputAudioTranscriptionDelta(string itemId) : base(ServerEventType.ConversationItemInputAudioTranscriptionDelta)
+        internal SessionUpdateConversationItemInputAudioTranscriptionDelta(string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.ConversationItemInputAudioTranscriptionDelta)
         {
             ItemId = itemId;
-            Logprobs = new ChangeTrackingList<LogProbProperties>();
+            Logprobs = new ChangeTrackingList<global::Azure.AI.VoiceLive.LogProbProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> The text delta. </param>
         /// <param name="logprobs"> The log probabilities of the transcription. </param>
-        internal SessionUpdateConversationItemInputAudioTranscriptionDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int? contentIndex, string delta, IList<LogProbProperties> logprobs) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemInputAudioTranscriptionDelta(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string itemId, int? contentIndex, string delta, IList<global::Azure.AI.VoiceLive.LogProbProperties> logprobs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -47,6 +47,6 @@ namespace Azure.AI.VoiceLive
         public string Delta { get; }
 
         /// <summary> The log probabilities of the transcription. </summary>
-        public IList<LogProbProperties> Logprobs { get; }
+        public IList<global::Azure.AI.VoiceLive.LogProbProperties> Logprobs { get; }
     }
 }

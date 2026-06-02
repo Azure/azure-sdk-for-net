@@ -10,16 +10,16 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The EntraAuthorizationScheme. </summary>
     public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
-        /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
-        public EntraAuthorizationScheme() : base(AgentEndpointAuthorizationSchemeType.Entra)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.EntraAuthorizationScheme"/>. </summary>
+        public EntraAuthorizationScheme() : base(global::Azure.AI.Projects.Agents.AgentEndpointAuthorizationSchemeType.Entra)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.EntraAuthorizationScheme"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isolationKeySource"> The source from which the per-user isolation key is derived for requests authorized via this scheme. Defaults to Entra-based isolation when omitted. </param>
-        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsolationKeySource isolationKeySource) : base(@type, additionalBinaryDataProperties)
+        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IsolationKeySource isolationKeySource) : base(@type, additionalBinaryDataProperties)
         {
             IsolationKeySource = isolationKeySource;
         }

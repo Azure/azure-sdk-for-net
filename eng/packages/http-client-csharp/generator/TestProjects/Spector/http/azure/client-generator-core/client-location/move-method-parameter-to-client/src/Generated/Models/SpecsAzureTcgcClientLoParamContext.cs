@@ -10,7 +10,7 @@ using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClie
 
 namespace Specs.Azure.Tcgc.ClientLo.Param
 {
-    [ModelReaderWriterBuildable(typeof(Blob))]
+    [ModelReaderWriterBuildableAttribute(typeof(Blob))]
     public partial class SpecsAzureTcgcClientLoParamContext : ModelReaderWriterContext
     {
     }

@@ -49,10 +49,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTest"/> instance for mocking. </returns>
-        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIpDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTest"/> instance for mocking. </returns>
+        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIpDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
+            secrets ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             engineBuiltInIdentityIds ??= new ChangeTrackingList<string>();
 
@@ -89,11 +89,11 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Pass fail criteria for a test. </summary>
         /// <param name="passFailMetrics"> Map of id and pass fail metrics { id  : pass fail metrics }. </param>
         /// <param name="passFailServerMetrics"> Map of id and pass fail server metrics { id  : pass fail metrics }. </param>
-        /// <returns> A new <see cref="LoadTesting.PassFailCriteria"/> instance for mocking. </returns>
-        public static PassFailCriteria PassFailCriteria(IDictionary<string, PassFailMetric> passFailMetrics = default, IDictionary<string, PassFailServerMetric> passFailServerMetrics = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.PassFailCriteria"/> instance for mocking. </returns>
+        public static PassFailCriteria PassFailCriteria(IDictionary<string, global::Azure.Developer.LoadTesting.PassFailMetric> passFailMetrics = default, IDictionary<string, global::Azure.Developer.LoadTesting.PassFailServerMetric> passFailServerMetrics = default)
         {
-            passFailMetrics ??= new ChangeTrackingDictionary<string, PassFailMetric>();
-            passFailServerMetrics ??= new ChangeTrackingDictionary<string, PassFailServerMetric>();
+            passFailMetrics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.PassFailMetric>();
+            passFailServerMetrics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.PassFailServerMetric>();
 
             return new PassFailCriteria(passFailMetrics, passFailServerMetrics, additionalBinaryDataProperties: null);
         }
@@ -115,7 +115,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.PassFailMetric"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.PassFailMetric"/> instance for mocking. </returns>
         public static PassFailMetric PassFailMetric(PfMetrics? clientMetric = default, PassFailAggregationFunction? aggregate = default, string condition = default, string requestName = default, double? value = default, PassFailAction? action = default, double? actualValue = default, PassFailResult? result = default)
         {
             return new PassFailMetric(
@@ -140,7 +140,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
         /// <param name="actualValue"> The actual value of the server metric . </param>
         /// <param name="result"> Outcome of the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.PassFailServerMetric"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.PassFailServerMetric"/> instance for mocking. </returns>
         public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = default, string metricNamespace = default, string metricName = default, string aggregation = default, string condition = default, double value = default, PassFailAction? action = default, double? actualValue = default, PassFailResult? result = default)
         {
             return new PassFailServerMetric(
@@ -161,7 +161,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="errorRate"> Threshold percentage of errors on which test run should be automatically stopped. Allowed values are in range of 0.0-100.0. </param>
         /// <param name="errorRateTimeWindow"> Time window during which the error percentage should be evaluated in seconds. </param>
         /// <param name="maximumVirtualUsersPerEngine"> Maximum number of virtual users per load testing engine, at which the test run should be automatically stopped. </param>
-        /// <returns> A new <see cref="LoadTesting.AutoStopCriteria"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.AutoStopCriteria"/> instance for mocking. </returns>
         public static AutoStopCriteria AutoStopCriteria(bool? autoStopDisabled = default, float? errorRate = default, TimeSpan? errorRateTimeWindow = default, int? maximumVirtualUsersPerEngine = default)
         {
             return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindow, maximumVirtualUsersPerEngine, additionalBinaryDataProperties: null);
@@ -170,7 +170,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Secret. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
         /// <param name="secretKind"> Type of secret. </param>
-        /// <returns> A new <see cref="LoadTesting.TestSecret"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestSecret"/> instance for mocking. </returns>
         public static TestSecret TestSecret(string value = default, SecretType? secretKind = default)
         {
             return new TestSecret(value, secretKind, additionalBinaryDataProperties: null);
@@ -180,7 +180,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="value"> The value of the certificate for respective type. </param>
         /// <param name="certificateKind"> Type of certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
-        /// <returns> A new <see cref="LoadTesting.TestCertificate"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestCertificate"/> instance for mocking. </returns>
         public static TestCertificate TestCertificate(string value = default, CertificateType? certificateKind = default, string name = default)
         {
             return new TestCertificate(value, certificateKind, name, additionalBinaryDataProperties: null);
@@ -200,10 +200,10 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="optionalLoadTestConfiguration"> Configuration for quick load test. </param>
         /// <param name="regionalLoadTestConfiguration"> Region distribution configuration for the load test. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestConfiguration"/> instance for mocking. </returns>
-        public static LoadTestConfiguration LoadTestConfiguration(int? engineInstances = default, bool? splitAllCsvs = default, bool? quickStartTest = default, OptionalLoadTestConfiguration optionalLoadTestConfiguration = default, IEnumerable<RegionalConfiguration> regionalLoadTestConfiguration = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTestConfiguration"/> instance for mocking. </returns>
+        public static LoadTestConfiguration LoadTestConfiguration(int? engineInstances = default, bool? splitAllCsvs = default, bool? quickStartTest = default, OptionalLoadTestConfiguration optionalLoadTestConfiguration = default, IEnumerable<global::Azure.Developer.LoadTesting.RegionalConfiguration> regionalLoadTestConfiguration = default)
         {
-            regionalLoadTestConfiguration ??= new ChangeTrackingList<RegionalConfiguration>();
+            regionalLoadTestConfiguration ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.RegionalConfiguration>();
 
             return new LoadTestConfiguration(
                 engineInstances,
@@ -221,8 +221,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="virtualUsers"> No of concurrent virtual users. </param>
         /// <param name="rampUpTime"> Ramp up time in seconds. </param>
         /// <param name="duration"> Test run duration in seconds. </param>
-        /// <returns> A new <see cref="LoadTesting.OptionalLoadTestConfiguration"/> instance for mocking. </returns>
-        public static OptionalLoadTestConfiguration OptionalLoadTestConfiguration(Uri endpointUri = default, int? requestsPerSecond = default, int? maxResponseTimeInMs = default, int? virtualUsers = default, int? rampUpTime = default, TimeSpan? duration = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.OptionalLoadTestConfiguration"/> instance for mocking. </returns>
+        public static OptionalLoadTestConfiguration OptionalLoadTestConfiguration(global::System.Uri endpointUri = default, int? requestsPerSecond = default, int? maxResponseTimeInMs = default, int? virtualUsers = default, int? rampUpTime = default, TimeSpan? duration = default)
         {
             return new OptionalLoadTestConfiguration(
                 endpointUri,
@@ -241,7 +241,7 @@ namespace Azure.Developer.LoadTesting
         /// The region name should of format accepted by ARM, and should be a region supported by Azure Load Testing. For example, East US should be passed as "eastus".
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </param>
-        /// <returns> A new <see cref="LoadTesting.RegionalConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.RegionalConfiguration"/> instance for mocking. </returns>
         public static RegionalConfiguration RegionalConfiguration(int engineInstances = default, AzureLocation region = default)
         {
             return new RegionalConfiguration(engineInstances, region, additionalBinaryDataProperties: null);
@@ -254,10 +254,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="inputArtifactsZipFileInfo"> The zip file with all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.TestInputArtifacts"/> instance for mocking. </returns>
-        public static TestInputArtifacts TestInputArtifacts(TestFileInfo configFileInfo = default, TestFileInfo testScriptFileInfo = default, TestFileInfo userPropertyFileInfo = default, TestFileInfo inputArtifactsZipFileInfo = default, TestFileInfo urlTestConfigFileInfo = default, IEnumerable<TestFileInfo> additionalFileInfo = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestInputArtifacts"/> instance for mocking. </returns>
+        public static TestInputArtifacts TestInputArtifacts(TestFileInfo configFileInfo = default, TestFileInfo testScriptFileInfo = default, TestFileInfo userPropertyFileInfo = default, TestFileInfo inputArtifactsZipFileInfo = default, TestFileInfo urlTestConfigFileInfo = default, IEnumerable<global::Azure.Developer.LoadTesting.TestFileInfo> additionalFileInfo = default)
         {
-            additionalFileInfo ??= new ChangeTrackingList<TestFileInfo>();
+            additionalFileInfo ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestFileInfo>();
 
             return new TestInputArtifacts(
                 configFileInfo,
@@ -276,8 +276,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="expiresOn"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
-        /// <returns> A new <see cref="LoadTesting.TestFileInfo"/> instance for mocking. </returns>
-        public static TestFileInfo TestFileInfo(string fileName = default, Uri uri = default, LoadTestingFileType? fileType = default, DateTimeOffset? expiresOn = default, FileValidationStatus? validationStatus = default, string validationFailureDetails = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestFileInfo"/> instance for mocking. </returns>
+        public static TestFileInfo TestFileInfo(string fileName = default, global::System.Uri uri = default, LoadTestingFileType? fileType = default, DateTimeOffset? expiresOn = default, FileValidationStatus? validationStatus = default, string validationFailureDetails = default)
         {
             return new TestFileInfo(
                 fileName,
@@ -291,7 +291,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Preferences for the test. </summary>
         /// <param name="enableAIErrorInsights"> Enable or disable AI based insights on Test Run Errors. </param>
-        /// <returns> A new <see cref="LoadTesting.TestPreferences"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestPreferences"/> instance for mocking. </returns>
         public static TestPreferences TestPreferences(bool? enableAIErrorInsights = default)
         {
             return new TestPreferences(enableAIErrorInsights, additionalBinaryDataProperties: null);
@@ -308,10 +308,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestAppComponents"/> instance for mocking. </returns>
-        public static TestAppComponents TestAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestAppComponents"/> instance for mocking. </returns>
+        public static TestAppComponents TestAppComponents(IDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent> components = default, string testId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            components ??= new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
+            components ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent>();
 
             return new TestAppComponents(
                 components,
@@ -331,7 +331,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="resourceGroup"> Resource group name of the Azure resource. </param>
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingAppComponent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTestingAppComponent"/> instance for mocking. </returns>
         public static LoadTestingAppComponent LoadTestingAppComponent(ResourceIdentifier resourceId = default, string resourceName = default, string resourceType = default, string displayName = default, string resourceGroup = default, string subscriptionId = default, string kind = default)
         {
             return new LoadTestingAppComponent(
@@ -356,10 +356,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestServerMetricsConfiguration"/> instance for mocking. </returns>
-        public static TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestServerMetricsConfiguration"/> instance for mocking. </returns>
+        public static TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = default, IDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            metrics ??= new ChangeTrackingDictionary<string, ResourceMetric>();
+            metrics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric>();
 
             return new TestServerMetricsConfiguration(
                 testId,
@@ -384,7 +384,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> Metric aggregation. </param>
         /// <param name="unit"> Metric unit. </param>
         /// <param name="resourceType"> Azure resource type. </param>
-        /// <returns> A new <see cref="LoadTesting.ResourceMetric"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.ResourceMetric"/> instance for mocking. </returns>
         public static ResourceMetric ResourceMetric(string id = default, ResourceIdentifier resourceId = default, string metricNamespace = default, string displayDescription = default, string name = default, string aggregation = default, string unit = default, string resourceType = default)
         {
             return new ResourceMetric(
@@ -410,7 +410,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestProfile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestProfile"/> instance for mocking. </returns>
         public static TestProfile TestProfile(string testProfileId = default, string displayName = default, string description = default, string testId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             return new TestProfile(
@@ -429,10 +429,10 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// Configurations of a target resource. This varies with the kind of resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/>.
         /// </summary>
         /// <param name="kind"> Kind of the resource for which the configurations apply. </param>
-        /// <returns> A new <see cref="LoadTesting.TargetResourceConfigurations"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TargetResourceConfigurations"/> instance for mocking. </returns>
         public static TargetResourceConfigurations TargetResourceConfigurations(string kind = default)
         {
             return new UnknownTargetResourceConfigurations(new ResourceKind(kind), additionalBinaryDataProperties: null);
@@ -440,18 +440,18 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Configurations for a Function App using Flex Consumption Plan. </summary>
         /// <param name="configurations"> A map of configurations for a Function app using Flex Consumption Plan. </param>
-        /// <returns> A new <see cref="LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/> instance for mocking. </returns>
-        public static FunctionFlexConsumptionTargetResourceConfigurations FunctionFlexConsumptionTargetResourceConfigurations(IDictionary<string, FunctionFlexConsumptionResourceConfiguration> configurations = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations"/> instance for mocking. </returns>
+        public static FunctionFlexConsumptionTargetResourceConfigurations FunctionFlexConsumptionTargetResourceConfigurations(IDictionary<string, global::Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration> configurations = default)
         {
-            configurations ??= new ChangeTrackingDictionary<string, FunctionFlexConsumptionResourceConfiguration>();
+            configurations ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration>();
 
-            return new FunctionFlexConsumptionTargetResourceConfigurations(ResourceKind.FunctionsFlexConsumption, additionalBinaryDataProperties: null, configurations);
+            return new FunctionFlexConsumptionTargetResourceConfigurations(global::Azure.Developer.LoadTesting.ResourceKind.FunctionsFlexConsumption, additionalBinaryDataProperties: null, configurations);
         }
 
         /// <summary> Resource configuration instance for a Flex Consumption based Azure Function App. </summary>
         /// <param name="instanceMemoryMB"> Memory size of the instance. Supported values are 2048, 4096. </param>
         /// <param name="httpConcurrency"> HTTP Concurrency for the function app. </param>
-        /// <returns> A new <see cref="LoadTesting.FunctionFlexConsumptionResourceConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration"/> instance for mocking. </returns>
         public static FunctionFlexConsumptionResourceConfiguration FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB = default, long? httpConcurrency = default)
         {
             return new FunctionFlexConsumptionResourceConfiguration(instanceMemoryMB, httpConcurrency, additionalBinaryDataProperties: null);
@@ -459,7 +459,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// Trigger model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.ScheduleTestsTrigger"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.ScheduleTestsTrigger"/>.
         /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
         /// <param name="displayName"> The name of the trigger. </param>
@@ -471,7 +471,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTestingTrigger"/> instance for mocking. </returns>
         public static LoadTestingTrigger LoadTestingTrigger(string triggerId = default, string displayName = default, string description = default, string kind = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             return new UnknownLoadTestingTrigger(
@@ -490,7 +490,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> State details of the trigger. </summary>
         /// <param name="message"> The error message if the trigger is in disabled state. </param>
-        /// <returns> A new <see cref="LoadTesting.StateDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.StateDetails"/> instance for mocking. </returns>
         public static StateDetails StateDetails(string message = default)
         {
             return new StateDetails(message, additionalBinaryDataProperties: null);
@@ -510,7 +510,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="startDateTime"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
         /// <param name="recurrenceStatus"></param>
         /// <param name="recurrence"> Recurrence details of the trigger. Null if schedule is not recurring. </param>
-        /// <returns> A new <see cref="LoadTesting.ScheduleTestsTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.ScheduleTestsTrigger"/> instance for mocking. </returns>
         public static ScheduleTestsTrigger ScheduleTestsTrigger(string triggerId = default, string displayName = default, string description = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, DateTimeOffset? startDateTime = default, RecurrenceStatus recurrenceStatus = default, LoadTestingRecurrence recurrence = default)
         {
             testIds ??= new ChangeTrackingList<string>();
@@ -519,7 +519,7 @@ namespace Azure.Developer.LoadTesting
                 triggerId,
                 displayName,
                 description,
-                TriggerType.ScheduleTestsTrigger,
+                global::Azure.Developer.LoadTesting.TriggerType.ScheduleTestsTrigger,
                 state,
                 stateDetails,
                 createdDateTime,
@@ -536,21 +536,21 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Actual state of the recurrence for the trigger. </summary>
         /// <param name="remainingOccurrences"> The number of occurrences remaining for the trigger. Null if recurrence end has end date instead of number of occurrences. </param>
         /// <param name="nextScheduledDateTimes"> The next three execution times of the trigger. (RFC 3339 literal format). </param>
-        /// <returns> A new <see cref="LoadTesting.RecurrenceStatus"/> instance for mocking. </returns>
-        public static RecurrenceStatus RecurrenceStatus(int? remainingOccurrences = default, IEnumerable<DateTimeOffset> nextScheduledDateTimes = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.RecurrenceStatus"/> instance for mocking. </returns>
+        public static RecurrenceStatus RecurrenceStatus(int? remainingOccurrences = default, IEnumerable<global::System.DateTimeOffset> nextScheduledDateTimes = default)
         {
-            nextScheduledDateTimes ??= new ChangeTrackingList<DateTimeOffset>();
+            nextScheduledDateTimes ??= new ChangeTrackingList<global::System.DateTimeOffset>();
 
             return new RecurrenceStatus(remainingOccurrences, nextScheduledDateTimes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Recurrence model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.DailyRecurrence"/>, <see cref="LoadTesting.HourlyRecurrence"/>, <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="LoadTesting.RecurrenceWithCron"/>, and <see cref="LoadTesting.WeeklyRecurrence"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.DailyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.HourlyRecurrence"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="Azure.Developer.LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="Azure.Developer.LoadTesting.RecurrenceWithCron"/>, and <see cref="Azure.Developer.LoadTesting.WeeklyRecurrence"/>.
         /// </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingRecurrence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTestingRecurrence"/> instance for mocking. </returns>
         public static LoadTestingRecurrence LoadTestingRecurrence(string frequency = default, RecurrenceEnd recurrenceEnd = default)
         {
             return new UnknownLoadTestingRecurrence(new Frequency(frequency), recurrenceEnd, additionalBinaryDataProperties: null);
@@ -559,7 +559,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Recurrence end model. Either provide numberOfOccurrences if you want recurrence to end after a specified number of occurrences or provide endDate if you want recurrence to end after a specified end date. If both values are provided, a validation error will be thrown indicating that only one field should be provided. If neither value is provided, the recurrence will end when manually ended. </summary>
         /// <param name="numberOfOccurrences"> Number of occurrences after which the recurrence will end. </param>
         /// <param name="endDateTime"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
-        /// <returns> A new <see cref="LoadTesting.RecurrenceEnd"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.RecurrenceEnd"/> instance for mocking. </returns>
         public static RecurrenceEnd RecurrenceEnd(int? numberOfOccurrences = default, DateTimeOffset? endDateTime = default)
         {
             return new RecurrenceEnd(numberOfOccurrences, endDateTime, additionalBinaryDataProperties: null);
@@ -568,19 +568,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Recurrence model when frequency is set as Daily. </summary>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.DailyRecurrence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.DailyRecurrence"/> instance for mocking. </returns>
         public static DailyRecurrence DailyRecurrence(RecurrenceEnd recurrenceEnd = default, int interval = default)
         {
-            return new DailyRecurrence(Frequency.Daily, recurrenceEnd, additionalBinaryDataProperties: null, interval);
+            return new DailyRecurrence(global::Azure.Developer.LoadTesting.Frequency.Daily, recurrenceEnd, additionalBinaryDataProperties: null, interval);
         }
 
         /// <summary> Recurrence model when frequency is set as Hourly. </summary>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.HourlyRecurrence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.HourlyRecurrence"/> instance for mocking. </returns>
         public static HourlyRecurrence HourlyRecurrence(RecurrenceEnd recurrenceEnd = default, int interval = default)
         {
-            return new HourlyRecurrence(Frequency.Hourly, recurrenceEnd, additionalBinaryDataProperties: null, interval);
+            return new HourlyRecurrence(global::Azure.Developer.LoadTesting.Frequency.Hourly, recurrenceEnd, additionalBinaryDataProperties: null, interval);
         }
 
         /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
@@ -588,13 +588,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="weekDaysInMonth"> Specific days of the week when the recurrence should repeat. </param>
         /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/> instance for mocking. </returns>
-        public static MonthlyRecurrenceByWeekDays MonthlyRecurrenceByWeekDays(RecurrenceEnd recurrenceEnd = default, IEnumerable<WeekDays> weekDaysInMonth = default, int index = default, int interval = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays"/> instance for mocking. </returns>
+        public static MonthlyRecurrenceByWeekDays MonthlyRecurrenceByWeekDays(RecurrenceEnd recurrenceEnd = default, IEnumerable<global::Azure.Developer.LoadTesting.WeekDays> weekDaysInMonth = default, int index = default, int interval = default)
         {
-            weekDaysInMonth ??= new ChangeTrackingList<WeekDays>();
+            weekDaysInMonth ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.WeekDays>();
 
             return new MonthlyRecurrenceByWeekDays(
-                Frequency.MonthlyByDays,
+                global::Azure.Developer.LoadTesting.Frequency.MonthlyByDays,
                 recurrenceEnd,
                 additionalBinaryDataProperties: null,
                 weekDaysInMonth.ToList(),
@@ -606,38 +606,38 @@ namespace Azure.Developer.LoadTesting
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="datesInMonth"> Recurrence set to repeat on the specified dates of the month. Value of dates can be 1 to 31 and -1. -1 represents the last day of the month. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.MonthlyRecurrenceByDates"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MonthlyRecurrenceByDates"/> instance for mocking. </returns>
         public static MonthlyRecurrenceByDates MonthlyRecurrenceByDates(RecurrenceEnd recurrenceEnd = default, IEnumerable<int> datesInMonth = default, int? interval = default)
         {
             datesInMonth ??= new ChangeTrackingList<int>();
 
-            return new MonthlyRecurrenceByDates(Frequency.MonthlyByDates, recurrenceEnd, additionalBinaryDataProperties: null, datesInMonth.ToList(), interval);
+            return new MonthlyRecurrenceByDates(global::Azure.Developer.LoadTesting.Frequency.MonthlyByDates, recurrenceEnd, additionalBinaryDataProperties: null, datesInMonth.ToList(), interval);
         }
 
         /// <summary> Recurrence is set based on cron expression. </summary>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="cronExpression"> Cron expression for the recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.RecurrenceWithCron"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.RecurrenceWithCron"/> instance for mocking. </returns>
         public static RecurrenceWithCron RecurrenceWithCron(RecurrenceEnd recurrenceEnd = default, string cronExpression = default)
         {
-            return new RecurrenceWithCron(Frequency.Cron, recurrenceEnd, additionalBinaryDataProperties: null, cronExpression);
+            return new RecurrenceWithCron(global::Azure.Developer.LoadTesting.Frequency.Cron, recurrenceEnd, additionalBinaryDataProperties: null, cronExpression);
         }
 
         /// <summary> Recurrence model when frequency is set as weekly. </summary>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
         /// <param name="daysOfWeek"> Recurrence set to repeat on the specified days of the week. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of weeks between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.WeeklyRecurrence"/> instance for mocking. </returns>
-        public static WeeklyRecurrence WeeklyRecurrence(RecurrenceEnd recurrenceEnd = default, IEnumerable<WeekDays> daysOfWeek = default, int? interval = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.WeeklyRecurrence"/> instance for mocking. </returns>
+        public static WeeklyRecurrence WeeklyRecurrence(RecurrenceEnd recurrenceEnd = default, IEnumerable<global::Azure.Developer.LoadTesting.WeekDays> daysOfWeek = default, int? interval = default)
         {
-            daysOfWeek ??= new ChangeTrackingList<WeekDays>();
+            daysOfWeek ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.WeekDays>();
 
-            return new WeeklyRecurrence(Frequency.Weekly, recurrenceEnd, additionalBinaryDataProperties: null, daysOfWeek.ToList(), interval);
+            return new WeeklyRecurrence(global::Azure.Developer.LoadTesting.Frequency.Weekly, recurrenceEnd, additionalBinaryDataProperties: null, daysOfWeek.ToList(), interval);
         }
 
         /// <summary>
         /// Notification rule model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.TestsNotificationRule"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.TestsNotificationRule"/>.
         /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="displayName"> The name of the notification rule. </param>
@@ -647,7 +647,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.NotificationRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.NotificationRule"/> instance for mocking. </returns>
         public static NotificationRule NotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, string scope = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             actionGroupIds ??= new ChangeTrackingList<string>();
@@ -677,18 +677,18 @@ namespace Azure.Developer.LoadTesting
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
         /// </param>
-        /// <returns> A new <see cref="LoadTesting.TestsNotificationRule"/> instance for mocking. </returns>
-        public static TestsNotificationRule TestsNotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, IDictionary<string, TestsNotificationEventFilter> eventFilters = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestsNotificationRule"/> instance for mocking. </returns>
+        public static TestsNotificationRule TestsNotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, IDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters = default)
         {
             actionGroupIds ??= new ChangeTrackingList<string>();
             testIds ??= new ChangeTrackingList<string>();
-            eventFilters ??= new ChangeTrackingDictionary<string, TestsNotificationEventFilter>();
+            eventFilters ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestsNotificationEventFilter>();
 
             return new TestsNotificationRule(
                 notificationRuleId,
                 displayName,
                 actionGroupIds.ToList(),
-                NotificationScopeType.Tests,
+                global::Azure.Developer.LoadTesting.NotificationScopeType.Tests,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -700,10 +700,10 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// The notification event filter for Tests scope.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.TestRunEndedNotificationEventFilter"/>, <see cref="LoadTesting.TestRunStartedNotificationEventFilter"/>, <see cref="LoadTesting.TriggerCompletedNotificationEventFilter"/>, and <see cref="LoadTesting.TriggerDisabledNotificationEventFilter"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter"/>, <see cref="Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter"/>, <see cref="Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter"/>, and <see cref="Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter"/>.
         /// </summary>
         /// <param name="kind"> The event type. </param>
-        /// <returns> A new <see cref="LoadTesting.TestsNotificationEventFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestsNotificationEventFilter"/> instance for mocking. </returns>
         public static TestsNotificationEventFilter TestsNotificationEventFilter(string kind = default)
         {
             return new UnknownTestsNotificationEventFilter(new NotificationEventType(kind), additionalBinaryDataProperties: null);
@@ -711,43 +711,43 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> The notification event filter when the event type is TestRunEnded and scope is Tests. </summary>
         /// <param name="condition"> Event filtering condition. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunEndedNotificationEventFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter"/> instance for mocking. </returns>
         public static TestRunEndedNotificationEventFilter TestRunEndedNotificationEventFilter(TestRunEndedEventCondition condition = default)
         {
-            return new TestRunEndedNotificationEventFilter(NotificationEventType.TestRunEnded, additionalBinaryDataProperties: null, condition);
+            return new TestRunEndedNotificationEventFilter(global::Azure.Developer.LoadTesting.NotificationEventType.TestRunEnded, additionalBinaryDataProperties: null, condition);
         }
 
         /// <summary> TestRunEnded Event condition. </summary>
         /// <param name="testRunStatuses"> The test run statuses to send notification for. </param>
         /// <param name="testRunResults"> The test run results to send notification for. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunEndedEventCondition"/> instance for mocking. </returns>
-        public static TestRunEndedEventCondition TestRunEndedEventCondition(IEnumerable<TestRunStatus> testRunStatuses = default, IEnumerable<PassFailTestResult> testRunResults = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunEndedEventCondition"/> instance for mocking. </returns>
+        public static TestRunEndedEventCondition TestRunEndedEventCondition(IEnumerable<global::Azure.Developer.LoadTesting.TestRunStatus> testRunStatuses = default, IEnumerable<global::Azure.Developer.LoadTesting.PassFailTestResult> testRunResults = default)
         {
-            testRunStatuses ??= new ChangeTrackingList<TestRunStatus>();
-            testRunResults ??= new ChangeTrackingList<PassFailTestResult>();
+            testRunStatuses ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunStatus>();
+            testRunResults ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.PassFailTestResult>();
 
             return new TestRunEndedEventCondition(testRunStatuses.ToList(), testRunResults.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The notification event filter when the event type is TestRunStarted and scope is Tests. </summary>
-        /// <returns> A new <see cref="LoadTesting.TestRunStartedNotificationEventFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter"/> instance for mocking. </returns>
         public static TestRunStartedNotificationEventFilter TestRunStartedNotificationEventFilter()
         {
-            return new TestRunStartedNotificationEventFilter(NotificationEventType.TestRunStarted, additionalBinaryDataProperties: null);
+            return new TestRunStartedNotificationEventFilter(global::Azure.Developer.LoadTesting.NotificationEventType.TestRunStarted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
-        /// <returns> A new <see cref="LoadTesting.TriggerCompletedNotificationEventFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter"/> instance for mocking. </returns>
         public static TriggerCompletedNotificationEventFilter TriggerCompletedNotificationEventFilter()
         {
-            return new TriggerCompletedNotificationEventFilter(NotificationEventType.TriggerCompleted, additionalBinaryDataProperties: null);
+            return new TriggerCompletedNotificationEventFilter(global::Azure.Developer.LoadTesting.NotificationEventType.TriggerCompleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The notification event filter when the event type is TriggerDisabled. </summary>
-        /// <returns> A new <see cref="LoadTesting.TriggerDisabledNotificationEventFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter"/> instance for mocking. </returns>
         public static TriggerDisabledNotificationEventFilter TriggerDisabledNotificationEventFilter()
         {
-            return new TriggerDisabledNotificationEventFilter(NotificationEventType.TriggerDisabled, additionalBinaryDataProperties: null);
+            return new TriggerDisabledNotificationEventFilter(global::Azure.Developer.LoadTesting.NotificationEventType.TriggerDisabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Status of a long running operation. </summary>
@@ -755,7 +755,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> The state of the operation. </param>
         /// <param name="kind"> The kind of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is "Failed". </param>
-        /// <returns> A new <see cref="LoadTesting.OperationStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.OperationStatus"/> instance for mocking. </returns>
         public static OperationStatus OperationStatus(string id = default, OperationState status = default, OperationKind kind = default, ResponseError error = default)
         {
             return new OperationStatus(id, status, kind, error, additionalBinaryDataProperties: null);
@@ -813,14 +813,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestRun"/> instance for mocking. </returns>
-        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIpDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.LoadTestRun"/> instance for mocking. </returns>
+        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<global::Azure.Developer.LoadTesting.ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, global::System.Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIpDisabled = default, CreatedByType? createdByType = default, global::System.Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
+            secrets ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-            errorDetails ??= new ChangeTrackingList<ErrorDetails>();
-            testRunStatistics ??= new ChangeTrackingDictionary<string, TestRunStatistics>();
-            regionalStatistics ??= new ChangeTrackingDictionary<string, TestRunStatistics>();
+            errorDetails ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.ErrorDetails>();
+            testRunStatistics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
+            regionalStatistics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
 
             return new LoadTestRun(
                 testRunId,
@@ -867,10 +867,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="code"> Error code if there is any failure in load test run. </param>
         /// <param name="message"> Error details in case test run was not successfully run. </param>
         /// <param name="properties"> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </param>
-        /// <returns> A new <see cref="LoadTesting.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, IList<string>> properties = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.ErrorDetails"/> instance for mocking. </returns>
+        public static ErrorDetails ErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, global::System.Collections.Generic.IList<string>> properties = default)
         {
-            properties ??= new ChangeTrackingDictionary<string, IList<string>>();
+            properties ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<string>>();
 
             return new ErrorDetails(code, message, properties, additionalBinaryDataProperties: null);
         }
@@ -896,7 +896,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="throughput"> Throughput. </param>
         /// <param name="receivedKBytesPerSec"> Received network bytes. </param>
         /// <param name="sentKBytesPerSec"> Send network bytes. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunStatistics"/> instance for mocking. </returns>
         public static TestRunStatistics TestRunStatistics(string transaction = default, double? sampleCount = default, double? errorCount = default, double? errorPercentage = default, double? meanResponseTime = default, double? medianResponseTime = default, double? maxResponseTime = default, double? minResponseTime = default, double? percentile90ResponseTime = default, double? percentile95ResponseTime = default, double? percentile99ResponseTime = default, double? percentile75ResponseTime = default, double? percentile96ResponseTime = default, double? percentile97ResponseTime = default, double? percentile98ResponseTime = default, double? percentile999ResponseTime = default, double? percentile9999ResponseTime = default, double? throughput = default, double? receivedKBytesPerSec = default, double? sentKBytesPerSec = default)
         {
             return new TestRunStatistics(
@@ -926,7 +926,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Collection of test run artifacts. </summary>
         /// <param name="inputArtifacts"> The input artifacts for the test run. </param>
         /// <param name="outputArtifacts"> The output artifacts for the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunArtifacts"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunArtifacts"/> instance for mocking. </returns>
         public static TestRunArtifacts TestRunArtifacts(TestRunInputArtifacts inputArtifacts = default, TestRunOutputArtifacts outputArtifacts = default)
         {
             return new TestRunArtifacts(inputArtifacts, outputArtifacts, additionalBinaryDataProperties: null);
@@ -939,10 +939,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="inputArtifactsZipFileInfo"> The zip file for all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunInputArtifacts"/> instance for mocking. </returns>
-        public static TestRunInputArtifacts TestRunInputArtifacts(TestRunFileInfo configFileInfo = default, TestRunFileInfo testScriptFileInfo = default, TestRunFileInfo userPropertyFileInfo = default, TestRunFileInfo inputArtifactsZipFileInfo = default, TestRunFileInfo urlTestConfigFileInfo = default, IEnumerable<TestRunFileInfo> additionalFileInfo = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunInputArtifacts"/> instance for mocking. </returns>
+        public static TestRunInputArtifacts TestRunInputArtifacts(TestRunFileInfo configFileInfo = default, TestRunFileInfo testScriptFileInfo = default, TestRunFileInfo userPropertyFileInfo = default, TestRunFileInfo inputArtifactsZipFileInfo = default, TestRunFileInfo urlTestConfigFileInfo = default, IEnumerable<global::Azure.Developer.LoadTesting.TestRunFileInfo> additionalFileInfo = default)
         {
-            additionalFileInfo ??= new ChangeTrackingList<TestRunFileInfo>();
+            additionalFileInfo ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunFileInfo>();
 
             return new TestRunInputArtifacts(
                 configFileInfo,
@@ -961,8 +961,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="expiresOn"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunFileInfo"/> instance for mocking. </returns>
-        public static TestRunFileInfo TestRunFileInfo(string fileName = default, Uri uri = default, LoadTestingFileType? fileType = default, DateTimeOffset? expiresOn = default, FileValidationStatus? validationStatus = default, string validationFailureDetails = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunFileInfo"/> instance for mocking. </returns>
+        public static TestRunFileInfo TestRunFileInfo(string fileName = default, global::System.Uri uri = default, LoadTestingFileType? fileType = default, DateTimeOffset? expiresOn = default, FileValidationStatus? validationStatus = default, string validationFailureDetails = default)
         {
             return new TestRunFileInfo(
                 fileName,
@@ -979,7 +979,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="logsFileInfo"> The test run report with metrics. </param>
         /// <param name="artifactsContainerInfo"> The container for test run artifacts. </param>
         /// <param name="reportFileInfo"> The report file for the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunOutputArtifacts"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunOutputArtifacts"/> instance for mocking. </returns>
         public static TestRunOutputArtifacts TestRunOutputArtifacts(TestRunFileInfo resultFileInfo = default, TestRunFileInfo logsFileInfo = default, ArtifactsContainerInfo artifactsContainerInfo = default, TestRunFileInfo reportFileInfo = default)
         {
             return new TestRunOutputArtifacts(resultFileInfo, logsFileInfo, artifactsContainerInfo, reportFileInfo, additionalBinaryDataProperties: null);
@@ -988,8 +988,8 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Artifacts container info. </summary>
         /// <param name="uri"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
         /// <param name="expiresOn"> Expiry time of the container (RFC 3339 literal format). </param>
-        /// <returns> A new <see cref="LoadTesting.ArtifactsContainerInfo"/> instance for mocking. </returns>
-        public static ArtifactsContainerInfo ArtifactsContainerInfo(Uri uri = default, DateTimeOffset? expiresOn = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.ArtifactsContainerInfo"/> instance for mocking. </returns>
+        public static ArtifactsContainerInfo ArtifactsContainerInfo(global::System.Uri uri = default, DateTimeOffset? expiresOn = default)
         {
             return new ArtifactsContainerInfo(uri, expiresOn, additionalBinaryDataProperties: null);
         }
@@ -1005,10 +1005,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunAppComponents"/> instance for mocking. </returns>
-        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testRunId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunAppComponents"/> instance for mocking. </returns>
+        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent> components = default, string testRunId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            components ??= new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
+            components ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.LoadTestingAppComponent>();
 
             return new TestRunAppComponents(
                 components,
@@ -1031,10 +1031,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunServerMetricsConfiguration"/> instance for mocking. </returns>
-        public static TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration"/> instance for mocking. </returns>
+        public static TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = default, IDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            metrics ??= new ChangeTrackingDictionary<string, ResourceMetric>();
+            metrics ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.ResourceMetric>();
 
             return new TestRunServerMetricsConfiguration(
                 testRunId,
@@ -1048,10 +1048,10 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Represents collection of metric definitions. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricDefinitions"/> instance for mocking. </returns>
-        public static MetricDefinitions MetricDefinitions(IEnumerable<MetricDefinition> value = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricDefinitions"/> instance for mocking. </returns>
+        public static MetricDefinitions MetricDefinitions(IEnumerable<global::Azure.Developer.LoadTesting.MetricDefinition> value = default)
         {
-            value ??= new ChangeTrackingList<MetricDefinition>();
+            value ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricDefinition>();
 
             return new MetricDefinitions(value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1068,12 +1068,12 @@ namespace Azure.Developer.LoadTesting
         /// Metric availability specifies the time grain (aggregation interval or
         /// frequency).
         /// </param>
-        /// <returns> A new <see cref="LoadTesting.MetricDefinition"/> instance for mocking. </returns>
-        public static MetricDefinition MetricDefinition(IEnumerable<NameAndDescription> dimensions = default, string description = default, string name = default, string @namespace = default, AggregationType? primaryAggregationType = default, IEnumerable<string> supportedAggregationTypes = default, MetricUnit? unit = default, IEnumerable<MetricAvailability> metricAvailabilities = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricDefinition"/> instance for mocking. </returns>
+        public static MetricDefinition MetricDefinition(IEnumerable<global::Azure.Developer.LoadTesting.NameAndDescription> dimensions = default, string description = default, string name = default, string @namespace = default, AggregationType? primaryAggregationType = default, IEnumerable<string> supportedAggregationTypes = default, MetricUnit? unit = default, IEnumerable<global::Azure.Developer.LoadTesting.MetricAvailability> metricAvailabilities = default)
         {
-            dimensions ??= new ChangeTrackingList<NameAndDescription>();
+            dimensions ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.NameAndDescription>();
             supportedAggregationTypes ??= new ChangeTrackingList<string>();
-            metricAvailabilities ??= new ChangeTrackingList<MetricAvailability>();
+            metricAvailabilities ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricAvailability>();
 
             return new MetricDefinition(
                 dimensions.ToList(),
@@ -1090,7 +1090,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The name and description. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="name"> The name. </param>
-        /// <returns> A new <see cref="LoadTesting.NameAndDescription"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.NameAndDescription"/> instance for mocking. </returns>
         public static NameAndDescription NameAndDescription(string description = default, string name = default)
         {
             return new NameAndDescription(description, name, additionalBinaryDataProperties: null);
@@ -1101,7 +1101,7 @@ namespace Azure.Developer.LoadTesting
         /// The time grain specifies the aggregation interval for the metric. Expressed as
         /// a duration 'PT1M', 'PT1H', etc.
         /// </param>
-        /// <returns> A new <see cref="LoadTesting.MetricAvailability"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(TimeGrain? timeGrain = default)
         {
             return new MetricAvailability(timeGrain, additionalBinaryDataProperties: null);
@@ -1109,10 +1109,10 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Represents collection of metric namespaces. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricNamespaces"/> instance for mocking. </returns>
-        public static MetricNamespaces MetricNamespaces(IEnumerable<MetricNamespace> value = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricNamespaces"/> instance for mocking. </returns>
+        public static MetricNamespaces MetricNamespaces(IEnumerable<global::Azure.Developer.LoadTesting.MetricNamespace> value = default)
         {
-            value ??= new ChangeTrackingList<MetricNamespace>();
+            value ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricNamespace>();
 
             return new MetricNamespaces(value.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1120,7 +1120,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
         /// <param name="description"> The namespace description. </param>
         /// <param name="name"> The metric namespace name. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricNamespace"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricNamespace"/> instance for mocking. </returns>
         public static MetricNamespace MetricNamespace(string description = default, string name = default)
         {
             return new MetricNamespace(description, name, additionalBinaryDataProperties: null);
@@ -1133,10 +1133,10 @@ namespace Azure.Developer.LoadTesting
         /// is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be
         /// {"SamplerName", ["HTTPRequest1", "HTTPRequest2"}
         /// </param>
-        /// <returns> A new <see cref="LoadTesting.MetricsFilters"/> instance for mocking. </returns>
-        public static MetricsFilters MetricsFilters(IEnumerable<DimensionFilter> filters = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricsFilters"/> instance for mocking. </returns>
+        public static MetricsFilters MetricsFilters(IEnumerable<global::Azure.Developer.LoadTesting.DimensionFilter> filters = default)
         {
-            filters ??= new ChangeTrackingList<DimensionFilter>();
+            filters ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.DimensionFilter>();
 
             return new MetricsFilters(filters.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1144,7 +1144,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Dimension name and values to filter. </summary>
         /// <param name="name"> The dimension name. </param>
         /// <param name="values"> The dimension values. Maximum values can be 20. </param>
-        /// <returns> A new <see cref="LoadTesting.DimensionFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.DimensionFilter"/> instance for mocking. </returns>
         public static DimensionFilter DimensionFilter(string name = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
@@ -1155,11 +1155,11 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The time series returned when a data query is performed. </summary>
         /// <param name="data"> An array of data points representing the metric values. </param>
         /// <param name="dimensionValues"> The dimension values . </param>
-        /// <returns> A new <see cref="LoadTesting.TimeSeriesElement"/> instance for mocking. </returns>
-        public static TimeSeriesElement TimeSeriesElement(IEnumerable<MetricValue> data = default, IEnumerable<DimensionValue> dimensionValues = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TimeSeriesElement"/> instance for mocking. </returns>
+        public static TimeSeriesElement TimeSeriesElement(IEnumerable<global::Azure.Developer.LoadTesting.MetricValue> data = default, IEnumerable<global::Azure.Developer.LoadTesting.DimensionValue> dimensionValues = default)
         {
-            data ??= new ChangeTrackingList<MetricValue>();
-            dimensionValues ??= new ChangeTrackingList<DimensionValue>();
+            data ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.MetricValue>();
+            dimensionValues ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.DimensionValue>();
 
             return new TimeSeriesElement(data.ToList(), dimensionValues.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1167,7 +1167,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Represents a metric value. </summary>
         /// <param name="timestamp"> The timestamp for the metric value in RFC 3339 format. </param>
         /// <param name="value"> The metric value. </param>
-        /// <returns> A new <see cref="LoadTesting.MetricValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.MetricValue"/> instance for mocking. </returns>
         public static MetricValue MetricValue(DateTimeOffset? timestamp = default, double? value = default)
         {
             return new MetricValue(timestamp, value, additionalBinaryDataProperties: null);
@@ -1176,7 +1176,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Represents a metric dimension value. </summary>
         /// <param name="name"> The name of the dimension. </param>
         /// <param name="value"> The value of the dimension. </param>
-        /// <returns> A new <see cref="LoadTesting.DimensionValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.DimensionValue"/> instance for mocking. </returns>
         public static DimensionValue DimensionValue(string name = default, string value = default)
         {
             return new DimensionValue(name, value, additionalBinaryDataProperties: null);
@@ -1203,12 +1203,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="LoadTesting.TestProfileRun"/> instance for mocking. </returns>
-        public static TestProfileRun TestProfileRun(string testProfileRunId = default, string displayName = default, string description = default, string testProfileId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, TestProfileRunStatus? status = default, IEnumerable<ErrorDetails> errorDetails = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, long? durationInSeconds = default, IReadOnlyDictionary<string, TestRunDetail> testRunDetails = default, IEnumerable<TestProfileRunRecommendation> recommendations = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestProfileRun"/> instance for mocking. </returns>
+        public static TestProfileRun TestProfileRun(string testProfileRunId = default, string displayName = default, string description = default, string testProfileId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, TestProfileRunStatus? status = default, IEnumerable<global::Azure.Developer.LoadTesting.ErrorDetails> errorDetails = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, long? durationInSeconds = default, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunDetail> testRunDetails = default, IEnumerable<global::Azure.Developer.LoadTesting.TestProfileRunRecommendation> recommendations = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
-            errorDetails ??= new ChangeTrackingList<ErrorDetails>();
-            testRunDetails ??= new ChangeTrackingDictionary<string, TestRunDetail>();
-            recommendations ??= new ChangeTrackingList<TestProfileRunRecommendation>();
+            errorDetails ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.ErrorDetails>();
+            testRunDetails ??= new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunDetail>();
+            recommendations ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestProfileRunRecommendation>();
 
             return new TestProfileRun(
                 testProfileRunId,
@@ -1235,7 +1235,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> Status of the test run. </param>
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunDetail"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunDetail"/> instance for mocking. </returns>
         public static TestRunDetail TestRunDetail(TestRunStatus status = default, string configurationId = default, IDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
@@ -1246,7 +1246,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> A recommendation object that provides a list of configuration that optimizes its category. </summary>
         /// <param name="category"> Category of the recommendation. </param>
         /// <param name="configurations"> List of configurations IDs for which the recommendation is applicable. These are a subset of the provided target resource configurations. </param>
-        /// <returns> A new <see cref="LoadTesting.TestProfileRunRecommendation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestProfileRunRecommendation"/> instance for mocking. </returns>
         public static TestProfileRunRecommendation TestProfileRunRecommendation(RecommendationCategory category = default, IEnumerable<string> configurations = default)
         {
             configurations ??= new ChangeTrackingList<string>();
@@ -1259,11 +1259,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="rows"> The rows of the insights. </param>
         /// <param name="version"> The version of the insights. </param>
         /// <param name="status"> The status of the insights. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunInsights"/> instance for mocking. </returns>
-        public static TestRunInsights TestRunInsights(IEnumerable<TestRunInsightColumn> columns = default, IDictionary<string, IDictionary<string, string>> rows = default, long? version = default, OperationState? status = default)
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunInsights"/> instance for mocking. </returns>
+        public static TestRunInsights TestRunInsights(IEnumerable<global::Azure.Developer.LoadTesting.TestRunInsightColumn> columns = default, IDictionary<string, global::System.Collections.Generic.IDictionary<string, string>> rows = default, long? version = default, OperationState? status = default)
         {
-            columns ??= new ChangeTrackingList<TestRunInsightColumn>();
-            rows ??= new ChangeTrackingDictionary<string, IDictionary<string, string>>();
+            columns ??= new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestRunInsightColumn>();
+            rows ??= new ChangeTrackingDictionary<string, global::System.Collections.Generic.IDictionary<string, string>>();
 
             return new TestRunInsights(columns.ToList(), rows, version, status, additionalBinaryDataProperties: null);
         }
@@ -1271,7 +1271,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Represents a column of the test run insight. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="dataType"> The data type of the column. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunInsightColumn"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.Developer.LoadTesting.TestRunInsightColumn"/> instance for mocking. </returns>
         public static TestRunInsightColumn TestRunInsightColumn(string name = default, string dataType = default)
         {
             return new TestRunInsightColumn(name, dataType, additionalBinaryDataProperties: null);

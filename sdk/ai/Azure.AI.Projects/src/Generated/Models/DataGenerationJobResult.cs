@@ -11,22 +11,22 @@ namespace Azure.AI.Projects
     public partial class DataGenerationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobResult"/>. </summary>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
         internal DataGenerationJobResult(int generatedSamples)
         {
-            Outputs = new ChangeTrackingList<DataGenerationJobOutput>();
+            Outputs = new ChangeTrackingList<global::Azure.AI.Projects.DataGenerationJobOutput>();
             GeneratedSamples = generatedSamples;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobResult"/>. </summary>
         /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
         /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobResult(IList<DataGenerationJobOutput> outputs, int generatedSamples, DataGenerationTokenUsage tokenUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobResult(IList<global::Azure.AI.Projects.DataGenerationJobOutput> outputs, int generatedSamples, DataGenerationTokenUsage tokenUsage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Outputs = outputs;
             GeneratedSamples = generatedSamples;
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </summary>
-        public IList<DataGenerationJobOutput> Outputs { get; }
+        public IList<global::Azure.AI.Projects.DataGenerationJobOutput> Outputs { get; }
 
         /// <summary> The number of samples actually generated. </summary>
         public int GeneratedSamples { get; }

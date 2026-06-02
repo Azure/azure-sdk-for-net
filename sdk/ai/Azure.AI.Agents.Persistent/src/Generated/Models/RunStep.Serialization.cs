@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Detailed information about a single step of an agent thread run. </summary>
-    public partial class RunStep : IJsonModel<RunStep>
+    public partial class RunStep : IJsonModel<global::Azure.AI.Agents.Persistent.RunStep>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStep"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStep"/> for deserialization. </summary>
         internal RunStep()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStep PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStep(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStep.DeserializeRunStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStep)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStep)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStep)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStep)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStep>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStep IPersistableModel<RunStep>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStep IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RunStep"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Agents.Persistent.RunStep"/> from. </param>
         public static explicit operator RunStep(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRunStep(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Agents.Persistent.RunStep.DeserializeRunStep(document.RootElement, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,15 +81,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStep)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStep)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(this.Object);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("assistant_id"u8);
@@ -101,11 +101,11 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue(StepDetails, options);
-            if (Optional.IsDefined(LastError))
+            writer.WriteObjectValue<RunStepDetails>(StepDetails, options);
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(LastError))
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError, options);
+                writer.WriteObjectValue<RunStepError>(LastError, options);
             }
             else
             {
@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
-            if (Optional.IsDefined(ExpiredAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(ExpiredAt))
             {
                 writer.WritePropertyName("expired_at"u8);
                 writer.WriteNumberValue(ExpiredAt.Value, "U");
@@ -122,7 +122,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("expired_at"u8);
             }
-            if (Optional.IsDefined(CompletedAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completed_at"u8);
                 writer.WriteNumberValue(CompletedAt.Value, "U");
@@ -131,7 +131,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("completed_at"u8);
             }
-            if (Optional.IsDefined(CancelledAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(CancelledAt))
             {
                 writer.WritePropertyName("cancelled_at"u8);
                 writer.WriteNumberValue(CancelledAt.Value, "U");
@@ -140,7 +140,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("cancelled_at"u8);
             }
-            if (Optional.IsDefined(FailedAt))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(FailedAt))
             {
                 writer.WritePropertyName("failed_at"u8);
                 writer.WriteNumberValue(FailedAt.Value, "U");
@@ -149,19 +149,19 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("failed_at"u8);
             }
-            if (Optional.IsDefined(Usage))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                writer.WriteObjectValue<RunStepCompletionUsage>(Usage, options);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -174,7 +174,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("metadata"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -182,9 +182,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -193,26 +193,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStep IJsonModel<RunStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStep IJsonModel<global::Azure.AI.Agents.Persistent.RunStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStep JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStep>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStep>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStep)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStep)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStep(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStep.DeserializeRunStep(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStep DeserializeRunStep(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -232,7 +232,7 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? failedAt = default;
             RunStepCompletionUsage usage = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -272,22 +272,22 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("step_details"u8))
                 {
-                    stepDetails = RunStepDetails.DeserializeRunStepDetails(prop.Value, options);
+                    stepDetails = global::Azure.AI.Agents.Persistent.RunStepDetails.DeserializeRunStepDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("last_error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         lastError = null;
                         continue;
                     }
-                    lastError = RunStepError.DeserializeRunStepError(prop.Value, options);
+                    lastError = global::Azure.AI.Agents.Persistent.RunStepError.DeserializeRunStepError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("expired_at"u8))
@@ -312,17 +312,17 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         usage = null;
                         continue;
                     }
-                    usage = RunStepCompletionUsage.DeserializeRunStepCompletionUsage(prop.Value, options);
+                    usage = global::Azure.AI.Agents.Persistent.RunStepCompletionUsage.DeserializeRunStepCompletionUsage(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
@@ -330,7 +330,7 @@ namespace Azure.AI.Agents.Persistent
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -342,9 +342,9 @@ namespace Azure.AI.Agents.Persistent
                     metadata = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RunStep(

@@ -10,17 +10,17 @@ namespace Azure.AI.Projects
     /// <summary> Azure OpenAI file output for a data generation job. </summary>
     public partial class FileDataGenerationJobOutput : DataGenerationJobOutput
     {
-        /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobOutput"/>. </summary>
-        internal FileDataGenerationJobOutput() : base(DataGenerationJobOutputType.File)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataGenerationJobOutput"/>. </summary>
+        internal FileDataGenerationJobOutput() : base(global::Azure.AI.Projects.DataGenerationJobOutputType.File)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.FileDataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The id of the output Azure OpenAI file. </param>
         /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
-        internal FileDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string filename) : base(@type, additionalBinaryDataProperties)
+        internal FileDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id, string filename) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Filename = filename;

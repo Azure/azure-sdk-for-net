@@ -17,24 +17,24 @@ namespace Routes._PathParameters.ReservedExpansion
     {
         protected PathParametersReservedExpansion() => throw null;
 
-        internal PathParametersReservedExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PathParametersReservedExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Template(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> TemplateAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> TemplateAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response Template(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> TemplateAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> TemplateAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Annotation(string @param, RequestContext context) => throw null;
 
-        public virtual Task<Response> AnnotationAsync(string @param, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> AnnotationAsync(string @param, RequestContext context) => throw null;
 
         public virtual Response Annotation(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> AnnotationAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> AnnotationAsync(string @param, CancellationToken cancellationToken = default) => throw null;
     }
 }

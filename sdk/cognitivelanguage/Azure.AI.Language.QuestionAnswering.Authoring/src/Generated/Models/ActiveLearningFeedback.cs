@@ -14,24 +14,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class ActiveLearningFeedback
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActiveLearningFeedback"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ActiveLearningFeedback"/>. </summary>
         public ActiveLearningFeedback()
         {
-            Records = new ChangeTrackingList<FeedbackRecord>();
+            Records = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActiveLearningFeedback"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.ActiveLearningFeedback"/>. </summary>
         /// <param name="records"> A list of Feedback Records for Active Learning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveLearningFeedback(IList<FeedbackRecord> records, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveLearningFeedback(IList<global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord> records, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Records = records;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of Feedback Records for Active Learning. </summary>
-        public IList<FeedbackRecord> Records { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord> Records { get; }
     }
 }

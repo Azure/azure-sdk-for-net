@@ -14,22 +14,22 @@ namespace Azure.Analytics.OnlineExperimentation
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AggregatedValue))]
-    [ModelReaderWriterBuildable(typeof(AverageMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(DiagnosticDetail))]
-    [ModelReaderWriterBuildable(typeof(EventCountMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(EventRateMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(ExperimentMetric))]
-    [ModelReaderWriterBuildable(typeof(ExperimentMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(ExperimentMetricValidationResult))]
-    [ModelReaderWriterBuildable(typeof(ObservedEvent))]
-    [ModelReaderWriterBuildable(typeof(PagedExperimentMetric))]
-    [ModelReaderWriterBuildable(typeof(PercentileMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SumMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(UnknownExperimentMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(UserCountMetricDefinition))]
-    [ModelReaderWriterBuildable(typeof(UserRateMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(AggregatedValue))]
+    [ModelReaderWriterBuildableAttribute(typeof(AverageMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(DiagnosticDetail))]
+    [ModelReaderWriterBuildableAttribute(typeof(EventCountMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(EventRateMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(ExperimentMetric))]
+    [ModelReaderWriterBuildableAttribute(typeof(ExperimentMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(ExperimentMetricValidationResult))]
+    [ModelReaderWriterBuildableAttribute(typeof(ObservedEvent))]
+    [ModelReaderWriterBuildableAttribute(typeof(PagedExperimentMetric))]
+    [ModelReaderWriterBuildableAttribute(typeof(PercentileMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(SumMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(UnknownExperimentMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(UserCountMetricDefinition))]
+    [ModelReaderWriterBuildableAttribute(typeof(UserRateMetricDefinition))]
     public partial class AzureAnalyticsOnlineExperimentationContext : ModelReaderWriterContext
     {
     }

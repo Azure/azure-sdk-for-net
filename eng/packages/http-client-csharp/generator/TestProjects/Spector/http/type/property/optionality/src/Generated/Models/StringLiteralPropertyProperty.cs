@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Property.Optional
 {
-    public readonly partial struct StringLiteralPropertyProperty : IEquatable<StringLiteralPropertyProperty>
+    public readonly partial struct StringLiteralPropertyProperty : IEquatable<global::_Type.Property.Optional.StringLiteralPropertyProperty>
     {
         public StringLiteralPropertyProperty(string value) => throw null;
 
@@ -20,20 +20,20 @@ namespace _Type.Property.Optional
 
         public static bool operator !=(StringLiteralPropertyProperty left, StringLiteralPropertyProperty right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="StringLiteralPropertyProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.Optional.StringLiteralPropertyProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StringLiteralPropertyProperty(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="StringLiteralPropertyProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.Optional.StringLiteralPropertyProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StringLiteralPropertyProperty?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(StringLiteralPropertyProperty other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

@@ -17,7 +17,7 @@ namespace Azure.Template
     /// <summary> The AzureWidgets sub-client. </summary>
     public partial class AzureWidgets
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AzureWidgets for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Template
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AzureWidgets(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AzureWidgets(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -54,9 +54,9 @@ namespace Azure.Template
         /// </summary>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetWidget(string widgetName, RequestContext context)
         {
@@ -64,9 +64,9 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-                using HttpMessage message = CreateGetWidgetRequest(widgetName, context);
+                using HttpMessage message = this.CreateGetWidgetRequest(widgetName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -86,19 +86,19 @@ namespace Azure.Template
         /// </summary>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWidgetAsync(string widgetName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetWidgetAsync(string widgetName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.GetWidget");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-                using HttpMessage message = CreateGetWidgetRequest(widgetName, context);
+                using HttpMessage message = this.CreateGetWidgetRequest(widgetName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -111,29 +111,29 @@ namespace Azure.Template
         /// <summary> Fetch a Widget by name. </summary>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WidgetSuite> GetWidget(string widgetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Template.WidgetSuite> GetWidget(string widgetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Response result = GetWidget(widgetName, cancellationToken.ToRequestContext());
-            return Response.FromValue((WidgetSuite)result, result);
+            Response result = this.GetWidget(widgetName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((WidgetSuite)result), result);
         }
 
         /// <summary> Fetch a Widget by name. </summary>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WidgetSuite>> GetWidgetAsync(string widgetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Template.WidgetSuite>> GetWidgetAsync(string widgetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Response result = await GetWidgetAsync(widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((WidgetSuite)result, result);
+            Response result = await this.GetWidgetAsync(widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((WidgetSuite)result), result);
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace Azure.Template
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="operationId"> The unique ID of the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetWidgetOperationStatus(string widgetName, string operationId, RequestContext context)
         {
@@ -157,10 +157,10 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetWidgetOperationStatusRequest(widgetName, operationId, context);
+                using HttpMessage message = this.CreateGetWidgetOperationStatusRequest(widgetName, operationId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -181,20 +181,20 @@ namespace Azure.Template
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="operationId"> The unique ID of the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWidgetOperationStatusAsync(string widgetName, string operationId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetWidgetOperationStatusAsync(string widgetName, string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.GetWidgetOperationStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-                using HttpMessage message = CreateGetWidgetOperationStatusRequest(widgetName, operationId, context);
+                using HttpMessage message = this.CreateGetWidgetOperationStatusRequest(widgetName, operationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -208,32 +208,32 @@ namespace Azure.Template
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="operationId"> The unique ID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ResourceOperationStatusWidgetSuiteWidgetSuiteError> GetWidgetOperationStatus(string widgetName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError> GetWidgetOperationStatus(string widgetName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = GetWidgetOperationStatus(widgetName, operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result, result);
+            Response result = this.GetWidgetOperationStatus(widgetName, operationId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result), result);
         }
 
         /// <summary> Gets status of a Widget operation. </summary>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="operationId"> The unique ID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ResourceOperationStatusWidgetSuiteWidgetSuiteError>> GetWidgetOperationStatusAsync(string widgetName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>> GetWidgetOperationStatusAsync(string widgetName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetWidgetOperationStatusAsync(widgetName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result, result);
+            Response result = await this.GetWidgetOperationStatusAsync(widgetName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result), result);
         }
 
         /// <summary> Creates or updates a Widget asynchronously. </summary>
@@ -241,20 +241,20 @@ namespace Azure.Template
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateOrUpdateWidget(WaitUntil waitUntil, string widgetName, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> CreateOrUpdateWidget(WaitUntil waitUntil, string widgetName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.CreateOrUpdateWidget");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidget", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidget", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -268,20 +268,20 @@ namespace Azure.Template
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateOrUpdateWidgetAsync(WaitUntil waitUntil, string widgetName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> CreateOrUpdateWidgetAsync(WaitUntil waitUntil, string widgetName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.CreateOrUpdateWidget");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidgetAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -294,19 +294,19 @@ namespace Azure.Template
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> DeleteWidget(WaitUntil waitUntil, string widgetName, RequestContext context)
+        public virtual Operation<global::System.BinaryData> DeleteWidget(WaitUntil waitUntil, string widgetName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.DeleteWidget");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-                using HttpMessage message = CreateDeleteWidgetRequest(widgetName, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidget", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateDeleteWidgetRequest(widgetName, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidget", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -319,19 +319,19 @@ namespace Azure.Template
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> DeleteWidgetAsync(WaitUntil waitUntil, string widgetName, RequestContext context)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> DeleteWidgetAsync(WaitUntil waitUntil, string widgetName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.DeleteWidget");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+                global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-                using HttpMessage message = CreateDeleteWidgetRequest(widgetName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateDeleteWidgetRequest(widgetName, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -344,28 +344,28 @@ namespace Azure.Template
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation<WidgetSuite> DeleteWidget(WaitUntil waitUntil, string widgetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<global::Azure.Template.WidgetSuite> DeleteWidget(WaitUntil waitUntil, string widgetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Operation<BinaryData> result = DeleteWidget(waitUntil, widgetName, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidget");
+            Operation<global::System.BinaryData> result = this.DeleteWidget(waitUntil, widgetName, cancellationToken.ToRequestContext());
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(result, response => global::Azure.Template.WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidget");
         }
 
         /// <summary> Delete a Widget asynchronously. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="widgetName"> The widget name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation<WidgetSuite>> DeleteWidgetAsync(WaitUntil waitUntil, string widgetName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation<global::Azure.Template.WidgetSuite>> DeleteWidgetAsync(WaitUntil waitUntil, string widgetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+            global::Azure.Template.Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Operation<BinaryData> result = await DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
+            Operation<global::System.BinaryData> result = await this.DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(result, response => global::Azure.Template.WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
         }
 
         /// <summary>
@@ -377,9 +377,9 @@ namespace Azure.Template
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetWidgets(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetWidgets(RequestContext context)
         {
             return new AzureWidgetsGetWidgetsCollectionResult(this, context, "AzureWidgets.GetWidgets");
         }
@@ -393,25 +393,25 @@ namespace Azure.Template
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetWidgetsAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetWidgetsAsync(RequestContext context)
         {
             return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context, "AzureWidgets.GetWidgets");
         }
 
         /// <summary> List Widget resources. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WidgetSuite> GetWidgets(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Template.WidgetSuite> GetWidgets(CancellationToken cancellationToken = default)
         {
             return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
         }
 
         /// <summary> List Widget resources. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WidgetSuite> GetWidgetsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Template.WidgetSuite> GetWidgetsAsync(CancellationToken cancellationToken = default)
         {
             return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
         }

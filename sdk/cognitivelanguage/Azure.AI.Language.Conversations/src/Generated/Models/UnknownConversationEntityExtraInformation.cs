@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Conversations.Models
 {
     internal partial class UnknownConversationEntityExtraInformation : ConversationEntityExtraInformation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationEntityExtraInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.UnknownConversationEntityExtraInformation"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(extraInformationKind != default ? extraInformationKind : "unknown", additionalBinaryDataProperties)
+        internal UnknownConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((extraInformationKind != default) ? extraInformationKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

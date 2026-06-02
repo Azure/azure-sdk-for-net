@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Await : IJsonModel<Await>
+    public partial class Await : IJsonModel<global::SpecialWords._Models.Await>
     {
         internal Await() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Await>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Await>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Await IPersistableModel<Await>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Await IPersistableModel<global::SpecialWords._Models.Await>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Await>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Await>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="await"> The <see cref="Await"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="await"> The <see cref="global::SpecialWords._Models.Await"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Await @await) => throw null;
 
-        void IJsonModel<Await>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Await>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Await IJsonModel<Await>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Await IJsonModel<global::SpecialWords._Models.Await>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Await JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

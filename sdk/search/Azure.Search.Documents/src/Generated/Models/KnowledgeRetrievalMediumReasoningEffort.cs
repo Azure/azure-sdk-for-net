@@ -13,15 +13,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Run knowledge retrieval with medium reasoning effort. </summary>
     public partial class KnowledgeRetrievalMediumReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalMediumReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Medium)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
+        public KnowledgeRetrievalMediumReasoningEffort() : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffortKind.Medium)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

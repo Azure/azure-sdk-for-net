@@ -13,13 +13,13 @@ namespace Azure.AI.VoiceLive
     /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
     public partial class AzureSemanticVadTurnDetectionMultilingual : TurnDetection
     {
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionMultilingual"/>. </summary>
-        public AzureSemanticVadTurnDetectionMultilingual() : base(TurnDetectionType.AzureSemanticVadMultilingual)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>. </summary>
+        public AzureSemanticVadTurnDetectionMultilingual() : base(global::Azure.AI.VoiceLive.TurnDetectionType.AzureSemanticVadMultilingual)
         {
             Languages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetectionMultilingual"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="autoTruncate"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
-        internal AzureSemanticVadTurnDetectionMultilingual(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
+        internal AzureSemanticVadTurnDetectionMultilingual(TurnDetectionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;

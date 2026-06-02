@@ -14,15 +14,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasNumberFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasNumberFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat"/>. </summary>
         public AtlasNumberFormat()
         {
             AvailableLocales = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasNumberFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat"/>. </summary>
         /// <param name="availableLocales"> The number format. </param>
         /// <param name="currency"> The currency. </param>
         /// <param name="currencyInstance"> The number format. </param>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="percentInstance"> The number format. </param>
         /// <param name="roundingMode"> The enum of rounding mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasNumberFormat(IList<string> availableLocales, string currency, AtlasNumberFormat currencyInstance, bool? groupingUsed, AtlasNumberFormat instance, AtlasNumberFormat integerInstance, int? maximumFractionDigits, int? maximumIntegerDigits, int? minimumFractionDigits, int? minimumIntegerDigits, AtlasNumberFormat numberInstance, bool? parseIntegerOnly, AtlasNumberFormat percentInstance, RoundingMode? roundingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasNumberFormat(IList<string> availableLocales, string currency, AtlasNumberFormat currencyInstance, bool? groupingUsed, AtlasNumberFormat instance, AtlasNumberFormat integerInstance, int? maximumFractionDigits, int? maximumIntegerDigits, int? minimumFractionDigits, int? minimumIntegerDigits, AtlasNumberFormat numberInstance, bool? parseIntegerOnly, AtlasNumberFormat percentInstance, RoundingMode? roundingMode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AvailableLocales = availableLocales;
             Currency = currency;

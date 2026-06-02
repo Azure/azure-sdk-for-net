@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseWorkIQReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseFileReference"/>, and <see cref="KnowledgeBaseIndexedSqlReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWebReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricDataAgentReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFabricOntologyReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerReference"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseFileReference"/>, and <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
@@ -30,17 +30,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Type = @type;
             Id = id;
             ActivitySource = activitySource;
-            SourceData = new ChangeTrackingDictionary<string, BinaryData>();
+            SourceData = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, global::System.BinaryData> sourceData, float? rerankerScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
@@ -61,8 +61,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary>
         /// The source data for the reference.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> SourceData { get; }
+        public IDictionary<string, global::System.BinaryData> SourceData { get; }
 
         /// <summary> The reranker score for the document reference. </summary>
         public float? RerankerScore { get; }

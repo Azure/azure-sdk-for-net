@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
     public partial class VectorizedQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizedQuery"/>. </summary>
         /// <param name="vector"> The vector representation of a search query. </param>
-        public VectorizedQuery(ReadOnlyMemory<float> vector) : base(VectorQueryKind.Vector)
+        public VectorizedQuery(ReadOnlyMemory<float> vector) : base(global::Azure.Search.Documents.Models.VectorQueryKind.Vector)
         {
             Vector = vector;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizedQuery"/>. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
-        internal VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReadOnlyMemory<float> vector) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
+        internal VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ReadOnlyMemory<float> vector) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
         {
             Vector = vector;
         }

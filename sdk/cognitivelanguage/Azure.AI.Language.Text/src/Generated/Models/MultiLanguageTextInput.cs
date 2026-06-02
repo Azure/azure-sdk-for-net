@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Text
     public partial class MultiLanguageTextInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.MultiLanguageTextInput"/>. </summary>
         public MultiLanguageTextInput()
         {
-            MultiLanguageInputs = new ChangeTrackingList<MultiLanguageInput>();
+            MultiLanguageInputs = new ChangeTrackingList<global::Azure.AI.Language.Text.MultiLanguageInput>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageTextInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.MultiLanguageTextInput"/>. </summary>
         /// <param name="multiLanguageInputs"> The input documents to be analyzed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiLanguageTextInput(IList<MultiLanguageInput> multiLanguageInputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiLanguageTextInput(IList<global::Azure.AI.Language.Text.MultiLanguageInput> multiLanguageInputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MultiLanguageInputs = multiLanguageInputs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The input documents to be analyzed. </summary>
-        public IList<MultiLanguageInput> MultiLanguageInputs { get; }
+        public IList<global::Azure.AI.Language.Text.MultiLanguageInput> MultiLanguageInputs { get; }
     }
 }

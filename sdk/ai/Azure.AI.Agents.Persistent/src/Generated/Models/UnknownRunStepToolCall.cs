@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownRunStepToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRunStepToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownRunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRunStepToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", id, additionalBinaryDataProperties)
+        internal UnknownRunStepToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type ?? "unknown"), id, additionalBinaryDataProperties)
         {
         }
     }

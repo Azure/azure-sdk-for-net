@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class DocumentError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentError"/>. </summary>
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
         internal DocumentError(string id, AnalyzeTextError error)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.DocumentError"/>. </summary>
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentError(string id, AnalyzeTextError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentError(string id, AnalyzeTextError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Error = error;

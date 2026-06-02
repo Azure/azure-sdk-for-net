@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Enums used to filters jobs by status. </summary>
-    public readonly partial struct RouterJobStatusSelector : IEquatable<RouterJobStatusSelector>
+    public readonly partial struct RouterJobStatusSelector : IEquatable<global::Azure.Communication.JobRouter.RouterJobStatusSelector>
     {
         private readonly string _value;
         /// <summary> Default. </summary>
@@ -43,12 +43,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Job is in a state of PendingClassification or Queued or Assigned or ClassificationFailed or Completed or PendingSchedule or Scheduled or ScheduleFailed or WaitingForActivation. </summary>
         private const string ActiveValue = "active";
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobStatusSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobStatusSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouterJobStatusSelector(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -95,34 +95,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Job is in a state of PendingClassification or Queued or Assigned or ClassificationFailed or Completed or PendingSchedule or Scheduled or ScheduleFailed or WaitingForActivation. </summary>
         public static RouterJobStatusSelector Active { get; } = new RouterJobStatusSelector(ActiveValue);
 
-        /// <summary> Determines if two <see cref="RouterJobStatusSelector"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.RouterJobStatusSelector"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouterJobStatusSelector left, RouterJobStatusSelector right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RouterJobStatusSelector"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.RouterJobStatusSelector"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouterJobStatusSelector left, RouterJobStatusSelector right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RouterJobStatusSelector"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.RouterJobStatusSelector"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator RouterJobStatusSelector(string value) => new RouterJobStatusSelector(value);
 
-        /// <summary> Converts a string to a <see cref="RouterJobStatusSelector"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.RouterJobStatusSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RouterJobStatusSelector?(string value) => value == null ? null : new RouterJobStatusSelector(value);
+        public static implicit operator RouterJobStatusSelector?(string value) => (value == null) ? null : new RouterJobStatusSelector(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RouterJobStatusSelector other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is RouterJobStatusSelector other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(RouterJobStatusSelector other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RouterJobStatusSelector other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

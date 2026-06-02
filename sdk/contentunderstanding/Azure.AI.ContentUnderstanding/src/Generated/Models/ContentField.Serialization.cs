@@ -13,12 +13,12 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.ContentStringField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentTimeField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentNumberField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentIntegerField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentBooleanField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentArrayField"/>, <see cref="Azure.AI.ContentUnderstanding.ContentObjectField"/>, and <see cref="Azure.AI.ContentUnderstanding.ContentJsonField"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownContentField))]
-    public abstract partial class ContentField : IJsonModel<ContentField>
+    [PersistableModelProxyAttribute(typeof(UnknownContentField))]
+    public abstract partial class ContentField : IJsonModel<global::Azure.AI.ContentUnderstanding.ContentField>
     {
-        /// <summary> Initializes a new instance of <see cref="ContentField"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentField"/> for deserialization. </summary>
         internal ContentField()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.ContentUnderstanding.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContentField(document.RootElement, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentField.DeserializeContentField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentField)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentField)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.ContentUnderstanding.AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContentField)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentField)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentField IPersistableModel<ContentField>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContentField IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.ContentUnderstanding.ContentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,34 +76,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentField)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentField)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(Spans))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsCollectionDefined(Spans))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
                 foreach (ContentSpan item in Spans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ContentSpan>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Confidence))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (Optional.IsDefined(SourceValue))
+            if (global::Azure.AI.ContentUnderstanding.Optional.IsDefined(SourceValue))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(SourceValue);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -111,9 +111,9 @@ namespace Azure.AI.ContentUnderstanding
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -122,26 +122,26 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentField IJsonModel<ContentField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContentField IJsonModel<global::Azure.AI.ContentUnderstanding.ContentField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContentField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentField>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.ContentUnderstanding.ContentField>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContentField)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.ContentUnderstanding.ContentField)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentField(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.ContentUnderstanding.ContentField.DeserializeContentField(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentField DeserializeContentField(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -150,26 +150,26 @@ namespace Azure.AI.ContentUnderstanding
                 switch (discriminator.GetString())
                 {
                     case "string":
-                        return ContentStringField.DeserializeContentStringField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentStringField.DeserializeContentStringField(element, options);
                     case "date":
-                        return ContentDateTimeOffsetField.DeserializeContentDateTimeOffsetField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentDateTimeOffsetField.DeserializeContentDateTimeOffsetField(element, options);
                     case "time":
-                        return ContentTimeField.DeserializeContentTimeField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentTimeField.DeserializeContentTimeField(element, options);
                     case "number":
-                        return ContentNumberField.DeserializeContentNumberField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentNumberField.DeserializeContentNumberField(element, options);
                     case "integer":
-                        return ContentIntegerField.DeserializeContentIntegerField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentIntegerField.DeserializeContentIntegerField(element, options);
                     case "boolean":
-                        return ContentBooleanField.DeserializeContentBooleanField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentBooleanField.DeserializeContentBooleanField(element, options);
                     case "array":
-                        return ContentArrayField.DeserializeContentArrayField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentArrayField.DeserializeContentArrayField(element, options);
                     case "object":
-                        return ContentObjectField.DeserializeContentObjectField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentObjectField.DeserializeContentObjectField(element, options);
                     case "json":
-                        return ContentJsonField.DeserializeContentJsonField(element, options);
+                        return global::Azure.AI.ContentUnderstanding.ContentJsonField.DeserializeContentJsonField(element, options);
                 }
             }
-            return UnknownContentField.DeserializeUnknownContentField(element, options);
+            return global::Azure.AI.ContentUnderstanding.UnknownContentField.DeserializeUnknownContentField(element, options);
         }
     }
 }

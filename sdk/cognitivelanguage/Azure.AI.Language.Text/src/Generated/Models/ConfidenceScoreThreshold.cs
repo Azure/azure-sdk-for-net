@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
     public partial class ConfidenceScoreThreshold
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfidenceScoreThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThreshold"/>. </summary>
         /// <param name="default"> Minimum confidence score threshold for the PII entities to be returned in the response. Entities with a confidence score below this threshold will be filtered out. Value should be between 0.0 and 1.0. </param>
         public ConfidenceScoreThreshold(float @default)
         {
             Default = @default;
-            Overrides = new ChangeTrackingList<ConfidenceScoreThresholdOverride>();
+            Overrides = new ChangeTrackingList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfidenceScoreThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThreshold"/>. </summary>
         /// <param name="default"> Minimum confidence score threshold for the PII entities to be returned in the response. Entities with a confidence score below this threshold will be filtered out. Value should be between 0.0 and 1.0. </param>
         /// <param name="overrides"> List of confidence score threshold overrides for specific PII categories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidenceScoreThreshold(float @default, IList<ConfidenceScoreThresholdOverride> overrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfidenceScoreThreshold(float @default, IList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> overrides, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Default = @default;
             Overrides = overrides;
@@ -39,6 +39,6 @@ namespace Azure.AI.Language.Text
         public float Default { get; }
 
         /// <summary> List of confidence score threshold overrides for specific PII categories. </summary>
-        public IList<ConfidenceScoreThresholdOverride> Overrides { get; }
+        public IList<global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> Overrides { get; }
     }
 }

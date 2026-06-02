@@ -16,19 +16,19 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CreatedResources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
         private IDictionary<string, string> _additionalStringProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreatedResources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CreatedResources"/>. </summary>
         internal CreatedResources()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreatedResources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CreatedResources"/>. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreatedResources(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreatedResources(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

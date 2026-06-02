@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerResyncBody
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexerResyncBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerResyncBody"/>. </summary>
         public IndexerResyncBody()
         {
-            Options = new ChangeTrackingList<IndexerResyncOption>();
+            Options = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.IndexerResyncOption>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexerResyncBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexerResyncBody"/>. </summary>
         /// <param name="options"> Re-sync options that have been pre-defined from data source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerResyncBody(IList<IndexerResyncOption> options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerResyncBody(IList<global::Azure.Search.Documents.Indexes.Models.IndexerResyncOption> options, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Options = options;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Re-sync options that have been pre-defined from data source. </summary>
-        public IList<IndexerResyncOption> Options { get; set; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.IndexerResyncOption> Options { get; set; }
     }
 }

@@ -14,29 +14,29 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplate"/>. </summary>
         /// <param name="name"> Name of the template. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
         public MessageTemplate(string name, string language)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(language, nameof(language));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(language, nameof(language));
 
             Name = name;
             Language = language;
-            Values = new ChangeTrackingList<MessageTemplateValue>();
+            Values = new ChangeTrackingList<global::Azure.Communication.Messages.MessageTemplateValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.MessageTemplate"/>. </summary>
         /// <param name="name"> Name of the template. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="values"> The template values. </param>
         /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplate(string name, string language, IList<MessageTemplateValue> values, MessageTemplateBindings bindings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageTemplate(string name, string language, IList<global::Azure.Communication.Messages.MessageTemplateValue> values, MessageTemplateBindings bindings, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Language = language;
@@ -52,7 +52,7 @@ namespace Azure.Communication.Messages
         public string Language { get; set; }
 
         /// <summary> The template values. </summary>
-        public IList<MessageTemplateValue> Values { get; }
+        public IList<global::Azure.Communication.Messages.MessageTemplateValue> Values { get; }
 
         /// <summary> The binding object to link values to the template specific locations. </summary>
         public MessageTemplateBindings Bindings { get; set; }

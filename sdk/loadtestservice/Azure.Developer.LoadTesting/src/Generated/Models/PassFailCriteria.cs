@@ -14,20 +14,20 @@ namespace Azure.Developer.LoadTesting
     public partial class PassFailCriteria
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PassFailCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailCriteria"/>. </summary>
         public PassFailCriteria()
         {
-            PassFailMetrics = new ChangeTrackingDictionary<string, PassFailMetric>();
-            PassFailServerMetrics = new ChangeTrackingDictionary<string, PassFailServerMetric>();
+            PassFailMetrics = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.PassFailMetric>();
+            PassFailServerMetrics = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.PassFailServerMetric>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PassFailCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailCriteria"/>. </summary>
         /// <param name="passFailMetrics"> Map of id and pass fail metrics { id  : pass fail metrics }. </param>
         /// <param name="passFailServerMetrics"> Map of id and pass fail server metrics { id  : pass fail metrics }. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailCriteria(IDictionary<string, PassFailMetric> passFailMetrics, IDictionary<string, PassFailServerMetric> passFailServerMetrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PassFailCriteria(IDictionary<string, global::Azure.Developer.LoadTesting.PassFailMetric> passFailMetrics, IDictionary<string, global::Azure.Developer.LoadTesting.PassFailServerMetric> passFailServerMetrics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PassFailMetrics = passFailMetrics;
             PassFailServerMetrics = passFailServerMetrics;
@@ -35,9 +35,9 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Map of id and pass fail metrics { id  : pass fail metrics }. </summary>
-        public IDictionary<string, PassFailMetric> PassFailMetrics { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.PassFailMetric> PassFailMetrics { get; }
 
         /// <summary> Map of id and pass fail server metrics { id  : pass fail metrics }. </summary>
-        public IDictionary<string, PassFailServerMetric> PassFailServerMetrics { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.PassFailServerMetric> PassFailServerMetrics { get; }
     }
 }

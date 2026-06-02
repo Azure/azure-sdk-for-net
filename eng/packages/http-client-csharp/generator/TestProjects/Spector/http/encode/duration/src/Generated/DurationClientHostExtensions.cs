@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Encode.Duration
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class DurationClientHostExtensions
     {
         public static IClientBuilder AddDurationClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddDurationClient(this IHostApplicationBuilder host, string sectionName, Action<DurationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddDurationClient(this IHostApplicationBuilder host, string sectionName, Action<global::Encode.Duration.DurationClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedDurationClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedDurationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<DurationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedDurationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Encode.Duration.DurationClientSettings> configureSettings) => throw null;
     }
 }

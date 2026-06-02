@@ -16,11 +16,11 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateGetVersionsRequest(string name, string @type, int? limit, RequestOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath("/evaluators/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.TypeFormatters.ConvertToString(limit), true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateNextGetVersionsRequest(Uri nextPage, string name, string @type, int? limit, RequestOptions options)
+        internal PipelineMessage CreateNextGetVersionsRequest(global::System.Uri nextPage, string name, string @type, int? limit, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -57,9 +57,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -75,17 +75,17 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluators", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (@type != null)
+            if ((@type != null))
             {
                 uri.AppendQuery("type", @type, true);
             }
-            if (limit != null)
+            if ((limit != null))
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+                uri.AppendQuery("limit", global::Azure.AI.Projects.TypeFormatters.ConvertToString(limit), true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateNextGetLatestVersionsRequest(Uri nextPage, string @type, int? limit, RequestOptions options)
+        internal PipelineMessage CreateNextGetLatestVersionsRequest(global::System.Uri nextPage, string @type, int? limit, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -103,9 +103,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath("/evaluators/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -181,7 +181,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -203,13 +203,13 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendPath("/startPendingUpload", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -229,13 +229,13 @@ namespace Azure.AI.Projects.Evaluation
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendPath("/credentials", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }

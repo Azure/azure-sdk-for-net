@@ -14,25 +14,25 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalSubmitToolOutputsDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalSubmitToolOutputsDetails"/>. </summary>
         /// <param name="toolCalls"> The list of tool calls that must be resolved for the agent thread run to continue. </param>
-        internal InternalSubmitToolOutputsDetails(IEnumerable<RequiredToolCall> toolCalls)
+        internal InternalSubmitToolOutputsDetails(IEnumerable<global::Azure.AI.Agents.Persistent.RequiredToolCall> toolCalls)
         {
             ToolCalls = toolCalls.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalSubmitToolOutputsDetails"/>. </summary>
         /// <param name="toolCalls"> The list of tool calls that must be resolved for the agent thread run to continue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalSubmitToolOutputsDetails(IList<RequiredToolCall> toolCalls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalSubmitToolOutputsDetails(IList<global::Azure.AI.Agents.Persistent.RequiredToolCall> toolCalls, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of tool calls that must be resolved for the agent thread run to continue. </summary>
-        public IList<RequiredToolCall> ToolCalls { get; }
+        public IList<global::Azure.AI.Agents.Persistent.RequiredToolCall> ToolCalls { get; }
     }
 }

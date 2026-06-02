@@ -13,12 +13,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobExceptionTriggered event. </summary>
     public partial class AcsRouterJobExceptionTriggeredEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         internal AcsRouterJobExceptionTriggeredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="ruleKey"> Router Job Exception Triggered Rule Key. </param>
         /// <param name="exceptionRuleId"> Router Job Exception Triggered Rule Id. </param>
-        internal AcsRouterJobExceptionTriggeredEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string ruleKey, string exceptionRuleId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobExceptionTriggeredEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string ruleKey, string exceptionRuleId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             RuleKey = ruleKey;
             ExceptionRuleId = exceptionRuleId;

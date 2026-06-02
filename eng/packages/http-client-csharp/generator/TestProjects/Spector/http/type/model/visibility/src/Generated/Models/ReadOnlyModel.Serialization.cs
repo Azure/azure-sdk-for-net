@@ -13,28 +13,28 @@ using Azure.Core;
 
 namespace _Type.Model.Visibility
 {
-    public partial class ReadOnlyModel : IJsonModel<ReadOnlyModel>
+    public partial class ReadOnlyModel : IJsonModel<global::_Type.Model.Visibility.ReadOnlyModel>
     {
         protected virtual ReadOnlyModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ReadOnlyModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Visibility.ReadOnlyModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ReadOnlyModel IPersistableModel<ReadOnlyModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ReadOnlyModel IPersistableModel<global::_Type.Model.Visibility.ReadOnlyModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ReadOnlyModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Visibility.ReadOnlyModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="readOnlyModel"> The <see cref="ReadOnlyModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="readOnlyModel"> The <see cref="global::_Type.Model.Visibility.ReadOnlyModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ReadOnlyModel readOnlyModel) => throw null;
 
         public static explicit operator ReadOnlyModel(Response response) => throw null;
 
-        void IJsonModel<ReadOnlyModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Visibility.ReadOnlyModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ReadOnlyModel IJsonModel<ReadOnlyModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ReadOnlyModel IJsonModel<global::_Type.Model.Visibility.ReadOnlyModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ReadOnlyModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

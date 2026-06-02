@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal readonly partial struct SeverityLevel : IEquatable<SeverityLevel>
+    internal readonly partial struct SeverityLevel : IEquatable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel>
     {
         private readonly string _value;
         /// <summary> Verbose level. </summary>
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Critical level. </summary>
         private const string CriticalValue = "Critical";
 
-        /// <summary> Initializes a new instance of <see cref="SeverityLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
         public SeverityLevel(string value)
         {
@@ -46,34 +46,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Critical level. </summary>
         public static SeverityLevel Critical { get; } = new SeverityLevel(CriticalValue);
 
-        /// <summary> Determines if two <see cref="SeverityLevel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SeverityLevel left, SeverityLevel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SeverityLevel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SeverityLevel left, SeverityLevel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SeverityLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SeverityLevel(string value) => new SeverityLevel(value);
 
-        /// <summary> Converts a string to a <see cref="SeverityLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeverityLevel?(string value) => value == null ? null : new SeverityLevel(value);
+        public static implicit operator SeverityLevel?(string value) => (value == null) ? null : new SeverityLevel(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SeverityLevel other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SeverityLevel other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SeverityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SeverityLevel other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

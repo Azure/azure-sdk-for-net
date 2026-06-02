@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateInputAudioBufferSpeechStarted : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>. </summary>
         /// <param name="audioStartMs">
         /// Milliseconds from the start of all audio written to the buffer during the
         /// session when speech was first detected. This will correspond to the
@@ -31,13 +31,13 @@ namespace Azure.AI.VoiceLive
         /// `prefix_padding_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
-        internal SessionUpdateInputAudioBufferSpeechStarted(int audioStartMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStarted)
+        internal SessionUpdateInputAudioBufferSpeechStarted(int audioStartMs, string itemId) : base(global::Azure.AI.VoiceLive.ServerEventType.InputAudioBufferSpeechStarted)
         {
             AudioStartMs = audioStartMs;
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// `prefix_padding_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
-        internal SessionUpdateInputAudioBufferSpeechStarted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioStartMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateInputAudioBufferSpeechStarted(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, int audioStartMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioStartMs = audioStartMs;
             ItemId = itemId;

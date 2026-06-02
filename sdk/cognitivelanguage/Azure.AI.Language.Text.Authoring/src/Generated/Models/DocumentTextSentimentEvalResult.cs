@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentTextSentimentEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTextSentimentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult"/>. </summary>
         /// <param name="expectedSentimentSpans"> Represents the document's expected sentiment labels. </param>
         /// <param name="predictedSentimentSpans"> Represents the document's predicted sentiment labels. </param>
-        internal DocumentTextSentimentEvalResult(IEnumerable<DocumentSentimentLabelEvalResult> expectedSentimentSpans, IEnumerable<DocumentSentimentLabelEvalResult> predictedSentimentSpans)
+        internal DocumentTextSentimentEvalResult(IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> expectedSentimentSpans, IEnumerable<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> predictedSentimentSpans)
         {
             ExpectedSentimentSpans = expectedSentimentSpans.ToList();
             PredictedSentimentSpans = predictedSentimentSpans.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTextSentimentEvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult"/>. </summary>
         /// <param name="expectedSentimentSpans"> Represents the document's expected sentiment labels. </param>
         /// <param name="predictedSentimentSpans"> Represents the document's predicted sentiment labels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTextSentimentEvalResult(IList<DocumentSentimentLabelEvalResult> expectedSentimentSpans, IList<DocumentSentimentLabelEvalResult> predictedSentimentSpans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTextSentimentEvalResult(IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> expectedSentimentSpans, IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> predictedSentimentSpans, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpectedSentimentSpans = expectedSentimentSpans;
             PredictedSentimentSpans = predictedSentimentSpans;
@@ -38,9 +38,9 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Represents the document's expected sentiment labels. </summary>
-        public IList<DocumentSentimentLabelEvalResult> ExpectedSentimentSpans { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> ExpectedSentimentSpans { get; }
 
         /// <summary> Represents the document's predicted sentiment labels. </summary>
-        public IList<DocumentSentimentLabelEvalResult> PredictedSentimentSpans { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> PredictedSentimentSpans { get; }
     }
 }

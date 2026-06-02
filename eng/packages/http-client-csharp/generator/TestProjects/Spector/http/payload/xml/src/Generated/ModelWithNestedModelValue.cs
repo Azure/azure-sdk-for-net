@@ -18,24 +18,24 @@ namespace Payload.Xml
     {
         protected ModelWithNestedModelValue() => throw null;
 
-        internal ModelWithNestedModelValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelWithNestedModelValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<ModelWithNestedModel> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Payload.Xml.ModelWithNestedModel> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelWithNestedModel>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Payload.Xml.ModelWithNestedModel>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(ModelWithNestedModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(ModelWithNestedModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(ModelWithNestedModel input, CancellationToken cancellationToken = default) => throw null;
     }
 }

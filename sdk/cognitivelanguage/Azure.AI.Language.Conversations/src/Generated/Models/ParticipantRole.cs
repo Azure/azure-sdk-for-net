@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Role of the participant. </summary>
-    public readonly partial struct ParticipantRole : IEquatable<ParticipantRole>
+    public readonly partial struct ParticipantRole : IEquatable<global::Azure.AI.Language.Conversations.Models.ParticipantRole>
     {
         private readonly string _value;
         /// <summary> The participant is a customer. </summary>
@@ -22,12 +22,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> The is a generic participant. </summary>
         private const string GenericValue = "generic";
 
-        /// <summary> Initializes a new instance of <see cref="ParticipantRole"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ParticipantRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ParticipantRole(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> The is a generic participant. </summary>
         public static ParticipantRole Generic { get; } = new ParticipantRole(GenericValue);
 
-        /// <summary> Determines if two <see cref="ParticipantRole"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ParticipantRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ParticipantRole left, ParticipantRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ParticipantRole"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.ParticipantRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ParticipantRole left, ParticipantRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ParticipantRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ParticipantRole"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ParticipantRole(string value) => new ParticipantRole(value);
 
-        /// <summary> Converts a string to a <see cref="ParticipantRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.ParticipantRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ParticipantRole?(string value) => value == null ? null : new ParticipantRole(value);
+        public static implicit operator ParticipantRole?(string value) => (value == null) ? null : new ParticipantRole(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ParticipantRole other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ParticipantRole other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ParticipantRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ParticipantRole other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

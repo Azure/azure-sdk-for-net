@@ -14,19 +14,19 @@ namespace Azure.AI.VoiceLive
     public partial class AnimationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnimationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AnimationOptions"/>. </summary>
         public AnimationOptions()
         {
-            Outputs = new ChangeTrackingList<AnimationOutputType>();
+            Outputs = new ChangeTrackingList<global::Azure.AI.VoiceLive.AnimationOutputType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnimationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AnimationOptions"/>. </summary>
         /// <param name="modelName"> The name of the animation model to use. </param>
         /// <param name="outputs"> Set of output data types requested from the animation system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnimationOptions(string modelName, IList<AnimationOutputType> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnimationOptions(string modelName, IList<global::Azure.AI.VoiceLive.AnimationOutputType> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             Outputs = outputs;
@@ -37,6 +37,6 @@ namespace Azure.AI.VoiceLive
         public string ModelName { get; set; }
 
         /// <summary> Set of output data types requested from the animation system. </summary>
-        public IList<AnimationOutputType> Outputs { get; }
+        public IList<global::Azure.AI.VoiceLive.AnimationOutputType> Outputs { get; }
     }
 }

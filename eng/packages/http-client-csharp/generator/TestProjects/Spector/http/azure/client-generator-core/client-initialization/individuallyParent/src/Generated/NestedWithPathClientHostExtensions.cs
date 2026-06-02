@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NestedWithPathClientHostExtensions
     {
         public static IClientBuilder AddNestedWithPathClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNestedWithPathClient(this IHostApplicationBuilder host, string sectionName, Action<NestedWithPathClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNestedWithPathClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithPathClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNestedWithPathClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNestedWithPathClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NestedWithPathClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNestedWithPathClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient.NestedWithPathClientSettings> configureSettings) => throw null;
     }
 }

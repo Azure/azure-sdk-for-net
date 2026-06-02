@@ -18,24 +18,24 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class SearchFacetResultValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchFacetResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetResultValue"/>. </summary>
         internal SearchFacetResultValue()
         {
-            EntityType = new ChangeTrackingList<SearchFacetItemValue>();
-            AssetType = new ChangeTrackingList<SearchFacetItemValue>();
-            Classification = new ChangeTrackingList<SearchFacetItemValue>();
-            Term = new ChangeTrackingList<SearchFacetItemValue>();
-            ContactId = new ChangeTrackingList<SearchFacetItemValue>();
-            ContactType = new ChangeTrackingList<SearchFacetItemValue>();
-            Label = new ChangeTrackingList<SearchFacetItemValue>();
-            GlossaryType = new ChangeTrackingList<SearchFacetItemValue>();
-            TermStatus = new ChangeTrackingList<SearchFacetItemValue>();
-            TermTemplate = new ChangeTrackingList<SearchFacetItemValue>();
+            EntityType = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            AssetType = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            Classification = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            Term = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            ContactId = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            ContactType = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            Label = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            GlossaryType = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            TermStatus = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
+            TermTemplate = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchFacetResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SearchFacetResultValue"/>. </summary>
         /// <param name="entityType"> Entity type. </param>
         /// <param name="assetType"> Asset type. </param>
         /// <param name="classification"> Classification. </param>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termStatus"> Term status. </param>
         /// <param name="termTemplate"> Term template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchFacetResultValue(IList<SearchFacetItemValue> entityType, IList<SearchFacetItemValue> assetType, IList<SearchFacetItemValue> classification, IList<SearchFacetItemValue> term, IList<SearchFacetItemValue> contactId, IList<SearchFacetItemValue> contactType, IList<SearchFacetItemValue> label, IList<SearchFacetItemValue> glossaryType, IList<SearchFacetItemValue> termStatus, IList<SearchFacetItemValue> termTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchFacetResultValue(IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> entityType, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> assetType, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> classification, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> term, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactId, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactType, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> label, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> glossaryType, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termStatus, IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termTemplate, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             AssetType = assetType;
@@ -63,33 +63,33 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Entity type. </summary>
-        public IList<SearchFacetItemValue> EntityType { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> EntityType { get; }
 
         /// <summary> Asset type. </summary>
-        public IList<SearchFacetItemValue> AssetType { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> AssetType { get; }
 
         /// <summary> Classification. </summary>
-        public IList<SearchFacetItemValue> Classification { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> Classification { get; }
 
         /// <summary> Term. </summary>
-        public IList<SearchFacetItemValue> Term { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> Term { get; }
 
         /// <summary> Contact id. </summary>
-        public IList<SearchFacetItemValue> ContactId { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> ContactId { get; }
 
         /// <summary> Contact type. </summary>
-        public IList<SearchFacetItemValue> ContactType { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> ContactType { get; }
 
         /// <summary> Label. </summary>
-        public IList<SearchFacetItemValue> Label { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> Label { get; }
 
         /// <summary> Glossary type. </summary>
-        public IList<SearchFacetItemValue> GlossaryType { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> GlossaryType { get; }
 
         /// <summary> Term status. </summary>
-        public IList<SearchFacetItemValue> TermStatus { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> TermStatus { get; }
 
         /// <summary> Term template. </summary>
-        public IList<SearchFacetItemValue> TermTemplate { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItemValue> TermTemplate { get; }
     }
 }

@@ -10,24 +10,24 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
     public abstract partial class EvaluationRuleAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         private protected EvaluationRuleAction(EvaluationRuleActionType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

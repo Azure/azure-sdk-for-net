@@ -14,18 +14,18 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ReportBillableAssetBreakdown
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetBreakdown"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown"/>. </summary>
         internal ReportBillableAssetBreakdown()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetBreakdown"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown"/>. </summary>
         /// <param name="kind"> The kind of billable asset. </param>
         /// <param name="count"> The number of assets of this type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportBillableAssetBreakdown(ReportBillableAssetBreakdownKind? kind, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportBillableAssetBreakdown(ReportBillableAssetBreakdownKind? kind, long? count, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Count = count;

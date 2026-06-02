@@ -15,9 +15,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentThreadMessage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentThreadMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentThreadMessage"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<MessageContent> contentItems, string assistantId, string runId, IEnumerable<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<global::Azure.AI.Agents.Persistent.MessageContent> contentItems, string assistantId, string runId, IEnumerable<global::Azure.AI.Agents.Persistent.MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -48,7 +48,7 @@ namespace Azure.AI.Agents.Persistent
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentThreadMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentThreadMessage"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.message'. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
@@ -64,10 +64,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IReadOnlyList<MessageContent> contentItems, string assistantId, string runId, IReadOnlyList<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageContent> contentItems, string assistantId, string runId, IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             CreatedAt = createdAt;
             ThreadId = threadId;
             Status = status;
@@ -108,7 +108,7 @@ namespace Azure.AI.Agents.Persistent
         public MessageRole Role { get; }
 
         /// <summary> The list of content items associated with the agent thread message. </summary>
-        public IReadOnlyList<MessageContent> ContentItems { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageContent> ContentItems { get; }
 
         /// <summary> If applicable, the ID of the agent that authored this message. </summary>
         public string AssistantId { get; }
@@ -117,7 +117,7 @@ namespace Azure.AI.Agents.Persistent
         public string RunId { get; }
 
         /// <summary> A list of files attached to the message, and the tools they were added to. </summary>
-        public IReadOnlyList<MessageAttachment> Attachments { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageAttachment> Attachments { get; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }

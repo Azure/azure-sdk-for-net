@@ -14,16 +14,16 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class TermTemplateDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TermTemplateDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TermTemplateDef"/>. </summary>
         public TermTemplateDef()
         {
             Options = new ChangeTrackingDictionary<string, string>();
-            AttributeDefs = new ChangeTrackingList<AtlasAttributeDef>();
+            AttributeDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TermTemplateDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.TermTemplateDef"/>. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="createTime"> The created time of the record. </param>
         /// <param name="createdBy"> The user who created the record. </param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TermTemplateDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TermTemplateDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> attributeDefs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             CreateTime = createTime;
@@ -103,6 +103,6 @@ namespace Azure.Analytics.Purview.DataMap
         public string LastModifiedTS { get; set; }
 
         /// <summary> An array of attribute definitions. </summary>
-        public IList<AtlasAttributeDef> AttributeDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasAttributeDef> AttributeDefs { get; }
     }
 }

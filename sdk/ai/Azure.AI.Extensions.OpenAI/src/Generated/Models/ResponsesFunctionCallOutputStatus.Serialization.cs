@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsesFunctionCallOutputStatus value) => value switch
         {
-            ResponsesFunctionCallOutputStatus.InProgress => "in_progress",
-            ResponsesFunctionCallOutputStatus.Completed => "completed",
-            ResponsesFunctionCallOutputStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesFunctionCallOutputStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsesFunctionCallOutputStatus ToResponsesFunctionCallOutputStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return ResponsesFunctionCallOutputStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return ResponsesFunctionCallOutputStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return ResponsesFunctionCallOutputStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesFunctionCallOutputStatus value.");
         }

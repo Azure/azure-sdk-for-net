@@ -15,20 +15,20 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringAssignedProjectDeploymentsMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        internal TextAuthoringAssignedProjectDeploymentsMetadata(IEnumerable<TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata)
+        internal TextAuthoringAssignedProjectDeploymentsMetadata(IEnumerable<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata)
         {
             DeploymentsMetadata = deploymentsMetadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
         /// <param name="projectName"> Represents the project name. </param>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringAssignedProjectDeploymentsMetadata(string projectName, IList<TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringAssignedProjectDeploymentsMetadata(string projectName, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             DeploymentsMetadata = deploymentsMetadata;
@@ -39,6 +39,6 @@ namespace Azure.AI.Language.Text.Authoring
         public string ProjectName { get; }
 
         /// <summary> Represents the resource region. </summary>
-        public IList<TextAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get; }
     }
 }

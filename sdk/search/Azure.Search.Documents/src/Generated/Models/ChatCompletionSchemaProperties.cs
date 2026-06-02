@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ChatCompletionSchemaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSchemaProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSchemaProperties"/>. </summary>
         public ChatCompletionSchemaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSchemaProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSchemaProperties"/>. </summary>
         /// <param name="name"> Name of the json schema the model will adhere to. </param>
         /// <param name="description"> Description of the json schema the model will adhere to. </param>
         /// <param name="isStrict"> Whether or not the model's response should use structured outputs. Default is true. </param>
         /// <param name="schema"> The schema definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionSchemaProperties(string name, string description, bool? isStrict, ChatCompletionSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatCompletionSchemaProperties(string name, string description, bool? isStrict, ChatCompletionSchema schema, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

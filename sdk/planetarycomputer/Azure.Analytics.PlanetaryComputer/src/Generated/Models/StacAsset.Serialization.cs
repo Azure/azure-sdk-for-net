@@ -16,9 +16,9 @@ namespace Azure.Analytics.PlanetaryComputer
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#asset-object
     /// Represents a STAC asset, which is a file or resource associated with a STAC item.
     /// </summary>
-    public partial class StacAsset : IJsonModel<StacAsset>
+    public partial class StacAsset : IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>
     {
-        /// <summary> Initializes a new instance of <see cref="StacAsset"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacAsset"/> for deserialization. </summary>
         internal StacAsset()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStacAsset(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.StacAsset.DeserializeStacAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StacAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StacAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacAsset IPersistableModel<StacAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StacAsset IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StacAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,23 +76,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacAsset)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Platform))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteStringValue(Platform);
             }
-            if (Optional.IsCollectionDefined(Instruments))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(Instruments))
             {
                 writer.WritePropertyName("instruments"u8);
                 writer.WriteStartArray();
                 foreach (string item in Instruments)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -101,65 +101,65 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Constellation))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Constellation))
             {
                 writer.WritePropertyName("constellation"u8);
                 writer.WriteStringValue(Constellation);
             }
-            if (Optional.IsDefined(Mission))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Mission))
             {
                 writer.WritePropertyName("mission"u8);
                 writer.WriteStringValue(Mission);
             }
-            if (Optional.IsCollectionDefined(Providers))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
                 foreach (StacProvider item in Providers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<StacProvider>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Gsd))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Gsd))
             {
                 writer.WritePropertyName("gsd"u8);
                 writer.WriteNumberValue(Gsd.Value);
             }
-            if (Optional.IsDefined(Created))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(Updated.Value, "O");
             }
-            if (Optional.IsDefined(Title))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("href"u8);
             writer.WriteStringValue(Href);
-            if (Optional.IsDefined(Type))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (global::Azure.Analytics.PlanetaryComputer.Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (string item in Roles)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -174,9 +174,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
@@ -184,26 +184,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StacAsset IJsonModel<StacAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StacAsset IJsonModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StacAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.StacAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(StacAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.StacAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStacAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.StacAsset.DeserializeStacAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static StacAsset DeserializeStacAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -211,7 +211,7 @@ namespace Azure.Analytics.PlanetaryComputer
             IList<string> instruments = default;
             string constellation = default;
             string mission = default;
-            IList<StacProvider> providers = default;
+            IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> providers = default;
             float? gsd = default;
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
@@ -220,7 +220,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string href = default;
             string @type = default;
             IList<string> roles = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("platform"u8))
@@ -230,14 +230,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("instruments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -261,21 +261,21 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("providers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<StacProvider> array = new List<StacProvider>();
+                    List<global::Azure.Analytics.PlanetaryComputer.StacProvider> array = new List<global::Azure.Analytics.PlanetaryComputer.StacProvider>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StacProvider.DeserializeStacProvider(item, options));
+                        array.Add(global::Azure.Analytics.PlanetaryComputer.StacProvider.DeserializeStacProvider(item, options));
                     }
                     providers = array;
                     continue;
                 }
                 if (prop.NameEquals("gsd"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -284,7 +284,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("created"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -293,7 +293,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("updated"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -322,14 +322,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("roles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -341,14 +341,14 @@ namespace Azure.Analytics.PlanetaryComputer
                     roles = array;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new StacAsset(
                 platform,
-                instruments ?? new ChangeTrackingList<string>(),
+                (instruments ?? new ChangeTrackingList<string>()),
                 constellation,
                 mission,
-                providers ?? new ChangeTrackingList<StacProvider>(),
+                (providers ?? new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacProvider>()),
                 gsd,
                 created,
                 updated,
@@ -356,7 +356,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 description,
                 href,
                 @type,
-                roles ?? new ChangeTrackingList<string>(),
+                (roles ?? new ChangeTrackingList<string>()),
                 additionalProperties);
         }
     }

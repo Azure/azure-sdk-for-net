@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Snapshot fields. </summary>
-    public readonly partial struct SnapshotFields : IEquatable<SnapshotFields>
+    public readonly partial struct SnapshotFields : IEquatable<global::Azure.Data.AppConfiguration.SnapshotFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>
@@ -37,12 +37,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Etag field. </summary>
         private const string EtagValue = "etag";
 
-        /// <summary> Initializes a new instance of <see cref="SnapshotFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.SnapshotFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotFields(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -59,34 +59,34 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Tags field. </summary>
         public static SnapshotFields Tags { get; } = new SnapshotFields(TagsValue);
 
-        /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.SnapshotFields"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotFields left, SnapshotFields right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SnapshotFields"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.SnapshotFields"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotFields left, SnapshotFields right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SnapshotFields"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.SnapshotFields"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SnapshotFields(string value) => new SnapshotFields(value);
 
-        /// <summary> Converts a string to a <see cref="SnapshotFields"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.SnapshotFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotFields?(string value) => value == null ? null : new SnapshotFields(value);
+        public static implicit operator SnapshotFields?(string value) => (value == null) ? null : new SnapshotFields(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SnapshotFields other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SnapshotFields other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SnapshotFields other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SnapshotFields other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.AlternateApiVersion.Service.Query
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class QueryClientHostExtensions
     {
         public static IClientBuilder AddQueryClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddQueryClient(this IHostApplicationBuilder host, string sectionName, Action<QueryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddQueryClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.AlternateApiVersion.Service.Query.QueryClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedQueryClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedQueryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<QueryClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedQueryClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.AlternateApiVersion.Service.Query.QueryClientSettings> configureSettings) => throw null;
     }
 }

@@ -11,19 +11,19 @@ namespace Azure.AI.Projects
     public partial class DatasetCredential
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatasetCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetCredential"/>. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
         internal DatasetCredential(AIProjectBlobReference blobReference)
         {
             BlobReference = blobReference;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetCredential"/>. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetCredential(AIProjectBlobReference blobReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetCredential(AIProjectBlobReference blobReference, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlobReference = blobReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

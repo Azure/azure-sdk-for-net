@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class MagnitudeScoringParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MagnitudeScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters"/>. </summary>
         /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
         /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
         public MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd)
@@ -25,12 +25,12 @@ namespace Azure.Search.Documents.Indexes.Models
             BoostingRangeEnd = boostingRangeEnd;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MagnitudeScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters"/>. </summary>
         /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
         /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
         /// <param name="shouldBoostBeyondRangeByConstant"> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd, bool? shouldBoostBeyondRangeByConstant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd, bool? shouldBoostBeyondRangeByConstant, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoostingRangeStart = boostingRangeStart;
             BoostingRangeEnd = boostingRangeEnd;

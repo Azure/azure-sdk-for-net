@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatRetentionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatRetentionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatRetentionPolicy"/>. </summary>
         internal AcsChatRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatRetentionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatRetentionPolicy"/>. </summary>
         /// <param name="kind"> The chat retention policy kind. </param>
         /// <param name="deleteThreadAfterDays"> The delete thread after number of days. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsChatRetentionPolicy(AcsChatRetentionPolicyKind? kind, int? deleteThreadAfterDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsChatRetentionPolicy(AcsChatRetentionPolicyKind? kind, int? deleteThreadAfterDays, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             DeleteThreadAfterDays = deleteThreadAfterDays;

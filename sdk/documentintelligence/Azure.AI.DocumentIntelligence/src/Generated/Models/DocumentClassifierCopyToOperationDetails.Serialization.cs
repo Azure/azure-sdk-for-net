@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Get Operation response object. </summary>
-    public partial class DocumentClassifierCopyToOperationDetails : DocumentIntelligenceOperationDetails, IJsonModel<DocumentClassifierCopyToOperationDetails>
+    public partial class DocumentClassifierCopyToOperationDetails : DocumentIntelligenceOperationDetails, IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentClassifierCopyToOperationDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/> for deserialization. </summary>
         internal DocumentClassifierCopyToOperationDetails()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DocumentIntelligenceOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.DocumentIntelligence.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentClassifierCopyToOperationDetails(document.RootElement, options);
+                        return global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierCopyToOperationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierCopyToOperationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentClassifierCopyToOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentClassifierCopyToOperationDetails IPersistableModel<DocumentClassifierCopyToOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentClassifierCopyToOperationDetails)PersistableModelCreateCore(data, options);
+        DocumentClassifierCopyToOperationDetails IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => ((DocumentClassifierCopyToOperationDetails)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentClassifierCopyToOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentClassifierCopyToOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,41 +73,41 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierCopyToOperationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Result))
+            if (global::Azure.AI.DocumentIntelligence.Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WriteObjectValue<DocumentClassifierDetails>(Result, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentClassifierCopyToOperationDetails IJsonModel<DocumentClassifierCopyToOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentClassifierCopyToOperationDetails)JsonModelCreateCore(ref reader, options);
+        DocumentClassifierCopyToOperationDetails IJsonModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((DocumentClassifierCopyToOperationDetails)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DocumentIntelligenceOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierCopyToOperationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentClassifierCopyToOperationDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentClassifierCopyToOperationDetails DeserializeDocumentClassifierCopyToOperationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -117,11 +117,11 @@ namespace Azure.AI.DocumentIntelligence
             DateTimeOffset createdOn = default;
             DateTimeOffset lastUpdatedOn = default;
             OperationKind kind = default;
-            Uri resourceLocation = default;
+            global::System.Uri resourceLocation = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
             DocumentIntelligenceError error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             DocumentClassifierDetails result = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("percentCompleted"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -161,7 +161,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("resourceLocation"u8))
                 {
-                    resourceLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    resourceLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("apiVersion"u8))
@@ -171,14 +171,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -192,25 +192,25 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(prop.Value, options);
+                    error = global::Azure.AI.DocumentIntelligence.DocumentIntelligenceError.DeserializeDocumentIntelligenceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    result = DocumentClassifierDetails.DeserializeDocumentClassifierDetails(prop.Value, options);
+                    result = global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails.DeserializeDocumentClassifierDetails(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentClassifierCopyToOperationDetails(
@@ -222,7 +222,7 @@ namespace Azure.AI.DocumentIntelligence
                 kind,
                 resourceLocation,
                 apiVersion,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (tags ?? new ChangeTrackingDictionary<string, string>()),
                 error,
                 additionalBinaryDataProperties,
                 result);

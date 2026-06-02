@@ -15,9 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class IngestionRunInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRunInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="creationTime"> The UTC time at which the operation was created. </param>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="totalPendingItems"> The number of items pending to be processed. </param>
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
-        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems)
+        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IEnumerable<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems)
         {
             Id = id;
             Status = status;
@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer
             TotalFailedItems = totalFailedItems;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRunInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionRunInformation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="creationTime"> The UTC time at which the operation was created. </param>
@@ -50,7 +50,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -75,7 +75,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public DateTimeOffset CreationTime { get; }
 
         /// <summary> The history of the operation status in time. </summary>
-        public IList<OperationStatusHistoryItem> StatusHistory { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.OperationStatusHistoryItem> StatusHistory { get; }
 
         /// <summary> The UTC time at which the operation was started. </summary>
         public DateTimeOffset? StartTime { get; }

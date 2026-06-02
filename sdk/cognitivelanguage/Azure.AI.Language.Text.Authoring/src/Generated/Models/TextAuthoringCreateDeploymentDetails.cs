@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringCreateDeploymentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
         public TextAuthoringCreateDeploymentDetails(string trainedModelLabel)
         {
-            Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
             AssignedResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
         /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TrainedModelLabel = trainedModelLabel;
             AssignedResourceIds = assignedResourceIds;

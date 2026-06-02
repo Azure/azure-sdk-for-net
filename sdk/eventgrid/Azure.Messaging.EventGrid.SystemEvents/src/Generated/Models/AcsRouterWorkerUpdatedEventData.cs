@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerUpdatedEventData"/>. </summary>
         internal AcsRouterWorkerUpdatedEventData()
         {
-            QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
-            ChannelConfigurations = new ChangeTrackingList<AcsRouterChannelConfiguration>();
+            QueueAssignments = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails>();
+            ChannelConfigurations = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration>();
             Labels = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
-            UpdatedWorkerProperties = new ChangeTrackingList<AcsRouterUpdatedWorkerProperty>();
+            UpdatedWorkerProperties = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerUpdatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerUpdatedEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Updated Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Updated Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Updated Channel Configuration. </param>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerUpdatedEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterWorkerUpdatedEventData(string workerId, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> queueAssignments, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty> updatedWorkerProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -51,10 +51,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string WorkerId { get; }
 
         /// <summary> Router Worker Updated Queue Info. </summary>
-        public IReadOnlyList<AcsRouterQueueDetails> QueueAssignments { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterQueueDetails> QueueAssignments { get; }
 
         /// <summary> Router Worker Updated Channel Configuration. </summary>
-        public IReadOnlyList<AcsRouterChannelConfiguration> ChannelConfigurations { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterChannelConfiguration> ChannelConfigurations { get; }
 
         /// <summary> Router Worker Updated Total Capacity. </summary>
         public int? TotalCapacity { get; }
@@ -66,6 +66,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Router Worker Properties Updated. </summary>
-        public IReadOnlyList<AcsRouterUpdatedWorkerProperty> UpdatedWorkerProperties { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterUpdatedWorkerProperty> UpdatedWorkerProperties { get; }
     }
 }

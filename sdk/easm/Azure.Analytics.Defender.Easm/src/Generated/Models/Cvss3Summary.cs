@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class Cvss3Summary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Cvss3Summary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.Cvss3Summary"/>. </summary>
         internal Cvss3Summary()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cvss3Summary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.Cvss3Summary"/>. </summary>
         /// <param name="version"></param>
         /// <param name="vectorString"></param>
         /// <param name="attackVector"></param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="exploitabilityScore"></param>
         /// <param name="impactScore"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             VectorString = vectorString;

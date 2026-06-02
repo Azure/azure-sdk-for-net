@@ -19,24 +19,24 @@ namespace _Type.Scalar
     {
         protected DecimalVerify() => throw null;
 
-        internal DecimalVerify(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal DecimalVerify(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PrepareVerify(RequestContext context) => throw null;
 
-        public virtual Task<Response> PrepareVerifyAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> PrepareVerifyAsync(RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<decimal>> PrepareVerify(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.Collections.Generic.IReadOnlyList<decimal>> PrepareVerify(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<decimal>>> PrepareVerifyAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.Collections.Generic.IReadOnlyList<decimal>>> PrepareVerifyAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Verify(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> VerifyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> VerifyAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Verify(decimal body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> VerifyAsync(decimal body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> VerifyAsync(decimal body, CancellationToken cancellationToken = default) => throw null;
     }
 }

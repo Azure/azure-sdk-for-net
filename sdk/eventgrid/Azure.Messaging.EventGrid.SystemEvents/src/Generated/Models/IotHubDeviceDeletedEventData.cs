@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.Devices.DeviceDeleted event. </summary>
     public partial class IotHubDeviceDeletedEventData : DeviceLifeCycleEventProperties
     {
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.IotHubDeviceDeletedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceDeletedEventData(string deviceId, string hubName, DeviceTwinInfo twin, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(deviceId, hubName, twin, additionalBinaryDataProperties)
+        internal IotHubDeviceDeletedEventData(string deviceId, string hubName, DeviceTwinInfo twin, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(deviceId, hubName, twin, additionalBinaryDataProperties)
         {
         }
     }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class HierarchyBuildingClientHostExtensions
     {
         public static IClientBuilder AddHierarchyBuildingClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddHierarchyBuildingClient(this IHostApplicationBuilder host, string sectionName, Action<HierarchyBuildingClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddHierarchyBuildingClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.HierarchyBuildingClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedHierarchyBuildingClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedHierarchyBuildingClient(this IHostApplicationBuilder host, string key, string sectionName, Action<HierarchyBuildingClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedHierarchyBuildingClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.HierarchyBuilding.HierarchyBuildingClientSettings> configureSettings) => throw null;
     }
 }

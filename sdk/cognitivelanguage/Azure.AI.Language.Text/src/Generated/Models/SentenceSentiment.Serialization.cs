@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A document's sentence sentiment. </summary>
-    public partial class SentenceSentiment : IJsonModel<SentenceSentiment>
+    public partial class SentenceSentiment : IJsonModel<global::Azure.AI.Language.Text.SentenceSentiment>
     {
-        /// <summary> Initializes a new instance of <see cref="SentenceSentiment"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.SentenceSentiment"/> for deserialization. </summary>
         internal SentenceSentiment()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SentenceSentiment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSentenceSentiment(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.SentenceSentiment.DeserializeSentenceSentiment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentenceSentiment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceSentiment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentenceSentiment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceSentiment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SentenceSentiment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentenceSentiment IPersistableModel<SentenceSentiment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SentenceSentiment IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SentenceSentiment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SentenceSentiment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.SentenceSentiment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,42 +73,42 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentenceSentiment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceSentiment)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores, options);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (Optional.IsCollectionDefined(Targets))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
                 foreach (SentenceTarget item in Targets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SentenceTarget>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Assessments))
+            if (global::Azure.AI.Language.Text.Optional.IsCollectionDefined(Assessments))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
                 foreach (SentenceAssessment item in Assessments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SentenceAssessment>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,26 +127,26 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentenceSentiment IJsonModel<SentenceSentiment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SentenceSentiment IJsonModel<global::Azure.AI.Language.Text.SentenceSentiment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SentenceSentiment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SentenceSentiment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.SentenceSentiment)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentenceSentiment(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.SentenceSentiment.DeserializeSentenceSentiment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -155,9 +155,9 @@ namespace Azure.AI.Language.Text
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            IList<SentenceTarget> targets = default;
-            IList<SentenceAssessment> assessments = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.SentenceTarget> targets = default;
+            IList<global::Azure.AI.Language.Text.SentenceAssessment> assessments = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("text"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(prop.Value, options);
+                    confidenceScores = global::Azure.AI.Language.Text.SentimentConfidenceScores.DeserializeSentimentConfidenceScores(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("offset"u8))
@@ -187,35 +187,35 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("targets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SentenceTarget> array = new List<SentenceTarget>();
+                    List<global::Azure.AI.Language.Text.SentenceTarget> array = new List<global::Azure.AI.Language.Text.SentenceTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SentenceTarget.DeserializeSentenceTarget(item, options));
+                        array.Add(global::Azure.AI.Language.Text.SentenceTarget.DeserializeSentenceTarget(item, options));
                     }
                     targets = array;
                     continue;
                 }
                 if (prop.NameEquals("assessments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SentenceAssessment> array = new List<SentenceAssessment>();
+                    List<global::Azure.AI.Language.Text.SentenceAssessment> array = new List<global::Azure.AI.Language.Text.SentenceAssessment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SentenceAssessment.DeserializeSentenceAssessment(item, options));
+                        array.Add(global::Azure.AI.Language.Text.SentenceAssessment.DeserializeSentenceAssessment(item, options));
                     }
                     assessments = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SentenceSentiment(
@@ -224,8 +224,8 @@ namespace Azure.AI.Language.Text
                 confidenceScores,
                 offset,
                 length,
-                targets ?? new ChangeTrackingList<SentenceTarget>(),
-                assessments ?? new ChangeTrackingList<SentenceAssessment>(),
+                (targets ?? new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceTarget>()),
+                (assessments ?? new ChangeTrackingList<global::Azure.AI.Language.Text.SentenceAssessment>()),
                 additionalBinaryDataProperties);
         }
     }

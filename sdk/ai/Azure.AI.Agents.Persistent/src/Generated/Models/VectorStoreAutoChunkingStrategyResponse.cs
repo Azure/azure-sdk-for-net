@@ -13,15 +13,15 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the chunking_strategy concept was introduced in the API. </summary>
     public partial class VectorStoreAutoChunkingStrategyResponse : VectorStoreChunkingStrategyResponse
     {
-        /// <summary> Initializes a new instance of <see cref="VectorStoreAutoChunkingStrategyResponse"/>. </summary>
-        internal VectorStoreAutoChunkingStrategyResponse() : base(VectorStoreChunkingStrategyResponseType.Other)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse"/>. </summary>
+        internal VectorStoreAutoChunkingStrategyResponse() : base(global::Azure.AI.Agents.Persistent.VectorStoreChunkingStrategyResponseType.Other)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreAutoChunkingStrategyResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreAutoChunkingStrategyResponse"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreAutoChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal VectorStoreAutoChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

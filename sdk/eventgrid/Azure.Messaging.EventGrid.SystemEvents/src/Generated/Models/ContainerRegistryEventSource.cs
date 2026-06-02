@@ -14,18 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryEventSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource"/>. </summary>
         internal ContainerRegistryEventSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
         /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryEventSource(string addr, string instanceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryEventSource(string addr, string instanceID, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Addr = addr;
             InstanceID = instanceID;

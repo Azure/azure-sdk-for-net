@@ -13,27 +13,27 @@ namespace Azure.AI.VoiceLive
     /// <summary> A function call output item within a conversation. </summary>
     public partial class FunctionCallOutputItem : ConversationRequestItem
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.FunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public FunctionCallOutputItem(string callId, string output) : base(ItemType.FunctionCallOutput)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
+        public FunctionCallOutputItem(string callId, string output) : base(global::Azure.AI.VoiceLive.ItemType.FunctionCallOutput)
         {
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(output, nameof(output));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(callId, nameof(callId));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(output, nameof(output));
 
             CallId = callId;
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.FunctionCallOutputItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <param name="status"></param>
-        internal FunctionCallOutputItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
+        internal FunctionCallOutputItem(ItemType @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string callId, string output, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;

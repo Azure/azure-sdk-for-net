@@ -12,54 +12,54 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventResponseCreate : ClientEvent, IJsonModel<ClientEventResponseCreate>
+    internal partial class ClientEventResponseCreate : ClientEvent, IJsonModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClientEventResponseCreate(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.ClientEventResponseCreate.DeserializeClientEventResponseCreate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientEventResponseCreate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventResponseCreate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClientEventResponseCreate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventResponseCreate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventResponseCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventResponseCreate IPersistableModel<ClientEventResponseCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventResponseCreate)PersistableModelCreateCore(data, options);
+        ClientEventResponseCreate IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ClientEventResponseCreate)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventResponseCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClientEventResponseCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -67,18 +67,18 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEventResponseCreate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventResponseCreate)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Response))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                writer.WriteObjectValue<ResponseCreateParams>(Response, options);
             }
-            if (Optional.IsDefined(AdditionalInstructions))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(AdditionalInstructions))
             {
                 writer.WritePropertyName("additional_instructions"u8);
                 writer.WriteStringValue(AdditionalInstructions);
@@ -87,32 +87,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventResponseCreate IJsonModel<ClientEventResponseCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClientEventResponseCreate)JsonModelCreateCore(ref reader, options);
+        ClientEventResponseCreate IJsonModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ClientEventResponseCreate)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEventResponseCreate>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEventResponseCreate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEventResponseCreate)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClientEventResponseCreate(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.ClientEventResponseCreate.DeserializeClientEventResponseCreate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ClientEventResponseCreate DeserializeClientEventResponseCreate(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ClientEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ResponseCreateParams response = default;
             string additionalInstructions = default;
             foreach (var prop in element.EnumerateObject())
@@ -129,11 +129,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("response"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    response = ResponseCreateParams.DeserializeResponseCreateParams(prop.Value, options);
+                    response = global::Azure.AI.VoiceLive.ResponseCreateParams.DeserializeResponseCreateParams(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additional_instructions"u8))
@@ -141,9 +141,9 @@ namespace Azure.AI.VoiceLive
                     additionalInstructions = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ClientEventResponseCreate(@type, eventId, additionalBinaryDataProperties, response, additionalInstructions);

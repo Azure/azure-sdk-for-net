@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Worker Selector State. </summary>
-    public readonly partial struct AcsRouterWorkerSelectorState : IEquatable<AcsRouterWorkerSelectorState>
+    public readonly partial struct AcsRouterWorkerSelectorState : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState>
     {
         private readonly string _value;
         /// <summary> Router Worker Selector State Active. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Worker Selector State Expired. </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterWorkerSelectorState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Worker Selector State Expired. </summary>
         public static AcsRouterWorkerSelectorState Expired { get; } = new AcsRouterWorkerSelectorState(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="AcsRouterWorkerSelectorState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsRouterWorkerSelectorState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterWorkerSelectorState(string value) => new AcsRouterWorkerSelectorState(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRouterWorkerSelectorState?(string value) => value == null ? null : new AcsRouterWorkerSelectorState(value);
+        public static implicit operator AcsRouterWorkerSelectorState?(string value) => (value == null) ? null : new AcsRouterWorkerSelectorState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsRouterWorkerSelectorState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsRouterWorkerSelectorState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsRouterWorkerSelectorState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsRouterWorkerSelectorState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

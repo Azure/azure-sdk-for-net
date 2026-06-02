@@ -11,14 +11,14 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAISearchIndexResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAISearchIndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource"/>. </summary>
         public ResponsesAISearchIndexResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesAISearchIndexResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource"/>. </summary>
         /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAISearchIndexResource(string projectConnectionId, string indexName, ResponsesAzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAISearchIndexResource(string projectConnectionId, string indexName, ResponsesAzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             IndexName = indexName;

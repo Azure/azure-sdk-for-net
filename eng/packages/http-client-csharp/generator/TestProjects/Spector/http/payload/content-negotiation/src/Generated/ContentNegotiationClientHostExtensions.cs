@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.ContentNegotiation
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ContentNegotiationClientHostExtensions
     {
         public static IClientBuilder AddContentNegotiationClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddContentNegotiationClient(this IHostApplicationBuilder host, string sectionName, Action<ContentNegotiationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddContentNegotiationClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.ContentNegotiation.ContentNegotiationClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedContentNegotiationClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedContentNegotiationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ContentNegotiationClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedContentNegotiationClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.ContentNegotiation.ContentNegotiationClientSettings> configureSettings) => throw null;
     }
 }

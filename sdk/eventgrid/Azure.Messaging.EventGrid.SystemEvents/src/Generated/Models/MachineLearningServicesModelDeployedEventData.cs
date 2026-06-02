@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MachineLearningServicesModelDeployedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
@@ -27,14 +27,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ModelIds = modelIds;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             ServiceComputeType = serviceComputeType;

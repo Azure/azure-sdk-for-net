@@ -18,9 +18,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TileJsonMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TileJsonMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata"/>. </summary>
         /// <param name="tiles"> Array of tile URL templates. </param>
         internal TileJsonMetadata(IEnumerable<string> tiles)
         {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Center = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TileJsonMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileJsonMetadata"/>. </summary>
         /// <param name="tileJson"> TileJson. </param>
         /// <param name="name"> Human-readable name of the tile set. </param>
         /// <param name="description"> Human-readable description of the tile set. </param>
@@ -48,7 +48,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="bounds"> Bounds. </param>
         /// <param name="center"> Default center point [longitude, latitude, zoom] for the tile set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileJsonMetadata(string tileJson, string name, string description, string version, string attribution, string template, string legend, TileAddressingScheme? scheme, IList<string> tiles, IList<string> grids, IList<string> data, int? minZoom, int? maxZoom, IList<float> bounds, IList<float> center, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileJsonMetadata(string tileJson, string name, string description, string version, string attribution, string template, string legend, TileAddressingScheme? scheme, IList<string> tiles, IList<string> grids, IList<string> data, int? minZoom, int? maxZoom, IList<float> bounds, IList<float> center, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TileJson = tileJson;
             Name = name;

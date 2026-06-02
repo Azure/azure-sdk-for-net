@@ -11,26 +11,26 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Client options for <see cref="TextTranslationClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.AI.Translation.Text.TextTranslationClient"/>. </summary>
     public partial class TextTranslationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_06_06;
+        private const global::Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion LatestVersion = global::Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V2026_06_06;
 
         /// <summary> Initializes a new instance of TextTranslationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal TextTranslationClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2026-06-06";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

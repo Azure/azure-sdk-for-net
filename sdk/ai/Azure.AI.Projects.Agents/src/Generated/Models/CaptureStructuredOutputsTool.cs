@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A tool for capturing structured outputs. </summary>
     public partial class CaptureStructuredOutputsTool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
-        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base(ToolType.CaptureStructuredOutputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
+        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base(global::OpenAI.ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
             OutputDefinition = outputDefinition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
+        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, StructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
         public StructuredOutputDefinition OutputDefinition { get; set; }

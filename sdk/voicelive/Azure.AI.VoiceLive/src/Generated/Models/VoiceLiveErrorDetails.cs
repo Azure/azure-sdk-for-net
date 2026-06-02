@@ -14,23 +14,23 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveErrorDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveErrorDetails"/>. </summary>
         /// <param name="message"> Human-readable error message. </param>
         internal VoiceLiveErrorDetails(string message)
         {
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.VoiceLiveErrorDetails"/>. </summary>
         /// <param name="code"> Error code, or null if unspecified. </param>
         /// <param name="message"> Human-readable error message. </param>
         /// <param name="param"> Parameter name related to the error, if applicable. </param>
         /// <param name="type"> Type or category of the error. </param>
         /// <param name="eventId"> Event id of the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveErrorDetails(string code, string message, string @param, string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveErrorDetails(string code, string message, string @param, string @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

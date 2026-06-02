@@ -10,19 +10,19 @@ namespace Azure.AI.Projects.Memory
     internal partial class DeleteScopeRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteScopeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.DeleteScopeRequest"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         internal DeleteScopeRequest(string scope)
         {
             Scope = scope;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteScopeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.DeleteScopeRequest"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteScopeRequest(string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteScopeRequest(string scope, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

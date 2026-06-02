@@ -15,7 +15,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT : AsyncPageable<KnowledgeSourceFile>
+    internal partial class SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>
     {
         private readonly SearchIndexClient _client;
         private readonly string _sourceName;
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(SearchIndexClient client, string sourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(SearchIndexClient client, string sourceName, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _sourceName = sourceName;
@@ -39,17 +39,17 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<KnowledgeSourceFile>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            ListKnowledgeSourceFilesResult result = (ListKnowledgeSourceFilesResult)response;
-            yield return Page<KnowledgeSourceFile>.FromValues((IReadOnlyList<KnowledgeSourceFile>)result.Value, null, response);
+            Response response = await this.GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            ListKnowledgeSourceFilesResult result = ((ListKnowledgeSourceFilesResult)response);
+            yield return global::Azure.Page<KnowledgeSourceFile>.FromValues(((IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>)result.Value), null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetKnowledgeSourceFilesRequest(_sourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The Discovery sub-client. </summary>
     public partial class Discovery
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Discovery for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Discovery(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Discovery(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -54,8 +54,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Query(RequestContent content, RequestContext context = null)
         {
@@ -63,9 +63,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateQueryRequest(content, context);
+                using HttpMessage message = this.CreateQueryRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -85,18 +85,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> QueryAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> QueryAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Discovery.Query");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateQueryRequest(content, context);
+                using HttpMessage message = this.CreateQueryRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -109,27 +109,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get data using search. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QueryResult> Query(QueryConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.QueryResult> Query(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Query(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((QueryResult)result, result);
+            Response result = this.Query(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((QueryResult)result), result);
         }
 
         /// <summary> Get data using search. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.QueryResult>> QueryAsync(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await QueryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QueryResult)result, result);
+            Response result = await this.QueryAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((QueryResult)result), result);
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
@@ -151,9 +151,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSuggestRequest(content, context);
+                using HttpMessage message = this.CreateSuggestRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -173,18 +173,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Discovery.Suggest");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSuggestRequest(content, context);
+                using HttpMessage message = this.CreateSuggestRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -197,27 +197,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SuggestResult> Suggest(SuggestConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.SuggestResult> Suggest(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Suggest(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((SuggestResult)result, result);
+            Response result = this.Suggest(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SuggestResult)result), result);
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.SuggestResult>> SuggestAsync(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await SuggestAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SuggestResult)result, result);
+            Response result = await this.SuggestAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SuggestResult)result), result);
         }
 
         /// <summary>
@@ -230,8 +230,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {
@@ -239,9 +239,9 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAutoCompleteRequest(content, context);
+                using HttpMessage message = this.CreateAutoCompleteRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -261,18 +261,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Discovery.AutoComplete");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAutoCompleteRequest(content, context);
+                using HttpMessage message = this.CreateAutoCompleteRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -285,27 +285,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Get auto complete options. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.Purview.DataMap.AutoCompleteResult> AutoComplete(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = AutoComplete(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((AutoCompleteResult)result, result);
+            Response result = this.AutoComplete(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AutoCompleteResult)result), result);
         }
 
         /// <summary> Get auto complete options. </summary>
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.Purview.DataMap.AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.Purview.DataMap.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await AutoCompleteAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AutoCompleteResult)result, result);
+            Response result = await this.AutoCompleteAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AutoCompleteResult)result), result);
         }
     }
 }

@@ -18,19 +18,19 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentLine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        internal DocumentLine(string content, IEnumerable<DocumentSpan> spans)
+        internal DocumentLine(string content, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             Content = content;
             Polygon = new ChangeTrackingList<float>();
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="polygon">
         /// Bounding polygon of the line, with coordinates specified relative to the
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Polygon = polygon;
@@ -60,6 +60,6 @@ namespace Azure.AI.DocumentIntelligence
         public IReadOnlyList<float> Polygon { get; }
 
         /// <summary> Location of the line in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
     }
 }

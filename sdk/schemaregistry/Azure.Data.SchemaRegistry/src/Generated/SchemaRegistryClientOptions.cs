@@ -11,26 +11,26 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary> Client options for <see cref="SchemaRegistryClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Data.SchemaRegistry.SchemaRegistryClient"/>. </summary>
     public partial class SchemaRegistryClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_07_01;
+        private const global::Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion LatestVersion = global::Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2023_07_01;
 
         /// <summary> Initializes a new instance of SchemaRegistryClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal SchemaRegistryClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2023-07-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Configures logging for the client options. </summary>

@@ -13,9 +13,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for skills. </summary>
-    public partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
+    public partial class SearchIndexerSkill : IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill"/> for deserialization. </summary>
         internal SearchIndexerSkill()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchIndexerSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill.DeserializeSearchIndexerSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexerSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerSkill IPersistableModel<SearchIndexerSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchIndexerSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexerSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchIndexerSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,24 +73,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -99,17 +99,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (InputFieldMappingEntry item in Inputs)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (OutputFieldMappingEntry item in Outputs)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -117,9 +117,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -128,26 +128,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerSkill IJsonModel<SearchIndexerSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchIndexerSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchIndexerSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkill.DeserializeSearchIndexerSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SearchIndexerSkill DeserializeSearchIndexerSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -156,52 +156,52 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Skills.Util.ConditionalSkill":
-                        return ConditionalSkill.DeserializeConditionalSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ConditionalSkill.DeserializeConditionalSkill(element, options);
                     case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill":
-                        return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element, options);
                     case "#Microsoft.Skills.Vision.OcrSkill":
-                        return OcrSkill.DeserializeOcrSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.OcrSkill.DeserializeOcrSkill(element, options);
                     case "#Microsoft.Skills.Vision.ImageAnalysisSkill":
-                        return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ImageAnalysisSkill.DeserializeImageAnalysisSkill(element, options);
                     case "#Microsoft.Skills.Text.LanguageDetectionSkill":
-                        return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element, options);
                     case "#Microsoft.Skills.Util.ShaperSkill":
-                        return ShaperSkill.DeserializeShaperSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ShaperSkill.DeserializeShaperSkill(element, options);
                     case "#Microsoft.Skills.Text.MergeSkill":
-                        return MergeSkill.DeserializeMergeSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.MergeSkill.DeserializeMergeSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.SentimentSkill":
-                        return SentimentSkill.DeserializeSentimentSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SentimentSkill.DeserializeSentimentSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.EntityLinkingSkill":
-                        return EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
                     case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill":
-                        return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
                     case "#Microsoft.Skills.Text.PIIDetectionSkill":
-                        return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
                     case "#Microsoft.Skills.Text.SplitSkill":
-                        return SplitSkill.DeserializeSplitSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.SplitSkill.DeserializeSplitSkill(element, options);
                     case "#Microsoft.Skills.Text.CustomEntityLookupSkill":
-                        return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element, options);
                     case "#Microsoft.Skills.Text.TranslationSkill":
-                        return TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
                     case "#Microsoft.Skills.Util.DocumentExtractionSkill":
-                        return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
                     case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill":
-                        return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
                     case "#Microsoft.Skills.Custom.WebApiSkill":
-                        return WebApiSkill.DeserializeWebApiSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.WebApiSkill.DeserializeWebApiSkill(element, options);
                     case "#Microsoft.Skills.Custom.AmlSkill":
-                        return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
-                        return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
                     case "#Microsoft.Skills.Vision.VectorizeSkill":
-                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                     case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
-                        return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":
-                        return ChatCompletionSkill.DeserializeChatCompletionSkill(element, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill.DeserializeChatCompletionSkill(element, options);
                 }
             }
-            return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element, options);
+            return global::Azure.Search.Documents.Indexes.Models.UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element, options);
         }
     }
 }

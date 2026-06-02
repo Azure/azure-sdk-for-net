@@ -13,24 +13,24 @@ namespace Azure.AI.Language.Text
     /// <summary> A metadata for numeric entity instances. </summary>
     public partial class OrdinalMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.OrdinalMetadata"/>. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalMetadata(string offset, RelativeTo relativeTo, string value) : base(MetadataKind.OrdinalMetadata)
+        internal OrdinalMetadata(string offset, RelativeTo relativeTo, string value) : base(global::Azure.AI.Language.Text.MetadataKind.OrdinalMetadata)
         {
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.OrdinalMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string offset, RelativeTo relativeTo, string value) : base(metadataKind, additionalBinaryDataProperties)
+        internal OrdinalMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string offset, RelativeTo relativeTo, string value) : base(metadataKind, additionalBinaryDataProperties)
         {
             Offset = offset;
             RelativeTo = relativeTo;

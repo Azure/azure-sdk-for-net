@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class InternalCreateAgentRequest : IJsonModel<InternalCreateAgentRequest>
+    internal partial class InternalCreateAgentRequest : IJsonModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalCreateAgentRequest"/> for deserialization. </summary>
         internal InternalCreateAgentRequest()
         {
         }
@@ -21,58 +21,58 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalCreateAgentRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalCreateAgentRequest(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.InternalCreateAgentRequest.DeserializeInternalCreateAgentRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalCreateAgentRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.InternalCreateAgentRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalCreateAgentRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.InternalCreateAgentRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalCreateAgentRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCreateAgentRequest IPersistableModel<InternalCreateAgentRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalCreateAgentRequest IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalCreateAgentRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="internalCreateAgentRequest"> The <see cref="InternalCreateAgentRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        /// <param name="internalCreateAgentRequest"> The <see cref="global::Azure.AI.Projects.Agents.InternalCreateAgentRequest"/> to serialize into <see cref="global::System.ClientModel.BinaryContent"/>. </param>
         public static implicit operator BinaryContent(InternalCreateAgentRequest internalCreateAgentRequest)
         {
-            if (internalCreateAgentRequest == null)
+            if ((internalCreateAgentRequest == null))
             {
                 return null;
             }
-            return BinaryContent.Create(internalCreateAgentRequest, ModelSerializationExtensions.WireOptions);
+            return global::System.ClientModel.BinaryContent.Create(internalCreateAgentRequest, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalCreateAgentRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -80,21 +80,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalCreateAgentRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.InternalCreateAgentRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -103,29 +103,29 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
-            if (Optional.IsDefined(BlueprintReference))
+            writer.WriteObjectValue<ProjectsAgentDefinition>(Definition, options);
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(BlueprintReference))
             {
                 writer.WritePropertyName("blueprint_reference"u8);
-                writer.WriteObjectValue(BlueprintReference, options);
+                writer.WriteObjectValue<AgentBlueprintReference>(BlueprintReference, options);
             }
-            if (Optional.IsDefined(AgentEndpoint))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(AgentEndpoint))
             {
                 writer.WritePropertyName("agent_endpoint"u8);
-                writer.WriteObjectValue(AgentEndpoint, options);
+                writer.WriteObjectValue<AgentEndpointConfiguration>(AgentEndpoint, options);
             }
-            if (Optional.IsDefined(AgentCard))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(AgentCard))
             {
                 writer.WritePropertyName("agent_card"u8);
-                writer.WriteObjectValue(AgentCard, options);
+                writer.WriteObjectValue<AgentCard>(AgentCard, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -133,9 +133,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -144,26 +144,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCreateAgentRequest IJsonModel<InternalCreateAgentRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalCreateAgentRequest IJsonModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalCreateAgentRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.InternalCreateAgentRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalCreateAgentRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.InternalCreateAgentRequest)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalCreateAgentRequest(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.InternalCreateAgentRequest.DeserializeInternalCreateAgentRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalCreateAgentRequest DeserializeInternalCreateAgentRequest(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
             AgentBlueprintReference blueprintReference = default;
             AgentEndpointConfiguration agentEndpoint = default;
             AgentCard agentCard = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -184,14 +184,14 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -215,39 +215,39 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("blueprint_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
+                    blueprintReference = global::Azure.AI.Projects.Agents.AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_endpoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
+                    agentEndpoint = global::Azure.AI.Projects.Agents.AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_card"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentCard = AgentCard.DeserializeAgentCard(prop.Value, options);
+                    agentCard = global::Azure.AI.Projects.Agents.AgentCard.DeserializeAgentCard(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalCreateAgentRequest(
                 name,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                (metadata ?? new ChangeTrackingDictionary<string, string>()),
                 description,
                 definition,
                 blueprintReference,

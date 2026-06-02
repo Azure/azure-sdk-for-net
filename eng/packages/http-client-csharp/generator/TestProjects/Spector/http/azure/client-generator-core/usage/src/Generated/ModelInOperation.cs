@@ -18,36 +18,36 @@ namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
     {
         protected ModelInOperation() => throw null;
 
-        internal ModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response InputToInputOutput(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> InputToInputOutputAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> InputToInputOutputAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response InputToInputOutput(InputModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> InputToInputOutputAsync(InputModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> InputToInputOutputAsync(InputModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response OutputToInputOutput(RequestContext context) => throw null;
 
-        public virtual Task<Response> OutputToInputOutputAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OutputToInputOutputAsync(RequestContext context) => throw null;
 
-        public virtual Response<OutputModel> OutputToInputOutput(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.OutputModel> OutputToInputOutput(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<OutputModel>> OutputToInputOutputAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.OutputModel>> OutputToInputOutputAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response ModelInReadOnlyProperty(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> ModelInReadOnlyPropertyAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> ModelInReadOnlyPropertyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<RoundTripModel> ModelInReadOnlyProperty(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.RoundTripModel> ModelInReadOnlyProperty(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<RoundTripModel>> ModelInReadOnlyPropertyAsync(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation.RoundTripModel>> ModelInReadOnlyPropertyAsync(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response OrphanModelSerializable(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> OrphanModelSerializableAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> OrphanModelSerializableAsync(RequestContent content, RequestContext context = null) => throw null;
     }
 }

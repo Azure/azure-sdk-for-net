@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassificationFailed event. </summary>
     public partial class AcsRouterJobClassificationFailedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClassificationFailedEventData"/>. </summary>
         internal AcsRouterJobClassificationFailedEventData()
         {
-            ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
+            ErrorsInternal = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterCommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClassificationFailedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="errorsInternal"> Router Job Classification Failed Errors. </param>
-        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             ClassificationPolicyId = classificationPolicyId;
             ErrorsInternal = errorsInternal;

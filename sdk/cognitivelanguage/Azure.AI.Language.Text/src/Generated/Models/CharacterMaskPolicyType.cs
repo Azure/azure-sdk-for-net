@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the policy of redacting with a redaction character. </summary>
     public partial class CharacterMaskPolicyType : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
-        public CharacterMaskPolicyType() : base(RedactionPolicyKind.CharacterMask)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CharacterMaskPolicyType"/>. </summary>
+        public CharacterMaskPolicyType() : base(global::Azure.AI.Language.Text.RedactionPolicyKind.CharacterMask)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CharacterMaskPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="unmaskLength"> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </param>
         /// <param name="unmaskFromEnd"> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </param>
-        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedactionCharacter? redactionCharacter, int? unmaskLength, bool? unmaskFromEnd) : base(policyKind, entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
+        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IList<global::Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RedactionCharacter? redactionCharacter, int? unmaskLength, bool? unmaskFromEnd) : base(policyKind, entityTypes, policyName, isDefaultPolicy, additionalBinaryDataProperties)
         {
             RedactionCharacter = redactionCharacter;
             UnmaskLength = unmaskLength;

@@ -15,25 +15,25 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ReadResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ReadResult"/>. </summary>
         /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
-        internal ReadResult(IEnumerable<DetectedTextBlock> blocks)
+        internal ReadResult(IEnumerable<global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock> blocks)
         {
             Blocks = blocks.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.ReadResult"/>. </summary>
         /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReadResult(IReadOnlyList<DetectedTextBlock> blocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReadResult(IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock> blocks, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Blocks = blocks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </summary>
-        public IReadOnlyList<DetectedTextBlock> Blocks { get; }
+        public IReadOnlyList<global::Azure.AI.Vision.ImageAnalysis.DetectedTextBlock> Blocks { get; }
     }
 }

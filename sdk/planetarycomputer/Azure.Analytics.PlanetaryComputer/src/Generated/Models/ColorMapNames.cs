@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Available color maps for data visualization. </summary>
-    public readonly partial struct ColorMapNames : IEquatable<ColorMapNames>
+    public readonly partial struct ColorMapNames : IEquatable<global::Azure.Analytics.PlanetaryComputer.ColorMapNames>
     {
         private readonly string _value;
         /// <summary> Accent colormap - qualitative colormap with distinct colors. </summary>
@@ -447,12 +447,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Reversed YlOrRd colormap. </summary>
         private const string YlorrdRValue = "ylorrd_r";
 
-        /// <summary> Initializes a new instance of <see cref="ColorMapNames"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ColorMapNames"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ColorMapNames(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -1105,34 +1105,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Reversed YlOrRd colormap. </summary>
         public static ColorMapNames YlorrdR { get; } = new ColorMapNames(YlorrdRValue);
 
-        /// <summary> Determines if two <see cref="ColorMapNames"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.ColorMapNames"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ColorMapNames left, ColorMapNames right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ColorMapNames"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.ColorMapNames"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ColorMapNames left, ColorMapNames right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ColorMapNames"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.ColorMapNames"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ColorMapNames(string value) => new ColorMapNames(value);
 
-        /// <summary> Converts a string to a <see cref="ColorMapNames"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.ColorMapNames"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ColorMapNames?(string value) => value == null ? null : new ColorMapNames(value);
+        public static implicit operator ColorMapNames?(string value) => (value == null) ? null : new ColorMapNames(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ColorMapNames other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ColorMapNames other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ColorMapNames other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ColorMapNames other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

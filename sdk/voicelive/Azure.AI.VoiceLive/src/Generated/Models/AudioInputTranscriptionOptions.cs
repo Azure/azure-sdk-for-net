@@ -14,9 +14,9 @@ namespace Azure.AI.VoiceLive
     public partial class AudioInputTranscriptionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptions"/>. </summary>
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
             PhraseList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AudioInputTranscriptionOptions"/>. </summary>
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
         /// <param name="phraseList"> Optional list of phrase hints to bias recognition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model, string language, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model, string language, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Language = language;

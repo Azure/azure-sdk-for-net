@@ -15,26 +15,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LexicalAnalyzer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="odataType"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="odataType"/> or <paramref name="name"/> is null. </exception>
         public LexicalAnalyzer(string odataType, string name)
         {
-            Argument.AssertNotNull(odataType, nameof(odataType));
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(odataType, nameof(odataType));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             OdataType = odataType;
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LexicalAnalyzer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LexicalAnalyzer(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OdataType = odataType;
             Name = name;

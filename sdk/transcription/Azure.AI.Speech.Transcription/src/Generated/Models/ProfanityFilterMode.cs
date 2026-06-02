@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> Mode of profanity filtering. </summary>
-    public readonly partial struct ProfanityFilterMode : IEquatable<ProfanityFilterMode>
+    public readonly partial struct ProfanityFilterMode : IEquatable<global::Azure.AI.Speech.Transcription.ProfanityFilterMode>
     {
         private readonly string _value;
         /// <summary> Disable profanity filtering. </summary>
@@ -20,12 +20,12 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Mask the profanity with * except of the first letter, e.g., f***. </summary>
         private const string MaskedValue = "Masked";
 
-        /// <summary> Initializes a new instance of <see cref="ProfanityFilterMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Speech.Transcription.ProfanityFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProfanityFilterMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Speech.Transcription.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -42,34 +42,34 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Mask the profanity with * except of the first letter, e.g., f***. </summary>
         public static ProfanityFilterMode Masked { get; } = new ProfanityFilterMode(MaskedValue);
 
-        /// <summary> Determines if two <see cref="ProfanityFilterMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Speech.Transcription.ProfanityFilterMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProfanityFilterMode left, ProfanityFilterMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProfanityFilterMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Speech.Transcription.ProfanityFilterMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProfanityFilterMode left, ProfanityFilterMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProfanityFilterMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Speech.Transcription.ProfanityFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ProfanityFilterMode(string value) => new ProfanityFilterMode(value);
 
-        /// <summary> Converts a string to a <see cref="ProfanityFilterMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Speech.Transcription.ProfanityFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfanityFilterMode?(string value) => value == null ? null : new ProfanityFilterMode(value);
+        public static implicit operator ProfanityFilterMode?(string value) => (value == null) ? null : new ProfanityFilterMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProfanityFilterMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ProfanityFilterMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ProfanityFilterMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProfanityFilterMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

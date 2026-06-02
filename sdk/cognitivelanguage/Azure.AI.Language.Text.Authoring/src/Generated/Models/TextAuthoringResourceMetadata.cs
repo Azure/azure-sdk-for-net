@@ -14,30 +14,30 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringResourceMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata"/>. </summary>
         /// <param name="azureResourceId"> Represents the Azure resource ID. </param>
         /// <param name="customDomain"> Represents the Azure resource custom domain. </param>
         /// <param name="region"> Represents the Azure resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/>, <paramref name="customDomain"/> or <paramref name="region"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="azureResourceId"/>, <paramref name="customDomain"/> or <paramref name="region"/> is null. </exception>
         public TextAuthoringResourceMetadata(string azureResourceId, string customDomain, string region)
         {
-            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
-            Argument.AssertNotNull(customDomain, nameof(customDomain));
-            Argument.AssertNotNull(region, nameof(region));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(customDomain, nameof(customDomain));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(region, nameof(region));
 
             AzureResourceId = azureResourceId;
             CustomDomain = customDomain;
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringResourceMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata"/>. </summary>
         /// <param name="azureResourceId"> Represents the Azure resource ID. </param>
         /// <param name="customDomain"> Represents the Azure resource custom domain. </param>
         /// <param name="region"> Represents the Azure resource region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringResourceMetadata(string azureResourceId, string customDomain, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringResourceMetadata(string azureResourceId, string customDomain, string region, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             CustomDomain = customDomain;

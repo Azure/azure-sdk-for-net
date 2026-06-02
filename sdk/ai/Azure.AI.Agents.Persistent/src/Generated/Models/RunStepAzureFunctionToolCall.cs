@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A record of a call to an Azure Function tool. </summary>
     public partial class RunStepAzureFunctionToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepAzureFunctionToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureFunction"> The description of an Azure function call. </param>
         internal RunStepAzureFunctionToolCall(string id, AzureFunctionToolCallDetails azureFunction) : base("azure_function", id)
@@ -21,12 +21,12 @@ namespace Azure.AI.Agents.Persistent
             AzureFunction = azureFunction;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepAzureFunctionToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepAzureFunctionToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureFunction"> The description of an Azure function call. </param>
-        internal RunStepAzureFunctionToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionToolCallDetails azureFunction) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepAzureFunctionToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AzureFunctionToolCallDetails azureFunction) : base(@type, id, additionalBinaryDataProperties)
         {
             AzureFunction = azureFunction;
         }

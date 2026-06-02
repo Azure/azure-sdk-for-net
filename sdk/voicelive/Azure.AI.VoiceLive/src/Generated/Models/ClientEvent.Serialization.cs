@@ -11,10 +11,10 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    [PersistableModelProxy(typeof(UnknownClientEvent))]
-    internal abstract partial class ClientEvent : IJsonModel<ClientEvent>
+    [PersistableModelProxyAttribute(typeof(UnknownClientEvent))]
+    internal abstract partial class ClientEvent : IJsonModel<global::Azure.AI.VoiceLive.ClientEvent>
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEvent"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEvent"/> for deserialization. </summary>
         internal ClientEvent()
         {
         }
@@ -23,48 +23,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClientEvent(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.ClientEvent.DeserializeClientEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientEvent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEvent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClientEvent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEvent IPersistableModel<ClientEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClientEvent IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClientEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.ClientEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -72,19 +72,19 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEvent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEvent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(EventId))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(EventId))
             {
                 writer.WritePropertyName("event_id"u8);
                 writer.WriteStringValue(EventId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,26 +103,26 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEvent IJsonModel<ClientEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClientEvent IJsonModel<global::Azure.AI.VoiceLive.ClientEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ClientEvent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.ClientEvent)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClientEvent(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.ClientEvent.DeserializeClientEvent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ClientEvent DeserializeClientEvent(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -131,40 +131,40 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "session.update":
-                        return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
                     case "session.avatar.connect":
-                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
                     case "input_audio.turn.start":
-                        return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
                     case "input_audio.turn.append":
-                        return ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
                     case "input_audio.turn.end":
-                        return ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
                     case "input_audio.turn.cancel":
-                        return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
                     case "input_audio.clear":
-                        return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
                     case "input_audio_buffer.append":
-                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
                     case "input_audio_buffer.commit":
-                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
                     case "input_audio_buffer.clear":
-                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
                     case "conversation.item.create":
-                        return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
                     case "conversation.item.truncate":
-                        return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
                     case "conversation.item.delete":
-                        return ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
                     case "response.create":
-                        return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
                     case "response.cancel":
-                        return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
                     case "conversation.item.retrieve":
-                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                        return global::Azure.AI.VoiceLive.ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
                 }
             }
-            return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);
+            return global::Azure.AI.VoiceLive.UnknownClientEvent.DeserializeUnknownClientEvent(element, options);
         }
     }
 }

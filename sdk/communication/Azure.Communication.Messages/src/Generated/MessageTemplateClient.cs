@@ -16,30 +16,30 @@ namespace Azure.Communication.Messages
     /// <summary> The MessageTemplateClient. </summary>
     public partial class MessageTemplateClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal MessageTemplateClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CommunicationMessagesClientOptions options)
+        internal MessageTemplateClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new CommunicationMessagesClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -47,8 +47,8 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of MessageTemplateClient from a <see cref="MessageTemplateClientSettings"/>. </summary>
         /// <param name="settings"> The settings for MessageTemplateClient. </param>
-        [Experimental("SCME0002")]
-        public MessageTemplateClient(MessageTemplateClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public MessageTemplateClient(MessageTemplateClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -69,9 +69,9 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTemplates(Guid channelId, int? maxpagesize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTemplates(Guid channelId, int? maxpagesize, RequestContext context)
         {
             return new MessageTemplateClientGetTemplatesCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
@@ -87,9 +87,9 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTemplatesAsync(Guid channelId, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTemplatesAsync(Guid channelId, int? maxpagesize, RequestContext context)
         {
             return new MessageTemplateClientGetTemplatesAsyncCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
@@ -98,8 +98,8 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Communication.Messages.MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new MessageTemplateClientGetTemplatesCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }
@@ -108,8 +108,8 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }

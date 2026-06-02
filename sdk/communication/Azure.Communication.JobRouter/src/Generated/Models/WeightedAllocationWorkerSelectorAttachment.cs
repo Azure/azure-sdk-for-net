@@ -13,16 +13,16 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<WorkerWeightedAllocation> allocations) : base(kind, additionalBinaryDataProperties)
+        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IReadOnlyList<global::Azure.Communication.JobRouter.WorkerWeightedAllocation> allocations) : base(kind, additionalBinaryDataProperties)
         {
             Allocations = allocations;
         }
 
         /// <summary> A collection of percentage based weighted allocations. </summary>
-        public IReadOnlyList<WorkerWeightedAllocation> Allocations { get; }
+        public IReadOnlyList<global::Azure.Communication.JobRouter.WorkerWeightedAllocation> Allocations { get; }
     }
 }

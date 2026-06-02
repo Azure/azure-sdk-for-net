@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     internal partial class UnknownAIProjectDataset : AIProjectDataset
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAIProjectDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.UnknownAIProjectDataset"/>. </summary>
         /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAIProjectDataset(Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataUri, @type != default ? @type : "unknown", isReference, connectionName, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal UnknownAIProjectDataset(global::System.Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(dataUri, (@type != default) ? @type : "unknown", isReference, connectionName, id, name, version, description, tags, additionalBinaryDataProperties)
         {
         }
     }

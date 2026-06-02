@@ -15,22 +15,22 @@ namespace Azure.AI.Language.Text
     public partial class FhirBundle
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FhirBundle"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.FhirBundle"/>. </summary>
         internal FhirBundle()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirBundle"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.FhirBundle"/>. </summary>
         /// <param name="additionalProperties"></param>
-        internal FhirBundle(IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal FhirBundle(IReadOnlyDictionary<string, global::System.BinaryData> additionalProperties)
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>(additionalProperties);
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IReadOnlyDictionary<string, global::System.BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, global::System.BinaryData>(_additionalBinaryDataProperties);
     }
 }

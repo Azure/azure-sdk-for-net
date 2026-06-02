@@ -18,21 +18,21 @@ namespace Azure.AI.Agents.Persistent
     public partial class ToolResources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolResources"/>. </summary>
         public ToolResources()
         {
-            Mcp = new ChangeTrackingList<MCPToolResource>();
+            Mcp = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MCPToolResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ToolResources"/>. </summary>
         /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter` tool consisting of file IDs. </param>
         /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
         /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="mcp"> Resources to be used by the `mcp` tool consisting of a server label and headers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, AzureAISearchToolResource azureAISearch, IList<MCPToolResource> mcp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, AzureAISearchToolResource azureAISearch, IList<global::Azure.AI.Agents.Persistent.MCPToolResource> mcp, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CodeInterpreter = codeInterpreter;
             FileSearch = fileSearch;
@@ -51,6 +51,6 @@ namespace Azure.AI.Agents.Persistent
         public AzureAISearchToolResource AzureAISearch { get; set; }
 
         /// <summary> Resources to be used by the `mcp` tool consisting of a server label and headers. </summary>
-        public IList<MCPToolResource> Mcp { get; }
+        public IList<global::Azure.AI.Agents.Persistent.MCPToolResource> Mcp { get; }
     }
 }

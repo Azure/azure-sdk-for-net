@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class If : IJsonModel<If>
+    public partial class If : IJsonModel<global::SpecialWords._Models.If>
     {
         internal If() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<If>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.If>.Write(ModelReaderWriterOptions options) => throw null;
 
-        If IPersistableModel<If>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        If IPersistableModel<global::SpecialWords._Models.If>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<If>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.If>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="if"> The <see cref="If"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="if"> The <see cref="global::SpecialWords._Models.If"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(If @if) => throw null;
 
-        void IJsonModel<If>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.If>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        If IJsonModel<If>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        If IJsonModel<global::SpecialWords._Models.If>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual If JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

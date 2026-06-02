@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> ContainerWorkingDirectory enums. </summary>
-    public readonly partial struct ContainerWorkingDirectory : IEquatable<ContainerWorkingDirectory>
+    public readonly partial struct ContainerWorkingDirectory : IEquatable<global::Azure.Compute.Batch.ContainerWorkingDirectory>
     {
         private readonly string _value;
         /// <summary> Use the standard Batch service Task working directory, which will contain the Task Resource Files populated by Batch. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Compute.Batch
         /// <summary> Use the working directory defined in the container Image. Beware that this directory will not contain the Resource Files downloaded by Batch. </summary>
         private const string ContainerImageDefaultValue = "containerImageDefault";
 
-        /// <summary> Initializes a new instance of <see cref="ContainerWorkingDirectory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.ContainerWorkingDirectory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerWorkingDirectory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Compute.Batch
         /// <summary> Use the working directory defined in the container Image. Beware that this directory will not contain the Resource Files downloaded by Batch. </summary>
         public static ContainerWorkingDirectory ContainerImageDefault { get; } = new ContainerWorkingDirectory(ContainerImageDefaultValue);
 
-        /// <summary> Determines if two <see cref="ContainerWorkingDirectory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.ContainerWorkingDirectory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerWorkingDirectory left, ContainerWorkingDirectory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContainerWorkingDirectory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.ContainerWorkingDirectory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerWorkingDirectory left, ContainerWorkingDirectory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContainerWorkingDirectory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.ContainerWorkingDirectory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerWorkingDirectory(string value) => new ContainerWorkingDirectory(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerWorkingDirectory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.ContainerWorkingDirectory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerWorkingDirectory?(string value) => value == null ? null : new ContainerWorkingDirectory(value);
+        public static implicit operator ContainerWorkingDirectory?(string value) => (value == null) ? null : new ContainerWorkingDirectory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContainerWorkingDirectory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ContainerWorkingDirectory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ContainerWorkingDirectory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerWorkingDirectory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

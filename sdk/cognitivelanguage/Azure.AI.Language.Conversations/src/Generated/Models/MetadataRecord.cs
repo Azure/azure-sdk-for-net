@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class MetadataRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetadataRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.MetadataRecord"/>. </summary>
         /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
         /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public MetadataRecord(string key, string value)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(key, nameof(key));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetadataRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.MetadataRecord"/>. </summary>
         /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
         /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataRecord(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetadataRecord(string key, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

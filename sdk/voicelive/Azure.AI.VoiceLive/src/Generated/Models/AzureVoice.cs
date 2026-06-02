@@ -12,24 +12,24 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for Azure voice configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, and <see cref="AzurePersonalVoice"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.AzureCustomVoice"/>, <see cref="Azure.AI.VoiceLive.AzureStandardVoice"/>, and <see cref="Azure.AI.VoiceLive.AzurePersonalVoice"/>.
     /// </summary>
     public abstract partial class AzureVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureVoice"/>. </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         private protected AzureVoice(AzureVoiceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AzureVoice"/>. </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureVoice(AzureVoiceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

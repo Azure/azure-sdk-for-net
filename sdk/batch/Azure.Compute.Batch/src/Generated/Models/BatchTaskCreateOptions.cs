@@ -14,26 +14,26 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskCreateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within a Job that differ only by case). </param>
         /// <param name="commandLine"> The command line of the Task. For multi-instance Tasks, the command line is executed as the primary Task, after the primary Task and all subtasks have finished executing the coordination command line. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="commandLine"/> is null. </exception>
         public BatchTaskCreateOptions(string id, string commandLine)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(commandLine, nameof(commandLine));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(commandLine, nameof(commandLine));
 
             Id = id;
             CommandLine = commandLine;
-            ResourceFiles = new ChangeTrackingList<ResourceFile>();
-            OutputFiles = new ChangeTrackingList<OutputFile>();
-            EnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
+            ResourceFiles = new ChangeTrackingList<global::Azure.Compute.Batch.ResourceFile>();
+            OutputFiles = new ChangeTrackingList<global::Azure.Compute.Batch.OutputFile>();
+            EnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCreateOptions"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within a Job that differ only by case). </param>
         /// <param name="displayName"> A display name for the Task. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="exitConditions"> How the Batch service should respond when the Task completes. </param>
@@ -50,7 +50,7 @@ namespace Azure.Compute.Batch
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. If the Job does not have usesTaskDependencies set to true, and this element is present, the request fails with error code TaskDependenciesNotSpecifiedOnJob. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskCreateOptions(string id, string displayName, ExitConditions exitConditions, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, MultiInstanceSettings multiInstanceSettings, BatchTaskDependencies dependsOn, IList<BatchApplicationPackageReference> applicationPackageReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskCreateOptions(string id, string displayName, ExitConditions exitConditions, string commandLine, BatchTaskContainerSettings containerSettings, IList<global::Azure.Compute.Batch.ResourceFile> resourceFiles, IList<global::Azure.Compute.Batch.OutputFile> outputFiles, IList<global::Azure.Compute.Batch.EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, MultiInstanceSettings multiInstanceSettings, BatchTaskDependencies dependsOn, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -86,13 +86,13 @@ namespace Azure.Compute.Batch
         public BatchTaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary> A list of files that the Batch service will download to the Compute Node before running the command line. For multi-instance Tasks, the resource files will only be downloaded to the Compute Node on which the primary Task is executed. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
-        public IList<ResourceFile> ResourceFiles { get; }
+        public IList<global::Azure.Compute.Batch.ResourceFile> ResourceFiles { get; }
 
         /// <summary> A list of files that the Batch service will upload from the Compute Node after running the command line. For multi-instance Tasks, the files will only be uploaded from the Compute Node on which the primary Task is executed. </summary>
-        public IList<OutputFile> OutputFiles { get; }
+        public IList<global::Azure.Compute.Batch.OutputFile> OutputFiles { get; }
 
         /// <summary> A list of environment variable settings for the Task. </summary>
-        public IList<EnvironmentSetting> EnvironmentSettings { get; }
+        public IList<global::Azure.Compute.Batch.EnvironmentSetting> EnvironmentSettings { get; }
 
         /// <summary> A locality hint that can be used by the Batch service to select a Compute Node on which to start the new Task. </summary>
         public BatchAffinityInfo AffinityInfo { get; set; }
@@ -113,6 +113,6 @@ namespace Azure.Compute.Batch
         public BatchTaskDependencies DependsOn { get; set; }
 
         /// <summary> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
     }
 }

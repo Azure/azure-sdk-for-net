@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
-    public partial class SessionUpdateResponseAnimationBlendshapeDelta : SessionUpdate, IJsonModel<SessionUpdateResponseAnimationBlendshapeDelta>
+    public partial class SessionUpdateResponseAnimationBlendshapeDelta : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAnimationBlendshapeDelta()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateResponseAnimationBlendshapeDelta(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateResponseAnimationBlendshapeDelta)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateResponseAnimationBlendshapeDelta)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseAnimationBlendshapeDelta IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseAnimationBlendshapeDelta)PersistableModelCreateCore(data, options);
+        SessionUpdateResponseAnimationBlendshapeDelta IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateResponseAnimationBlendshapeDelta)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateResponseAnimationBlendshapeDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,10 +73,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateResponseAnimationBlendshapeDelta)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
@@ -91,9 +91,9 @@ namespace Azure.AI.VoiceLive
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Frames);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Frames))
+            using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Frames))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
             writer.WritePropertyName("frame_index"u8);
@@ -102,32 +102,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseAnimationBlendshapeDelta IJsonModel<SessionUpdateResponseAnimationBlendshapeDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateResponseAnimationBlendshapeDelta)JsonModelCreateCore(ref reader, options);
+        SessionUpdateResponseAnimationBlendshapeDelta IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateResponseAnimationBlendshapeDelta)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateResponseAnimationBlendshapeDelta)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateResponseAnimationBlendshapeDelta(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateResponseAnimationBlendshapeDelta DeserializeSessionUpdateResponseAnimationBlendshapeDelta(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("frames"u8))
                 {
-                    frames = BinaryData.FromString(prop.Value.GetRawText());
+                    frames = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("frame_index"u8))
@@ -176,9 +176,9 @@ namespace Azure.AI.VoiceLive
                     frameIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateResponseAnimationBlendshapeDelta(

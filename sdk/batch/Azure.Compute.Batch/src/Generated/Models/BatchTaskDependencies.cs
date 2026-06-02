@@ -18,20 +18,20 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskDependencies
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskDependencies"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskDependencies"/>. </summary>
         public BatchTaskDependencies()
         {
             TaskIds = new ChangeTrackingList<string>();
-            TaskIdRanges = new ChangeTrackingList<BatchTaskIdRange>();
+            TaskIdRanges = new ChangeTrackingList<global::Azure.Compute.Batch.BatchTaskIdRange>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskDependencies"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskDependencies"/>. </summary>
         /// <param name="taskIds"> The list of Task IDs that this Task depends on. All Tasks in this list must complete successfully before the dependent Task can be scheduled. The taskIds collection is limited to 64000 characters total (i.e. the combined length of all Task IDs). If the taskIds collection exceeds the maximum length, the Add Task request fails with error code TaskDependencyListTooLong. In this case consider using Task ID ranges instead. </param>
         /// <param name="taskIdRanges"> The list of Task ID ranges that this Task depends on. All Tasks in all ranges must complete successfully before the dependent Task can be scheduled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskDependencies(IList<string> taskIds, IList<BatchTaskIdRange> taskIdRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskDependencies(IList<string> taskIds, IList<global::Azure.Compute.Batch.BatchTaskIdRange> taskIdRanges, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TaskIds = taskIds;
             TaskIdRanges = taskIdRanges;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public IList<string> TaskIds { get; }
 
         /// <summary> The list of Task ID ranges that this Task depends on. All Tasks in all ranges must complete successfully before the dependent Task can be scheduled. </summary>
-        public IList<BatchTaskIdRange> TaskIdRanges { get; }
+        public IList<global::Azure.Compute.Batch.BatchTaskIdRange> TaskIdRanges { get; }
     }
 }

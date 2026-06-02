@@ -18,28 +18,28 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfiguration"/>. </summary>
         /// <param name="dataSources"> Data sources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
-        public VectorStoreConfiguration(IEnumerable<VectorStoreDataSource> dataSources)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
+        public VectorStoreConfiguration(IEnumerable<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources)
         {
-            Argument.AssertNotNull(dataSources, nameof(dataSources));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(dataSources, nameof(dataSources));
 
             DataSources = dataSources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreConfiguration"/>. </summary>
         /// <param name="dataSources"> Data sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreConfiguration(IList<VectorStoreDataSource> dataSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreConfiguration(IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DataSources = dataSources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Data sources. </summary>
-        public IList<VectorStoreDataSource> DataSources { get; }
+        public IList<global::Azure.AI.Agents.Persistent.VectorStoreDataSource> DataSources { get; }
     }
 }

@@ -18,32 +18,32 @@ namespace Encode.Numeric._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SafeintAsString(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SafeintAsStringAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SafeintAsStringAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<SafeintAsStringProperty> SafeintAsString(SafeintAsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Numeric._Property.SafeintAsStringProperty> SafeintAsString(SafeintAsStringProperty value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<SafeintAsStringProperty>> SafeintAsStringAsync(SafeintAsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Numeric._Property.SafeintAsStringProperty>> SafeintAsStringAsync(SafeintAsStringProperty value, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Uint32AsStringOptional(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Uint32AsStringOptionalAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Uint32AsStringOptionalAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Uint32AsStringProperty> Uint32AsStringOptional(Uint32AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Numeric._Property.Uint32AsStringProperty> Uint32AsStringOptional(Uint32AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Uint32AsStringProperty>> Uint32AsStringOptionalAsync(Uint32AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Numeric._Property.Uint32AsStringProperty>> Uint32AsStringOptionalAsync(Uint32AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Uint8AsString(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Uint8AsStringAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Uint8AsStringAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Uint8AsStringProperty> Uint8AsString(Uint8AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Numeric._Property.Uint8AsStringProperty> Uint8AsString(Uint8AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Uint8AsStringProperty>> Uint8AsStringAsync(Uint8AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Numeric._Property.Uint8AsStringProperty>> Uint8AsStringAsync(Uint8AsStringProperty value, CancellationToken cancellationToken = default) => throw null;
     }
 }

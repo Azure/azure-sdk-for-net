@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom sentiment project. </summary>
-    public partial class SpanSentimentEvalSummary : IJsonModel<SpanSentimentEvalSummary>
+    public partial class SpanSentimentEvalSummary : IJsonModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="SpanSentimentEvalSummary"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary"/> for deserialization. </summary>
         internal SpanSentimentEvalSummary()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SpanSentimentEvalSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSpanSentimentEvalSummary(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary.DeserializeSpanSentimentEvalSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpanSentimentEvalSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SpanSentimentEvalSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SpanSentimentEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpanSentimentEvalSummary IPersistableModel<SpanSentimentEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SpanSentimentEvalSummary IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SpanSentimentEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SpanSentimentEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,17 +73,17 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SpanSentimentEvalSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("confusionMatrix"u8);
             writer.WriteStartObject();
             foreach (var item in ConfusionMatrix)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WriteObjectValue<TextAuthoringConfusionMatrixRow>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("sentiments"u8);
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Text.Authoring
             foreach (var item in Sentiments)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WriteObjectValue<SentimentEvalSummary>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("microF1"u8);
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteNumberValue(MacroPrecision);
             writer.WritePropertyName("macroRecall"u8);
             writer.WriteNumberValue(MacroRecall);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -114,9 +114,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -125,56 +125,56 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SpanSentimentEvalSummary IJsonModel<SpanSentimentEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SpanSentimentEvalSummary IJsonModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SpanSentimentEvalSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SpanSentimentEvalSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSpanSentimentEvalSummary(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary.DeserializeSpanSentimentEvalSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SpanSentimentEvalSummary DeserializeSpanSentimentEvalSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, TextAuthoringConfusionMatrixRow> confusionMatrix = default;
-            IDictionary<string, SentimentEvalSummary> sentiments = default;
+            IDictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = default;
+            IDictionary<string, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary> sentiments = default;
             float microF1 = default;
             float microPrecision = default;
             float microRecall = default;
             float macroF1 = default;
             float macroPrecision = default;
             float macroRecall = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("confusionMatrix"u8))
                 {
-                    Dictionary<string, TextAuthoringConfusionMatrixRow> dictionary = new Dictionary<string, TextAuthoringConfusionMatrixRow>();
+                    Dictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> dictionary = new Dictionary<string, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, TextAuthoringConfusionMatrixRow.DeserializeTextAuthoringConfusionMatrixRow(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow.DeserializeTextAuthoringConfusionMatrixRow(prop0.Value, options));
                     }
                     confusionMatrix = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("sentiments"u8))
                 {
-                    Dictionary<string, SentimentEvalSummary> dictionary = new Dictionary<string, SentimentEvalSummary>();
+                    Dictionary<string, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary> dictionary = new Dictionary<string, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, SentimentEvalSummary.DeserializeSentimentEvalSummary(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Language.Text.Authoring.SentimentEvalSummary.DeserializeSentimentEvalSummary(prop0.Value, options));
                     }
                     sentiments = dictionary;
                     continue;
@@ -209,9 +209,9 @@ namespace Azure.AI.Language.Text.Authoring
                     macroRecall = prop.Value.GetSingle();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SpanSentimentEvalSummary(

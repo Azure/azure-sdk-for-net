@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A drag action. </summary>
     public partial class DragAction : ComputerUseAction
     {
-        /// <summary> Initializes a new instance of <see cref="DragAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DragAction"/>. </summary>
         /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
-        internal DragAction(IEnumerable<CoordinatePoint> path) : base("drag")
+        internal DragAction(IEnumerable<global::Azure.AI.Agents.Persistent.CoordinatePoint> path) : base("drag")
         {
             Path = path.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DragAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DragAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
-        internal DragAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CoordinatePoint> path) : base(@type, additionalBinaryDataProperties)
+        internal DragAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Agents.Persistent.CoordinatePoint> path) : base(@type, additionalBinaryDataProperties)
         {
             Path = path;
         }
 
         /// <summary> An array of coordinates representing the path of the drag action. </summary>
-        public IList<CoordinatePoint> Path { get; }
+        public IList<global::Azure.AI.Agents.Persistent.CoordinatePoint> Path { get; }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a code interpreter tool, issued by the model in evaluation of a defined tool, that
     /// represents inputs and outputs consumed and emitted by the code interpreter.
     /// </summary>
-    public partial class RunStepCodeInterpreterToolCall : RunStepToolCall, IJsonModel<RunStepCodeInterpreterToolCall>
+    public partial class RunStepCodeInterpreterToolCall : RunStepToolCall, IJsonModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCall"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/> for deserialization. </summary>
         internal RunStepCodeInterpreterToolCall()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepToolCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepCodeInterpreterToolCall(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepCodeInterpreterToolCall IPersistableModel<RunStepCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (RunStepCodeInterpreterToolCall)PersistableModelCreateCore(data, options);
+        RunStepCodeInterpreterToolCall IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => ((RunStepCodeInterpreterToolCall)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,44 +76,44 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("code_interpreter"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalCodeInterpreterToolCallDetails>(InternalDetails, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepCodeInterpreterToolCall IJsonModel<RunStepCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RunStepCodeInterpreterToolCall)JsonModelCreateCore(ref reader, options);
+        RunStepCodeInterpreterToolCall IJsonModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((RunStepCodeInterpreterToolCall)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RunStepToolCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepCodeInterpreterToolCall(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepCodeInterpreterToolCall DeserializeRunStepCodeInterpreterToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string @type = "code_interpreter";
             string id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InternalCodeInterpreterToolCallDetails internalDetails = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,12 +129,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("code_interpreter"u8))
                 {
-                    internalDetails = InternalCodeInterpreterToolCallDetails.DeserializeInternalCodeInterpreterToolCallDetails(prop.Value, options);
+                    internalDetails = global::Azure.AI.Agents.Persistent.InternalCodeInterpreterToolCallDetails.DeserializeInternalCodeInterpreterToolCallDetails(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new RunStepCodeInterpreterToolCall(@type, id, additionalBinaryDataProperties, internalDetails);

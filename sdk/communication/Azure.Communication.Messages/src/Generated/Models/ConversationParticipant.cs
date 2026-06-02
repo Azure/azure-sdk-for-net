@@ -12,26 +12,26 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Advanced Messaging conversation participant.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InternalConversationParticipant"/> and <see cref="ExternalConversationParticipant"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.Messages.InternalConversationParticipant"/> and <see cref="Azure.Communication.Messages.ExternalConversationParticipant"/>.
     /// </summary>
     public abstract partial class ConversationParticipant
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationParticipant"/>. </summary>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
         private protected ConversationParticipant(ParticipantKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;

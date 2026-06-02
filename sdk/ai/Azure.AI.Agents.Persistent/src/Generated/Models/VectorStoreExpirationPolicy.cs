@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreExpirationPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreExpirationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy"/>. </summary>
         /// <param name="anchor"> Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`. </param>
         /// <param name="days"> The anchor timestamp after which the expiration policy applies. </param>
         public VectorStoreExpirationPolicy(VectorStoreExpirationPolicyAnchor anchor, int days)
@@ -25,11 +25,11 @@ namespace Azure.AI.Agents.Persistent
             Days = days;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreExpirationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy"/>. </summary>
         /// <param name="anchor"> Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`. </param>
         /// <param name="days"> The anchor timestamp after which the expiration policy applies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreExpirationPolicy(VectorStoreExpirationPolicyAnchor anchor, int days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreExpirationPolicy(VectorStoreExpirationPolicyAnchor anchor, int days, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Anchor = anchor;
             Days = days;

@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Text format. </summary>
     public partial class ResponsesCustomTextFormatParam : ResponsesCustomToolParamFormat
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomTextFormatParam"/>. </summary>
-        public ResponsesCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomTextFormatParam"/>. </summary>
+        public ResponsesCustomTextFormatParam() : base(global::Azure.AI.Extensions.OpenAI.CustomToolParamFormatType.Text)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomTextFormatParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomTextFormatParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesCustomTextFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesCustomTextFormatParam(CustomToolParamFormatType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

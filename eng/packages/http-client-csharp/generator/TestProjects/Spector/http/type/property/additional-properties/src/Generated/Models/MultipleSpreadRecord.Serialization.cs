@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class MultipleSpreadRecord : IJsonModel<MultipleSpreadRecord>
+    public partial class MultipleSpreadRecord : IJsonModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>
     {
         internal MultipleSpreadRecord() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        MultipleSpreadRecord IPersistableModel<MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        MultipleSpreadRecord IPersistableModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<MultipleSpreadRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="multipleSpreadRecord"> The <see cref="MultipleSpreadRecord"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="multipleSpreadRecord"> The <see cref="global::_Type.Property.AdditionalProperties.MultipleSpreadRecord"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(MultipleSpreadRecord multipleSpreadRecord) => throw null;
 
         public static explicit operator MultipleSpreadRecord(Response response) => throw null;
 
-        void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        MultipleSpreadRecord IJsonModel<MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        MultipleSpreadRecord IJsonModel<global::_Type.Property.AdditionalProperties.MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual MultipleSpreadRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

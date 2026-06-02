@@ -16,7 +16,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="delimiter"> The delimiter. </param>
         public static void SetDelimited<T>(this PipelineRequestHeaders headers, string name, IEnumerable<T> value, string delimiter)
         {
-            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v));
+            IEnumerable<string> stringValues = value.Select(v => global::Azure.AI.Speech.Transcription.TypeFormatters.ConvertToString(v));
             headers.Set(name, string.Join(delimiter, stringValues));
         }
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="format"> The format. </param>
         public static void SetDelimited<T>(this PipelineRequestHeaders headers, string name, IEnumerable<T> value, string delimiter, SerializationFormat format)
         {
-            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
+            IEnumerable<string> stringValues = value.Select(v => global::Azure.AI.Speech.Transcription.TypeFormatters.ConvertToString(v, format));
             headers.Set(name, string.Join(delimiter, stringValues));
         }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Speech.Transcription
         {
             foreach (var header in value)
             {
-                headers.Add(prefix + header.Key, header.Value);
+                headers.Add((prefix + header.Key), header.Value);
             }
         }
     }

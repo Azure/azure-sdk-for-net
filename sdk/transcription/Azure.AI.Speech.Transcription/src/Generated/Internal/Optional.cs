@@ -11,17 +11,17 @@ namespace Azure.AI.Speech.Transcription
     {
         public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
         {
-            return !(collection is ChangeTrackingList<T> changeTrackingList && changeTrackingList.IsUndefined);
+            return !((collection is ChangeTrackingList<T> changeTrackingList) && changeTrackingList.IsUndefined);
         }
 
         public static bool IsCollectionDefined<TKey, TValue>(IDictionary<TKey, TValue> collection)
         {
-            return !(collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary && changeTrackingDictionary.IsUndefined);
+            return !((collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary) && changeTrackingDictionary.IsUndefined);
         }
 
         public static bool IsCollectionDefined<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> collection)
         {
-            return !(collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary && changeTrackingDictionary.IsUndefined);
+            return !((collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary) && changeTrackingDictionary.IsUndefined);
         }
 
         public static bool IsDefined<T>(T? value)
@@ -32,17 +32,17 @@ namespace Azure.AI.Speech.Transcription
 
         public static bool IsDefined(object value)
         {
-            return value != null;
+            return (value != null);
         }
 
         public static bool IsDefined(string value)
         {
-            return value != null;
+            return (value != null);
         }
 
         public static bool IsDefined(JsonElement value)
         {
-            return value.ValueKind != JsonValueKind.Undefined;
+            return (value.ValueKind != global::System.Text.Json.JsonValueKind.Undefined);
         }
     }
 }

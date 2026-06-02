@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class OpenApiToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiToolDefinition"/>. </summary>
         /// <param name="openapi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openapi"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="openapi"/> is null. </exception>
         public OpenApiToolDefinition(OpenApiFunctionDefinition openapi) : base("openapi")
         {
-            Argument.AssertNotNull(openapi, nameof(openapi));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(openapi, nameof(openapi));
 
             Openapi = openapi;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.OpenApiToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="openapi"> The openapi function definition. </param>
-        internal OpenApiToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
+        internal OpenApiToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
         {
             Openapi = openapi;
         }

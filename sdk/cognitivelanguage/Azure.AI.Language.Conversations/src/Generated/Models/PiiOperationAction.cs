@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Task definition for a PII redaction in conversations. </summary>
     public partial class PiiOperationAction : AnalyzeConversationOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="PiiOperationAction"/>. </summary>
-        public PiiOperationAction() : base(AnalyzeConversationOperationActionKind.ConversationalPIITask)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.PiiOperationAction"/>. </summary>
+        public PiiOperationAction() : base(global::Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationActionKind.ConversationalPIITask)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.PiiOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> parameters. </param>
-        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationPiiActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal PiiOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ConversationPiiActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }

@@ -14,7 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public DifferentSpreadModelDerived(string knownProp, ModelForRecord derivedProp) : base(knownProp) => throw null;
 
-        internal DifferentSpreadModelDerived(string knownProp, IDictionary<string, BinaryData> additionalProperties, ModelForRecord derivedProp) : base(knownProp, additionalProperties) => throw null;
+        internal DifferentSpreadModelDerived(string knownProp, IDictionary<string, global::System.BinaryData> additionalProperties, ModelForRecord derivedProp) : base(knownProp, additionalProperties) => throw null;
 
         public ModelForRecord DerivedProp
         {

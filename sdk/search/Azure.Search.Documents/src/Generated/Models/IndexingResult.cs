@@ -14,20 +14,20 @@ namespace Azure.Search.Documents.Models
     public partial class IndexingResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexingResult"/>. </summary>
         internal IndexingResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.IndexingResult"/>. </summary>
         /// <param name="key"> The key of a document that was in the indexing request. </param>
         /// <param name="errorMessage"> The error message explaining why the indexing operation failed for the document identified by the key; null if indexing succeeded. </param>
         /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
         /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexingResult(string key, string errorMessage, bool succeeded, int status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexingResult(string key, string errorMessage, bool succeeded, int status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             ErrorMessage = errorMessage;

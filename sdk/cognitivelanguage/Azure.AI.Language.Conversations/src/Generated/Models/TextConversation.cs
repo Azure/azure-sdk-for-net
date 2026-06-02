@@ -15,33 +15,33 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> model for text conversation. </summary>
     public partial class TextConversation : ConversationInput
     {
-        /// <summary> Initializes a new instance of <see cref="TextConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TextConversation"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="language"/> or <paramref name="conversationItems"/> is null. </exception>
-        public TextConversation(string id, string language, IEnumerable<TextConversationItem> conversationItems) : base(id, language, InputModality.Text)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="language"/> or <paramref name="conversationItems"/> is null. </exception>
+        public TextConversation(string id, string language, IEnumerable<global::Azure.AI.Language.Conversations.Models.TextConversationItem> conversationItems) : base(id, language, global::Azure.AI.Language.Conversations.Models.InputModality.Text)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(conversationItems, nameof(conversationItems));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(language, nameof(language));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(conversationItems, nameof(conversationItems));
 
             ConversationItems = conversationItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TextConversation"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
-        internal TextConversation(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TextConversationItem> conversationItems) : base(id, language, modality, domain, additionalBinaryDataProperties)
+        internal TextConversation(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Conversations.Models.TextConversationItem> conversationItems) : base(id, language, modality, domain, additionalBinaryDataProperties)
         {
             ConversationItems = conversationItems;
         }
 
         /// <summary> Ordered list of text conversation items in the conversation. </summary>
-        public IList<TextConversationItem> ConversationItems { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.TextConversationItem> ConversationItems { get; }
     }
 }

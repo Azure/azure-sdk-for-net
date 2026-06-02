@@ -15,15 +15,15 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasClassifications
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasClassifications"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassifications"/>. </summary>
         internal AtlasClassifications()
         {
-            List = new ChangeTrackingList<BinaryData>();
+            List = new ChangeTrackingList<global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasClassifications"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasClassifications"/>. </summary>
         /// <param name="list"> An array of objects. </param>
         /// <param name="pageSize"> The size of the page. </param>
         /// <param name="sortBy"> The sorted by field. </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="startIndex"> The start index of the page. </param>
         /// <param name="totalCount"> The total count of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasClassifications(IList<BinaryData> list, int? pageSize, string sortBy, AtlasSortType? sortType, int? startIndex, int? totalCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasClassifications(IList<global::System.BinaryData> list, int? pageSize, string sortBy, AtlasSortType? sortType, int? startIndex, int? totalCount, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             List = list;
             PageSize = pageSize;
@@ -44,8 +44,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// An array of objects.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> List { get; }
+        public IList<global::System.BinaryData> List { get; }
 
         /// <summary> The size of the page. </summary>
         public int? PageSize { get; }

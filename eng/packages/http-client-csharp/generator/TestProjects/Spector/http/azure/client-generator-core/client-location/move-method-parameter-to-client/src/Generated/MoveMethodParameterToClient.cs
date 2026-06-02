@@ -15,16 +15,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
     {
         protected MoveMethodParameterToClient() => throw null;
 
-        public MoveMethodParameterToClient(string storageAccount) : this(new Uri("http://localhost:3000"), storageAccount, new MoveMethodParameterToClientOptions()) => throw null;
+        public MoveMethodParameterToClient(string storageAccount) : this(new global::System.Uri("http://localhost:3000"), storageAccount, new MoveMethodParameterToClientOptions()) => throw null;
 
-        public MoveMethodParameterToClient(string storageAccount, MoveMethodParameterToClientOptions options) : this(new Uri("http://localhost:3000"), storageAccount, options) => throw null;
+        public MoveMethodParameterToClient(string storageAccount, MoveMethodParameterToClientOptions options) : this(new global::System.Uri("http://localhost:3000"), storageAccount, options) => throw null;
 
-        internal MoveMethodParameterToClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) => throw null;
+        internal MoveMethodParameterToClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) => throw null;
 
-        public MoveMethodParameterToClient(Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) : this(null, endpoint, storageAccount, options) => throw null;
+        public MoveMethodParameterToClient(global::System.Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) : this(null, endpoint, storageAccount, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MoveMethodParameterToClient(MoveMethodParameterToClientSettings settings) : this(null, settings?.Endpoint, settings?.StorageAccount, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MoveMethodParameterToClient(MoveMethodParameterToClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.StorageAccount, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

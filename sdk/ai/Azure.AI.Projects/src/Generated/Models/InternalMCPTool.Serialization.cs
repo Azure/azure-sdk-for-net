@@ -10,9 +10,9 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : InternalTool, IJsonModel<InternalMCPTool>
+    internal partial class InternalMCPTool : InternalTool, IJsonModel<global::OpenAI.InternalMCPTool>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPTool"/> for deserialization. </summary>
         internal InternalMCPTool()
         {
         }
@@ -21,48 +21,48 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalMCPTool(document.RootElement, options);
+                        return global::OpenAI.InternalMCPTool.DeserializeInternalMCPTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalMCPTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalMCPTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMCPTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalMCPTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPTool IPersistableModel<InternalMCPTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalMCPTool)PersistableModelCreateCore(data, options);
+        InternalMCPTool IPersistableModel<global::OpenAI.InternalMCPTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalMCPTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMCPTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalMCPTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalMCPTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalMCPTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,42 +70,42 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMCPTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            if (Optional.IsDefined(ServerUrl))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ServerUrl))
             {
                 writer.WritePropertyName("server_url"u8);
                 writer.WriteStringValue(ServerUrl.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConnectorId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteStringValue(ConnectorId.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Authorization))
+            if (global::Azure.AI.Projects.Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteStringValue(Authorization);
             }
-            if (Optional.IsDefined(ServerDescription))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ServerDescription))
             {
                 writer.WritePropertyName("server_description"u8);
                 writer.WriteStringValue(ServerDescription);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -114,48 +114,48 @@ namespace OpenAI
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(AllowedTools))
+            if (global::Azure.AI.Projects.Optional.IsDefined(AllowedTools))
             {
                 writer.WritePropertyName("allowed_tools"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(AllowedTools);
 #else
-                using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(AllowedTools))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (global::Azure.AI.Projects.Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(RequireApproval);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(RequireApproval))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsDefined(DeferLoading))
+            if (global::Azure.AI.Projects.Optional.IsDefined(DeferLoading))
             {
                 writer.WritePropertyName("defer_loading"u8);
                 writer.WriteBooleanValue(DeferLoading.Value);
             }
-            if (Optional.IsDefined(ProjectConnectionId))
+            if (global::Azure.AI.Projects.Optional.IsDefined(ProjectConnectionId))
             {
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
                 writer.WriteStartObject();
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<ToolConfig>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -163,33 +163,33 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPTool IJsonModel<InternalMCPTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalMCPTool)JsonModelCreateCore(ref reader, options);
+        InternalMCPTool IJsonModel<global::OpenAI.InternalMCPTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalMCPTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalMCPTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalMCPTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalMCPTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalMCPTool.DeserializeInternalMCPTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalMCPTool DeserializeInternalMCPTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string serverLabel = default;
-            Uri serverUrl = default;
+            global::System.Uri serverUrl = default;
             MCPToolConnectorId? connectorId = default;
             string authorization = default;
             string serverDescription = default;
@@ -198,7 +198,7 @@ namespace OpenAI
             BinaryData requireApproval = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, global::Azure.AI.Projects.ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -213,16 +213,16 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("server_url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("connector_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -241,14 +241,14 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("headers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -262,27 +262,27 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("allowed_tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         allowedTools = null;
                         continue;
                     }
-                    allowedTools = BinaryData.FromString(prop.Value.GetRawText());
+                    allowedTools = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("require_approval"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         requireApproval = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApproval = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -296,21 +296,21 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("tool_configs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    Dictionary<string, global::Azure.AI.Projects.ToolConfig> dictionary = new Dictionary<string, global::Azure.AI.Projects.ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.AI.Projects.ToolConfig.DeserializeToolConfig(prop0.Value, options));
                     }
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new InternalMCPTool(
@@ -321,12 +321,12 @@ namespace OpenAI
                 connectorId,
                 authorization,
                 serverDescription,
-                headers ?? new ChangeTrackingDictionary<string, string>(),
+                (headers ?? new ChangeTrackingDictionary<string, string>()),
                 allowedTools,
                 requireApproval,
                 deferLoading,
                 projectConnectionId,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+                (toolConfigs ?? new ChangeTrackingDictionary<string, global::Azure.AI.Projects.ToolConfig>()));
         }
     }
 }

@@ -15,19 +15,19 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ErrorInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ErrorInfo"/>. </summary>
         /// <param name="error"> Error details. </param>
         internal ErrorInfo(ResponseError error)
         {
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ErrorInfo"/>. </summary>
         /// <param name="error"> Error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorInfo(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorInfo(ResponseError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -13,16 +13,16 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TestRunEnded and scope is Tests. </summary>
     public partial class TestRunEndedNotificationEventFilter : TestsNotificationEventFilter
     {
-        /// <summary> Initializes a new instance of <see cref="TestRunEndedNotificationEventFilter"/>. </summary>
-        public TestRunEndedNotificationEventFilter() : base(NotificationEventType.TestRunEnded)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter"/>. </summary>
+        public TestRunEndedNotificationEventFilter() : base(global::Azure.Developer.LoadTesting.NotificationEventType.TestRunEnded)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunEndedNotificationEventFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition"> Event filtering condition. </param>
-        internal TestRunEndedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TestRunEndedEventCondition condition) : base(kind, additionalBinaryDataProperties)
+        internal TestRunEndedNotificationEventFilter(NotificationEventType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, TestRunEndedEventCondition condition) : base(kind, additionalBinaryDataProperties)
         {
             Condition = condition;
         }

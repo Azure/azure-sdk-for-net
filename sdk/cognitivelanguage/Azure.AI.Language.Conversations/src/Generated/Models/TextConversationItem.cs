@@ -15,25 +15,25 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class TextConversationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextConversationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TextConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="text"> The text input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/> or <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/> or <paramref name="text"/> is null. </exception>
         public TextConversationItem(string id, string participantId, string text)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(participantId, nameof(participantId));
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(participantId, nameof(participantId));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(text, nameof(text));
 
             Id = id;
             ParticipantId = participantId;
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextConversationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.TextConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="role"> Role of the participant. </param>
         /// <param name="text"> The text input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParticipantId = participantId;

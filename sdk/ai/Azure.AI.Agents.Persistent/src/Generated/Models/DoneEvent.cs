@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Terminal event indicating the successful end of a stream. </summary>
-    public readonly partial struct DoneEvent : IEquatable<DoneEvent>
+    public readonly partial struct DoneEvent : IEquatable<global::Azure.AI.Agents.Persistent.DoneEvent>
     {
         private readonly string _value;
         /// <summary> Event sent when the stream is done. </summary>
         private const string DoneValue = "done";
 
-        /// <summary> Initializes a new instance of <see cref="DoneEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.DoneEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DoneEvent(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Event sent when the stream is done. </summary>
         public static DoneEvent Done { get; } = new DoneEvent(DoneValue);
 
-        /// <summary> Determines if two <see cref="DoneEvent"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.DoneEvent"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DoneEvent left, DoneEvent right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DoneEvent"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.DoneEvent"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DoneEvent left, DoneEvent right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DoneEvent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.DoneEvent"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DoneEvent(string value) => new DoneEvent(value);
 
-        /// <summary> Converts a string to a <see cref="DoneEvent"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.DoneEvent"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DoneEvent?(string value) => value == null ? null : new DoneEvent(value);
+        public static implicit operator DoneEvent?(string value) => (value == null) ? null : new DoneEvent(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DoneEvent other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DoneEvent other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DoneEvent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DoneEvent other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -15,22 +15,22 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DeltaSummaryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryResult"/>. </summary>
         /// <param name="summary"> Contains added, removed, and difference values for the whole range either 7 or 30 days. </param>
         /// <param name="daily"> Contains added, removed, count, and difference values for each day. </param>
-        internal DeltaSummaryResult(DeltaRangeResult summary, IEnumerable<DeltaDateResult> daily)
+        internal DeltaSummaryResult(DeltaRangeResult summary, IEnumerable<global::Azure.Analytics.Defender.Easm.DeltaDateResult> daily)
         {
             Summary = summary;
             Daily = daily.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DeltaSummaryResult"/>. </summary>
         /// <param name="summary"> Contains added, removed, and difference values for the whole range either 7 or 30 days. </param>
         /// <param name="daily"> Contains added, removed, count, and difference values for each day. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaSummaryResult(DeltaRangeResult summary, IList<DeltaDateResult> daily, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaSummaryResult(DeltaRangeResult summary, IList<global::Azure.Analytics.Defender.Easm.DeltaDateResult> daily, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Summary = summary;
             Daily = daily;
@@ -41,6 +41,6 @@ namespace Azure.Analytics.Defender.Easm
         public DeltaRangeResult Summary { get; }
 
         /// <summary> Contains added, removed, count, and difference values for each day. </summary>
-        public IList<DeltaDateResult> Daily { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DeltaDateResult> Daily { get; }
     }
 }

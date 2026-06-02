@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The storage method for the original full-precision vectors used for rescoring and internal index operations. </summary>
-    public readonly partial struct VectorSearchCompressionRescoreStorageMethod : IEquatable<VectorSearchCompressionRescoreStorageMethod>
+    public readonly partial struct VectorSearchCompressionRescoreStorageMethod : IEquatable<global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod>
     {
         private readonly string _value;
         /// <summary> This option preserves the original full-precision vectors. Choose this option for maximum flexibility and highest quality of compressed search results. This consumes more storage but allows for rescoring and oversampling. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> This option discards the original full-precision vectors. Choose this option for maximum storage savings. Since this option does not allow for rescoring and oversampling, it will often cause slight to moderate reductions in quality. </summary>
         private const string DiscardOriginalsValue = "discardOriginals";
 
-        /// <summary> Initializes a new instance of <see cref="VectorSearchCompressionRescoreStorageMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorSearchCompressionRescoreStorageMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> This option discards the original full-precision vectors. Choose this option for maximum storage savings. Since this option does not allow for rescoring and oversampling, it will often cause slight to moderate reductions in quality. </summary>
         public static VectorSearchCompressionRescoreStorageMethod DiscardOriginals { get; } = new VectorSearchCompressionRescoreStorageMethod(DiscardOriginalsValue);
 
-        /// <summary> Determines if two <see cref="VectorSearchCompressionRescoreStorageMethod"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorSearchCompressionRescoreStorageMethod left, VectorSearchCompressionRescoreStorageMethod right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorSearchCompressionRescoreStorageMethod"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorSearchCompressionRescoreStorageMethod left, VectorSearchCompressionRescoreStorageMethod right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorSearchCompressionRescoreStorageMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorSearchCompressionRescoreStorageMethod(string value) => new VectorSearchCompressionRescoreStorageMethod(value);
 
-        /// <summary> Converts a string to a <see cref="VectorSearchCompressionRescoreStorageMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorSearchCompressionRescoreStorageMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorSearchCompressionRescoreStorageMethod?(string value) => value == null ? null : new VectorSearchCompressionRescoreStorageMethod(value);
+        public static implicit operator VectorSearchCompressionRescoreStorageMethod?(string value) => (value == null) ? null : new VectorSearchCompressionRescoreStorageMethod(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorSearchCompressionRescoreStorageMethod other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorSearchCompressionRescoreStorageMethod other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorSearchCompressionRescoreStorageMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorSearchCompressionRescoreStorageMethod other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

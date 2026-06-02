@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Text
     public partial class EntityActionResultWithMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityActionResultWithMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityActionResultWithMetadata"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal EntityActionResultWithMetadata(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<NamedEntityWithMetadata> entities)
+        internal EntityActionResultWithMetadata(string id, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings, IEnumerable<global::Azure.AI.Language.Text.NamedEntityWithMetadata> entities)
         {
             Id = id;
             Warnings = warnings.ToList();
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityActionResultWithMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.EntityActionResultWithMetadata"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityActionResultWithMetadata(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, IList<NamedEntityWithMetadata> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityActionResultWithMetadata(string id, IList<global::Azure.AI.Language.Text.DocumentWarning> warnings, DocumentStatistics statistics, IList<global::Azure.AI.Language.Text.NamedEntityWithMetadata> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -47,12 +47,12 @@ namespace Azure.AI.Language.Text
         public string Id { get; }
 
         /// <summary> Warnings encountered while processing document. </summary>
-        public IList<DocumentWarning> Warnings { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentWarning> Warnings { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
 
         /// <summary> Recognized entities in the document. </summary>
-        public IList<NamedEntityWithMetadata> Entities { get; }
+        public IList<global::Azure.AI.Language.Text.NamedEntityWithMetadata> Entities { get; }
     }
 }

@@ -14,16 +14,16 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEnumDef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEnumDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumDef"/>. </summary>
         public AtlasEnumDef()
         {
             Options = new ChangeTrackingDictionary<string, string>();
-            ElementDefs = new ChangeTrackingList<AtlasEnumElementDef>();
+            ElementDefs = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEnumDef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEnumDef"/>. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="createTime"> The created time of the record. </param>
         /// <param name="createdBy"> The user who created the record. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="defaultValue"> The default value. </param>
         /// <param name="elementDefs"> An array of enum element definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEnumDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, string defaultValue, IList<AtlasEnumElementDef> elementDefs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEnumDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, string defaultValue, IList<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef> elementDefs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             CreateTime = createTime;
@@ -108,6 +108,6 @@ namespace Azure.Analytics.Purview.DataMap
         public string DefaultValue { get; set; }
 
         /// <summary> An array of enum element definitions. </summary>
-        public IList<AtlasEnumElementDef> ElementDefs { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasEnumElementDef> ElementDefs { get; }
     }
 }

@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         internal ConversationError(ConversationErrorCode code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ConversationError>();
+            Details = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationError(ConversationErrorCode code, string message, string target, IList<ConversationError> details, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationError(ConversationErrorCode code, string message, string target, IList<global::Azure.AI.Language.Conversations.Models.ConversationError> details, InnerErrorModel innererror, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Models
         public string Target { get; }
 
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IList<ConversationError> Details { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationError> Details { get; }
 
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; }

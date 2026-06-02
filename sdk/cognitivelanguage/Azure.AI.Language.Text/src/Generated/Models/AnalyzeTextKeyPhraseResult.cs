@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the analyze text KeyPhraseExtraction task result. </summary>
     public partial class AnalyzeTextKeyPhraseResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult"/>. </summary>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        internal AnalyzeTextKeyPhraseResult(KeyPhraseResult results) : base(AnalyzeTextResultsKind.KeyPhraseExtractionResults)
+        internal AnalyzeTextKeyPhraseResult(KeyPhraseResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.KeyPhraseExtractionResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        internal AnalyzeTextKeyPhraseResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextKeyPhraseResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, KeyPhraseResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

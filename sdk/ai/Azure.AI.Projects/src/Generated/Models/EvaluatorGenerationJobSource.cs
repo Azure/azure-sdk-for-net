@@ -9,24 +9,24 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptEvaluatorGenerationJobSource"/>, <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="TracesEvaluatorGenerationJobSource"/>, and <see cref="DatasetEvaluatorGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.PromptEvaluatorGenerationJobSource"/>, <see cref="Azure.AI.Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Azure.AI.Projects.TracesEvaluatorGenerationJobSource"/>, and <see cref="Azure.AI.Projects.DatasetEvaluatorGenerationJobSource"/>.
     /// </summary>
     public abstract partial class EvaluatorGenerationJobSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         private protected EvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJobSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

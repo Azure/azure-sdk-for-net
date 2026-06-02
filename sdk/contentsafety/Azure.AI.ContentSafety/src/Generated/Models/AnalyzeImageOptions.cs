@@ -14,25 +14,25 @@ namespace Azure.AI.ContentSafety
     public partial class AnalyzeImageOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image to be analyzed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public AnalyzeImageOptions(ContentSafetyImageData image)
         {
-            Argument.AssertNotNull(image, nameof(image));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(image, nameof(image));
 
             Image = image;
-            Categories = new ChangeTrackingList<ImageCategory>();
+            Categories = new ChangeTrackingList<global::Azure.AI.ContentSafety.ImageCategory>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeImageOptions(ContentSafetyImageData image, IList<ImageCategory> categories, AnalyzeImageOutputType? outputType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeImageOptions(ContentSafetyImageData image, IList<global::Azure.AI.ContentSafety.ImageCategory> categories, AnalyzeImageOutputType? outputType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             Categories = categories;
@@ -44,7 +44,7 @@ namespace Azure.AI.ContentSafety
         public ContentSafetyImageData Image { get; }
 
         /// <summary> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </summary>
-        public IList<ImageCategory> Categories { get; }
+        public IList<global::Azure.AI.ContentSafety.ImageCategory> Categories { get; }
 
         /// <summary> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </summary>
         public AnalyzeImageOutputType? OutputType { get; set; }

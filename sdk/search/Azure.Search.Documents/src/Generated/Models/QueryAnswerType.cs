@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </summary>
-    public readonly partial struct QueryAnswerType : IEquatable<QueryAnswerType>
+    public readonly partial struct QueryAnswerType : IEquatable<global::Azure.Search.Documents.Models.QueryAnswerType>
     {
         private readonly string _value;
         /// <summary> Do not return answers for the query. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
         private const string ExtractiveValue = "extractive";
 
-        /// <summary> Initializes a new instance of <see cref="QueryAnswerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QueryAnswerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryAnswerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
         public static QueryAnswerType Extractive { get; } = new QueryAnswerType(ExtractiveValue);
 
-        /// <summary> Determines if two <see cref="QueryAnswerType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QueryAnswerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryAnswerType left, QueryAnswerType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="QueryAnswerType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QueryAnswerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryAnswerType left, QueryAnswerType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QueryAnswerType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator QueryAnswerType(string value) => new QueryAnswerType(value);
 
-        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QueryAnswerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QueryAnswerType?(string value) => value == null ? null : new QueryAnswerType(value);
+        public static implicit operator QueryAnswerType?(string value) => (value == null) ? null : new QueryAnswerType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QueryAnswerType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is QueryAnswerType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(QueryAnswerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueryAnswerType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

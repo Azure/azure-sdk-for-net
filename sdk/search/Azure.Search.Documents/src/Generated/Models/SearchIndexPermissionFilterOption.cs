@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
-    public readonly partial struct SearchIndexPermissionFilterOption : IEquatable<SearchIndexPermissionFilterOption>
+    public readonly partial struct SearchIndexPermissionFilterOption : IEquatable<global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption>
     {
         private readonly string _value;
         /// <summary> Permission filtering is enabled for the index. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Permission filtering is disabled for the index. </summary>
         private const string DisabledValue = "disabled";
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchIndexPermissionFilterOption(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Permission filtering is disabled for the index. </summary>
         public static SearchIndexPermissionFilterOption Disabled { get; } = new SearchIndexPermissionFilterOption(DisabledValue);
 
-        /// <summary> Determines if two <see cref="SearchIndexPermissionFilterOption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchIndexPermissionFilterOption left, SearchIndexPermissionFilterOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SearchIndexPermissionFilterOption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchIndexPermissionFilterOption left, SearchIndexPermissionFilterOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SearchIndexPermissionFilterOption(string value) => new SearchIndexPermissionFilterOption(value);
 
-        /// <summary> Converts a string to a <see cref="SearchIndexPermissionFilterOption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndexPermissionFilterOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SearchIndexPermissionFilterOption?(string value) => value == null ? null : new SearchIndexPermissionFilterOption(value);
+        public static implicit operator SearchIndexPermissionFilterOption?(string value) => (value == null) ? null : new SearchIndexPermissionFilterOption(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SearchIndexPermissionFilterOption other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SearchIndexPermissionFilterOption other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SearchIndexPermissionFilterOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SearchIndexPermissionFilterOption other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

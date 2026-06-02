@@ -15,22 +15,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageDelta
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDelta"/>. </summary>
         /// <param name="role"> The entity that produced the message. </param>
         /// <param name="content"> The content of the message as an array of text and/or images. </param>
-        internal MessageDelta(MessageRole role, IEnumerable<MessageDeltaContent> content)
+        internal MessageDelta(MessageRole role, IEnumerable<global::Azure.AI.Agents.Persistent.MessageDeltaContent> content)
         {
             Role = role;
             Content = content.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDelta"/>. </summary>
         /// <param name="role"> The entity that produced the message. </param>
         /// <param name="content"> The content of the message as an array of text and/or images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDelta(MessageRole role, IReadOnlyList<MessageDeltaContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDelta(MessageRole role, IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageDeltaContent> content, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -41,6 +41,6 @@ namespace Azure.AI.Agents.Persistent
         public MessageRole Role { get; }
 
         /// <summary> The content of the message as an array of text and/or images. </summary>
-        public IReadOnlyList<MessageDeltaContent> Content { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageDeltaContent> Content { get; }
     }
 }

@@ -14,12 +14,12 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.AgeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.VolumeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.SpeedResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.AreaResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.LengthResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.InformationResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.TemperatureResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.WeightResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.CurrencyResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.BooleanResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.DateTimeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.NumberResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.OrdinalResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.TemporalSpanResolution"/>, and <see cref="Azure.AI.Language.Conversations.Models.NumericRangeResolution"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownResolutionBase))]
-    public abstract partial class ResolutionBase : IJsonModel<ResolutionBase>
+    [PersistableModelProxyAttribute(typeof(UnknownResolutionBase))]
+    public abstract partial class ResolutionBase : IJsonModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>
     {
-        /// <summary> Initializes a new instance of <see cref="ResolutionBase"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ResolutionBase"/> for deserialization. </summary>
         internal ResolutionBase()
         {
         }
@@ -28,48 +28,48 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Conversations.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResolutionBase(document.RootElement, options);
+                        return global::Azure.AI.Language.Conversations.Models.ResolutionBase.DeserializeResolutionBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResolutionBase)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ResolutionBase)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Conversations.AzureAILanguageConversationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResolutionBase)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ResolutionBase)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResolutionBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResolutionBase IPersistableModel<ResolutionBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResolutionBase IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResolutionBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResolutionBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -77,14 +77,14 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResolutionBase)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ResolutionBase)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -92,9 +92,9 @@ namespace Azure.AI.Language.Conversations.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -103,26 +103,26 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResolutionBase IJsonModel<ResolutionBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResolutionBase IJsonModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResolutionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Conversations.Models.ResolutionBase>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResolutionBase)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Conversations.Models.ResolutionBase)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResolutionBase(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Conversations.Models.ResolutionBase.DeserializeResolutionBase(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResolutionBase DeserializeResolutionBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -131,38 +131,38 @@ namespace Azure.AI.Language.Conversations.Models
                 switch (discriminator.GetString())
                 {
                     case "AgeResolution":
-                        return AgeResolution.DeserializeAgeResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.AgeResolution.DeserializeAgeResolution(element, options);
                     case "VolumeResolution":
-                        return VolumeResolution.DeserializeVolumeResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.VolumeResolution.DeserializeVolumeResolution(element, options);
                     case "SpeedResolution":
-                        return SpeedResolution.DeserializeSpeedResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.SpeedResolution.DeserializeSpeedResolution(element, options);
                     case "AreaResolution":
-                        return AreaResolution.DeserializeAreaResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.AreaResolution.DeserializeAreaResolution(element, options);
                     case "LengthResolution":
-                        return LengthResolution.DeserializeLengthResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.LengthResolution.DeserializeLengthResolution(element, options);
                     case "InformationResolution":
-                        return InformationResolution.DeserializeInformationResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.InformationResolution.DeserializeInformationResolution(element, options);
                     case "TemperatureResolution":
-                        return TemperatureResolution.DeserializeTemperatureResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.TemperatureResolution.DeserializeTemperatureResolution(element, options);
                     case "WeightResolution":
-                        return WeightResolution.DeserializeWeightResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.WeightResolution.DeserializeWeightResolution(element, options);
                     case "CurrencyResolution":
-                        return CurrencyResolution.DeserializeCurrencyResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.CurrencyResolution.DeserializeCurrencyResolution(element, options);
                     case "BooleanResolution":
-                        return BooleanResolution.DeserializeBooleanResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.BooleanResolution.DeserializeBooleanResolution(element, options);
                     case "DateTimeResolution":
-                        return DateTimeResolution.DeserializeDateTimeResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.DateTimeResolution.DeserializeDateTimeResolution(element, options);
                     case "NumberResolution":
-                        return NumberResolution.DeserializeNumberResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.NumberResolution.DeserializeNumberResolution(element, options);
                     case "OrdinalResolution":
-                        return OrdinalResolution.DeserializeOrdinalResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.OrdinalResolution.DeserializeOrdinalResolution(element, options);
                     case "TemporalSpanResolution":
-                        return TemporalSpanResolution.DeserializeTemporalSpanResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.TemporalSpanResolution.DeserializeTemporalSpanResolution(element, options);
                     case "NumericRangeResolution":
-                        return NumericRangeResolution.DeserializeNumericRangeResolution(element, options);
+                        return global::Azure.AI.Language.Conversations.Models.NumericRangeResolution.DeserializeNumericRangeResolution(element, options);
                 }
             }
-            return UnknownResolutionBase.DeserializeUnknownResolutionBase(element, options);
+            return global::Azure.AI.Language.Conversations.Models.UnknownResolutionBase.DeserializeUnknownResolutionBase(element, options);
         }
     }
 }

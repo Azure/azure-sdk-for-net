@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Models
     public partial class DocumentDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.DocumentDebugInfo"/>. </summary>
         internal DocumentDebugInfo()
         {
-            InnerHits = new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>();
+            InnerHits = new ChangeTrackingDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.QueryResultDocumentInnerHit>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.DocumentDebugInfo"/>. </summary>
         /// <param name="semantic"> Contains debugging information specific to semantic ranking requests. </param>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         /// <param name="innerHits"> Contains debugging information specific to vectors matched within a collection of complex types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors, IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.QueryResultDocumentInnerHit>> innerHits, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Semantic = semantic;
             Vectors = vectors;
@@ -43,6 +43,6 @@ namespace Azure.Search.Documents.Models
         public VectorsDebugInfo Vectors { get; }
 
         /// <summary> Contains debugging information specific to vectors matched within a collection of complex types. </summary>
-        public IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> InnerHits { get; }
+        public IReadOnlyDictionary<string, global::System.Collections.Generic.IList<global::Azure.Search.Documents.Models.QueryResultDocumentInnerHit>> InnerHits { get; }
     }
 }

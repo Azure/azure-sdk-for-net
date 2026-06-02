@@ -15,19 +15,19 @@ namespace Azure.Search.Documents.Models
     public partial class AutocompleteResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutocompleteResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.AutocompleteResults"/>. </summary>
         internal AutocompleteResults()
         {
-            Results = new ChangeTrackingList<AutocompleteItem>();
+            Results = new ChangeTrackingList<global::Azure.Search.Documents.Models.AutocompleteItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutocompleteResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.AutocompleteResults"/>. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutocompleteResults(double? coverage, IReadOnlyList<AutocompleteItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutocompleteResults(double? coverage, IReadOnlyList<global::Azure.Search.Documents.Models.AutocompleteItem> results, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Coverage = coverage;
             Results = results;
@@ -38,6 +38,6 @@ namespace Azure.Search.Documents.Models
         public double? Coverage { get; }
 
         /// <summary> The list of returned Autocompleted items. </summary>
-        public IReadOnlyList<AutocompleteItem> Results { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Models.AutocompleteItem> Results { get; }
     }
 }

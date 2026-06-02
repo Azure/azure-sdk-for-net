@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsesToolSearchExecutionType value) => value switch
         {
-            ResponsesToolSearchExecutionType.Server => "server",
-            ResponsesToolSearchExecutionType.Client => "client",
+            global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server => "server",
+            global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Client => "client",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesToolSearchExecutionType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsesToolSearchExecutionType ToResponsesToolSearchExecutionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "server"))
             {
-                return ResponsesToolSearchExecutionType.Server;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "client"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "client"))
             {
-                return ResponsesToolSearchExecutionType.Client;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Client;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesToolSearchExecutionType value.");
         }

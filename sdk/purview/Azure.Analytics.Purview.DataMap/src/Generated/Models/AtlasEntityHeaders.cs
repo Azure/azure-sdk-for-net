@@ -14,24 +14,24 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntityHeaders
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityHeaders"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeaders"/>. </summary>
         public AtlasEntityHeaders()
         {
-            GuidHeaderMap = new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+            GuidHeaderMap = new ChangeTrackingDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityHeaders"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeaders"/>. </summary>
         /// <param name="guidHeaderMap"> The description of the guid header map,. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityHeaders(IDictionary<string, AtlasEntityHeader> guidHeaderMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntityHeaders(IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> guidHeaderMap, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             GuidHeaderMap = guidHeaderMap;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of the guid header map,. </summary>
-        public IDictionary<string, AtlasEntityHeader> GuidHeaderMap { get; }
+        public IDictionary<string, global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GuidHeaderMap { get; }
     }
 }

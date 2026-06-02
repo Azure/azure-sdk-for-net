@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The power states of a Dev Box. </summary>
-    public readonly partial struct PowerState : IEquatable<PowerState>
+    public readonly partial struct PowerState : IEquatable<global::Azure.Developer.DevCenter.Models.PowerState>
     {
         private readonly string _value;
         /// <summary> The Dev Box power state is not known. </summary>
@@ -26,12 +26,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The Dev Box is hibernated. </summary>
         private const string HibernatedValue = "Hibernated";
 
-        /// <summary> Initializes a new instance of <see cref="PowerState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.PowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PowerState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -51,34 +51,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The Dev Box is hibernated. </summary>
         public static PowerState Hibernated { get; } = new PowerState(HibernatedValue);
 
-        /// <summary> Determines if two <see cref="PowerState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.PowerState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PowerState left, PowerState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PowerState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.PowerState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PowerState left, PowerState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PowerState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.PowerState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PowerState(string value) => new PowerState(value);
 
-        /// <summary> Converts a string to a <see cref="PowerState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.PowerState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PowerState?(string value) => value == null ? null : new PowerState(value);
+        public static implicit operator PowerState?(string value) => (value == null) ? null : new PowerState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PowerState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PowerState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PowerState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

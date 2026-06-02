@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Communication cloud environment model. </summary>
-    public readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<CommunicationCloudEnvironmentModel>
+    public readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel>
     {
         private readonly string _value;
         /// <summary> Public. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Gcch. </summary>
         private const string GcchValue = "gcch";
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunicationCloudEnvironmentModel(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Gcch. </summary>
         public static CommunicationCloudEnvironmentModel Gcch { get; } = new CommunicationCloudEnvironmentModel(GcchValue);
 
-        /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator CommunicationCloudEnvironmentModel(string value) => new CommunicationCloudEnvironmentModel(value);
 
-        /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunicationCloudEnvironmentModel?(string value) => value == null ? null : new CommunicationCloudEnvironmentModel(value);
+        public static implicit operator CommunicationCloudEnvironmentModel?(string value) => (value == null) ? null : new CommunicationCloudEnvironmentModel(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CommunicationCloudEnvironmentModel other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is CommunicationCloudEnvironmentModel other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(CommunicationCloudEnvironmentModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommunicationCloudEnvironmentModel other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

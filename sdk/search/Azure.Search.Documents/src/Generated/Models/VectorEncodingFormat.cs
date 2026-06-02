@@ -12,18 +12,18 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The encoding format for interpreting vector field contents. </summary>
-    public readonly partial struct VectorEncodingFormat : IEquatable<VectorEncodingFormat>
+    public readonly partial struct VectorEncodingFormat : IEquatable<global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat>
     {
         private readonly string _value;
         /// <summary> Encoding format representing bits packed into a wider data type. </summary>
         private const string PackedBitValue = "packedBit";
 
-        /// <summary> Initializes a new instance of <see cref="VectorEncodingFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorEncodingFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -31,34 +31,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Encoding format representing bits packed into a wider data type. </summary>
         public static VectorEncodingFormat PackedBit { get; } = new VectorEncodingFormat(PackedBitValue);
 
-        /// <summary> Determines if two <see cref="VectorEncodingFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorEncodingFormat left, VectorEncodingFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorEncodingFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorEncodingFormat left, VectorEncodingFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorEncodingFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorEncodingFormat(string value) => new VectorEncodingFormat(value);
 
-        /// <summary> Converts a string to a <see cref="VectorEncodingFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.VectorEncodingFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorEncodingFormat?(string value) => value == null ? null : new VectorEncodingFormat(value);
+        public static implicit operator VectorEncodingFormat?(string value) => (value == null) ? null : new VectorEncodingFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorEncodingFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorEncodingFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorEncodingFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorEncodingFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

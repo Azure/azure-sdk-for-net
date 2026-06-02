@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemFunctionToolCallStatus value) => value switch
         {
-            InputItemFunctionToolCallStatus.InProgress => "in_progress",
-            InputItemFunctionToolCallStatus.Completed => "completed",
-            InputItemFunctionToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemFunctionToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemFunctionToolCallStatus ToInputItemFunctionToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemFunctionToolCallStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemFunctionToolCallStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return InputItemFunctionToolCallStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.InputItemFunctionToolCallStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemFunctionToolCallStatus value.");
         }

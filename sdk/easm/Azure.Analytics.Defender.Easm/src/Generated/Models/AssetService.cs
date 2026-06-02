@@ -14,19 +14,19 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AssetService
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetService"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetService"/>. </summary>
         internal AssetService()
         {
-            WebComponents = new ChangeTrackingList<WebComponent>();
-            SslCerts = new ChangeTrackingList<SslCertAsset>();
-            Exceptions = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            PortStates = new ChangeTrackingList<ObservedPortState>();
+            WebComponents = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>();
+            SslCerts = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
+            Exceptions = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>();
+            Sources = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>();
+            PortStates = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedPortState>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetService"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AssetService"/>. </summary>
         /// <param name="scheme"></param>
         /// <param name="port"></param>
         /// <param name="webComponents"></param>
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recent"></param>
         /// <param name="portStates"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetService(string scheme, int? port, IList<WebComponent> webComponents, IList<SslCertAsset> sslCerts, IList<ObservedString> exceptions, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IList<ObservedPortState> portStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetService(string scheme, int? port, IList<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents, IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts, IList<global::Azure.Analytics.Defender.Easm.ObservedString> exceptions, IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IList<global::Azure.Analytics.Defender.Easm.ObservedPortState> portStates, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scheme = scheme;
             Port = port;
@@ -62,16 +62,16 @@ namespace Azure.Analytics.Defender.Easm
         public int? Port { get; }
 
         /// <summary> Gets the WebComponents. </summary>
-        public IList<WebComponent> WebComponents { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get; }
 
         /// <summary> Gets the SslCerts. </summary>
-        public IList<SslCertAsset> SslCerts { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> SslCerts { get; }
 
         /// <summary> Gets the Exceptions. </summary>
-        public IList<ObservedString> Exceptions { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedString> Exceptions { get; }
 
         /// <summary> Gets the Sources. </summary>
-        public IList<SourceDetails> Sources { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.SourceDetails> Sources { get; }
 
         /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
@@ -86,6 +86,6 @@ namespace Azure.Analytics.Defender.Easm
         public bool? Recent { get; }
 
         /// <summary> Gets the PortStates. </summary>
-        public IList<ObservedPortState> PortStates { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservedPortState> PortStates { get; }
     }
 }

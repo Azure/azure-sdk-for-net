@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
     public partial class TemporalSpanValues
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanValues"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSpanValues"/>. </summary>
         internal TemporalSpanValues()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemporalSpanValues"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSpanValues"/>. </summary>
         /// <param name="begin"> Start value for the span. </param>
         /// <param name="end"> End value for the span. </param>
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TemporalSpanValues(string begin, string end, string duration, TemporalModifier? modifier, string timex, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TemporalSpanValues(string begin, string end, string duration, TemporalModifier? modifier, string timex, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Begin = begin;
             End = end;

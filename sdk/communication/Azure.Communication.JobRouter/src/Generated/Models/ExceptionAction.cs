@@ -12,25 +12,25 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// The action to take when the exception is triggered.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CancelExceptionAction"/>, <see cref="ManualReclassifyExceptionAction"/>, and <see cref="ReclassifyExceptionAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Communication.JobRouter.CancelExceptionAction"/>, <see cref="Azure.Communication.JobRouter.ManualReclassifyExceptionAction"/>, and <see cref="Azure.Communication.JobRouter.ReclassifyExceptionAction"/>.
     /// </summary>
     public abstract partial class ExceptionAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionAction"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         private protected ExceptionAction(ExceptionActionKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExceptionAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;

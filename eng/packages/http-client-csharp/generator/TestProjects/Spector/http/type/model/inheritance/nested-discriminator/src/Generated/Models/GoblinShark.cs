@@ -14,6 +14,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
     {
         public GoblinShark(int age) : base(age, "goblin") => throw null;
 
-        internal GoblinShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties, sharktype) => throw null;
+        internal GoblinShark(string kind, int age, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties, sharktype) => throw null;
     }
 }

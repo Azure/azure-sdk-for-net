@@ -14,61 +14,61 @@ using Azure;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Load test run model. </summary>
-    public partial class LoadTestRun : IJsonModel<LoadTestRun>
+    public partial class LoadTestRun : IJsonModel<global::Azure.Developer.LoadTesting.LoadTestRun>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LoadTestRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLoadTestRun(document.RootElement, options);
+                        return global::Azure.Developer.LoadTesting.LoadTestRun.DeserializeLoadTestRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestRun)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestRun)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestRun)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestRun)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestRun IPersistableModel<LoadTestRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LoadTestRun IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestRun"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.LoadTesting.LoadTestRun"/> from. </param>
         public static explicit operator LoadTestRun(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestRun(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.LoadTesting.LoadTestRun.DeserializeLoadTestRun(document.RootElement, global::Azure.Developer.LoadTesting.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoadTestRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.LoadTesting.LoadTestRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,50 +76,50 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LoadTestRun)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestRun)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("testRunId"u8);
                 writer.WriteStringValue(TestRunId);
             }
-            if (Optional.IsDefined(PassFailCriteria))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(PassFailCriteria))
             {
                 writer.WritePropertyName("passFailCriteria"u8);
-                writer.WriteObjectValue(PassFailCriteria, options);
+                writer.WriteObjectValue<PassFailCriteria>(PassFailCriteria, options);
             }
-            if (Optional.IsDefined(AutoStopCriteria))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(AutoStopCriteria))
             {
                 writer.WritePropertyName("autoStopCriteria"u8);
-                writer.WriteObjectValue(AutoStopCriteria, options);
+                writer.WriteObjectValue<AutoStopCriteria>(AutoStopCriteria, options);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartObject();
                 foreach (var item in Secrets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<TestSecret>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Certificate))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
+                writer.WriteObjectValue<TestCertificate>(Certificate, options);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -128,179 +128,179 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(ErrorDetails)))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
                 foreach (ErrorDetails item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TestRunStatistics))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(TestRunStatistics)))
             {
                 writer.WritePropertyName("testRunStatistics"u8);
                 writer.WriteStartObject();
                 foreach (var item in TestRunStatistics)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<TestRunStatistics>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RegionalStatistics))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsCollectionDefined(RegionalStatistics)))
             {
                 writer.WritePropertyName("regionalStatistics"u8);
                 writer.WriteStartObject();
                 foreach (var item in RegionalStatistics)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<TestRunStatistics>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadTestConfiguration))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(LoadTestConfiguration)))
             {
                 writer.WritePropertyName("loadTestConfiguration"u8);
-                writer.WriteObjectValue(LoadTestConfiguration, options);
+                writer.WriteObjectValue<LoadTestConfiguration>(LoadTestConfiguration, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestArtifacts))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(TestArtifacts)))
             {
                 writer.WritePropertyName("testArtifacts"u8);
-                writer.WriteObjectValue(TestArtifacts, options);
+                writer.WriteObjectValue<TestRunArtifacts>(TestArtifacts, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestResult))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(TestResult)))
             {
                 writer.WritePropertyName("testResult"u8);
                 writer.WriteStringValue(TestResult.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualUsers))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(VirtualUsers)))
             {
                 writer.WritePropertyName("virtualUsers"u8);
                 writer.WriteNumberValue(VirtualUsers.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(TestId))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(TestId))
             {
                 writer.WritePropertyName("testId"u8);
                 writer.WriteStringValue(TestId);
             }
-            if (Optional.IsDefined(Description))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Status)))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(StartDateTime)))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(EndDateTime)))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutedDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ExecutedDateTime)))
             {
                 writer.WritePropertyName("executedDateTime"u8);
                 writer.WriteStringValue(ExecutedDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PortalUri))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(PortalUri)))
             {
                 writer.WritePropertyName("portalUrl"u8);
                 writer.WriteStringValue(PortalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Duration))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Duration)))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Duration.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualUserHours))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(VirtualUserHours)))
             {
                 writer.WritePropertyName("virtualUserHours"u8);
                 writer.WriteNumberValue(VirtualUserHours.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(SubnetId)))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(Kind)))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(RequestDataLevel))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(RequestDataLevel))
             {
                 writer.WritePropertyName("requestDataLevel"u8);
                 writer.WriteStringValue(RequestDataLevel.Value.ToString());
             }
-            if (Optional.IsDefined(DebugLogsEnabled))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(DebugLogsEnabled))
             {
                 writer.WritePropertyName("debugLogsEnabled"u8);
                 writer.WriteBooleanValue(DebugLogsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpDisabled))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(PublicIpDisabled)))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
                 writer.WriteBooleanValue(PublicIpDisabled.Value);
             }
-            if (Optional.IsDefined(CreatedByType))
+            if (global::Azure.Developer.LoadTesting.Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByUri))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(CreatedByUri)))
             {
                 writer.WritePropertyName("createdByUri"u8);
                 writer.WriteStringValue(CreatedByUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedVirtualUserHours))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(EstimatedVirtualUserHours)))
             {
                 writer.WritePropertyName("estimatedVirtualUserHours"u8);
                 writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ExecutionStartDateTime)))
             {
                 writer.WritePropertyName("executionStartDateTime"u8);
                 writer.WriteStringValue(ExecutionStartDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(ExecutionEndDateTime)))
             {
                 writer.WritePropertyName("executionEndDateTime"u8);
                 writer.WriteStringValue(ExecutionEndDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(CreatedDateTime)))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(CreatedBy)))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(LastModifiedDateTime)))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedDateTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (((options.Format != "W") && global::Azure.Developer.LoadTesting.Optional.IsDefined(LastModifiedBy)))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -308,9 +308,9 @@ namespace Azure.Developer.LoadTesting
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -319,38 +319,38 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestRun IJsonModel<LoadTestRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LoadTestRun IJsonModel<global::Azure.Developer.LoadTesting.LoadTestRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LoadTestRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.LoadTesting.LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LoadTestRun)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.LoadTesting.LoadTestRun)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoadTestRun(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.LoadTesting.LoadTestRun.DeserializeLoadTestRun(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LoadTestRun DeserializeLoadTestRun(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string testRunId = default;
             PassFailCriteria passFailCriteria = default;
             AutoStopCriteria autoStopCriteria = default;
-            IDictionary<string, TestSecret> secrets = default;
+            IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> secrets = default;
             TestCertificate certificate = default;
             IDictionary<string, string> environmentVariables = default;
-            IReadOnlyList<ErrorDetails> errorDetails = default;
-            IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default;
-            IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default;
+            IReadOnlyList<global::Azure.Developer.LoadTesting.ErrorDetails> errorDetails = default;
+            IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = default;
+            IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = default;
             LoadTestConfiguration loadTestConfiguration = default;
             TestRunArtifacts testArtifacts = default;
             PassFailTestResult? testResult = default;
@@ -362,7 +362,7 @@ namespace Azure.Developer.LoadTesting
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? endDateTime = default;
             DateTimeOffset? executedDateTime = default;
-            Uri portalUri = default;
+            global::System.Uri portalUri = default;
             long? duration = default;
             double? virtualUserHours = default;
             string subnetId = default;
@@ -371,7 +371,7 @@ namespace Azure.Developer.LoadTesting
             bool? debugLogsEnabled = default;
             bool? publicIpDisabled = default;
             CreatedByType? createdByType = default;
-            Uri createdByUri = default;
+            global::System.Uri createdByUri = default;
             double? estimatedVirtualUserHours = default;
             DateTimeOffset? executionStartDateTime = default;
             DateTimeOffset? executionEndDateTime = default;
@@ -379,7 +379,7 @@ namespace Azure.Developer.LoadTesting
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
             string lastModifiedBy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("testRunId"u8))
@@ -389,55 +389,55 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("passFailCriteria"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(prop.Value, options);
+                    passFailCriteria = global::Azure.Developer.LoadTesting.PassFailCriteria.DeserializePassFailCriteria(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("autoStopCriteria"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    autoStopCriteria = AutoStopCriteria.DeserializeAutoStopCriteria(prop.Value, options);
+                    autoStopCriteria = global::Azure.Developer.LoadTesting.AutoStopCriteria.DeserializeAutoStopCriteria(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("secrets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, TestSecret> dictionary = new Dictionary<string, TestSecret>();
+                    Dictionary<string, global::Azure.Developer.LoadTesting.TestSecret> dictionary = new Dictionary<string, global::Azure.Developer.LoadTesting.TestSecret>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, TestSecret.DeserializeTestSecret(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Developer.LoadTesting.TestSecret.DeserializeTestSecret(prop0.Value, options));
                     }
                     secrets = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("certificate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    certificate = TestCertificate.DeserializeTestCertificate(prop.Value, options);
+                    certificate = global::Azure.Developer.LoadTesting.TestCertificate.DeserializeTestCertificate(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("environmentVariables"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -451,67 +451,67 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("errorDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<global::Azure.Developer.LoadTesting.ErrorDetails> array = new List<global::Azure.Developer.LoadTesting.ErrorDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LoadTesting.ErrorDetails.DeserializeErrorDetails(item, options));
+                        array.Add(global::Azure.Developer.LoadTesting.ErrorDetails.DeserializeErrorDetails(item, options));
                     }
                     errorDetails = array;
                     continue;
                 }
                 if (prop.NameEquals("testRunStatistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
+                    Dictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> dictionary = new Dictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Developer.LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     testRunStatistics = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("regionalStatistics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
+                    Dictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics> dictionary = new Dictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
+                        dictionary.Add(prop0.Name, global::Azure.Developer.LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     regionalStatistics = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("loadTestConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(prop.Value, options);
+                    loadTestConfiguration = global::Azure.Developer.LoadTesting.LoadTestConfiguration.DeserializeLoadTestConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("testArtifacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    testArtifacts = TestRunArtifacts.DeserializeTestRunArtifacts(prop.Value, options);
+                    testArtifacts = global::Azure.Developer.LoadTesting.TestRunArtifacts.DeserializeTestRunArtifacts(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("testResult"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -520,7 +520,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("virtualUsers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -544,7 +544,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -553,7 +553,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("startDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -562,7 +562,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("endDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -571,7 +571,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("executedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -580,16 +580,16 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("portalUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    portalUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    portalUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -598,7 +598,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("virtualUserHours"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -612,7 +612,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -621,7 +621,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("requestDataLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -630,7 +630,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("debugLogsEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -639,7 +639,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("publicIPDisabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -648,7 +648,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("createdByType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -657,16 +657,16 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("createdByUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    createdByUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    createdByUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("estimatedVirtualUserHours"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -675,7 +675,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("executionStartDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -684,7 +684,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("executionEndDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -693,7 +693,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -707,7 +707,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -719,21 +719,21 @@ namespace Azure.Developer.LoadTesting
                     lastModifiedBy = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LoadTestRun(
                 testRunId,
                 passFailCriteria,
                 autoStopCriteria,
-                secrets ?? new ChangeTrackingDictionary<string, TestSecret>(),
+                (secrets ?? new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestSecret>()),
                 certificate,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                errorDetails ?? new ChangeTrackingList<ErrorDetails>(),
-                testRunStatistics ?? new ChangeTrackingDictionary<string, TestRunStatistics>(),
-                regionalStatistics ?? new ChangeTrackingDictionary<string, TestRunStatistics>(),
+                (environmentVariables ?? new ChangeTrackingDictionary<string, string>()),
+                (errorDetails ?? new ChangeTrackingList<global::Azure.Developer.LoadTesting.ErrorDetails>()),
+                (testRunStatistics ?? new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>()),
+                (regionalStatistics ?? new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunStatistics>()),
                 loadTestConfiguration,
                 testArtifacts,
                 testResult,

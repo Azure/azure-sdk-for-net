@@ -14,18 +14,18 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentTypeDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTypeDetails"/>. </summary>
         public DocumentTypeDetails()
         {
-            FieldSchema = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
+            FieldSchema = new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema>();
             FieldConfidence = new ChangeTrackingDictionary<string, float>();
-            Features = new ChangeTrackingList<DocumentAnalysisFeature>();
+            Features = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature>();
             QueryFields = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentTypeDetails"/>. </summary>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="maxDocumentsToAnalyze"> Maximum number of documents of specified type to analyze.  Default=all. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IDictionary<string, DocumentFieldSchema> fieldSchema, IDictionary<string, float> fieldConfidence, string modelId, float? confidenceThreshold, IList<DocumentAnalysisFeature> features, IList<string> queryFields, int? maxDocumentsToAnalyze, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> fieldSchema, IDictionary<string, float> fieldConfidence, string modelId, float? confidenceThreshold, IList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features, IList<string> queryFields, int? maxDocumentsToAnalyze, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             BuildMode = buildMode;
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentBuildMode? BuildMode { get; set; }
 
         /// <summary> Description of the document semantic schema using a JSON Schema style syntax. </summary>
-        public IDictionary<string, DocumentFieldSchema> FieldSchema { get; }
+        public IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> FieldSchema { get; }
 
         /// <summary> Estimated confidence for each field. </summary>
         public IDictionary<string, float> FieldConfidence { get; }
@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence
         public float? ConfidenceThreshold { get; set; }
 
         /// <summary> List of optional analysis features. </summary>
-        public IList<DocumentAnalysisFeature> Features { get; }
+        public IList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> Features { get; }
 
         /// <summary> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </summary>
         public IList<string> QueryFields { get; }

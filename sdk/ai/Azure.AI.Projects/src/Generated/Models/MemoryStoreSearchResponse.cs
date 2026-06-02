@@ -12,25 +12,25 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryStoreSearchResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreSearchResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreSearchResponse"/>. </summary>
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
         /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
-        internal MemoryStoreSearchResponse(string searchId, IEnumerable<MemorySearchItem> memories, MemoryStoreOperationUsage usage)
+        internal MemoryStoreSearchResponse(string searchId, IEnumerable<global::Azure.AI.Projects.Memory.MemorySearchItem> memories, MemoryStoreOperationUsage usage)
         {
             SearchId = searchId;
             Memories = memories.ToList();
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreSearchResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreSearchResponse"/>. </summary>
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
         /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreSearchResponse(string searchId, IList<MemorySearchItem> memories, MemoryStoreOperationUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreSearchResponse(string searchId, IList<global::Azure.AI.Projects.Memory.MemorySearchItem> memories, MemoryStoreOperationUsage usage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchId = searchId;
             Memories = memories;
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Memory
         public string SearchId { get; }
 
         /// <summary> Related memory items found during the search operation. </summary>
-        public IList<MemorySearchItem> Memories { get; }
+        public IList<global::Azure.AI.Projects.Memory.MemorySearchItem> Memories { get; }
 
         /// <summary> Usage statistics associated with the memory search operation. </summary>
         public MemoryStoreOperationUsage Usage { get; }

@@ -13,16 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnding event. </summary>
     public partial class ContainerServiceClusterSupportEndingEventData : ContainerServiceClusterSupportEventData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion) : base(kubernetesVersion)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kubernetesVersion, additionalBinaryDataProperties)
+        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kubernetesVersion, additionalBinaryDataProperties)
         {
         }
     }

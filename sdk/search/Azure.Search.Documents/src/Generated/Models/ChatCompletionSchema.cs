@@ -15,21 +15,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ChatCompletionSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSchema"/>. </summary>
         public ChatCompletionSchema()
         {
             Required = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSchema"/>. </summary>
         /// <param name="type"> Type of schema representation. Usually 'object'. Default is 'object'. </param>
         /// <param name="properties"> A JSON-formatted string that defines the output schema's properties and constraints for the model. </param>
         /// <param name="required"> An array of the property names that are required to be part of the model's response. All properties must be included for structured outputs. </param>
         /// <param name="additionalProperties"> Controls whether it is allowable for an object to contain additional keys / values that were not defined in the JSON Schema. Default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionSchema(string @type, string properties, IList<string> @required, bool? additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatCompletionSchema(string @type, string properties, IList<string> @required, bool? additionalProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Properties = properties;

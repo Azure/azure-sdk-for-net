@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ToolChoiceAllowedMode value) => value switch
         {
-            ToolChoiceAllowedMode.Auto => "auto",
-            ToolChoiceAllowedMode.Required => "required",
+            global::Azure.AI.Extensions.OpenAI.ToolChoiceAllowedMode.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ToolChoiceAllowedMode.Required => "required",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolChoiceAllowedMode value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ToolChoiceAllowedMode ToToolChoiceAllowedMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ToolChoiceAllowedMode.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ToolChoiceAllowedMode.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "required"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "required"))
             {
-                return ToolChoiceAllowedMode.Required;
+                return global::Azure.AI.Extensions.OpenAI.ToolChoiceAllowedMode.Required;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolChoiceAllowedMode value.");
         }

@@ -10,21 +10,21 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalInputFileContentParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputFileContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputFileContentParam"/>. </summary>
         public InternalInputFileContentParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputFileContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalInputFileContentParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_file`. </param>
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
         /// <param name="fileUrl"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputFileContentParam(string @type, string fileId, string filename, string fileData, global::System.Uri fileUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;
@@ -47,6 +47,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string FileData { get; set; }
 
         /// <summary> Gets or sets the FileUrl. </summary>
-        public Uri FileUrl { get; set; }
+        public global::System.Uri FileUrl { get; set; }
     }
 }

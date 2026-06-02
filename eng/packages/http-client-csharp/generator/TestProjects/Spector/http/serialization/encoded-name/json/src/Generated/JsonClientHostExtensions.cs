@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Serialization.EncodedName.Json
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class JsonClientHostExtensions
     {
         public static IClientBuilder AddJsonClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddJsonClient(this IHostApplicationBuilder host, string sectionName, Action<JsonClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddJsonClient(this IHostApplicationBuilder host, string sectionName, Action<global::Serialization.EncodedName.Json.JsonClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedJsonClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedJsonClient(this IHostApplicationBuilder host, string key, string sectionName, Action<JsonClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedJsonClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Serialization.EncodedName.Json.JsonClientSettings> configureSettings) => throw null;
     }
 }

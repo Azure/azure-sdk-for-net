@@ -15,18 +15,18 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentStyle
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentStyle"/>. </summary>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        internal DocumentStyle(IEnumerable<DocumentSpan> spans, float confidence)
+        internal DocumentStyle(IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float confidence)
         {
             Spans = spans.ToList();
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentStyle"/>. </summary>
         /// <param name="isHandwritten"> Is content handwritten?. </param>
         /// <param name="similarFontFamily">
         /// Visually most similar font from among the set of supported font families, with
@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
         public string BackgroundColor { get; }
 
         /// <summary> Location of the text elements in the concatenated content the style applies to. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Confidence of correctly identifying the style. </summary>
         public float Confidence { get; }

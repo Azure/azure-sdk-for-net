@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceCounters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KnowledgeSourceCounter = knowledgeSourceCounter;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="knowledgeBaseCounter"> Total number of knowledge bases. </param>
         /// <param name="knowledgeSourceCounter"> Total number of knowledge sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter, SearchResourceCounter knowledgeSourceCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter, SearchResourceCounter knowledgeSourceCounter, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;

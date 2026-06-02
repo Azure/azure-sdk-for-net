@@ -14,28 +14,28 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ExportedUtteranceEntityLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedUtteranceEntityLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel"/>. </summary>
         /// <param name="category"> The category of the entity label. </param>
         /// <param name="offset"> Start position for the entity text. </param>
         /// <param name="length"> Length for the entity text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public ExportedUtteranceEntityLabel(string category, int offset, int length)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
             Offset = offset;
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedUtteranceEntityLabel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel"/>. </summary>
         /// <param name="category"> The category of the entity label. </param>
         /// <param name="offset"> Start position for the entity text. </param>
         /// <param name="length"> Length for the entity text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedUtteranceEntityLabel(string category, int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportedUtteranceEntityLabel(string category, int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Offset = offset;

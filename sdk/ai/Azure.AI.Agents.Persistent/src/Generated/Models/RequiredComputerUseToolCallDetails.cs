@@ -15,22 +15,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class RequiredComputerUseToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCallDetails"/>. </summary>
         /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
-        internal RequiredComputerUseToolCallDetails(ComputerUseAction action, IEnumerable<SafetyCheck> pendingSafetyChecks)
+        internal RequiredComputerUseToolCallDetails(ComputerUseAction action, IEnumerable<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks)
         {
             Action = action;
             PendingSafetyChecks = pendingSafetyChecks.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RequiredComputerUseToolCallDetails"/>. </summary>
         /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequiredComputerUseToolCallDetails(ComputerUseAction action, IList<SafetyCheck> pendingSafetyChecks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequiredComputerUseToolCallDetails(ComputerUseAction action, IList<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             PendingSafetyChecks = pendingSafetyChecks;
@@ -41,6 +41,6 @@ namespace Azure.AI.Agents.Persistent
         public ComputerUseAction Action { get; }
 
         /// <summary> Safety checks that are pending acknowledgment by the developer. </summary>
-        public IList<SafetyCheck> PendingSafetyChecks { get; }
+        public IList<global::Azure.AI.Agents.Persistent.SafetyCheck> PendingSafetyChecks { get; }
     }
 }

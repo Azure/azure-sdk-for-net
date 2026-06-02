@@ -13,20 +13,20 @@ namespace Azure.AI.VoiceLive
     internal abstract partial class ClientEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClientEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         private protected ClientEvent(ClientEventType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEvent(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClientEvent(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             EventId = eventId;

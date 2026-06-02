@@ -13,17 +13,17 @@ namespace Azure.AI.Language.Text
     /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
     public partial class ExtractiveSummarizationOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOperationAction"/>. </summary>
-        public ExtractiveSummarizationOperationAction() : base(AnalyzeTextOperationActionKind.ExtractiveSummarization)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationOperationAction"/>. </summary>
+        public ExtractiveSummarizationOperationAction() : base(global::Azure.AI.Language.Text.AnalyzeTextOperationActionKind.ExtractiveSummarization)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ExtractiveSummarizationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
-        internal ExtractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal ExtractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ExtractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }

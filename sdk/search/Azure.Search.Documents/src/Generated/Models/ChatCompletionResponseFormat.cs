@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ChatCompletionResponseFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormat"/>. </summary>
         public ChatCompletionResponseFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormat"/>. </summary>
         /// <param name="type"> Specifies how the LLM should format the response. </param>
         /// <param name="jsonSchemaProperties"> An open dictionary for extended properties. Required if 'type' == 'json_schema'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionResponseFormat(ChatCompletionResponseFormatType? @type, ChatCompletionSchemaProperties jsonSchemaProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatCompletionResponseFormat(ChatCompletionResponseFormatType? @type, ChatCompletionSchemaProperties jsonSchemaProperties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             JsonSchemaProperties = jsonSchemaProperties;

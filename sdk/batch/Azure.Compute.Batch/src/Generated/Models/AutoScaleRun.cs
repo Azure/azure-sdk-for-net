@@ -14,21 +14,21 @@ namespace Azure.Compute.Batch
     public partial class AutoScaleRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutoScaleRun"/>. </summary>
         /// <param name="timestamp"> The time at which the autoscale formula was last evaluated. </param>
         internal AutoScaleRun(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutoScaleRun"/>. </summary>
         /// <param name="timestamp"> The time at which the autoscale formula was last evaluated. </param>
         /// <param name="results"> The final values of all variables used in the evaluation of the autoscale formula. Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
         /// <param name="error"> Details of the error encountered evaluating the autoscale formula on the Pool, if the evaluation was unsuccessful. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleRun(DateTimeOffset timestamp, string results, AutoScaleRunError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoScaleRun(DateTimeOffset timestamp, string results, AutoScaleRunError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Results = results;

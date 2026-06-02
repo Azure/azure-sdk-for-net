@@ -14,19 +14,19 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageDeltaTextContentObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextContentObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextContentObject"/>. </summary>
         internal MessageDeltaTextContentObject()
         {
-            Annotations = new ChangeTrackingList<MessageDeltaTextAnnotation>();
+            Annotations = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextContentObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextContentObject"/>. </summary>
         /// <param name="value"> The data that makes up the text. </param>
         /// <param name="annotations"> Annotations for the text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaTextContentObject(string value, IReadOnlyList<MessageDeltaTextAnnotation> annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaTextContentObject(string value, IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation> annotations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Annotations = annotations;
@@ -37,6 +37,6 @@ namespace Azure.AI.Agents.Persistent
         public string Value { get; }
 
         /// <summary> Annotations for the text. </summary>
-        public IReadOnlyList<MessageDeltaTextAnnotation> Annotations { get; }
+        public IReadOnlyList<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation> Annotations { get; }
     }
 }

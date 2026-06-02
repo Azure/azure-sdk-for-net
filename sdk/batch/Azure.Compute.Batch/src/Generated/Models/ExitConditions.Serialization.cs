@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> Specifies how the Batch service should respond when the Task completes. </summary>
-    public partial class ExitConditions : IJsonModel<ExitConditions>
+    public partial class ExitConditions : IJsonModel<global::Azure.Compute.Batch.ExitConditions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExitConditions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExitConditions(document.RootElement, options);
+                        return global::Azure.Compute.Batch.ExitConditions.DeserializeExitConditions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExitConditions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.ExitConditions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExitConditions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.ExitConditions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExitConditions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.ExitConditions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExitConditions IPersistableModel<ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExitConditions IPersistableModel<global::Azure.Compute.Batch.ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExitConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.ExitConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExitConditions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.ExitConditions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,47 +68,47 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExitConditions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.ExitConditions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ExitCodes))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(ExitCodes))
             {
                 writer.WritePropertyName("exitCodes"u8);
                 writer.WriteStartArray();
                 foreach (ExitCodeMapping item in ExitCodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ExitCodeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExitCodeRanges))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(ExitCodeRanges))
             {
                 writer.WritePropertyName("exitCodeRanges"u8);
                 writer.WriteStartArray();
                 foreach (ExitCodeRangeMapping item in ExitCodeRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ExitCodeRangeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PreProcessingError))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(PreProcessingError))
             {
                 writer.WritePropertyName("preProcessingError"u8);
-                writer.WriteObjectValue(PreProcessingError, options);
+                writer.WriteObjectValue<ExitOptions>(PreProcessingError, options);
             }
-            if (Optional.IsDefined(FileUploadError))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(FileUploadError))
             {
                 writer.WritePropertyName("fileUploadError"u8);
-                writer.WriteObjectValue(FileUploadError, options);
+                writer.WriteObjectValue<ExitOptions>(FileUploadError, options);
             }
-            if (Optional.IsDefined(DefaultExitOptions))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DefaultExitOptions))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(DefaultExitOptions, options);
+                writer.WriteObjectValue<ExitOptions>(DefaultExitOptions, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -116,9 +116,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -127,100 +127,100 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExitConditions IJsonModel<ExitConditions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExitConditions IJsonModel<global::Azure.Compute.Batch.ExitConditions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExitConditions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ExitConditions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.ExitConditions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExitConditions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.ExitConditions.DeserializeExitConditions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ExitConditions DeserializeExitConditions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<ExitCodeMapping> exitCodes = default;
-            IList<ExitCodeRangeMapping> exitCodeRanges = default;
+            IList<global::Azure.Compute.Batch.ExitCodeMapping> exitCodes = default;
+            IList<global::Azure.Compute.Batch.ExitCodeRangeMapping> exitCodeRanges = default;
             ExitOptions preProcessingError = default;
             ExitOptions fileUploadError = default;
             ExitOptions defaultExitOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("exitCodes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ExitCodeMapping> array = new List<ExitCodeMapping>();
+                    List<global::Azure.Compute.Batch.ExitCodeMapping> array = new List<global::Azure.Compute.Batch.ExitCodeMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExitCodeMapping.DeserializeExitCodeMapping(item, options));
+                        array.Add(global::Azure.Compute.Batch.ExitCodeMapping.DeserializeExitCodeMapping(item, options));
                     }
                     exitCodes = array;
                     continue;
                 }
                 if (prop.NameEquals("exitCodeRanges"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ExitCodeRangeMapping> array = new List<ExitCodeRangeMapping>();
+                    List<global::Azure.Compute.Batch.ExitCodeRangeMapping> array = new List<global::Azure.Compute.Batch.ExitCodeRangeMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExitCodeRangeMapping.DeserializeExitCodeRangeMapping(item, options));
+                        array.Add(global::Azure.Compute.Batch.ExitCodeRangeMapping.DeserializeExitCodeRangeMapping(item, options));
                     }
                     exitCodeRanges = array;
                     continue;
                 }
                 if (prop.NameEquals("preProcessingError"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    preProcessingError = ExitOptions.DeserializeExitOptions(prop.Value, options);
+                    preProcessingError = global::Azure.Compute.Batch.ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fileUploadError"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    fileUploadError = ExitOptions.DeserializeExitOptions(prop.Value, options);
+                    fileUploadError = global::Azure.Compute.Batch.ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("default"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    defaultExitOptions = ExitOptions.DeserializeExitOptions(prop.Value, options);
+                    defaultExitOptions = global::Azure.Compute.Batch.ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ExitConditions(
-                exitCodes ?? new ChangeTrackingList<ExitCodeMapping>(),
-                exitCodeRanges ?? new ChangeTrackingList<ExitCodeRangeMapping>(),
+                (exitCodes ?? new ChangeTrackingList<global::Azure.Compute.Batch.ExitCodeMapping>()),
+                (exitCodeRanges ?? new ChangeTrackingList<global::Azure.Compute.Batch.ExitCodeRangeMapping>()),
                 preProcessingError,
                 fileUploadError,
                 defaultExitOptions,

@@ -14,9 +14,9 @@ namespace Azure.Health.Deidentification
     public partial class TargetStorageLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.TargetStorageLocation"/>. </summary>
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
@@ -26,17 +26,17 @@ namespace Azure.Health.Deidentification
         /// Output Prefix: "output_docs/"
         /// Output file: "output_docs/note.txt"
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
-        public TargetStorageLocation(Uri location, string prefix)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
+        public TargetStorageLocation(global::System.Uri location, string prefix)
         {
-            Argument.AssertNotNull(location, nameof(location));
-            Argument.AssertNotNull(prefix, nameof(prefix));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(location, nameof(location));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(prefix, nameof(prefix));
 
             Location = location;
             Prefix = prefix;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.TargetStorageLocation"/>. </summary>
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
@@ -48,7 +48,7 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetStorageLocation(Uri location, string prefix, bool? overwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetStorageLocation(global::System.Uri location, string prefix, bool? overwrite, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Prefix = prefix;
@@ -57,7 +57,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> URL to storage location. </summary>
-        public Uri Location { get; set; }
+        public global::System.Uri Location { get; set; }
 
         /// <summary>
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.

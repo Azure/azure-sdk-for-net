@@ -13,12 +13,12 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when an url that represents an image value that needs to be vectorized is provided. </summary>
     public partial class VectorizableImageUrlQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of <see cref="VectorizableImageUrlQuery"/>. </summary>
-        public VectorizableImageUrlQuery() : base(VectorQueryKind.ImageUrl)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableImageUrlQuery"/>. </summary>
+        public VectorizableImageUrlQuery() : base(global::Azure.Search.Documents.Models.VectorQueryKind.ImageUrl)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorizableImageUrlQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorizableImageUrlQuery"/>. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
-        internal VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
+        internal VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri url) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
         {
             Url = url;
         }
 
         /// <summary> The URL of an image to be vectorized to perform a vector search query. </summary>
-        public Uri Url { get; set; }
+        public global::System.Uri Url { get; set; }
     }
 }

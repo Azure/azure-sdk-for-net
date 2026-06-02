@@ -11,12 +11,12 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemCodeInterpreterToolCall : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemCodeInterpreterToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall"/>. </summary>
         /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        public InternalOutputItemCodeInterpreterToolCall(InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(AgentResponseItemKind.CodeInterpreterCall)
+        public InternalOutputItemCodeInterpreterToolCall(InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<global::System.BinaryData> outputs) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.CodeInterpreterCall)
         {
             Status = status;
             ContainerId = containerId;
@@ -24,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
             Outputs = outputs?.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemCodeInterpreterToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemCodeInterpreterToolCall"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InternalOutputItemCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<global::System.BinaryData> outputs) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             ContainerId = containerId;
@@ -53,17 +53,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// Gets or sets the Outputs.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputLogs"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputLogs"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputImage"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.InternalCodeInterpreterOutputImage"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -90,6 +90,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Outputs { get; set; }
+        public IList<global::System.BinaryData> Outputs { get; set; }
     }
 }

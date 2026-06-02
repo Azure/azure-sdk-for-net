@@ -15,9 +15,9 @@ namespace Azure.Template
     public partial class ResourceOperationStatusWidgetSuiteWidgetSuiteError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationStatusWidgetSuiteWidgetSuiteError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         internal ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id, OperationState status)
@@ -26,13 +26,13 @@ namespace Azure.Template
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationStatusWidgetSuiteWidgetSuiteError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is "Failed". </param>
         /// <param name="result"> The result of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id, OperationState status, ResponseError error, WidgetSuite result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id, OperationState status, ResponseError error, WidgetSuite result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;

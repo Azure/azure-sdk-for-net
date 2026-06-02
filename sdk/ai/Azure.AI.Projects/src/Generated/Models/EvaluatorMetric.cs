@@ -11,14 +11,14 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluatorMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetric"/>. </summary>
         public EvaluatorMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvaluatorMetric"/>. </summary>
         /// <param name="type"> Type of the metric. </param>
         /// <param name="desirableDirection"> It indicates whether a higher value is better or a lower value is better for this metric. </param>
         /// <param name="minValue"> Minimum value for the metric. </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="threshold"> Default pass/fail threshold for this metric. </param>
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, float? threshold, bool? isPrimary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, float? threshold, bool? isPrimary, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             DesirableDirection = desirableDirection;

@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskExecutionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskExecutionInfo"/>. </summary>
         /// <param name="retryCount"> The number of times the Task has been retried by the Batch service. Task application failures (non-zero exit code) are retried, pre-processing errors (the Task could not be run) and file upload errors are not retried. The Batch service will retry the Task up to the limit specified by the constraints. </param>
         /// <param name="requeueCount"> The number of times the Task has been requeued by the Batch service as the result of a user request. When the user removes Compute Nodes from a Pool (by resizing/shrinking the pool) or when the Job is being disabled, the user can specify that running Tasks on the Compute Nodes be requeued for execution. This count tracks how many times the Task has been requeued for these reasons. </param>
         internal BatchTaskExecutionInfo(int retryCount, int requeueCount)
@@ -25,7 +25,7 @@ namespace Azure.Compute.Batch
             RequeueCount = requeueCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskExecutionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskExecutionInfo"/>. </summary>
         /// <param name="startTime"> The time at which the Task started running. 'Running' corresponds to the running state, so if the Task specifies resource files or Packages, then the start time reflects the time at which the Task started downloading or deploying these. If the Task has been restarted or retried, this is the most recent time at which the Task started running. This property is present only for Tasks that are in the running or completed state. </param>
         /// <param name="endTime"> The time at which the Task completed. This property is set only if the Task is in the Completed state. </param>
         /// <param name="exitCode"> The exit code of the program specified on the Task command line. This property is set only if the Task is in the completed state. In general, the exit code for a process reflects the specific convention implemented by the application developer for that process. If you use the exit code value to make decisions in your code, be sure that you know the exit code convention used by the application process. However, if the Batch service terminates the Task (due to timeout, or user termination via the API) you may see an operating system-defined exit code. </param>
@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastRequeueTime"> The most recent time at which the Task has been requeued by the Batch service as the result of a user request. This property is set only if the requeueCount is nonzero. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskExecutionInfo(DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, int retryCount, DateTimeOffset? lastRetryTime, int requeueCount, DateTimeOffset? lastRequeueTime, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskExecutionInfo(DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, int retryCount, DateTimeOffset? lastRetryTime, int requeueCount, DateTimeOffset? lastRequeueTime, BatchTaskExecutionResult? result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;

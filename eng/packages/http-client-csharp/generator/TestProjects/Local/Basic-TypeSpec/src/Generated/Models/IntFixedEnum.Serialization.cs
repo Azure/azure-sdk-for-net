@@ -14,17 +14,17 @@ namespace BasicTypeSpec
         /// <param name="value"> The value to deserialize. </param>
         public static IntFixedEnum ToIntFixedEnum(this int value)
         {
-            if (value == 1)
+            if ((value == 1))
             {
-                return IntFixedEnum.One;
+                return global::BasicTypeSpec.IntFixedEnum.One;
             }
-            if (value == 2)
+            if ((value == 2))
             {
-                return IntFixedEnum.Two;
+                return global::BasicTypeSpec.IntFixedEnum.Two;
             }
-            if (value == 4)
+            if ((value == 4))
             {
-                return IntFixedEnum.Four;
+                return global::BasicTypeSpec.IntFixedEnum.Four;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntFixedEnum value.");
         }

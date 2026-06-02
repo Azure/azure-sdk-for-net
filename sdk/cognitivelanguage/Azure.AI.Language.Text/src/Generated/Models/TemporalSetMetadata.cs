@@ -13,22 +13,22 @@ namespace Azure.AI.Language.Text
     /// <summary> A Metadata for temporal set entity instances. </summary>
     public partial class TemporalSetMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="TemporalSetMetadata"/>. </summary>
-        internal TemporalSetMetadata() : base(MetadataKind.TemporalSetMetadata)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSetMetadata"/>. </summary>
+        internal TemporalSetMetadata() : base(global::Azure.AI.Language.Text.MetadataKind.TemporalSetMetadata)
         {
-            Dates = new ChangeTrackingList<DateValue>();
+            Dates = new ChangeTrackingList<global::Azure.AI.Language.Text.DateValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemporalSetMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemporalSetMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dates"> List of date values. </param>
-        internal TemporalSetMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DateValue> dates) : base(metadataKind, additionalBinaryDataProperties)
+        internal TemporalSetMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Text.DateValue> dates) : base(metadataKind, additionalBinaryDataProperties)
         {
             Dates = dates;
         }
 
         /// <summary> List of date values. </summary>
-        public IList<DateValue> Dates { get; }
+        public IList<global::Azure.AI.Language.Text.DateValue> Dates { get; }
     }
 }

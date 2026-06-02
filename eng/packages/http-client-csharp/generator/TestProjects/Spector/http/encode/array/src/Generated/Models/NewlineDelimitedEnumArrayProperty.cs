@@ -11,8 +11,8 @@ namespace Encode._Array
 {
     public partial class NewlineDelimitedEnumArrayProperty
     {
-        public NewlineDelimitedEnumArrayProperty(IEnumerable<Colors> value) => throw null;
+        public NewlineDelimitedEnumArrayProperty(IEnumerable<global::Encode._Array.Colors> value) => throw null;
 
-        public IList<Colors> Value => throw null;
+        public IList<global::Encode._Array.Colors> Value => throw null;
     }
 }

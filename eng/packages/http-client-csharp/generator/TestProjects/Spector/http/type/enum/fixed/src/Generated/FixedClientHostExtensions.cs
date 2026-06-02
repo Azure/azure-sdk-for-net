@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type._Enum.Fixed
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class FixedClientHostExtensions
     {
         public static IClientBuilder AddFixedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddFixedClient(this IHostApplicationBuilder host, string sectionName, Action<FixedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddFixedClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type._Enum.Fixed.FixedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedFixedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedFixedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<FixedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedFixedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type._Enum.Fixed.FixedClientSettings> configureSettings) => throw null;
     }
 }

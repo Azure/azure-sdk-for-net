@@ -15,12 +15,12 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Ingestion Source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedAccessSignatureTokenIngestionSource"/> and <see cref="ManagedIdentityIngestionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource"/> and <see cref="Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownIngestionSource))]
-    public abstract partial class IngestionSource : IJsonModel<IngestionSource>
+    [PersistableModelProxyAttribute(typeof(UnknownIngestionSource))]
+    public abstract partial class IngestionSource : IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>
     {
-        /// <summary> Initializes a new instance of <see cref="IngestionSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSource"/> for deserialization. </summary>
         internal IngestionSource()
         {
         }
@@ -29,65 +29,65 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIngestionSource(document.RootElement, options);
+                        return global::Azure.Analytics.PlanetaryComputer.IngestionSource.DeserializeIngestionSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.PlanetaryComputer.AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionSource IPersistableModel<IngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionSource IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="ingestionSource"> The <see cref="IngestionSource"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="ingestionSource"> The <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSource"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(IngestionSource ingestionSource)
         {
-            if (ingestionSource == null)
+            if ((ingestionSource == null))
             {
                 return null;
             }
-            return RequestContent.Create(ingestionSource, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(ingestionSource, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionSource"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSource"/> from. </param>
         public static explicit operator IngestionSource(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIngestionSource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Analytics.PlanetaryComputer.IngestionSource.DeserializeIngestionSource(document.RootElement, global::Azure.Analytics.PlanetaryComputer.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -95,21 +95,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IngestionSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionSource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (((options.Format != "W") && global::Azure.Analytics.PlanetaryComputer.Optional.IsDefined(Created)))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -117,9 +117,9 @@ namespace Azure.Analytics.PlanetaryComputer
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -128,26 +128,26 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionSource IJsonModel<IngestionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionSource IJsonModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IngestionSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.PlanetaryComputer.IngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IngestionSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.PlanetaryComputer.IngestionSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngestionSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.PlanetaryComputer.IngestionSource.DeserializeIngestionSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IngestionSource DeserializeIngestionSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -156,12 +156,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 switch (discriminator.GetString())
                 {
                     case "SasToken":
-                        return SharedAccessSignatureTokenIngestionSource.DeserializeSharedAccessSignatureTokenIngestionSource(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource.DeserializeSharedAccessSignatureTokenIngestionSource(element, options);
                     case "BlobManagedIdentity":
-                        return ManagedIdentityIngestionSource.DeserializeManagedIdentityIngestionSource(element, options);
+                        return global::Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource.DeserializeManagedIdentityIngestionSource(element, options);
                 }
             }
-            return UnknownIngestionSource.DeserializeUnknownIngestionSource(element, options);
+            return global::Azure.Analytics.PlanetaryComputer.UnknownIngestionSource.DeserializeUnknownIngestionSource(element, options);
         }
     }
 }

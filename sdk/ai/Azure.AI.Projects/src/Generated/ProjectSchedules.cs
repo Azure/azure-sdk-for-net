@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
     /// <summary> The ProjectSchedules sub-client. </summary>
     public partial class ProjectSchedules
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ProjectSchedules for mocking. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectSchedules(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectSchedules(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -46,16 +46,16 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -68,42 +68,42 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteAsync(string id, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a schedule. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult Delete(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return Delete(id, cancellationToken.ToRequestOptions());
+            return this.Delete(id, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete a schedule. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,16 +116,16 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -138,44 +138,44 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a schedule by id. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsSchedule> Get(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule> Get(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
+            ClientResult result = this.Get(id, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectsSchedule)result), result.GetRawResponse());
         }
 
         /// <summary> Get a schedule by id. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsSchedule>> GetAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
+            ClientResult result = await this.GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectsSchedule)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string @type, bool? enabled, RequestOptions options)
         {
@@ -207,7 +207,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string @type, bool? enabled, RequestOptions options)
         {
@@ -218,8 +218,8 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ProjectsSchedule> GetAll(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule> GetAll(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new ProjectSchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
@@ -228,8 +228,8 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ProjectsSchedule> GetAllAsync(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule> GetAllAsync(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new ProjectSchedulesGetAllAsyncCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
@@ -245,17 +245,17 @@ namespace Azure.AI.Projects
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateOrUpdate(string id, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateOrUpdateRequest(id, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -269,49 +269,49 @@ namespace Azure.AI.Projects
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateOrUpdateRequest(id, content, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsSchedule> CreateOrUpdate(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule> CreateOrUpdate(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(resource, nameof(resource));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = CreateOrUpdate(id, resource, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
+            ClientResult result = this.CreateOrUpdate(id, resource, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectsSchedule)result), result.GetRawResponse());
         }
 
         /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsSchedule>> CreateOrUpdateAsync(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.ProjectsSchedule>> CreateOrUpdateAsync(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(resource, nameof(resource));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = await CreateOrUpdateAsync(id, resource, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
+            ClientResult result = await this.CreateOrUpdateAsync(id, resource, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ProjectsSchedule)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -325,17 +325,17 @@ namespace Azure.AI.Projects
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetRun(string scheduleId, string runId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetRunRequest(scheduleId, runId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -349,49 +349,49 @@ namespace Azure.AI.Projects
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetRunAsync(string scheduleId, string runId, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetRunAsync(string scheduleId, string runId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetRunRequest(scheduleId, runId, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a schedule run by id. </summary>
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ScheduleRun> GetRun(string scheduleId, string runId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.ScheduleRun> GetRun(string scheduleId, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            ClientResult result = GetRun(scheduleId, runId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ScheduleRun)result, result.GetRawResponse());
+            ClientResult result = this.GetRun(scheduleId, runId, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((ScheduleRun)result), result.GetRawResponse());
         }
 
         /// <summary> Get a schedule run by id. </summary>
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ScheduleRun>> GetRunAsync(string scheduleId, string runId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.ScheduleRun>> GetRunAsync(string scheduleId, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            ClientResult result = await GetRunAsync(scheduleId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ScheduleRun)result, result.GetRawResponse());
+            ClientResult result = await this.GetRunAsync(scheduleId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((ScheduleRun)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -406,13 +406,13 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetRuns(string id, string @type, bool? enabled, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             return new ProjectSchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
         }
@@ -429,13 +429,13 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetRunsAsync(string id, string @type, bool? enabled, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             return new ProjectSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
         }
@@ -445,12 +445,12 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ScheduleRun> GetRuns(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.ScheduleRun> GetRuns(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             return new ProjectSchedulesGetRunsCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
@@ -460,12 +460,12 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ScheduleRun> GetRunsAsync(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.ScheduleRun> GetRunsAsync(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             return new ProjectSchedulesGetRunsAsyncCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }

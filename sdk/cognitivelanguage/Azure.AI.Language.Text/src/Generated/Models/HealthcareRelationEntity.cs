@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class HealthcareRelationEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareRelationEntity"/>. </summary>
         /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
         /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
         internal HealthcareRelationEntity(string @ref, string role)
@@ -25,11 +25,11 @@ namespace Azure.AI.Language.Text
             Role = role;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.HealthcareRelationEntity"/>. </summary>
         /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
         /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareRelationEntity(string @ref, string role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthcareRelationEntity(string @ref, string role, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Ref = @ref;
             Role = role;

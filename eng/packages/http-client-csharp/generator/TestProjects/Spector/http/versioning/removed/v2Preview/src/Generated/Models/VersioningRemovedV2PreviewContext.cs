@@ -10,9 +10,9 @@ using Versioning.Removed;
 
 namespace Versioning.Removed.V2Preview
 {
-    [ModelReaderWriterBuildable(typeof(ModelV1))]
-    [ModelReaderWriterBuildable(typeof(ModelV2))]
-    [ModelReaderWriterBuildable(typeof(ModelV3))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelV1))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelV2))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelV3))]
     public partial class VersioningRemovedV2PreviewContext : ModelReaderWriterContext
     {
     }

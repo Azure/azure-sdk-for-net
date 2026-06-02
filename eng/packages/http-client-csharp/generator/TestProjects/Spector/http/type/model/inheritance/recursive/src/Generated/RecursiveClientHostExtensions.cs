@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RecursiveClientHostExtensions
     {
         public static IClientBuilder AddRecursiveClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRecursiveClient(this IHostApplicationBuilder host, string sectionName, Action<RecursiveClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRecursiveClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Inheritance.Recursive.RecursiveClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRecursiveClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRecursiveClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RecursiveClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRecursiveClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Inheritance.Recursive.RecursiveClientSettings> configureSettings) => throw null;
     }
 }

@@ -13,27 +13,27 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a video notification. </summary>
     public partial class VideoNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="VideoNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.VideoNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
-        public VideoNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to, CommunicationMessageKind.Video)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
+        public VideoNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, global::System.Uri mediaUri) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.Video)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.VideoNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="caption"> Optional text content. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal VideoNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string caption, Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal VideoNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string caption, global::System.Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             Caption = caption;
             MediaUri = mediaUri;
@@ -43,6 +43,6 @@ namespace Azure.Communication.Messages
         public string Caption { get; set; }
 
         /// <summary> A media url for the file. Required if the type is one of the supported media types, e.g. image. </summary>
-        public Uri MediaUri { get; }
+        public global::System.Uri MediaUri { get; }
     }
 }

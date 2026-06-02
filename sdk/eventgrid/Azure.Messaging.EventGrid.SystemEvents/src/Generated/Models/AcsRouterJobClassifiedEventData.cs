@@ -13,15 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
     public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="queueDetails"> Router Job Queue Info. </param>
         internal AcsRouterJobClassifiedEventData(AcsRouterQueueDetails queueDetails)
         {
             QueueDetails = queueDetails;
-            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
-        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             QueueDetails = queueDetails;
             ClassificationPolicyId = classificationPolicyId;
@@ -51,6 +51,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? Priority { get; }
 
         /// <summary> Router Job Attached Worker Selector. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
     }
 }

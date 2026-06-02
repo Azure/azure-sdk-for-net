@@ -14,28 +14,28 @@ namespace Azure.AI.Language.Text
     public partial class ConfidenceScoreThresholdOverride
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfidenceScoreThresholdOverride"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride"/>. </summary>
         /// <param name="entity"> The PII category for which to override the confidence score threshold. </param>
         /// <param name="value"> The confidence score threshold for the specified PII category. </param>
         /// <param name="language"> The 2 letter ISO 639-1 language for which the override applies. If not specified, the override applies to all languages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="language"/> is null. </exception>
         public ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity, float value, string language)
         {
-            Argument.AssertNotNull(language, nameof(language));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(language, nameof(language));
 
             Entity = entity;
             Value = value;
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfidenceScoreThresholdOverride"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.ConfidenceScoreThresholdOverride"/>. </summary>
         /// <param name="entity"> The PII category for which to override the confidence score threshold. </param>
         /// <param name="value"> The confidence score threshold for the specified PII category. </param>
         /// <param name="language"> The 2 letter ISO 639-1 language for which the override applies. If not specified, the override applies to all languages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity, float value, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity, float value, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Entity = entity;
             Value = value;

@@ -12,11 +12,11 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Represents the settings used to configure a <see cref="EventGridReceiverClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class EventGridReceiverClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
-        public Uri Endpoint { get; set; }
+        public global::System.Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the TopicName. </summary>
         public string TopicName { get; set; }

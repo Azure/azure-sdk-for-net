@@ -16,7 +16,7 @@ namespace Routes._PathParameters.LabelExpansion
     {
         protected PathParametersLabelExpansion() => throw null;
 
-        internal PathParametersLabelExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal PathParametersLabelExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

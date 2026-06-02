@@ -17,16 +17,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClie
     {
         protected UserOperations() => throw null;
 
-        internal UserOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal UserOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetUser(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetUserAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetUserAsync(RequestContext context) => throw null;
 
         public virtual Response GetUser(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetUserAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetUserAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

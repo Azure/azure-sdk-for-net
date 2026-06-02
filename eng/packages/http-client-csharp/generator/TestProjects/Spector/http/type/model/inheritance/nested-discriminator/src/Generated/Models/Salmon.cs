@@ -14,11 +14,11 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
     {
         public Salmon(int age) : base("salmon", age) => throw null;
 
-        internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties) => throw null;
+        internal Salmon(string kind, int age, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> friends, IDictionary<string, global::_Type.Model.Inheritance.NestedDiscriminator.Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties) => throw null;
 
-        public IList<Fish> Friends => throw null;
+        public IList<global::_Type.Model.Inheritance.NestedDiscriminator.Fish> Friends => throw null;
 
-        public IDictionary<string, Fish> Hate => throw null;
+        public IDictionary<string, global::_Type.Model.Inheritance.NestedDiscriminator.Fish> Hate => throw null;
 
         public Fish Partner
         {

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Supported OpenAI voice names (string enum). </summary>
-    public readonly partial struct OAIVoice : IEquatable<OAIVoice>
+    public readonly partial struct OAIVoice : IEquatable<global::Azure.AI.VoiceLive.OAIVoice>
     {
         private readonly string _value;
         /// <summary> Alloy voice. </summary>
@@ -35,12 +35,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Cedar voice. </summary>
         private const string CedarValue = "cedar";
 
-        /// <summary> Initializes a new instance of <see cref="OAIVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.OAIVoice"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OAIVoice(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -75,34 +75,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Cedar voice. </summary>
         public static OAIVoice Cedar { get; } = new OAIVoice(CedarValue);
 
-        /// <summary> Determines if two <see cref="OAIVoice"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.OAIVoice"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OAIVoice left, OAIVoice right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OAIVoice"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.OAIVoice"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OAIVoice left, OAIVoice right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OAIVoice"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.OAIVoice"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator OAIVoice(string value) => new OAIVoice(value);
 
-        /// <summary> Converts a string to a <see cref="OAIVoice"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.OAIVoice"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OAIVoice?(string value) => value == null ? null : new OAIVoice(value);
+        public static implicit operator OAIVoice?(string value) => (value == null) ? null : new OAIVoice(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OAIVoice other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is OAIVoice other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(OAIVoice other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OAIVoice other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

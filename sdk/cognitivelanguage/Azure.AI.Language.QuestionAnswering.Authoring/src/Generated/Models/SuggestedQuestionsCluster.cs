@@ -14,22 +14,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class SuggestedQuestionsCluster
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestedQuestionsCluster"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster"/>. </summary>
         public SuggestedQuestionsCluster()
         {
-            SuggestedQuestions = new ChangeTrackingList<SuggestedQuestion>();
+            SuggestedQuestions = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestedQuestionsCluster"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster"/>. </summary>
         /// <param name="clusterHead">
         /// Question chosen as the head of suggested questions cluster by Active Learning
         /// clustering algorithm.
         /// </param>
         /// <param name="suggestedQuestions"> List of all suggested questions for the QnA. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestedQuestionsCluster(string clusterHead, IList<SuggestedQuestion> suggestedQuestions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuggestedQuestionsCluster(string clusterHead, IList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion> suggestedQuestions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClusterHead = clusterHead;
             SuggestedQuestions = suggestedQuestions;
@@ -43,6 +43,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public string ClusterHead { get; set; }
 
         /// <summary> List of all suggested questions for the QnA. </summary>
-        public IList<SuggestedQuestion> SuggestedQuestions { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion> SuggestedQuestions { get; }
     }
 }

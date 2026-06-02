@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether hibernate is supported and enabled, disabled, or unsupported by the operating system. Unknown hibernate support is represented as null. </summary>
-    public readonly partial struct HibernateSupport : IEquatable<HibernateSupport>
+    public readonly partial struct HibernateSupport : IEquatable<global::Azure.Developer.DevCenter.Models.HibernateSupport>
     {
         private readonly string _value;
         /// <summary> Hibernate is enabled. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Hibernate is not supported by the operating system. </summary>
         private const string OsUnsupportedValue = "OsUnsupported";
 
-        /// <summary> Initializes a new instance of <see cref="HibernateSupport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.HibernateSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HibernateSupport(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Hibernate is not supported by the operating system. </summary>
         public static HibernateSupport OsUnsupported { get; } = new HibernateSupport(OsUnsupportedValue);
 
-        /// <summary> Determines if two <see cref="HibernateSupport"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.HibernateSupport"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HibernateSupport left, HibernateSupport right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HibernateSupport"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.HibernateSupport"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HibernateSupport left, HibernateSupport right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HibernateSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.HibernateSupport"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator HibernateSupport(string value) => new HibernateSupport(value);
 
-        /// <summary> Converts a string to a <see cref="HibernateSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.HibernateSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HibernateSupport?(string value) => value == null ? null : new HibernateSupport(value);
+        public static implicit operator HibernateSupport?(string value) => (value == null) ? null : new HibernateSupport(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HibernateSupport other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is HibernateSupport other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(HibernateSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HibernateSupport other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

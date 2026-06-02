@@ -14,55 +14,55 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.AppServicePlanUpdated event. </summary>
-    [JsonConverter(typeof(WebAppServicePlanUpdatedEventDataConverter))]
-    public partial class WebAppServicePlanUpdatedEventData : IJsonModel<WebAppServicePlanUpdatedEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData.WebAppServicePlanUpdatedEventDataConverter))]
+    public partial class WebAppServicePlanUpdatedEventData : IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WebAppServicePlanUpdatedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData.DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebAppServicePlanUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebAppServicePlanUpdatedEventData IPersistableModel<WebAppServicePlanUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WebAppServicePlanUpdatedEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebAppServicePlanUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WebAppServicePlanUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,52 +70,52 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AppServicePlanEventTypeDetail))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(AppServicePlanEventTypeDetail))
             {
                 writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
-                writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
+                writer.WriteObjectValue<AppServicePlanEventTypeDetail>(AppServicePlanEventTypeDetail, options);
             }
-            if (Optional.IsDefined(Sku))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                writer.WriteObjectValue<WebAppServicePlanUpdatedEventDataSku>(Sku, options);
             }
-            if (Optional.IsDefined(Name))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ClientRequestId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Optional.IsDefined(CorrelationRequestId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(CorrelationRequestId))
             {
                 writer.WritePropertyName("correlationRequestId"u8);
                 writer.WriteStringValue(CorrelationRequestId);
             }
-            if (Optional.IsDefined(RequestId))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Optional.IsDefined(Address))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(Verb))
+            if (global::Azure.Messaging.EventGrid.SystemEvents.Optional.IsDefined(Verb))
             {
                 writer.WritePropertyName("verb"u8);
                 writer.WriteStringValue(Verb);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -123,9 +123,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -134,26 +134,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebAppServicePlanUpdatedEventData IJsonModel<WebAppServicePlanUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WebAppServicePlanUpdatedEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WebAppServicePlanUpdatedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData.DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static WebAppServicePlanUpdatedEventData DeserializeWebAppServicePlanUpdatedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -165,25 +165,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string requestId = default;
             string address = default;
             string verb = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("appServicePlanEventTypeDetail"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(prop.Value, options);
+                    appServicePlanEventTypeDetail = global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(prop.Value, options);
+                    sku = global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -216,9 +216,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     verb = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WebAppServicePlanUpdatedEventData(
@@ -233,7 +233,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties);
         }
 
-        internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>
+        internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -241,7 +241,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, WebAppServicePlanUpdatedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<WebAppServicePlanUpdatedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -250,8 +250,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override WebAppServicePlanUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

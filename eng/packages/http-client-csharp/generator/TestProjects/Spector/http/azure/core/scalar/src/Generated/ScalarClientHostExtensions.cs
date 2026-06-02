@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.Core.Scalar
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ScalarClientHostExtensions
     {
         public static IClientBuilder AddScalarClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddScalarClient(this IHostApplicationBuilder host, string sectionName, Action<ScalarClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddScalarClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.Core.Scalar.ScalarClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedScalarClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedScalarClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ScalarClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedScalarClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.Core.Scalar.ScalarClientSettings> configureSettings) => throw null;
     }
 }

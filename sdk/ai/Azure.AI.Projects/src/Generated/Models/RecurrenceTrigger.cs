@@ -11,19 +11,19 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Recurrence based trigger. </summary>
     public partial class RecurrenceTrigger : ScheduleTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RecurrenceTrigger"/>. </summary>
         /// <param name="interval"> Interval for the recurrence schedule. </param>
         /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public RecurrenceTrigger(int interval, RecurrenceSchedule schedule) : base(TriggerType.Recurrence)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
+        public RecurrenceTrigger(int interval, RecurrenceSchedule schedule) : base(global::Azure.AI.Projects.Evaluation.TriggerType.Recurrence)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            global::Azure.AI.Projects.Argument.AssertNotNull(schedule, nameof(schedule));
 
             Interval = interval;
             Schedule = schedule;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RecurrenceTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="timeZone"> Time zone for the recurrence schedule. Defaults to `UTC`. </param>
         /// <param name="interval"> Interval for the recurrence schedule. </param>
         /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
-        internal RecurrenceTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeZone, int interval, RecurrenceSchedule schedule) : base(@type, additionalBinaryDataProperties)
+        internal RecurrenceTrigger(TriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeZone, int interval, RecurrenceSchedule schedule) : base(@type, additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;

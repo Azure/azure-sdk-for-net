@@ -14,27 +14,27 @@ namespace Azure.AI.Language.Text
     public partial class CustomMultiLabelClassificationActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public CustomMultiLabelClassificationActionContent(string projectName, string deploymentName)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(projectName, nameof(projectName));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomMultiLabelClassificationActionContent(bool? loggingOptOut, string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomMultiLabelClassificationActionContent(bool? loggingOptOut, string projectName, string deploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;

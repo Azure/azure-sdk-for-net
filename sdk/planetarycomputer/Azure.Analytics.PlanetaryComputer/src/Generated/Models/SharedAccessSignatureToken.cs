@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class SharedAccessSignatureToken
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken"/>. </summary>
         /// <param name="expiresOn"> The expiration date and time of the SAS token in UTC. </param>
         /// <param name="token"> The SAS token string used for authentication. </param>
         internal SharedAccessSignatureToken(DateTimeOffset expiresOn, string token)
@@ -25,11 +25,11 @@ namespace Azure.Analytics.PlanetaryComputer
             Token = token;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken"/>. </summary>
         /// <param name="expiresOn"> The expiration date and time of the SAS token in UTC. </param>
         /// <param name="token"> The SAS token string used for authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessSignatureToken(DateTimeOffset expiresOn, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedAccessSignatureToken(DateTimeOffset expiresOn, string token, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ExpiresOn = expiresOn;
             Token = token;

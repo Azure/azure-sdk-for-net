@@ -15,26 +15,26 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentFootnote
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
-        internal DocumentFootnote(string content, IEnumerable<DocumentSpan> spans)
+        internal DocumentFootnote(string content, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans)
         {
             Content = content;
-            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
             Spans = spans.ToList();
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="boundingRegions"> Bounding regions covering the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFootnote(string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFootnote(string content, IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions, IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             BoundingRegions = boundingRegions;
@@ -47,10 +47,10 @@ namespace Azure.AI.DocumentIntelligence
         public string Content { get; }
 
         /// <summary> Bounding regions covering the footnote. </summary>
-        public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.BoundingRegion> BoundingRegions { get; }
 
         /// <summary> Location of the footnote in the reading order concatenated content. </summary>
-        public IReadOnlyList<DocumentSpan> Spans { get; }
+        public IReadOnlyList<global::Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get; }
 
         /// <summary> Child elements of the footnote. </summary>
         public IReadOnlyList<string> Elements { get; }

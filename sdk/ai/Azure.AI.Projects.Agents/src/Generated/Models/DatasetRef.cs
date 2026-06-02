@@ -11,23 +11,23 @@ namespace Azure.AI.Projects.Agents
     public partial class DatasetRef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatasetRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DatasetRef"/>. </summary>
         /// <param name="name"> Dataset name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DatasetRef(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DatasetRef"/>. </summary>
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetRef(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetRef(string name, string version, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

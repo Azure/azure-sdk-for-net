@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents an MCP server retrieval activity record. </summary>
-    public partial class KnowledgeBaseMcpServerActivityRecord : KnowledgeBaseActivityRecord, IJsonModel<KnowledgeBaseMcpServerActivityRecord>
+    public partial class KnowledgeBaseMcpServerActivityRecord : KnowledgeBaseActivityRecord, IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMcpServerActivityRecord"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/> for deserialization. </summary>
         internal KnowledgeBaseMcpServerActivityRecord()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseMcpServerActivityRecord(document.RootElement, options);
+                        return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord.DeserializeKnowledgeBaseMcpServerActivityRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseMcpServerActivityRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseMcpServerActivityRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseMcpServerActivityRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseMcpServerActivityRecord IPersistableModel<KnowledgeBaseMcpServerActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseMcpServerActivityRecord)PersistableModelCreateCore(data, options);
+        KnowledgeBaseMcpServerActivityRecord IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => ((KnowledgeBaseMcpServerActivityRecord)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseMcpServerActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseMcpServerActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,61 +74,61 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseMcpServerActivityRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(KnowledgeSourceName))
+            if (global::Azure.Search.Documents.Optional.IsDefined(KnowledgeSourceName))
             {
                 writer.WritePropertyName("knowledgeSourceName"u8);
                 writer.WriteStringValue(KnowledgeSourceName);
             }
-            if (Optional.IsDefined(QueryTime))
+            if (global::Azure.Search.Documents.Optional.IsDefined(QueryTime))
             {
                 writer.WritePropertyName("queryTime"u8);
                 writer.WriteStringValue(QueryTime.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Search.Documents.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(ImageServing))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ImageServing))
             {
                 writer.WritePropertyName("imageServing"u8);
-                writer.WriteObjectValue(ImageServing, options);
+                writer.WriteObjectValue<ImageServingStatistics>(ImageServing, options);
             }
-            if (Optional.IsDefined(McpServerArguments))
+            if (global::Azure.Search.Documents.Optional.IsDefined(McpServerArguments))
             {
                 writer.WritePropertyName("mcpServerArguments"u8);
-                writer.WriteObjectValue(McpServerArguments, options);
+                writer.WriteObjectValue<KnowledgeBaseMcpServerActivityArguments>(McpServerArguments, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseMcpServerActivityRecord IJsonModel<KnowledgeBaseMcpServerActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseMcpServerActivityRecord)JsonModelCreateCore(ref reader, options);
+        KnowledgeBaseMcpServerActivityRecord IJsonModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((KnowledgeBaseMcpServerActivityRecord)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeBaseActivityRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseMcpServerActivityRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseMcpServerActivityRecord(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord.DeserializeKnowledgeBaseMcpServerActivityRecord(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static KnowledgeBaseMcpServerActivityRecord DeserializeKnowledgeBaseMcpServerActivityRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -137,7 +137,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string knowledgeSourceName = default;
             DateTimeOffset? queryTime = default;
             int? count = default;
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("elapsedMs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -166,11 +166,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
+                    error = global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("warning"u8))
@@ -185,7 +185,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("queryTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -194,7 +194,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -203,25 +203,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("imageServing"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    imageServing = ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
+                    imageServing = global::Azure.Search.Documents.KnowledgeBases.Models.ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mcpServerArguments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    mcpServerArguments = KnowledgeBaseMcpServerActivityArguments.DeserializeKnowledgeBaseMcpServerActivityArguments(prop.Value, options);
+                    mcpServerArguments = global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMcpServerActivityArguments.DeserializeKnowledgeBaseMcpServerActivityArguments(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new KnowledgeBaseMcpServerActivityRecord(

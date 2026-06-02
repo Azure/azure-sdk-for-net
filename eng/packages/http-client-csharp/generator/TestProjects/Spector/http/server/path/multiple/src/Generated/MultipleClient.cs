@@ -18,31 +18,31 @@ namespace Server.Path.Multiple
     {
         protected MultipleClient() => throw null;
 
-        public MultipleClient(Uri endpoint) : this(endpoint, new MultipleClientOptions()) => throw null;
+        public MultipleClient(global::System.Uri endpoint) : this(endpoint, new MultipleClientOptions()) => throw null;
 
-        internal MultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MultipleClientOptions options) => throw null;
+        internal MultipleClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MultipleClientOptions options) => throw null;
 
-        public MultipleClient(Uri endpoint, MultipleClientOptions options) : this(null, endpoint, options) => throw null;
+        public MultipleClient(global::System.Uri endpoint, MultipleClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MultipleClient(MultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MultipleClient(MultipleClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response NoOperationParams(RequestContext context) => throw null;
 
-        public virtual Task<Response> NoOperationParamsAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> NoOperationParamsAsync(RequestContext context) => throw null;
 
         public virtual Response NoOperationParams(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> NoOperationParamsAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> NoOperationParamsAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithOperationPathParam(string keyword, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithOperationPathParamAsync(string keyword, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithOperationPathParamAsync(string keyword, RequestContext context) => throw null;
 
         public virtual Response WithOperationPathParam(string keyword, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithOperationPathParamAsync(string keyword, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithOperationPathParamAsync(string keyword, CancellationToken cancellationToken = default) => throw null;
     }
 }

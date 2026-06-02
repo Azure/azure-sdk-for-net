@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Image message type. </summary>
     public partial class KnowledgeBaseMessageImageContent : KnowledgeBaseMessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>. </summary>
         /// <param name="image"> The image content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
-        public KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image) : base(KnowledgeBaseMessageContentType.Image)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="image"/> is null. </exception>
+        public KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image) : base(global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageContentType.Image)
         {
-            Argument.AssertNotNull(image, nameof(image));
+            global::Azure.Search.Documents.Argument.AssertNotNull(image, nameof(image));
 
             Image = image;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="image"> The image content. </param>
-        internal KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, KnowledgeBaseImageContent image) : base(@type, additionalBinaryDataProperties)
+        internal KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, KnowledgeBaseImageContent image) : base(@type, additionalBinaryDataProperties)
         {
             Image = image;
         }

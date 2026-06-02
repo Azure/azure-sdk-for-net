@@ -15,71 +15,71 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A key-value pair representing application settings. </summary>
-    public partial class ConfigurationSetting : IJsonModel<ConfigurationSetting>
+    public partial class ConfigurationSetting : IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfigurationSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfigurationSetting(document.RootElement, options);
+                        return global::Azure.Data.AppConfiguration.ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Data.AppConfiguration.AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSetting IPersistableModel<ConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationSetting IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="configurationSetting"> The <see cref="ConfigurationSetting"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="configurationSetting"> The <see cref="global::Azure.Data.AppConfiguration.ConfigurationSetting"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ConfigurationSetting configurationSetting)
         {
-            if (configurationSetting == null)
+            if ((configurationSetting == null))
             {
                 return null;
             }
-            return RequestContent.Create(configurationSetting, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(configurationSetting, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSetting"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Data.AppConfiguration.ConfigurationSetting"/> from. </param>
         public static explicit operator ConfigurationSetting(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConfigurationSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Data.AppConfiguration.ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement, global::Azure.Data.AppConfiguration.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -87,44 +87,44 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSetting)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Label))
+            if (global::Azure.Data.AppConfiguration.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(ContentType))
+            if (global::Azure.Data.AppConfiguration.Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("content_type"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Value))
+            if (global::Azure.Data.AppConfiguration.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(LastModified))
+            if (global::Azure.Data.AppConfiguration.Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("last_modified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (global::Azure.Data.AppConfiguration.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -133,14 +133,14 @@ namespace Azure.Data.AppConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsReadOnly))
+            if (global::Azure.Data.AppConfiguration.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("locked"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("etag"u8);
-            SerializationEtag(writer, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            this.SerializationEtag(writer, options);
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -148,9 +148,9 @@ namespace Azure.Data.AppConfiguration
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -159,26 +159,26 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSetting IJsonModel<ConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationSetting IJsonModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConfigurationSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Data.AppConfiguration.ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Data.AppConfiguration.ConfigurationSetting)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationSetting(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Data.AppConfiguration.ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ConfigurationSetting DeserializeConfigurationSetting(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -190,7 +190,7 @@ namespace Azure.Data.AppConfiguration
             IDictionary<string, string> tags = default;
             bool? isReadOnly = default;
             ETag eTag = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("key"u8))
@@ -215,7 +215,7 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("last_modified"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -224,14 +224,14 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -245,7 +245,7 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("locked"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -257,9 +257,9 @@ namespace Azure.Data.AppConfiguration
                     DeserializeEtag(prop, ref eTag);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ConfigurationSetting(
@@ -268,7 +268,7 @@ namespace Azure.Data.AppConfiguration
                 contentType,
                 value,
                 lastModified,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (tags ?? new ChangeTrackingDictionary<string, string>()),
                 isReadOnly,
                 eTag,
                 additionalBinaryDataProperties);

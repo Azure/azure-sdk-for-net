@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for a data generation job. </summary>
-    public partial class DataGenerationJobInputs : IJsonModel<DataGenerationJobInputs>
+    public partial class DataGenerationJobInputs : IJsonModel<global::Azure.AI.Projects.DataGenerationJobInputs>
     {
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobInputs"/> for deserialization. </summary>
         internal DataGenerationJobInputs()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataGenerationJobInputs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataGenerationJobInputs(document.RootElement, options);
+                        return global::Azure.AI.Projects.DataGenerationJobInputs.DeserializeDataGenerationJobInputs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataGenerationJobInputs)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.DataGenerationJobInputs)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataGenerationJobInputs)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.DataGenerationJobInputs)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataGenerationJobInputs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataGenerationJobInputs IPersistableModel<DataGenerationJobInputs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataGenerationJobInputs IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataGenerationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataGenerationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.DataGenerationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DataGenerationJobInputs)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.DataGenerationJobInputs)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -81,19 +81,19 @@ namespace Azure.AI.Projects
             writer.WriteStartArray();
             foreach (DataGenerationJobSource item in Sources)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DataGenerationJobSource>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("options"u8);
-            writer.WriteObjectValue(Options, options);
+            writer.WriteObjectValue<DataGenerationJobOptions>(Options, options);
             writer.WritePropertyName("scenario"u8);
             writer.WriteStringValue(Scenario.ToString());
-            if (Optional.IsDefined(OutputOptions))
+            if (global::Azure.AI.Projects.Optional.IsDefined(OutputOptions))
             {
                 writer.WritePropertyName("output_options"u8);
-                writer.WriteObjectValue(OutputOptions, options);
+                writer.WriteObjectValue<DataGenerationJobOutputOptions>(OutputOptions, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -101,9 +101,9 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -112,35 +112,35 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataGenerationJobInputs IJsonModel<DataGenerationJobInputs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataGenerationJobInputs IJsonModel<global::Azure.AI.Projects.DataGenerationJobInputs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataGenerationJobInputs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.DataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DataGenerationJobInputs)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.DataGenerationJobInputs)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataGenerationJobInputs(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.DataGenerationJobInputs.DeserializeDataGenerationJobInputs(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DataGenerationJobInputs DeserializeDataGenerationJobInputs(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
-            IList<DataGenerationJobSource> sources = default;
+            IList<global::Azure.AI.Projects.DataGenerationJobSource> sources = default;
             DataGenerationJobOptions options0 = default;
             DataGenerationJobScenario scenario = default;
             DataGenerationJobOutputOptions outputOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -150,17 +150,17 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("sources"u8))
                 {
-                    List<DataGenerationJobSource> array = new List<DataGenerationJobSource>();
+                    List<global::Azure.AI.Projects.DataGenerationJobSource> array = new List<global::Azure.AI.Projects.DataGenerationJobSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataGenerationJobSource.DeserializeDataGenerationJobSource(item, options));
+                        array.Add(global::Azure.AI.Projects.DataGenerationJobSource.DeserializeDataGenerationJobSource(item, options));
                     }
                     sources = array;
                     continue;
                 }
                 if (prop.NameEquals("options"u8))
                 {
-                    options0 = DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
+                    options0 = global::Azure.AI.Projects.DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scenario"u8))
@@ -170,16 +170,16 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("output_options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    outputOptions = DataGenerationJobOutputOptions.DeserializeDataGenerationJobOutputOptions(prop.Value, options);
+                    outputOptions = global::Azure.AI.Projects.DataGenerationJobOutputOptions.DeserializeDataGenerationJobOutputOptions(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DataGenerationJobInputs(

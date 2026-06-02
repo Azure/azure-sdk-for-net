@@ -19,14 +19,14 @@ namespace Azure.Compute.Batch
     public partial class BatchVmImageReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchVmImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchVmImageReference"/>. </summary>
         public BatchVmImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchVmImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchVmImageReference"/>. </summary>
         /// <param name="publisher"> The publisher of the Azure Virtual Machines Marketplace Image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="offer"> The offer type of the Azure Virtual Machines Marketplace Image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> The SKU of the Azure Virtual Machines Marketplace Image. For example, 18.04-LTS or 2019-Datacenter. </param>
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         /// <param name="sharedGalleryImageId"> The shared gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> The community gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier virtualMachineImageId, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchVmImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier virtualMachineImageId, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;

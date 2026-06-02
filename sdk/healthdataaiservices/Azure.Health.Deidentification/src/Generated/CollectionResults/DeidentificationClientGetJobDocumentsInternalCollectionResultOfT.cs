@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Health.Deidentification
 {
-    internal partial class DeidentificationClientGetJobDocumentsInternalCollectionResultOfT : Pageable<DeidentificationDocumentDetails>
+    internal partial class DeidentificationClientGetJobDocumentsInternalCollectionResultOfT : Pageable<global::Azure.Health.Deidentification.DeidentificationDocumentDetails>
     {
         private readonly DeidentificationClient _client;
         private readonly string _jobName;
@@ -29,7 +29,7 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(DeidentificationClient client, string jobName, int? maxPageSize, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(DeidentificationClient client, string jobName, int? maxPageSize, string continuationToken, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _jobName = jobName;
@@ -43,20 +43,20 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeidentificationClientGetJobDocumentsInternalCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeidentificationDocumentDetails>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<global::Azure.Page<global::Azure.Health.Deidentification.DeidentificationDocumentDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                if ((response is null))
                 {
                     yield break;
                 }
-                PagedDeidentificationDocumentDetails result = (PagedDeidentificationDocumentDetails)response;
-                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PagedDeidentificationDocumentDetails result = ((PagedDeidentificationDocumentDetails)response);
+                yield return global::Azure.Page<DeidentificationDocumentDetails>.FromValues(((IReadOnlyList<global::Azure.Health.Deidentification.DeidentificationDocumentDetails>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -66,10 +66,10 @@ namespace Azure.Health.Deidentification
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, pageSize, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, pageSize, _continuationToken, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, pageSize, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, pageSize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

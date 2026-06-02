@@ -14,20 +14,20 @@ namespace Azure.Communication.Messages.Models.Channels
     /// <summary> WhatsApp Contact. </summary>
     public partial class WhatsAppContact : ConversationContact
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public WhatsAppContact(string id) : base(id, MessagePlatformKind.WhatsApp)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public WhatsAppContact(string id) : base(id, global::Azure.Communication.Messages.MessagePlatformKind.WhatsApp)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(id, nameof(id));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatsAppContact(string id, MessagePlatformKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, kind, additionalBinaryDataProperties)
+        internal WhatsAppContact(string id, MessagePlatformKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, kind, additionalBinaryDataProperties)
         {
         }
     }

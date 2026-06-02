@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Supported parameters for scoring workers used with BestWorkerMode. </summary>
-    public readonly partial struct ScoringRuleParameterSelector : IEquatable<ScoringRuleParameterSelector>
+    public readonly partial struct ScoringRuleParameterSelector : IEquatable<global::Azure.Communication.JobRouter.ScoringRuleParameterSelector>
     {
         private readonly string _value;
         /// <summary> Parameter to add job labels to scoring payload.  Property is sent as `job`. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Parameter to add worker selectors from a job to scoring payload.  Property is sent as `selectors`. </summary>
         private const string WorkerSelectorsValue = "workerSelectors";
 
-        /// <summary> Initializes a new instance of <see cref="ScoringRuleParameterSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.ScoringRuleParameterSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScoringRuleParameterSelector(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Communication.JobRouter
         /// <summary> Parameter to add worker selectors from a job to scoring payload.  Property is sent as `selectors`. </summary>
         public static ScoringRuleParameterSelector WorkerSelectors { get; } = new ScoringRuleParameterSelector(WorkerSelectorsValue);
 
-        /// <summary> Determines if two <see cref="ScoringRuleParameterSelector"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.ScoringRuleParameterSelector"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScoringRuleParameterSelector left, ScoringRuleParameterSelector right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScoringRuleParameterSelector"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Communication.JobRouter.ScoringRuleParameterSelector"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScoringRuleParameterSelector left, ScoringRuleParameterSelector right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScoringRuleParameterSelector"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.ScoringRuleParameterSelector"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ScoringRuleParameterSelector(string value) => new ScoringRuleParameterSelector(value);
 
-        /// <summary> Converts a string to a <see cref="ScoringRuleParameterSelector"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Communication.JobRouter.ScoringRuleParameterSelector"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScoringRuleParameterSelector?(string value) => value == null ? null : new ScoringRuleParameterSelector(value);
+        public static implicit operator ScoringRuleParameterSelector?(string value) => (value == null) ? null : new ScoringRuleParameterSelector(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScoringRuleParameterSelector other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ScoringRuleParameterSelector other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ScoringRuleParameterSelector other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScoringRuleParameterSelector other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

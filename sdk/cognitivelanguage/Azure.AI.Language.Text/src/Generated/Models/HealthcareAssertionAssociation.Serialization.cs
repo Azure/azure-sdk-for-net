@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareAssertionAssociation value) => value switch
         {
-            HealthcareAssertionAssociation.Subject => "subject",
-            HealthcareAssertionAssociation.Other => "other",
+            global::Azure.AI.Language.Text.HealthcareAssertionAssociation.Subject => "subject",
+            global::Azure.AI.Language.Text.HealthcareAssertionAssociation.Other => "other",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionAssociation value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static HealthcareAssertionAssociation ToHealthcareAssertionAssociation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "subject"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "subject"))
             {
-                return HealthcareAssertionAssociation.Subject;
+                return global::Azure.AI.Language.Text.HealthcareAssertionAssociation.Subject;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "other"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "other"))
             {
-                return HealthcareAssertionAssociation.Other;
+                return global::Azure.AI.Language.Text.HealthcareAssertionAssociation.Other;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareAssertionAssociation value.");
         }

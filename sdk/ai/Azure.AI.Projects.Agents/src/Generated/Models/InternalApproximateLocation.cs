@@ -10,21 +10,21 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalApproximateLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalApproximateLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalApproximateLocation"/>. </summary>
         public InternalApproximateLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalApproximateLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalApproximateLocation"/>. </summary>
         /// <param name="type"> The type of location approximation. Always `approximate`. </param>
         /// <param name="country"></param>
         /// <param name="region"></param>
         /// <param name="city"></param>
         /// <param name="timezone"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalApproximateLocation(string @type, string country, string region, string city, string timezone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalApproximateLocation(string @type, string country, string region, string city, string timezone, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Country = country;

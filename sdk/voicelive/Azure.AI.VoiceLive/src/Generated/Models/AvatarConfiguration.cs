@@ -14,22 +14,22 @@ namespace Azure.AI.VoiceLive
     public partial class AvatarConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AvatarConfiguration"/>. </summary>
         /// <param name="character"> The character name or ID used for the avatar. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="character"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="character"/> is null. </exception>
         public AvatarConfiguration(string character, bool customized)
         {
-            Argument.AssertNotNull(character, nameof(character));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(character, nameof(character));
 
-            IceServers = new ChangeTrackingList<IceServer>();
+            IceServers = new ChangeTrackingList<global::Azure.AI.VoiceLive.IceServer>();
             Character = character;
             Customized = customized;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AvatarConfiguration"/>. </summary>
         /// <param name="type"> Type of avatar to use. </param>
         /// <param name="iceServers"> Optional list of ICE servers to use for WebRTC connection establishment. </param>
         /// <param name="character"> The character name or ID used for the avatar. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
         /// <param name="outputAuditAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? outputAuditAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<global::Azure.AI.VoiceLive.IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? outputAuditAudio, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             IceServers = iceServers;
@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive
         public AvatarConfigTypes? Type { get; set; }
 
         /// <summary> Optional list of ICE servers to use for WebRTC connection establishment. </summary>
-        public IList<IceServer> IceServers { get; }
+        public IList<global::Azure.AI.VoiceLive.IceServer> IceServers { get; }
 
         /// <summary> The character name or ID used for the avatar. </summary>
         public string Character { get; set; }

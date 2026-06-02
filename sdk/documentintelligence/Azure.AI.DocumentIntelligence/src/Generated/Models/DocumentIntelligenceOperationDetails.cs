@@ -12,21 +12,21 @@ namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
     /// Operation info.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/>, <see cref="DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentClassifierBuildOperationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, and <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>.
     /// </summary>
     public abstract partial class DocumentIntelligenceOperationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        private protected DocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation)
+        private protected DocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, global::System.Uri resourceLocation)
         {
             OperationId = operationId;
             Status = status;
@@ -37,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, global::System.Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             Status = status;
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
         internal OperationKind Kind { get; set; }
 
         /// <summary> URL of the resource targeted by this operation. </summary>
-        public Uri ResourceLocation { get; }
+        public global::System.Uri ResourceLocation { get; }
 
         /// <summary> API version used to create this operation. </summary>
         public string ApiVersion { get; }

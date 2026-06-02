@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.Access
     {
         public AccessClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal AccessClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

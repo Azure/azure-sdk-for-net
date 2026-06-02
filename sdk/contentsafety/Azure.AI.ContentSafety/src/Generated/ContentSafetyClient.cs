@@ -18,9 +18,9 @@ namespace Azure.AI.ContentSafety
     /// <summary> The ContentSafetyClient. </summary>
     public partial class ContentSafetyClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ContentSafetyClient for mocking. </summary>
@@ -31,16 +31,16 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of ContentSafetyClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ContentSafetyClient(global::System.Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ContentSafetyClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ContentSafetyClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
@@ -48,20 +48,20 @@ namespace Azure.AI.ContentSafety
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ContentSafetyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ContentSafetyClientOptions options)
+        internal ContentSafetyClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new ContentSafetyClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,8 +71,8 @@ namespace Azure.AI.ContentSafety
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ContentSafetyClient(global::System.Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
@@ -80,14 +80,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ContentSafetyClient(global::System.Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of ContentSafetyClient from a <see cref="ContentSafetyClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ContentSafetyClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public ContentSafetyClient(ContentSafetyClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -108,8 +108,8 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnalyzeImage(RequestContent content, RequestContext context = null)
         {
@@ -117,9 +117,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeImageRequest(content, context);
+                using HttpMessage message = this.CreateAnalyzeImageRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -139,18 +139,18 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnalyzeImageAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AnalyzeImageAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeImage");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeImageRequest(content, context);
+                using HttpMessage message = this.CreateAnalyzeImageRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -163,27 +163,27 @@ namespace Azure.AI.ContentSafety
         /// <summary> A synchronous API for the analysis of potentially harmful image content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </summary>
         /// <param name="options"> The image analysis request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AnalyzeImageResult> AnalyzeImage(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.AnalyzeImageResult> AnalyzeImage(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = AnalyzeImage(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((AnalyzeImageResult)result, result);
+            Response result = this.AnalyzeImage(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AnalyzeImageResult)result), result);
         }
 
         /// <summary> A synchronous API for the analysis of potentially harmful image content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </summary>
         /// <param name="options"> The image analysis request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AnalyzeImageResult>> AnalyzeImageAsync(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.AnalyzeImageResult>> AnalyzeImageAsync(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await AnalyzeImageAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AnalyzeImageResult)result, result);
+            Response result = await this.AnalyzeImageAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AnalyzeImageResult)result), result);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnalyzeText(RequestContent content, RequestContext context = null)
         {
@@ -205,9 +205,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
+                using HttpMessage message = this.CreateAnalyzeTextRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -227,18 +227,18 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
+                using HttpMessage message = this.CreateAnalyzeTextRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -251,27 +251,27 @@ namespace Azure.AI.ContentSafety
         /// <summary> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </summary>
         /// <param name="options"> The text analysis request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AnalyzeTextResult> AnalyzeText(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.AnalyzeTextResult> AnalyzeText(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = AnalyzeText(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((AnalyzeTextResult)result, result);
+            Response result = this.AnalyzeText(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((AnalyzeTextResult)result), result);
         }
 
         /// <summary> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </summary>
         /// <param name="options"> The text analysis request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AnalyzeTextResult>> AnalyzeTextAsync(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await AnalyzeTextAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AnalyzeTextResult)result, result);
+            Response result = await this.AnalyzeTextAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((AnalyzeTextResult)result), result);
         }
 
         /// <summary>
@@ -284,8 +284,8 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DetectTextProtectedMaterial(RequestContent content, RequestContext context = null)
         {
@@ -293,9 +293,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                using HttpMessage message = this.CreateDetectTextProtectedMaterialRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -315,18 +315,18 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DetectTextProtectedMaterialAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> DetectTextProtectedMaterialAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextProtectedMaterial");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                using HttpMessage message = this.CreateDetectTextProtectedMaterialRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -339,27 +339,27 @@ namespace Azure.AI.ContentSafety
         /// <summary> A synchronous API for detecting protected material in the given text. </summary>
         /// <param name="options"> The request body to be detected, which may contain protected material. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DetectTextProtectedMaterialResult> DetectTextProtectedMaterial(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.DetectTextProtectedMaterialResult> DetectTextProtectedMaterial(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = DetectTextProtectedMaterial(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((DetectTextProtectedMaterialResult)result, result);
+            Response result = this.DetectTextProtectedMaterial(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DetectTextProtectedMaterialResult)result), result);
         }
 
         /// <summary> A synchronous API for detecting protected material in the given text. </summary>
         /// <param name="options"> The request body to be detected, which may contain protected material. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DetectTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await DetectTextProtectedMaterialAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DetectTextProtectedMaterialResult)result, result);
+            Response result = await this.DetectTextProtectedMaterialAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DetectTextProtectedMaterialResult)result), result);
         }
 
         /// <summary>
@@ -372,8 +372,8 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ShieldPrompt(RequestContent content, RequestContext context = null)
         {
@@ -381,9 +381,9 @@ namespace Azure.AI.ContentSafety
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateShieldPromptRequest(content, context);
+                using HttpMessage message = this.CreateShieldPromptRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -403,18 +403,18 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ShieldPromptAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ShieldPromptAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.ShieldPrompt");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.ContentSafety.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateShieldPromptRequest(content, context);
+                using HttpMessage message = this.CreateShieldPromptRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -427,27 +427,27 @@ namespace Azure.AI.ContentSafety
         /// <summary> A synchronous API for shielding prompt from direct and indirect injection attacks. </summary>
         /// <param name="options"> The request body to be detected, which may contain direct or indirect injection attacks. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ShieldPromptResult> ShieldPrompt(ShieldPromptOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.ContentSafety.ShieldPromptResult> ShieldPrompt(ShieldPromptOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = ShieldPrompt(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((ShieldPromptResult)result, result);
+            Response result = this.ShieldPrompt(options, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ShieldPromptResult)result), result);
         }
 
         /// <summary> A synchronous API for shielding prompt from direct and indirect injection attacks. </summary>
         /// <param name="options"> The request body to be detected, which may contain direct or indirect injection attacks. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ShieldPromptResult>> ShieldPromptAsync(ShieldPromptOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.ContentSafety.ShieldPromptResult>> ShieldPromptAsync(ShieldPromptOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await ShieldPromptAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ShieldPromptResult)result, result);
+            Response result = await this.ShieldPromptAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ShieldPromptResult)result), result);
         }
     }
 }

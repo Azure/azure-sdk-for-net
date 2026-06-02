@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionDelta : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>
+    public partial class SessionUpdateConversationItemInputAudioTranscriptionDelta : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionDelta()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemInputAudioTranscriptionDelta IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionDelta)PersistableModelCreateCore(data, options);
+        SessionUpdateConversationItemInputAudioTranscriptionDelta IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemInputAudioTranscriptionDelta)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,31 +73,31 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("item_id"u8);
             writer.WriteStringValue(ItemId);
-            if (Optional.IsDefined(ContentIndex))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(ContentIndex))
             {
                 writer.WritePropertyName("content_index"u8);
                 writer.WriteNumberValue(ContentIndex.Value);
             }
-            if (Optional.IsDefined(Delta))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStringValue(Delta);
             }
-            if (Optional.IsCollectionDefined(Logprobs))
+            if (global::Azure.AI.VoiceLive.Optional.IsCollectionDefined(Logprobs))
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteStartArray();
                 foreach (LogProbProperties item in Logprobs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<LogProbProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,36 +105,36 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemInputAudioTranscriptionDelta IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionDelta)JsonModelCreateCore(ref reader, options);
+        SessionUpdateConversationItemInputAudioTranscriptionDelta IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemInputAudioTranscriptionDelta)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateConversationItemInputAudioTranscriptionDelta DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string itemId = default;
             int? contentIndex = default;
             string delta = default;
-            IList<LogProbProperties> logprobs = default;
+            IList<global::Azure.AI.VoiceLive.LogProbProperties> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -154,7 +154,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("content_index"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -168,21 +168,21 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<LogProbProperties> array = new List<LogProbProperties>();
+                    List<global::Azure.AI.VoiceLive.LogProbProperties> array = new List<global::Azure.AI.VoiceLive.LogProbProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogProbProperties.DeserializeLogProbProperties(item, options));
+                        array.Add(global::Azure.AI.VoiceLive.LogProbProperties.DeserializeLogProbProperties(item, options));
                     }
                     logprobs = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateConversationItemInputAudioTranscriptionDelta(
@@ -192,7 +192,7 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 contentIndex,
                 delta,
-                logprobs ?? new ChangeTrackingList<LogProbProperties>());
+                (logprobs ?? new ChangeTrackingList<global::Azure.AI.VoiceLive.LogProbProperties>()));
         }
     }
 }

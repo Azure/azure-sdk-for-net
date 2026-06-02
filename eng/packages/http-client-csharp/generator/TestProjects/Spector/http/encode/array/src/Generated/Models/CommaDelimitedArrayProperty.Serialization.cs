@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Encode._Array
 {
-    public partial class CommaDelimitedArrayProperty : IJsonModel<CommaDelimitedArrayProperty>
+    public partial class CommaDelimitedArrayProperty : IJsonModel<global::Encode._Array.CommaDelimitedArrayProperty>
     {
         internal CommaDelimitedArrayProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace Encode._Array
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<CommaDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Encode._Array.CommaDelimitedArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        CommaDelimitedArrayProperty IPersistableModel<CommaDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        CommaDelimitedArrayProperty IPersistableModel<global::Encode._Array.CommaDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<CommaDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Encode._Array.CommaDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="commaDelimitedArrayProperty"> The <see cref="CommaDelimitedArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="commaDelimitedArrayProperty"> The <see cref="global::Encode._Array.CommaDelimitedArrayProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(CommaDelimitedArrayProperty commaDelimitedArrayProperty) => throw null;
 
         public static explicit operator CommaDelimitedArrayProperty(Response response) => throw null;
 
-        void IJsonModel<CommaDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Encode._Array.CommaDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        CommaDelimitedArrayProperty IJsonModel<CommaDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        CommaDelimitedArrayProperty IJsonModel<global::Encode._Array.CommaDelimitedArrayProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CommaDelimitedArrayProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

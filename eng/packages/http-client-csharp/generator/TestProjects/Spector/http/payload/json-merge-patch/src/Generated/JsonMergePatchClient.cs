@@ -17,31 +17,31 @@ namespace Payload.JsonMergePatch
 {
     public partial class JsonMergePatchClient
     {
-        public JsonMergePatchClient() : this(new Uri("http://localhost:3000"), new JsonMergePatchClientOptions()) => throw null;
+        public JsonMergePatchClient() : this(new global::System.Uri("http://localhost:3000"), new JsonMergePatchClientOptions()) => throw null;
 
-        internal JsonMergePatchClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, JsonMergePatchClientOptions options) => throw null;
+        internal JsonMergePatchClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, JsonMergePatchClientOptions options) => throw null;
 
-        public JsonMergePatchClient(Uri endpoint, JsonMergePatchClientOptions options) : this(null, endpoint, options) => throw null;
+        public JsonMergePatchClient(global::System.Uri endpoint, JsonMergePatchClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public JsonMergePatchClient(JsonMergePatchClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public JsonMergePatchClient(JsonMergePatchClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response CreateResource(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> CreateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> CreateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Resource> CreateResource(Resource body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Payload.JsonMergePatch.Resource> CreateResource(Resource body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Resource>> CreateResourceAsync(Resource body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Payload.JsonMergePatch.Resource>> CreateResourceAsync(Resource body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UpdateResource(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response UpdateOptionalResource(RequestContent content = null, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateOptionalResourceAsync(RequestContent content = null, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UpdateOptionalResourceAsync(RequestContent content = null, RequestContext context = null) => throw null;
     }
 }

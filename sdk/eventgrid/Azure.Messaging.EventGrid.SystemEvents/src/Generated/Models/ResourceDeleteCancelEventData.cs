@@ -15,9 +15,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ResourceDeleteCancelEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceDeleteCancelEventData"/>. </summary>
         /// <param name="authorizationJson"> The requested authorization for the operation. </param>
         /// <param name="httpRequestJson"> The details of the operation. </param>
         internal ResourceDeleteCancelEventData(JsonElement authorizationJson, JsonElement httpRequestJson)
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             HttpRequestJson = httpRequestJson;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ResourceDeleteCancelEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequestJson"> The details of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;

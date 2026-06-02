@@ -18,15 +18,15 @@ namespace Azure.Communication.JobRouter
     /// <summary> The JobRouterAdministrationClient. </summary>
     public partial class JobRouterAdministrationClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public JobRouterAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new JobRouterClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public JobRouterAdministrationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new JobRouterClientOptions())
         {
         }
 
@@ -34,20 +34,20 @@ namespace Azure.Communication.JobRouter
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal JobRouterAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, JobRouterClientOptions options)
+        internal JobRouterAdministrationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, JobRouterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new JobRouterClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -55,8 +55,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClient from a <see cref="JobRouterAdministrationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for JobRouterAdministrationClient. </param>
-        [Experimental("SCME0002")]
-        public JobRouterAdministrationClient(JobRouterAdministrationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public JobRouterAdministrationClient(JobRouterAdministrationClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertDistributionPolicy(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
@@ -86,16 +86,16 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -117,24 +117,24 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpsertDistributionPolicyAsync(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> UpsertDistributionPolicyAsync(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -154,9 +154,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDistributionPolicy(string distributionPolicyId, RequestContext context)
         {
@@ -164,9 +164,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-                using HttpMessage message = CreateGetDistributionPolicyRequest(distributionPolicyId, context);
+                using HttpMessage message = this.CreateGetDistributionPolicyRequest(distributionPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -186,19 +186,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetDistributionPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-                using HttpMessage message = CreateGetDistributionPolicyRequest(distributionPolicyId, context);
+                using HttpMessage message = this.CreateGetDistributionPolicyRequest(distributionPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -211,29 +211,29 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves an existing distribution policy by Id. </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DistributionPolicy> GetDistributionPolicy(string distributionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.JobRouter.DistributionPolicy> GetDistributionPolicy(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-            Response result = GetDistributionPolicy(distributionPolicyId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DistributionPolicy)result, result);
+            Response result = this.GetDistributionPolicy(distributionPolicyId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((DistributionPolicy)result), result);
         }
 
         /// <summary> Retrieves an existing distribution policy by Id. </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.JobRouter.DistributionPolicy>> GetDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-            Response result = await GetDistributionPolicyAsync(distributionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DistributionPolicy)result, result);
+            Response result = await this.GetDistributionPolicyAsync(distributionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((DistributionPolicy)result), result);
         }
 
         /// <summary>
@@ -246,9 +246,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
@@ -263,9 +263,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
@@ -273,8 +273,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DistributionPolicy> GetDistributionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Communication.JobRouter.DistributionPolicy> GetDistributionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
@@ -282,8 +282,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Communication.JobRouter.DistributionPolicy> GetDistributionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
@@ -298,9 +298,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDistributionPolicy(string distributionPolicyId, RequestContext context)
         {
@@ -308,9 +308,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-                using HttpMessage message = CreateDeleteDistributionPolicyRequest(distributionPolicyId, context);
+                using HttpMessage message = this.CreateDeleteDistributionPolicyRequest(distributionPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -330,19 +330,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteDistributionPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-                using HttpMessage message = CreateDeleteDistributionPolicyRequest(distributionPolicyId, context);
+                using HttpMessage message = this.CreateDeleteDistributionPolicyRequest(distributionPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -355,27 +355,27 @@ namespace Azure.Communication.JobRouter
         /// <summary> Delete a distribution policy by Id. </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteDistributionPolicy(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-            return DeleteDistributionPolicy(distributionPolicyId, cancellationToken.ToRequestContext());
+            return this.DeleteDistributionPolicy(distributionPolicyId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a distribution policy by Id. </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
 
-            return await DeleteDistributionPolicyAsync(distributionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteDistributionPolicyAsync(distributionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertClassificationPolicy(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
@@ -398,16 +398,16 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -429,24 +429,24 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpsertClassificationPolicyAsync(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> UpsertClassificationPolicyAsync(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -466,9 +466,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassificationPolicy(string classificationPolicyId, RequestContext context)
         {
@@ -476,9 +476,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-                using HttpMessage message = CreateGetClassificationPolicyRequest(classificationPolicyId, context);
+                using HttpMessage message = this.CreateGetClassificationPolicyRequest(classificationPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -498,19 +498,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-                using HttpMessage message = CreateGetClassificationPolicyRequest(classificationPolicyId, context);
+                using HttpMessage message = this.CreateGetClassificationPolicyRequest(classificationPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -523,29 +523,29 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves an existing classification policy by Id. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ClassificationPolicy> GetClassificationPolicy(string classificationPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.JobRouter.ClassificationPolicy> GetClassificationPolicy(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-            Response result = GetClassificationPolicy(classificationPolicyId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ClassificationPolicy)result, result);
+            Response result = this.GetClassificationPolicy(classificationPolicyId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ClassificationPolicy)result), result);
         }
 
         /// <summary> Retrieves an existing classification policy by Id. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.JobRouter.ClassificationPolicy>> GetClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-            Response result = await GetClassificationPolicyAsync(classificationPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ClassificationPolicy)result, result);
+            Response result = await this.GetClassificationPolicyAsync(classificationPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ClassificationPolicy)result), result);
         }
 
         /// <summary>
@@ -558,9 +558,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
@@ -575,9 +575,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
@@ -585,8 +585,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<ClassificationPolicy> GetClassificationPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Communication.JobRouter.ClassificationPolicy> GetClassificationPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
@@ -594,8 +594,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Communication.JobRouter.ClassificationPolicy> GetClassificationPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
@@ -610,9 +610,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteClassificationPolicy(string classificationPolicyId, RequestContext context)
         {
@@ -620,9 +620,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-                using HttpMessage message = CreateDeleteClassificationPolicyRequest(classificationPolicyId, context);
+                using HttpMessage message = this.CreateDeleteClassificationPolicyRequest(classificationPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -642,19 +642,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteClassificationPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-                using HttpMessage message = CreateDeleteClassificationPolicyRequest(classificationPolicyId, context);
+                using HttpMessage message = this.CreateDeleteClassificationPolicyRequest(classificationPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -667,27 +667,27 @@ namespace Azure.Communication.JobRouter
         /// <summary> Delete a classification policy by Id. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteClassificationPolicy(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-            return DeleteClassificationPolicy(classificationPolicyId, cancellationToken.ToRequestContext());
+            return this.DeleteClassificationPolicy(classificationPolicyId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a classification policy by Id. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
 
-            return await DeleteClassificationPolicyAsync(classificationPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteClassificationPolicyAsync(classificationPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -702,7 +702,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertExceptionPolicy(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
@@ -710,16 +710,16 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -741,24 +741,24 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpsertExceptionPolicyAsync(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> UpsertExceptionPolicyAsync(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -778,9 +778,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetExceptionPolicy(string exceptionPolicyId, RequestContext context)
         {
@@ -788,9 +788,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-                using HttpMessage message = CreateGetExceptionPolicyRequest(exceptionPolicyId, context);
+                using HttpMessage message = this.CreateGetExceptionPolicyRequest(exceptionPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -810,19 +810,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetExceptionPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-                using HttpMessage message = CreateGetExceptionPolicyRequest(exceptionPolicyId, context);
+                using HttpMessage message = this.CreateGetExceptionPolicyRequest(exceptionPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -835,29 +835,29 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves an existing exception policy by Id. </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ExceptionPolicy> GetExceptionPolicy(string exceptionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.JobRouter.ExceptionPolicy> GetExceptionPolicy(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-            Response result = GetExceptionPolicy(exceptionPolicyId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ExceptionPolicy)result, result);
+            Response result = this.GetExceptionPolicy(exceptionPolicyId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ExceptionPolicy)result), result);
         }
 
         /// <summary> Retrieves an existing exception policy by Id. </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ExceptionPolicy>> GetExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.JobRouter.ExceptionPolicy>> GetExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-            Response result = await GetExceptionPolicyAsync(exceptionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ExceptionPolicy)result, result);
+            Response result = await this.GetExceptionPolicyAsync(exceptionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ExceptionPolicy)result), result);
         }
 
         /// <summary>
@@ -870,9 +870,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
@@ -887,9 +887,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
@@ -897,8 +897,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<ExceptionPolicy> GetExceptionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Communication.JobRouter.ExceptionPolicy> GetExceptionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
@@ -906,8 +906,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Communication.JobRouter.ExceptionPolicy> GetExceptionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
@@ -922,9 +922,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteExceptionPolicy(string exceptionPolicyId, RequestContext context)
         {
@@ -932,9 +932,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-                using HttpMessage message = CreateDeleteExceptionPolicyRequest(exceptionPolicyId, context);
+                using HttpMessage message = this.CreateDeleteExceptionPolicyRequest(exceptionPolicyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -954,19 +954,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteExceptionPolicy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-                using HttpMessage message = CreateDeleteExceptionPolicyRequest(exceptionPolicyId, context);
+                using HttpMessage message = this.CreateDeleteExceptionPolicyRequest(exceptionPolicyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -979,27 +979,27 @@ namespace Azure.Communication.JobRouter
         /// <summary> Deletes a exception policy by Id. </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteExceptionPolicy(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-            return DeleteExceptionPolicy(exceptionPolicyId, cancellationToken.ToRequestContext());
+            return this.DeleteExceptionPolicy(exceptionPolicyId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a exception policy by Id. </summary>
         /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
 
-            return await DeleteExceptionPolicyAsync(exceptionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteExceptionPolicyAsync(exceptionPolicyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1014,7 +1014,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertQueue(string queueId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
@@ -1022,16 +1022,16 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertQueueRequest(queueId, content, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1053,24 +1053,24 @@ namespace Azure.Communication.JobRouter
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpsertQueueAsync(string queueId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> UpsertQueueAsync(string queueId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
             try
             {
-                if (requestConditions?.IfNoneMatch != null)
+                if ((requestConditions?.IfNoneMatch != null))
                 {
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
-                if (requestConditions?.IfModifiedSince != null)
+                if ((requestConditions?.IfModifiedSince != null))
                 {
                     throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
+                using HttpMessage message = this.CreateUpsertQueueRequest(queueId, content, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1090,9 +1090,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetQueue(string queueId, RequestContext context)
         {
@@ -1100,9 +1100,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-                using HttpMessage message = CreateGetQueueRequest(queueId, context);
+                using HttpMessage message = this.CreateGetQueueRequest(queueId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1122,19 +1122,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetQueueAsync(string queueId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetQueueAsync(string queueId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetQueue");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-                using HttpMessage message = CreateGetQueueRequest(queueId, context);
+                using HttpMessage message = this.CreateGetQueueRequest(queueId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1147,29 +1147,29 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves an existing queue by Id. </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Communication.JobRouter.RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-            Response result = GetQueue(queueId, cancellationToken.ToRequestContext());
-            return Response.FromValue((RouterQueue)result, result);
+            Response result = this.GetQueue(queueId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((RouterQueue)result), result);
         }
 
         /// <summary> Retrieves an existing queue by Id. </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Communication.JobRouter.RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-            Response result = await GetQueueAsync(queueId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((RouterQueue)result, result);
+            Response result = await this.GetQueueAsync(queueId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((RouterQueue)result), result);
         }
 
         /// <summary>
@@ -1182,9 +1182,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<global::System.BinaryData> GetQueues(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetQueuesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetQueues");
         }
@@ -1199,9 +1199,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<global::System.BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
         {
             return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetQueues");
         }
@@ -1209,8 +1209,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<RouterQueue> GetQueues(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<global::Azure.Communication.JobRouter.RouterQueue> GetQueues(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
@@ -1218,8 +1218,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<RouterQueue> GetQueuesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<global::Azure.Communication.JobRouter.RouterQueue> GetQueuesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
@@ -1234,9 +1234,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteQueue(string queueId, RequestContext context)
         {
@@ -1244,9 +1244,9 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-                using HttpMessage message = CreateDeleteQueueRequest(queueId, context);
+                using HttpMessage message = this.CreateDeleteQueueRequest(queueId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1266,19 +1266,19 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteQueueAsync(string queueId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteQueueAsync(string queueId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteQueue");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+                global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-                using HttpMessage message = CreateDeleteQueueRequest(queueId, context);
+                using HttpMessage message = this.CreateDeleteQueueRequest(queueId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1291,27 +1291,27 @@ namespace Azure.Communication.JobRouter
         /// <summary> Deletes a queue by Id. </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteQueue(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-            return DeleteQueue(queueId, cancellationToken.ToRequestContext());
+            return this.DeleteQueue(queueId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a queue by Id. </summary>
         /// <param name="queueId"> Id of a queue. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteQueueAsync(string queueId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteQueueAsync(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            global::Azure.Communication.JobRouter.Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
-            return await DeleteQueueAsync(queueId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteQueueAsync(queueId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

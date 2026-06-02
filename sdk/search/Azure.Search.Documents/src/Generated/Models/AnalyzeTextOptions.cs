@@ -15,21 +15,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AnalyzeTextOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text to break into tokens. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.Search.Documents.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            TokenFilters = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.TokenFilterName>();
             CharFilters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text to break into tokens. </param>
         /// <param name="analyzerName"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
         /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
         /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzerName, LexicalTokenizerName? tokenizerName, LexicalNormalizerName? normalizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzerName, LexicalTokenizerName? tokenizerName, LexicalNormalizerName? normalizerName, IList<global::Azure.Search.Documents.Indexes.Models.TokenFilterName> tokenFilters, IList<string> charFilters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             AnalyzerName = analyzerName;
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public LexicalNormalizerName? NormalizerName { get; set; }
 
         /// <summary> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
-        public IList<TokenFilterName> TokenFilters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.TokenFilterName> TokenFilters { get; }
 
         /// <summary> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
         public IList<string> CharFilters { get; }

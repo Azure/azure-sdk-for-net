@@ -14,21 +14,21 @@ namespace Azure.Compute.Batch
     public partial class BatchJobSpecification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSpecification"/>. </summary>
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
         public BatchJobSpecification(BatchPoolInfo poolInfo)
         {
-            Argument.AssertNotNull(poolInfo, nameof(poolInfo));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(poolInfo, nameof(poolInfo));
 
-            CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
+            CommonEnvironmentSettings = new ChangeTrackingList<global::Azure.Compute.Batch.EnvironmentSetting>();
             PoolInfo = poolInfo;
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobSpecification"/>. </summary>
         /// <param name="priority"> The priority of Jobs created under this schedule. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. This priority is used as the default for all Jobs under the Job Schedule. You can update a Job's priority after it has been created using by using the update Job API. </param>
         /// <param name="allowTaskPreemption"> Whether Tasks in this job can be preempted by other high priority jobs. (This property is not available by default. Please contact support for more information) If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </param>
         /// <param name="maxParallelTasks"> The maximum number of tasks that can be executed in parallel for the job. (This property is not available by default. Please contact support for more information) The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </param>
@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
         /// <param name="metadata"> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<global::Azure.Compute.Batch.EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             AllowTaskPreemption = allowTaskPreemption;
@@ -102,12 +102,12 @@ namespace Azure.Compute.Batch
         public BatchJobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary> A list of common environment variable settings. These environment variables are set for all Tasks in Jobs created under this schedule (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </summary>
-        public IList<EnvironmentSetting> CommonEnvironmentSettings { get; }
+        public IList<global::Azure.Compute.Batch.EnvironmentSetting> CommonEnvironmentSettings { get; }
 
         /// <summary> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </summary>
         public BatchPoolInfo PoolInfo { get; set; }
 
         /// <summary> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
     }
 }

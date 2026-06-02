@@ -10,19 +10,19 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalOutputItemOutputMessage : AgentResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemOutputMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemOutputMessage"/>. </summary>
         /// <param name="content"> The content of the output message. </param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        public InternalOutputItemOutputMessage(IEnumerable<InternalOutputMessageContent> content, InputItemOutputMessageStatus status) : base(AgentResponseItemKind.OutputMessage)
+        public InternalOutputItemOutputMessage(IEnumerable<global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContent> content, InputItemOutputMessageStatus status) : base(global::Azure.AI.Extensions.OpenAI.AgentResponseItemKind.OutputMessage)
         {
             Content = content.ToList();
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalOutputItemOutputMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalOutputItemOutputMessage"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<InternalOutputMessageContent> content, MessagePhase? phase, InputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string role, IList<global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContent> content, MessagePhase? phase, InputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -47,7 +47,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
-        public IList<InternalOutputMessageContent> Content { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.InternalOutputMessageContent> Content { get; }
 
         /// <summary> Gets or sets the Phase. </summary>
         public MessagePhase? Phase { get; set; }

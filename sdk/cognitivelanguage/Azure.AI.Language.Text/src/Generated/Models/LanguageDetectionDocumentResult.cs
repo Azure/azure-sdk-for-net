@@ -15,26 +15,26 @@ namespace Azure.AI.Language.Text
     public partial class LanguageDetectionDocumentResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionDocumentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
-        internal LanguageDetectionDocumentResult(string id, IEnumerable<DocumentWarning> warnings, DetectedLanguage detectedLanguage)
+        internal LanguageDetectionDocumentResult(string id, IEnumerable<global::Azure.AI.Language.Text.DocumentWarning> warnings, DetectedLanguage detectedLanguage)
         {
             Id = id;
             Warnings = warnings.ToList();
             DetectedLanguage = detectedLanguage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionDocumentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.LanguageDetectionDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LanguageDetectionDocumentResult(string id, IList<DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LanguageDetectionDocumentResult(string id, IList<global::Azure.AI.Language.Text.DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Text
         public string Id { get; }
 
         /// <summary> Warnings encountered while processing document. </summary>
-        public IList<DocumentWarning> Warnings { get; }
+        public IList<global::Azure.AI.Language.Text.DocumentWarning> Warnings { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }

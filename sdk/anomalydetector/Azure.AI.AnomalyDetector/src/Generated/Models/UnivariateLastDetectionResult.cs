@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateLastDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -58,7 +58,7 @@ namespace Azure.AI.AnomalyDetector
             IsPositiveAnomaly = isPositiveAnomaly;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -93,7 +93,7 @@ namespace Azure.AI.AnomalyDetector
         /// severe the anomaly is. For normal points, the severity is always 0.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Period = period;
             SuggestedWindow = suggestedWindow;

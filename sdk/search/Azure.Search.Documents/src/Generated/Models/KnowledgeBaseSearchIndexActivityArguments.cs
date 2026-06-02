@@ -16,23 +16,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseSearchIndexActivityArguments
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
         internal KnowledgeBaseSearchIndexActivityArguments()
         {
-            SourceDataFields = new ChangeTrackingList<SearchIndexFieldReference>();
-            SearchFields = new ChangeTrackingList<SearchIndexFieldReference>();
+            SourceDataFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference>();
+            SearchFields = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
         /// <param name="search"> The search string used to query the search index. </param>
         /// <param name="filter"> The filter string. </param>
         /// <param name="sourceDataFields"> What fields were selected for search. </param>
         /// <param name="searchFields"> What fields were searched against. </param>
         /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> sourceDataFields, IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             Filter = filter;
@@ -49,10 +49,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Filter { get; }
 
         /// <summary> What fields were selected for search. </summary>
-        public IList<SearchIndexFieldReference> SourceDataFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> SourceDataFields { get; }
 
         /// <summary> What fields were searched against. </summary>
-        public IList<SearchIndexFieldReference> SearchFields { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchIndexFieldReference> SearchFields { get; }
 
         /// <summary> What semantic configuration was used from the search index. </summary>
         public string SemanticConfigurationName { get; }

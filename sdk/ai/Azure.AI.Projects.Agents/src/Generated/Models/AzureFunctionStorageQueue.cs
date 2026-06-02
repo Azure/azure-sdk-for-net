@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Agents
     public partial class AzureFunctionStorageQueue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionStorageQueue"/>. </summary>
         /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceEndpoint"/> or <paramref name="queueName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="queueServiceEndpoint"/> or <paramref name="queueName"/> is null. </exception>
         public AzureFunctionStorageQueue(string queueServiceEndpoint, string queueName)
         {
-            Argument.AssertNotNull(queueServiceEndpoint, nameof(queueServiceEndpoint));
-            Argument.AssertNotNull(queueName, nameof(queueName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(queueServiceEndpoint, nameof(queueServiceEndpoint));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(queueName, nameof(queueName));
 
             QueueServiceEndpoint = queueServiceEndpoint;
             QueueName = queueName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AzureFunctionStorageQueue"/>. </summary>
         /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionStorageQueue(string queueServiceEndpoint, string queueName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFunctionStorageQueue(string queueServiceEndpoint, string queueName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QueueServiceEndpoint = queueServiceEndpoint;
             QueueName = queueName;

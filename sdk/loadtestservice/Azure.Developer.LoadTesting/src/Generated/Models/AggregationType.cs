@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Aggregation type. </summary>
-    public readonly partial struct AggregationType : IEquatable<AggregationType>
+    public readonly partial struct AggregationType : IEquatable<global::Azure.Developer.LoadTesting.AggregationType>
     {
         private readonly string _value;
         /// <summary> Average value. </summary>
@@ -41,12 +41,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> 99.99th percentile. </summary>
         private const string Percentile9999Value = "Percentile9999";
 
-        /// <summary> Initializes a new instance of <see cref="AggregationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.AggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AggregationType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -90,34 +90,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> 99.99th percentile. </summary>
         public static AggregationType Percentile9999 { get; } = new AggregationType(Percentile9999Value);
 
-        /// <summary> Determines if two <see cref="AggregationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.AggregationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AggregationType left, AggregationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AggregationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.AggregationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AggregationType left, AggregationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.AggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AggregationType(string value) => new AggregationType(value);
 
-        /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.AggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregationType?(string value) => value == null ? null : new AggregationType(value);
+        public static implicit operator AggregationType?(string value) => (value == null) ? null : new AggregationType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AggregationType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AggregationType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AggregationType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

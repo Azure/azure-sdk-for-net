@@ -13,9 +13,9 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class UnknownMonitorDomain : MonitorDomain, IJsonModel<MonitorDomain>
+    internal partial class UnknownMonitorDomain : MonitorDomain, IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMonitorDomain"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.UnknownMonitorDomain"/> for deserialization. </summary>
         internal UnknownMonitorDomain()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.OpenTelemetry.Exporter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitorDomain(document.RootElement, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain.DeserializeMonitorDomain(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorDomain>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorDomain IPersistableModel<MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorDomain IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorDomain>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,42 +73,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorDomain IJsonModel<MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorDomain IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorDomain(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain.DeserializeMonitorDomain(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static UnknownMonitorDomain DeserializeUnknownMonitorDomain(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int version = default;
             MonitorDomainKind kind = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ver"u8))
@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     kind = new MonitorDomainKind(prop.Value.GetString());
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new UnknownMonitorDomain(version, kind, additionalProperties);
         }

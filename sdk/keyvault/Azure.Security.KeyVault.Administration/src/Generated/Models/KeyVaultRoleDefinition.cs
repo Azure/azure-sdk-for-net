@@ -15,20 +15,20 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultRoleDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition"/>. </summary>
         public KeyVaultRoleDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>
         /// <param name="properties"> Role definition properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultRoleDefinition(string id, string name, KeyVaultRoleDefinitionType? @type, RoleDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultRoleDefinition(string id, string name, KeyVaultRoleDefinitionType? @type, RoleDefinitionProperties properties, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

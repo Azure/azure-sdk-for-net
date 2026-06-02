@@ -7,14 +7,14 @@ using System.ComponentModel;
 
 namespace OpenAI
 {
-    internal readonly partial struct ImageGenToolBackground : IEquatable<ImageGenToolBackground>
+    internal readonly partial struct ImageGenToolBackground : IEquatable<global::OpenAI.ImageGenToolBackground>
     {
         private readonly string _value;
         private const string TransparentValue = "transparent";
         private const string OpaqueValue = "opaque";
         private const string AutoValue = "auto";
 
-        /// <summary> Initializes a new instance of <see cref="ImageGenToolBackground"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.ImageGenToolBackground"/>. </summary>
         /// <param name="value"> The value. </param>
         public ImageGenToolBackground(string value)
         {
@@ -30,34 +30,34 @@ namespace OpenAI
         /// <summary> Gets the Auto. </summary>
         public static ImageGenToolBackground Auto { get; } = new ImageGenToolBackground(AutoValue);
 
-        /// <summary> Determines if two <see cref="ImageGenToolBackground"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolBackground"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageGenToolBackground left, ImageGenToolBackground right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImageGenToolBackground"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolBackground"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageGenToolBackground left, ImageGenToolBackground right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolBackground"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolBackground"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImageGenToolBackground(string value) => new ImageGenToolBackground(value);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolBackground"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolBackground"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageGenToolBackground?(string value) => value == null ? null : new ImageGenToolBackground(value);
+        public static implicit operator ImageGenToolBackground?(string value) => (value == null) ? null : new ImageGenToolBackground(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImageGenToolBackground other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImageGenToolBackground other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImageGenToolBackground other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImageGenToolBackground other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

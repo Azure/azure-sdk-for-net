@@ -12,29 +12,29 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Namespace. </summary>
     public partial class ResponsesNamespaceToolParam : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesNamespaceToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam"/>. </summary>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="tools"/> is null. </exception>
-        public ResponsesNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base(ToolType.Namespace)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="tools"/> is null. </exception>
+        public ResponsesNamespaceToolParam(string name, string description, IEnumerable<global::System.BinaryData> tools) : base(global::Azure.AI.Extensions.OpenAI.ToolType.Namespace)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(tools, nameof(tools));
 
             Name = name;
             Description = description;
             Tools = tools.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesNamespaceToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        internal ResponsesNamespaceToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IList<BinaryData> tools) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesNamespaceToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IList<global::System.BinaryData> tools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -49,17 +49,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The function/custom tools available inside this namespace.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ResponsesFunctionToolParam"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesFunctionToolParam"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponsesCustomToolParam"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -86,6 +86,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Tools { get; }
+        public IList<global::System.BinaryData> Tools { get; }
     }
 }

@@ -16,24 +16,24 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationalAIAnalysis
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysis"/>. </summary>
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
-        internal ConversationalAIAnalysis(string id, IEnumerable<ConversationalAIIntent> intents)
+        internal ConversationalAIAnalysis(string id, IEnumerable<global::Azure.AI.Language.Conversations.Models.ConversationalAIIntent> intents)
         {
             Id = id;
             Intents = intents.ToList();
-            Entities = new ChangeTrackingList<ConversationalAIEntity>();
+            Entities = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationalAIAnalysis"/>. </summary>
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
         /// <param name="entities"> Global entities that are matched but not associated with any specific intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIAnalysis(string id, IList<ConversationalAIIntent> intents, IList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationalAIAnalysis(string id, IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIIntent> intents, IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Intents = intents;
@@ -45,9 +45,9 @@ namespace Azure.AI.Language.Conversations.Models
         public string Id { get; }
 
         /// <summary> The intent classification results for this conversation. </summary>
-        public IList<ConversationalAIIntent> Intents { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIIntent> Intents { get; }
 
         /// <summary> Global entities that are matched but not associated with any specific intent. </summary>
-        public IList<ConversationalAIEntity> Entities { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ConversationalAIEntity> Entities { get; }
     }
 }

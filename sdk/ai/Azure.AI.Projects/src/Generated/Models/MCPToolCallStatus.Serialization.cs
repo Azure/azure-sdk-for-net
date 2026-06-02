@@ -11,36 +11,36 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MCPToolCallStatus value) => value switch
         {
-            MCPToolCallStatus.InProgress => "in_progress",
-            MCPToolCallStatus.Completed => "completed",
-            MCPToolCallStatus.Incomplete => "incomplete",
-            MCPToolCallStatus.Calling => "calling",
-            MCPToolCallStatus.Failed => "failed",
+            global::Azure.AI.Projects.MCPToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.MCPToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.MCPToolCallStatus.Incomplete => "incomplete",
+            global::Azure.AI.Projects.MCPToolCallStatus.Calling => "calling",
+            global::Azure.AI.Projects.MCPToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MCPToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static MCPToolCallStatus ToMCPToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return MCPToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.MCPToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return MCPToolCallStatus.Completed;
+                return global::Azure.AI.Projects.MCPToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return MCPToolCallStatus.Incomplete;
+                return global::Azure.AI.Projects.MCPToolCallStatus.Incomplete;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "calling"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "calling"))
             {
-                return MCPToolCallStatus.Calling;
+                return global::Azure.AI.Projects.MCPToolCallStatus.Calling;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return MCPToolCallStatus.Failed;
+                return global::Azure.AI.Projects.MCPToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MCPToolCallStatus value.");
         }

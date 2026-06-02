@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NextLinkVerbClientHostExtensions
     {
         public static IClientBuilder AddNextLinkVerbClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNextLinkVerbClient(this IHostApplicationBuilder host, string sectionName, Action<NextLinkVerbClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNextLinkVerbClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.NextLinkVerbClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNextLinkVerbClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNextLinkVerbClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NextLinkVerbClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNextLinkVerbClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.NextLinkVerb.NextLinkVerbClientSettings> configureSettings) => throw null;
     }
 }

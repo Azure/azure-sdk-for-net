@@ -13,30 +13,30 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a Reaction notification. </summary>
     public partial class ReactionNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="ReactionNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ReactionNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="emoji"> emoji content like \uD83D\uDE00. </param>
         /// <param name="messageId"> ID of the previous message you want to reply to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/>, <paramref name="emoji"/> or <paramref name="messageId"/> is null. </exception>
-        public ReactionNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string emoji, string messageId) : base(channelRegistrationId, to, CommunicationMessageKind.Reaction)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/>, <paramref name="emoji"/> or <paramref name="messageId"/> is null. </exception>
+        public ReactionNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string emoji, string messageId) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.Reaction)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(emoji, nameof(emoji));
-            Argument.AssertNotNull(messageId, nameof(messageId));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(emoji, nameof(emoji));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(messageId, nameof(messageId));
 
             Emoji = emoji;
             MessageId = messageId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReactionNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ReactionNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="emoji"> emoji content like \uD83D\uDE00. </param>
         /// <param name="messageId"> ID of the previous message you want to reply to. </param>
-        internal ReactionNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emoji, string messageId) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal ReactionNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string emoji, string messageId) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             Emoji = emoji;
             MessageId = messageId;

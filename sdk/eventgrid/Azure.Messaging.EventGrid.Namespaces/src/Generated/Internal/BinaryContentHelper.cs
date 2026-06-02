@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<T>(item, global::Azure.Messaging.EventGrid.Namespaces.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -30,13 +30,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <param name="enumerable"></param>
-        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        public static RequestContent FromEnumerable(IEnumerable<global::System.BinaryData> enumerable)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     content.JsonWriter.WriteNullValue();
                 }
@@ -45,9 +45,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
 #if NET6_0_OR_GREATER
                     content.JsonWriter.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item))
                     {
-                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
 #endif
                 }
@@ -64,9 +64,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             int i = 0;
-            for (; i < span.Length; i++)
+            for (; (i < span.Length); i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<T>(span[i], global::Azure.Messaging.EventGrid.Namespaces.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<TValue>(item.Value, global::Azure.Messaging.EventGrid.Namespaces.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -90,14 +90,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <param name="dictionary"></param>
-        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        public static RequestContent FromDictionary(IDictionary<string, global::System.BinaryData> dictionary)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     content.JsonWriter.WriteNullValue();
                 }
@@ -106,9 +106,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
 #if NET6_0_OR_GREATER
                     content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
 #endif
                 }
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<object>(value, global::Azure.Messaging.EventGrid.Namespaces.ModelSerializationExtensions.WireOptions);
             return content;
         }
 
@@ -133,9 +133,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
 #if NET6_0_OR_GREATER
             content.JsonWriter.WriteRawValue(value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(value))
+            using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(value))
             {
-                JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
 #endif
             return content;

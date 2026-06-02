@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> The EvaluationRules sub-client. </summary>
     public partial class EvaluationRules
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of EvaluationRules for mocking. </summary>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal EvaluationRules(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal EvaluationRules(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -46,16 +46,16 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateGetRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -68,44 +68,44 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> GetAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateGetRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationRule> Get(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.EvaluationRule> Get(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
+            ClientResult result = this.Get(id, cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluationRule)result), result.GetRawResponse());
         }
 
         /// <summary> Get an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationRule>> GetAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.EvaluationRule>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
+            ClientResult result = await this.GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluationRule)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -118,16 +118,16 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateDeleteRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -140,42 +140,42 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteAsync(string id, RequestOptions options)
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateDeleteRequest(id, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult Delete(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return Delete(id, cancellationToken.ToRequestOptions());
+            return this.Delete(id, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await this.DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -190,17 +190,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateOrUpdate(string id, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using PipelineMessage message = this.CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
@@ -215,17 +215,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<global::System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using PipelineMessage message = this.CreateCreateOrUpdateRequest(id, content, foundryFeatures, options);
+            return global::System.ClientModel.ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create or update an evaluation rule. </summary>
@@ -233,16 +233,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationRule> CreateOrUpdate(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<global::Azure.AI.Projects.Evaluation.EvaluationRule> CreateOrUpdate(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
+            ClientResult result = this.CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluationRule)result), result.GetRawResponse());
         }
 
         /// <summary> Create or update an evaluation rule. </summary>
@@ -250,16 +250,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationRule>> CreateOrUpdateAsync(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="evaluationRule"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::System.ClientModel.ClientResult<global::Azure.AI.Projects.Evaluation.EvaluationRule>> CreateOrUpdateAsync(string id, EvaluationRule evaluationRule, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
+            global::Azure.AI.Projects.Argument.AssertNotNullOrEmpty(id, nameof(id));
+            global::Azure.AI.Projects.Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
+            ClientResult result = await this.CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return global::System.ClientModel.ClientResult.FromValue(((EvaluationRule)result), result.GetRawResponse());
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string actionType, string agentName, bool? enabled, RequestOptions options)
         {
@@ -293,7 +293,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string actionType, string agentName, bool? enabled, RequestOptions options)
         {
@@ -305,8 +305,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<EvaluationRule> GetAll(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<global::Azure.AI.Projects.Evaluation.EvaluationRule> GetAll(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationRulesGetAllCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }
@@ -316,8 +316,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<EvaluationRule> GetAllAsync(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ClientModel.ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<global::Azure.AI.Projects.Evaluation.EvaluationRule> GetAllAsync(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationRulesGetAllAsyncCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }

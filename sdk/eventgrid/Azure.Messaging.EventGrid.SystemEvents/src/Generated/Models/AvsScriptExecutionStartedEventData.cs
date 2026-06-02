@@ -13,19 +13,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionStarted event. </summary>
     public partial class AvsScriptExecutionStartedEventData : AvsScriptExecutionEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionStartedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         internal AvsScriptExecutionStartedEventData(string operationId, string cmdletId) : base(operationId, cmdletId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionStartedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsScriptExecutionStartedEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, cmdletId, output, additionalBinaryDataProperties)
+        internal AvsScriptExecutionStartedEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(operationId, cmdletId, output, additionalBinaryDataProperties)
         {
         }
     }

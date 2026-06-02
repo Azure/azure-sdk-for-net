@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Resampling algorithm to use when reading source raster data at different resolutions. </summary>
-    public readonly partial struct ResamplingMethod : IEquatable<ResamplingMethod>
+    public readonly partial struct ResamplingMethod : IEquatable<global::Azure.Analytics.PlanetaryComputer.ResamplingMethod>
     {
         private readonly string _value;
         /// <summary> Nearest neighbor - fastest method that selects the closest pixel value. </summary>
@@ -33,12 +33,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Root mean square resampling - useful for resampling error or deviation grids. </summary>
         private const string RmsValue = "rms";
 
-        /// <summary> Initializes a new instance of <see cref="ResamplingMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ResamplingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResamplingMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -70,34 +70,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Root mean square resampling - useful for resampling error or deviation grids. </summary>
         public static ResamplingMethod Rms { get; } = new ResamplingMethod(RmsValue);
 
-        /// <summary> Determines if two <see cref="ResamplingMethod"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.ResamplingMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResamplingMethod left, ResamplingMethod right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResamplingMethod"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.PlanetaryComputer.ResamplingMethod"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResamplingMethod left, ResamplingMethod right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResamplingMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.ResamplingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ResamplingMethod(string value) => new ResamplingMethod(value);
 
-        /// <summary> Converts a string to a <see cref="ResamplingMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.PlanetaryComputer.ResamplingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResamplingMethod?(string value) => value == null ? null : new ResamplingMethod(value);
+        public static implicit operator ResamplingMethod?(string value) => (value == null) ? null : new ResamplingMethod(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResamplingMethod other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ResamplingMethod other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ResamplingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ResamplingMethod other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

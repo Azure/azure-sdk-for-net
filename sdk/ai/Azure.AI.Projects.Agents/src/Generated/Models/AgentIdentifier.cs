@@ -11,23 +11,23 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentIdentifier"/>. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public AgentIdentifier(string agentName)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.AgentIdentifier"/>. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentifier(string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIdentifier(string agentName, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;

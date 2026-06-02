@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._ModelProperties
 {
-    public partial class ModelWithList : IJsonModel<ModelWithList>
+    public partial class ModelWithList : IJsonModel<global::SpecialWords._ModelProperties.ModelWithList>
     {
         internal ModelWithList() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._ModelProperties
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithList>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._ModelProperties.ModelWithList>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithList IPersistableModel<ModelWithList>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithList IPersistableModel<global::SpecialWords._ModelProperties.ModelWithList>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._ModelProperties.ModelWithList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithList"> The <see cref="ModelWithList"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithList"> The <see cref="global::SpecialWords._ModelProperties.ModelWithList"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithList modelWithList) => throw null;
 
-        void IJsonModel<ModelWithList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._ModelProperties.ModelWithList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ModelWithList IJsonModel<ModelWithList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ModelWithList IJsonModel<global::SpecialWords._ModelProperties.ModelWithList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelWithList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

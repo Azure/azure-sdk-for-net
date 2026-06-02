@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Agents
     public partial class CandidateMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CandidateMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateMetadata"/>. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. </param>
         /// <param name="jobId"> Owning optimization job id. </param>
         /// <param name="candidateName"> Display name of the candidate. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdAt"> Timestamp when the candidate was created, represented in Unix time. </param>
         /// <param name="updatedAt"> Timestamp when the candidate was last updated, represented in Unix time. </param>
         /// <param name="files"> Files in the candidate's blob directory. </param>
-        internal CandidateMetadata(string candidateId, string jobId, string candidateName, string status, bool hasResults, DateTimeOffset createdAt, DateTimeOffset updatedAt, IEnumerable<CandidateFileInfo> files)
+        internal CandidateMetadata(string candidateId, string jobId, string candidateName, string status, bool hasResults, DateTimeOffset createdAt, DateTimeOffset updatedAt, IEnumerable<global::Azure.AI.Projects.Agents.CandidateFileInfo> files)
         {
             CandidateId = candidateId;
             JobId = jobId;
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
             Files = files.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CandidateMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.CandidateMetadata"/>. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. </param>
         /// <param name="jobId"> Owning optimization job id. </param>
         /// <param name="candidateName"> Display name of the candidate. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="promotion"> Promotion metadata. Null if not promoted. </param>
         /// <param name="files"> Files in the candidate's blob directory. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CandidateMetadata(string candidateId, string jobId, string candidateName, string status, double? score, bool hasResults, DateTimeOffset createdAt, DateTimeOffset updatedAt, PromotionInfo promotion, IList<CandidateFileInfo> files, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CandidateMetadata(string candidateId, string jobId, string candidateName, string status, double? score, bool hasResults, DateTimeOffset createdAt, DateTimeOffset updatedAt, PromotionInfo promotion, IList<global::Azure.AI.Projects.Agents.CandidateFileInfo> files, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             JobId = jobId;
@@ -90,6 +90,6 @@ namespace Azure.AI.Projects.Agents
         public PromotionInfo Promotion { get; }
 
         /// <summary> Files in the candidate's blob directory. </summary>
-        public IList<CandidateFileInfo> Files { get; }
+        public IList<global::Azure.AI.Projects.Agents.CandidateFileInfo> Files { get; }
     }
 }

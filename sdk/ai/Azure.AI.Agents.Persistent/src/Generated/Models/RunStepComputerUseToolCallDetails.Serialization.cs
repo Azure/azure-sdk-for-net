@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The detailed information about a computer use tool call. </summary>
-    public partial class RunStepComputerUseToolCallDetails : IJsonModel<RunStepComputerUseToolCallDetails>
+    public partial class RunStepComputerUseToolCallDetails : IJsonModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCallDetails"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails"/> for deserialization. </summary>
         internal RunStepComputerUseToolCallDetails()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepComputerUseToolCallDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunStepComputerUseToolCallDetails(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails.DeserializeRunStepComputerUseToolCallDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepComputerUseToolCallDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepComputerUseToolCallDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunStepComputerUseToolCallDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepComputerUseToolCallDetails IPersistableModel<RunStepComputerUseToolCallDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunStepComputerUseToolCallDetails IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunStepComputerUseToolCallDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunStepComputerUseToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,33 +73,33 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepComputerUseToolCallDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            writer.WriteObjectValue<ComputerUseAction>(Action, options);
             writer.WritePropertyName("pending_safety_checks"u8);
             writer.WriteStartArray();
             foreach (SafetyCheck item in PendingSafetyChecks)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<SafetyCheck>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output, options);
-            if (Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
+            writer.WriteObjectValue<ComputerScreenshot>(Output, options);
+            if (global::Azure.AI.Agents.Persistent.Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
             {
                 writer.WritePropertyName("acknowledged_safety_checks"u8);
                 writer.WriteStartArray();
                 foreach (SafetyCheck item in AcknowledgedSafetyChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SafetyCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -107,9 +107,9 @@ namespace Azure.AI.Agents.Persistent
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -118,76 +118,76 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunStepComputerUseToolCallDetails IJsonModel<RunStepComputerUseToolCallDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunStepComputerUseToolCallDetails IJsonModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepComputerUseToolCallDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(RunStepComputerUseToolCallDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepComputerUseToolCallDetails(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.RunStepComputerUseToolCallDetails.DeserializeRunStepComputerUseToolCallDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static RunStepComputerUseToolCallDetails DeserializeRunStepComputerUseToolCallDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ComputerUseAction action = default;
-            IList<SafetyCheck> pendingSafetyChecks = default;
+            IList<global::Azure.AI.Agents.Persistent.SafetyCheck> pendingSafetyChecks = default;
             ComputerScreenshot output = default;
-            IList<SafetyCheck> acknowledgedSafetyChecks = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Agents.Persistent.SafetyCheck> acknowledgedSafetyChecks = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("action"u8))
                 {
-                    action = ComputerUseAction.DeserializeComputerUseAction(prop.Value, options);
+                    action = global::Azure.AI.Agents.Persistent.ComputerUseAction.DeserializeComputerUseAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
                 {
-                    List<SafetyCheck> array = new List<SafetyCheck>();
+                    List<global::Azure.AI.Agents.Persistent.SafetyCheck> array = new List<global::Azure.AI.Agents.Persistent.SafetyCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SafetyCheck.DeserializeSafetyCheck(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.SafetyCheck.DeserializeSafetyCheck(item, options));
                     }
                     pendingSafetyChecks = array;
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = ComputerScreenshot.DeserializeComputerScreenshot(prop.Value, options);
+                    output = global::Azure.AI.Agents.Persistent.ComputerScreenshot.DeserializeComputerScreenshot(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("acknowledged_safety_checks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SafetyCheck> array = new List<SafetyCheck>();
+                    List<global::Azure.AI.Agents.Persistent.SafetyCheck> array = new List<global::Azure.AI.Agents.Persistent.SafetyCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SafetyCheck.DeserializeSafetyCheck(item, options));
+                        array.Add(global::Azure.AI.Agents.Persistent.SafetyCheck.DeserializeSafetyCheck(item, options));
                     }
                     acknowledgedSafetyChecks = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks, output, acknowledgedSafetyChecks ?? new ChangeTrackingList<SafetyCheck>(), additionalBinaryDataProperties);
+            return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks, output, (acknowledgedSafetyChecks ?? new ChangeTrackingList<global::Azure.AI.Agents.Persistent.SafetyCheck>()), additionalBinaryDataProperties);
         }
     }
 }

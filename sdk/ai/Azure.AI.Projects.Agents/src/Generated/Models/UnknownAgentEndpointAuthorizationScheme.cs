@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownAgentEndpointAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAgentEndpointAuthorizationScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownAgentEndpointAuthorizationScheme"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentEndpointAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownAgentEndpointAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

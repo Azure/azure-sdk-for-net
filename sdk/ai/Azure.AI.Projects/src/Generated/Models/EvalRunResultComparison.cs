@@ -12,15 +12,15 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvalRunResultComparison
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultComparison"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultComparison"/>. </summary>
         /// <param name="testingCriteria"> Name of the testing criteria. </param>
         /// <param name="metricName"> Metric being evaluated. </param>
         /// <param name="evaluatorName"> Name of the evaluator for this testing criteria. </param>
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
-        internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IEnumerable<EvalRunResultCompareItem> compareItems)
+        internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IEnumerable<global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem> compareItems)
         {
             TestingCriteria = testingCriteria;
             MetricName = metricName;
@@ -29,14 +29,14 @@ namespace Azure.AI.Projects.Evaluation
             CompareItems = compareItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvalRunResultComparison"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalRunResultComparison"/>. </summary>
         /// <param name="testingCriteria"> Name of the testing criteria. </param>
         /// <param name="metricName"> Metric being evaluated. </param>
         /// <param name="evaluatorName"> Name of the evaluator for this testing criteria. </param>
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IList<EvalRunResultCompareItem> compareItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvalRunResultComparison(string testingCriteria, string metricName, string evaluatorName, EvalRunResultSummary baselineRunSummary, IList<global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem> compareItems, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestingCriteria = testingCriteria;
             MetricName = metricName;
@@ -59,6 +59,6 @@ namespace Azure.AI.Projects.Evaluation
         public EvalRunResultSummary BaselineRunSummary { get; }
 
         /// <summary> List of comparison results for each treatment run. </summary>
-        public IList<EvalRunResultCompareItem> CompareItems { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem> CompareItems { get; }
     }
 }

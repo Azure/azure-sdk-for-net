@@ -15,25 +15,25 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DistanceScoringParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DistanceScoringParameters"/>. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="referencePointParameter"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="referencePointParameter"/> is null. </exception>
         public DistanceScoringParameters(string referencePointParameter, double boostingDistance)
         {
-            Argument.AssertNotNull(referencePointParameter, nameof(referencePointParameter));
+            global::Azure.Search.Documents.Argument.AssertNotNull(referencePointParameter, nameof(referencePointParameter));
 
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DistanceScoringParameters"/>. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DistanceScoringParameters(string referencePointParameter, double boostingDistance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DistanceScoringParameters(string referencePointParameter, double boostingDistance, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;

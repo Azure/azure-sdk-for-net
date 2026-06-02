@@ -18,32 +18,32 @@ namespace _Type.Property.Nullable
     {
         protected String() => throw null;
 
-        internal String(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal String(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetNonNull(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetNonNullAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetNonNullAsync(RequestContext context) => throw null;
 
-        public virtual Response<StringProperty> GetNonNull(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Nullable.StringProperty> GetNonNull(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<StringProperty>> GetNonNullAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Nullable.StringProperty>> GetNonNullAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetNull(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetNullAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetNullAsync(RequestContext context) => throw null;
 
-        public virtual Response<StringProperty> GetNull(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.Nullable.StringProperty> GetNull(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<StringProperty>> GetNullAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.Nullable.StringProperty>> GetNullAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PatchNonNull(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PatchNonNullAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PatchNonNullAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response PatchNull(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PatchNullAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PatchNullAsync(RequestContent content, RequestContext context = null) => throw null;
     }
 }

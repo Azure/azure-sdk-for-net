@@ -22,9 +22,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class TileMatrix
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrix"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrix"/>. </summary>
         /// <param name="id"> Unique identifier for this tile matrix level, often the zoom level. </param>
         /// <param name="scaleDenominator"> Scale denominator representing the scale of this tile matrix level. </param>
         /// <param name="cellSize"> Size of a pixel in map units at this tile matrix level. </param>
@@ -49,10 +49,10 @@ namespace Azure.Analytics.PlanetaryComputer
             TileHeight = tileHeight;
             MatrixWidth = matrixWidth;
             MatrixHeight = matrixHeight;
-            VariableMatrixWidths = new ChangeTrackingList<VariableMatrixWidth>();
+            VariableMatrixWidths = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.VariableMatrixWidth>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TileMatrix"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.TileMatrix"/>. </summary>
         /// <param name="title"> Human-readable title of the tile matrix level. </param>
         /// <param name="description"> Human-readable description of this tile matrix level. </param>
         /// <param name="keywords">
@@ -82,7 +82,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrix(string title, string description, IList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IList<float> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IList<VariableMatrixWidth> variableMatrixWidths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileMatrix(string title, string description, IList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IList<float> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IList<global::Azure.Analytics.PlanetaryComputer.VariableMatrixWidth> variableMatrixWidths, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -152,6 +152,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Describes the rows that has variable matrix width
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </summary>
-        public IList<VariableMatrixWidth> VariableMatrixWidths { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.VariableMatrixWidth> VariableMatrixWidths { get; }
     }
 }

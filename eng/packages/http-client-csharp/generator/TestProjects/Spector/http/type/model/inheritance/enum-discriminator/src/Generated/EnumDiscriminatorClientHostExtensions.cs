@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class EnumDiscriminatorClientHostExtensions
     {
         public static IClientBuilder AddEnumDiscriminatorClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddEnumDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<EnumDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddEnumDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Inheritance.EnumDiscriminator.EnumDiscriminatorClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedEnumDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedEnumDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<EnumDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedEnumDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Inheritance.EnumDiscriminator.EnumDiscriminatorClientSettings> configureSettings) => throw null;
     }
 }

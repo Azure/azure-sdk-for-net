@@ -16,23 +16,23 @@ namespace Client.AlternateApiVersion.Service.Header
 {
     public partial class HeaderClient
     {
-        public HeaderClient() : this(new Uri("http://localhost:3000"), new HeaderClientOptions()) => throw null;
+        public HeaderClient() : this(new global::System.Uri("http://localhost:3000"), new HeaderClientOptions()) => throw null;
 
-        internal HeaderClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, HeaderClientOptions options) => throw null;
+        internal HeaderClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, HeaderClientOptions options) => throw null;
 
-        public HeaderClient(Uri endpoint, HeaderClientOptions options) : this(null, endpoint, options) => throw null;
+        public HeaderClient(global::System.Uri endpoint, HeaderClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public HeaderClient(HeaderClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public HeaderClient(HeaderClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response HeaderApiVersion(RequestContext context) => throw null;
 
-        public virtual Task<Response> HeaderApiVersionAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> HeaderApiVersionAsync(RequestContext context) => throw null;
 
         public virtual Response HeaderApiVersion(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeaderApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> HeaderApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

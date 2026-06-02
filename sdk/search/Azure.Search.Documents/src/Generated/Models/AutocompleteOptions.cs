@@ -15,9 +15,9 @@ namespace Azure.Search.Documents
     public partial class AutocompleteOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutocompleteOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.AutocompleteOptions"/>. </summary>
         /// <param name="searchText"> The search text on which to base autocomplete results. </param>
         /// <param name="mode"> Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context while producing auto-completed terms. </param>
         /// <param name="filter"> An OData expression that filters the documents used to produce completed terms for the Autocomplete result. </param>
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents
         /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
         /// <param name="size"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutocompleteOptions(string searchText, AutocompleteMode? mode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string searchFieldsRaw, string suggesterName, int? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutocompleteOptions(string searchText, AutocompleteMode? mode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string searchFieldsRaw, string suggesterName, int? size, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchText = searchText;
             Mode = mode;

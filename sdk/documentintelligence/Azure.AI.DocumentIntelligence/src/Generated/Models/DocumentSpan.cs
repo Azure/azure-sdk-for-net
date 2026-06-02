@@ -17,9 +17,9 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentSpan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentSpan"/>. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         internal DocumentSpan(int offset, int length)
@@ -28,11 +28,11 @@ namespace Azure.AI.DocumentIntelligence
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentSpan"/>. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSpan(int offset, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSpan(int offset, int length, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Offset = offset;
             Length = length;

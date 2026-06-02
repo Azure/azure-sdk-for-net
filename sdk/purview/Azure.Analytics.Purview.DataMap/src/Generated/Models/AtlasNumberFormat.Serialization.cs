@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The number format. </summary>
-    public partial class AtlasNumberFormat : IJsonModel<AtlasNumberFormat>
+    public partial class AtlasNumberFormat : IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasNumberFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAtlasNumberFormat(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasNumberFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasNumberFormat IPersistableModel<AtlasNumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AtlasNumberFormat IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasNumberFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AtlasNumberFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,18 +68,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(AvailableLocales))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(AvailableLocales))
             {
                 writer.WritePropertyName("availableLocales"u8);
                 writer.WriteStartArray();
                 foreach (string item in AvailableLocales)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -88,72 +88,72 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Currency))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Optional.IsDefined(CurrencyInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(CurrencyInstance))
             {
                 writer.WritePropertyName("currencyInstance"u8);
-                writer.WriteObjectValue(CurrencyInstance, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(CurrencyInstance, options);
             }
-            if (Optional.IsDefined(GroupingUsed))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(GroupingUsed))
             {
                 writer.WritePropertyName("groupingUsed"u8);
                 writer.WriteBooleanValue(GroupingUsed.Value);
             }
-            if (Optional.IsDefined(Instance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(Instance, options);
             }
-            if (Optional.IsDefined(IntegerInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(IntegerInstance))
             {
                 writer.WritePropertyName("integerInstance"u8);
-                writer.WriteObjectValue(IntegerInstance, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(IntegerInstance, options);
             }
-            if (Optional.IsDefined(MaximumFractionDigits))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(MaximumFractionDigits))
             {
                 writer.WritePropertyName("maximumFractionDigits"u8);
                 writer.WriteNumberValue(MaximumFractionDigits.Value);
             }
-            if (Optional.IsDefined(MaximumIntegerDigits))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(MaximumIntegerDigits))
             {
                 writer.WritePropertyName("maximumIntegerDigits"u8);
                 writer.WriteNumberValue(MaximumIntegerDigits.Value);
             }
-            if (Optional.IsDefined(MinimumFractionDigits))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(MinimumFractionDigits))
             {
                 writer.WritePropertyName("minimumFractionDigits"u8);
                 writer.WriteNumberValue(MinimumFractionDigits.Value);
             }
-            if (Optional.IsDefined(MinimumIntegerDigits))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(MinimumIntegerDigits))
             {
                 writer.WritePropertyName("minimumIntegerDigits"u8);
                 writer.WriteNumberValue(MinimumIntegerDigits.Value);
             }
-            if (Optional.IsDefined(NumberInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(NumberInstance))
             {
                 writer.WritePropertyName("numberInstance"u8);
-                writer.WriteObjectValue(NumberInstance, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(NumberInstance, options);
             }
-            if (Optional.IsDefined(ParseIntegerOnly))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ParseIntegerOnly))
             {
                 writer.WritePropertyName("parseIntegerOnly"u8);
                 writer.WriteBooleanValue(ParseIntegerOnly.Value);
             }
-            if (Optional.IsDefined(PercentInstance))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(PercentInstance))
             {
                 writer.WritePropertyName("percentInstance"u8);
-                writer.WriteObjectValue(PercentInstance, options);
+                writer.WriteObjectValue<AtlasNumberFormat>(PercentInstance, options);
             }
-            if (Optional.IsDefined(RoundingMode))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(RoundingMode))
             {
                 writer.WritePropertyName("roundingMode"u8);
                 writer.WriteStringValue(RoundingMode.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -161,9 +161,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -172,26 +172,26 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasNumberFormat IJsonModel<AtlasNumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AtlasNumberFormat IJsonModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AtlasNumberFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasNumberFormat(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AtlasNumberFormat DeserializeAtlasNumberFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -209,19 +209,19 @@ namespace Azure.Analytics.Purview.DataMap
             bool? parseIntegerOnly = default;
             AtlasNumberFormat percentInstance = default;
             RoundingMode? roundingMode = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("availableLocales"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -240,16 +240,16 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("currencyInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    currencyInstance = DeserializeAtlasNumberFormat(prop.Value, options);
+                    currencyInstance = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("groupingUsed"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -258,25 +258,25 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("instance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasNumberFormat(prop.Value, options);
+                    instance = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("integerInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    integerInstance = DeserializeAtlasNumberFormat(prop.Value, options);
+                    integerInstance = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maximumFractionDigits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -285,7 +285,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("maximumIntegerDigits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -294,7 +294,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("minimumFractionDigits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -303,7 +303,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("minimumIntegerDigits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -312,16 +312,16 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("numberInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    numberInstance = DeserializeAtlasNumberFormat(prop.Value, options);
+                    numberInstance = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("parseIntegerOnly"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -330,29 +330,29 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("percentInstance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    percentInstance = DeserializeAtlasNumberFormat(prop.Value, options);
+                    percentInstance = global::Azure.Analytics.Purview.DataMap.AtlasNumberFormat.DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("roundingMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     roundingMode = new RoundingMode(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AtlasNumberFormat(
-                availableLocales ?? new ChangeTrackingList<string>(),
+                (availableLocales ?? new ChangeTrackingList<string>()),
                 currency,
                 currencyInstance,
                 groupingUsed,

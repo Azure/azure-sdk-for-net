@@ -14,6 +14,6 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         internal RealModel(string name) : base("real", name) => throw null;
 
-        internal RealModel(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, name, additionalBinaryDataProperties) => throw null;
+        internal RealModel(string kind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, name, additionalBinaryDataProperties) => throw null;
     }
 }

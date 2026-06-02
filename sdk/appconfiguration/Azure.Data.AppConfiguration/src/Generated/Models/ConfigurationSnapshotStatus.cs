@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Snapshot status. </summary>
-    public readonly partial struct ConfigurationSnapshotStatus : IEquatable<ConfigurationSnapshotStatus>
+    public readonly partial struct ConfigurationSnapshotStatus : IEquatable<global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus>
     {
         private readonly string _value;
         /// <summary> Provisioning. </summary>
@@ -23,12 +23,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Failed. </summary>
         private const string FailedValue = "failed";
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshotStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfigurationSnapshotStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Data.AppConfiguration.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Failed. </summary>
         public static ConfigurationSnapshotStatus Failed { get; } = new ConfigurationSnapshotStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="ConfigurationSnapshotStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfigurationSnapshotStatus left, ConfigurationSnapshotStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConfigurationSnapshotStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfigurationSnapshotStatus left, ConfigurationSnapshotStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConfigurationSnapshotStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConfigurationSnapshotStatus(string value) => new ConfigurationSnapshotStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ConfigurationSnapshotStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.ConfigurationSnapshotStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfigurationSnapshotStatus?(string value) => value == null ? null : new ConfigurationSnapshotStatus(value);
+        public static implicit operator ConfigurationSnapshotStatus?(string value) => (value == null) ? null : new ConfigurationSnapshotStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConfigurationSnapshotStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConfigurationSnapshotStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConfigurationSnapshotStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConfigurationSnapshotStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

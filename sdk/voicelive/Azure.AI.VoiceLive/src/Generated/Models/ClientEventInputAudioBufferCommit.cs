@@ -12,16 +12,16 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventInputAudioBufferCommit : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
-        public ClientEventInputAudioBufferCommit() : base(ClientEventType.InputAudioBufferCommit)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioBufferCommit"/>. </summary>
+        public ClientEventInputAudioBufferCommit() : base(global::Azure.AI.VoiceLive.ClientEventType.InputAudioBufferCommit)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventInputAudioBufferCommit"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEventInputAudioBufferCommit(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioBufferCommit(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
         {
         }
     }

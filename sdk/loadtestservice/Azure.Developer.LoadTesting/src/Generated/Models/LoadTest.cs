@@ -14,17 +14,17 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTest"/>. </summary>
         public LoadTest()
         {
-            Secrets = new ChangeTrackingDictionary<string, TestSecret>();
+            Secrets = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestSecret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             EngineBuiltInIdentityIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.LoadTest"/>. </summary>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
         /// <param name="autoStopCriteria"> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </param>
         /// <param name="secrets">
@@ -58,7 +58,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, TestPreferences preferences, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, TestPreferences preferences, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -102,7 +102,7 @@ namespace Azure.Developer.LoadTesting
         /// elsewhere, the secret value should be provided directly and the type should be
         /// SECRET_VALUE.
         /// </summary>
-        public IDictionary<string, TestSecret> Secrets { get; }
+        public IDictionary<string, global::Azure.Developer.LoadTesting.TestSecret> Secrets { get; }
 
         /// <summary> Certificates metadata. </summary>
         public TestCertificate Certificate { get; set; }

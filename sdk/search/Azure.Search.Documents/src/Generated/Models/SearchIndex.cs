@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="description"> The description of the index. </param>
         /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(string name, string description, IList<global::Azure.Search.Documents.Indexes.Models.ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<global::Azure.Search.Documents.Indexes.Models.SearchSuggester> suggesters, IList<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> analyzers, IList<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizer> tokenizers, IList<global::Azure.Search.Documents.Indexes.Models.TokenFilter> tokenFilters, IList<global::Azure.Search.Documents.Indexes.Models.CharFilter> charFilters, IList<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<global::Azure.Search.Documents.Indexes.Models.SearchField> fields, string etag, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
 
         /// <summary> The scoring profiles for the index. </summary>
-        public IList<ScoringProfile> ScoringProfiles { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.ScoringProfile> ScoringProfiles { get; }
 
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>
         public string DefaultScoringProfile { get; set; }
@@ -79,22 +79,22 @@ namespace Azure.Search.Documents.Indexes.Models
         public CorsOptions CorsOptions { get; set; }
 
         /// <summary> The suggesters for the index. </summary>
-        public IList<SearchSuggester> Suggesters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.SearchSuggester> Suggesters { get; }
 
         /// <summary> The analyzers for the index. </summary>
-        public IList<LexicalAnalyzer> Analyzers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalAnalyzer> Analyzers { get; }
 
         /// <summary> The tokenizers for the index. </summary>
-        public IList<LexicalTokenizer> Tokenizers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalTokenizer> Tokenizers { get; }
 
         /// <summary> The token filters for the index. </summary>
-        public IList<TokenFilter> TokenFilters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.TokenFilter> TokenFilters { get; }
 
         /// <summary> The character filters for the index. </summary>
-        public IList<CharFilter> CharFilters { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.CharFilter> CharFilters { get; }
 
         /// <summary> The normalizers for the index. </summary>
-        public IList<LexicalNormalizer> Normalizers { get; }
+        public IList<global::Azure.Search.Documents.Indexes.Models.LexicalNormalizer> Normalizers { get; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }

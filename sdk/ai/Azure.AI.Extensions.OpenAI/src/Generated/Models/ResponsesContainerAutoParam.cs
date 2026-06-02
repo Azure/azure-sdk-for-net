@@ -10,21 +10,21 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The ResponsesContainerAutoParam. </summary>
     public partial class ResponsesContainerAutoParam : ResponsesFunctionShellToolParamEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerAutoParam"/>. </summary>
-        public ResponsesContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam"/>. </summary>
+        public ResponsesContainerAutoParam() : base(global::Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType.ContainerAuto)
         {
             FileIds = new ChangeTrackingList<string>();
-            Skills = new ChangeTrackingList<ContainerSkill>();
+            Skills = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ContainerSkill>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerAutoParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
         /// <param name="memoryLimit"></param>
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"></param>
-        internal ResponsesContainerAutoParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, IList<ContainerSkill> skills, ResponsesContainerNetworkPolicyParam networkPolicy) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesContainerAutoParam(FunctionShellToolParamEnvironmentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, IList<global::Azure.AI.Extensions.OpenAI.ContainerSkill> skills, ResponsesContainerNetworkPolicyParam networkPolicy) : base(@type, additionalBinaryDataProperties)
         {
             FileIds = fileIds;
             MemoryLimit = memoryLimit;
@@ -39,7 +39,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ResponsesContainerMemoryLimit? MemoryLimit { get; set; }
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>
-        public IList<ContainerSkill> Skills { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ContainerSkill> Skills { get; }
 
         /// <summary> Gets or sets the NetworkPolicy. </summary>
         public ResponsesContainerNetworkPolicyParam NetworkPolicy { get; set; }

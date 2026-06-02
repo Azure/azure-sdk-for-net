@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The threshold used for vector queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorSimilarityThreshold"/> and <see cref="SearchScoreThreshold"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Models.VectorSimilarityThreshold"/> and <see cref="Azure.Search.Documents.Models.SearchScoreThreshold"/>.
     /// </summary>
     public abstract partial class VectorThreshold
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
         private protected VectorThreshold(VectorThresholdKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorThreshold(VectorThresholdKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

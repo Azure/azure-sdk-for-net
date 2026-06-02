@@ -9,13 +9,13 @@ using System;
 
 namespace Microsoft.TypeSpec.Generator.Customizations
 {
-    [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct))]
+    [AttributeUsageAttribute(((global::System.AttributeTargets.Class | global::System.AttributeTargets.Enum) | global::System.AttributeTargets.Struct))]
     internal partial class CodeGenTypeAttribute : Attribute
     {
         /// <param name="originalName"> The original name of the type. </param>
         public CodeGenTypeAttribute(string originalName)
         {
-            OriginalName = originalName;
+            this.OriginalName = originalName;
         }
 
         /// <summary> Gets the OriginalName. </summary>

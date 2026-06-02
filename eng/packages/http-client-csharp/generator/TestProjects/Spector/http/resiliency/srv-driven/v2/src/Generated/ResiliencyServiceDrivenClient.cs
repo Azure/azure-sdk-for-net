@@ -18,47 +18,47 @@ namespace Resiliency.ServiceDriven
     {
         protected ResiliencyServiceDrivenClient() => throw null;
 
-        public ResiliencyServiceDrivenClient(Uri endpoint, string serviceDeploymentVersion) : this(endpoint, serviceDeploymentVersion, new ResiliencyServiceDrivenClientOptions()) => throw null;
+        public ResiliencyServiceDrivenClient(global::System.Uri endpoint, string serviceDeploymentVersion) : this(endpoint, serviceDeploymentVersion, new ResiliencyServiceDrivenClientOptions()) => throw null;
 
-        internal ResiliencyServiceDrivenClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) => throw null;
+        internal ResiliencyServiceDrivenClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) => throw null;
 
-        public ResiliencyServiceDrivenClient(Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) : this(null, endpoint, serviceDeploymentVersion, options) => throw null;
+        public ResiliencyServiceDrivenClient(global::System.Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) : this(null, endpoint, serviceDeploymentVersion, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ResiliencyServiceDrivenClient(ResiliencyServiceDrivenClientSettings settings) : this(null, settings?.Endpoint, settings?.ServiceDeploymentVersion, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ResiliencyServiceDrivenClient(ResiliencyServiceDrivenClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.ServiceDeploymentVersion, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response AddOperation(RequestContext context) => throw null;
 
-        public virtual Task<Response> AddOperationAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> AddOperationAsync(RequestContext context) => throw null;
 
         public virtual Response AddOperation(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> AddOperationAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> AddOperationAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FromNone(string newParameter, RequestContext context) => throw null;
 
-        public virtual Task<Response> FromNoneAsync(string newParameter, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FromNoneAsync(string newParameter, RequestContext context) => throw null;
 
         public virtual Response FromNone(string newParameter = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FromNoneAsync(string newParameter = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FromNoneAsync(string newParameter = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FromOneRequired(string parameter, string newParameter, RequestContext context) => throw null;
 
-        public virtual Task<Response> FromOneRequiredAsync(string parameter, string newParameter, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FromOneRequiredAsync(string parameter, string newParameter, RequestContext context) => throw null;
 
         public virtual Response FromOneRequired(string parameter, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FromOneRequiredAsync(string parameter, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FromOneRequiredAsync(string parameter, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response FromOneOptional(string parameter, string newParameter, RequestContext context) => throw null;
 
-        public virtual Task<Response> FromOneOptionalAsync(string parameter, string newParameter, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FromOneOptionalAsync(string parameter, string newParameter, RequestContext context) => throw null;
 
         public virtual Response FromOneOptional(string parameter = default, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FromOneOptionalAsync(string parameter = default, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FromOneOptionalAsync(string parameter = default, string newParameter = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

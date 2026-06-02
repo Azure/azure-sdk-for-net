@@ -12,9 +12,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryStoreOperationUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreOperationUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreOperationUsage"/>. </summary>
         /// <param name="embeddingTokens"> The number of embedding tokens. </param>
         /// <param name="inputTokens"> The number of input tokens. </param>
         /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Memory
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreOperationUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreOperationUsage"/>. </summary>
         /// <param name="embeddingTokens"> The number of embedding tokens. </param>
         /// <param name="inputTokens"> The number of input tokens. </param>
         /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             EmbeddingTokens = embeddingTokens;
             InputTokens = inputTokens;

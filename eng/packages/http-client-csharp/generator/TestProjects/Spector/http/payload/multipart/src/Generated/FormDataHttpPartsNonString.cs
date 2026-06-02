@@ -17,12 +17,12 @@ namespace Payload.MultiPart._FormData.HttpParts.NonString
     {
         protected FormDataHttpPartsNonString() => throw null;
 
-        internal FormDataHttpPartsNonString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal FormDataHttpPartsNonString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Float(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> FloatAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> FloatAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
     }
 }

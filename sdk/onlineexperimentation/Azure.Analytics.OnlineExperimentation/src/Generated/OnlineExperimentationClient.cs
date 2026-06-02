@@ -18,8 +18,8 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The OnlineExperimentationClient. </summary>
     public partial class OnlineExperimentationClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://exp.azure.net/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://exp.azure.net/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of OnlineExperimentationClient for mocking. </summary>
@@ -30,8 +30,8 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Initializes a new instance of OnlineExperimentationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OnlineExperimentationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new OnlineExperimentationClientOptions())
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public OnlineExperimentationClient(global::System.Uri endpoint, TokenCredential credential) : this(endpoint, credential, new OnlineExperimentationClientOptions())
         {
         }
 
@@ -39,20 +39,20 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal OnlineExperimentationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OnlineExperimentationClientOptions options)
+        internal OnlineExperimentationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, OnlineExperimentationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new OnlineExperimentationClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -62,14 +62,14 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OnlineExperimentationClient(Uri endpoint, TokenCredential credential, OnlineExperimentationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public OnlineExperimentationClient(global::System.Uri endpoint, TokenCredential credential, OnlineExperimentationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of OnlineExperimentationClient from a <see cref="OnlineExperimentationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for OnlineExperimentationClient. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         public OnlineExperimentationClient(OnlineExperimentationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
@@ -91,9 +91,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMetric(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
         {
@@ -101,9 +101,9 @@ namespace Azure.Analytics.OnlineExperimentation
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-                using HttpMessage message = CreateGetMetricRequest(experimentMetricId, requestConditions, context);
+                using HttpMessage message = this.CreateGetMetricRequest(experimentMetricId, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -124,19 +124,19 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMetricAsync(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMetricAsync(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OnlineExperimentationClient.GetMetric");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-                using HttpMessage message = CreateGetMetricRequest(experimentMetricId, requestConditions, context);
+                using HttpMessage message = this.CreateGetMetricRequest(experimentMetricId, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -150,30 +150,30 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ExperimentMetric> GetMetric(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetric(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-            Response result = GetMetric(experimentMetricId, requestConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((ExperimentMetric)result, result);
+            Response result = this.GetMetric(experimentMetricId, requestConditions, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ExperimentMetric)result), result);
         }
 
         /// <summary> Fetches an experiment metric by ID. </summary>
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ExperimentMetric>> GetMetricAsync(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric>> GetMetricAsync(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-            Response result = await GetMetricAsync(experimentMetricId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ExperimentMetric)result, result);
+            Response result = await this.GetMetricAsync(experimentMetricId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ExperimentMetric)result), result);
         }
 
         /// <summary>
@@ -188,9 +188,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateMetric(string experimentMetricId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
@@ -198,10 +198,10 @@ namespace Azure.Analytics.OnlineExperimentation
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateMetricRequest(experimentMetricId, content, requestConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateMetricRequest(experimentMetricId, content, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -223,20 +223,20 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateMetricAsync(string experimentMetricId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrUpdateMetricAsync(string experimentMetricId, RequestContent content, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OnlineExperimentationClient.CreateOrUpdateMetric");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateMetricRequest(experimentMetricId, content, requestConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateMetricRequest(experimentMetricId, content, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -256,8 +256,8 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ValidateMetric(RequestContent content, RequestContext context = null)
         {
@@ -265,9 +265,9 @@ namespace Azure.Analytics.OnlineExperimentation
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateMetricRequest(content, context);
+                using HttpMessage message = this.CreateValidateMetricRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -287,18 +287,18 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ValidateMetricAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> ValidateMetricAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OnlineExperimentationClient.ValidateMetric");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateValidateMetricRequest(content, context);
+                using HttpMessage message = this.CreateValidateMetricRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -311,27 +311,27 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Validates an experiment metric definition. </summary>
         /// <param name="body"> Experiment metric input to validate. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ExperimentMetricValidationResult> ValidateMetric(ExperimentMetric body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult> ValidateMetric(ExperimentMetric body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ValidateMetric(body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ExperimentMetricValidationResult)result, result);
+            Response result = this.ValidateMetric(body, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ExperimentMetricValidationResult)result), result);
         }
 
         /// <summary> Validates an experiment metric definition. </summary>
         /// <param name="body"> Experiment metric input to validate. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ExperimentMetricValidationResult>> ValidateMetricAsync(ExperimentMetric body, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>> ValidateMetricAsync(ExperimentMetric body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ValidateMetricAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ExperimentMetricValidationResult)result, result);
+            Response result = await this.ValidateMetricAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ExperimentMetricValidationResult)result), result);
         }
 
         /// <summary>
@@ -345,9 +345,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteMetric(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
         {
@@ -355,9 +355,9 @@ namespace Azure.Analytics.OnlineExperimentation
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-                using HttpMessage message = CreateDeleteMetricRequest(experimentMetricId, requestConditions, context);
+                using HttpMessage message = this.CreateDeleteMetricRequest(experimentMetricId, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -378,19 +378,19 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteMetricAsync(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteMetricAsync(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OnlineExperimentationClient.DeleteMetric");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+                global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-                using HttpMessage message = CreateDeleteMetricRequest(experimentMetricId, requestConditions, context);
+                using HttpMessage message = this.CreateDeleteMetricRequest(experimentMetricId, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -404,28 +404,28 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteMetric(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-            return DeleteMetric(experimentMetricId, requestConditions, cancellationToken.ToRequestContext());
+            return this.DeleteMetric(experimentMetricId, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an experiment metric. </summary>
         /// <param name="experimentMetricId"> Identifier for this experiment metric. Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteMetricAsync(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="experimentMetricId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="experimentMetricId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteMetricAsync(string experimentMetricId, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNullOrEmpty(experimentMetricId, nameof(experimentMetricId));
 
-            return await DeleteMetricAsync(experimentMetricId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteMetricAsync(experimentMetricId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -440,9 +440,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new OnlineExperimentationClientGetMetricsCollectionResult(
                 this,
@@ -465,9 +465,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(
                 this,
@@ -483,8 +483,8 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new OnlineExperimentationClientGetMetricsCollectionResultOfT(
                 this,
@@ -500,8 +500,8 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(
                 this,

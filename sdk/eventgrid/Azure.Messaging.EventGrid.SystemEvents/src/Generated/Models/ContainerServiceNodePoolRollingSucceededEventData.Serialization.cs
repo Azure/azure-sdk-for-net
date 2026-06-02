@@ -14,10 +14,10 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingSucceeded event. </summary>
-    [JsonConverter(typeof(ContainerServiceNodePoolRollingSucceededEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingSucceededEventData : ContainerServiceNodePoolRollingEventData, IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData.ContainerServiceNodePoolRollingSucceededEventDataConverter))]
+    public partial class ContainerServiceNodePoolRollingSucceededEventData : ContainerServiceNodePoolRollingEventData, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData"/> for deserialization. </summary>
         internal ContainerServiceNodePoolRollingSucceededEventData()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerServiceNodePoolRollingEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData.DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingSucceededEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingSucceededEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceNodePoolRollingSucceededEventData IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceNodePoolRollingSucceededEventData)PersistableModelCreateCore(data, options);
+        ContainerServiceNodePoolRollingSucceededEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ContainerServiceNodePoolRollingSucceededEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,41 +75,41 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingSucceededEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceNodePoolRollingSucceededEventData IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceNodePoolRollingSucceededEventData)JsonModelCreateCore(ref reader, options);
+        ContainerServiceNodePoolRollingSucceededEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ContainerServiceNodePoolRollingSucceededEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContainerServiceNodePoolRollingEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingSucceededEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData.DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContainerServiceNodePoolRollingSucceededEventData DeserializeContainerServiceNodePoolRollingSucceededEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string nodePoolName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nodePoolName"u8))
@@ -117,15 +117,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nodePoolName = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ContainerServiceNodePoolRollingSucceededEventData(nodePoolName, additionalBinaryDataProperties);
         }
 
-        internal partial class ContainerServiceNodePoolRollingSucceededEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingSucceededEventData>
+        internal partial class ContainerServiceNodePoolRollingSucceededEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingSucceededEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -142,8 +142,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override ContainerServiceNodePoolRollingSucceededEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

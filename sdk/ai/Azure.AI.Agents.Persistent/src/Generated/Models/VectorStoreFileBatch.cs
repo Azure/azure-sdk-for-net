@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class VectorStoreFileBatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatch"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store files batch was created. </param>
         /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
             FileCounts = fileCounts;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatch"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store.file_batch`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store files batch was created. </param>
@@ -39,10 +39,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
         /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileBatch(string id, VectorStoreFileBatchObject @object, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileBatchStatus status, VectorStoreFileCount fileCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFileBatch(string id, VectorStoreFileBatchObject @object, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileBatchStatus status, VectorStoreFileCount fileCounts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             CreatedAt = createdAt;
             VectorStoreId = vectorStoreId;
             Status = status;

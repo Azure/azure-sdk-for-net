@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

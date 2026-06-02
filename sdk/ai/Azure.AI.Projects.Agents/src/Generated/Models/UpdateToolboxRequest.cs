@@ -11,26 +11,26 @@ namespace Azure.AI.Projects.Agents
     public partial class UpdateToolboxRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UpdateToolboxRequest"/>. </summary>
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
         public UpdateToolboxRequest(string name, string defaultVersion)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
             Name = name;
             DefaultVersion = defaultVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UpdateToolboxRequest"/>. </summary>
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateToolboxRequest(string name, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateToolboxRequest(string name, string defaultVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DefaultVersion = defaultVersion;

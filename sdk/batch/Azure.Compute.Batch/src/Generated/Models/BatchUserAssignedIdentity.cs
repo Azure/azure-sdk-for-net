@@ -15,21 +15,21 @@ namespace Azure.Compute.Batch
     public partial class BatchUserAssignedIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchUserAssignedIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchUserAssignedIdentity"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
         internal BatchUserAssignedIdentity(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchUserAssignedIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchUserAssignedIdentity"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
         /// <param name="clientId"> The client id of the user assigned identity. </param>
         /// <param name="principalId"> The principal id of the user assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchUserAssignedIdentity(ResourceIdentifier resourceId, string clientId, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchUserAssignedIdentity(ResourceIdentifier resourceId, string clientId, string principalId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ClientId = clientId;

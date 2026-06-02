@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageInteractiveListReplyContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveListReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         internal AcsMessageInteractiveListReplyContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveListReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
         /// <param name="description"> The description of the selected row. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageInteractiveListReplyContent(string listItemId, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageInteractiveListReplyContent(string listItemId, string title, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ListItemId = listItemId;
             Title = title;

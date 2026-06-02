@@ -10,54 +10,54 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchPreviewTool : ResponsesTool, IJsonModel<InternalWebSearchPreviewTool>
+    internal partial class InternalWebSearchPreviewTool : ResponsesTool, IJsonModel<global::OpenAI.InternalWebSearchPreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
+                        return global::OpenAI.InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalWebSearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchPreviewTool IPersistableModel<InternalWebSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalWebSearchPreviewTool)PersistableModelCreateCore(data, options);
+        InternalWebSearchPreviewTool IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => ((InternalWebSearchPreviewTool)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalWebSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalWebSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::OpenAI.InternalWebSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,23 +65,23 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(UserLocation))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(UserLocation))
             {
                 writer.WritePropertyName("user_location"u8);
-                writer.WriteObjectValue(UserLocation, options);
+                writer.WriteObjectValue<InternalApproximateLocation>(UserLocation, options);
             }
-            if (Optional.IsDefined(SearchContextSize))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(SearchContentTypes))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(SearchContentTypes))
             {
                 writer.WritePropertyName("search_content_types"u8);
                 writer.WriteStartArray();
@@ -95,34 +95,34 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchPreviewTool IJsonModel<InternalWebSearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalWebSearchPreviewTool)JsonModelCreateCore(ref reader, options);
+        InternalWebSearchPreviewTool IJsonModel<global::OpenAI.InternalWebSearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((InternalWebSearchPreviewTool)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::OpenAI.InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::OpenAI.InternalWebSearchPreviewTool)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::OpenAI.InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalWebSearchPreviewTool DeserializeInternalWebSearchPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             InternalApproximateLocation userLocation = default;
             SearchContextSize? searchContextSize = default;
-            IList<SearchContentType> searchContentTypes = default;
+            IList<global::Azure.AI.Extensions.OpenAI.SearchContentType> searchContentTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -132,17 +132,17 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("user_location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         userLocation = null;
                         continue;
                     }
-                    userLocation = InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
+                    userLocation = global::OpenAI.InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -151,11 +151,11 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("search_content_types"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SearchContentType> array = new List<SearchContentType>();
+                    List<global::Azure.AI.Extensions.OpenAI.SearchContentType> array = new List<global::Azure.AI.Extensions.OpenAI.SearchContentType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToSearchContentType());
@@ -163,12 +163,12 @@ namespace OpenAI
                     searchContentTypes = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize, searchContentTypes ?? new ChangeTrackingList<SearchContentType>());
+            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize, (searchContentTypes ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.SearchContentType>()));
         }
     }
 }

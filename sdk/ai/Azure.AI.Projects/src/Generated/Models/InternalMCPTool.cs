@@ -11,16 +11,16 @@ namespace OpenAI
 {
     internal partial class InternalMCPTool : InternalTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        public InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
+        public InternalMCPTool(string serverLabel) : base(global::Azure.AI.Projects.ToolType.Mcp)
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
@@ -51,7 +51,7 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, global::System.Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, global::Azure.AI.Projects.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -73,7 +73,7 @@ namespace OpenAI
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </summary>
-        public Uri ServerUrl { get; set; }
+        public global::System.Uri ServerUrl { get; set; }
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
@@ -99,17 +99,17 @@ namespace OpenAI
 
         /// <summary>
         /// Gets or sets the AllowedTools.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalMCPToolFilter"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Projects.InternalMCPToolFilter"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -140,14 +140,14 @@ namespace OpenAI
 
         /// <summary>
         /// Gets or sets the RequireApproval.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalMCPToolRequireApproval"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Projects.InternalMCPToolRequireApproval"/>. </description>
         /// </item>
         /// <item>
         /// <description> "always". </description>
@@ -193,6 +193,6 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.ToolConfig> ToolConfigs { get; }
     }
 }

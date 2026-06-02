@@ -14,14 +14,14 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepConnectedAgent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgent"/>. </summary>
         internal RunStepConnectedAgent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgent"/>. </summary>
         /// <param name="name"> The name of connected agent. </param>
         /// <param name="arguments"> The JSON serialized query to the connected agent. </param>
         /// <param name="output"> The tool output. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="threadId"> The thread ID used by the connected agent. </param>
         /// <param name="agentId"> The ID of a connected agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepConnectedAgent(string name, string arguments, string output, string runId, string threadId, string agentId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepConnectedAgent(string name, string arguments, string output, string runId, string threadId, string agentId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Arguments = arguments;

@@ -12,7 +12,7 @@ using Azure;
 
 namespace Client.Clientnamespace.Second
 {
-    public partial class SecondClientResult : IJsonModel<SecondClientResult>
+    public partial class SecondClientResult : IJsonModel<global::Client.Clientnamespace.Second.SecondClientResult>
     {
         internal SecondClientResult() => throw null;
 
@@ -20,19 +20,19 @@ namespace Client.Clientnamespace.Second
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<SecondClientResult>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Clientnamespace.Second.SecondClientResult>.Write(ModelReaderWriterOptions options) => throw null;
 
-        SecondClientResult IPersistableModel<SecondClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SecondClientResult IPersistableModel<global::Client.Clientnamespace.Second.SecondClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<SecondClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Clientnamespace.Second.SecondClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator SecondClientResult(Response response) => throw null;
 
-        void IJsonModel<SecondClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Clientnamespace.Second.SecondClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        SecondClientResult IJsonModel<SecondClientResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        SecondClientResult IJsonModel<global::Client.Clientnamespace.Second.SecondClientResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual SecondClientResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

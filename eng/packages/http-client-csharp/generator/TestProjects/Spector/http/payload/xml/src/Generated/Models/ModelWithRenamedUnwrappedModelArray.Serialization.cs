@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class ModelWithRenamedUnwrappedModelArray : IPersistableModel<ModelWithRenamedUnwrappedModelArray>, IXmlSerializable
+    public partial class ModelWithRenamedUnwrappedModelArray : IPersistableModel<global::Payload.Xml.ModelWithRenamedUnwrappedModelArray>, IXmlSerializable
     {
         internal ModelWithRenamedUnwrappedModelArray() => throw null;
 
@@ -21,13 +21,13 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ModelWithRenamedUnwrappedModelArray>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.ModelWithRenamedUnwrappedModelArray>.Write(ModelReaderWriterOptions options) => throw null;
 
-        ModelWithRenamedUnwrappedModelArray IPersistableModel<ModelWithRenamedUnwrappedModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelWithRenamedUnwrappedModelArray IPersistableModel<global::Payload.Xml.ModelWithRenamedUnwrappedModelArray>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<ModelWithRenamedUnwrappedModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.ModelWithRenamedUnwrappedModelArray>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="modelWithRenamedUnwrappedModelArray"> The <see cref="ModelWithRenamedUnwrappedModelArray"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="modelWithRenamedUnwrappedModelArray"> The <see cref="global::Payload.Xml.ModelWithRenamedUnwrappedModelArray"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRenamedUnwrappedModelArray modelWithRenamedUnwrappedModelArray) => throw null;
 
         public static explicit operator ModelWithRenamedUnwrappedModelArray(Response response) => throw null;

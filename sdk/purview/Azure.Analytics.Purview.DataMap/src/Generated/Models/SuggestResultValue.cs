@@ -14,21 +14,21 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class SuggestResultValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SuggestResultValue"/>. </summary>
         internal SuggestResultValue()
         {
             Endorsement = new ChangeTrackingList<string>();
             Classification = new ChangeTrackingList<string>();
             Label = new ChangeTrackingList<string>();
-            Term = new ChangeTrackingList<TermSearchResultValue>();
-            Contact = new ChangeTrackingList<ContactSearchResultValue>();
+            Term = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue>();
+            Contact = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue>();
             AssetType = new ChangeTrackingList<string>();
             TermTemplate = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestResultValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.SuggestResultValue"/>. </summary>
         /// <param name="searchScore">
         /// The search score calculated by the search engine. The results are ordered by
         /// search score by default.
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestResultValue(float? searchScore, string searchText, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, IList<string> endorsement, string owner, IList<string> classification, IList<string> label, IList<TermSearchResultValue> term, IList<ContactSearchResultValue> contact, IList<string> assetType, string glossaryType, string glossary, string termStatus, IList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuggestResultValue(float? searchScore, string searchText, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, IList<string> endorsement, string owner, IList<string> classification, IList<string> label, IList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> term, IList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact, IList<string> assetType, string glossaryType, string glossary, string termStatus, IList<string> termTemplate, string longDescription, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchScore = searchScore;
             SearchText = searchText;
@@ -143,10 +143,10 @@ namespace Azure.Analytics.Purview.DataMap
         public IList<string> Label { get; }
 
         /// <summary> The terms assigned to the asset. </summary>
-        public IList<TermSearchResultValue> Term { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.TermSearchResultValue> Term { get; }
 
         /// <summary> The contacts of the asset. </summary>
-        public IList<ContactSearchResultValue> Contact { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.ContactSearchResultValue> Contact { get; }
 
         /// <summary> The asset types of the asset. </summary>
         public IList<string> AssetType { get; }

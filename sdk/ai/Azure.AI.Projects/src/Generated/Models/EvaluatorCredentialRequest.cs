@@ -11,28 +11,28 @@ namespace Azure.AI.Projects
     public partial class EvaluatorCredentialRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCredentialRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorCredentialRequest"/>. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobUri"/> is null. </exception>
-        public EvaluatorCredentialRequest(Uri blobUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="blobUri"/> is null. </exception>
+        public EvaluatorCredentialRequest(global::System.Uri blobUri)
         {
-            Argument.AssertNotNull(blobUri, nameof(blobUri));
+            global::Azure.AI.Projects.Argument.AssertNotNull(blobUri, nameof(blobUri));
 
             BlobUri = blobUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCredentialRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorCredentialRequest"/>. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorCredentialRequest(Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorCredentialRequest(global::System.Uri blobUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </summary>
-        public Uri BlobUri { get; }
+        public global::System.Uri BlobUri { get; }
     }
 }

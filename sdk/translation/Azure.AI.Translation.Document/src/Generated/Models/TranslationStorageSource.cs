@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Storage Source. </summary>
-    public readonly partial struct TranslationStorageSource : IEquatable<TranslationStorageSource>
+    public readonly partial struct TranslationStorageSource : IEquatable<global::Azure.AI.Translation.Document.TranslationStorageSource>
     {
         private readonly string _value;
         /// <summary> Azure blob storage source. </summary>
         private const string AzureBlobValue = "AzureBlob";
 
-        /// <summary> Initializes a new instance of <see cref="TranslationStorageSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationStorageSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TranslationStorageSource(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Translation.Document
         /// <summary> Azure blob storage source. </summary>
         public static TranslationStorageSource AzureBlob { get; } = new TranslationStorageSource(AzureBlobValue);
 
-        /// <summary> Determines if two <see cref="TranslationStorageSource"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Translation.Document.TranslationStorageSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TranslationStorageSource left, TranslationStorageSource right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TranslationStorageSource"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Translation.Document.TranslationStorageSource"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TranslationStorageSource left, TranslationStorageSource right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TranslationStorageSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Translation.Document.TranslationStorageSource"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TranslationStorageSource(string value) => new TranslationStorageSource(value);
 
-        /// <summary> Converts a string to a <see cref="TranslationStorageSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Translation.Document.TranslationStorageSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TranslationStorageSource?(string value) => value == null ? null : new TranslationStorageSource(value);
+        public static implicit operator TranslationStorageSource?(string value) => (value == null) ? null : new TranslationStorageSource(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TranslationStorageSource other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TranslationStorageSource other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TranslationStorageSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TranslationStorageSource other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

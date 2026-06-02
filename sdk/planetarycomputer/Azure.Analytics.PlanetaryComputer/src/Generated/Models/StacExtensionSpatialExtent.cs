@@ -17,24 +17,24 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacExtensionSpatialExtent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacExtensionSpatialExtent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacExtensionSpatialExtent"/>. </summary>
         public StacExtensionSpatialExtent()
         {
-            BoundingBox = new ChangeTrackingList<IList<float>>();
+            BoundingBox = new ChangeTrackingList<global::System.Collections.Generic.IList<float>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacExtensionSpatialExtent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacExtensionSpatialExtent"/>. </summary>
         /// <param name="boundingBox"> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacExtensionSpatialExtent(IList<IList<float>> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacExtensionSpatialExtent(IList<global::System.Collections.Generic.IList<float>> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </summary>
-        public IList<IList<float>> BoundingBox { get; }
+        public IList<global::System.Collections.Generic.IList<float>> BoundingBox { get; }
     }
 }

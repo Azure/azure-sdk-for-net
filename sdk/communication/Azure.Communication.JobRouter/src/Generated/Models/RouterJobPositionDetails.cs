@@ -14,9 +14,9 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobPositionDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
@@ -31,14 +31,14 @@ namespace Azure.Communication.JobRouter
             EstimatedWaitTime = estimatedWaitTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobId = jobId;
             Position = position;

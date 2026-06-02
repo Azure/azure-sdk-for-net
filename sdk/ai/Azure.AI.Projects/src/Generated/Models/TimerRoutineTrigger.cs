@@ -10,16 +10,16 @@ namespace Azure.AI.Projects
     /// <summary> A one-shot timer routine trigger. </summary>
     public partial class TimerRoutineTrigger : RoutineTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
-        public TimerRoutineTrigger() : base(RoutineTriggerType.Timer)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TimerRoutineTrigger"/>. </summary>
+        public TimerRoutineTrigger() : base(global::Azure.AI.Projects.RoutineTriggerType.Timer)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.TimerRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="at"> The UTC date and time at which the timer fires. </param>
-        internal TimerRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
+        internal TimerRoutineTrigger(RoutineTriggerType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
         {
             At = at;
         }

@@ -18,9 +18,9 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> Tree is a specific type of plant. </summary>
-    public partial class Tree : Plant, IJsonModel<Tree>, IXmlSerializable
+    public partial class Tree : Plant, IJsonModel<global::BasicTypeSpec.Tree>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="Tree"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.Tree"/> for deserialization. </summary>
         internal Tree()
         {
         }
@@ -29,71 +29,71 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Plant PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.Tree>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTree(document.RootElement, options);
+                        return global::BasicTypeSpec.Tree.DeserializeTree(document.RootElement, options);
                     }
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeTree(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return global::BasicTypeSpec.Tree.DeserializeTree(global::System.Xml.Linq.XElement.Load(dataStream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Tree)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.Tree)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.Tree>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::BasicTypeSpec.BasicTypeSpecContext.Default);
                 case "X":
                     using (MemoryStream stream = new MemoryStream(256))
                     {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        using (XmlWriter writer = global::System.Xml.XmlWriter.Create(stream, global::BasicTypeSpec.ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "Tree");
+                            this.WriteXml(writer, options, "Tree");
                         }
-                        if (stream.Position > int.MaxValue)
+                        if ((stream.Position > int.MaxValue))
                         {
-                            return BinaryData.FromStream(stream);
+                            return global::System.BinaryData.FromStream(stream);
                         }
                         else
                         {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, ((int)stream.Position)));
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Tree)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.Tree)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Tree>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.Tree>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Tree IPersistableModel<Tree>.Create(BinaryData data, ModelReaderWriterOptions options) => (Tree)PersistableModelCreateCore(data, options);
+        Tree IPersistableModel<global::BasicTypeSpec.Tree>.Create(BinaryData data, ModelReaderWriterOptions options) => ((Tree)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Tree>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::BasicTypeSpec.Tree>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="tree"> The <see cref="Tree"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="tree"> The <see cref="global::BasicTypeSpec.Tree"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Tree tree)
         {
-            if (tree == null)
+            if ((tree == null))
             {
                 return null;
             }
-            return RequestContent.Create(tree, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(tree, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <summary> Converts the model to RequestContent using the specified format. </summary>
@@ -108,37 +108,37 @@ namespace BasicTypeSpec
                     content.XmlWriter.WriteObjectValue(this, options, "Tree");
                     return content;
                 case "J":
-                    return RequestContent.Create(this, options);
+                    return global::Azure.Core.RequestContent.Create(this, options);
                 default:
-                    return RequestContent.Create(this, options);
+                    return global::Azure.Core.RequestContent.Create(this, options);
             }
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::BasicTypeSpec.Tree"/> from. </param>
         public static explicit operator Tree(Response response)
         {
 
-            if (response.Headers.TryGetValue("Content-Type", out string value) && value.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
+            if ((response.Headers.TryGetValue("Content-Type", out string value) && value.StartsWith("application/json", global::System.StringComparison.OrdinalIgnoreCase)))
             {
-                using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-                return DeserializeTree(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::BasicTypeSpec.ModelSerializationExtensions.JsonDocumentOptions);
+                return global::BasicTypeSpec.Tree.DeserializeTree(document.RootElement, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
             }
 
             using Stream stream = response.ContentStream;
-            if (stream == null)
+            if ((stream == null))
             {
                 return default;
             }
 
-            return DeserializeTree(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return global::BasicTypeSpec.Tree.DeserializeTree(global::System.Xml.Linq.XElement.Load(stream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), global::BasicTypeSpec.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Tree>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::BasicTypeSpec.Tree>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -146,10 +146,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.Tree>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.Tree)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("age"u8);
@@ -158,33 +158,33 @@ namespace BasicTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Tree IJsonModel<Tree>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Tree)JsonModelCreateCore(ref reader, options);
+        Tree IJsonModel<global::BasicTypeSpec.Tree>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((Tree)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Plant JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.Tree>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.Tree)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTree(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::BasicTypeSpec.Tree.DeserializeTree(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static Tree DeserializeTree(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string species = "tree";
             string id = default;
             int height = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             int age = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,9 +208,9 @@ namespace BasicTypeSpec
                     age = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new Tree(species, id, height, additionalBinaryDataProperties, age);
@@ -221,14 +221,14 @@ namespace BasicTypeSpec
         /// <param name="nameHint"> An optional name hint. </param>
         private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteStartElement(nameHint);
             }
 
-            XmlModelWriteCore(writer, options);
+            this.XmlModelWriteCore(writer, options);
 
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteEndElement();
             }
@@ -238,10 +238,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal override void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.Tree>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "X"))
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.Tree)} does not support writing '{format}' format.");
             }
 
             base.XmlModelWriteCore(writer, options);
@@ -254,7 +254,7 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static Tree DeserializeTree(XElement element, ModelReaderWriterOptions options)
         {
-            if (element == null)
+            if ((element == null))
             {
                 return null;
             }
@@ -262,30 +262,30 @@ namespace BasicTypeSpec
             string species = "tree";
             string id = default;
             int height = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             int age = default;
 
             foreach (var child in element.Elements())
             {
                 string localName = child.Name.LocalName;
-                if (localName == "species")
+                if ((localName == "species"))
                 {
-                    species = (string)child;
+                    species = ((string)child);
                     continue;
                 }
-                if (localName == "id")
+                if ((localName == "id"))
                 {
-                    id = (string)child;
+                    id = ((string)child);
                     continue;
                 }
-                if (localName == "height")
+                if ((localName == "height"))
                 {
-                    height = (int)child;
+                    height = ((int)child);
                     continue;
                 }
-                if (localName == "age")
+                if ((localName == "age"))
                 {
-                    age = (int)child;
+                    age = ((int)child);
                     continue;
                 }
             }
@@ -294,6 +294,6 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => this.WriteXml(writer, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

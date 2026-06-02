@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageDeltaChunk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaChunk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaChunk"/>. </summary>
         /// <param name="id"> The identifier of the message, which can be referenced in API endpoints. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
         internal MessageDeltaChunk(string id, MessageDelta delta)
@@ -25,15 +25,15 @@ namespace Azure.AI.Agents.Persistent
             Delta = delta;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaChunk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaChunk"/>. </summary>
         /// <param name="id"> The identifier of the message, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `thread.message.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaChunk(string id, MessageDeltaChunkObject @object, MessageDelta delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaChunk(string id, MessageDeltaChunkObject @object, MessageDelta delta, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             Delta = delta;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

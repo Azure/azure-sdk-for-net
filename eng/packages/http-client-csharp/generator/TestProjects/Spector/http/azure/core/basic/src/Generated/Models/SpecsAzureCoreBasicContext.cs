@@ -10,10 +10,10 @@ using Azure;
 
 namespace Specs.Azure.Core.Basic
 {
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(User))]
-    [ModelReaderWriterBuildable(typeof(UserList))]
-    [ModelReaderWriterBuildable(typeof(UserOrder))]
+    [ModelReaderWriterBuildableAttribute(typeof(ResponseError))]
+    [ModelReaderWriterBuildableAttribute(typeof(User))]
+    [ModelReaderWriterBuildableAttribute(typeof(UserList))]
+    [ModelReaderWriterBuildableAttribute(typeof(UserOrder))]
     public partial class SpecsAzureCoreBasicContext : ModelReaderWriterContext
     {
     }

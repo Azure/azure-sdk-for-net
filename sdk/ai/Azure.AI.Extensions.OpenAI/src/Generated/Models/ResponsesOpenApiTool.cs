@@ -10,18 +10,18 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class ResponsesOpenApiTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool"/>. </summary>
         /// <param name="openApi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openApi"/> is null. </exception>
-        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="openApi"/> is null. </exception>
+        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(global::Azure.AI.Extensions.OpenAI.ToolType.Openapi)
         {
-            Argument.AssertNotNull(openApi, nameof(openApi));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(openApi, nameof(openApi));
 
             OpenApi = openApi;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="openApi"> The openapi function definition. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             OpenApi = openApi;
             ToolConfigs = toolConfigs;
@@ -44,6 +44,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
     }
 }

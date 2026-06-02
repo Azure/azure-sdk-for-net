@@ -14,15 +14,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexingParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingParameters"/>. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
         /// <param name="maxFailedItems"> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="maxFailedItemsPerBatch"> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="indexingParametersConfiguration"> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;

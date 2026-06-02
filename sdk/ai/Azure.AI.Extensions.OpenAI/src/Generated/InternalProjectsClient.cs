@@ -12,17 +12,17 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalProjectsClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+                { global::System.ClientModel.Primitives.GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { global::System.ClientModel.Primitives.GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
-        private Responses _cachedResponses;
+        private global::Azure.AI.Extensions.OpenAI.Responses _cachedResponses;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new InternalProjectsClientOptions())
+        public InternalProjectsClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new InternalProjectsClientOptions())
         {
         }
 
@@ -40,20 +40,20 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, InternalProjectsClientOptions options)
+        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, global::System.Uri endpoint, InternalProjectsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new InternalProjectsClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             }
             else
             {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+                Pipeline = global::System.ClientModel.Primitives.ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
+        public InternalProjectsClient(global::System.Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
         }
 
@@ -69,9 +69,9 @@ namespace Azure.AI.Extensions.OpenAI
         public ClientPipeline Pipeline { get; }
 
         /// <summary> Initializes a new instance of Responses. </summary>
-        public virtual Responses GetResponsesClient()
+        public virtual global::Azure.AI.Extensions.OpenAI.Responses GetResponsesClient()
         {
-            return Volatile.Read(ref _cachedResponses) ?? Interlocked.CompareExchange(ref _cachedResponses, new Responses(Pipeline, _endpoint), null) ?? _cachedResponses;
+            return (global::System.Threading.Volatile.Read(ref _cachedResponses) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedResponses, new global::Azure.AI.Extensions.OpenAI.Responses(Pipeline, _endpoint), null) ?? _cachedResponses));
         }
     }
 }

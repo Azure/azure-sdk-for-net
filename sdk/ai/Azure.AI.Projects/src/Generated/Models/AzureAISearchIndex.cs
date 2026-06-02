@@ -10,20 +10,20 @@ namespace Azure.AI.Projects
     /// <summary> Azure AI Search Index Definition. </summary>
     public partial class AzureAISearchIndex : AIProjectIndex
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AzureAISearchIndex"/>. </summary>
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureAISearchIndex(string connectionName, string indexName) : base(IndexType.AzureSearch)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="indexName"/> is null. </exception>
+        public AzureAISearchIndex(string connectionName, string indexName) : base(global::Azure.AI.Projects.IndexType.AzureSearch)
         {
-            Argument.AssertNotNull(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(indexName, nameof(indexName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(connectionName, nameof(connectionName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(indexName, nameof(indexName));
 
             ConnectionName = connectionName;
             IndexName = indexName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AzureAISearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
-        internal AzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string indexName, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal AzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string connectionName, string indexName, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
             ConnectionName = connectionName;
             IndexName = indexName;

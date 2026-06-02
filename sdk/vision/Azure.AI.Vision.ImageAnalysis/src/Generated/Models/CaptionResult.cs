@@ -14,9 +14,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class CaptionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CaptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.CaptionResult"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -28,14 +28,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CaptionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.CaptionResult"/>. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CaptionResult(float confidence, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CaptionResult(float confidence, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Confidence = confidence;
             Text = text;

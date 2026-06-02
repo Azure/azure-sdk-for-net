@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.RenamedFrom
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class RenamedFromClientHostExtensions
     {
         public static IClientBuilder AddRenamedFromClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddRenamedFromClient(this IHostApplicationBuilder host, string sectionName, Action<RenamedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddRenamedFromClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.RenamedFrom.RenamedFromClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedRenamedFromClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedRenamedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<RenamedFromClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedRenamedFromClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.RenamedFrom.RenamedFromClientSettings> configureSettings) => throw null;
     }
 }

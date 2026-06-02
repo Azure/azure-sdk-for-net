@@ -16,13 +16,13 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateResponseContentPartAdded : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartAdded"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseContentPartAdded"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item to which the content part was added. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that was added. </param>
-        internal SessionUpdateResponseContentPartAdded(string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(ServerEventType.ResponseContentPartAdded)
+        internal SessionUpdateResponseContentPartAdded(string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseContentPartAdded)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
             Part = part;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartAdded"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseContentPartAdded"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that was added. </param>
-        internal SessionUpdateResponseContentPartAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseContentPartAdded(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

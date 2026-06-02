@@ -15,20 +15,20 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJob"/>. </summary>
         internal RouterJob()
         {
-            RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
-            AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
-            _labels = new ChangeTrackingDictionary<string, BinaryData>();
-            Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
-            _tags = new ChangeTrackingDictionary<string, BinaryData>();
-            Notes = new ChangeTrackingList<RouterJobNote>();
+            RequestedWorkerSelectors = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterWorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterWorkerSelector>();
+            _labels = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Assignments = new ChangeTrackingDictionary<string, global::Azure.Communication.JobRouter.RouterJobAssignment>();
+            _tags = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            Notes = new ChangeTrackingList<global::Azure.Communication.JobRouter.RouterJobNote>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterJob"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
@@ -48,7 +48,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<global::Azure.Communication.JobRouter.RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, global::System.BinaryData> labels, IReadOnlyDictionary<string, global::Azure.Communication.JobRouter.RouterJobAssignment> assignments, IDictionary<string, global::System.BinaryData> tags, IList<global::Azure.Communication.JobRouter.RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;
@@ -81,10 +81,10 @@ namespace Azure.Communication.JobRouter
         public DateTimeOffset? EnqueuedAt { get; }
 
         /// <summary> A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job. </summary>
-        public IReadOnlyList<RouterWorkerSelector> AttachedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Communication.JobRouter.RouterWorkerSelector> AttachedWorkerSelectors { get; }
 
         /// <summary> A collection of the assignments of the job. Key is AssignmentId. </summary>
-        public IReadOnlyDictionary<string, RouterJobAssignment> Assignments { get; }
+        public IReadOnlyDictionary<string, global::Azure.Communication.JobRouter.RouterJobAssignment> Assignments { get; }
 
         /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
         public DateTimeOffset? ScheduledAt { get; }

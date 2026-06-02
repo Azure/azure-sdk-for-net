@@ -32,14 +32,14 @@ namespace Azure.Communication.Messages
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/conversations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = global::Azure.Core.RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -52,14 +52,14 @@ namespace Azure.Communication.Messages
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -70,16 +70,16 @@ namespace Azure.Communication.Messages
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Delete;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             return message;
         }
 
@@ -90,16 +90,16 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath(":terminate", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             return message;
         }
 
@@ -108,31 +108,31 @@ namespace Azure.Communication.Messages
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/conversations", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxPageSize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxPageSize", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (participantId != null)
+            if ((participantId != null))
             {
                 uri.AppendQuery("participantId", participantId, true);
             }
-            if (channelId != null)
+            if ((channelId != null))
             {
-                uri.AppendQuery("channelId", TypeFormatters.ConvertToString(channelId), true);
+                uri.AppendQuery("channelId", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(channelId), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetConversationsRequest(Uri nextPage, int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
+        internal HttpMessage CreateNextGetConversationsRequest(global::System.Uri nextPage, int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -141,16 +141,16 @@ namespace Azure.Communication.Messages
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -162,27 +162,27 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/messages", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxPageSize != null)
+            if ((maxPageSize != null))
             {
-                uri.AppendQuery("maxPageSize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxPageSize", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(maxPageSize), true);
             }
-            if (participantId != null)
+            if ((participantId != null))
             {
                 uri.AppendQuery("participantId", participantId, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetMessagesRequest(Uri nextPage, string conversationId, int? maxPageSize, string participantId, RequestContext context)
+        internal HttpMessage CreateNextGetMessagesRequest(global::System.Uri nextPage, string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -191,16 +191,16 @@ namespace Azure.Communication.Messages
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -212,16 +212,16 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/participants:add", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier207);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -235,16 +235,16 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/participants:remove", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier207);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -258,16 +258,16 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath(":analyze", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Repeatability-Request-ID", Guid.NewGuid().ToString());
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
+            request.Method = global::Azure.Core.RequestMethod.Post;
+            request.Headers.SetValue("Repeatability-Request-ID", global::System.Guid.NewGuid().ToString());
+            request.Headers.SetValue("Repeatability-First-Sent", global::Azure.Communication.Messages.TypeFormatters.ConvertToString(global::System.DateTimeOffset.Now, global::Azure.Communication.Messages.SerializationFormat.DateTime_RFC7231));
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

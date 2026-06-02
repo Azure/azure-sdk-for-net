@@ -14,9 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class UserCollectionSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserCollectionSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.UserCollectionSettings"/>. </summary>
         /// <param name="tileSettings"> Settings for map tile visualization. </param>
         /// <param name="mosaicConfiguration"> Settings for data mosaic visualization. </param>
         internal UserCollectionSettings(TileSettings tileSettings, StacMosaicConfiguration mosaicConfiguration)
@@ -25,11 +25,11 @@ namespace Azure.Analytics.PlanetaryComputer
             MosaicConfiguration = mosaicConfiguration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserCollectionSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.UserCollectionSettings"/>. </summary>
         /// <param name="tileSettings"> Settings for map tile visualization. </param>
         /// <param name="mosaicConfiguration"> Settings for data mosaic visualization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserCollectionSettings(TileSettings tileSettings, StacMosaicConfiguration mosaicConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserCollectionSettings(TileSettings tileSettings, StacMosaicConfiguration mosaicConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TileSettings = tileSettings;
             MosaicConfiguration = mosaicConfiguration;

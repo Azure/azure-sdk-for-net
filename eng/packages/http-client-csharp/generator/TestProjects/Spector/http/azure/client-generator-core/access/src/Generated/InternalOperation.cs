@@ -14,7 +14,7 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
     {
         protected InternalOperation() => throw null;
 
-        internal InternalOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal InternalOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
     }

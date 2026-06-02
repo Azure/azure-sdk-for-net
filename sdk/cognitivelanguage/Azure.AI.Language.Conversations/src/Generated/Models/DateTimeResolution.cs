@@ -13,25 +13,25 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> A resolution for datetime entity instances. </summary>
     public partial class DateTimeResolution : ResolutionBase
     {
-        /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeResolution"/>. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
-        internal DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value) : base(ResolutionKind.DateTimeResolution)
+        internal DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value) : base(global::Azure.AI.Language.Conversations.Models.ResolutionKind.DateTimeResolution)
         {
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.DateTimeResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        internal DateTimeResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier) : base(resolutionKind, additionalBinaryDataProperties)
+        internal DateTimeResolution(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;

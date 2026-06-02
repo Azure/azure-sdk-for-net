@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.AgeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.VolumeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.SpeedResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.AreaResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.LengthResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.InformationResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.TemperatureResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.WeightResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.CurrencyResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.BooleanResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.DateTimeResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.NumberResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.OrdinalResolution"/>, <see cref="Azure.AI.Language.Conversations.Models.TemporalSpanResolution"/>, and <see cref="Azure.AI.Language.Conversations.Models.NumericRangeResolution"/>.
     /// </summary>
     public abstract partial class ResolutionBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ResolutionBase"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         private protected ResolutionBase(ResolutionKind resolutionKind)
         {
             ResolutionKind = resolutionKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ResolutionBase"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResolutionBase(ResolutionKind resolutionKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ResolutionKind = resolutionKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

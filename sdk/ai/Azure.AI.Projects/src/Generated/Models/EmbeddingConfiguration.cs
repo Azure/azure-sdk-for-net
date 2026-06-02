@@ -11,26 +11,26 @@ namespace Azure.AI.Projects
     public partial class EmbeddingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EmbeddingConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> Deployment name of embedding model. It can point to a model deployment either in the parent AIServices or a connection. </param>
         /// <param name="embeddingField"> Embedding field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelDeploymentName"/> or <paramref name="embeddingField"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelDeploymentName"/> or <paramref name="embeddingField"/> is null. </exception>
         public EmbeddingConfiguration(string modelDeploymentName, string embeddingField)
         {
-            Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
-            Argument.AssertNotNull(embeddingField, nameof(embeddingField));
+            global::Azure.AI.Projects.Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(embeddingField, nameof(embeddingField));
 
             ModelDeploymentName = modelDeploymentName;
             EmbeddingField = embeddingField;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EmbeddingConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> Deployment name of embedding model. It can point to a model deployment either in the parent AIServices or a connection. </param>
         /// <param name="embeddingField"> Embedding field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingConfiguration(string modelDeploymentName, string embeddingField, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingConfiguration(string modelDeploymentName, string embeddingField, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelDeploymentName = modelDeploymentName;
             EmbeddingField = embeddingField;

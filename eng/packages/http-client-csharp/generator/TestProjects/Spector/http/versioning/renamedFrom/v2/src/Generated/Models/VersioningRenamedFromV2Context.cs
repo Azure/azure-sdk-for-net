@@ -10,7 +10,7 @@ using Versioning.RenamedFrom;
 
 namespace Versioning.RenamedFrom.V2
 {
-    [ModelReaderWriterBuildable(typeof(NewModel))]
+    [ModelReaderWriterBuildableAttribute(typeof(NewModel))]
     public partial class VersioningRenamedFromV2Context : ModelReaderWriterContext
     {
     }

@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Indicates whether owners of Dev Boxes in a pool are local administrators on the Dev Boxes. </summary>
-    public readonly partial struct LocalAdministratorStatus : IEquatable<LocalAdministratorStatus>
+    public readonly partial struct LocalAdministratorStatus : IEquatable<global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus>
     {
         private readonly string _value;
         /// <summary> Owners of Dev Boxes in the pool are local administrators on the Dev Boxes. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalAdministratorStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes. </summary>
         public static LocalAdministratorStatus Disabled { get; } = new LocalAdministratorStatus(DisabledValue);
 
-        /// <summary> Determines if two <see cref="LocalAdministratorStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalAdministratorStatus left, LocalAdministratorStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LocalAdministratorStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalAdministratorStatus left, LocalAdministratorStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LocalAdministratorStatus(string value) => new LocalAdministratorStatus(value);
 
-        /// <summary> Converts a string to a <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.LocalAdministratorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalAdministratorStatus?(string value) => value == null ? null : new LocalAdministratorStatus(value);
+        public static implicit operator LocalAdministratorStatus?(string value) => (value == null) ? null : new LocalAdministratorStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalAdministratorStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LocalAdministratorStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LocalAdministratorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LocalAdministratorStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

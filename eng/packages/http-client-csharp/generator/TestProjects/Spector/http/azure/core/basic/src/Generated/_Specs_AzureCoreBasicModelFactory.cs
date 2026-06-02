@@ -13,10 +13,10 @@ namespace Specs.Azure.Core.Basic
 {
     public static partial class _Specs_AzureCoreBasicModelFactory
     {
-        public static User User(int id = default, string name = default, IEnumerable<UserOrder> orders = default, ETag etag = default) => throw null;
+        public static User User(int id = default, string name = default, IEnumerable<global::Specs.Azure.Core.Basic.UserOrder> orders = default, ETag etag = default) => throw null;
 
         public static UserOrder UserOrder(int id = default, int userId = default, string detail = default) => throw null;
 
-        public static UserList UserList(IEnumerable<User> users = default) => throw null;
+        public static UserList UserList(IEnumerable<global::Specs.Azure.Core.Basic.User> users = default) => throw null;
     }
 }

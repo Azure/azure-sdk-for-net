@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Type of partial response that was returned for a semantic ranking request. </summary>
-    public readonly partial struct SemanticSearchResultsType : IEquatable<SemanticSearchResultsType>
+    public readonly partial struct SemanticSearchResultsType : IEquatable<global::Azure.Search.Documents.Models.SemanticSearchResultsType>
     {
         private readonly string _value;
         /// <summary> Results without any semantic enrichment or reranking. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Results have been reranked with the reranker model and will include semantic captions. They will not include any answers, answers highlights or caption highlights. </summary>
         private const string RerankedResultsValue = "rerankedResults";
 
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResultsType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SemanticSearchResultsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticSearchResultsType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> Results have been reranked with the reranker model and will include semantic captions. They will not include any answers, answers highlights or caption highlights. </summary>
         public static SemanticSearchResultsType RerankedResults { get; } = new SemanticSearchResultsType(RerankedResultsValue);
 
-        /// <summary> Determines if two <see cref="SemanticSearchResultsType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticSearchResultsType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticSearchResultsType left, SemanticSearchResultsType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SemanticSearchResultsType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.SemanticSearchResultsType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticSearchResultsType left, SemanticSearchResultsType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SemanticSearchResultsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticSearchResultsType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SemanticSearchResultsType(string value) => new SemanticSearchResultsType(value);
 
-        /// <summary> Converts a string to a <see cref="SemanticSearchResultsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.SemanticSearchResultsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SemanticSearchResultsType?(string value) => value == null ? null : new SemanticSearchResultsType(value);
+        public static implicit operator SemanticSearchResultsType?(string value) => (value == null) ? null : new SemanticSearchResultsType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SemanticSearchResultsType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SemanticSearchResultsType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SemanticSearchResultsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SemanticSearchResultsType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

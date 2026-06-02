@@ -17,26 +17,26 @@ namespace Azure.Compute.Batch
     public partial class BatchMetadataItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchMetadataItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchMetadataItem"/>. </summary>
         /// <param name="name"> The name of the metadata item. </param>
         /// <param name="value"> The value of the metadata item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public BatchMetadataItem(string name, string value)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchMetadataItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchMetadataItem"/>. </summary>
         /// <param name="name"> The name of the metadata item. </param>
         /// <param name="value"> The value of the metadata item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchMetadataItem(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchMetadataItem(string name, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

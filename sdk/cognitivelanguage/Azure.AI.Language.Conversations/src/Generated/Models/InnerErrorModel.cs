@@ -15,9 +15,9 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class InnerErrorModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.InnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         internal InnerErrorModel(InnerErrorCode code, string message)
@@ -27,14 +27,14 @@ namespace Azure.AI.Language.Conversations.Models
             Details = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.InnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerErrorModel(InnerErrorCode code, string message, IDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InnerErrorModel(InnerErrorCode code, string message, IDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

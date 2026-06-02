@@ -7,14 +7,14 @@ using System.ComponentModel;
 
 namespace OpenAI
 {
-    internal readonly partial struct ImageGenToolOutputFormat : IEquatable<ImageGenToolOutputFormat>
+    internal readonly partial struct ImageGenToolOutputFormat : IEquatable<global::OpenAI.ImageGenToolOutputFormat>
     {
         private readonly string _value;
         private const string PngValue = "png";
         private const string WebpValue = "webp";
         private const string JpegValue = "jpeg";
 
-        /// <summary> Initializes a new instance of <see cref="ImageGenToolOutputFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.ImageGenToolOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public ImageGenToolOutputFormat(string value)
         {
@@ -30,34 +30,34 @@ namespace OpenAI
         /// <summary> Gets the Jpeg. </summary>
         public static ImageGenToolOutputFormat Jpeg { get; } = new ImageGenToolOutputFormat(JpegValue);
 
-        /// <summary> Determines if two <see cref="ImageGenToolOutputFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolOutputFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageGenToolOutputFormat left, ImageGenToolOutputFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImageGenToolOutputFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::OpenAI.ImageGenToolOutputFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageGenToolOutputFormat left, ImageGenToolOutputFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolOutputFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ImageGenToolOutputFormat(string value) => new ImageGenToolOutputFormat(value);
 
-        /// <summary> Converts a string to a <see cref="ImageGenToolOutputFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::OpenAI.ImageGenToolOutputFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImageGenToolOutputFormat?(string value) => value == null ? null : new ImageGenToolOutputFormat(value);
+        public static implicit operator ImageGenToolOutputFormat?(string value) => (value == null) ? null : new ImageGenToolOutputFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImageGenToolOutputFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ImageGenToolOutputFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ImageGenToolOutputFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImageGenToolOutputFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

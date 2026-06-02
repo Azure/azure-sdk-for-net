@@ -13,12 +13,12 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a streamed text content part's text annotation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaTextUriCitationAnnotation"/>, <see cref="MessageDeltaTextFileCitationAnnotation"/>, and <see cref="MessageDeltaTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMessageDeltaTextAnnotation))]
-    public abstract partial class MessageDeltaTextAnnotation : IJsonModel<MessageDeltaTextAnnotation>
+    [PersistableModelProxyAttribute(typeof(UnknownMessageDeltaTextAnnotation))]
+    public abstract partial class MessageDeltaTextAnnotation : IJsonModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageDeltaTextAnnotation"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation"/> for deserialization. </summary>
         internal MessageDeltaTextAnnotation()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageDeltaTextAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Agents.Persistent.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMessageDeltaTextAnnotation(document.RootElement, options);
+                        return global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation.DeserializeMessageDeltaTextAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageDeltaTextAnnotation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MessageDeltaTextAnnotation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageDeltaTextAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageDeltaTextAnnotation IPersistableModel<MessageDeltaTextAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MessageDeltaTextAnnotation IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageDeltaTextAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MessageDeltaTextAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,10 +76,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageDeltaTextAnnotation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -89,26 +89,26 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageDeltaTextAnnotation IJsonModel<MessageDeltaTextAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MessageDeltaTextAnnotation IJsonModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageDeltaTextAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MessageDeltaTextAnnotation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageDeltaTextAnnotation(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation.DeserializeMessageDeltaTextAnnotation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MessageDeltaTextAnnotation DeserializeMessageDeltaTextAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -117,14 +117,14 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "url_citation":
-                        return MessageDeltaTextUriCitationAnnotation.DeserializeMessageDeltaTextUriCitationAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageDeltaTextUriCitationAnnotation.DeserializeMessageDeltaTextUriCitationAnnotation(element, options);
                     case "file_citation":
-                        return MessageDeltaTextFileCitationAnnotation.DeserializeMessageDeltaTextFileCitationAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageDeltaTextFileCitationAnnotation.DeserializeMessageDeltaTextFileCitationAnnotation(element, options);
                     case "file_path":
-                        return MessageDeltaTextFilePathAnnotation.DeserializeMessageDeltaTextFilePathAnnotation(element, options);
+                        return global::Azure.AI.Agents.Persistent.MessageDeltaTextFilePathAnnotation.DeserializeMessageDeltaTextFilePathAnnotation(element, options);
                 }
             }
-            return UnknownMessageDeltaTextAnnotation.DeserializeUnknownMessageDeltaTextAnnotation(element, options);
+            return global::Azure.AI.Agents.Persistent.UnknownMessageDeltaTextAnnotation.DeserializeUnknownMessageDeltaTextAnnotation(element, options);
         }
     }
 }

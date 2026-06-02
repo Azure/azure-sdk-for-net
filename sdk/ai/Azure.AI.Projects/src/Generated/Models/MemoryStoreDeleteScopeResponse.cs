@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryStoreDeleteScopeResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDeleteScopeResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse"/>. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
         /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
@@ -24,15 +24,15 @@ namespace Azure.AI.Projects.Memory
             IsDeleted = isDeleted;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDeleteScopeResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse"/>. </summary>
         /// <param name="object"> The object type. Always 'memory_store.scope.deleted'. </param>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
         /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDeleteScopeResponse(MemoryStoreObjectType @object, string name, string scope, bool isDeleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDeleteScopeResponse(MemoryStoreObjectType @object, string name, string scope, bool isDeleted, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
-            Object = @object;
+            this.Object = @object;
             Name = name;
             Scope = scope;
             IsDeleted = isDeleted;

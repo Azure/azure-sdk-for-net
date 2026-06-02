@@ -14,14 +14,14 @@ namespace Payload.MultiPart
 {
     public partial class MultiPartClient
     {
-        public MultiPartClient() : this(new Uri("http://localhost:3000"), new MultiPartClientOptions()) => throw null;
+        public MultiPartClient() : this(new global::System.Uri("http://localhost:3000"), new MultiPartClientOptions()) => throw null;
 
-        internal MultiPartClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MultiPartClientOptions options) => throw null;
+        internal MultiPartClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, MultiPartClientOptions options) => throw null;
 
-        public MultiPartClient(Uri endpoint, MultiPartClientOptions options) : this(null, endpoint, options) => throw null;
+        public MultiPartClient(global::System.Uri endpoint, MultiPartClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public MultiPartClient(MultiPartClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public MultiPartClient(MultiPartClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

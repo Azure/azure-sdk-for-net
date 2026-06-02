@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The search query of advanced search request. </summary>
-    public partial class QueryConfig : IJsonModel<QueryConfig>
+    public partial class QueryConfig : IJsonModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QueryConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQueryConfig(document.RootElement, options);
+                        return global::Azure.Analytics.Purview.DataMap.QueryConfig.DeserializeQueryConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.QueryConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.QueryConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QueryConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryConfig IPersistableModel<QueryConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QueryConfig IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QueryConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="queryConfig"> The <see cref="QueryConfig"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="queryConfig"> The <see cref="global::Azure.Analytics.Purview.DataMap.QueryConfig"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(QueryConfig queryConfig)
         {
-            if (queryConfig == null)
+            if ((queryConfig == null))
             {
                 return null;
             }
-            return RequestContent.Create(queryConfig, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(queryConfig, global::Azure.Analytics.Purview.DataMap.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QueryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,33 +79,33 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.QueryConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Keywords))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStringValue(Keywords);
             }
-            if (Optional.IsDefined(Limit))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(ContinuationToken))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
-            if (Optional.IsCollectionDefined(Orderby))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Orderby))
             {
                 writer.WritePropertyName("orderby"u8);
                 writer.WriteStartArray();
                 foreach (BinaryData item in Orderby)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -113,42 +113,42 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Filter))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(Filter);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Filter))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(Filter))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Facets))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
                 foreach (SearchFacetItem item in Facets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SearchFacetItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TaxonomySetting))
+            if (global::Azure.Analytics.Purview.DataMap.Optional.IsDefined(TaxonomySetting))
             {
                 writer.WritePropertyName("taxonomySetting"u8);
-                writer.WriteObjectValue(TaxonomySetting, options);
+                writer.WriteObjectValue<SearchTaxonomySetting>(TaxonomySetting, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -156,9 +156,9 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -167,37 +167,37 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QueryConfig IJsonModel<QueryConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QueryConfig IJsonModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QueryConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Purview.DataMap.QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Purview.DataMap.QueryConfig)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQueryConfig(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Purview.DataMap.QueryConfig.DeserializeQueryConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static QueryConfig DeserializeQueryConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string keywords = default;
             int? limit = default;
             string continuationToken = default;
-            IList<BinaryData> @orderby = default;
+            IList<global::System.BinaryData> @orderby = default;
             BinaryData filter = default;
-            IList<SearchFacetItem> facets = default;
+            IList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem> facets = default;
             SearchTaxonomySetting taxonomySetting = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("keywords"u8))
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("limit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -221,20 +221,20 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("orderby"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<global::System.BinaryData> array = new List<global::System.BinaryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(global::System.BinaryData.FromString(item.GetRawText()));
                         }
                     }
                     @orderby = array;
@@ -242,48 +242,48 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (prop.NameEquals("filter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    filter = BinaryData.FromString(prop.Value.GetRawText());
+                    filter = global::System.BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("facets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SearchFacetItem> array = new List<SearchFacetItem>();
+                    List<global::Azure.Analytics.Purview.DataMap.SearchFacetItem> array = new List<global::Azure.Analytics.Purview.DataMap.SearchFacetItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItem.DeserializeSearchFacetItem(item, options));
+                        array.Add(global::Azure.Analytics.Purview.DataMap.SearchFacetItem.DeserializeSearchFacetItem(item, options));
                     }
                     facets = array;
                     continue;
                 }
                 if (prop.NameEquals("taxonomySetting"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    taxonomySetting = SearchTaxonomySetting.DeserializeSearchTaxonomySetting(prop.Value, options);
+                    taxonomySetting = global::Azure.Analytics.Purview.DataMap.SearchTaxonomySetting.DeserializeSearchTaxonomySetting(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new QueryConfig(
                 keywords,
                 limit,
                 continuationToken,
-                @orderby ?? new ChangeTrackingList<BinaryData>(),
+                (@orderby ?? new ChangeTrackingList<global::System.BinaryData>()),
                 filter,
-                facets ?? new ChangeTrackingList<SearchFacetItem>(),
+                (facets ?? new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.SearchFacetItem>()),
                 taxonomySetting,
                 additionalBinaryDataProperties);
         }

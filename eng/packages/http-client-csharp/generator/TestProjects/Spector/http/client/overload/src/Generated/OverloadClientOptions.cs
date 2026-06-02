@@ -15,7 +15,7 @@ namespace Client.Overload
     {
         public OverloadClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal OverloadClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

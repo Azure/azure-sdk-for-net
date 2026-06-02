@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedPrebuiltEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedPrebuiltEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity"/>. </summary>
         /// <param name="category"> The prebuilt entity category. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public TextAuthoringExportedPrebuiltEntity(string category)
         {
-            Argument.AssertNotNull(category, nameof(category));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedPrebuiltEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity"/>. </summary>
         /// <param name="category"> The prebuilt entity category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedPrebuiltEntity(string category, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedPrebuiltEntity(string category, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

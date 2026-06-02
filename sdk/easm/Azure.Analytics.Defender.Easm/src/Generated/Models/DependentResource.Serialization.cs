@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The DependentResource. </summary>
-    public partial class DependentResource : IJsonModel<DependentResource>
+    public partial class DependentResource : IJsonModel<global::Azure.Analytics.Defender.Easm.DependentResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DependentResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDependentResource(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.DependentResource.DeserializeDependentResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DependentResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DependentResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DependentResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DependentResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DependentResource IPersistableModel<DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DependentResource IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DependentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DependentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.DependentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,67 +68,67 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DependentResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DependentResource)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Md5))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Md5))
             {
                 writer.WritePropertyName("md5"u8);
                 writer.WriteStringValue(Md5);
             }
-            if (Optional.IsDefined(ResponseBodySize))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ResponseBodySize))
             {
                 writer.WritePropertyName("responseBodySize"u8);
                 writer.WriteNumberValue(ResponseBodySize.Value);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(FirstSeenCrawlGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeenCrawlGuid))
             {
                 writer.WritePropertyName("firstSeenCrawlGuid"u8);
                 writer.WriteStringValue(FirstSeenCrawlGuid);
             }
-            if (Optional.IsDefined(FirstSeenPageGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeenPageGuid))
             {
                 writer.WritePropertyName("firstSeenPageGuid"u8);
                 writer.WriteStringValue(FirstSeenPageGuid);
             }
-            if (Optional.IsDefined(FirstSeenResourceGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeenResourceGuid))
             {
                 writer.WritePropertyName("firstSeenResourceGuid"u8);
                 writer.WriteStringValue(FirstSeenResourceGuid);
             }
-            if (Optional.IsDefined(LastSeenCrawlGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeenCrawlGuid))
             {
                 writer.WritePropertyName("lastSeenCrawlGuid"u8);
                 writer.WriteStringValue(LastSeenCrawlGuid);
             }
-            if (Optional.IsDefined(LastSeenPageGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeenPageGuid))
             {
                 writer.WritePropertyName("lastSeenPageGuid"u8);
                 writer.WriteStringValue(LastSeenPageGuid);
             }
-            if (Optional.IsDefined(LastSeenResourceGuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeenResourceGuid))
             {
                 writer.WritePropertyName("lastSeenResourceGuid"u8);
                 writer.WriteStringValue(LastSeenResourceGuid);
             }
-            if (Optional.IsCollectionDefined(ResponseBodyMinhash))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(ResponseBodyMinhash))
             {
                 writer.WritePropertyName("responseBodyMinhash"u8);
                 writer.WriteStartArray();
@@ -138,72 +138,72 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentType))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Sha256))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Sha256))
             {
                 writer.WritePropertyName("sha256"u8);
                 writer.WriteStringValue(Sha256);
             }
-            if (Optional.IsDefined(Sha384))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Sha384))
             {
                 writer.WritePropertyName("sha384"u8);
                 writer.WriteStringValue(Sha384);
             }
-            if (Optional.IsDefined(Sha512))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Sha512))
             {
                 writer.WritePropertyName("sha512"u8);
                 writer.WriteStringValue(Sha512);
             }
-            if (Optional.IsDefined(Url))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsDefined(Cached))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Cached))
             {
                 writer.WritePropertyName("cached"u8);
                 writer.WriteBooleanValue(Cached.Value);
             }
-            if (Optional.IsCollectionDefined(SriChecks))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SriChecks))
             {
                 writer.WritePropertyName("sriChecks"u8);
                 writer.WriteStartArray();
                 foreach (SubResourceIntegrityCheck item in SriChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SubResourceIntegrityCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Host))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(LastObservedViolation))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastObservedViolation))
             {
                 writer.WritePropertyName("lastObservedViolation"u8);
                 writer.WriteStringValue(LastObservedViolation.Value, "O");
             }
-            if (Optional.IsDefined(LastObservedValidation))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastObservedValidation))
             {
                 writer.WritePropertyName("lastObservedValidation"u8);
                 writer.WriteStringValue(LastObservedValidation.Value, "O");
             }
-            if (Optional.IsDefined(LastObservedActualSriHash))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastObservedActualSriHash))
             {
                 writer.WritePropertyName("lastObservedActualSriHash"u8);
                 writer.WriteStringValue(LastObservedActualSriHash);
             }
-            if (Optional.IsDefined(LastObservedExpectedSriHash))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastObservedExpectedSriHash))
             {
                 writer.WritePropertyName("lastObservedExpectedSriHash"u8);
                 writer.WriteStringValue(LastObservedExpectedSriHash);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -211,9 +211,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -222,26 +222,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DependentResource IJsonModel<DependentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DependentResource IJsonModel<global::Azure.Analytics.Defender.Easm.DependentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DependentResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.DependentResource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDependentResource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.DependentResource.DeserializeDependentResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DependentResource DeserializeDependentResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -261,15 +261,15 @@ namespace Azure.Analytics.Defender.Easm
             string sha256 = default;
             string sha384 = default;
             string sha512 = default;
-            Uri url = default;
+            global::System.Uri url = default;
             bool? cached = default;
-            IList<SubResourceIntegrityCheck> sriChecks = default;
+            IList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> sriChecks = default;
             string host = default;
             DateTimeOffset? lastObservedViolation = default;
             DateTimeOffset? lastObservedValidation = default;
             string lastObservedActualSriHash = default;
             string lastObservedExpectedSriHash = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("md5"u8))
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("responseBodySize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -306,7 +306,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -345,7 +345,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("responseBodyMinhash"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -379,16 +379,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("cached"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -397,14 +397,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("sriChecks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SubResourceIntegrityCheck> array = new List<SubResourceIntegrityCheck>();
+                    List<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> array = new List<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceIntegrityCheck.DeserializeSubResourceIntegrityCheck(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck.DeserializeSubResourceIntegrityCheck(item, options));
                     }
                     sriChecks = array;
                     continue;
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastObservedViolation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -425,7 +425,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastObservedValidation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -442,9 +442,9 @@ namespace Azure.Analytics.Defender.Easm
                     lastObservedExpectedSriHash = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DependentResource(
@@ -459,14 +459,14 @@ namespace Azure.Analytics.Defender.Easm
                 lastSeenCrawlGuid,
                 lastSeenPageGuid,
                 lastSeenResourceGuid,
-                responseBodyMinhash ?? new ChangeTrackingList<int>(),
+                (responseBodyMinhash ?? new ChangeTrackingList<int>()),
                 contentType,
                 sha256,
                 sha384,
                 sha512,
                 url,
                 cached,
-                sriChecks ?? new ChangeTrackingList<SubResourceIntegrityCheck>(),
+                (sriChecks ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>()),
                 host,
                 lastObservedViolation,
                 lastObservedValidation,

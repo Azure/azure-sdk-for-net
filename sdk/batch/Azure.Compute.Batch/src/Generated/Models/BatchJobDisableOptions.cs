@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class BatchJobDisableOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobDisableOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobDisableOptions"/>. </summary>
         /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
         public BatchJobDisableOptions(DisableBatchJobOption jobOption)
         {
             JobOption = jobOption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobDisableOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobDisableOptions"/>. </summary>
         /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobDisableOptions(DisableBatchJobOption jobOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobDisableOptions(DisableBatchJobOption jobOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             JobOption = jobOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

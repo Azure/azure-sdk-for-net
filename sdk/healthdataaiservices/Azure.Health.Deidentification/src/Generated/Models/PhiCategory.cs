@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Health.Deidentification
 {
     /// <summary> List of PHI Entities. </summary>
-    public readonly partial struct PhiCategory : IEquatable<PhiCategory>
+    public readonly partial struct PhiCategory : IEquatable<global::Azure.Health.Deidentification.PhiCategory>
     {
         private readonly string _value;
         /// <summary> Unknown PHI Type. </summary>
@@ -73,12 +73,12 @@ namespace Azure.Health.Deidentification
         /// <summary> Zip Code. </summary>
         private const string ZipValue = "Zip";
 
-        /// <summary> Initializes a new instance of <see cref="PhiCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.PhiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhiCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Health.Deidentification.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -170,34 +170,34 @@ namespace Azure.Health.Deidentification
         /// <summary> Zip Code. </summary>
         public static PhiCategory Zip { get; } = new PhiCategory(ZipValue);
 
-        /// <summary> Determines if two <see cref="PhiCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Health.Deidentification.PhiCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PhiCategory left, PhiCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PhiCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Health.Deidentification.PhiCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PhiCategory left, PhiCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PhiCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Health.Deidentification.PhiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PhiCategory(string value) => new PhiCategory(value);
 
-        /// <summary> Converts a string to a <see cref="PhiCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Health.Deidentification.PhiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhiCategory?(string value) => value == null ? null : new PhiCategory(value);
+        public static implicit operator PhiCategory?(string value) => (value == null) ? null : new PhiCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PhiCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PhiCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PhiCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PhiCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

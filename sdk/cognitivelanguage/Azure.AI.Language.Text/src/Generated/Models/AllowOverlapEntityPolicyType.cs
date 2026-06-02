@@ -13,15 +13,15 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the allow overlap policy. Will apply no post processing logic for the entities. Whatever the model predicts is what will be returned to the user. This allows the user to get a full view of every single model's possible values and apply their own custom logic on entity selection. </summary>
     public partial class AllowOverlapEntityPolicyType : EntityOverlapPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="AllowOverlapEntityPolicyType"/>. </summary>
-        public AllowOverlapEntityPolicyType() : base(PolicyKind.AllowOverlap)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AllowOverlapEntityPolicyType"/>. </summary>
+        public AllowOverlapEntityPolicyType() : base(global::Azure.AI.Language.Text.PolicyKind.AllowOverlap)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AllowOverlapEntityPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AllowOverlapEntityPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllowOverlapEntityPolicyType(PolicyKind policyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind, additionalBinaryDataProperties)
+        internal AllowOverlapEntityPolicyType(PolicyKind policyKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(policyKind, additionalBinaryDataProperties)
         {
         }
     }

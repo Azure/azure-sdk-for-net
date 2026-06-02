@@ -9,14 +9,14 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The VersionSelectionRule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FixedRatioVersionSelectionRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule"/>.
     /// </summary>
     public abstract partial class VersionSelectionRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VersionSelectionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionSelectionRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
         private protected VersionSelectionRule(VersionSelectorType @type, string agentVersion)
@@ -25,11 +25,11 @@ namespace Azure.AI.Projects.Agents
             AgentVersion = agentVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionSelectionRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.VersionSelectionRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VersionSelectionRule(VersionSelectorType @type, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             AgentVersion = agentVersion;

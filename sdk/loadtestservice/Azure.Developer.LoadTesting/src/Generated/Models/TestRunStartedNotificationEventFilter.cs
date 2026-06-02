@@ -13,15 +13,15 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TestRunStarted and scope is Tests. </summary>
     public partial class TestRunStartedNotificationEventFilter : TestsNotificationEventFilter
     {
-        /// <summary> Initializes a new instance of <see cref="TestRunStartedNotificationEventFilter"/>. </summary>
-        public TestRunStartedNotificationEventFilter() : base(NotificationEventType.TestRunStarted)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter"/>. </summary>
+        public TestRunStartedNotificationEventFilter() : base(global::Azure.Developer.LoadTesting.NotificationEventType.TestRunStarted)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunStartedNotificationEventFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunStartedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal TestRunStartedNotificationEventFilter(NotificationEventType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

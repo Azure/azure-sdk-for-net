@@ -12,21 +12,21 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Daily recurrence schedule. </summary>
     public partial class DailyRecurrenceSchedule : RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> Hours for the recurrence schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hours"/> is null. </exception>
-        public DailyRecurrenceSchedule(IEnumerable<int> hours) : base(RecurrenceType.Daily)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="hours"/> is null. </exception>
+        public DailyRecurrenceSchedule(IEnumerable<int> hours) : base(global::Azure.AI.Projects.Evaluation.RecurrenceType.Daily)
         {
-            Argument.AssertNotNull(hours, nameof(hours));
+            global::Azure.AI.Projects.Argument.AssertNotNull(hours, nameof(hours));
 
             Hours = hours.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hours"> Hours for the recurrence schedule. </param>
-        internal DailyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> hours) : base(@type, additionalBinaryDataProperties)
+        internal DailyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<int> hours) : base(@type, additionalBinaryDataProperties)
         {
             Hours = hours;
         }

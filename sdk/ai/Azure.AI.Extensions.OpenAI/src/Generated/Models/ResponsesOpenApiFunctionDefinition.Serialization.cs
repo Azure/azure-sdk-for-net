@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an openapi function. </summary>
-    public partial class ResponsesOpenApiFunctionDefinition : IJsonModel<ResponsesOpenApiFunctionDefinition>
+    public partial class ResponsesOpenApiFunctionDefinition : IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiFunctionDefinition"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition"/> for deserialization. </summary>
         internal ResponsesOpenApiFunctionDefinition()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesOpenApiFunctionDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesOpenApiFunctionDefinition(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition.DeserializeResponsesOpenApiFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesOpenApiFunctionDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesOpenApiFunctionDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesOpenApiFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesOpenApiFunctionDefinition IPersistableModel<ResponsesOpenApiFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResponsesOpenApiFunctionDefinition IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesOpenApiFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesOpenApiFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,14 +70,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesOpenApiFunctionDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -87,7 +87,7 @@ namespace Azure.AI.Extensions.OpenAI
             foreach (var item in Specification)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     writer.WriteNullValue();
                     continue;
@@ -95,22 +95,22 @@ namespace Azure.AI.Extensions.OpenAI
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
             writer.WriteEndObject();
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
-            if (Optional.IsCollectionDefined(DefaultParams))
+            writer.WriteObjectValue<ResponsesOpenApiAuthDetails>(Auth, options);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
                 writer.WriteStartArray();
                 foreach (string item in DefaultParams)
                 {
-                    if (item == null)
+                    if ((item == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -119,17 +119,17 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Functions))
+            if (((options.Format != "W") && global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Functions)))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (ResponsesOpenApiFunctionDefinitionFunction item in Functions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ResponsesOpenApiFunctionDefinitionFunction>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -137,9 +137,9 @@ namespace Azure.AI.Extensions.OpenAI
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -148,36 +148,36 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesOpenApiFunctionDefinition IJsonModel<ResponsesOpenApiFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResponsesOpenApiFunctionDefinition IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResponsesOpenApiFunctionDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesOpenApiFunctionDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesOpenApiFunctionDefinition(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition.DeserializeResponsesOpenApiFunctionDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesOpenApiFunctionDefinition DeserializeResponsesOpenApiFunctionDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             string name = default;
             string description = default;
-            IDictionary<string, BinaryData> specification = default;
+            IDictionary<string, global::System.BinaryData> specification = default;
             ResponsesOpenApiAuthDetails auth = default;
             IList<string> defaultParams = default;
-            IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction> functions = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -192,16 +192,16 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("spec"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     specification = dictionary;
@@ -209,19 +209,19 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("auth"u8))
                 {
-                    auth = ResponsesOpenApiAuthDetails.DeserializeResponsesOpenApiAuthDetails(prop.Value, options);
+                    auth = global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiAuthDetails.DeserializeResponsesOpenApiAuthDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("default_params"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -235,21 +235,21 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("functions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ResponsesOpenApiFunctionDefinitionFunction> array = new List<ResponsesOpenApiFunctionDefinitionFunction>();
+                    List<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction> array = new List<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesOpenApiFunctionDefinitionFunction.DeserializeResponsesOpenApiFunctionDefinitionFunction(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction.DeserializeResponsesOpenApiFunctionDefinitionFunction(item, options));
                     }
                     functions = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResponsesOpenApiFunctionDefinition(
@@ -257,8 +257,8 @@ namespace Azure.AI.Extensions.OpenAI
                 description,
                 specification,
                 auth,
-                defaultParams ?? new ChangeTrackingList<string>(),
-                functions ?? new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>(),
+                (defaultParams ?? new ChangeTrackingList<string>()),
+                (functions ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction>()),
                 additionalBinaryDataProperties);
         }
     }

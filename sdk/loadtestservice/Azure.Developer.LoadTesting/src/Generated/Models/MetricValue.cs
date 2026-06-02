@@ -14,18 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class MetricValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricValue"/>. </summary>
         internal MetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.MetricValue"/>. </summary>
         /// <param name="timestamp"> The timestamp for the metric value in RFC 3339 format. </param>
         /// <param name="value"> The metric value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricValue(DateTimeOffset? timestamp, double? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricValue(DateTimeOffset? timestamp, double? value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Value = value;

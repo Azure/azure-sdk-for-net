@@ -14,25 +14,25 @@ namespace Azure.AI.DocumentIntelligence
     public partial class AuthorizeClassifierCopyOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeClassifierCopyOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeClassifierCopyOptions"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         public AuthorizeClassifierCopyOptions(string classifierId)
         {
-            Argument.AssertNotNull(classifierId, nameof(classifierId));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(classifierId, nameof(classifierId));
 
             ClassifierId = classifierId;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeClassifierCopyOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeClassifierCopyOptions"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizeClassifierCopyOptions(string classifierId, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizeClassifierCopyOptions(string classifierId, string description, IDictionary<string, string> tags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ClassifierId = classifierId;
             Description = description;

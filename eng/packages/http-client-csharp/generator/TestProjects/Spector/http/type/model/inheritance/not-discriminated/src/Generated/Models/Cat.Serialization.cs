@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public partial class Cat : Pet, IJsonModel<Cat>
+    public partial class Cat : Pet, IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>
     {
         internal Cat() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Cat>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Cat IPersistableModel<Cat>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Cat IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Cat>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Cat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Cat IJsonModel<Cat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Cat IJsonModel<global::_Type.Model.Inheritance.NotDiscriminated.Cat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

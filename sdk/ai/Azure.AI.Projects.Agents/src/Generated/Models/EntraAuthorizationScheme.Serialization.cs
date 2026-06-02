@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The EntraAuthorizationScheme. </summary>
-    public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<EntraAuthorizationScheme>
+    public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentEndpointAuthorizationScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntraAuthorizationScheme(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.EntraAuthorizationScheme.DeserializeEntraAuthorizationScheme(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntraAuthorizationScheme)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.EntraAuthorizationScheme)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntraAuthorizationScheme)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.EntraAuthorizationScheme)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntraAuthorizationScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntraAuthorizationScheme IPersistableModel<EntraAuthorizationScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntraAuthorizationScheme)PersistableModelCreateCore(data, options);
+        EntraAuthorizationScheme IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => ((EntraAuthorizationScheme)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntraAuthorizationScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntraAuthorizationScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,46 +65,46 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntraAuthorizationScheme)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.EntraAuthorizationScheme)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(IsolationKeySource))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(IsolationKeySource))
             {
                 writer.WritePropertyName("isolation_key_source"u8);
-                writer.WriteObjectValue(IsolationKeySource, options);
+                writer.WriteObjectValue<IsolationKeySource>(IsolationKeySource, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntraAuthorizationScheme IJsonModel<EntraAuthorizationScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntraAuthorizationScheme)JsonModelCreateCore(ref reader, options);
+        EntraAuthorizationScheme IJsonModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((EntraAuthorizationScheme)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentEndpointAuthorizationScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.EntraAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(EntraAuthorizationScheme)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.EntraAuthorizationScheme)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntraAuthorizationScheme(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.EntraAuthorizationScheme.DeserializeEntraAuthorizationScheme(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static EntraAuthorizationScheme DeserializeEntraAuthorizationScheme(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             AgentEndpointAuthorizationSchemeType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             IsolationKeySource isolationKeySource = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,16 +115,16 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("isolation_key_source"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    isolationKeySource = IsolationKeySource.DeserializeIsolationKeySource(prop.Value, options);
+                    isolationKeySource = global::Azure.AI.Projects.Agents.IsolationKeySource.DeserializeIsolationKeySource(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EntraAuthorizationScheme(@type, additionalBinaryDataProperties, isolationKeySource);

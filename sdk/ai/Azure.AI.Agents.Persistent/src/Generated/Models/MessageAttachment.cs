@@ -16,24 +16,24 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageAttachment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageAttachment"/>. </summary>
         /// <param name="tools"> The tools to add to this file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public MessageAttachment(IEnumerable<BinaryData> tools)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="tools"/> is null. </exception>
+        public MessageAttachment(IEnumerable<global::System.BinaryData> tools)
         {
-            Argument.AssertNotNull(tools, nameof(tools));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(tools, nameof(tools));
 
             Tools = tools.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageAttachment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageAttachment"/>. </summary>
         /// <param name="fileId"> The ID of the file to attach to the message. </param>
         /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="tools"> The tools to add to this file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageAttachment(string fileId, VectorStoreDataSource dataSource, IList<BinaryData> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageAttachment(string fileId, VectorStoreDataSource dataSource, IList<global::System.BinaryData> tools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             DataSource = dataSource;
@@ -49,17 +49,17 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The tools to add to this file.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="CodeInterpreterToolDefinition"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.CodeInterpreterToolDefinition"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="FileSearchToolDefinition"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.FileSearchToolDefinition"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -86,6 +86,6 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Tools { get; }
+        public IList<global::System.BinaryData> Tools { get; }
     }
 }

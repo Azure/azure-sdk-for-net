@@ -12,14 +12,14 @@ namespace Azure.AI.Projects
     public partial class EvaluatorGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationJob"/>. </summary>
         public EvaluatorGenerationJob()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.EvaluatorGenerationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
         /// <param name="inputs"> Caller-supplied inputs. </param>
         /// <param name="result"> Result produced on success. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects
         /// <param name="finishedAt"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="usage"> Token consumption summary. Populated when the job reaches a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationJob(string id, EvaluatorGenerationInputs inputs, EvaluatorVersion result, JobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, EvaluatorGenerationTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationJob(string id, EvaluatorGenerationInputs inputs, EvaluatorVersion result, JobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, EvaluatorGenerationTokenUsage usage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;

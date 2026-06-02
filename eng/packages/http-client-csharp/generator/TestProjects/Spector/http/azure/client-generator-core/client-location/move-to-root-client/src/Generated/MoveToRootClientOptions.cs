@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
     {
         public MoveToRootClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal MoveToRootClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -15,11 +15,11 @@ namespace Azure.AI.Projects
         private static PipelineMessageClassifier _pipelineMessageClassifier200201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateGetDatasetVersionsRequest(string name, RequestOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/datasets/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetDatasetVersionsRequest(Uri nextPage, string name, RequestOptions options)
+        internal PipelineMessage CreateNextGetDatasetVersionsRequest(global::System.Uri nextPage, string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -48,9 +48,9 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetDatasetsRequest(Uri nextPage, RequestOptions options)
+        internal PipelineMessage CreateNextGetDatasetsRequest(global::System.Uri nextPage, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -86,9 +86,9 @@ namespace Azure.AI.Projects
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -166,7 +166,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendPath("/startPendingUpload", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -188,7 +188,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendPath("/credentials", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

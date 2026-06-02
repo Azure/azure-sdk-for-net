@@ -14,27 +14,27 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DataGenerationConnectionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationConnectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo"/>. </summary>
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="deploymentName"/> is null. </exception>
         public DataGenerationConnectionInfo(string resourceId, string deploymentName)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(resourceId, nameof(resourceId));
+            global::Azure.AI.Language.Text.Authoring.Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ResourceId = resourceId;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationConnectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo"/>. </summary>
         /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationConnectionInfo(string kind, string resourceId, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationConnectionInfo(string kind, string resourceId, string deploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ResourceId = resourceId;

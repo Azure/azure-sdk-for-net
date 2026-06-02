@@ -15,14 +15,14 @@ namespace Parameters.Spread
 {
     public partial class SpreadClient
     {
-        public SpreadClient() : this(new Uri("http://localhost:3000"), new SpreadClientOptions()) => throw null;
+        public SpreadClient() : this(new global::System.Uri("http://localhost:3000"), new SpreadClientOptions()) => throw null;
 
-        internal SpreadClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SpreadClientOptions options) => throw null;
+        internal SpreadClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, SpreadClientOptions options) => throw null;
 
-        public SpreadClient(Uri endpoint, SpreadClientOptions options) : this(null, endpoint, options) => throw null;
+        public SpreadClient(global::System.Uri endpoint, SpreadClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public SpreadClient(SpreadClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public SpreadClient(SpreadClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

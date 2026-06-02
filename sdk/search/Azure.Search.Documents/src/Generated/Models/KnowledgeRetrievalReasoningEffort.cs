@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for reasoning effort.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="KnowledgeRetrievalMediumReasoningEffort"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>.
     /// </summary>
     public abstract partial class KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalReasoningEffort"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         private protected KnowledgeRetrievalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalReasoningEffort"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeRetrievalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

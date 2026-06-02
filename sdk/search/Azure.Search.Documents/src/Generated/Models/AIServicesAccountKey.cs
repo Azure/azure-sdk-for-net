@@ -14,26 +14,26 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The account key of an Azure AI service resource that's attached to a skillset, to be used with the resource's subdomain. </summary>
     public partial class AIServicesAccountKey : CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of <see cref="AIServicesAccountKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesAccountKey"/>. </summary>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
         /// <param name="subdomainUrl"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="subdomainUrl"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="key"/> or <paramref name="subdomainUrl"/> is null. </exception>
         public AIServicesAccountKey(string key, string subdomainUrl) : base("#Microsoft.Azure.Search.AIServicesByKey")
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(subdomainUrl, nameof(subdomainUrl));
+            global::Azure.Search.Documents.Argument.AssertNotNull(key, nameof(key));
+            global::Azure.Search.Documents.Argument.AssertNotNull(subdomainUrl, nameof(subdomainUrl));
 
             Key = key;
             SubdomainUrl = subdomainUrl;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIServicesAccountKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.AIServicesAccountKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
         /// <param name="subdomainUrl"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
-        internal AIServicesAccountKey(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, string subdomainUrl) : base(odataType, description, additionalBinaryDataProperties)
+        internal AIServicesAccountKey(string odataType, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string key, string subdomainUrl) : base(odataType, description, additionalBinaryDataProperties)
         {
             Key = key;
             SubdomainUrl = subdomainUrl;

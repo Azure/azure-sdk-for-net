@@ -20,9 +20,9 @@ namespace _Type.Property.Nullable
 
         public static DurationProperty DurationProperty(string requiredProperty = default, TimeSpan? nullableProperty = default) => throw null;
 
-        public static CollectionsByteProperty CollectionsByteProperty(string requiredProperty = default, IEnumerable<BinaryData> nullableProperty = default) => throw null;
+        public static CollectionsByteProperty CollectionsByteProperty(string requiredProperty = default, IEnumerable<global::System.BinaryData> nullableProperty = default) => throw null;
 
-        public static CollectionsModelProperty CollectionsModelProperty(string requiredProperty = default, IEnumerable<InnerModel> nullableProperty = default) => throw null;
+        public static CollectionsModelProperty CollectionsModelProperty(string requiredProperty = default, IEnumerable<global::_Type.Property.Nullable.InnerModel> nullableProperty = default) => throw null;
 
         public static InnerModel InnerModel(string @property = default) => throw null;
 

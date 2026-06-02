@@ -13,11 +13,11 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a function tool as used to configure an agent. </summary>
     public partial class FunctionToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.FunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalFunction"> The definition of the concrete function that the function tool should call. </param>
-        internal FunctionToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalFunctionDefinition internalFunction) : base(@type, additionalBinaryDataProperties)
+        internal FunctionToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InternalFunctionDefinition internalFunction) : base(@type, additionalBinaryDataProperties)
         {
             InternalFunction = internalFunction;
         }

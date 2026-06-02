@@ -13,25 +13,25 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a UserRate metric definition. Calculates the percentage of users who encounter a start event and subsequently an end event. Users must encounter events in the specified order. </summary>
     public partial class UserRateMetricDefinition : ExperimentMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="UserRateMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition"/>. </summary>
         /// <param name="startEvent"> The start event to observe as the rate denominator. </param>
         /// <param name="endEvent"> The end event to observe, which is a condition for the rate numerator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startEvent"/> or <paramref name="endEvent"/> is null. </exception>
-        public UserRateMetricDefinition(ObservedEvent startEvent, ObservedEvent endEvent) : base(ExperimentMetricType.UserRate)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="startEvent"/> or <paramref name="endEvent"/> is null. </exception>
+        public UserRateMetricDefinition(ObservedEvent startEvent, ObservedEvent endEvent) : base(global::Azure.Analytics.OnlineExperimentation.ExperimentMetricType.UserRate)
         {
-            Argument.AssertNotNull(startEvent, nameof(startEvent));
-            Argument.AssertNotNull(endEvent, nameof(endEvent));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(startEvent, nameof(startEvent));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(endEvent, nameof(endEvent));
 
             StartEvent = startEvent;
             EndEvent = endEvent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserRateMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition"/>. </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startEvent"> The start event to observe as the rate denominator. </param>
         /// <param name="endEvent"> The end event to observe, which is a condition for the rate numerator. </param>
-        internal UserRateMetricDefinition(ExperimentMetricType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedEvent startEvent, ObservedEvent endEvent) : base(@type, additionalBinaryDataProperties)
+        internal UserRateMetricDefinition(ExperimentMetricType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ObservedEvent startEvent, ObservedEvent endEvent) : base(@type, additionalBinaryDataProperties)
         {
             StartEvent = startEvent;
             EndEvent = endEvent;

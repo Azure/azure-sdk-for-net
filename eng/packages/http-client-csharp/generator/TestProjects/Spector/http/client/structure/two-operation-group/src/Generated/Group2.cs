@@ -18,32 +18,32 @@ namespace Client.Structure.TwoOperationGroup
     {
         protected Group2() => throw null;
 
-        internal Group2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
+        internal Group2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Two(RequestContext context) => throw null;
 
-        public virtual Task<Response> TwoAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> TwoAsync(RequestContext context) => throw null;
 
         public virtual Response Two(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> TwoAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> TwoAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Five(RequestContext context) => throw null;
 
-        public virtual Task<Response> FiveAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> FiveAsync(RequestContext context) => throw null;
 
         public virtual Response Five(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> FiveAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> FiveAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Six(RequestContext context) => throw null;
 
-        public virtual Task<Response> SixAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> SixAsync(RequestContext context) => throw null;
 
         public virtual Response Six(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SixAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SixAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.Naming.EnumConflict
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class EnumConflictClientHostExtensions
     {
         public static IClientBuilder AddEnumConflictClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddEnumConflictClient(this IHostApplicationBuilder host, string sectionName, Action<EnumConflictClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddEnumConflictClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.Naming.EnumConflict.EnumConflictClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedEnumConflictClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedEnumConflictClient(this IHostApplicationBuilder host, string key, string sectionName, Action<EnumConflictClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedEnumConflictClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.Naming.EnumConflict.EnumConflictClientSettings> configureSettings) => throw null;
     }
 }

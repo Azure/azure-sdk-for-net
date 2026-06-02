@@ -19,22 +19,22 @@ namespace Azure.Developer.LoadTesting
     public partial class ResourceMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.ResourceMetric"/>. </summary>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="metricNamespace"> Metric name space. </param>
         /// <param name="name"> The invariant value of metric name. </param>
         /// <param name="aggregation"> Metric aggregation. </param>
         /// <param name="resourceType"> Azure resource type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="name"/>, <paramref name="aggregation"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="name"/>, <paramref name="aggregation"/> or <paramref name="resourceType"/> is null. </exception>
         public ResourceMetric(ResourceIdentifier resourceId, string metricNamespace, string name, string aggregation, string resourceType)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(resourceId, nameof(resourceId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(aggregation, nameof(aggregation));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;
@@ -43,7 +43,7 @@ namespace Azure.Developer.LoadTesting
             ResourceType = resourceType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceMetric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.ResourceMetric"/>. </summary>
         /// <param name="id"> Unique name for metric. </param>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="metricNamespace"> Metric name space. </param>
@@ -53,7 +53,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="unit"> Metric unit. </param>
         /// <param name="resourceType"> Azure resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetric(string id, ResourceIdentifier resourceId, string metricNamespace, string displayDescription, string name, string aggregation, string unit, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceMetric(string id, ResourceIdentifier resourceId, string metricNamespace, string displayDescription, string name, string aggregation, string unit, string resourceType, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ResourceId = resourceId;

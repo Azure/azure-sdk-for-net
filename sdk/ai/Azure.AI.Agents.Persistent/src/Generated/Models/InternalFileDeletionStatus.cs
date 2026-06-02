@@ -13,9 +13,9 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalFileDeletionStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileDeletionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFileDeletionStatus"/>. </summary>
         /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         internal InternalFileDeletionStatus(string id, bool deleted)
@@ -24,16 +24,16 @@ namespace Azure.AI.Agents.Persistent
             Deleted = deleted;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileDeletionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalFileDeletionStatus"/>. </summary>
         /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'file'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileDeletionStatus(string id, bool deleted, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFileDeletionStatus(string id, bool deleted, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Deleted = deleted;
-            Object = @object;
+            this.Object = @object;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

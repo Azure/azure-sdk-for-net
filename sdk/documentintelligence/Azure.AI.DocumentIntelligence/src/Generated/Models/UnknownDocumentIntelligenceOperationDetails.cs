@@ -12,7 +12,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     internal partial class UnknownDocumentIntelligenceOperationDetails : DocumentIntelligenceOperationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDocumentIntelligenceOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.UnknownDocumentIntelligenceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind != default ? kind : "unknown", resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
+        internal UnknownDocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, global::System.Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, (kind != default) ? kind : "unknown", resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
         {
         }
     }

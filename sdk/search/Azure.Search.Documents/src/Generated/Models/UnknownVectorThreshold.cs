@@ -12,10 +12,10 @@ namespace Azure.Search.Documents.Models
 {
     internal partial class UnknownVectorThreshold : VectorThreshold
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVectorThreshold"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.UnknownVectorThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVectorThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownVectorThreshold(VectorThresholdKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

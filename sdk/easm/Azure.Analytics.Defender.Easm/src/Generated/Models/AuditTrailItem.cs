@@ -14,21 +14,21 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AuditTrailItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AuditTrailItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItem"/>. </summary>
         internal AuditTrailItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuditTrailItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.AuditTrailItem"/>. </summary>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="reason"> An explanation of why this audit trail node was discovered from the previous node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuditTrailItem(string id, string name, string displayName, AuditTrailItemKind? kind, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuditTrailItem(string id, string name, string displayName, AuditTrailItemKind? kind, string reason, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

@@ -13,16 +13,16 @@ namespace Azure.AI.VoiceLive
     /// <summary> An audio content part for a response. </summary>
     public partial class ResponseAudioContentPart : VoiceLiveContentPart
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAudioContentPart"/>. </summary>
-        internal ResponseAudioContentPart() : base(ContentPartType.Audio)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseAudioContentPart"/>. </summary>
+        internal ResponseAudioContentPart() : base(global::Azure.AI.VoiceLive.ContentPartType.Audio)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAudioContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseAudioContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="transcript"></param>
-        internal ResponseAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string transcript) : base(@type, additionalBinaryDataProperties)
+        internal ResponseAudioContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string transcript) : base(@type, additionalBinaryDataProperties)
         {
             Transcript = transcript;
         }

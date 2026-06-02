@@ -14,27 +14,27 @@ namespace Azure.Compute.Batch
     public partial class NfsMountConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NfsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.NfsMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="relativeMountPath"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="source"/> or <paramref name="relativeMountPath"/> is null. </exception>
         public NfsMountConfiguration(string source, string relativeMountPath)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(source, nameof(source));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
 
             Source = source;
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NfsMountConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.NfsMountConfiguration"/>. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NfsMountConfiguration(string source, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NfsMountConfiguration(string source, string relativeMountPath, string mountOptions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             RelativeMountPath = relativeMountPath;

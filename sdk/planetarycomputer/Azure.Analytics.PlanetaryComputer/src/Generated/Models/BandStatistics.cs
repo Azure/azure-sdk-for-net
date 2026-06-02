@@ -15,9 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class BandStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BandStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.BandStatistics"/>. </summary>
         /// <param name="minimum"> Minimum value in the band. </param>
         /// <param name="maximum"> Maximum value in the band. </param>
         /// <param name="mean"> Mean value of the band. </param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Percentile 98
         /// The 98th percentile value.
         /// </param>
-        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IEnumerable<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98)
+        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IEnumerable<global::System.Collections.Generic.IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Percentile98 = percentile98;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BandStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.BandStatistics"/>. </summary>
         /// <param name="minimum"> Minimum value in the band. </param>
         /// <param name="maximum"> Maximum value in the band. </param>
         /// <param name="mean"> Mean value of the band. </param>
@@ -84,7 +84,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// The 98th percentile value.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IList<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IList<global::System.Collections.Generic.IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -136,7 +136,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public float Unique { get; }
 
         /// <summary> Histogram of pixel values in the band. </summary>
-        public IList<IList<float>> Histogram { get; }
+        public IList<global::System.Collections.Generic.IList<float>> Histogram { get; }
 
         /// <summary> Percentage of valid (non-masked) pixels. </summary>
         public float ValidPercent { get; }

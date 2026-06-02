@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Specifies runtime parameters for a search index knowledge source. </summary>
     public partial class SearchIndexKnowledgeSourceParams : KnowledgeSourceParams
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
-        public SearchIndexKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, KnowledgeSourceKind.SearchIndex)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
+        public SearchIndexKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceKind.SearchIndex)
         {
-            Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
-        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, failOnError, rerankerThreshold, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string filterAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, failOnError, rerankerThreshold, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
             FilterAddOn = filterAddOn;
         }

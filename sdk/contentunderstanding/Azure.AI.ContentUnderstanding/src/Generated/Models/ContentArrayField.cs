@@ -13,20 +13,20 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Array field extracted from the content. </summary>
     public partial class ContentArrayField : ContentField
     {
-        /// <summary> Initializes a new instance of <see cref="ContentArrayField"/>. </summary>
-        internal ContentArrayField() : base(ContentFieldType.Array)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentArrayField"/>. </summary>
+        internal ContentArrayField() : base(global::Azure.AI.ContentUnderstanding.ContentFieldType.Array)
         {
-            ValueArray = new ChangeTrackingList<ContentField>();
+            ValueArray = new ChangeTrackingList<global::Azure.AI.ContentUnderstanding.ContentField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentArrayField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.ContentArrayField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueArray"> Array field value. </param>
-        internal ContentArrayField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentField> valueArray) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
+        internal ContentArrayField(ContentFieldType @type, IList<global::Azure.AI.ContentUnderstanding.ContentSpan> spans, float? confidence, string sourceValue, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.ContentUnderstanding.ContentField> valueArray) : base(@type, spans, confidence, sourceValue, additionalBinaryDataProperties)
         {
             ValueArray = valueArray;
         }

@@ -15,17 +15,17 @@ namespace Azure.Developer.LoadTesting
     public partial class TestProfileRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestProfileRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfileRun"/>. </summary>
         public TestProfileRun()
         {
-            ErrorDetails = new ChangeTrackingList<ErrorDetails>();
-            TestRunDetails = new ChangeTrackingDictionary<string, TestRunDetail>();
-            Recommendations = new ChangeTrackingList<TestProfileRunRecommendation>();
+            ErrorDetails = new ChangeTrackingList<global::Azure.Developer.LoadTesting.ErrorDetails>();
+            TestRunDetails = new ChangeTrackingDictionary<string, global::Azure.Developer.LoadTesting.TestRunDetail>();
+            Recommendations = new ChangeTrackingList<global::Azure.Developer.LoadTesting.TestProfileRunRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestProfileRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestProfileRun"/>. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="displayName"> Display name for the test profile run. </param>
         /// <param name="description"> The test profile run description. </param>
@@ -47,7 +47,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<ErrorDetails> errorDetails, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, long? durationInSeconds, IReadOnlyDictionary<string, TestRunDetail> testRunDetails, IReadOnlyList<TestProfileRunRecommendation> recommendations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<global::Azure.Developer.LoadTesting.ErrorDetails> errorDetails, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, long? durationInSeconds, IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunDetail> testRunDetails, IReadOnlyList<global::Azure.Developer.LoadTesting.TestProfileRunRecommendation> recommendations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TestProfileRunId = testProfileRunId;
             DisplayName = displayName;
@@ -91,7 +91,7 @@ namespace Azure.Developer.LoadTesting
         public TestProfileRunStatus? Status { get; }
 
         /// <summary> Error details if there is any failure in test profile run. These errors are specific to the Test Profile Run. </summary>
-        public IReadOnlyList<ErrorDetails> ErrorDetails { get; }
+        public IReadOnlyList<global::Azure.Developer.LoadTesting.ErrorDetails> ErrorDetails { get; }
 
         /// <summary> The test profile run start DateTime(RFC 3339 literal format). </summary>
         public DateTimeOffset? StartDateTime { get; }
@@ -106,10 +106,10 @@ namespace Azure.Developer.LoadTesting
         /// Details of the test runs ran as part of the test profile run.
         /// Key is the testRunId of the corresponding testRun.
         /// </summary>
-        public IReadOnlyDictionary<string, TestRunDetail> TestRunDetails { get; }
+        public IReadOnlyDictionary<string, global::Azure.Developer.LoadTesting.TestRunDetail> TestRunDetails { get; }
 
         /// <summary> Recommendations provided based on a successful test profile run. </summary>
-        public IReadOnlyList<TestProfileRunRecommendation> Recommendations { get; }
+        public IReadOnlyList<global::Azure.Developer.LoadTesting.TestProfileRunRecommendation> Recommendations { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }

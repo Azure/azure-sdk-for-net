@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
     /// <summary> The AIProjectModels sub-client. </summary>
     public partial class AIProjectModels
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AIProjectModels for mocking. </summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectModels(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectModels(ClientPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;

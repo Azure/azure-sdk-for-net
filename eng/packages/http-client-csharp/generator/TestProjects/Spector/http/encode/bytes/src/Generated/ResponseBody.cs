@@ -17,48 +17,48 @@ namespace Encode.Bytes._ResponseBody
     {
         protected ResponseBody() => throw null;
 
-        internal ResponseBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ResponseBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContext context) => throw null;
 
-        public virtual Task<Response> DefaultAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> Default(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> Default(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> DefaultAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> DefaultAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response OctetStream(RequestContext context) => throw null;
 
-        public virtual Task<Response> OctetStreamAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OctetStreamAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> OctetStream(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> OctetStream(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> OctetStreamAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> OctetStreamAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response CustomContentType(RequestContext context) => throw null;
 
-        public virtual Task<Response> CustomContentTypeAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> CustomContentTypeAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> CustomContentType(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> CustomContentType(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> CustomContentTypeAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> CustomContentTypeAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Base64(RequestContext context) => throw null;
 
-        public virtual Task<Response> Base64Async(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Base64Async(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> Base64(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> Base64(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> Base64Async(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> Base64Async(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Base64url(RequestContext context) => throw null;
 
-        public virtual Task<Response> Base64urlAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> Base64urlAsync(RequestContext context) => throw null;
 
-        public virtual Response<BinaryData> Base64url(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::System.BinaryData> Base64url(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<BinaryData>> Base64urlAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::System.BinaryData>> Base64urlAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

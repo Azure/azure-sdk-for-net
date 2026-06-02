@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeDisableSchedulingOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDisableSchedulingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOptions"/>. </summary>
         public BatchNodeDisableSchedulingOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDisableSchedulingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDisableSchedulingOptions"/>. </summary>
         /// <param name="nodeDisableSchedulingOption"> What to do with currently running Tasks when disabling Task scheduling on the Compute Node. The default value is requeue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeDisableSchedulingOptions(BatchNodeDisableSchedulingOption? nodeDisableSchedulingOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeDisableSchedulingOptions(BatchNodeDisableSchedulingOption? nodeDisableSchedulingOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NodeDisableSchedulingOption = nodeDisableSchedulingOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

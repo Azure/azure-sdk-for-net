@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the mode the indexer is executing in. </summary>
-    public readonly partial struct IndexingMode : IEquatable<IndexingMode>
+    public readonly partial struct IndexingMode : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexingMode>
     {
         private readonly string _value;
         /// <summary> The indexer is indexing all documents in the datasource. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
         private const string IndexingResyncValue = "indexingResync";
 
-        /// <summary> Initializes a new instance of <see cref="IndexingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexingMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
         public static IndexingMode IndexingResync { get; } = new IndexingMode(IndexingResyncValue);
 
-        /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexingMode left, IndexingMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexingMode(string value) => new IndexingMode(value);
 
-        /// <summary> Converts a string to a <see cref="IndexingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexingMode?(string value) => value == null ? null : new IndexingMode(value);
+        public static implicit operator IndexingMode?(string value) => (value == null) ? null : new IndexingMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexingMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexingMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexingMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

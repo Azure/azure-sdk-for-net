@@ -12,24 +12,24 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Knowledge source.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LabeledDataKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource"/>.
     /// </summary>
     public abstract partial class KnowledgeSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.KnowledgeSource"/>. </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
         private protected KnowledgeSource(KnowledgeSourceKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.KnowledgeSource"/>. </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

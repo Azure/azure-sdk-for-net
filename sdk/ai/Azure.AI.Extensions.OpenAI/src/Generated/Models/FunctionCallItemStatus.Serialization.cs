@@ -11,26 +11,26 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FunctionCallItemStatus value) => value switch
         {
-            FunctionCallItemStatus.InProgress => "in_progress",
-            FunctionCallItemStatus.Completed => "completed",
-            FunctionCallItemStatus.Incomplete => "incomplete",
+            global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.InProgress => "in_progress",
+            global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.Completed => "completed",
+            global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FunctionCallItemStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FunctionCallItemStatus ToFunctionCallItemStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return FunctionCallItemStatus.InProgress;
+                return global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return FunctionCallItemStatus.Completed;
+                return global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
             {
-                return FunctionCallItemStatus.Incomplete;
+                return global::Azure.AI.Extensions.OpenAI.FunctionCallItemStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FunctionCallItemStatus value.");
         }

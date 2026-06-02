@@ -15,25 +15,25 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ObservationPageResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObservationPageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationPageResult"/>. </summary>
         /// <param name="totalElements"> The total number of elements. </param>
         /// <param name="prioritySummary"> The summary of observation counts by priority. </param>
         /// <param name="value"> The list of observation results. </param>
-        internal ObservationPageResult(long totalElements, IDictionary<string, int> prioritySummary, IEnumerable<ObservationResult> value)
+        internal ObservationPageResult(long totalElements, IDictionary<string, int> prioritySummary, IEnumerable<global::Azure.Analytics.Defender.Easm.ObservationResult> value)
         {
             TotalElements = totalElements;
             PrioritySummary = prioritySummary;
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservationPageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservationPageResult"/>. </summary>
         /// <param name="totalElements"> The total number of elements. </param>
         /// <param name="prioritySummary"> The summary of observation counts by priority. </param>
         /// <param name="value"> The list of observation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObservationPageResult(long totalElements, IDictionary<string, int> prioritySummary, IList<ObservationResult> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObservationPageResult(long totalElements, IDictionary<string, int> prioritySummary, IList<global::Azure.Analytics.Defender.Easm.ObservationResult> value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TotalElements = totalElements;
             PrioritySummary = prioritySummary;
@@ -48,6 +48,6 @@ namespace Azure.Analytics.Defender.Easm
         public IDictionary<string, int> PrioritySummary { get; }
 
         /// <summary> The list of observation results. </summary>
-        public IList<ObservationResult> Value { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ObservationResult> Value { get; }
     }
 }

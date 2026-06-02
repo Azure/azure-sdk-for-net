@@ -14,20 +14,20 @@ namespace Azure.Compute.Batch
     public partial class AutomaticOsUpgradePolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutomaticOsUpgradePolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutomaticOsUpgradePolicy"/>. </summary>
         public AutomaticOsUpgradePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomaticOsUpgradePolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.AutomaticOsUpgradePolicy"/>. </summary>
         /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. </param>
         /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pools/create-pool#windowsconfiguration) cannot be set to true. </param>
         /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
         /// <param name="osRollingUpgradeDeferral"> Defer OS upgrades on the TVMs if they are running tasks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomaticOsUpgradePolicy(bool? disableAutomaticRollback, bool? enableAutomaticOsUpgrade, bool? useRollingUpgradePolicy, bool? osRollingUpgradeDeferral, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomaticOsUpgradePolicy(bool? disableAutomaticRollback, bool? enableAutomaticOsUpgrade, bool? useRollingUpgradePolicy, bool? osRollingUpgradeDeferral, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisableAutomaticRollback = disableAutomaticRollback;
             EnableAutomaticOsUpgrade = enableAutomaticOsUpgrade;

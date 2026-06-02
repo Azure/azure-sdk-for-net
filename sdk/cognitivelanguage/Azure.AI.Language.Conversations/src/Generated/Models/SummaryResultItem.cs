@@ -15,24 +15,24 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class SummaryResultItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SummaryResultItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryResultItem"/>. </summary>
         /// <param name="aspect"> aspect. </param>
         /// <param name="text"> text. </param>
         internal SummaryResultItem(string aspect, string text)
         {
             Aspect = aspect;
             Text = text;
-            Contexts = new ChangeTrackingList<ItemizedSummaryContext>();
+            Contexts = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Models.ItemizedSummaryContext>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryResultItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryResultItem"/>. </summary>
         /// <param name="aspect"> aspect. </param>
         /// <param name="text"> text. </param>
         /// <param name="contexts"> Context list of the summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryResultItem(string aspect, string text, IList<ItemizedSummaryContext> contexts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryResultItem(string aspect, string text, IList<global::Azure.AI.Language.Conversations.Models.ItemizedSummaryContext> contexts, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Aspect = aspect;
             Text = text;
@@ -47,6 +47,6 @@ namespace Azure.AI.Language.Conversations.Models
         public string Text { get; }
 
         /// <summary> Context list of the summary. </summary>
-        public IList<ItemizedSummaryContext> Contexts { get; }
+        public IList<global::Azure.AI.Language.Conversations.Models.ItemizedSummaryContext> Contexts { get; }
     }
 }

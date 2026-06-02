@@ -14,16 +14,16 @@ namespace Azure.Monitor.Query.Metrics.Models
     public partial class MetricValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         internal MetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> The average value in the time range. </param>
         /// <param name="minimum"> The least value in the time range. </param>
@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// values that contributed to the average value.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TimeStamp = timeStamp;
             Average = average;

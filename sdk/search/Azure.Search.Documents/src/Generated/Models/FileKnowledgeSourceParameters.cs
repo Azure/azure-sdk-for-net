@@ -15,18 +15,18 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FileKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FileKnowledgeSourceParameters"/>. </summary>
         public FileKnowledgeSourceParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FileKnowledgeSourceParameters"/>. </summary>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </param>
         /// <param name="createdResources"> Resources created by the file knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IngestionParameters = ingestionParameters;
             CreatedResources = createdResources;

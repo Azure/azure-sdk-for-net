@@ -12,24 +12,24 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Media content base class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentContent"/> and <see cref="AudioVisualContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.ContentUnderstanding.DocumentContent"/> and <see cref="Azure.AI.ContentUnderstanding.AudioVisualContent"/>.
     /// </summary>
     public abstract partial class AnalysisContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisContent"/>. </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         private protected AnalysisContent(AnalysisContentKind kind, string mimeType)
         {
             Kind = kind;
             MimeType = mimeType;
-            Fields = new ChangeTrackingDictionary<string, ContentField>();
+            Fields = new ChangeTrackingDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnalysisContent"/>. </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="analyzerId"> The analyzer that generated this content. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> fields, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             MimeType = mimeType;
@@ -69,6 +69,6 @@ namespace Azure.AI.ContentUnderstanding
         public string Markdown { get; }
 
         /// <summary> Extracted fields from the content. </summary>
-        public IDictionary<string, ContentField> Fields { get; }
+        public IDictionary<string, global::Azure.AI.ContentUnderstanding.ContentField> Fields { get; }
     }
 }

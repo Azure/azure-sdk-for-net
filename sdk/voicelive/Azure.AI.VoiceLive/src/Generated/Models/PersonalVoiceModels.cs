@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> PersonalVoice models. </summary>
-    public readonly partial struct PersonalVoiceModels : IEquatable<PersonalVoiceModels>
+    public readonly partial struct PersonalVoiceModels : IEquatable<global::Azure.AI.VoiceLive.PersonalVoiceModels>
     {
         private readonly string _value;
         /// <summary> Use the latest Dragon model. </summary>
@@ -21,12 +21,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use the Phoenix V2 model. </summary>
         private const string PhoenixV2NeuralValue = "PhoenixV2Neural";
 
-        /// <summary> Initializes a new instance of <see cref="PersonalVoiceModels"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalVoiceModels(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use the Phoenix V2 model. </summary>
         public static PersonalVoiceModels PhoenixV2Neural { get; } = new PersonalVoiceModels(PhoenixV2NeuralValue);
 
-        /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.PersonalVoiceModels"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersonalVoiceModels left, PersonalVoiceModels right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.PersonalVoiceModels"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersonalVoiceModels left, PersonalVoiceModels right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PersonalVoiceModels"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PersonalVoiceModels(string value) => new PersonalVoiceModels(value);
 
-        /// <summary> Converts a string to a <see cref="PersonalVoiceModels"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersonalVoiceModels?(string value) => value == null ? null : new PersonalVoiceModels(value);
+        public static implicit operator PersonalVoiceModels?(string value) => (value == null) ? null : new PersonalVoiceModels(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PersonalVoiceModels other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PersonalVoiceModels other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PersonalVoiceModels other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PersonalVoiceModels other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

@@ -11,31 +11,31 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InputItemImageGenToolCallStatus value) => value switch
         {
-            InputItemImageGenToolCallStatus.InProgress => "in_progress",
-            InputItemImageGenToolCallStatus.Completed => "completed",
-            InputItemImageGenToolCallStatus.Generating => "generating",
-            InputItemImageGenToolCallStatus.Failed => "failed",
+            global::Azure.AI.Projects.InputItemImageGenToolCallStatus.InProgress => "in_progress",
+            global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Completed => "completed",
+            global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Generating => "generating",
+            global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemImageGenToolCallStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static InputItemImageGenToolCallStatus ToInputItemImageGenToolCallStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))
             {
-                return InputItemImageGenToolCallStatus.InProgress;
+                return global::Azure.AI.Projects.InputItemImageGenToolCallStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
             {
-                return InputItemImageGenToolCallStatus.Completed;
+                return global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Completed;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "generating"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "generating"))
             {
-                return InputItemImageGenToolCallStatus.Generating;
+                return global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Generating;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
-                return InputItemImageGenToolCallStatus.Failed;
+                return global::Azure.AI.Projects.InputItemImageGenToolCallStatus.Failed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemImageGenToolCallStatus value.");
         }

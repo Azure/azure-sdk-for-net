@@ -12,28 +12,28 @@ namespace Azure.AI.Projects.Agents
     public partial class BingGroundingSearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BingGroundingSearchToolOptions"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
+        public BingGroundingSearchToolOptions(IEnumerable<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.BingGroundingSearchToolOptions"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingSearchToolOptions(IList<BingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingGroundingSearchToolOptions(IList<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,6 +43,6 @@ namespace Azure.AI.Projects.Agents
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </summary>
-        public IList<BingGroundingSearchConfiguration> SearchConfigurations { get; }
+        public IList<global::Azure.AI.Projects.Agents.BingGroundingSearchConfiguration> SearchConfigurations { get; }
     }
 }

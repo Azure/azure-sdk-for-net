@@ -14,14 +14,14 @@ namespace Serialization.EncodedName.Json
 {
     public partial class JsonClient
     {
-        public JsonClient() : this(new Uri("http://localhost:3000"), new JsonClientOptions()) => throw null;
+        public JsonClient() : this(new global::System.Uri("http://localhost:3000"), new JsonClientOptions()) => throw null;
 
-        internal JsonClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, JsonClientOptions options) => throw null;
+        internal JsonClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, JsonClientOptions options) => throw null;
 
-        public JsonClient(Uri endpoint, JsonClientOptions options) : this(null, endpoint, options) => throw null;
+        public JsonClient(global::System.Uri endpoint, JsonClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public JsonClient(JsonClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public JsonClient(JsonClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

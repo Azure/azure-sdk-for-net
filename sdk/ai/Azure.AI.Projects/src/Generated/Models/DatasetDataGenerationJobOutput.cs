@@ -10,13 +10,13 @@ namespace Azure.AI.Projects
     /// <summary> Dataset output for a data generation job. </summary>
     public partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetDataGenerationJobOutput"/>. </summary>
-        internal DatasetDataGenerationJobOutput() : base(DataGenerationJobOutputType.Dataset)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetDataGenerationJobOutput"/>. </summary>
+        internal DatasetDataGenerationJobOutput() : base(global::Azure.AI.Projects.DataGenerationJobOutputType.Dataset)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetDataGenerationJobOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DatasetDataGenerationJobOutput"/>. </summary>
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The id of the output dataset created. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the output dataset. </param>
         /// <param name="description"> Description of the output dataset. </param>
         /// <param name="tags"> Tag dictionary of the output dataset. </param>
-        internal DatasetDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string name, string version, string description, IReadOnlyDictionary<string, string> tags) : base(@type, additionalBinaryDataProperties)
+        internal DatasetDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id, string name, string version, string description, IReadOnlyDictionary<string, string> tags) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

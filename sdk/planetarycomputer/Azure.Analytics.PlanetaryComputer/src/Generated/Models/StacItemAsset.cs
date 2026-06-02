@@ -17,26 +17,26 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemAsset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemAsset"/>. </summary>
         /// <param name="title"> Human-readable title for the asset. </param>
         /// <param name="type"> Media type of the asset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="type"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="title"/> or <paramref name="type"/> is null. </exception>
         public StacItemAsset(string title, string @type)
         {
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(@type, nameof(@type));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(title, nameof(title));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(@type, nameof(@type));
 
             Instruments = new ChangeTrackingList<string>();
-            Providers = new ChangeTrackingList<StacProvider>();
+            Providers = new ChangeTrackingList<global::Azure.Analytics.PlanetaryComputer.StacProvider>();
             Title = title;
             Type = @type;
             Roles = new ChangeTrackingList<string>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemAsset"/>. </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
         /// <param name="instruments"> Instruments that acquired the data. </param>
         /// <param name="constellation"> Constellation of satellites that acquired the data. </param>
@@ -51,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> Media type of the asset. </param>
         /// <param name="roles"> Roles of the asset within the item. </param>
         /// <param name="additionalProperties"></param>
-        internal StacItemAsset(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string href, string @type, IList<string> roles, IDictionary<string, BinaryData> additionalProperties)
+        internal StacItemAsset(string platform, IList<string> instruments, string constellation, string mission, IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string href, string @type, IList<string> roles, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Platform = platform;
             Instruments = instruments;
@@ -82,7 +82,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Mission { get; set; }
 
         /// <summary> Organizations or individuals who provide the data. </summary>
-        public IList<StacProvider> Providers { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacProvider> Providers { get; }
 
         /// <summary> Ground sample distance in meters. </summary>
         public float? Gsd { get; set; }
@@ -109,6 +109,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Roles { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

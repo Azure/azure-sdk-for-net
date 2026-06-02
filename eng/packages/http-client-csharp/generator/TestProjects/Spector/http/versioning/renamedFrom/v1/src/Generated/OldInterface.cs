@@ -18,16 +18,16 @@ namespace Versioning.RenamedFrom
     {
         protected OldInterface() => throw null;
 
-        internal OldInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version) => throw null;
+        internal OldInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string version) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response NewOpInNewInterface(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> NewOpInNewInterfaceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> NewOpInNewInterfaceAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<OldModel> NewOpInNewInterface(OldModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.RenamedFrom.OldModel> NewOpInNewInterface(OldModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<OldModel>> NewOpInNewInterfaceAsync(OldModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.RenamedFrom.OldModel>> NewOpInNewInterfaceAsync(OldModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

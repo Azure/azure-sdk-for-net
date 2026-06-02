@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Recording content type. </summary>
-    public readonly partial struct AcsRecordingContentType : IEquatable<AcsRecordingContentType>
+    public readonly partial struct AcsRecordingContentType : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType>
     {
         private readonly string _value;
         /// <summary> AudioVideo content type. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Audio content type. </summary>
         private const string AudioValue = "Audio";
 
-        /// <summary> Initializes a new instance of <see cref="AcsRecordingContentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRecordingContentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Audio content type. </summary>
         public static AcsRecordingContentType Audio { get; } = new AcsRecordingContentType(AudioValue);
 
-        /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRecordingContentType left, AcsRecordingContentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRecordingContentType left, AcsRecordingContentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsRecordingContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsRecordingContentType(string value) => new AcsRecordingContentType(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRecordingContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsRecordingContentType?(string value) => value == null ? null : new AcsRecordingContentType(value);
+        public static implicit operator AcsRecordingContentType?(string value) => (value == null) ? null : new AcsRecordingContentType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsRecordingContentType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsRecordingContentType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsRecordingContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsRecordingContentType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

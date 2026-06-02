@@ -14,9 +14,9 @@ namespace Azure.Communication.Messages
     public partial class ConversationMessageItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessageItem"/>. </summary>
         /// <param name="message"> Payload of a threaded conversation message. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the message sender. </param>
         /// <param name="createdOn"> Timestamp when the message is sent. </param>
@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
             CreatedOn = createdOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessageItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ConversationMessageItem"/>. </summary>
         /// <param name="id"> Message ID. </param>
         /// <param name="sequenceId"> Message sequence ID. </param>
         /// <param name="message"> Payload of a threaded conversation message. </param>
@@ -35,7 +35,7 @@ namespace Azure.Communication.Messages
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the message sender. </param>
         /// <param name="createdOn"> Timestamp when the message is sent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationMessageItem(string id, long? sequenceId, ConversationMessageContent message, string senderDisplayName, string senderCommunicationIdentifier, DateTimeOffset createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationMessageItem(string id, long? sequenceId, ConversationMessageContent message, string senderDisplayName, string senderCommunicationIdentifier, DateTimeOffset createdOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SequenceId = sequenceId;

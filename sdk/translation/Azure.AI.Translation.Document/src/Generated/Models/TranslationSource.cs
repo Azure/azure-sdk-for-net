@@ -14,19 +14,19 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationSource"/>. </summary>
         /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
-        public TranslationSource(Uri sourceUri)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
+        public TranslationSource(global::System.Uri sourceUri)
         {
-            Argument.AssertNotNull(sourceUri, nameof(sourceUri));
+            global::Azure.AI.Translation.Document.Argument.AssertNotNull(sourceUri, nameof(sourceUri));
 
             SourceUri = sourceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.TranslationSource"/>. </summary>
         /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
         /// <param name="filter"> Document filter. </param>
         /// <param name="languageCode">
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationSource(Uri sourceUri, DocumentFilter filter, string languageCode, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationSource(global::System.Uri sourceUri, DocumentFilter filter, string languageCode, TranslationStorageSource? storageSource, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SourceUri = sourceUri;
             Filter = filter;

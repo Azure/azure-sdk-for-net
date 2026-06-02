@@ -14,9 +14,9 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolResourceStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolResourceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolResourceStatistics"/>. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="avgCpuPercentage"> The average CPU usage across all Compute Nodes in the Pool (percentage per node). </param>
@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
             NetworkWriteGiB = networkWriteGiB;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolResourceStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolResourceStatistics"/>. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="avgCpuPercentage"> The average CPU usage across all Compute Nodes in the Pool (percentage per node). </param>
@@ -62,7 +62,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIops, long diskWriteIops, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIops, long diskWriteIops, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;

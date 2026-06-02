@@ -14,22 +14,22 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingCustomSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration"/>. </summary>
         /// <param name="connectionId"> Connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="instanceName"/> is null. </exception>
         public BingCustomSearchConfiguration(string connectionId, string instanceName)
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
-            Argument.AssertNotNull(instanceName, nameof(instanceName));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(connectionId, nameof(connectionId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(instanceName, nameof(instanceName));
 
             ConnectionId = connectionId;
             InstanceName = instanceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BingCustomSearchConfiguration"/>. </summary>
         /// <param name="connectionId"> Connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <param name="market"> The market where the results come from. Typically, market is the country where the user is making the request from. However, it could be a different country if the user is not located in a country where Bing delivers results. The market must be in the form: `&lt;language&gt;-&lt;country/region&gt;` where `&lt;language&gt;` is an ISO 639-1 language code (neutral culture) and `&lt;country/region&gt;` is an ISO 3166 country/region (specific culture) code. For example, `en-US`. The string is case insensitive. For a list of possible market values, see [Market codes](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/market-codes). If known, you are encouraged to always specify the market. Specifying the market helps Bing route the request and return an appropriate and optimal response. If you specify a market that is not listed in Market codes, Bing uses a best fit market code based on an internal mapping that is subject to change. </param>
@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
         /// <list type="bullet"><item><description>Day: Return webpages that Bing discovered within the last 24 hours.</description></item><item><description>Week: Return webpages that Bing discovered within the last 7 days.</description></item><item><description>Month: Return webpages that Bing discovered within the last 30 days. To get articles discovered by Bing during a specific timeframe, specify a date range in the form: `YYYY-MM-DD..YYYY-MM-DD`. For example, `freshness=2019-02-01..2019-05-30. To limit the results to a single date, set this parameter to a specific date. For example, freshness=2019-02-04`.</description></item></list>
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchConfiguration(string connectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingCustomSearchConfiguration(string connectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             InstanceName = instanceName;

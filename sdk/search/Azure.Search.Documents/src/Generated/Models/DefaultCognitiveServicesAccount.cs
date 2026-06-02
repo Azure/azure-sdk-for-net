@@ -13,16 +13,16 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> An empty object that represents the default Azure AI service resource for a skillset. </summary>
     public partial class DefaultCognitiveServicesAccount : CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of <see cref="DefaultCognitiveServicesAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DefaultCognitiveServicesAccount"/>. </summary>
         public DefaultCognitiveServicesAccount() : base("#Microsoft.Azure.Search.DefaultCognitiveServices")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefaultCognitiveServicesAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.DefaultCognitiveServicesAccount"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultCognitiveServicesAccount(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, description, additionalBinaryDataProperties)
+        internal DefaultCognitiveServicesAccount(string odataType, string description, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(odataType, description, additionalBinaryDataProperties)
         {
         }
     }

@@ -12,24 +12,24 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The base class of a conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITask"/> and <see cref="ConversationLanguageUnderstandingInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Language.Conversations.Models.ConversationalAITask"/> and <see cref="Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationInput"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         private protected AnalyzeConversationInput(AnalyzeConversationInputKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.AnalyzeConversationInput"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationInput(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationInput(AnalyzeConversationInputKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

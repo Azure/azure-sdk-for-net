@@ -14,27 +14,27 @@ namespace Azure.AI.Language.Text
     public partial class MultiLanguageInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> or <paramref name="text"/> is null. </exception>
         public MultiLanguageInput(string id, string text)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(id, nameof(id));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(text, nameof(text));
 
             Id = id;
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         /// <param name="language"> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use \"en\" for English; \"es\" for Spanish etc. If not set, use \"en\" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto Language Detection, use \"auto\". If not set, use \"en\" for English as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiLanguageInput(string id, string text, string language, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiLanguageInput(string id, string text, string language, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Text = text;

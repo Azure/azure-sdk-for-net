@@ -15,19 +15,19 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacItemBounds
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacItemBounds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemBounds"/>. </summary>
         /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
         internal StacItemBounds(IEnumerable<float> bounds)
         {
             Bounds = bounds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemBounds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemBounds"/>. </summary>
         /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemBounds(IList<float> bounds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemBounds(IList<float> bounds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

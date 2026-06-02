@@ -15,15 +15,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ChatCompletionCommonModelParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionCommonModelParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionCommonModelParameters"/>. </summary>
         public ChatCompletionCommonModelParameters()
         {
             Stop = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionCommonModelParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionCommonModelParameters"/>. </summary>
         /// <param name="modelName"> The name of the model to use (e.g., 'gpt-4o', etc.). Default is null if not specified. </param>
         /// <param name="frequencyPenalty"> A float in the range [-2,2] that reduces or increases likelihood of repeated tokens. Default is 0. </param>
         /// <param name="presencePenalty"> A float in the range [-2,2] that penalizes new tokens based on their existing presence. Default is 0. </param>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="seed"> Random seed for controlling deterministic outputs. If omitted, randomization is used. </param>
         /// <param name="stop"> List of stop sequences that will cut off text generation. Default is none. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionCommonModelParameters(string modelName, double? frequencyPenalty, double? presencePenalty, int? maxTokens, double? temperature, int? seed, IList<string> stop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatCompletionCommonModelParameters(string modelName, double? frequencyPenalty, double? presencePenalty, int? maxTokens, double? temperature, int? seed, IList<string> stop, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             FrequencyPenalty = frequencyPenalty;

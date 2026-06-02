@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponsesGrammarSyntax value) => value switch
         {
-            ResponsesGrammarSyntax.Lark => "lark",
-            ResponsesGrammarSyntax.Regex => "regex",
+            global::Azure.AI.Extensions.OpenAI.ResponsesGrammarSyntax.Lark => "lark",
+            global::Azure.AI.Extensions.OpenAI.ResponsesGrammarSyntax.Regex => "regex",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesGrammarSyntax value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponsesGrammarSyntax ToResponsesGrammarSyntax(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lark"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lark"))
             {
-                return ResponsesGrammarSyntax.Lark;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesGrammarSyntax.Lark;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "regex"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "regex"))
             {
-                return ResponsesGrammarSyntax.Regex;
+                return global::Azure.AI.Extensions.OpenAI.ResponsesGrammarSyntax.Regex;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponsesGrammarSyntax value.");
         }

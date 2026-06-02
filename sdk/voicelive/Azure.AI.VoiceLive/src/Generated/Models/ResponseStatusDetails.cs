@@ -12,24 +12,24 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for all non-success response details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.VoiceLive.ResponseCancelledDetails"/>, <see cref="Azure.AI.VoiceLive.ResponseIncompleteDetails"/>, and <see cref="Azure.AI.VoiceLive.ResponseFailedDetails"/>.
     /// </summary>
     public abstract partial class ResponseStatusDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
         private protected ResponseStatusDetails(SessionResponseStatus @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseStatusDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseStatusDetails(SessionResponseStatus @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

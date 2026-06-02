@@ -15,35 +15,35 @@ namespace Azure.Developer.DevCenter
     /// <summary> Client options for clients in this library. </summary>
     public partial class DevCenterClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
+        private const global::Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion LatestVersion = global::Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion.V2023_04_01;
 
         /// <summary> Initializes a new instance of DevCenterClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public DevCenterClientOptions(ServiceVersion version = LatestVersion)
+        public DevCenterClientOptions(global::Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2023_04_01 => "2023-04-01",
+                global::Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion.V2023_04_01 => "2023-04-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of DevCenterClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal DevCenterClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2023-04-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

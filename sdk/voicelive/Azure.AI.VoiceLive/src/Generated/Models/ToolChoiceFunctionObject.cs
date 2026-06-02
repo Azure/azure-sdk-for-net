@@ -12,18 +12,18 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ToolChoiceFunctionObject : ToolChoiceObject
     {
-        /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ToolChoiceFunctionObject"/>. </summary>
         /// <param name="name"></param>
-        public ToolChoiceFunctionObject(string name) : base(ToolType.Function)
+        public ToolChoiceFunctionObject(string name) : base(global::Azure.AI.VoiceLive.ToolType.Function)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ToolChoiceFunctionObject"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"></param>
-        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(@type, additionalBinaryDataProperties)
+        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
         }

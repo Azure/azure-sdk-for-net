@@ -14,26 +14,26 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchQueryType value) => value switch
         {
-            SearchQueryType.Simple => "simple",
-            SearchQueryType.Full => "full",
-            SearchQueryType.Semantic => "semantic",
+            global::Azure.Search.Documents.Models.SearchQueryType.Simple => "simple",
+            global::Azure.Search.Documents.Models.SearchQueryType.Full => "full",
+            global::Azure.Search.Documents.Models.SearchQueryType.Semantic => "semantic",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static SearchQueryType ToSearchQueryType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "simple"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "simple"))
             {
-                return SearchQueryType.Simple;
+                return global::Azure.Search.Documents.Models.SearchQueryType.Simple;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "full"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "full"))
             {
-                return SearchQueryType.Full;
+                return global::Azure.Search.Documents.Models.SearchQueryType.Full;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "semantic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "semantic"))
             {
-                return SearchQueryType.Semantic;
+                return global::Azure.Search.Documents.Models.SearchQueryType.Semantic;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
         }

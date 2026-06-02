@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Lambda : IJsonModel<Lambda>
+    public partial class Lambda : IJsonModel<global::SpecialWords._Models.Lambda>
     {
         internal Lambda() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Lambda>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Lambda>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Lambda IPersistableModel<Lambda>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Lambda IPersistableModel<global::SpecialWords._Models.Lambda>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Lambda>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Lambda>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="lambda"> The <see cref="Lambda"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="lambda"> The <see cref="global::SpecialWords._Models.Lambda"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Lambda lambda) => throw null;
 
-        void IJsonModel<Lambda>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Lambda>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Lambda IJsonModel<Lambda>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Lambda IJsonModel<global::SpecialWords._Models.Lambda>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Lambda JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

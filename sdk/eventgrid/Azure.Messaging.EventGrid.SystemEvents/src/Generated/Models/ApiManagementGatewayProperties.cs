@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ApiManagementGatewayProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayProperties"/>. </summary>
         /// <param name="gatewayId"> Id of Gateway that is used to deploy the gateway to get the configuration for. This is the ARM resource ID referenced in the Azure API Management instance. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateway/&lt;GatewayName&gt;`. </param>
         /// <param name="instanceId"> Unique instance ID of the deployed gateway. </param>
         internal ApiManagementGatewayProperties(string gatewayId, string instanceId)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             InstanceId = instanceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.ApiManagementGatewayProperties"/>. </summary>
         /// <param name="gatewayId"> Id of Gateway that is used to deploy the gateway to get the configuration for. This is the ARM resource ID referenced in the Azure API Management instance. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateway/&lt;GatewayName&gt;`. </param>
         /// <param name="instanceId"> Unique instance ID of the deployed gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayProperties(string gatewayId, string instanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementGatewayProperties(string gatewayId, string instanceId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             GatewayId = gatewayId;
             InstanceId = instanceId;

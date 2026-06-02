@@ -13,14 +13,14 @@ namespace Specs.Azure.ClientGenerator.Core.Override
 {
     public partial class OverrideClient
     {
-        public OverrideClient() : this(new Uri("http://localhost:3000"), new OverrideClientOptions()) => throw null;
+        public OverrideClient() : this(new global::System.Uri("http://localhost:3000"), new OverrideClientOptions()) => throw null;
 
-        internal OverrideClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OverrideClientOptions options) => throw null;
+        internal OverrideClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, OverrideClientOptions options) => throw null;
 
-        public OverrideClient(Uri endpoint, OverrideClientOptions options) : this(null, endpoint, options) => throw null;
+        public OverrideClient(global::System.Uri endpoint, OverrideClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public OverrideClient(OverrideClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public OverrideClient(OverrideClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -14,19 +14,19 @@ namespace Azure.AI.ContentSafety
     public partial class ShieldPromptResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ShieldPromptResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ShieldPromptResult"/>. </summary>
         internal ShieldPromptResult()
         {
-            DocumentsAnalysis = new ChangeTrackingList<DocumentInjectionAnalysisResult>();
+            DocumentsAnalysis = new ChangeTrackingList<global::Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ShieldPromptResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.ShieldPromptResult"/>. </summary>
         /// <param name="userPromptAnalysis"> Direct injection attacks analysis result for the given user prompt. </param>
         /// <param name="documentsAnalysis"> Direct and indirect injection attacks analysis result for the given documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShieldPromptResult(UserPromptInjectionAnalysisResult userPromptAnalysis, IList<DocumentInjectionAnalysisResult> documentsAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShieldPromptResult(UserPromptInjectionAnalysisResult userPromptAnalysis, IList<global::Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> documentsAnalysis, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UserPromptAnalysis = userPromptAnalysis;
             DocumentsAnalysis = documentsAnalysis;
@@ -37,6 +37,6 @@ namespace Azure.AI.ContentSafety
         public UserPromptInjectionAnalysisResult UserPromptAnalysis { get; }
 
         /// <summary> Direct and indirect injection attacks analysis result for the given documents. </summary>
-        public IList<DocumentInjectionAnalysisResult> DocumentsAnalysis { get; }
+        public IList<global::Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> DocumentsAnalysis { get; }
     }
 }

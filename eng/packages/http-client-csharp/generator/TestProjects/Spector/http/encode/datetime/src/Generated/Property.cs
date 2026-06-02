@@ -19,48 +19,48 @@ namespace Encode.Datetime._Property
     {
         protected Property() => throw null;
 
-        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Property(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> DefaultAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<DefaultDatetimeProperty> Default(DefaultDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Datetime.DefaultDatetimeProperty> Default(DefaultDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DefaultDatetimeProperty>> DefaultAsync(DefaultDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Datetime.DefaultDatetimeProperty>> DefaultAsync(DefaultDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc3339(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Rfc3339Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Rfc3339Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Rfc3339DatetimeProperty> Rfc3339(Rfc3339DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Datetime.Rfc3339DatetimeProperty> Rfc3339(Rfc3339DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Rfc3339DatetimeProperty>> Rfc3339Async(Rfc3339DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Datetime.Rfc3339DatetimeProperty>> Rfc3339Async(Rfc3339DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Rfc7231(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> Rfc7231Async(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> Rfc7231Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Rfc7231DatetimeProperty> Rfc7231(Rfc7231DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Datetime.Rfc7231DatetimeProperty> Rfc7231(Rfc7231DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Rfc7231DatetimeProperty>> Rfc7231Async(Rfc7231DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Datetime.Rfc7231DatetimeProperty>> Rfc7231Async(Rfc7231DatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UnixTimestamp(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UnixTimestampAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<UnixTimestampDatetimeProperty> UnixTimestamp(UnixTimestampDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Datetime.UnixTimestampDatetimeProperty> UnixTimestamp(UnixTimestampDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UnixTimestampDatetimeProperty>> UnixTimestampAsync(UnixTimestampDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Datetime.UnixTimestampDatetimeProperty>> UnixTimestampAsync(UnixTimestampDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UnixTimestampArray(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UnixTimestampArrayAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> UnixTimestampArrayAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<UnixTimestampArrayDatetimeProperty> UnixTimestampArray(UnixTimestampArrayDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty> UnixTimestampArray(UnixTimestampArrayDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UnixTimestampArrayDatetimeProperty>> UnixTimestampArrayAsync(UnixTimestampArrayDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Encode.Datetime.UnixTimestampArrayDatetimeProperty>> UnixTimestampArrayAsync(UnixTimestampArrayDatetimeProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

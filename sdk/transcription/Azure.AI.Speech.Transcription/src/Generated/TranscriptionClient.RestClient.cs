@@ -12,7 +12,7 @@ namespace Azure.AI.Speech.Transcription
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         internal PipelineMessage CreateTranscribeRequest(BinaryContent content, string contentType, RequestOptions options)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Speech.Transcription
             uri.Reset(_endpoint);
             uri.AppendPath("/speechtotext", false);
             uri.AppendPath("/transcriptions:transcribe", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

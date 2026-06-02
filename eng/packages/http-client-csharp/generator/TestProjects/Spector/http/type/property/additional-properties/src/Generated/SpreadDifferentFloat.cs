@@ -18,24 +18,24 @@ namespace _Type.Property.AdditionalProperties
     {
         protected SpreadDifferentFloat() => throw null;
 
-        internal SpreadDifferentFloat(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal SpreadDifferentFloat(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<DifferentSpreadFloatRecord> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatRecord> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<DifferentSpreadFloatRecord>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Property.AdditionalProperties.DifferentSpreadFloatRecord>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Put(DifferentSpreadFloatRecord body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PutAsync(DifferentSpreadFloatRecord body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> PutAsync(DifferentSpreadFloatRecord body, CancellationToken cancellationToken = default) => throw null;
     }
 }

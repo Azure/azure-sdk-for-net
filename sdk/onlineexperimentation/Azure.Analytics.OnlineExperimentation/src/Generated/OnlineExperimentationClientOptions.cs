@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Analytics.OnlineExperimentation
 {
-    /// <summary> Client options for <see cref="OnlineExperimentationClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Analytics.OnlineExperimentation.OnlineExperimentationClient"/>. </summary>
     public partial class OnlineExperimentationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_31_Preview;
+        private const global::Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion LatestVersion = global::Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion.V2025_05_31_Preview;
 
         /// <summary> Initializes a new instance of OnlineExperimentationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public OnlineExperimentationClientOptions(ServiceVersion version = LatestVersion)
+        public OnlineExperimentationClientOptions(global::Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2025_05_31_Preview => "2025-05-31-preview",
+                global::Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion.V2025_05_31_Preview => "2025-05-31-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of OnlineExperimentationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal OnlineExperimentationClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2025-05-31-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

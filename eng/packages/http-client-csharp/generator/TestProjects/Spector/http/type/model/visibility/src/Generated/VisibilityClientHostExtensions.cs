@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Visibility
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class VisibilityClientHostExtensions
     {
         public static IClientBuilder AddVisibilityClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddVisibilityClient(this IHostApplicationBuilder host, string sectionName, Action<VisibilityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddVisibilityClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Visibility.VisibilityClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedVisibilityClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedVisibilityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<VisibilityClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedVisibilityClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Visibility.VisibilityClientSettings> configureSettings) => throw null;
     }
 }

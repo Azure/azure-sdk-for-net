@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class PromoteCandidateResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PromoteCandidateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.PromoteCandidateResponse"/>. </summary>
         /// <param name="candidateId"> The promoted candidate id. </param>
         /// <param name="status"> Status after promotion. </param>
         /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects.Agents
             AgentVersion = agentVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PromoteCandidateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.PromoteCandidateResponse"/>. </summary>
         /// <param name="candidateId"> The promoted candidate id. </param>
         /// <param name="status"> Status after promotion. </param>
         /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
         /// <param name="agentName"> Name of the Foundry agent promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent promoted to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PromoteCandidateResponse(string candidateId, string status, DateTimeOffset promotedAt, string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PromoteCandidateResponse(string candidateId, string status, DateTimeOffset promotedAt, string agentName, string agentVersion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             Status = status;

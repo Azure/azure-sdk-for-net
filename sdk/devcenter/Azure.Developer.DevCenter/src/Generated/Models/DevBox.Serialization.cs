@@ -17,9 +17,9 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A Dev Box. </summary>
-    public partial class DevBox : IJsonModel<DevBox>
+    public partial class DevBox : IJsonModel<global::Azure.Developer.DevCenter.Models.DevBox>
     {
-        /// <summary> Initializes a new instance of <see cref="DevBox"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBox"/> for deserialization. </summary>
         internal DevBox()
         {
         }
@@ -28,55 +28,55 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevBox PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDevBox(document.RootElement, options);
+                        return global::Azure.Developer.DevCenter.Models.DevBox.DeserializeDevBox(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBox)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBox)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DevBox)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBox)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevBox>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevBox IPersistableModel<DevBox>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DevBox IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevBox>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevBox"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Developer.DevCenter.Models.DevBox"/> from. </param>
         public static explicit operator DevBox(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevBox(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Developer.DevCenter.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Developer.DevCenter.Models.DevBox.DeserializeDevBox(document.RootElement, global::Azure.Developer.DevCenter.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DevBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Developer.DevCenter.Models.DevBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -84,94 +84,94 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevBox)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBox)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if ((options.Format != "W"))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProjectName))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ProjectName)))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
             writer.WritePropertyName("poolName"u8);
             writer.WriteStringValue(PoolName);
-            if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(HibernateSupport)))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ProvisioningState)))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionState))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ActionState)))
             {
                 writer.WritePropertyName("actionState"u8);
                 writer.WriteStringValue(ActionState);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(PowerState)))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(UniqueId)))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(Error)))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                ((IJsonModel<global::Azure.ResponseError>)Error).Write(writer, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(Location)))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(OSType)))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(UserId)))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(UserId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(HardwareProfile)))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                writer.WriteObjectValue<DevBoxHardwareProfile>(HardwareProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(StorageProfile)))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                writer.WriteObjectValue<DevBoxStorageProfile>(StorageProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageReference))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(ImageReference)))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                writer.WriteObjectValue<DevBoxImageReference>(ImageReference, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedTime))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(CreatedTime)))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalAdministratorStatus))
+            if (((options.Format != "W") && global::Azure.Developer.DevCenter.Optional.IsDefined(LocalAdministratorStatus)))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -179,9 +179,9 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -190,26 +190,26 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevBox IJsonModel<DevBox>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DevBox IJsonModel<global::Azure.Developer.DevCenter.Models.DevBox>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DevBox JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Developer.DevCenter.Models.DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DevBox)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Developer.DevCenter.Models.DevBox)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBox(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Developer.DevCenter.Models.DevBox.DeserializeDevBox(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DevBox DeserializeDevBox(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -230,7 +230,7 @@ namespace Azure.Developer.DevCenter.Models
             DevBoxImageReference imageReference = default;
             DateTimeOffset? createdTime = default;
             LocalAdministratorStatus? localAdministratorStatus = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -250,7 +250,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("hibernateSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -259,7 +259,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -273,7 +273,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("powerState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -282,7 +282,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("uniqueId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -291,16 +291,16 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureDeveloperDevCenterContext.Default);
+                    error = global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, global::Azure.Developer.DevCenter.AzureDeveloperDevCenterContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -309,7 +309,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -318,7 +318,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("user"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -327,34 +327,34 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("hardwareProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(prop.Value, options);
+                    hardwareProfile = global::Azure.Developer.DevCenter.Models.DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(prop.Value, options);
+                    storageProfile = global::Azure.Developer.DevCenter.Models.DevBoxStorageProfile.DeserializeDevBoxStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("imageReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(prop.Value, options);
+                    imageReference = global::Azure.Developer.DevCenter.Models.DevBoxImageReference.DeserializeDevBoxImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createdTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -363,16 +363,16 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (prop.NameEquals("localAdministrator"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     localAdministratorStatus = new LocalAdministratorStatus(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DevBox(

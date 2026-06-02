@@ -16,11 +16,11 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier _pipelineMessageClassifier200201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= global::System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         internal PipelineMessage CreateGetRequest(string id, RequestOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -61,13 +61,13 @@ namespace Azure.AI.Projects.Evaluation
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules/", false);
             uri.AppendPath(id, true);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
+            if ((foundryFeatures != null))
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
@@ -83,21 +83,21 @@ namespace Azure.AI.Projects.Evaluation
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluationrules", false);
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (actionType != null)
+            if ((actionType != null))
             {
                 uri.AppendQuery("actionType", actionType, true);
             }
-            if (agentName != null)
+            if ((agentName != null))
             {
                 uri.AppendQuery("agentName", agentName, true);
             }
-            if (enabled != null)
+            if ((enabled != null))
             {
-                uri.AppendQuery("enabled", TypeFormatters.ConvertToString(enabled), true);
+                uri.AppendQuery("enabled", global::Azure.AI.Projects.TypeFormatters.ConvertToString(enabled), true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string actionType, string agentName, bool? enabled, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(global::System.Uri nextPage, string actionType, string agentName, bool? enabled, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -115,9 +115,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(new global::System.Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            if ((_apiVersion != null))
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }

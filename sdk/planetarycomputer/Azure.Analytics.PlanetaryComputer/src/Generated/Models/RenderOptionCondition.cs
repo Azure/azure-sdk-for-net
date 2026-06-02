@@ -14,23 +14,23 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class RenderOptionCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition"/>. </summary>
         /// <param name="property"> Property name to check in the active CQL filter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="property"/> is null. </exception>
         public RenderOptionCondition(string @property)
         {
-            Argument.AssertNotNull(@property, nameof(@property));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(@property, nameof(@property));
 
             Property = @property;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenderOptionCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.RenderOptionCondition"/>. </summary>
         /// <param name="property"> Property name to check in the active CQL filter. </param>
         /// <param name="value"> Value that the property must equal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionCondition(string @property, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderOptionCondition(string @property, string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Property = @property;
             Value = value;

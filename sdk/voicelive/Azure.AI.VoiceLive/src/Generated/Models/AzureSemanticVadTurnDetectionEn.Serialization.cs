@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
-    public partial class AzureSemanticVadTurnDetectionEn : TurnDetection, IJsonModel<AzureSemanticVadTurnDetectionEn>
+    public partial class AzureSemanticVadTurnDetectionEn : TurnDetection, IJsonModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureSemanticVadTurnDetectionEn(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn.DeserializeAzureSemanticVadTurnDetectionEn(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticVadTurnDetectionEn)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureSemanticVadTurnDetectionEn)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureSemanticVadTurnDetectionEn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticVadTurnDetectionEn IPersistableModel<AzureSemanticVadTurnDetectionEn>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticVadTurnDetectionEn)PersistableModelCreateCore(data, options);
+        AzureSemanticVadTurnDetectionEn IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>.Create(BinaryData data, ModelReaderWriterOptions options) => ((AzureSemanticVadTurnDetectionEn)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureSemanticVadTurnDetectionEn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureSemanticVadTurnDetectionEn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,53 +68,53 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureSemanticVadTurnDetectionEn)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Threshold))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(PrefixPaddingMs))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(PrefixPaddingMs))
             {
                 writer.WritePropertyName("prefix_padding_ms"u8);
                 writer.WriteNumberValue(PrefixPaddingMs.Value);
             }
-            if (Optional.IsDefined(SilenceDurationMs))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(SilenceDurationMs))
             {
                 writer.WritePropertyName("silence_duration_ms"u8);
                 writer.WriteNumberValue(SilenceDurationMs.Value);
             }
-            if (Optional.IsDefined(EndOfUtteranceDetection))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(EndOfUtteranceDetection))
             {
                 writer.WritePropertyName("end_of_utterance_detection"u8);
-                writer.WriteObjectValue(EndOfUtteranceDetection, options);
+                writer.WriteObjectValue<EouDetection>(EndOfUtteranceDetection, options);
             }
-            if (Optional.IsDefined(SpeechDurationMs))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(SpeechDurationMs))
             {
                 writer.WritePropertyName("speech_duration_ms"u8);
                 writer.WriteNumberValue(SpeechDurationMs.Value);
             }
-            if (Optional.IsDefined(RemoveFillerWords))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(RemoveFillerWords))
             {
                 writer.WritePropertyName("remove_filler_words"u8);
                 writer.WriteBooleanValue(RemoveFillerWords.Value);
             }
-            if (Optional.IsDefined(AutoTruncate))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(AutoTruncate))
             {
                 writer.WritePropertyName("auto_truncate"u8);
                 writer.WriteBooleanValue(AutoTruncate.Value);
             }
-            if (Optional.IsDefined(CreateResponse))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(CreateResponse))
             {
                 writer.WritePropertyName("create_response"u8);
                 writer.WriteBooleanValue(CreateResponse.Value);
             }
-            if (Optional.IsDefined(InterruptResponse))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(InterruptResponse))
             {
                 writer.WritePropertyName("interrupt_response"u8);
                 writer.WriteBooleanValue(InterruptResponse.Value);
@@ -123,31 +123,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticVadTurnDetectionEn IJsonModel<AzureSemanticVadTurnDetectionEn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSemanticVadTurnDetectionEn)JsonModelCreateCore(ref reader, options);
+        AzureSemanticVadTurnDetectionEn IJsonModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((AzureSemanticVadTurnDetectionEn)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TurnDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AzureSemanticVadTurnDetectionEn)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureSemanticVadTurnDetectionEn(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionEn.DeserializeAzureSemanticVadTurnDetectionEn(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureSemanticVadTurnDetectionEn DeserializeAzureSemanticVadTurnDetectionEn(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TurnDetectionType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             float? threshold = default;
             int? prefixPaddingMs = default;
             int? silenceDurationMs = default;
@@ -166,7 +166,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("threshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -175,7 +175,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("prefix_padding_ms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -184,7 +184,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("silence_duration_ms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -193,16 +193,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    endOfUtteranceDetection = EouDetection.DeserializeEouDetection(prop.Value, options);
+                    endOfUtteranceDetection = global::Azure.AI.VoiceLive.EouDetection.DeserializeEouDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("speech_duration_ms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -211,7 +211,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("remove_filler_words"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -220,7 +220,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("auto_truncate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,7 +229,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("create_response"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -238,16 +238,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("interrupt_response"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     interruptResponse = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureSemanticVadTurnDetectionEn(

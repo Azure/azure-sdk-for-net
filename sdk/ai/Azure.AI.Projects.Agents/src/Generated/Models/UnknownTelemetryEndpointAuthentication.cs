@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class UnknownTelemetryEndpointAuthentication : TelemetryEndpointAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownTelemetryEndpointAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.UnknownTelemetryEndpointAuthentication"/>. </summary>
         /// <param name="type"> The authentication type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTelemetryEndpointAuthentication(TelemetryEndpointAuthenticationKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownTelemetryEndpointAuthentication(TelemetryEndpointAuthenticationKind @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

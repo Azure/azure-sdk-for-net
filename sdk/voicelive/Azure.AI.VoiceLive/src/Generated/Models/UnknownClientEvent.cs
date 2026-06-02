@@ -12,11 +12,11 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class UnknownClientEvent : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownClientEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.UnknownClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownClientEvent(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", eventId, additionalBinaryDataProperties)
+        internal UnknownClientEvent(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", eventId, additionalBinaryDataProperties)
         {
         }
     }

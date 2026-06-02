@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> Lifecycle stages of an experiment metric, determining whether the metric is included in experiment analysis. </summary>
-    public readonly partial struct LifecycleStage : IEquatable<LifecycleStage>
+    public readonly partial struct LifecycleStage : IEquatable<global::Azure.Analytics.OnlineExperimentation.LifecycleStage>
     {
         private readonly string _value;
         /// <summary> The metric is included in experiment analysis. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> The metric is excluded from experiment analysis but remains available for future use. </summary>
         private const string InactiveValue = "Inactive";
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleStage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.LifecycleStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LifecycleStage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> The metric is excluded from experiment analysis but remains available for future use. </summary>
         public static LifecycleStage Inactive { get; } = new LifecycleStage(InactiveValue);
 
-        /// <summary> Determines if two <see cref="LifecycleStage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.OnlineExperimentation.LifecycleStage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LifecycleStage left, LifecycleStage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LifecycleStage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.OnlineExperimentation.LifecycleStage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LifecycleStage left, LifecycleStage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LifecycleStage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.OnlineExperimentation.LifecycleStage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LifecycleStage(string value) => new LifecycleStage(value);
 
-        /// <summary> Converts a string to a <see cref="LifecycleStage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.OnlineExperimentation.LifecycleStage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleStage?(string value) => value == null ? null : new LifecycleStage(value);
+        public static implicit operator LifecycleStage?(string value) => (value == null) ? null : new LifecycleStage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LifecycleStage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LifecycleStage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LifecycleStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LifecycleStage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

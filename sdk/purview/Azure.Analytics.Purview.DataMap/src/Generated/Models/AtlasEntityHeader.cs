@@ -15,20 +15,20 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class AtlasEntityHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader"/>. </summary>
         public AtlasEntityHeader()
         {
-            Attributes = new ChangeTrackingDictionary<string, BinaryData>();
+            Attributes = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             ClassificationNames = new ChangeTrackingList<string>();
-            Classifications = new ChangeTrackingList<AtlasClassification>();
+            Classifications = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasClassification>();
             Labels = new ChangeTrackingList<string>();
             MeaningNames = new ChangeTrackingList<string>();
-            Meanings = new ChangeTrackingList<AtlasTermAssignmentHeader>();
+            Meanings = new ChangeTrackingList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasEntityHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Purview.DataMap.AtlasEntityHeader"/>. </summary>
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// removed.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityHeader(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<AtlasTermAssignmentHeader> meanings, EntityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntityHeader(IDictionary<string, global::System.BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> meanings, EntityStatus? status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -64,8 +64,8 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// The attributes of the struct.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Attributes { get; }
+        public IDictionary<string, global::System.BinaryData> Attributes { get; }
 
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
         public IList<string> ClassificationNames { get; }
 
         /// <summary> An array of classifications. </summary>
-        public IList<AtlasClassification> Classifications { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasClassification> Classifications { get; }
 
         /// <summary> The display text. </summary>
         public string DisplayText { get; set; }
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.DataMap
         public IList<string> MeaningNames { get; }
 
         /// <summary> An array of term assignment headers. </summary>
-        public IList<AtlasTermAssignmentHeader> Meanings { get; }
+        public IList<global::Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> Meanings { get; }
 
         /// <summary>
         /// Status of the entity - can be active or deleted. Deleted entities are not

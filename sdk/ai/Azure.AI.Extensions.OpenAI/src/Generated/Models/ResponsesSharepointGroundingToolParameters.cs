@@ -11,21 +11,21 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesSharepointGroundingToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesSharepointGroundingToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters"/>. </summary>
         public ResponsesSharepointGroundingToolParameters()
         {
-            ProjectConnections = new ChangeTrackingList<ResponsesToolProjectConnection>();
+            ProjectConnections = new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesSharepointGroundingToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters"/>. </summary>
         /// <param name="projectConnections">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesSharepointGroundingToolParameters(IList<ResponsesToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesSharepointGroundingToolParameters(IList<global::Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection> projectConnections, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnections = projectConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,6 +35,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<ResponsesToolProjectConnection> ProjectConnections { get; }
+        public IList<global::Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection> ProjectConnections { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> Desired direction for an experiment metric value. </summary>
-    public readonly partial struct DesiredDirection : IEquatable<DesiredDirection>
+    public readonly partial struct DesiredDirection : IEquatable<global::Azure.Analytics.OnlineExperimentation.DesiredDirection>
     {
         private readonly string _value;
         /// <summary> An increase to the metric value is desired. E.g., Success rate, Total revenue. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Neither an increase nor a decrease to the metric value is desired, or the desired direction depends on other factors. E.g., Number of video play attempts, Number of user feedbacks. </summary>
         private const string NeutralValue = "Neutral";
 
-        /// <summary> Initializes a new instance of <see cref="DesiredDirection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.OnlineExperimentation.DesiredDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesiredDirection(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.OnlineExperimentation.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> Neither an increase nor a decrease to the metric value is desired, or the desired direction depends on other factors. E.g., Number of video play attempts, Number of user feedbacks. </summary>
         public static DesiredDirection Neutral { get; } = new DesiredDirection(NeutralValue);
 
-        /// <summary> Determines if two <see cref="DesiredDirection"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.OnlineExperimentation.DesiredDirection"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesiredDirection left, DesiredDirection right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DesiredDirection"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.OnlineExperimentation.DesiredDirection"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesiredDirection left, DesiredDirection right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DesiredDirection"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.OnlineExperimentation.DesiredDirection"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DesiredDirection(string value) => new DesiredDirection(value);
 
-        /// <summary> Converts a string to a <see cref="DesiredDirection"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.OnlineExperimentation.DesiredDirection"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesiredDirection?(string value) => value == null ? null : new DesiredDirection(value);
+        public static implicit operator DesiredDirection?(string value) => (value == null) ? null : new DesiredDirection(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DesiredDirection other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DesiredDirection other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DesiredDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DesiredDirection other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

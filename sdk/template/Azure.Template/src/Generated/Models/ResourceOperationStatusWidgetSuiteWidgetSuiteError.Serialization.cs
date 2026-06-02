@@ -15,9 +15,9 @@ using Azure;
 namespace Azure.Template
 {
     /// <summary> Provides status details for long running operations. </summary>
-    public partial class ResourceOperationStatusWidgetSuiteWidgetSuiteError : IJsonModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>
+    public partial class ResourceOperationStatusWidgetSuiteWidgetSuiteError : IJsonModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> for deserialization. </summary>
         internal ResourceOperationStatusWidgetSuiteWidgetSuiteError()
         {
         }
@@ -26,55 +26,55 @@ namespace Azure.Template
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceOperationStatusWidgetSuiteWidgetSuiteError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Template.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, options);
+                        return global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError.DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureTemplateContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Template.AzureTemplateContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceOperationStatusWidgetSuiteWidgetSuiteError IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceOperationStatusWidgetSuiteWidgetSuiteError IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError"/> from. </param>
         public static explicit operator ResourceOperationStatusWidgetSuiteWidgetSuiteError(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.Template.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError.DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, global::Azure.Template.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -82,26 +82,26 @@ namespace Azure.Template
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Error))
+            if (global::Azure.Template.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                ((IJsonModel<global::Azure.ResponseError>)Error).Write(writer, options);
             }
-            if (Optional.IsDefined(Result))
+            if (global::Azure.Template.Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WriteObjectValue<WidgetSuite>(Result, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -109,9 +109,9 @@ namespace Azure.Template
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -120,26 +120,26 @@ namespace Azure.Template
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceOperationStatusWidgetSuiteWidgetSuiteError IJsonModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceOperationStatusWidgetSuiteWidgetSuiteError IJsonModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceOperationStatusWidgetSuiteWidgetSuiteError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError.DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResourceOperationStatusWidgetSuiteWidgetSuiteError DeserializeResourceOperationStatusWidgetSuiteWidgetSuiteError(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -147,7 +147,7 @@ namespace Azure.Template
             OperationState status = default;
             ResponseError error = default;
             WidgetSuite result = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -162,25 +162,25 @@ namespace Azure.Template
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureTemplateContext.Default);
+                    error = global::System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseError>(new BinaryData(global::System.Text.Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, global::Azure.Template.AzureTemplateContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    result = WidgetSuite.DeserializeWidgetSuite(prop.Value, options);
+                    result = global::Azure.Template.WidgetSuite.DeserializeWidgetSuite(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ResourceOperationStatusWidgetSuiteWidgetSuiteError(id, status, error, result, additionalBinaryDataProperties);

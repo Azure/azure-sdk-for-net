@@ -13,11 +13,11 @@ namespace Azure.Communication.JobRouter
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.WaitTimeExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan threshold) : base(kind, additionalBinaryDataProperties)
+        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, TimeSpan threshold) : base(kind, additionalBinaryDataProperties)
         {
             Threshold = threshold;
         }

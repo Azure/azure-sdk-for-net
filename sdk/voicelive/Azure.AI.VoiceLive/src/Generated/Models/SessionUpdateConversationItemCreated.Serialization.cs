@@ -23,54 +23,54 @@ namespace Azure.AI.VoiceLive
     /// <list type="bullet"><item><description>The client has sent a `conversation.item.create` event to add a new Item</description></item></list>
     /// to the Conversation.
     /// </summary>
-    public partial class SessionUpdateConversationItemCreated : SessionUpdate, IJsonModel<SessionUpdateConversationItemCreated>
+    public partial class SessionUpdateConversationItemCreated : SessionUpdate, IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.VoiceLive.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionUpdateConversationItemCreated(document.RootElement, options);
+                        return global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemCreated)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.VoiceLive.AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemCreated)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemCreated>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemCreated IPersistableModel<SessionUpdateConversationItemCreated>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemCreated)PersistableModelCreateCore(data, options);
+        SessionUpdateConversationItemCreated IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemCreated)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemCreated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionUpdateConversationItemCreated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -78,52 +78,52 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemCreated)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PreviousItemId))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(PreviousItemId))
             {
                 writer.WritePropertyName("previous_item_id"u8);
                 writer.WriteStringValue(PreviousItemId);
             }
-            if (Optional.IsDefined(Item))
+            if (global::Azure.AI.VoiceLive.Optional.IsDefined(Item))
             {
                 writer.WritePropertyName("item"u8);
-                writer.WriteObjectValue(Item, options);
+                writer.WriteObjectValue<SessionResponseItem>(Item, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemCreated IJsonModel<SessionUpdateConversationItemCreated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionUpdateConversationItemCreated)JsonModelCreateCore(ref reader, options);
+        SessionUpdateConversationItemCreated IJsonModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SessionUpdateConversationItemCreated)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SessionUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SessionUpdateConversationItemCreated)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionUpdateConversationItemCreated(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.VoiceLive.SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SessionUpdateConversationItemCreated DeserializeSessionUpdateConversationItemCreated(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             ServerEventType @type = default;
             string eventId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string previousItemId = default;
             SessionResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
@@ -145,16 +145,16 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("item"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
+                    item = global::Azure.AI.VoiceLive.SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SessionUpdateConversationItemCreated(@type, eventId, additionalBinaryDataProperties, previousItemId, item);

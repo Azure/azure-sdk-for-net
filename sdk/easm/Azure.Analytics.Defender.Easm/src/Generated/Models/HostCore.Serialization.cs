@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The HostCore. </summary>
-    public partial class HostCore : IJsonModel<HostCore>
+    public partial class HostCore : IJsonModel<global::Azure.Analytics.Defender.Easm.HostCore>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HostCore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHostCore(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.HostCore.DeserializeHostCore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostCore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.HostCore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HostCore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.HostCore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HostCore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostCore IPersistableModel<HostCore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HostCore IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HostCore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HostCore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.HostCore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,202 +68,202 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HostCore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.HostCore)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Host))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Domain))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(BlacklistCauseFirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistCauseFirstSeen))
             {
                 writer.WritePropertyName("blacklistCauseFirstSeen"u8);
                 writer.WriteStringValue(BlacklistCauseFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistCauseLastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistCauseLastSeen))
             {
                 writer.WritePropertyName("blacklistCauseLastSeen"u8);
                 writer.WriteStringValue(BlacklistCauseLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistCauseCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistCauseCount))
             {
                 writer.WritePropertyName("blacklistCauseCount"u8);
                 writer.WriteNumberValue(BlacklistCauseCount.Value);
             }
-            if (Optional.IsDefined(BlacklistResourceFirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistResourceFirstSeen))
             {
                 writer.WritePropertyName("blacklistResourceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistResourceFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistResourceLastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistResourceLastSeen))
             {
                 writer.WritePropertyName("blacklistResourceLastSeen"u8);
                 writer.WriteStringValue(BlacklistResourceLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistResourceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistResourceCount))
             {
                 writer.WritePropertyName("blacklistResourceCount"u8);
                 writer.WriteNumberValue(BlacklistResourceCount.Value);
             }
-            if (Optional.IsDefined(BlacklistSequenceFirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistSequenceFirstSeen))
             {
                 writer.WritePropertyName("blacklistSequenceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistSequenceLastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistSequenceLastSeen))
             {
                 writer.WritePropertyName("blacklistSequenceLastSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistSequenceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(BlacklistSequenceCount))
             {
                 writer.WritePropertyName("blacklistSequenceCount"u8);
                 writer.WriteNumberValue(BlacklistSequenceCount.Value);
             }
-            if (Optional.IsDefined(PhishCauseCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(PhishCauseCount))
             {
                 writer.WritePropertyName("phishCauseCount"u8);
                 writer.WriteNumberValue(PhishCauseCount.Value);
             }
-            if (Optional.IsDefined(MalwareCauseCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(MalwareCauseCount))
             {
                 writer.WritePropertyName("malwareCauseCount"u8);
                 writer.WriteNumberValue(MalwareCauseCount.Value);
             }
-            if (Optional.IsDefined(SpamCauseCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SpamCauseCount))
             {
                 writer.WritePropertyName("spamCauseCount"u8);
                 writer.WriteNumberValue(SpamCauseCount.Value);
             }
-            if (Optional.IsDefined(ScamCauseCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ScamCauseCount))
             {
                 writer.WritePropertyName("scamCauseCount"u8);
                 writer.WriteNumberValue(ScamCauseCount.Value);
             }
-            if (Optional.IsDefined(PhishResourceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(PhishResourceCount))
             {
                 writer.WritePropertyName("phishResourceCount"u8);
                 writer.WriteNumberValue(PhishResourceCount.Value);
             }
-            if (Optional.IsDefined(MalwareResourceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(MalwareResourceCount))
             {
                 writer.WritePropertyName("malwareResourceCount"u8);
                 writer.WriteNumberValue(MalwareResourceCount.Value);
             }
-            if (Optional.IsDefined(SpamResourceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SpamResourceCount))
             {
                 writer.WritePropertyName("spamResourceCount"u8);
                 writer.WriteNumberValue(SpamResourceCount.Value);
             }
-            if (Optional.IsDefined(ScamResourceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ScamResourceCount))
             {
                 writer.WritePropertyName("scamResourceCount"u8);
                 writer.WriteNumberValue(ScamResourceCount.Value);
             }
-            if (Optional.IsDefined(PhishSequenceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(PhishSequenceCount))
             {
                 writer.WritePropertyName("phishSequenceCount"u8);
                 writer.WriteNumberValue(PhishSequenceCount.Value);
             }
-            if (Optional.IsDefined(MalwareSequenceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(MalwareSequenceCount))
             {
                 writer.WritePropertyName("malwareSequenceCount"u8);
                 writer.WriteNumberValue(MalwareSequenceCount.Value);
             }
-            if (Optional.IsDefined(SpamSequenceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(SpamSequenceCount))
             {
                 writer.WritePropertyName("spamSequenceCount"u8);
                 writer.WriteNumberValue(SpamSequenceCount.Value);
             }
-            if (Optional.IsDefined(ScamSequenceCount))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(ScamSequenceCount))
             {
                 writer.WritePropertyName("scamSequenceCount"u8);
                 writer.WriteNumberValue(ScamSequenceCount.Value);
             }
-            if (Optional.IsDefined(AlexaRank))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(AlexaRank))
             {
                 writer.WritePropertyName("alexaRank"u8);
                 writer.WriteNumberValue(AlexaRank.Value);
             }
-            if (Optional.IsDefined(HostReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(HostReputationScore))
             {
                 writer.WritePropertyName("hostReputationScore"u8);
                 writer.WriteNumberValue(HostReputationScore.Value);
             }
-            if (Optional.IsDefined(HostPhishReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(HostPhishReputationScore))
             {
                 writer.WritePropertyName("hostPhishReputationScore"u8);
                 writer.WriteNumberValue(HostPhishReputationScore.Value);
             }
-            if (Optional.IsDefined(HostMalwareReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(HostMalwareReputationScore))
             {
                 writer.WritePropertyName("hostMalwareReputationScore"u8);
                 writer.WriteNumberValue(HostMalwareReputationScore.Value);
             }
-            if (Optional.IsDefined(HostSpamReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(HostSpamReputationScore))
             {
                 writer.WritePropertyName("hostSpamReputationScore"u8);
                 writer.WriteNumberValue(HostSpamReputationScore.Value);
             }
-            if (Optional.IsDefined(HostScamReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(HostScamReputationScore))
             {
                 writer.WritePropertyName("hostScamReputationScore"u8);
                 writer.WriteNumberValue(HostScamReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DomainReputationScore))
             {
                 writer.WritePropertyName("domainReputationScore"u8);
                 writer.WriteNumberValue(DomainReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainPhishReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DomainPhishReputationScore))
             {
                 writer.WritePropertyName("domainPhishReputationScore"u8);
                 writer.WriteNumberValue(DomainPhishReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainMalwareReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DomainMalwareReputationScore))
             {
                 writer.WritePropertyName("domainMalwareReputationScore"u8);
                 writer.WriteNumberValue(DomainMalwareReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainSpamReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DomainSpamReputationScore))
             {
                 writer.WritePropertyName("domainSpamReputationScore"u8);
                 writer.WriteNumberValue(DomainSpamReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainScamReputationScore))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(DomainScamReputationScore))
             {
                 writer.WritePropertyName("domainScamReputationScore"u8);
                 writer.WriteNumberValue(DomainScamReputationScore.Value);
             }
-            if (Optional.IsDefined(Uuid))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -271,9 +271,9 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -282,26 +282,26 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HostCore IJsonModel<HostCore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HostCore IJsonModel<global::Azure.Analytics.Defender.Easm.HostCore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HostCore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HostCore>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.HostCore>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(HostCore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.HostCore)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHostCore(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.HostCore.DeserializeHostCore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static HostCore DeserializeHostCore(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -343,7 +343,7 @@ namespace Azure.Analytics.Defender.Easm
             int? domainSpamReputationScore = default;
             int? domainScamReputationScore = default;
             string uuid = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("host"u8))
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -367,7 +367,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -376,7 +376,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistCauseFirstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistCauseLastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -403,7 +403,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistCauseCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -412,7 +412,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistResourceFirstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -421,7 +421,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistResourceLastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -430,7 +430,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistResourceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -439,7 +439,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistSequenceFirstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -448,7 +448,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistSequenceLastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -457,7 +457,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("blacklistSequenceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -466,7 +466,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("phishCauseCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -475,7 +475,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("malwareCauseCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -484,7 +484,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("spamCauseCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -493,7 +493,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("scamCauseCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("phishResourceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("malwareResourceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -520,7 +520,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("spamResourceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -529,7 +529,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("scamResourceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -538,7 +538,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("phishSequenceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -547,7 +547,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("malwareSequenceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -556,7 +556,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("spamSequenceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -565,7 +565,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("scamSequenceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -574,7 +574,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("alexaRank"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -583,7 +583,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("hostReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -592,7 +592,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("hostPhishReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("hostMalwareReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -610,7 +610,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("hostSpamReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -619,7 +619,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("hostScamReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -628,7 +628,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("domainReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -637,7 +637,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("domainPhishReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -646,7 +646,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("domainMalwareReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -655,7 +655,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("domainSpamReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -664,7 +664,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("domainScamReputationScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -676,9 +676,9 @@ namespace Azure.Analytics.Defender.Easm
                     uuid = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new HostCore(

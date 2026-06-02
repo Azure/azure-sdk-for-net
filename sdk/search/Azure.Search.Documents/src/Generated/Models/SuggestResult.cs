@@ -14,18 +14,18 @@ namespace Azure.Search.Documents.Models
     internal partial class SuggestResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SuggestResult"/>. </summary>
         public SuggestResult()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.SuggestResult"/>. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
         /// <param name="additionalProperties"></param>
-        internal SuggestResult(string text, IDictionary<string, BinaryData> additionalProperties)
+        internal SuggestResult(string text, IDictionary<string, global::System.BinaryData> additionalProperties)
         {
             Text = text;
             _additionalBinaryDataProperties = additionalProperties;
@@ -35,6 +35,6 @@ namespace Azure.Search.Documents.Models
         public string Text { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, global::System.BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

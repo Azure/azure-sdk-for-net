@@ -15,14 +15,14 @@ namespace Service.MultiService.Combined
 {
     public partial class CombinedClient
     {
-        public CombinedClient() : this(new Uri("http://localhost:3000"), new CombinedClientOptions()) => throw null;
+        public CombinedClient() : this(new global::System.Uri("http://localhost:3000"), new CombinedClientOptions()) => throw null;
 
-        internal CombinedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CombinedClientOptions options) => throw null;
+        internal CombinedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, CombinedClientOptions options) => throw null;
 
-        public CombinedClient(Uri endpoint, CombinedClientOptions options) : this(null, endpoint, options) => throw null;
+        public CombinedClient(global::System.Uri endpoint, CombinedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public CombinedClient(CombinedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public CombinedClient(CombinedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -12,15 +12,15 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalFileSearchTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalFileSearchTool"/>. </summary>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        public InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
+        public InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(global::Azure.AI.Extensions.OpenAI.ToolType.FileSearch)
         {
             VectorStoreIds = vectorStoreIds.ToList();
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalFileSearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalFileSearchTool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters, string name, string description, IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
@@ -56,17 +56,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// Gets or sets the Filters.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalComparisonFilter"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.InternalComparisonFilter"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCompoundFilter"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Extensions.OpenAI.InternalCompoundFilter"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -106,6 +106,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get; }
     }
 }

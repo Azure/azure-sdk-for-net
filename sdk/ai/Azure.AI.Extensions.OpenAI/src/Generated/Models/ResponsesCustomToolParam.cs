@@ -10,24 +10,24 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Custom tool. </summary>
     public partial class ResponsesCustomToolParam : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResponsesCustomToolParam(string name) : base(ToolType.Custom)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ResponsesCustomToolParam(string name) : base(global::Azure.AI.Extensions.OpenAI.ToolType.Custom)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="shouldDeferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal ResponsesCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesCustomToolParamFormat format, bool? shouldDeferLoading) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesCustomToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesCustomToolParamFormat format, bool? shouldDeferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

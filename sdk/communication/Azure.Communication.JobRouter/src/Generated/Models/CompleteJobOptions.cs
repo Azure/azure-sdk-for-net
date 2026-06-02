@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     public partial class CompleteJobOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CompleteJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.CompleteJobOptions"/>. </summary>
         /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompleteJobOptions(string note, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompleteJobOptions(string note, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Note = note;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

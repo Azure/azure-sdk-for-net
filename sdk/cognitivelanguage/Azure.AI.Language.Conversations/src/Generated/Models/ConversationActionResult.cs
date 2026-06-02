@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The results of a Conversation task. </summary>
     public partial class ConversationActionResult : AnalyzeConversationActionResult
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionResult"/>. </summary>
         /// <param name="result"> Represents a conversation analysis response. </param>
-        internal ConversationActionResult(AnalyzeConversationResult result) : base(AnalyzeConversationResultKind.ConversationResult)
+        internal ConversationActionResult(AnalyzeConversationResult result) : base(global::Azure.AI.Language.Conversations.Models.AnalyzeConversationResultKind.ConversationResult)
         {
             Result = result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.ConversationActionResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Represents a conversation analysis response. </param>
-        internal ConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnalyzeConversationResult result) : base(kind, additionalBinaryDataProperties)
+        internal ConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, AnalyzeConversationResult result) : base(kind, additionalBinaryDataProperties)
         {
             Result = result;
         }

@@ -15,9 +15,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringExportJobState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringExportJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
@@ -27,11 +27,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<global::Azure.ResponseError>();
             ResultUrl = resultUrl;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringExportJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<ResponseError> errors, string resultUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<global::Azure.ResponseError> errors, string resultUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public JobStatus Status { get; }
 
         /// <summary> The errors encountered while executing the job. </summary>
-        public IList<ResponseError> Errors { get; }
+        public IList<global::Azure.ResponseError> Errors { get; }
 
         /// <summary> URL to download the result of the Export Job. </summary>
         public string ResultUrl { get; }

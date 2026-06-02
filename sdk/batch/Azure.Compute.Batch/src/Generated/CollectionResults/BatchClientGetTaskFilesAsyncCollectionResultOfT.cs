@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Compute.Batch
 {
-    internal partial class BatchClientGetTaskFilesAsyncCollectionResultOfT : AsyncPageable<BatchNodeFile>
+    internal partial class BatchClientGetTaskFilesAsyncCollectionResultOfT : AsyncPageable<global::Azure.Compute.Batch.BatchNodeFile>
     {
         private readonly BatchClient _client;
         private readonly string _jobId;
@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetTaskFilesAsyncCollectionResultOfT(BatchClient client, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetTaskFilesAsyncCollectionResultOfT(BatchClient client, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _jobId = jobId;
@@ -69,20 +69,20 @@ namespace Azure.Compute.Batch
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BatchClientGetTaskFilesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BatchNodeFile>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<global::Azure.Page<global::Azure.Compute.Batch.BatchNodeFile>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
+                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if ((response is null))
                 {
                     yield break;
                 }
-                BatchNodeFileListResult result = (BatchNodeFileListResult)response;
-                yield return Page<BatchNodeFile>.FromValues((IReadOnlyList<BatchNodeFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                BatchNodeFileListResult result = ((BatchNodeFileListResult)response);
+                yield return global::Azure.Page<BatchNodeFile>.FromValues(((IReadOnlyList<global::Azure.Compute.Batch.BatchNodeFile>)result.Value), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
-                if (nextPage == null)
+                if ((nextPage == null))
                 {
                     yield break;
                 }
@@ -92,9 +92,9 @@ namespace Azure.Compute.Batch
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTaskFilesRequest(nextLink, _jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context) : _client.CreateGetTaskFilesRequest(_jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context);
+            HttpMessage message = (nextLink != null) ? _client.CreateNextGetTaskFilesRequest(nextLink, _jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context) : _client.CreateGetTaskFilesRequest(_jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

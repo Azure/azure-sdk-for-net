@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Union
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class UnionClientHostExtensions
     {
         public static IClientBuilder AddUnionClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddUnionClient(this IHostApplicationBuilder host, string sectionName, Action<UnionClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddUnionClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Union.UnionClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedUnionClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedUnionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<UnionClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedUnionClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Union.UnionClientSettings> configureSettings) => throw null;
     }
 }

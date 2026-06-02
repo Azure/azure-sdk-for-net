@@ -24,11 +24,11 @@ namespace Azure.AI.Translation.Text
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
-        /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
-        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, ETag etag = default, IReadOnlyDictionary<string, TranslationLanguage> translation = default, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default, IEnumerable<string> models = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, ETag etag = default, IReadOnlyDictionary<string, global::Azure.AI.Translation.Text.TranslationLanguage> translation = default, IReadOnlyDictionary<string, global::Azure.AI.Translation.Text.TransliterationLanguage> transliteration = default, IEnumerable<string> models = default)
         {
-            translation ??= new ChangeTrackingDictionary<string, TranslationLanguage>();
-            transliteration ??= new ChangeTrackingDictionary<string, TransliterationLanguage>();
+            translation ??= new ChangeTrackingDictionary<string, global::Azure.AI.Translation.Text.TranslationLanguage>();
+            transliteration ??= new ChangeTrackingDictionary<string, global::Azure.AI.Translation.Text.TransliterationLanguage>();
             models ??= new ChangeTrackingList<string>();
 
             return new GetSupportedLanguagesResult(
@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="models"> LLM models supported for translation. </param>
-        /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TranslationLanguage"/> instance for mocking. </returns>
         public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<string> models = default)
         {
             models ??= new ChangeTrackingList<string>();
@@ -64,10 +64,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
-        /// <returns> A new <see cref="Text.TransliterationLanguage"/> instance for mocking. </returns>
-        public static TransliterationLanguage TransliterationLanguage(string name = default, string nativeName = default, IEnumerable<TransliterableScript> scripts = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TransliterationLanguage"/> instance for mocking. </returns>
+        public static TransliterationLanguage TransliterationLanguage(string name = default, string nativeName = default, IEnumerable<global::Azure.AI.Translation.Text.TransliterableScript> scripts = default)
         {
-            scripts ??= new ChangeTrackingList<TransliterableScript>();
+            scripts ??= new ChangeTrackingList<global::Azure.AI.Translation.Text.TransliterableScript>();
 
             return new TransliterationLanguage(name, nativeName, scripts.ToList(), additionalBinaryDataProperties: null);
         }
@@ -78,10 +78,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="toScripts"> List of scripts available to convert text to. </param>
-        /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> toScripts = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TransliterableScript"/> instance for mocking. </returns>
+        public static TransliterableScript TransliterableScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<global::Azure.AI.Translation.Text.LanguageScript> toScripts = default)
         {
-            toScripts ??= new ChangeTrackingList<LanguageScript>();
+            toScripts ??= new ChangeTrackingList<global::Azure.AI.Translation.Text.LanguageScript>();
 
             return new TransliterableScript(
                 code,
@@ -97,7 +97,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.LanguageScript"/> instance for mocking. </returns>
         public static LanguageScript LanguageScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = default)
         {
             return new LanguageScript(code, name, nativeName, directionality, additionalBinaryDataProperties: null);
@@ -118,10 +118,10 @@ namespace Azure.AI.Translation.Text
         /// complete element. Possible values are: plain (default) or html.
         /// </param>
         /// <param name="translationTargets"> Translation target parameters. </param>
-        /// <returns> A new <see cref="Text.TranslateInputItem"/> instance for mocking. </returns>
-        public static TranslateInputItem TranslateInputItem(string text = default, string script = default, string language = default, TextType? textType = default, IEnumerable<TranslationTarget> translationTargets = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TranslateInputItem"/> instance for mocking. </returns>
+        public static TranslateInputItem TranslateInputItem(string text = default, string script = default, string language = default, TextType? textType = default, IEnumerable<global::Azure.AI.Translation.Text.TranslationTarget> translationTargets = default)
         {
-            translationTargets ??= new ChangeTrackingList<TranslationTarget>();
+            translationTargets ??= new ChangeTrackingList<global::Azure.AI.Translation.Text.TranslationTarget>();
 
             return new TranslateInputItem(
                 text,
@@ -171,10 +171,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="gender"> Desired gender of target translation. Accepted values are female, male, or neutral. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
-        /// <returns> A new <see cref="Text.TranslationTarget"/> instance for mocking. </returns>
-        public static TranslationTarget TranslationTarget(string language = default, string script = default, ProfanityAction? profanityAction = default, ProfanityMarker? profanityMarker = default, string deploymentName = default, bool? allowFallback = default, TranslationTone? tone = default, TranslationGender? gender = default, string adaptiveDatasetId = default, IEnumerable<ReferenceTextPair> referenceTextPairs = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TranslationTarget"/> instance for mocking. </returns>
+        public static TranslationTarget TranslationTarget(string language = default, string script = default, ProfanityAction? profanityAction = default, ProfanityMarker? profanityMarker = default, string deploymentName = default, bool? allowFallback = default, TranslationTone? tone = default, TranslationGender? gender = default, string adaptiveDatasetId = default, IEnumerable<global::Azure.AI.Translation.Text.ReferenceTextPair> referenceTextPairs = default)
         {
-            referenceTextPairs ??= new ChangeTrackingList<ReferenceTextPair>();
+            referenceTextPairs ??= new ChangeTrackingList<global::Azure.AI.Translation.Text.ReferenceTextPair>();
 
             return new TranslationTarget(
                 language,
@@ -193,7 +193,7 @@ namespace Azure.AI.Translation.Text
         /// <summary> Reference text pair to generate adaptive customized translation. </summary>
         /// <param name="source"> Source reference sentence. </param>
         /// <param name="target"> Target reference sentence. </param>
-        /// <returns> A new <see cref="Text.ReferenceTextPair"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.ReferenceTextPair"/> instance for mocking. </returns>
         public static ReferenceTextPair ReferenceTextPair(string source = default, string target = default)
         {
             return new ReferenceTextPair(source, target, additionalBinaryDataProperties: null);
@@ -205,10 +205,10 @@ namespace Azure.AI.Translation.Text
         /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </param>
-        /// <returns> A new <see cref="Text.TranslatedTextItem"/> instance for mocking. </returns>
-        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = default, IEnumerable<TranslationText> translations = default)
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TranslatedTextItem"/> instance for mocking. </returns>
+        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = default, IEnumerable<global::Azure.AI.Translation.Text.TranslationText> translations = default)
         {
-            translations ??= new ChangeTrackingList<TranslationText>();
+            translations ??= new ChangeTrackingList<global::Azure.AI.Translation.Text.TranslationText>();
 
             return new TranslatedTextItem(detectedLanguage, translations.ToList(), additionalBinaryDataProperties: null);
         }
@@ -219,7 +219,7 @@ namespace Azure.AI.Translation.Text
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
-        /// <returns> A new <see cref="Text.DetectedLanguage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.DetectedLanguage"/> instance for mocking. </returns>
         public static DetectedLanguage DetectedLanguage(string language = default, float score = default)
         {
             return new DetectedLanguage(language, score, additionalBinaryDataProperties: null);
@@ -233,7 +233,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="responseTokens"> An integer indicating the number of tokens used in the translation response. </param>
         /// <param name="targetTokens"> An integer indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TranslationText"/> instance for mocking. </returns>
         public static TranslationText TranslationText(string language = default, int? sourceCharacters = default, int? instructionTokens = default, int? sourceTokens = default, int? responseTokens = default, int? targetTokens = default, string text = default)
         {
             return new TranslationText(
@@ -249,7 +249,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Element containing the text for translation. </summary>
         /// <param name="text"> Text to translate. </param>
-        /// <returns> A new <see cref="Text.InputTextItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.InputTextItem"/> instance for mocking. </returns>
         public static InputTextItem InputTextItem(string text = default)
         {
             return new InputTextItem(text, additionalBinaryDataProperties: null);
@@ -258,7 +258,7 @@ namespace Azure.AI.Translation.Text
         /// <summary> Transliterated text element. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
-        /// <returns> A new <see cref="Text.TransliteratedText"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.Translation.Text.TransliteratedText"/> instance for mocking. </returns>
         public static TransliteratedText TransliteratedText(string text = default, string script = default)
         {
             return new TransliteratedText(text, script, additionalBinaryDataProperties: null);

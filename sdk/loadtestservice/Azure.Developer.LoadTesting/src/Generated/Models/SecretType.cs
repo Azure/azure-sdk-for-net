@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Types of secrets supported. </summary>
-    public readonly partial struct SecretType : IEquatable<SecretType>
+    public readonly partial struct SecretType : IEquatable<global::Azure.Developer.LoadTesting.SecretType>
     {
         private readonly string _value;
         /// <summary> If the secret is stored in an Azure Key Vault. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> If the secret value provided as plain text. </summary>
         private const string SecretValueValue = "SECRET_VALUE";
 
-        /// <summary> Initializes a new instance of <see cref="SecretType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.SecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecretType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> If the secret value provided as plain text. </summary>
         public static SecretType SecretValue { get; } = new SecretType(SecretValueValue);
 
-        /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.SecretType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SecretType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.SecretType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecretType left, SecretType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.SecretType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SecretType(string value) => new SecretType(value);
 
-        /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.SecretType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SecretType?(string value) => value == null ? null : new SecretType(value);
+        public static implicit operator SecretType?(string value) => (value == null) ? null : new SecretType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SecretType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SecretType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecretType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

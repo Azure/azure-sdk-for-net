@@ -14,26 +14,26 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ErrorDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ErrorDetail"/>. </summary>
         /// <param name="code"> This is one of a server-defined set of error codes. </param>
         /// <param name="message"> This is a human-readable representation of the error. </param>
         internal ErrorDetail(string code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ErrorDetail>();
+            Details = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ErrorDetail"/>. </summary>
         /// <param name="code"> This is one of a server-defined set of error codes. </param>
         /// <param name="message"> This is a human-readable representation of the error. </param>
         /// <param name="target"> This is the error target. </param>
         /// <param name="details"> This is an array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> This is an object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetail(string code, string message, string target, IList<ErrorDetail> details, InnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorDetail(string code, string message, string target, IList<global::Azure.Analytics.Defender.Easm.ErrorDetail> details, InnerError innererror, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Target { get; }
 
         /// <summary> This is an array of details about specific errors that led to this reported error. </summary>
-        public IList<ErrorDetail> Details { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.ErrorDetail> Details { get; }
 
         /// <summary> This is an object containing more specific information than the current object about the error. </summary>
         public InnerError Innererror { get; }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Client.Naming._Property
 {
-    public partial class LanguageClientNameModel : IJsonModel<LanguageClientNameModel>
+    public partial class LanguageClientNameModel : IJsonModel<global::Client.Naming._Property.LanguageClientNameModel>
     {
         internal LanguageClientNameModel() => throw null;
 
@@ -20,20 +20,20 @@ namespace Client.Naming._Property
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<LanguageClientNameModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Client.Naming._Property.LanguageClientNameModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        LanguageClientNameModel IPersistableModel<LanguageClientNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        LanguageClientNameModel IPersistableModel<global::Client.Naming._Property.LanguageClientNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<LanguageClientNameModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Client.Naming._Property.LanguageClientNameModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="languageClientNameModel"> The <see cref="LanguageClientNameModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="languageClientNameModel"> The <see cref="global::Client.Naming._Property.LanguageClientNameModel"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(LanguageClientNameModel languageClientNameModel) => throw null;
 
-        void IJsonModel<LanguageClientNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Client.Naming._Property.LanguageClientNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        LanguageClientNameModel IJsonModel<LanguageClientNameModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        LanguageClientNameModel IJsonModel<global::Client.Naming._Property.LanguageClientNameModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual LanguageClientNameModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

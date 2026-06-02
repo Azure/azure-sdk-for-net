@@ -14,20 +14,20 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateLastDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult"/>. </summary>
         internal MultivariateLastDetectionResult()
         {
-            VariableStates = new ChangeTrackingList<VariableState>();
-            Results = new ChangeTrackingList<AnomalyState>();
+            VariableStates = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
+            Results = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.AnomalyState>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateLastDetectionResult"/>. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateLastDetectionResult(IList<VariableState> variableStates, IList<AnomalyState> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateLastDetectionResult(IList<global::Azure.AI.AnomalyDetector.VariableState> variableStates, IList<global::Azure.AI.AnomalyDetector.AnomalyState> results, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             VariableStates = variableStates;
             Results = results;
@@ -35,9 +35,9 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Variable status. </summary>
-        public IList<VariableState> VariableStates { get; }
+        public IList<global::Azure.AI.AnomalyDetector.VariableState> VariableStates { get; }
 
         /// <summary> Anomaly status and information. </summary>
-        public IList<AnomalyState> Results { get; }
+        public IList<global::Azure.AI.AnomalyDetector.AnomalyState> Results { get; }
     }
 }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Versioning.Added
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class AddedClientHostExtensions
     {
         public static IClientBuilder AddAddedClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddAddedClient(this IHostApplicationBuilder host, string sectionName, Action<AddedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddAddedClient(this IHostApplicationBuilder host, string sectionName, Action<global::Versioning.Added.AddedClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedAddedClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedAddedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<AddedClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedAddedClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Versioning.Added.AddedClientSettings> configureSettings) => throw null;
     }
 }

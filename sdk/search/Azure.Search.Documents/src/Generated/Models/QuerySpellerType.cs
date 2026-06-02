@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Improve search recall by spell-correcting individual search query terms. </summary>
-    public readonly partial struct QuerySpellerType : IEquatable<QuerySpellerType>
+    public readonly partial struct QuerySpellerType : IEquatable<global::Azure.Search.Documents.Models.QuerySpellerType>
     {
         private readonly string _value;
         /// <summary> Speller not enabled. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Speller corrects individual query terms using a static lexicon for the language specified by the queryLanguage parameter. </summary>
         private const string LexiconValue = "lexicon";
 
-        /// <summary> Initializes a new instance of <see cref="QuerySpellerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.QuerySpellerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuerySpellerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> Speller corrects individual query terms using a static lexicon for the language specified by the queryLanguage parameter. </summary>
         public static QuerySpellerType Lexicon { get; } = new QuerySpellerType(LexiconValue);
 
-        /// <summary> Determines if two <see cref="QuerySpellerType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QuerySpellerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuerySpellerType left, QuerySpellerType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="QuerySpellerType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.QuerySpellerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuerySpellerType left, QuerySpellerType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="QuerySpellerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QuerySpellerType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator QuerySpellerType(string value) => new QuerySpellerType(value);
 
-        /// <summary> Converts a string to a <see cref="QuerySpellerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.QuerySpellerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QuerySpellerType?(string value) => value == null ? null : new QuerySpellerType(value);
+        public static implicit operator QuerySpellerType?(string value) => (value == null) ? null : new QuerySpellerType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QuerySpellerType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is QuerySpellerType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(QuerySpellerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QuerySpellerType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

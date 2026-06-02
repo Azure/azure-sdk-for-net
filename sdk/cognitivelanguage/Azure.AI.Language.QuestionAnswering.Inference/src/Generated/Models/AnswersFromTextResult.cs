@@ -14,24 +14,24 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class AnswersFromTextResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnswersFromTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult"/>. </summary>
         internal AnswersFromTextResult()
         {
-            Answers = new ChangeTrackingList<TextAnswer>();
+            Answers = new ChangeTrackingList<global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnswersFromTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult"/>. </summary>
         /// <param name="answers"> Represents the answer results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnswersFromTextResult(IList<TextAnswer> answers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnswersFromTextResult(IList<global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer> answers, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Answers = answers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the answer results. </summary>
-        public IList<TextAnswer> Answers { get; }
+        public IList<global::Azure.AI.Language.QuestionAnswering.Inference.TextAnswer> Answers { get; }
     }
 }

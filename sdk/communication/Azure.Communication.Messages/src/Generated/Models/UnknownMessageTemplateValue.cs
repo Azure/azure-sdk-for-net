@@ -12,11 +12,11 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownMessageTemplateValue : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageTemplateValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.UnknownMessageTemplateValue"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(name, (kind != default) ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }
